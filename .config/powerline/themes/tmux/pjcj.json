@@ -1,0 +1,36 @@
+{
+    "default_module": "powerline.segments.common",
+    "segments": {
+        "right": [
+            {
+                "name": "uptime",
+                "priority": 50,
+                "args": {"shorten_len": 1}
+            },
+            {
+                "name": "network_load",
+                "priority": 50,
+                "divider_highlight_group": "background:divider"
+            },
+            {
+                "name": "system_load",
+                "priority": 50,
+                "divider_highlight_group": "background:divider"
+            },
+            {
+                "name": "date",
+                "args": {"format": "%a %-d %b"}
+            },
+            {
+                "name": "date",
+                "args": {"format": "%H:%M"},
+                "highlight_group": ["time", "date"],
+                "divider_highlight_group": "time:divider"
+            },
+            {
+                "name": "hostname",
+                "args": {"exclude_domain": true}
+            }
+        ]
+    }
+}

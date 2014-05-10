@@ -1,0 +1,13 @@
+#!/usr/bin/zsh
+
+command which $1
+echo PATH is $PATH
+perl -e '
+for my $file (@ARGV) {
+    for my $dir (split(/:/, $ENV{PATH})) {
+        if (-f (my $path = "$dir/$file") && -x _) {
+            system "ls", "-ld", $path;
+        }
+    }
+}
+' $1

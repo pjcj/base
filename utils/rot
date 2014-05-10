@@ -1,0 +1,16 @@
+#!/bin/bash
+
+angle=$1
+shift
+
+orgdir=`dirname "$pic"`/_rot
+mkdir -p $orgdir
+
+while [ $# -gt 0 ]; do
+    pic=$1
+    shift
+    mv "$pic" "$orgdir"
+    jpegtran -copy all -rotate $angle "$orgdir/$pic" > "$pic"
+    jpegexiforient -1 "$pic" > /dev/null
+done
+

@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+# Original author: Paul Johnson
+# Created:         Thu 07 Aug 1997 01:20:41 pm
+
+setopt null_glob  # ignore null globs
+setopt glob_dots  # get .files
+rm -rf **/*~

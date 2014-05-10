@@ -1,0 +1,73 @@
+#compdef dzil
+
+local curcontext="$curcontext" state line cmds ret=1
+
+_arguments -C \
+  '(- 1 *)'{-v,--verbose}'[log additional output]' \
+  '(- 1 *)'{-I,--lib-inc}'[additional @INC dirs]' \
+  '1: :->cmds' \
+  '*: :->args' && ret=0
+
+case $state in
+  cmds)
+    cmds=( ${${(M)${(f)"$(LC_ALL=C _call_program commands dzil help | sed 's/^ *//' 2>/dev/null)"}:#*: *}/(#b) *(*[^ ]) #- (*)/$match[1]:$match[2]:l})
+    _describe -t commands 'dzil command' cmds && ret=0
+  ;;
+  args)
+    case $line[1] in
+      (authordeps|build|install|listdeps|new|release|smoke|test)
+        cmds=( ${${(M)${(f)"$(LC_ALL=C _call_program commands dzil help $line[1] | perl -ple 's/\s+/ /g' 2>/dev/null)"}:#*--*}/(#b) ([^[:space:]]##) ([^[:space:]]##)/$match[1]:$match[2]:l})
+        _describe -t commands 'dzil $line[1]' cmds && ret=0
+      ;;
+      help)
+        cmds=( ${${(M)${(f)"$(LC_ALL=C _call_program commands dzil help | sed 's/^ *//' 2>/dev/null)"}:#*: *}/(#b) *(*[^ ]) #- (*)/$match[1]:$match[2]:l})
+        _describe -t commands 'dzil help' cmds && ret=0
+      ;;
+      run)
+        _command_names -e && ret=0
+      ;;
+      *)
+        (( ret )) && _message 'no more arguments'
+      ;;
+    esac
+  ;;
+esac
+
+return ret
+
+
+# ${name:#pattern}
+#   If the pattern matches the value of name, then substitute the empty string; otherwise,  just  sub‐
+#   stitute  the  value of name.  If name is an array the matching array elements are removed (use the
+#   `(M)' flag to remove the non-matched elements).
+
+# ${name/pattern/repl}
+# ${name//pattern/repl}
+#   Replace the longest possible match of pattern in the expansion of parameter name by  string  repl.
+#   The  first form replaces just the first occurrence, the second form all occurrences.  Both pattern
+#   and repl are subject to double-quoted substitution, so that expressions  like  ${name/$opat/$npat}
+#   will  work,  but  note  the  usual rule that pattern characters in $opat are not treated specially
+#   unless either the option GLOB_SUBST is set, or $opat is instead substituted as ${~opat}.
+#
+#   The pattern may begin with a `#', in which case the pattern must match at the start of the string,
+#   or  `%',  in  which case it must match at the end of the string, or `#%' in which case the pattern
+#   must match the entire string.  The repl may be an empty string, in which case the  final  `/'  may
+#   also  be  omitted.   To quote the final `/' in other cases it should be preceded by a single back‐
+#   slash; this is not necessary if the `/' occurs inside a substituted parameter.  Note also that the
+#   `#', `%' and `#% are not active if they occur inside a substituted parameter, even at the start.
+#
+#   The  first  `/'  may be preceded by a `:', in which case the match will only succeed if it matches
+#   the entire word.  Note also the effect of the I and S parameter expansion  flags  below;  however,
+#   the flags M, R, B, E and N are not useful.
+#
+#   For example,
+#
+#          foo="twinkle twinkle little star" sub="t*e" rep="spy"
+#          print ${foo//${~sub}/$rep}
+#          print ${(S)foo//${~sub}/$rep}
+#
+#   Here,  the  `~'  ensures that the text of $sub is treated as a pattern rather than a plain string.
+#   In the first case, the longest match for t*e is substituted and the result is `spy star', while in
+#   the second case, the shortest matches are taken and the result is `spy spy lispy star'.
+
+#  f      Split the result of the expansion at newlines. This is a shorthand for `ps:\n:'.

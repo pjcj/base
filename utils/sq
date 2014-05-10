@@ -1,0 +1,18 @@
+#!/usr/bin/perl -w
+
+# Original author: Paul Johnson
+# Created:         Fri 02 Oct 1998 04:05:55 pm
+
+use strict;
+
+require 5.004;
+
+die "usage: $0 file|directory" if @ARGV < 1;
+my $tar = "/bin/tar";
+$tar = "tar" unless -f $tar;
+
+for (@ARGV) {
+  my $c = "$tar cvf - $_ | pigz -v > $_.tar.gz";
+  print "running $c\n";
+  system($c) == 0 or die "$0: ($c) failed: $?";
+}

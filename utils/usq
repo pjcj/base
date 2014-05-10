@@ -1,0 +1,29 @@
+#!/usr/bin/env perl
+
+# Original author: Paul Johnson
+# Created:         Fri 02 Oct 1998 04:05:55 pm
+
+$^W = 1;
+
+use strict;
+
+require 5.004;
+
+die "usage: $0 file" if @ARGV < 1;
+my $tar = "/bin/tar";
+$tar = "tar" unless -f $tar;
+
+my $zcat = "zcat";
+
+for my $f (@ARGV) {
+  my $t = $0 =~ /lsq/ ? "t" : "x";
+  my $c;
+  if ($f =~ /rar$/) {
+    $c = "unrar $t '$f'";
+  } else {
+    my $d = $f =~ /z$/i ? $zcat : "bzcat";
+    $c = "$d < $f | $tar ${t}vf -";
+  }
+  print "running $c\n";
+  system($c) == 0 or die "$0: ($c) failed: $?";
+}

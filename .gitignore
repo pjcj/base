@@ -1,0 +1,12 @@
+*.org
+*.bak
+*~
+.vim/bundle/
+.vim/.netrwhist
+.notion/default-session--0/cfg_statusd.lua
+.notion/default-session--0/saved_layout.lua
+.notion/default-session--0/saved_queryhist.lua
+.notion/default-session--0/saved_wd.lua
+.notion/default-session--1/
+*.pyo
+*.pyc

@@ -1,0 +1,25 @@
+#!/usr/bin/perl -w
+
+use strict;
+
+my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = localtime;
+
+my $suffix = sprintf "%04d%02d%02d", $year + 1900, $mon + 1, $mday;
+
+for my $file (@ARGV) {
+    if ($file =~ /\.bz2/) {
+        warn "Skipping $file\n";
+        next;
+    }
+
+    my $n = "$file.$suffix";
+
+    unless (rename $file => $n) {
+        warn "Unable to rename $file => $n : $!\n";
+        next;
+    }
+
+    system "bzip2", "-v", $n;
+
+    system "touch", $file;
+}
