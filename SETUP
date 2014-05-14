@@ -5,6 +5,7 @@
 
 ln -s g/base/{dircolours,utils,.abcde.conf,.gitconfig} ~
 ln -s g/base/{.notion,.vimrc,.Xdefaults,.vim,.tmux.conf} ~
+[[ -d ~/.config ]] || mkdir ~/.config
 ln -s ~/g/base/.config/* ~/.config
 ( cd ~ && ln -s g/base/.zshrc.* . )
 
