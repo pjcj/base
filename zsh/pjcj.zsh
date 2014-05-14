@@ -266,8 +266,10 @@ LS_OPTIONS=
 
 zshrc_load_status 'path'
 
-PATH=~/bin:~/g/local_base/utils:~/g/base/utils:~/g/sw/bin:$PATH:~/g/sw/powerline-daemon:~/g/base/powerline/scripts:~/.rvm/bin
+PATH=~/bin:~/g/local_base/utils:~/g/base/utils:~/g/sw/bin:$PATH:/sbin:~/g/sw/powerline-daemon:~/g/base/powerline/scripts:~/.rvm/bin
 
+typeset -U path
+typeset -U manpath
 path=($^path(N))
 manpath=($^manpath(N))
 
