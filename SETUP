@@ -18,3 +18,5 @@ cd ~/.oh-my-zsh/custom
 mkdir plugins
 cd plugins
 git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
+
+sudo gem install tmuxinator

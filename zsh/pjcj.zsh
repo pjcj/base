@@ -266,7 +266,7 @@ LS_OPTIONS=
 
 zshrc_load_status 'path'
 
-PATH=~/bin:~/g/local_base/utils:~/g/base/utils:~/g/sw/bin:$PATH:/sbin:~/g/sw/powerline-daemon:~/g/base/powerline/scripts:~/.rvm/bin
+PATH=~/bin:~/g/local_base/utils:~/g/base/utils:~/g/sw/bin:$PATH:/sbin:~/g/sw/powerline-daemon:~/g/base/powerline/scripts
 
 typeset -U path
 typeset -U manpath
@@ -405,11 +405,6 @@ if [[ -e ~/perl5/perlbrew/etc/bashrc ]] then
     . ~/perl5/perlbrew/etc/perlbrew-completion.bash
     pb() { TEST_JOBS=9 perlbrew "$@" }
     complete -F _perlbrew_compgen pb
-fi
-
-if [[ -e ~/.rvm/scripts/rvm ]] then
-    . ~/.rvm/scripts/rvm
-    . ~/.rvm/gems/ruby-1.9.3-*/gems/tmuxinator-*/completion/tmuxinator.zsh
 fi
 
 # Plugins
