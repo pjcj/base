@@ -385,6 +385,7 @@ zshrc_load_status 'hashed directories'
 hash -d dc=~/g/perl/Devel--Cover
 hash -d am=~/g/perl/AMeasure
 hash -d base=~/g/base
+hash -d local_base=~/g/local_base
 
 zshrc_load_status 'environment'
 
