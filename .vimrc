@@ -115,7 +115,7 @@ set textwidth=80
 set title
 set ttimeoutlen=50
 set ttyfast
-set updatetime=750
+set updatetime=500
 set undodir=~/g/tmp/vim
 set undofile
 set undolevels=1000
