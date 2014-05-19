@@ -19,7 +19,7 @@ endif
 
 " Perl help
 noremap K :!perldoc <cword> <bar><bar> perldoc -f <cword><cr>
-setlocal iskeyword+=:
+" setlocal iskeyword+=:
 
 " Allow gf to work with modules
 set isfname+=:
@@ -29,8 +29,8 @@ set path+=lib
 
 " check perl code with :make
 " setlocal makeprg=perl\ -c\ -Iblib\ -Ilib\ %\ $*
-setlocal errorformat=%f:%l:%m
-setlocal errorformat+=%m\ at\ %f\ line\ %l.
+" setlocal errorformat=%f:%l:%m
+" setlocal errorformat+=%m\ at\ %f\ line\ %l.
 setlocal autowrite
 
 " Adds prove as the make option for .t files
