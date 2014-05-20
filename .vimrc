@@ -67,13 +67,6 @@ set cmdheight=3
 set dictionary=/usr/dict/words
 set directory=>~/g/tmp/vim/
 set encoding=utf-8
-" quickfix for Perl error formats
-" set errorformat=%m\ at\ %f\ line\ %l\.
-" set errorformat+=%m\ at\ %f\ line\ %l\,\ <DATA>:
-" set errorformat=%m\ at\ %f\ line\ %l
-" set errorformat=%f line %l:\ %m,In\ file\ included\ from\ %f:%l:,\^I\^Ifrom\ %f:%l%m,\"%f\"\\,%*[^0-9]%l:\ %m,%f(%l):\ %m
-" set errorformat=%-G%.%#had compilation errors.,%-G%.%#syntax OK,%m at %f line %l.,%+A%.%# at %f line %l\,%.%#,%+C%.%#
-" set errorformat=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 set errorformat=%f:%l:%m
 set expandtab
 set exrc
