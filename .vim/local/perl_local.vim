@@ -31,7 +31,7 @@ set path+=lib
 " setlocal makeprg=perl\ -c\ -Iblib\ -Ilib\ %\ $*
 " setlocal errorformat=%f:%l:%m
 " setlocal errorformat+=%m\ at\ %f\ line\ %l.
-setlocal autowrite
+" setlocal autowrite
 
 " Adds prove as the make option for .t files
 " ':make %' to run prove on the current file. Can pass more options to make.
@@ -70,7 +70,7 @@ setlocal cinkeys-=0#
 setlocal cinwords&
 " add Perl-ish keywords
 setlocal cinwords+=elsif,foreach,sub,unless,until
-setlocal cinoptions&
+" setlocal cinoptions&
 " I don't rememer these OTTOMH; :help cinoptions to learn more
-setlocal cinoptions+=+2s,(1s,u0,m1
+" setlocal cinoptions+=+2s,(1s,u0,m1
 setlocal cindent
