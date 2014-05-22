@@ -266,7 +266,7 @@ LS_OPTIONS=
 
 zshrc_load_status 'path'
 
-PATH=~/bin:~/g/local_base/utils:~/g/base/utils:~/g/sw/bin:$PATH:/sbin:~/g/sw/powerline-daemon:~/g/base/powerline/scripts
+PATH=~/bin:~/g/local_base/utils:~/g/base/utils:~/g/sw/bin:$PATH:/usr/local/sbin:/usr/sbin:/sbin:~/g/sw/powerline-daemon:~/g/base/powerline/scripts
 
 typeset -U path
 typeset -U manpath
