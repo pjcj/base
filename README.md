@@ -5,7 +5,7 @@ It includes config files for:
 
 * [notion](notion.sourceforge.net)
 * Xdefaults, including [urxvt](http://software.schmorp.de/pkg/rxvt-unicode)
-* tmux
+* [tmux](http://tmux.sourceforge.net/)
 * zsh
 * vim
 * powerline
