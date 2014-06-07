@@ -9,6 +9,6 @@ It includes config files for:
 * [zsh](http://www.zsh.org/)
 * [vim](http://www.vim.org/)
 * [powerline](https://github.com/Lokaltog/powerline)
-* git
+* [git](http://www.git-scm.com/)
 
 Colours are Solarized Dark.
