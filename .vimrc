@@ -24,6 +24,7 @@ Plugin 'chrisbra/csv.vim'
 Plugin 'ervandew/supertab'
 Plugin 'godlygeek/tabular'
 Plugin 'gregsexton/gitv'
+Plugin 'itchyny/calendar.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'kshenoy/vim-signature'
 Plugin 'majutsushi/tagbar'
@@ -258,6 +259,9 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_collect_identifiers_from_tags_files           = 1
 let g:ycm_seed_identifiers_with_syntax                  = 1
 let g:ycm_add_preview_to_completeopt                    = 1
+
+let g:calendar_google_calendar = 1
+let g:calendar_google_task     = 1
 
 au FocusLost * silent! wa
 
