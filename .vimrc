@@ -43,6 +43,7 @@ Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'zirrostig/vim-schlepp'
 
 call vundle#end()
 
@@ -263,6 +264,11 @@ let g:ycm_add_preview_to_completeopt                    = 1
 
 let g:calendar_google_calendar = 1
 let g:calendar_google_task     = 1
+
+vmap <unique> k <Plug>SchleppUp
+vmap <unique> j <Plug>SchleppDown
+vmap <unique> h <Plug>SchleppLeft
+vmap <unique> l <Plug>SchleppRight
 
 au FocusLost * silent! wa
 
