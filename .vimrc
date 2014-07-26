@@ -77,7 +77,7 @@ set exrc
 set formatoptions=tcrqnl
 " set grepprg=tcgrep\ -nrq
 set grepprg=git\ grep\ -nw
-set guifont=inconsolata\ \for\ powerline\ 14
+set guifont=inconsolata\ \for\ powerline\ 12
 set history=1000
 set icon
 set incsearch
