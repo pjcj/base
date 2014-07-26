@@ -6,8 +6,8 @@ let s:bg_old   = "#342a2a"
 let s:types = [ "pod", "subroutine", "statement", "branch", "condition", ]
 
 for s:type in s:types
-    exe "highlight cov_" . s:type .       " ctermbg=1 cterm=bold gui=NONE guifg=" . s:fg_cover
-    exe "highlight cov_" . s:type . "_error ctermbg=1 cterm=bold gui=NONE guifg=" . s:fg_error
+    exe "highlight cov_" . s:type .       " ctermbg=0 cterm=bold gui=NONE guifg=" . s:fg_cover
+    exe "highlight cov_" . s:type . "_error ctermbg=0 cterm=bold gui=NONE guifg=" . s:fg_error
 endfor
 exe "highlight SignColumn ctermbg=0 guibg=" . s:bg_valid
 
