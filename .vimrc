@@ -68,6 +68,7 @@ set colorcolumn=80,120
 set complete=.,w,b,u,U,k/usr/dict/words,i,t
 set cmdheight=3
 set dictionary=/usr/dict/words
+set diffopt=filler,vertical
 set directory=>~/g/tmp/vim/
 set encoding=utf-8
 set errorformat=%f:%l:%m
