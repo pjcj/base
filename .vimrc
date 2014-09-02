@@ -428,7 +428,7 @@ function! MyToHtml(line1, line2)
   %s/c00000/dc322f/g  " red    - punctuation
 
   " font
-  %s/monospace/inconsolata/g
+  %s/monospace/inconsolata,monospace/g
 
   redraw  " no hit enter ...
 
