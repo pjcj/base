@@ -425,6 +425,7 @@ function! MyToHtml(line1, line2)
   %s/008000/b58900/g  " yellow - sub
   %s/0000c0/268bd2/g  " blue   - sub name
   %s/804000/cb4b16/g  " orange - vars
+  %s/c00000/dc322f/g  " red    - punctuation
 
   " font
   %s/monospace/inconsolata/g
