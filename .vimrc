@@ -400,6 +400,41 @@ let g:ctrlp_prompt_mappings = {
 
 abbr ,, =>
 
+function! MyToHtml(line1, line2)
+  " make sure to generate in the correct format
+  let old_css = 1
+  if exists('g:html_use_css')
+    let old_css = g:html_use_css
+  endif
+  let g:html_use_css = 0
+
+  " generate and delete unneeded lines
+  exec a:line1.','.a:line2.'TOhtml'
+  %g/<body/normal k$dgg
+
+  " convert body to a table
+  %s/<body\s*\(bgcolor="[^"]*"\)\s*text=\("[^"]*"\)\s*onload='JumpToLine();'>/<table \1 cellPadding=0><tr><td><font color=\2>/
+  %s#</body>\(.\|\n\)*</html>#\='</font></td></tr></table>'#i
+
+  " solarised colours
+  %s/808080/002b36/g  " base03 - background
+  %s/000000/073642/g  " base02 - gutter
+  %s/8080ff/839496/g  " base0  - body text
+  %s/00ff00/93a1a1/g  " base1  - line numbers
+  %s/008000/b58900/g  " yellow - sub
+  %s/0000c0/268bd2/g  " blue   - sub name
+  %s/804000/cb4b16/g  " orange - vars
+
+  " font
+  %s/monospace/inconsolata/g
+
+  redraw  " no hit enter ...
+
+  " restore old setting
+  let g:html_use_css = old_css
+endfunction
+command! -range=% MyToHtml :call MyToHtml(<line1>,<line2>)
+
 let s:localrc = expand($HOME . '/.vimrc.local')
 if filereadable(s:localrc)
     exec 'source ' . s:localrc
