@@ -257,6 +257,7 @@ set background=dark
 " let g:solarized_contrast="high"
 " let g:solarized_visibility="normal"
 colorscheme solarized
+highlight Comment cterm=italic
 highlight clear SignColumn
 set t_Co=256
 " highlight link diffAdded Constant
