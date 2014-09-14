@@ -32,6 +32,7 @@
         whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
         graphviz = "!f() { echo 'digraph git {'; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g'; echo '}'; }; f"
         lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --abbrev-commit --all --date=relative
+        lgm = "!f() { git lg $( git reflog | awk '{print $1}' ); }; f"
         lga = "!f() { git lg $( git fsck --no-reflog | awk '/dangling commit/ {print $3}' ); }; f"
         lgn = "!f() { git log --graph --pretty=format:'%Cred%H%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --date=relative $@ | git name-rev --stdin --name-only; }; f | less"
         vgc = repack -f -a -d --depth=250 --window=250
