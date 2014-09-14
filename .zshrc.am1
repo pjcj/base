@@ -1,0 +1,5 @@
+# TERM=rxvt-unicode-256color
+TZ=Europe/Zurich
+ml=/tmp/ml
+[[ ! -d $ml ]] && mkdir $ml && chmod 777 $ml
+mutt() { DISPLAY= sudo -u admin mutt }
