@@ -19,7 +19,13 @@ mkdir plugins
 cd plugins
 git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
 
+# TODO - do we need tmuxinator now?
 sudo gem install tmuxinator
 
-# pip install --user git+git://github.com/Lokaltog/powerline
-# pip install --upgrade --user git+git://github.com/Lokaltog/powerline
+pip install --user git+git://github.com/Lokaltog/powerline
+pip install --upgrade --user git+git://github.com/Lokaltog/powerline
+
+cd ~
+mkdir -p ~/.tmux/plugins
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+tmux source-file ~/.tmux.conf
