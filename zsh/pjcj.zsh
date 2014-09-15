@@ -266,7 +266,7 @@ LS_OPTIONS=
 
 zshrc_load_status 'path'
 
-PATH=~/bin:~/g/local_base/utils:~/g/base/utils:~/g/sw/bin:$PATH:/usr/local/sbin:/usr/sbin:/sbin:~/g/sw/powerline-daemon:~/g/base/powerline/scripts
+PATH=~/bin:~/g/local_base/utils:~/g/base/utils:~/g/sw/bin:$PATH:/usr/local/sbin:/usr/sbin:/sbin:~/.local/bin
 
 typeset -U path
 typeset -U manpath
@@ -437,9 +437,6 @@ if [[ -r ~/.zshrc.${HOST%%.*} ]]; then
 fi
 
 setopt NO_ksh_glob
-
-# start powerline daemon
-powerline-daemon >& /dev/null
 
 # Clear up after status display
 
