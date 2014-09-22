@@ -359,6 +359,10 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_reuse_window = 'quickfix'
 let g:ctrlp_working_path_mode = 'ra'
 " let g:ctrlp_root_markers = ['.git']
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](tmp|blib|cover_db|pdldb)$',
+  \ 'file': '\v\nytprof$',
+  \ }
 let g:ctrlp_extensions = ['tag', 'changes']
 let g:ctrlp_mruf_relative = 1
 let g:ctrlp_use_caching = 0
