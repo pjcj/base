@@ -23,19 +23,22 @@ git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
 sudo gem install tmuxinator
 
 # if necessary
+# either
+# sudo aptitude install python-pip
+# or
 # wget --no-check-certificate https://bootstrap.pypa.io/get-pip.py
 # python get-pip.py
 
-pip install --user git+git://github.com/Lokaltog/powerline
 pip install --upgrade --user git+git://github.com/Lokaltog/powerline
 
 # if necessary
+# sudo aptitude instal libncurses-dev
 # cd ~/g/sw/build
 # wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
 # ./configure --prefix=~/g/sw
 # wget http://downloads.sourceforge.net/tmux/tmux-1.9.tar.gz
-# export LIBEVENT_CFLAGS="-I/home/paul/g/sw/include"
-# export LIBEVENT_LIBS="-L/home/paul/g/sw/lib -Wl,-rpath=/home/paul/g/sw/lib -levent"
+# export LIBEVENT_CFLAGS="-I/home/pjcj/g/sw/include"
+# export LIBEVENT_LIBS="-L/home/pjcj/g/sw/lib -Wl,-rpath=/home/pjcj/g/sw/lib -levent"
 # ./configure --prefix=~/g/sw
 
 cd ~
