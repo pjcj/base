@@ -343,6 +343,9 @@ nnoremap <leader>se :setlocal spell spelllang=en_gb<CR>
 nnoremap <leader>sd :setlocal spell spelllang=de_ch<CR>
 nnoremap <leader>so :set nospell<CR>
 
+" paste
+map <leader>p :set paste!<CR>
+
 cmap w!! w !sudo tee % >/dev/null
 
 let NERDSpaceDelims = 1
