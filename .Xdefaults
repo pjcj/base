@@ -146,7 +146,7 @@ URxvt.matcher.pattern.1:      \\bwww\\.[\\w-]+\\.[\\w./?&@#-=]*[\\w/-]
 
 *background:              S_base03
 *foreground:              S_base0
-! *fading:                  40
+*fading:                  15
 *fadeColor:               S_base03
 *cursorColor:             S_base1
 *pointerColorBackground:  S_base01
