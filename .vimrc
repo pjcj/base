@@ -45,6 +45,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-obsession'
 Plugin 'tpope/vim-surround'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'vim-scripts/YankRing.vim'
 Plugin 'zirrostig/vim-schlepp'
 
 call vundle#end()
@@ -346,14 +347,24 @@ nnoremap <leader>so :set nospell<CR>
 " paste
 map <leader>p :set paste!<CR>
 
+" yankring
+map <leader>m :YRShow<CR>
+let g:yankring_max_history = 1000
+let g:yankring_min_element_length = 2
+let g:yankring_max_element_length = 4194304 " 4M
+let g:yankring_max_display = 70
+let g:yankring_window_height = 25
+let g:yankring_manage_numbered_reg = 1
+let g:yankring_history_dir = '$HOME/.vim'
+
 cmap w!! w !sudo tee % >/dev/null
 
 let NERDSpaceDelims = 1
 map - <Plug>NERDCommenterToggle
 
 " if &term == "rxvt-unicode-256color"
-  " let &t_SI = "\<Esc>[3 q"
-  " let &t_EI = "\<Esc>[0 q"
+    " let &t_SI = "\<Esc>[3 q"
+    " let &t_EI = "\<Esc>[0 q"
 " endif
 
 nnoremap <F11> :silent! write <Bar> CtrlPBuffer<CR>
@@ -363,9 +374,9 @@ let g:ctrlp_reuse_window = 'quickfix'
 let g:ctrlp_working_path_mode = 'ra'
 " let g:ctrlp_root_markers = ['.git']
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](tmp|blib|cover_db|pdldb)$',
-  \ 'file': '\v\nytprof$',
-  \ }
+    \ 'dir':  '\v[\/](tmp|blib|cover_db|pdldb)$',
+    \ 'file': '\v\nytprof$',
+    \ }
 let g:ctrlp_extensions = ['tag', 'changes']
 let g:ctrlp_mruf_relative = 1
 let g:ctrlp_use_caching = 0
@@ -410,38 +421,38 @@ let g:ctrlp_prompt_mappings = {
 abbr ,, =>
 
 function! MyToHtml(line1, line2)
-  " make sure to generate in the correct format
-  let old_css = 1
-  if exists('g:html_use_css')
-    let old_css = g:html_use_css
-  endif
-  let g:html_use_css = 0
+    " make sure to generate in the correct format
+    let old_css = 1
+    if exists('g:html_use_css')
+        let old_css = g:html_use_css
+    endif
+    let g:html_use_css = 0
 
-  " generate and delete unneeded lines
-  exec a:line1.','.a:line2.'TOhtml'
-  %g/<body/normal k$dgg
+    " generate and delete unneeded lines
+    exec a:line1.','.a:line2.'TOhtml'
+    %g/<body/normal k$dgg
 
-  " convert body to a table
-  %s/<body\s*\(bgcolor="[^"]*"\)\s*text=\("[^"]*"\)\s*onload='JumpToLine();'>/<table \1 cellPadding=0><tr><td><font color=\2>/
-  %s#</body>\(.\|\n\)*</html>#\='</font></td></tr></table>'#i
+    " convert body to a table
+    %s/<body\s*\(bgcolor="[^"]*"\)\s*text=\("[^"]*"\)\s*onload='JumpToLine();'>/<table \1 cellPadding=0><tr><td><font color=\2>/
+    %s#</body>\(.\|\n\)*</html>#\='</font></td></tr></table>'#i
 
-  " solarised colours
-  %s/808080/002b36/g  " base03 - background
-  %s/000000/073642/g  " base02 - gutter
-  %s/8080ff/839496/g  " base0  - body text
-  %s/00ff00/93a1a1/g  " base1  - line numbers
-  %s/008000/b58900/g  " yellow - sub
-  %s/0000c0/268bd2/g  " blue   - sub name
-  %s/804000/cb4b16/g  " orange - vars
-  %s/c00000/dc322f/g  " red    - punctuation
+    " solarised colours
+    %s/808080/002b36/g  " base03 - background
+    %s/000000/073642/g  " base02 - gutter
+    %s/8080ff/839496/g  " base0  - body text
+    %s/00ff00/93a1a1/g  " base1  - line numbers
+    %s/008000/b58900/g  " yellow - sub
+    %s/0000c0/268bd2/g  " blue   - sub name
+    %s/804000/cb4b16/g  " orange - vars
+    %s/c00000/dc322f/g  " red    - punctuation
 
-  " font
-  %s/monospace/inconsolata,monospace/g
+    " font
+    %s/monospace/inconsolata,monospace/g
 
-  redraw  " no hit enter ...
+    redraw  " no hit enter ...
 
-  " restore old setting
-  let g:html_use_css = old_css
+    " restore old setting
+    let g:html_use_css = old_css
 endfunction
 command! -range=% MyToHtml :call MyToHtml(<line1>,<line2>)
 
