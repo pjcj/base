@@ -1,0 +1,3 @@
+xrdb -merge .Xdefaults
+urxvt&
+candybar&
