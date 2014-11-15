@@ -36,6 +36,7 @@ Plugin 'pjcj/vim-hl-var'
 Plugin 'saltstack/salt-vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
 Plugin 'sjl/gundo.vim'
 Plugin 'Spaceghost/vim-matchit'
 Plugin 'terryma/vim-multiple-cursors'
@@ -274,6 +275,8 @@ vmap <unique> k <Plug>SchleppUp
 vmap <unique> j <Plug>SchleppDown
 vmap <unique> h <Plug>SchleppLeft
 vmap <unique> l <Plug>SchleppRight
+nnoremap k gk
+nnoremap j gj
 
 au FocusLost * silent! wa
 
@@ -285,12 +288,20 @@ nnoremap <silent> <F2> :TagbarToggle<CR>
 nmap <F3> 
 nnoremap <F4> :execute "tjump " . expand("<cword>")<CR>
 nnoremap <S-F4> :tnext<CR>
+map [26~ <S-F4>
 nnoremap <M-F4> :tprev<CR>
+map OS <M-F4>
 nnoremap <F5> :execute "silent make" <Bar> botright copen<CR><C-L>
-nnoremap <F6> :cp<CR>
-nnoremap <F7> :cn<CR>
+nnoremap <S-F5> :w<CR>:SyntasticCheck<CR>:ll<CR>
+map [28~ <S-F5>
+nnoremap <F6> :cprevious<CR>
+nnoremap <S-F6> :lprevious<CR>
+map [29~ <S-F6>
+nnoremap <F7> :lnext<CR>:cnext<CR>
+nnoremap <S-F7> :lnext<CR>
+map [31~ <S-F7>
 nnoremap <F8> :execute "silent grep! " . expand("<cword>") <Bar> botright copen<CR><C-L>
-nnoremap <F9> :cclose<CR>
+nnoremap <F9> :cclose<Bar>:lclose<CR>
 nnoremap <silent> <F10> w
 nnoremap <Home> 1G
 nnoremap <End> Gz-
@@ -300,7 +311,7 @@ nnoremap <Insert> [[(z<CR>]]
 nnoremap <Del> j]](z<CR>]]
 nnoremap <F12> 
 
-imap <F2> <CR>sub {<CR>my $self = shift;<CR>my () = @_;<CR>}<ESC>%hi 
+imap <F2> sub {<CR>my $self = shift;<CR>my () = @_;<CR>}<ESC>%hi 
 imap <F3> $self->{}<ESC>i
 imap <F4> $self-><ESC>a
 
@@ -357,6 +368,17 @@ let g:yankring_max_display = 500
 let g:yankring_window_height = 25
 let g:yankring_manage_numbered_reg = 1
 let g:yankring_history_dir = '$HOME/.vim'
+
+" syntastic
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = { "mode": "passive",
+    \ "active_filetypes": [],
+    \ "passive_filetypes": [] }
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_perl_checkers = ["perl"]
+let g:syntastic_enable_perl_checker = 1
+highlight SyntasticErrorSign ctermbg=0 ctermfg=Red cterm=bold
 
 cmap w!! w !sudo tee % >/dev/null
 
