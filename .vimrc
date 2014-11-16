@@ -378,7 +378,9 @@ let g:syntastic_mode_map = { "mode": "passive",
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_perl_checkers = ["perl"]
 let g:syntastic_enable_perl_checker = 1
-highlight SyntasticErrorSign ctermbg=0 ctermfg=Red cterm=bold
+let g:syntastic_shell_checkers = ["shellcheck"]
+highlight SyntasticErrorSign   ctermbg=0 ctermfg=1 cterm=bold
+highlight SyntasticWarningSign ctermbg=0 ctermfg=5 cterm=bold
 
 cmap w!! w !sudo tee % >/dev/null
 
