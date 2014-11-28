@@ -297,7 +297,7 @@ map [28~ <S-F5>
 nnoremap <F6> :cprevious<CR>
 nnoremap <S-F6> :lprevious<CR>
 map [29~ <S-F6>
-nnoremap <F7> :lnext<CR>:cnext<CR>
+nnoremap <F7> :cnext<CR>
 nnoremap <S-F7> :lnext<CR>
 map [31~ <S-F7>
 nnoremap <F8> :execute "silent grep! " . expand("<cword>") <Bar> botright copen<CR><C-L>
