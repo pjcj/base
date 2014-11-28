@@ -290,7 +290,7 @@ nnoremap <F4> :execute "tjump " . expand("<cword>")<CR>
 nnoremap <S-F4> :tnext<CR>
 map [26~ <S-F4>
 nnoremap <M-F4> :tprev<CR>
-map OS <M-F4>
+" map OS <M-F4>
 nnoremap <F5> :execute "silent make" <Bar> botright copen<CR><C-L>
 nnoremap <S-F5> :w<CR>:SyntasticCheck<CR>:ll<CR>
 map [28~ <S-F5>
