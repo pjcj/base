@@ -363,7 +363,7 @@ map <leader>p :set paste!<CR>
 map <leader>m :YRShow<CR>
 let g:yankring_max_history = 1000
 let g:yankring_min_element_length = 1
-let g:yankring_max_element_length = 4194304 " 4M
+let g:yankring_max_element_length = 40000 " 40K
 let g:yankring_max_display = 500
 let g:yankring_window_height = 25
 let g:yankring_manage_numbered_reg = 1
