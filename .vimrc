@@ -233,6 +233,7 @@ let g:tagbar_singleclick      = 1
 let g:tagbar_autoshowtag      = 1
 
 autocmd BufReadPost fugitive://* set bufhidden=delete
+autocmd QuickFixCmdPost *grep* cwindow
 
 augroup gitgutter
     autocmd BufEnter * call GitGutter()
