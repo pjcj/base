@@ -265,6 +265,12 @@ nmap <silent> abc6 <Plug>JumpDiffCharNextEnd
 let g:calendar_google_calendar = 1
 let g:calendar_google_task     = 1
 
+let g:vim_search_pulse_disable_auto_mappings = 1
+nmap n n<Plug>Pulse
+nmap N N<Plug>Pulse
+nmap * *<Plug>Pulse``
+cmap <enter> <Plug>PulseFirst
+
 vmap <unique> k <Plug>SchleppUp
 vmap <unique> j <Plug>SchleppDown
 vmap <unique> h <Plug>SchleppLeft
