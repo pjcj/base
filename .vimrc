@@ -1,62 +1,44 @@
 filetype off
 
-" http://erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
-let iCanHazVundle=1
-let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
-if !filereadable(vundle_readme)
-    echo "Installing Vundle.."
-    echo ""
-    silent !mkdir -p ~/.vim/bundle
-    silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-    let iCanHazVundle=0
-endif
+call plug#begin('~/.vim/plugged')
 
-set runtimepath+=~/.vim/bundle/vundle
-call vundle#begin()
+Plug 'airblade/vim-gitgutter'
+Plug 'akracun/vitality.vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'bling/vim-airline'
+Plug 'chrisbra/csv.vim'
+Plug 'ervandew/supertab'
+Plug 'godlygeek/tabular'
+Plug 'gregsexton/gitv'
+Plug 'honza/dockerfile.vim'
+Plug 'inside/vim-search-pulse'
+Plug 'itchyny/calendar.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'kshenoy/vim-signature'
+Plug 'majutsushi/tagbar'
+Plug 'msanders/snipmate.vim'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'pjcj/vim-hl-var'
+Plug 'saltstack/salt-vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'sjl/gundo.vim'
+Plug 'Spaceghost/vim-matchit'
+Plug 'stefandtw/quickfix-reflector.vim'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+Plug 'vim-scripts/diffchar.vim'
+Plug 'vim-scripts/YankRing.vim'
+Plug 'zirrostig/vim-schlepp'
 
-Plugin 'gmarik/Vundle.vim'
-
-Plugin 'airblade/vim-gitgutter'
-Plugin 'akracun/vitality.vim'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'bling/vim-airline'
-Plugin 'chrisbra/csv.vim'
-Plugin 'ervandew/supertab'
-Plugin 'godlygeek/tabular'
-Plugin 'gregsexton/gitv'
-Plugin 'honza/dockerfile.vim'
-Plugin 'inside/vim-search-pulse'
-Plugin 'itchyny/calendar.vim'
-Plugin 'kien/ctrlp.vim'
-Plugin 'kshenoy/vim-signature'
-Plugin 'majutsushi/tagbar'
-Plugin 'msanders/snipmate.vim'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'pjcj/vim-hl-var'
-Plugin 'saltstack/salt-vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'sjl/gundo.vim'
-Plugin 'Spaceghost/vim-matchit'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-eunuch'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-obsession'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'vim-scripts/YankRing.vim'
-Plugin 'zirrostig/vim-schlepp'
-
-call vundle#end()
-
-if iCanHazVundle == 0
-    echo "Installing Bundles, please ignore key map error messages"
-    echo ""
-    :PluginInstall
-endif
+call plug#end()
 
 filetype plugin indent on
 
@@ -269,6 +251,14 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_collect_identifiers_from_tags_files           = 1
 let g:ycm_seed_identifiers_with_syntax                  = 1
 let g:ycm_add_preview_to_completeopt                    = 1
+
+" diffchar sets defaults if these aren't set
+nmap <silent> abc1 <Plug>ToggleDiffCharAllLines
+nmap <silent> abc2 <Plug>ToggleDiffCharCurrentLine
+nmap <silent> abc3 <Plug>JumpDiffCharPrevStart
+nmap <silent> abc4 <Plug>JumpDiffCharNextStart
+nmap <silent> abc5 <Plug>JumpDiffCharPrevEnd
+nmap <silent> abc6 <Plug>JumpDiffCharNextEnd
 
 let g:calendar_google_calendar = 1
 let g:calendar_google_task     = 1
