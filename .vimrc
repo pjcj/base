@@ -184,6 +184,8 @@ au BufRead *tmp/ml/mutt-*            setlocal tw=72 spell spelllang=en_gb
 au Filetype perl source ~/.vim/local/perl_local.vim
 au Filetype gitcommit setlocal colorcolumn=50,80
 
+autocmd InsertLeave * if expand('%') != '' | update | endif
+
 " closetag plugin
 " au Filetype html,xml,xsl source ~/.vim/plugin/closetag.vim
 au FileType xhtml,xml,html,tt2html so ~/.vim/plugin/html_autoclosetag.vim
