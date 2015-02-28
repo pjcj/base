@@ -23,6 +23,7 @@ Plug 'saltstack/salt-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
+Plug 'Shougo/neocomplete.vim'
 Plug 'sjl/gundo.vim'
 Plug 'Spaceghost/vim-matchit'
 Plug 'stefandtw/quickfix-reflector.vim'
@@ -33,7 +34,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 Plug 'vim-scripts/diffchar.vim'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'zirrostig/vim-schlepp'
@@ -242,17 +243,24 @@ let g:vitality_tumx_can_focus = 1
 
 let g:csv_autocmd_arrange = 1
 
-let g:ycm_min_num_of_chars_for_completion               = 1
-let g:ycm_min_num_identifier_candidate_chars            = 2
-let g:ycm_filetype_whitelist                            = { '*': 1 }
-let g:ycm_filetype_blacklist                            = { }
-let g:ycm_allow_changing_updatetime                     = 0
-let g:ycm_complete_in_strings                           = 1
-let g:ycm_complete_in_comments                          = 1
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
-let g:ycm_collect_identifiers_from_tags_files           = 1
-let g:ycm_seed_identifiers_with_syntax                  = 1
-let g:ycm_add_preview_to_completeopt                    = 1
+" let g:ycm_min_num_of_chars_for_completion               = 1
+" let g:ycm_min_num_identifier_candidate_chars            = 2
+" let g:ycm_filetype_whitelist                            = { '*': 1 }
+" let g:ycm_filetype_blacklist                            = { }
+" let g:ycm_allow_changing_updatetime                     = 0
+" let g:ycm_complete_in_strings                           = 1
+" let g:ycm_complete_in_comments                          = 1
+" let g:ycm_collect_identifiers_from_comments_and_strings = 1
+" let g:ycm_collect_identifiers_from_tags_files           = 1
+" let g:ycm_seed_identifiers_with_syntax                  = 1
+" let g:ycm_add_preview_to_completeopt                    = 1
+
+let g:acp_enableAtStartup                           = 0
+let g:neocomplete#enable_at_startup                 = 1
+let g:neocomplete#enable_smart_case                 = 1
+let g:neocomplete#sources#syntax#min_keyword_length = 1
+let g:neocomplete#same_filetypes                    = {}
+let g:neocomplete#same_filetypes._                  = '_'
 
 " diffchar sets defaults if these aren't set
 nmap <silent> abc1 <Plug>ToggleDiffCharAllLines
