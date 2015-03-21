@@ -38,7 +38,7 @@ Plug 'vim-scripts/diffchar.vim'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'zirrostig/vim-schlepp'
 
-if has ("nvim")
+if has ("nvim") || !has ("if_lua")
     Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
     let g:ycm_min_num_of_chars_for_completion               = 1
     let g:ycm_min_num_identifier_candidate_chars            = 2
