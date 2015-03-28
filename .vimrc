@@ -116,6 +116,7 @@ set showmatch
 set showmode
 set nosmartindent
 set nosmarttab
+set shiftround
 set softtabstop=0
 set suffixes=.d,.e,.o,.org,.bak,~
 set tabstop=8
