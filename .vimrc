@@ -199,7 +199,6 @@ function! Setup_indent_guides()
 endfunction
 autocmd VimEnter,Colorscheme * call Setup_indent_guides()
 
-" set rtp+=~/g/base/powerline/powerline/bindings/vim
 let g:airline_powerline_fonts = 1
 
 au BufNewFile,BufReadPost template/* set ft=tt2html
