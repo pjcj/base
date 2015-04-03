@@ -1,34 +1,33 @@
 {
-    "default_module": "powerline.segments.common",
     "segments": {
         "right": [
             {
-                "function": "uptime",
+                "function": "powerline.segments.common.sys.uptime",
                 "priority": 50,
                 "args": {"shorten_len": 1}
             },
             {
-                "function": "network_load",
+                "function": "powerline.segments.common.sys.network_load",
                 "priority": 50,
                 "divider_highlight_group": "background:divider"
             },
             {
-                "function": "system_load",
+                "function": "powerline.segments.common.sys.system_load",
                 "priority": 50,
                 "divider_highlight_group": "background:divider"
             },
             {
-                "function": "date",
+                "function": "powerline.segments.common.time.date",
                 "args": {"format": "%a %-d %b"}
             },
             {
-                "function": "date",
+                "function": "powerline.segments.common.time.date",
                 "args": {"format": "%H:%M"},
                 "highlight_group": ["time", "date"],
                 "divider_highlight_group": "time:divider"
             },
             {
-                "function": "hostname",
+                "function": "powerline.segments.common.net.hostname",
                 "args": {"exclude_domain": true}
             }
         ]
