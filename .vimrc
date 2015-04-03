@@ -65,6 +65,10 @@ endif
 
 call plug#end()
 
+if has ("nvim")
+    tnoremap <Esc> <C-\><C-n>
+endif
+
 filetype plugin indent on
 
 set autoindent
