@@ -7,7 +7,7 @@
                 "args": {"shorten_len": 1}
             },
             {
-                "function": "powerline.segments.common.sys.network_load",
+                "function": "powerline.segments.common.net.network_load",
                 "priority": 50,
                 "divider_highlight_group": "background:divider"
             },
