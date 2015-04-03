@@ -19,8 +19,13 @@ mkdir plugins
 cd plugins
 git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
 
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+exit
+
 # TODO - do we need tmuxinator now?
-sudo gem install tmuxinator
+# sudo gem install tmuxinator
 
 # if necessary
 # either
@@ -32,7 +37,7 @@ sudo gem install tmuxinator
 pip install --upgrade --user git+git://github.com/Lokaltog/powerline
 
 # if necessary
-# sudo aptitude instal libncurses-dev
+# sudo aptitude install libncurses-dev
 # cd ~/g/sw/build
 # wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
 # ./configure --prefix=~/g/sw
@@ -45,6 +50,3 @@ cd ~
 mkdir -p ~/.tmux/plugins
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 tmux source-file ~/.tmux.conf
-
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
