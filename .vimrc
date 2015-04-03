@@ -181,16 +181,14 @@ function! Setup_indent_guides()
         let g:indent_guides_guide_size  = 0
         let g:indent_guides_auto_colors = 0
         hi IndentGuidesEven  ctermbg=black
-        echo "small"
-        echo &shiftwidth
+        " echo "small: " &shiftwidth
     else
         let g:indent_guides_guide_size  = 1
         let g:indent_guides_start_level = 2
         let g:indent_guides_auto_colors = 0
         hi IndentGuidesOdd  ctermbg=black
         hi IndentGuidesEven ctermbg=black
-        echo "big"
-        echo &shiftwidth
+        " echo "big: " &shiftwidth
     endif
 endfunction
 autocmd VimEnter,Colorscheme * call Setup_indent_guides()
