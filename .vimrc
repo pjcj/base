@@ -38,12 +38,13 @@ Plug 'vim-scripts/diffchar.vim'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'zirrostig/vim-schlepp'
 
-if has ("nvim") || !has ("if_lua")
+if has ("nvim") || !has ("lua")
+    " echo "YCM"
     Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
     let g:ycm_min_num_of_chars_for_completion               = 1
     let g:ycm_min_num_identifier_candidate_chars            = 2
     let g:ycm_filetype_whitelist                            = { '*': 1 }
-    let g:ycm_filetype_blacklist                            = { }
+    let g:ycm_filetype_blacklist                            = {}
     let g:ycm_allow_changing_updatetime                     = 0
     let g:ycm_complete_in_strings                           = 1
     let g:ycm_complete_in_comments                          = 1
@@ -54,13 +55,14 @@ if has ("nvim") || !has ("if_lua")
     let g:ycm_auto_trigger                                  = 1
     let g:ycm_cache_omnifunc                                = 0
 else
+    " echo "neocomplete"
     Plug 'Shougo/neocomplete.vim'
-    let g:acp_enableAtStartup                           = 0
-    let g:neocomplete#enable_at_startup                 = 1
-    let g:neocomplete#enable_smart_case                 = 1
-    let g:neocomplete#sources#syntax#min_keyword_length = 1
-    let g:neocomplete#same_filetypes                    = {}
-    let g:neocomplete#same_filetypes._                  = '_'
+    let g:acp_enableAtStartup                               = 0
+    let g:neocomplete#enable_at_startup                     = 1
+    let g:neocomplete#enable_smart_case                     = 1
+    let g:neocomplete#sources#syntax#min_keyword_length     = 1
+    let g:neocomplete#same_filetypes                        = {}
+    let g:neocomplete#same_filetypes._                      = '_'
 endif
 
 call plug#end()
