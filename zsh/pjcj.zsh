@@ -300,6 +300,12 @@ unalias pu
 
 zshrc_load_status 'functions'
 
+if which nvim >&/dev/null; then
+    export EDITOR=nvim
+else
+    export EDITOR=vim
+fi
+
 c()
 {
     local DIR="$1:h"
@@ -332,7 +338,7 @@ gc()     { git commit -v "$@" }
 gd()     { git diff "$@" }
 gf()     { git fetch "$@" }
 gg()     { git grep -n "$@" }
-ggv()    { git grep -Ovim "$@" }
+ggv()    { git grep -O$EDITOR"$@" }
 gl()     { git lg "$@" }
 go()     { git co "$@" }
 gs()     { git st "$@" }
@@ -352,13 +358,13 @@ uu()     { uuencode "$@" "$@" | mailx -s "$@" paul@pjcj.net }
 v()
 {
     if test $# != 1 -o -r "$1"; then
-        command vim "${@}"
+        command $EDITOR "${@}"
     else
         local args
         args=(${(s.:.)1})
         [[ $#args == 2 && $args[2] == <-> ]] \
-            && command vim "$args[1]" +$args[2] \
-            || command vim "$args[1]"
+            && command $EDITOR "$args[1]" +$args[2] \
+            || command $EDITOR "$args[1]"
     fi
 }
 wh()     { . uwh "$@" }
@@ -389,7 +395,6 @@ hash -d local_base=~/g/local_base
 
 zshrc_load_status 'environment'
 
-export EDITOR=vim
 export LANG=en_GB.UTF-8
 export LESSOPEN="|lesspipe.sh %s"
 export LESS=-RM
@@ -399,7 +404,7 @@ export TERMINFO=~/.terminfo
 export TOP="-I all"
 export VISUAL=$EDITOR
 
-[[ ! -d ~/g/tmp/vim ]] && mkdir ~/g/tmp/vim
+[[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim
 
 if [[ -e ~/perl5/perlbrew/etc/bashrc ]] then
     . ~/perl5/perlbrew/etc/bashrc
