@@ -177,6 +177,8 @@ compinit -u
 zmodload -i zsh/complist
 autoload -U zargs
 
+zstyle ':completion:*' show-ambiguity true
+
 # Local completion
 
 compdef _which wh
