@@ -13,15 +13,15 @@ die "usage: $0 file" if @ARGV < 1;
 my $tar = "/bin/tar";
 $tar = "tar" unless -f $tar;
 
-my $zcat = "zcat";
-
 for my $f (@ARGV) {
   my $t = $0 =~ /lsq/ ? "t" : "x";
   my $c;
   if ($f =~ /rar$/) {
     $c = "unrar $t '$f'";
   } else {
-    my $d = $f =~ /z$/i ? $zcat : "bzcat";
+    my $d = $f =~ /bz2$/i ? "bzcat"
+          : $f =~ /xz$/i  ? "xzcat"
+          :                 "zcat";
     $c = "$d < $f | $tar ${t}vf -";
   }
   print "running $c\n";
