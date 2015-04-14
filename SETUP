@@ -51,3 +51,16 @@ cd ~
 mkdir -p ~/.tmux/plugins
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 tmux source-file ~/.tmux.conf
+
+aptitude install libxcb-util0-dev libxcb-keysyms1-dev libxcb-xinerama0-dev \
+                 libxcb-randr0-dev libxcb-icccm4-dev libxcb-ewmh1-dev
+git clone https://github.com/baskerville/sxhkd.git
+make install PREFIX=~/g/sw
+git clone https://github.com/baskerville/bspwm.git
+make install PREFIX=~/g/sw
+
+git clone  https://github.com/Lokaltog/candybar.git
+aptitude install libgtk-3-dev libgtk-3-0 webkit-image-gtk libwebkitgtk-3.0-dev \
+                 libdbusmenu-gtk3-dev libjansson-dev
+./waf configure --prefix=~/g/sw
+./waf install --prefix=~/g/sw
