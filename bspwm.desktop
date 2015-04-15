@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=bspwm
-Comment=This session logs you into Ebspwn
+Comment=This session logs you into bspwn
 Exec=bspwm-session
 Icon=
 Type=Application
