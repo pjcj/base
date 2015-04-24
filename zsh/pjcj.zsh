@@ -338,6 +338,7 @@ ddl()    { ds /{dl,music}*/**/*(#i)"$@"*(N) }
 dh()     { d --color "$@" | head }
 g()      { git "$@" }
 gb()     { git branch "$@" }
+gbc()    { git branch | sed -n -e "/^\*/ p " | cut -c 3-99 }
 gc()     { git commit -v "$@" }
 gd()     { git diff "$@" }
 gf()     { git fetch "$@" }
