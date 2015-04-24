@@ -191,6 +191,8 @@ compdef _git   gvd=git-diff
 compdef _git   gf=git-fetch
 compdef _git   gg=git-grep
 compdef _git   gl=git-log
+compdef _git   gls=git-log
+compdef _git   glsa=git-log
 compdef _git   go=git-checkout
 compdef _git   gs=git-status
 compdef _git   gw=git-wtf
@@ -341,7 +343,9 @@ gd()     { git diff "$@" }
 gf()     { git fetch "$@" }
 gg()     { git grep -n "$@" }
 ggv()    { git grep -O$EDITOR"$@" }
-gl()     { git lg "$@" }
+gl()     { git lg --all "$@" }
+gls()    { git lg --simplify-by-decoration "$@" }
+glsa()   { git lg --all --simplify-by-decoration "$@" }
 go()     { git co "$@" }
 gs()     { git st "$@" }
 gw()     { git wtf -A "$@" }
