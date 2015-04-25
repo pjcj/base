@@ -29,6 +29,7 @@
         ci = commit
         co = checkout
         br = branch
+        bc = branch-current
         bfd = branch-full-delete
         alias = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
         lc = log ORIG_HEAD.. --stat --no-merges
