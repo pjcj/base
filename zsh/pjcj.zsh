@@ -211,6 +211,12 @@ _git-origin-branch-move() {
 zstyle ':completion:*:*:git:*' user-commands \
   origin-branch-move:'move branch to its origin'
 
+_git-fpush() {
+  __git_branch_names
+}
+zstyle ':completion:*:*:git:*' user-commands \
+  fpush:'force push even when the remote forbids it'
+
 # ftp
 
 zshrc_load_status 'ftp'
