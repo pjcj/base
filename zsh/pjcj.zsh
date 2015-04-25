@@ -354,6 +354,7 @@ gb()     { git branch "$@" }
 gbc()    { git branch | sed -n -e "/^\*/ p " | cut -c 3-99 }
 gc()     { git commit -v "$@" }
 gd()     { git diff "$@" }
+gdw()    { git diffwords "$@" }
 gf()     { git fetch "$@" }
 gg()     { git grep -n "$@" }
 ggv()    { git grep -O$EDITOR"$@" }
