@@ -199,6 +199,18 @@ compdef _git   gs=git-status
 compdef _git   gw=git-wtf
 compdef _dzil  z=dzil
 
+_git-branch-full-delete() {
+  __git_branch_names
+}
+zstyle ':completion:*:*:git:*' user-commands \
+  branch-full-delete:'delete local and remote branches'
+
+_git-origin-branch-move() {
+  __git_branch_names
+}
+zstyle ':completion:*:*:git:*' user-commands \
+  origin-branch-move:'move branch to its origin'
+
 # ftp
 
 zshrc_load_status 'ftp'
