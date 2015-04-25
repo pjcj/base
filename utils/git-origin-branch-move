@@ -1,0 +1,6 @@
+#!/bin/sh
+
+branch=$1
+test -z $branch && echo "branch required" 1>&2 && exit 1
+
+git branch -f $branch origin/$branch
