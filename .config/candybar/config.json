@@ -1,52 +1,43 @@
 {
-	"height": 24,
-	"position": "bottom",
-	"monitor": 0,
-	"theme": {
-		"uri": "file:////home/pjcj/g/sw/share/candybar/theme-default/index.html",
-		"config": {}
-	},
-	"widgets": [
-		{
-			"module": "desktops",
-			"config": {}
-		},
-		{
-			"module": "window_title",
-			"config": {}
-		},
-		{
-			"module": "now_playing_mpd",
-			"config": {}
-		},
-		{
-			"module": "volume",
-			"config": {}
-		},
-		{
-			"module": "weather",
-			"config": { "location": "Zurich, Switzerland" }
-		},
-		{
-			"module": "external_ip",
-			"config": {}
-		},
-		{
-			"module": "battery",
-			"config": {}
-		},
-		{
-			"module": "email_imap",
-			"config": {
-                            "address": "imaps://mail.ameasure.com:993/new",
-                            "ssl_verify": false,
-                            "username": "paul@ameasure.com",
-                            "password": "jj11AA22jjWWjj45454545===="
-                        }
-		},
-		{
-			"module": "datetime",
-			"config": {}
-		}
-	]
+        "height": 24,
+        "position": "bottom",
+        "monitor": 0,
+        "theme": {
+                "uri": "file:////home/pjcj/g/sw/share/candybar/theme-default/index.html",
+                "config": {}
+        },
+        "widgets": [
+                {
+                        "module": "desktops",
+                        "config": {}
+                },
+                {
+                        "module": "window_title",
+                        "config": {}
+                },
+                {
+                        "module": "now_playing_mpd",
+                        "config": {}
+                },
+                {
+                        "module": "volume",
+                        "config": {}
+                },
+                {
+                        "module": "weather",
+                        "config": { "location": "Zurich, Switzerland" }
+                },
+                {
+                        "module": "external_ip",
+                        "config": {}
+                },
+                {
+                        "module": "battery",
+                        "config": {}
+                },
+                {
+                        "module": "datetime",
+                        "config": {}
+                }
+        ]
 }
