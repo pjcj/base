@@ -185,7 +185,6 @@ compdef _which wh
 compdef _make  n
 compdef _git   g=git
 compdef _git   gb=git-branch
-compdef _git   gbfd=git-branch
 compdef _git   gc=git-commit
 compdef _git   gd=git-diff
 compdef _git   gvd=git-diff
