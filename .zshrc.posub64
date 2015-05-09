@@ -6,3 +6,10 @@ _dc() {
 compctl -K _dc dc
 
 export DEVEL_COVER_CPUS=4
+
+function _tw() {
+    local expl
+    local -a options
+    eval "_arguments $(command tw -options)"
+}
+compdef _tw tw
