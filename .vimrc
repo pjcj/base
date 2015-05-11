@@ -434,7 +434,7 @@ let g:ctrlp_reuse_window = 'quickfix'
 let g:ctrlp_working_path_mode = 'ra'
 " let g:ctrlp_root_markers = ['.git']
 let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/](tmp|blib|cover_db|pdldb)$',
+    \ 'dir':  '\v[\/](tmp|blib|cover_db|nytprof|pdldb|site)$',
     \ 'file': '\v\nytprof$',
     \ }
 let g:ctrlp_extensions = ['tag', 'changes']
