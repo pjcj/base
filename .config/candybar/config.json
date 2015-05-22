@@ -16,23 +16,11 @@
                         "config": {}
                 },
                 {
-                        "module": "now_playing_mpd",
-                        "config": {}
-                },
-                {
-                        "module": "volume",
-                        "config": {}
-                },
-                {
                         "module": "weather",
                         "config": { "location": "Zurich, Switzerland" }
                 },
                 {
                         "module": "external_ip",
-                        "config": {}
-                },
-                {
-                        "module": "battery",
                         "config": {}
                 },
                 {
