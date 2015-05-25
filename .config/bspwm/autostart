@@ -1,2 +1,5 @@
 xrdb -merge .Xdefaults
+sleep 2
+candybar&
+sleep 2
 urxvt&
