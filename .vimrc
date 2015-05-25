@@ -35,7 +35,8 @@ Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/diffchar.vim'
-Plug 'vim-scripts/YankRing.vim'
+" Plug 'vim-scripts/YankRing.vim'
+" YankRing messes up xp unless min_element_length is 1, in which case it's slow
 Plug 'zirrostig/vim-schlepp'
 
 if has ("nvim") || !has ("lua")
