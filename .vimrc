@@ -9,12 +9,13 @@ Plug 'bling/vim-airline'
 Plug 'c9s/perlomni.vim'
 " Plug 'chrisbra/csv.vim'
 Plug 'ervandew/supertab'
-Plug 'godlygeek/tabular'
+" Plug 'godlygeek/tabular'
 Plug 'gregsexton/gitv'
 Plug 'honza/dockerfile.vim'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/calendar.vim'
 Plug 'jiangmiao/auto-pairs'
+Plug 'junegunn/vim-easy-align'
 Plug 'kien/ctrlp.vim'
 Plug 'kshenoy/vim-signature'
 Plug 'majutsushi/tagbar'
@@ -416,6 +417,9 @@ let g:syntastic_enable_perl_checker = 1
 let g:syntastic_shell_checkers = ["shellcheck"]
 highlight SyntasticErrorSign   ctermbg=0 ctermfg=1 cterm=bold
 highlight SyntasticWarningSign ctermbg=0 ctermfg=5 cterm=bold
+
+vmap <Enter> <Plug>(EasyAlign)
+nmap <Leader>a <Plug>(EasyAlign)
 
 cmap w!! w !sudo tee % >/dev/null
 
