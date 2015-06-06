@@ -7,9 +7,7 @@ Plug 'akracun/vitality.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'bling/vim-airline'
 Plug 'c9s/perlomni.vim'
-" Plug 'chrisbra/csv.vim'
 Plug 'ervandew/supertab'
-" Plug 'godlygeek/tabular'
 Plug 'gregsexton/gitv'
 Plug 'honza/dockerfile.vim'
 Plug 'inside/vim-search-pulse'
@@ -59,12 +57,41 @@ if has ("nvim") || !has ("lua")
 else
     " echo "neocomplete"
     Plug 'Shougo/neocomplete.vim'
-    let g:acp_enableAtStartup                               = 0
-    let g:neocomplete#enable_at_startup                     = 1
-    let g:neocomplete#enable_smart_case                     = 1
-    let g:neocomplete#sources#syntax#min_keyword_length     = 1
-    let g:neocomplete#same_filetypes                        = {}
-    let g:neocomplete#same_filetypes._                      = '_'
+    let g:acp_enableAtStartup                           = 0
+    let g:neocomplete#enable_at_startup                 = 1
+    let g:neocomplete#enable_smart_case                 = 1
+    let g:neocomplete#sources#syntax#min_keyword_length = 1
+    let g:neocomplete#same_filetypes                    = {}
+    let g:neocomplete#same_filetypes._                  = '_'
+    let g:neocomplete#sources                           = {}
+    let g:neocomplete#sources._                         = ['buffer']
+    let g:neocomplete#sources.cpp                       = ['buffer', 'dictionary']
+    let g:neocomplete#keyword_patterns                  = {}
+    let g:neocomplete#keyword_patterns.xml              = '\h\w*'
+    let g:neocomplete#text_mode_filetypes               = {}
+    let g:neocomplete#text_mode_filetypes.xml           = 1
+
+    let g:neocomplete#sources#dictionary#dictionaries = {
+        \ 'default'  : '',
+        \ 'vimshell' : $HOME.'/.vimshell_hist',
+        \ 'scheme'   : $HOME.'/.gosh_completions'
+        \ }
+
+    " Enable heavy omni completion.
+    let g:neocomplete#sources#omni#input_patterns = {}
+    let g:neocomplete#force_omni_input_patterns   = {}
+    autocmd FileType css           setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python        setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
+    " For perlomni.vim setting.
+    " https://github.com/c9s/perlomni.vim
+    let g:neocomplete#sources#omni#input_patterns.perl =
+        \ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+    let g:neocomplete#enable_onmi_fallback = 1
+    let g:neocomplete#fallback_mappings =
+        \ ["\<C-x>\<C-o>", "\<C-x>\<C-n>"]
 endif
 
 call plug#end()
@@ -271,23 +298,6 @@ nnoremap <leader>gp :GitGutterPrevHunk<CR>
 let g:vitality_tumx_can_focus = 1
 
 let g:csv_autocmd_arrange = 1
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
-endif
-if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
-endif
-autocmd FileType css           setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python        setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl =
- \ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 
 " diffchar sets defaults if these aren't set
 nmap <silent> abc1 <Plug>ToggleDiffCharAllLines
