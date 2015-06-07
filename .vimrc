@@ -276,6 +276,7 @@ let g:tagbar_autoshowtag      = 1
 
 autocmd BufReadPost fugitive://* set bufhidden=delete
 autocmd QuickFixCmdPost *grep* cwindow
+nnoremap <leader>gg :Gcommit -v<CR>
 
 augroup gitgutter
     autocmd BufEnter * call GitGutter()
