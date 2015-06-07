@@ -280,20 +280,23 @@ autocmd QuickFixCmdPost *grep* cwindow
 augroup gitgutter
     autocmd BufEnter * call GitGutter()
 augroup END
-highlight GitGutterAdd              ctermbg=black
-highlight GitGutterChange           ctermbg=black
-highlight GitGutterDelete           ctermbg=black
-highlight GitGutterChangeDelete     ctermbg=black
-highlight GitGutterAddLine          ctermbg=black
-highlight GitGutterChangeLine       ctermbg=black
-highlight GitGutterDeleteLine       ctermbg=black
-highlight GitGutterChangeDeleteLine ctermbg=black
+highlight link GitGutterAdd DiffAdd
+highlight link GitGutterChange DiffChange
+highlight link GitGutterDelete DiffDelete
+highlight link GitGutterChangeDelete DiffDelete
+highlight link GitGutterAddLine DiffAdd
+highlight link GitGutterChangeLine DiffChange
+highlight link GitGutterDeleteLine DiffDelete
+highlight link GitGutterChangeDeleteLine DiffDelete
 let g:gitgutter_signs           = 1
 let g:gitgutter_highlight_lines = 0
 let g:gitgutter_realtime        = 1
+let g:gitgutter_eager           = 1
 " ]h and [h
-nnoremap <leader>gn :GitGutterNextHunk<CR>
-nnoremap <leader>gp :GitGutterPrevHunk<CR>
+nnoremap <leader>hn :GitGutterNextHunk<CR>
+nnoremap <leader>hp :GitGutterPrevHunk<CR>
+nnoremap <leader>hv :GitGutterPreviewHunk<CR>
+" ,hs: stage, ,hr: revert
 
 let g:vitality_tumx_can_focus = 1
 
