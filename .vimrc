@@ -19,6 +19,7 @@ Plug 'majutsushi/tagbar'
 Plug 'msanders/snipmate.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'pjcj/vim-hl-var'
+Plug 'Raimondi/delimitMate'
 Plug 'saltstack/salt-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
@@ -430,6 +431,12 @@ let g:syntastic_enable_perl_checker = 1
 let g:syntastic_shell_checkers = ["shellcheck"]
 highlight SyntasticErrorSign   ctermbg=0 ctermfg=1 cterm=bold
 highlight SyntasticWarningSign ctermbg=0 ctermfg=5 cterm=bold
+
+" delimitMate
+imap § <C-G>g
+let delimitMate_expand_space         = 1
+let delimitMate_expand_cr            = 2
+let delimitMate_expand_inside_quotes = 1
 
 vmap <Enter> <Plug>(EasyAlign)
 nmap <Leader>a <Plug>(EasyAlign)
