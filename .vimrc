@@ -64,6 +64,7 @@ else
     let g:neocomplete#sources#syntax#min_keyword_length = 1
     let g:neocomplete#same_filetypes                    = {}
     let g:neocomplete#same_filetypes._                  = '_'
+    let g:neocomplete#skip_auto_completion_time         = ''
     let g:neocomplete#sources                           = {}
     let g:neocomplete#sources._                         = ['buffer']
     let g:neocomplete#sources.cpp                       = ['buffer', 'dictionary']
