@@ -94,6 +94,12 @@ else
     let g:neocomplete#enable_onmi_fallback = 1
     let g:neocomplete#fallback_mappings =
         \ ["\<C-x>\<C-o>", "\<C-x>\<C-n>"]
+    function! sqlcomplete#Complete(findstart, base)
+        if a:findstart
+            return -1
+        endif
+        return []
+    endfunc
 endif
 
 call plug#end()
