@@ -368,7 +368,7 @@ nnoremap <Insert> [[(z<CR>]]
 nnoremap <Del> j]](z<CR>]]
 nnoremap <F12> 
 
-imap <F2> sub {<CR>my $self = shift;<CR>my () = @_;<CR>}<ESC>%hi<Space>
+imap <F2> sub {<CR>my $self = shift;<CR>my () = @_;<ESC>kkhi<Space>
 imap <F3> $self->{}<ESC>i
 imap <F4> $self->
 
