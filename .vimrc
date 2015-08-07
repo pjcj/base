@@ -2,19 +2,25 @@ filetype off
 
 call plug#begin()
 
+Plug 'mpendse/unite-search-history'
+Plug 'soh335/unite-perl-module'
+Plug 'lambdalisue/unite-grep-vcs'
+Plug 'yuku-t/unite-git'
 Plug 'airblade/vim-gitgutter'
 Plug 'akracun/vitality.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'bling/vim-airline'
 Plug 'c9s/perlomni.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ervandew/supertab'
 Plug 'gregsexton/gitv'
 Plug 'honza/dockerfile.vim'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/calendar.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'junegunn/vim-easy-align'
-Plug 'kien/ctrlp.vim'
 Plug 'kshenoy/vim-signature'
+Plug 'LeafCage/yankround.vim'
 Plug 'majutsushi/tagbar'
 Plug 'msanders/snipmate.vim'
 Plug 'nathanaelkane/vim-indent-guides'
@@ -24,6 +30,10 @@ Plug 'saltstack/salt-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
+Plug 'sgur/ctrlp-extensions.vim'
+Plug 'Shougo/neomru.vim'
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'sjl/gundo.vim'
 Plug 'Spaceghost/vim-matchit'
 Plug 'stefandtw/quickfix-reflector.vim'
@@ -459,17 +469,20 @@ map - <Plug>NERDCommenterToggle
     " let &t_EI = "\<Esc>[0 q"
 " endif
 
-nnoremap <F11> :silent! write <Bar> CtrlPBuffer<CR>
+" ctrlp
+nnoremap <F11> :silent! write <Bar> CtrlPMixed<CR>
 let g:ctrlp_map = '<F99>'  " Not used
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_reuse_window = 'quickfix'
 let g:ctrlp_working_path_mode = 'ra'
-" let g:ctrlp_root_markers = ['.git']
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/](tmp|blib|cover_db|nytprof|pdldb|site)$',
     \ 'file': '\v\nytprof$',
     \ }
-let g:ctrlp_extensions = ['tag', 'changes']
+let g:ctrlp_extensions = [
+    \ 'mixed', 'menu', 'tag', 'yankring', 'changes', 'cmdline'
+    \ ]
 let g:ctrlp_mruf_relative = 1
 let g:ctrlp_use_caching = 0
 let g:ctrlp_match_window = 'bottom,order:ttb,min:25,max:25,results:25'
@@ -510,6 +523,95 @@ let g:ctrlp_prompt_mappings = {
     \ 'PrtExit()': ['<esc>', '<c-c>', '<c-g>'],
     \ }
 
+" fzf
+command! FZFMru call fzf#run({
+\ 'source':  reverse(s:all_files()),
+\ 'sink':    'edit',
+\ 'options': '-m -x +s',
+\ 'down':    '40%' })
+
+function! s:all_files()
+  return extend(
+  \ filter(copy(v:oldfiles),
+  \        "v:val !~ 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
+  \ map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'))
+endfunction
+
+function! FZFExecute()
+  " Remove trailing new line to make it work with tmux splits
+  let directory = substitute(system('git rev-parse --show-toplevel'), '\n$', '', '')
+  if !v:shell_error
+    call fzf#run({'sink': 'e', 'dir': directory, 'source': 'git ls-files', 'tmux_height': '40%'})
+  else
+    FZF
+  endif
+endfunction
+command! FZFExecute call FZFExecute()
+
+" unite
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+let g:unite_enable_start_insert = 1
+let g:unite_split_rule = "botright"
+let g:unite_data_directory = "~/.unite"
+
+" Shorten the default update date of 500ms
+let g:unite_update_time = 200
+
+let g:unite_source_file_mru_limit = 1000
+let g:unite_cursor_line_highlight = 'TabLineSel'
+
+let g:unite_source_file_mru_filename_format = ':~:.'
+let g:unite_source_file_mru_time_format = ''
+
+" Map space to the prefix for Unite
+nnoremap [unite] <Nop>
+nmap <space> [unite]
+
+" General fuzzy search
+nnoremap <silent> [unite]<space> :<C-u>Unite
+    \ -buffer-name=files buffer file_mru bookmark git_modified git_untracked git_cached<CR>
+
+" Quick registers
+nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
+
+" Quick yank history
+nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<CR>
+
+" Quick perl modules
+nnoremap <silent> [unite]p :<C-u>Unite -buffer-name=perl_modules perl-module/cpan<CR>
+
+" Quick sources
+nnoremap <silent> [unite]s :<C-u>Unite -buffer-name=sources source<CR>
+
+" Quickly switch lcd
+nnoremap <silent> [unite]d
+      \ :<C-u>Unite -buffer-name=change-cwd -default-action=cd directory_mru directory_rec/async<CR>
+
+" Quick file search
+nnoremap <silent> [unite]f :<C-u>Unite -buffer-name=files file_rec/async file/new<CR>
+
+" Quick grep from cwd
+nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep/git<CR>
+
+" Quick help
+nnoremap <silent> [unite]h :<C-u>Unite -buffer-name=help help<CR>
+
+" Quick commands
+nnoremap <silent> [unite]c :<C-u>Unite -buffer-name=commands command<CR>
+
+" Set augroup
+augroup MyAutoCmd
+    autocmd!
+augroup END
+
+" Custom Unite settings
+autocmd MyAutoCmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  nmap <buffer> <ESC> <Plug>(unite_insert_enter)
+  imap <buffer> <ESC> <Plug>(unite_exit)
+endfunction
+
+" abbr
 abbr ,, =>
 
 function! MyToHtml(line1, line2)
