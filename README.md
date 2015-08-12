@@ -14,8 +14,8 @@ It includes config files for:
 Colours are Solarized Dark.
 
 The zsh config uses [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) but
-only for the prompt, but only for the prompt and the cpanm, tmuxinator and
-zsh-syntax-highlighting plugins.
+only for the prompt and the cpanm, tmuxinator and zsh-syntax-highlighting
+plugins.
 
 The vim config uses [Vundle](https://github.com/gmarik/Vundle.vim) and the
 following plugins:
