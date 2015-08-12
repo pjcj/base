@@ -1,0 +1,17 @@
+To update utilities:
+
+$ git fetch
+$ git stash
+$ git rebase
+$ git stash pop
+
+$ v (for vim or nvim)
+:PlugUpgrade
+:PlugClean
+:PlugInstall
+:PlugUpdate
+
+$ pip install --upgrade --user git+git://github.com/Lokaltog/powerline
+
+[tmux]
+<ctrl-A> U all
