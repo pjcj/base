@@ -599,17 +599,31 @@ nnoremap <silent> [unite]h :<C-u>Unite -buffer-name=help help<CR>
 " Quick commands
 nnoremap <silent> [unite]c :<C-u>Unite -buffer-name=commands command<CR>
 
-" Set augroup
-augroup MyAutoCmd
-    autocmd!
-augroup END
-
 " Custom Unite settings
-autocmd MyAutoCmd FileType unite call s:unite_settings()
-function! s:unite_settings()
-  nmap <buffer> <ESC> <Plug>(unite_insert_enter)
-  imap <buffer> <ESC> <Plug>(unite_exit)
+function! s:EscapeUnite()
+    augroup CloseUniteBuffer
+        autocmd!
+        autocmd InsertEnter <buffer>
+            \ let b:close = 0 |
+            \ let g:udt = &updatetime |
+            \ set updatetime=3
+
+        autocmd InsertLeave <buffer>
+            \ let b:close = 1
+
+        autocmd BufLeave,CursorHold <buffer>
+            \ let &updatetime = g:udt |
+            \ unlet g:udt
+
+        autocmd CursorHold <buffer>
+            \ if b:close | close | endif
+    augroup END
 endfunction
+
+augroup EscapeUnite
+    autocmd!
+    autocmd FileType unite call s:EscapeUnite()
+augroup END
 
 " abbr
 abbr ,, =>
