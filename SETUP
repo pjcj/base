@@ -67,4 +67,4 @@ aptitude install libgtk-3-dev libgtk-3-0 webkit-image-gtk libwebkitgtk-3.0-dev \
 ./waf install --prefix=~/g/sw
 
 sudo ln -s ~base/bspwm.desktop /usr/share/xsessions
-ln -s /home/pjcj/g/sw/bin/{bspwm-session,sxhkd,bspwm} /usr/local/bin
+sudo ln -s ~/g/sw/bin/{bspwm-session,sxhkd,bspc,bspwm} /usr/local/bin
