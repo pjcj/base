@@ -15,3 +15,13 @@ $ pip install --upgrade --user git+git://github.com/Lokaltog/powerline
 
 [tmux]
 <ctrl-A> U all
+
+$ cd ~/g/sw/build/sxhkd
+$ git fetch
+$ git rebase
+$ make install PREFIX=~/g/sw
+
+$ cd ~/g/sw/build/bspwm
+$ git fetch
+$ git rebase
+$ make install PREFIX=~/g/sw
