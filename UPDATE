@@ -19,9 +19,11 @@ $ pip install --upgrade --user git+git://github.com/Lokaltog/powerline
 $ cd ~/g/sw/build/sxhkd
 $ git fetch
 $ git rebase
+$ make
 $ make install PREFIX=~/g/sw
 
 $ cd ~/g/sw/build/bspwm
 $ git fetch
 $ git rebase
+$ make
 $ make install PREFIX=~/g/sw
