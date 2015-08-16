@@ -50,7 +50,8 @@ Plug 'vim-scripts/diffchar.vim'
 " YankRing messes up xp unless min_element_length is 1, in which case it's slow
 Plug 'zirrostig/vim-schlepp'
 
-if has ("nvim") || !has ("lua")
+if hostname() =~ "^am1"
+elseif has ("nvim") || !has ("lua")
     " echo "YCM"
     Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
     let g:ycm_min_num_of_chars_for_completion               = 1
