@@ -1,0 +1,40 @@
+#!/usr/bin/env zsh
+
+setopt null_glob  # ignore null globs
+setopt glob_dots  # get .files
+
+folder=$(basename $(pwd) | sed 's/\.//').$(date +"%Y%m%d")
+msgs=$(ls cur new | wc -l)
+msgs=$((msgs-3))
+echo $folder $msgs
+
+n=1
+move () {
+    msg="$1"
+    if [[ "$msg" =~ '^new/' ]] then
+        header="Status:"
+    else
+        header="Status: RO"
+    fi
+    formail -I "$header" < "$msg" >> "$folder" && \
+        rm "$msg"
+    echo -en "\r$n"
+    n=$((n+1))
+}
+
+backup=backup
+mkdir -p $backup
+chmod 755 $backup
+cp -a cur new $backup
+
+for msg in {cur,new}/*; do move "$msg"; done
+echo ""
+
+bzip2 "$folder"
+
+zz=/tmp/zz
+mkdir -p $zz
+chmod 755 $zz
+mv "$folder"* $zz
+echo $zz
+ls -al $zz
