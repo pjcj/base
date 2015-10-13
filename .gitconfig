@@ -60,3 +60,5 @@
         default = current
 [url "git://github.com/"]
         insteadOf = github:
+[rerere]
+	enabled = 1
