@@ -627,6 +627,13 @@ augroup EscapeUnite
     autocmd FileType unite call s:EscapeUnite()
 augroup END
 
+" cursor configuration: blinking upright bar cursor in insert mode,
+" solid block in normal mode, blinking underline in replace mode
+" let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+" let &t_SI = "\<Esc>[5 q"
+" let &t_SR = "\<Esc>[3 q"
+" let &t_EI = "\<Esc>[2 q"
+
 " abbr
 abbr ,, =>
 
