@@ -416,7 +416,7 @@ nnoremap <leader>q gqip
 nnoremap <leader>v V`]
 
 " toggle cursorline and cursorcolumn
-nnoremap <Leader>cl :set cursorline! cursorcolumn!<CR>
+nnoremap <Leader>ccl :set cursorline! cursorcolumn!<CR>
 
 " Devel::Cover coverage information
 nnoremap <Leader>c :source cover_db/coverage.vim<CR>
