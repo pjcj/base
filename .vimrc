@@ -339,7 +339,7 @@ let g:vim_search_pulse_disable_auto_mappings = 1
 nmap n n<Plug>Pulse
 nmap N N<Plug>Pulse
 nmap * *<Plug>Pulse``
-cmap <enter> <Plug>PulseFirst
+" cmap <enter> <Plug>PulseFirst
 
 vmap <unique> k <Plug>SchleppUp
 vmap <unique> j <Plug>SchleppDown
