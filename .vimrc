@@ -31,7 +31,6 @@ Plug 'Raimondi/delimitMate'
 Plug 'saltstack/salt-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/syntastic'
 Plug 'sgur/ctrlp-extensions.vim'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/unite.vim'
@@ -53,6 +52,13 @@ Plug 'vim-scripts/diffchar.vim'
 Plug 'zirrostig/vim-schlepp'
 
 if hostname() =~ "^am1"
+elseif has ("nvim")
+    Plug 'Shougo/deoplete.nvim'
+    let g:deoplete#enable_at_startup = 1
+    let g:deoplete#disable_auto_complete = 0
+    let g:deoplete#auto_completion_start_length = 2
+
+    Plug 'benekastah/neomake'
 elseif has ("nvim") || !has ("lua")
     " echo "YCM"
     Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
@@ -70,6 +76,8 @@ elseif has ("nvim") || !has ("lua")
     let g:ycm_auto_trigger                                  = 1
     let g:ycm_cache_omnifunc                                = 0
 else
+    Plug 'scrooloose/syntastic'
+
     " echo "neocomplete"
     Plug 'Shougo/neocomplete.vim'
     let g:acp_enableAtStartup                           = 0
