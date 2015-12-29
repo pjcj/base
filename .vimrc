@@ -673,7 +673,12 @@ function! MyToHtml(line1, line2)
 endfunction
 command! -range=% MyToHtml :call MyToHtml(<line1>,<line2>)
 
-let s:localrc = expand($HOME . '/.vimrc.local')
+let s:homerc = expand($HOME . '/.vimrc.local')
+if filereadable(s:homerc)
+    exec 'source ' . s:homerc
+endif
+
+let s:localrc = expand('./.vimrc.local')
 if filereadable(s:localrc)
     exec 'source ' . s:localrc
 endif
