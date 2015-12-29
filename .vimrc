@@ -554,7 +554,7 @@ command! FZFExecute call FZFExecute()
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 let g:unite_enable_start_insert = 1
 let g:unite_split_rule = "botright"
-let g:unite_data_directory = "~/.unite"
+let g:unite_data_directory = expand($HOME . '/.unite')
 
 " Shorten the default update date of 500ms
 let g:unite_update_time = 200
