@@ -2,7 +2,7 @@ filetype off
 
 call plug#begin()
 
-Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'                              " ,hn ,hp ,hv ,hs ,hr
 Plug 'akracun/vitality.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'bling/vim-airline'
@@ -21,7 +21,6 @@ Plug 'majutsushi/tagbar'
 Plug 'msanders/snipmate.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'pjcj/vim-hl-var'
-Plug 'Raimondi/delimitMate'
 Plug 'saltstack/salt-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
@@ -36,13 +35,10 @@ Plug 'tpope/vim-abolish'               " :%Subvert/facilit{y,ies}/building{,s}/g
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'vasconcelloslf/vim-interestingwords'
-Plug 'vim-scripts/diffchar.vim'
-" Plug 'vim-scripts/YankRing.vim'
-" YankRing messes up xp unless min_element_length is 1, in which case it's slow
+Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
+Plug 'vasconcelloslf/vim-interestingwords'                           " ,k ,K n N
+Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
 Plug 'zirrostig/vim-schlepp'
 
 Plug 'Shougo/unite.vim'
@@ -50,6 +46,11 @@ Plug 'mpendse/unite-search-history'
 Plug 'soh335/unite-perl-module'
 Plug 'lambdalisue/unite-grep-vcs'
 Plug 'yuku-t/unite-git'
+
+" Plug 'Raimondi/delimitMate'
+" Plug 'tpope/vim-obsession'
+" Plug 'vim-scripts/YankRing.vim'
+" YankRing messes up xp unless min_element_length is 1, in which case it's slow
 
 if hostname() =~ "^am1"
 elseif has ("nvim")
