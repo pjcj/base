@@ -3,51 +3,51 @@ filetype off
 call plug#begin()
 
 Plug 'airblade/vim-gitgutter'                              " ,hn ,hp ,hv ,hs ,hr
-Plug 'akracun/vitality.vim'
+Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 Plug 'altercation/vim-colors-solarized'
 Plug 'bling/vim-airline'
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'ervandew/supertab'
-Plug 'gregsexton/gitv'
+Plug 'gregsexton/gitv'                                                       " =
 Plug 'honza/dockerfile.vim'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/calendar.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-Plug 'junegunn/vim-easy-align'
-Plug 'kshenoy/vim-signature'
-Plug 'LeafCage/yankround.vim'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'majutsushi/tagbar'
-Plug 'msanders/snipmate.vim'
-Plug 'nathanaelkane/vim-indent-guides'
+Plug 'junegunn/vim-easy-align'                                               " =
+Plug 'kshenoy/vim-signature'                               " in the signs column
+Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
+Plug 'majutsushi/tagbar'                                                  " <F2>
+Plug 'nathanaelkane/vim-indent-guides'                           " at 80 and 132
 Plug 'pjcj/vim-hl-var'
-Plug 'saltstack/salt-vim'
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
-Plug 'sgur/ctrlp-extensions.vim'
-Plug 'Shougo/neomru.vim'
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'sjl/gundo.vim'
-Plug 'Spaceghost/vim-matchit'
-Plug 'stefandtw/quickfix-reflector.vim'
-Plug 'terryma/vim-multiple-cursors'
+Plug 'saltstack/salt-vim'                                    " salt highlighting
+Plug 'scrooloose/nerdcommenter'                                              " -
+Plug 'scrooloose/nerdtree'                                                " <F1>
+Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
+Plug 'sjl/gundo.vim'                                                       " ,gu
+Plug 'Spaceghost/vim-matchit'                                                " %
+Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
+Plug 'terryma/vim-multiple-cursors'                                         " ^n
 Plug 'tpope/vim-abolish'               " :%Subvert/facilit{y,ies}/building{,s}/g
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-dispatch'                          " asynchronous build and test
+Plug 'tpope/vim-eunuch'                                          " Unix commands
+Plug 'tpope/vim-fugitive'                                  " :Gdiff :Gstatus ,gg
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
 Plug 'vasconcelloslf/vim-interestingwords'                           " ,k ,K n N
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
-Plug 'zirrostig/vim-schlepp'
+Plug 'zirrostig/vim-schlepp'                               " highlight then hjkl
 
-Plug 'Shougo/unite.vim'
-Plug 'mpendse/unite-search-history'
-Plug 'soh335/unite-perl-module'
+Plug 'Shougo/unite.vim'                                         " <space><space>
 Plug 'lambdalisue/unite-grep-vcs'
+Plug 'LeafCage/yankround.vim'
+Plug 'mpendse/unite-search-history'
+Plug 'Shougo/neomru.vim'                                         " MRU for unite
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
+Plug 'soh335/unite-perl-module'
 Plug 'yuku-t/unite-git'
 
-" Plug 'Raimondi/delimitMate'
+" Plug 'msanders/snipmate.vim'
+" Plug 'Raimondi/delimitMate'         " insert mode quote/bracket autocompletion
 " Plug 'tpope/vim-obsession'
 " Plug 'vim-scripts/YankRing.vim'
 " YankRing messes up xp unless min_element_length is 1, in which case it's slow
