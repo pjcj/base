@@ -2,11 +2,6 @@ filetype off
 
 call plug#begin()
 
-Plug 'mpendse/unite-search-history'
-Plug 'soh335/unite-perl-module'
-Plug 'lambdalisue/unite-grep-vcs'
-Plug 'yuku-t/unite-git'
-
 Plug 'airblade/vim-gitgutter'
 Plug 'akracun/vitality.vim'
 Plug 'altercation/vim-colors-solarized'
@@ -33,7 +28,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'sgur/ctrlp-extensions.vim'
 Plug 'Shougo/neomru.vim'
-Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'sjl/gundo.vim'
 Plug 'Spaceghost/vim-matchit'
@@ -50,6 +44,12 @@ Plug 'vim-scripts/diffchar.vim'
 " Plug 'vim-scripts/YankRing.vim'
 " YankRing messes up xp unless min_element_length is 1, in which case it's slow
 Plug 'zirrostig/vim-schlepp'
+
+Plug 'Shougo/unite.vim'
+Plug 'mpendse/unite-search-history'
+Plug 'soh335/unite-perl-module'
+Plug 'lambdalisue/unite-grep-vcs'
+Plug 'yuku-t/unite-git'
 
 if hostname() =~ "^am1"
 elseif has ("nvim")
@@ -324,7 +324,6 @@ let g:gitgutter_signs           = 1
 let g:gitgutter_highlight_lines = 0
 let g:gitgutter_realtime        = 1
 let g:gitgutter_eager           = 1
-" ]h and [h
 nnoremap <leader>hn :GitGutterNextHunk<CR>
 nnoremap <leader>hp :GitGutterPrevHunk<CR>
 nnoremap <leader>hv :GitGutterPreviewHunk<CR>
