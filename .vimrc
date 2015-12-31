@@ -6,7 +6,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'akracun/vitality.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'bling/vim-airline'
-Plug 'c9s/perlomni.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ervandew/supertab'
 Plug 'gregsexton/gitv'
@@ -102,6 +101,7 @@ else
         \ }
 
     " Enable heavy omni completion.
+    Plug 'c9s/perlomni.vim'
     let g:neocomplete#sources#omni#input_patterns = {}
     let g:neocomplete#force_omni_input_patterns   = {}
     autocmd FileType css           setlocal omnifunc=csscomplete#CompleteCSS
