@@ -140,7 +140,7 @@ set backupcopy=yes,breakhardlink
 set backupdir=~/g/tmp/vim/
 set backupext=.bak
 set nocompatible
-" set clipboard=unnamed  # yanks, deletes and changes go into X clipboard
+set clipboard=unnamedplus  " yanks, deletes and changes go into + clipboard
 set colorcolumn=80,120
 set complete=.,w,b,u,U,k/usr/dict/words,i,t
 set cmdheight=3
