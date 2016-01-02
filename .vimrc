@@ -13,7 +13,7 @@ Plug 'honza/dockerfile.vim'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/calendar.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-Plug 'junegunn/vim-easy-align'                                               " =
+Plug 'junegunn/vim-easy-align'                                     " = ^X<regex>
 Plug 'kshenoy/vim-signature'                               " in the signs column
 Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
 Plug 'majutsushi/tagbar'                                                  " <F2>
