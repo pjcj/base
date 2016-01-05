@@ -409,8 +409,8 @@ function! Tab_or_complete()
 endfunction
 " inoremap <Tab> <C-R>=Tab_or_complete()<CR>
 
-" let g:SuperTabMappingForward  = '<s-tab>'
-" let g:SuperTabMappingBackward = '<tab>'
+let g:SuperTabMappingForward  = '<s-tab>'
+let g:SuperTabMappingBackward = '<tab>'
 
 inoremap # X<BS>#
 cnoremap <C-w> <C-I>
