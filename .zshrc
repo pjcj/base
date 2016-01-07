@@ -180,7 +180,8 @@ compinit -u
 zmodload -i zsh/complist
 autoload -U zargs
 
-zstyle ':completion:*' show-ambiguity true
+zstyle ':completion:*' menu select show-ambiguity true
+zstyle ':completion:*' list-colors ''
 
 # Local completion
 
