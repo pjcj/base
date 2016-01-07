@@ -8,7 +8,19 @@ zshrc_load_status "plug"
 
 source ~/.zplug/zplug
 
-# Options
+zshrc_load_status 'plugins'
+
+# zsh-syntax-highlighting must be loaded after executing compinit command and
+# sourcing other plugins
+zplug "zsh-users/zsh-syntax-highlighting", nice:10
+# zplug "psprint/zsh-cmd-architect"
+
+zplug load
+
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern root)
+# To have paths coloured instead of underlined
+ZSH_HIGHLIGHT_STYLES[path]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[root]='underline'
 
 zshrc_load_status 'setting options'
 
@@ -115,13 +127,7 @@ setopt \
      NO_xtrace \
         zle
 
-# Environment
-
 zshrc_load_status 'setting environment'
-
-# Variables used by zsh
-
-# Function path
 
 fpath=(
     ~/{lib/zsh,.zsh,g/base/zsh}/{functions,scripts}(N)
@@ -130,26 +136,21 @@ fpath=(
 typeset -U fpath
 
 # Ignore these corrections
-
 CORRECT_IGNORE='[._]*'
 
 # Choose word delimiter characters in line editor
-
 WORDCHARS=''
 
 # Save a large history
-
 HISTFILE=~/.zshhistory
 HISTSIZE=100000000
 SAVEHIST=100000000
 
 # Maximum size of completion listing
-
 # Only ask if line would scroll off screen
 LISTMAX=0
 
 # Watching for other users
-
 LOGCHECK=60
 WATCHFMT="[%B%t%b] %B%n%b has %a %B%l%b from %B%M%b"
 
@@ -162,18 +163,12 @@ WATCHFMT="[%B%t%b] %B%n%b has %a %B%l%b from %B%M%b"
 
 KEYTIMEOUT=1
 
-# ls colours
-
-zshrc_load_status 'colours'
+zshrc_load_status 'ls colours'
 if which dircolors >&/dev/null; then
     source =(dircolors -b ~/dircolours)
 fi
 
-# Completions
-
 zshrc_load_status 'completion system'
-
-# New advanced completion system
 
 autoload -U compinit
 compinit -u
@@ -220,17 +215,11 @@ _git-fpush() {
 zstyle ':completion:*:*:git:*' user-commands \
   fpush:'force push even when the remote forbids it'
 
-# ftp
-
 zshrc_load_status 'ftp'
 autoload -U zfinit
 zfinit
 
-# Aliases and functions
-
 zshrc_load_status 'aliases and functions'
-
-# Restarting zsh, reloading .zshrc or functions
 
 restart () {
     exec $SHELL "$@"
@@ -248,8 +237,6 @@ reload () {
     fi
 }
 compdef _functions reload
-
-# Key bindings
 
 zshrc_load_status 'key bindings'
 
@@ -273,8 +260,6 @@ bindkey '^X' history-beginning-search-menu-space-end
 
 bindkey '^O' push-line-or-edit
 bindkey '^P' accept-and-infer-next-history
-
-# Miscellaneous
 
 zshrc_load_status 'miscellaneous'
 
@@ -436,18 +421,7 @@ if [[ -e ~/perl5/perlbrew/etc/bashrc ]] then
     complete -F _perlbrew_compgen pb
 fi
 
-zshrc_load_status 'plugins'
-
-# e.g., zsh-syntax-highlighting must be loaded
-# after executing compinit command and sourcing other plugins
-zplug "zsh-users/zsh-syntax-highlighting", nice:10
-
-zplug load
-
-# ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern root)
-# To have paths coloured instead of underlined
-# ZSH_HIGHLIGHT_STYLES[path]='fg=cyan'
-# ZSH_HIGHLIGHT_STYLES[root]='underline'
+zshrc_load_status 'prompt'
 
 setopt prompt_subst
 autoload -U colors && colors # Enable colors in prompt
@@ -465,12 +439,12 @@ GIT_PROMPT_UNTRACKED="%{$fg[red]%}●%{$reset_color%}"
 GIT_PROMPT_MODIFIED="%{$fg[yellow]%}●%{$reset_color%}"
 GIT_PROMPT_STAGED="%{$fg[green]%}●%{$reset_color%}"
 
-# Show Git branch/tag, or name-rev if on detached head
+# Show Git branch/tag, or name-rev if on detached head.
 parse_git_branch() {
   (git symbolic-ref -q HEAD || git name-rev --name-only --no-undefined --always HEAD) 2> /dev/null
 }
 
-# Show different symbols as appropriate for various Git repository states
+# Show different symbols as appropriate for various Git repository states.
 parse_git_state() {
   # Compose this value via multiple conditional appends.
   local GIT_STATE=""
@@ -512,12 +486,6 @@ perlv () { perl -e '$t = -e "Makefile"; $_ = $t ? `grep "FULLPERL = " Makefile` 
 PROMPT='$(git_prompt_info)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
 RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %T%{$reset_color%}'
 
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[blue]%}("
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
-# ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%})%{$fg[red]%}✗%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%})%{$fg[red]%}*%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
-
 zshrc_load_status 'command-not-found'
 # from command-not-found package
 if [[ -r /etc/zsh_command_not_found ]]; then
@@ -525,7 +493,6 @@ if [[ -r /etc/zsh_command_not_found ]]; then
   . /etc/zsh_command_not_found
 fi
 
-# Specific to hosts
 zshrc_load_status 'local environment'
 
 if [[ -r ~/.zshrc.local ]]; then
