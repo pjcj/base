@@ -22,7 +22,8 @@ move () {
     n=$((n+1))
 }
 
-backup=backup
+backup=/data/mail_backup
+rm -rf $backup
 mkdir -p $backup
 chmod 755 $backup
 cp -a cur new $backup
@@ -32,9 +33,9 @@ echo ""
 
 bzip2 "$folder"
 
-zz=/tmp/zz
+zz=/data/mail_archive
 mkdir -p $zz
 chmod 755 $zz
 mv "$folder"* $zz
 echo $zz
-ls -al $zz
+ls -alh $zz
