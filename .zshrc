@@ -1,7 +1,6 @@
 # Loading status
 
-zshrc_load_status ()
-{
+zshrc_load_status () {
     echo -n "\r.zshrc load: $* ... \e[0K"
 }
 
@@ -328,8 +327,7 @@ else
     export EDITOR=vim
 fi
 
-c()
-{
+c() {
     local DIR="$1:h"
     local STRIP="$1:r"
     local EXT="$1:e"
@@ -380,8 +378,7 @@ tmux()   { command tmux -u2 "$@" }
 tojpg()  { for f ("$@") { echo "$f"; j=`echo $f(:r)`; convert "$f" "$j.jpg" } }
 ud()     { u "$@"; d }
 uu()     { uuencode "$@" "$@" | mailx -s "$@" paul@pjcj.net }
-v()
-{
+v()      {
     if test $# != 1 -o -r "$1"; then
         command $EDITOR "${@}"
     else
