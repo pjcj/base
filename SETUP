@@ -9,16 +9,6 @@ ln -s g/base/{.notion,.vimrc,.Xdefaults,.vim,.nvim,.tmux.conf} ~
 ln -s ~/g/base/.config/* ~/.config
 ( cd ~ && ln -s g/base/.zshrc.* . )
 
-# wget --no-check-certificate http://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
-# ln -s ~/g/base/zsh/pjcj.zsh-theme ~/.oh-my-zsh/themes
-# perl -pi -e 's/robbyrussell/pjcj/' ~/.zshrc
-# perl -pi -e 's/git/colored-man cpanm zsh-syntax-highlighting/' ~/.zshrc
-# echo source ~/g/base/zsh/pjcj.zsh >> ~/.zshrc
-# cd ~/.oh-my-zsh/custom
-# mkdir plugins
-# cd plugins
-# git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
-
 curl -fLo ~/.zplug/zplug --create-dirs https://git.io/zplug
 
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
