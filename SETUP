@@ -7,7 +7,7 @@ ln -s g/base/{dircolours,utils,.abcde.conf,.gitconfig} ~
 ln -s g/base/{.notion,.vimrc,.Xdefaults,.vim,.nvim,.tmux.conf} ~
 [[ -d ~/.config ]] || mkdir ~/.config
 ln -s ~/g/base/.config/* ~/.config
-( cd ~ && ln -s g/base/.zshrc.* . )
+( cd ~ && ln -s g/base/.zshrc* . )
 
 curl -fLo ~/.zplug/zplug --create-dirs https://git.io/zplug
 
