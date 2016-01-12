@@ -14,6 +14,11 @@ zshrc_load_status 'plugins'
 # sourcing other plugins
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
 # zplug "psprint/zsh-cmd-architect"
+# zplug "rimraf/k"
+
+if ! zplug check; then
+    zplug install
+fi
 
 zplug load
 
