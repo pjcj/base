@@ -297,7 +297,6 @@ alias n=make
 alias p="pp|head"
 alias tf="tail -f"
 alias u=popd
-alias ur='fc -e - unrar\ x=rm\ -i unrar\ x'
 
 alias cp="cp -bv --backup=numbered"
 alias mv="mv -bv --backup=numbered"
