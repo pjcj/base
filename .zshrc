@@ -14,7 +14,7 @@ zshrc_load_status 'plugins'
 # sourcing other plugins
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
 # zplug "psprint/zsh-cmd-architect"
-# zplug "rimraf/k"
+zplug "pjcj/k"
 
 if ! zplug check; then
     zplug install
@@ -338,10 +338,18 @@ c() {
     fi
 }
 
+d() {
+    if which k >&/dev/null; then
+        k -h "$@"
+    else
+        f "$@"
+    fi
+}
+
 cd()     { c "$@" && d }
-d()      { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
 ddl()    { ds /{dl,music}*/**/*(#i)"$@"*(N) }
 dh()     { d --color "$@" | head }
+f()      { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
 g()      { git "$@" }
 gb()     { git branch "$@" }
 gc()     { git commit -v "$@" }
@@ -400,6 +408,7 @@ compdef __tmux-sessions tm
 
 zshrc_load_status 'hashed directories'
 
+hash -d g=~/g
 hash -d dc=~/g/perl/Devel--Cover
 hash -d am=~/g/perl/AMeasure
 hash -d base=~/g/base
