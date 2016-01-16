@@ -349,37 +349,7 @@ d() {
     fi
 }
 
-cd()     { c "$@" && d }
-ddl()    { ds /{dl,music}*/**/*(#i)"$@"*(N) }
-dh()     { f --color "$@" | head }
-f()      { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
-g()      { git "$@" }
-gb()     { git branch "$@" }
-gc()     { git commit -v "$@" }
-gd()     { git diff "$@" }
-gdw()    { git diffwords "$@" }
-gf()     { git fetch "$@" }
-gg()     { git grep -n "$@" }
-ggv()    { git grep -O$EDITOR"$@" }
-gl()     { git lg --all "$@" }
-gls()    { git lg --simplify-by-decoration "$@" }
-glsa()   { git lg --all --simplify-by-decoration "$@" }
-go()     { git co "$@" }
-gs()     { git st "$@" }
-gw()     { git wtf -A "$@" }
-hg()     { fc -li 1 | grep "$@" }
-ll()     { f --color "$@" | m -r -X }
-mutt()   { DISPLAY= command mutt }
-mn()     { nroff -man "$@" | m }
-pm()     { pod2man "$@" | mn }
-s()      { gnome-open "$@" }
-t()      { TERM=xterm-color tig --all "$@" }
-tg()     { tcgrep -brun "$@" }
-tmux()   { command tmux -u2 "$@" }
-tojpg()  { for f ("$@") { echo "$f"; j=`echo $f(:r)`; convert "$f" "$j.jpg" } }
-ud()     { u "$@"; d }
-uu()     { uuencode "$@" "$@" | mailx -s "$@" paul@pjcj.net }
-v()      {
+v() {
     if test $# != 1 -o -r "$1"; then
         command $EDITOR "${@}"
     else
@@ -390,12 +360,44 @@ v()      {
             || command $EDITOR "$args[1]"
     fi
 }
-wh()     { . uwh "$@" }
-z()      { dzil "$@" }
-zb()     { perl Makefile.PL; make clean; perl Makefile.PL; dzil build "$@" }
-zt()     { perl Makefile.PL; make clean; perl Makefile.PL; dzil test "$@" }
 
+cd()      { c "$@" && d }
+ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
+dh()      { f --color "$@" | head }
+f()       { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
+g()       { git "$@" }
+gb()      { git branch "$@" }
+gc()      { git commit -v "$@" }
+gd()      { git diff "$@" }
+gdw()     { git diffwords "$@" }
+gf()      { git fetch "$@" }
+gg()      { git grep -n "$@" }
+ggv()     { git grep -O$EDITOR"$@" }
+gl()      { git lg --all "$@" }
+gls()     { git lg --simplify-by-decoration "$@" }
+glsa()    { git lg --all --simplify-by-decoration "$@" }
+go()      { git co "$@" }
+gs()      { git st "$@" }
+gw()      { git wtf -A "$@" }
+hg()      { fc -li 1 | grep "$@" }
+ll()      { f --color "$@" | m -r -X }
+mn()      { nroff -man "$@" | m }
+mutt()    { DISPLAY= command mutt }
+pm()      { pod2man "$@" | mn }
+restart() { exec $SHELL "$@" }
 rtunnel() { ssh -N -f -R 9999:localhost:22 "$@" }
+s()       { gnome-open "$@" }
+tg()      { tcgrep -brun "$@" }
+tmux()    { command tmux -u2 "$@" }
+tojpg()   { for f ("$@") { echo "$f"; j=`echo $f(:r)`; convert "$f" "$j.jpg" } }
+t()       { TERM=xterm-color tig --all "$@" }
+ud()      { u "$@"; d }
+uu()      { uuencode "$@" "$@" | mailx -s "$@" paul@pjcj.net }
+wh()      { . uwh "$@" }
+z()       { dzil "$@" }
+zb()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil build "$@" }
+zt()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil test "$@" }
+
 
 function tm() {
     [[ -z "$1" ]] && { echo "usage: tm <session>" >&2; return 1; }
