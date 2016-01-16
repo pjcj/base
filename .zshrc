@@ -179,8 +179,37 @@ compinit -u
 zmodload -i zsh/complist
 autoload -U zargs
 
-zstyle ':completion:*' menu select show-ambiguity true
+zstyle ':completion:*' menu select
+zstyle ':completion:*' show-ambiguity true
+zstyle ':completion:*' ambiguous true
 zstyle ':completion:*' list-colors ''
+# _ and - are interchangeable
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' \
+                                    'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+zstyle ':completion:*:*:kill:*:processes' list-colors \
+           '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+zstyle ':completion:*:*:*:*:processes' \
+           command "ps -u $USER -o pid,user,comm -w -w"
+
+# disable named-directories autocompletion
+zstyle ':completion:*:cd:*' tag-order local-directories directory-stack \
+                            path-directories
+
+zstyle ':completion::complete:*' use-cache 1
+
+# Don't complete uninteresting users
+zstyle ':completion:*:*:*:users' ignored-patterns                             \
+        adm amanda apache at avahi avahi-autoipd beaglidx bin cacti canna     \
+        clamav daemon dbus distcache dnsmasq dovecot fax ftp games gdm        \
+        gkrellmd gopher hacluster haldaemon halt hsqldb ident junkbust kdm    \
+        ldap lp mail mailman mailnull man messagebus mldonkey mysql nagios    \
+        named netdump news nfsnobody nobody nscd ntp nut nx obsrun openvpn    \
+        operator pcap polkitd postfix postgres privoxy pulse pvm quagga radvd \
+        rpc rpcuser rpm rtkit scard shutdown squid sshd statd svn sync tftp   \
+        usbmux uucp vcsa wwwrun xfs '_*'
+# ... unless we really want to.
+zstyle '*' single-ignored show
 
 # Local completion
 
@@ -201,23 +230,17 @@ compdef _git   gs=git-status
 compdef _git   gw=git-wtf
 compdef _dzil  z=dzil
 
-_git-branch-full-delete() {
-  __git_branch_names
-}
+_git-branch-full-delete() { __git_branch_names }
 zstyle ':completion:*:*:git:*' user-commands \
-  branch-full-delete:'delete local and remote branches'
+    branch-full-delete:'delete local and remote branches'
 
-_git-origin-branch-move() {
-  __git_branch_names
-}
+_git-origin-branch-move() { __git_branch_names }
 zstyle ':completion:*:*:git:*' user-commands \
-  origin-branch-move:'move branch to its origin'
+    origin-branch-move:'move branch to its origin'
 
-_git-fpush() {
-  __git_branch_names
-}
+_git-fpush() { __git_branch_names }
 zstyle ':completion:*:*:git:*' user-commands \
-  fpush:'force push even when the remote forbids it'
+    fpush:'force push even when the remote forbids it'
 
 zshrc_load_status 'ftp'
 autoload -U zfinit
