@@ -1,5 +1,4 @@
 # Loading status
-
 zshrc_load_status () {
     echo -n "\r.zshrc load: $* ... \e[0K"
 }
@@ -248,10 +247,7 @@ zfinit
 
 zshrc_load_status 'aliases and functions'
 
-restart () {
-    exec $SHELL "$@"
-}
-
+restart () { exec $SHELL "$@" }
 reload () {
     if [[ "$#*" -eq 0 ]]; then
         . ~/.zshrc
@@ -304,7 +300,8 @@ LS_OPTIONS=
 
 zshrc_load_status 'path'
 
-PATH=~/bin:~/g/local_base/utils:~/g/base/utils:~/g/sw/bin:~/g/sw/usr/bin:$PATH:/usr/local/sbin:/usr/sbin:/sbin:~/.local/bin
+PATH=~/bin:~/g/local_base/utils:~/g/base/utils:~/g/sw/bin:~/g/sw/usr/bin:$PATH
+PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin:~/.local/bin
 
 typeset -U path
 typeset -U manpath
@@ -476,42 +473,44 @@ GIT_PROMPT_STAGED="%{$fg[green]%}●%{$reset_color%}"
 
 # Show Git branch/tag, or name-rev if on detached head.
 parse_git_branch() {
-  (git symbolic-ref -q HEAD || git name-rev --name-only --no-undefined --always HEAD) 2> /dev/null
+    (git symbolic-ref -q HEAD || \
+        git name-rev --name-only --no-undefined --always HEAD) 2> /dev/null
 }
 
 # Show different symbols as appropriate for various Git repository states.
 parse_git_state() {
-  # Compose this value via multiple conditional appends.
-  local GIT_STATE=""
-  local NUM_AHEAD="$(git log --oneline @{u}.. 2> /dev/null | wc -l | tr -d ' ')"
-  if [ "$NUM_AHEAD" -gt 0 ]; then
-    GIT_STATE=$GIT_STATE${GIT_PROMPT_AHEAD//NUM/$NUM_AHEAD}
-  fi
-  local NUM_BEHIND="$(git log --oneline ..@{u} 2> /dev/null | wc -l | tr -d ' ')"
-  if [ "$NUM_BEHIND" -gt 0 ]; then
-    GIT_STATE=$GIT_STATE${GIT_PROMPT_BEHIND//NUM/$NUM_BEHIND}
-  fi
-  local GIT_DIR="$(git rev-parse --git-dir 2> /dev/null)"
-  if [ -n $GIT_DIR ] && test -r $GIT_DIR/MERGE_HEAD; then
-    GIT_STATE=$GIT_STATE$GIT_PROMPT_MERGING
-  fi
-  if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
-    GIT_STATE=$GIT_STATE$GIT_PROMPT_UNTRACKED
-  fi
-  if ! git diff --quiet 2> /dev/null; then
-    GIT_STATE=$GIT_STATE$GIT_PROMPT_MODIFIED
-  fi
-  if ! git diff --cached --quiet 2> /dev/null; then
-    GIT_STATE=$GIT_STATE$GIT_PROMPT_STAGED
-  fi
-  if [[ -n $GIT_STATE ]]; then
-    echo "$GIT_STATE"
-  fi
+    # Compose this value via multiple conditional appends.
+    local GIT_STATE=""
+    local NUM_AHEAD="$(git log --oneline @{u}.. 2> /dev/null | wc -l | tr -d ' ')"
+    if [ "$NUM_AHEAD" -gt 0 ]; then
+        GIT_STATE=$GIT_STATE${GIT_PROMPT_AHEAD//NUM/$NUM_AHEAD}
+    fi
+    local NUM_BEHIND="$(git log --oneline ..@{u} 2> /dev/null | wc -l | tr -d ' ')"
+    if [ "$NUM_BEHIND" -gt 0 ]; then
+        GIT_STATE=$GIT_STATE${GIT_PROMPT_BEHIND//NUM/$NUM_BEHIND}
+    fi
+    local GIT_DIR="$(git rev-parse --git-dir 2> /dev/null)"
+    if [ -n $GIT_DIR ] && test -r $GIT_DIR/MERGE_HEAD; then
+        GIT_STATE=$GIT_STATE$GIT_PROMPT_MERGING
+    fi
+    if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
+        GIT_STATE=$GIT_STATE$GIT_PROMPT_UNTRACKED
+    fi
+    if ! git diff --quiet 2> /dev/null; then
+        GIT_STATE=$GIT_STATE$GIT_PROMPT_MODIFIED
+    fi
+    if ! git diff --cached --quiet 2> /dev/null; then
+        GIT_STATE=$GIT_STATE$GIT_PROMPT_STAGED
+    fi
+    if [[ -n $GIT_STATE ]]; then
+        echo "$GIT_STATE"
+    fi
 }
 
 git_prompt_info() {
-  local git_where="$(parse_git_branch)"
-  [ -n "$git_where" ] && echo "$GIT_PROMPT_PREFIX%{$fg[blue]%}${git_where#(refs/heads/|tags/)}$(parse_git_state)$GIT_PROMPT_SUFFIX "
+    local git_where="$(parse_git_branch)"
+    [ -n "$git_where" ] && \
+        echo "$GIT_PROMPT_PREFIX%{$fg[blue]%}${git_where#(refs/heads/|tags/)}$(parse_git_state)$GIT_PROMPT_SUFFIX "
 }
 
 if [ "$(whoami)" = "root" ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
@@ -524,20 +523,20 @@ RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %T%{$reset_color%}'
 zshrc_load_status 'command-not-found'
 # from command-not-found package
 if [[ -r /etc/zsh_command_not_found ]]; then
-  zshrc_load_status '/etc/zsh_command_not_found'
-  . /etc/zsh_command_not_found
+    zshrc_load_status '/etc/zsh_command_not_found'
+    . /etc/zsh_command_not_found
 fi
 
 zshrc_load_status 'local environment'
 
 if [[ -r ~/.zshrc.local ]]; then
-  zshrc_load_status '.zshrc.local'
-  . ~/.zshrc.local
+    zshrc_load_status '.zshrc.local'
+    . ~/.zshrc.local
 fi
 
 if [[ -r ~/.zshrc.${HOST%%.*} ]]; then
-  zshrc_load_status ".zshrc.${HOST%%.*}"
-  . ~/.zshrc.${HOST%%.*}
+    zshrc_load_status ".zshrc.${HOST%%.*}"
+    . ~/.zshrc.${HOST%%.*}
 fi
 
 setopt NO_ksh_glob
