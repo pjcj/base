@@ -245,22 +245,6 @@ zshrc_load_status 'ftp'
 autoload -U zfinit
 zfinit
 
-zshrc_load_status 'aliases and functions'
-
-restart () { exec $SHELL "$@" }
-reload () {
-    if [[ "$#*" -eq 0 ]]; then
-        . ~/.zshrc
-    else
-        local fn
-        for fn in "$@"; do
-            unfunction $fn
-            autoload -U $fn
-        done
-    fi
-}
-compdef _functions reload
-
 zshrc_load_status 'key bindings'
 
 bindkey -v -m 2> /dev/null
