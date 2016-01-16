@@ -370,7 +370,7 @@ d() {
 
 cd()     { c "$@" && d }
 ddl()    { ds /{dl,music}*/**/*(#i)"$@"*(N) }
-dh()     { d --color "$@" | head }
+dh()     { f --color "$@" | head }
 f()      { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
 g()      { git "$@" }
 gb()     { git branch "$@" }
@@ -387,7 +387,7 @@ go()     { git co "$@" }
 gs()     { git st "$@" }
 gw()     { git wtf -A "$@" }
 hg()     { fc -li 1 | grep "$@" }
-ll()     { d --color "$@" | m -r -X }
+ll()     { f --color "$@" | m -r -X }
 mutt()   { DISPLAY= command mutt }
 mn()     { nroff -man "$@" | m }
 pm()     { pod2man "$@" | mn }
