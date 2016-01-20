@@ -9,7 +9,7 @@ bspc config gapless_monocle         true
 bspc config focus_by_distance       true
 bspc config focus_follows_pointer   true
 
-if [[ $(hostname) == 'pj' ]]; then
+if [ $(hostname) = "pj" ]; then
     bspc monitor LVDS1 -d I II III IV V
     bspc monitor HDMI2 -d 1 2 3 4 5
 else
