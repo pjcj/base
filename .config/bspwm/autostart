@@ -1,5 +1,5 @@
 xrdb -merge .Xdefaults
-sleep 2
-candybar&
-sleep 2
+# sleep 2
+/home/pjcj/g/sw/bin/candybar&
+# sleep 2
 urxvt&
