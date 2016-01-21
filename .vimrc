@@ -331,6 +331,8 @@ nnoremap <leader>hp :GitGutterPrevHunk<CR>
 nnoremap <leader>hv :GitGutterPreviewHunk<CR>
 " ,hs: stage, ,hr: revert
 
+let g:SignatureMarkTextHLDynamic = 1
+
 let g:vitality_tumx_can_focus = 1
 
 let g:csv_autocmd_arrange = 1
