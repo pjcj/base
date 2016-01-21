@@ -295,7 +295,6 @@ manpath=($^manpath(N))
 zshrc_load_status 'aliases'
 
 alias dm='fc -e - d=m -1'
-alias ds="d -d"
 alias h="fc -li"
 alias hh="fc -li 1"
 alias lu='fc -e - lsq=usq -1'
@@ -364,6 +363,7 @@ v() {
 cd()      { c "$@" && d }
 ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
 dh()      { f --color "$@" | head }
+ds()      { f -d "$@" }
 f()       { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
 g()       { git "$@" }
 gb()      { git branch "$@" }
