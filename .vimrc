@@ -14,7 +14,7 @@ Plug 'inside/vim-search-pulse'
 Plug 'itchyny/calendar.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 Plug 'junegunn/vim-easy-align'                                     " = ^X<regex>
-Plug 'kshenoy/vim-signature'                               " in the signs column
+Plug 'kshenoy/vim-signature'                          " mx dmx m, m. m<Space> m/
 Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
 Plug 'majutsushi/tagbar'                                                  " <F2>
 Plug 'nathanaelkane/vim-indent-guides'                           " at 80 and 132
