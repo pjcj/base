@@ -55,9 +55,12 @@ Plug 'yuku-t/unite-git'
 if hostname() =~ "^am1"
 elseif has ("nvim")
     Plug 'Shougo/deoplete.nvim'
-    let g:deoplete#enable_at_startup = 1
-    let g:deoplete#disable_auto_complete = 0
+    let g:deoplete#enable_at_startup            = 1
+    let g:neocomplete#enable_smart_case         = 1
+    let g:deoplete#disable_auto_complete        = 0
     let g:deoplete#auto_completion_start_length = 2
+    let g:deoplete#sources                      = {}
+    let g:deoplete#sources._           = ["buffer", "tag", "file", "dictionary"]
 
     Plug 'benekastah/neomake'
 elseif has ("nvim") || !has ("lua")
