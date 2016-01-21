@@ -28,6 +28,11 @@ exit
 
 pip install --upgrade --user git+git://github.com/Lokaltog/powerline
 
+# for neovim:
+sudo aptitude install python3-pip
+sudo pip2 install neovim
+sudo pip3 install neovim
+
 # if necessary
 # sudo aptitude install libncurses-dev
 # cd ~/g/sw/build
