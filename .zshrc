@@ -13,9 +13,9 @@ zshrc_load_status 'plugins'
 # sourcing other plugins
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
 
+zplug "pjcj/k"
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-history-substring-search"
-zplug "pjcj/k"
 
 if ! zplug check; then
     zplug install
