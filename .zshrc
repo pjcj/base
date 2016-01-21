@@ -14,6 +14,7 @@ zshrc_load_status 'plugins'
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
 
 zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-history-substring-search"
 zplug "pjcj/k"
 
 if ! zplug check; then
@@ -250,15 +251,21 @@ zshrc_load_status 'key bindings'
 
 bindkey -v -m 2> /dev/null
 
-autoload -U history-search-end
-zle -N history-beginning-search-backward-end \
-     history-search-end
-zle -N history-beginning-search-forward-end \
-     history-search-end
-bindkey '^[[A' history-beginning-search-backward-end
-bindkey '^[[B' history-beginning-search-forward-end
-bindkey '^[OA' history-beginning-search-backward-end
-bindkey '^[OB' history-beginning-search-forward-end
+# autoload -U history-search-end
+# zle -N history-beginning-search-backward-end \
+     # history-search-end
+# zle -N history-beginning-search-forward-end \
+     # history-search-end
+# bindkey '^[[A' history-beginning-search-backward-end
+# bindkey '^[[B' history-beginning-search-forward-end
+# bindkey '^[OA' history-beginning-search-backward-end
+# bindkey '^[OB' history-beginning-search-forward-end
+
+zmodload zsh/terminfo
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 
 autoload -U history-beginning-search-menu-space-end \
        history-beginning-search-menu
