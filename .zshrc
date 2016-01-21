@@ -12,7 +12,8 @@ zshrc_load_status 'plugins'
 # zsh-syntax-highlighting must be loaded after executing compinit command and
 # sourcing other plugins
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
-# zplug "psprint/zsh-cmd-architect"
+
+zplug "zsh-users/zsh-completions"
 zplug "pjcj/k"
 
 if ! zplug check; then
