@@ -277,14 +277,14 @@ au BufRead *tmp/ml/mutt-*            setlocal tw=72 spell spelllang=en_gb
 au Filetype perl source ~/.vim/local/perl_local.vim
 au Filetype gitcommit setlocal colorcolumn=50,80
 
-autocmd InsertLeave * if expand('%') != '' | update | endif
+autocmd InsertLeave * if expand("%") != "" | update | endif
 
 " closetag plugin
 " au Filetype html,xml,xsl source ~/.vim/plugin/closetag.vim
 au FileType xhtml,xml,html,tt2html so ~/.vim/plugin/html_autoclosetag.vim
 au FileType xhtml,xml,html,tt2html setlocal sw=2
 
-au FileType * exe('setl dict^='.$VIMRUNTIME.'/syntax/'.&filetype.'.vim')
+au FileType * exe("setl dict^=".$VIMRUNTIME."/syntax/".&filetype.".vim")
 
 " taglist plugin
 let Tlist_Use_SingleClick      = 1
@@ -407,15 +407,15 @@ nnoremap <leader>gu :GundoToggle<CR>
 nnoremap <C-M-h> :set hls!<cr><bar>:echo "HLSearch: " . strpart("OffOn",3*&hlsearch,3)<cr>
 
 function! Tab_or_complete()
-    if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+    if col(".")>1 && strpart( getline("."), col(".")-2, 3 ) =~ "^\w"
         return "\<C-P>"
     else
         return "\<C-V>\<Tab>"
 endfunction
 " inoremap <Tab> <C-R>=Tab_or_complete()<CR>
 
-let g:SuperTabMappingForward  = '<s-tab>'
-let g:SuperTabMappingBackward = '<tab>'
+let g:SuperTabMappingForward  = "<s-tab>"
+let g:SuperTabMappingBackward = "<tab>"
 
 inoremap # X<BS>#
 cnoremap <C-w> <C-I>
@@ -426,7 +426,7 @@ map! <S-Insert> <C-R>*
 vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
 
 " delete trailing whitespace
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=""<CR>
 
 nnoremap <leader>q gqip
 nnoremap <leader>v V`]
@@ -453,7 +453,7 @@ let g:yankring_max_element_length = 40000 " 40K
 let g:yankring_max_display = 500
 let g:yankring_window_height = 25
 let g:yankring_manage_numbered_reg = 1
-let g:yankring_history_dir = '$HOME/.vim'
+let g:yankring_history_dir = "$HOME/.vim"
 
 " syntastic
 let g:syntastic_check_on_open = 1
@@ -489,78 +489,78 @@ map - <Plug>NERDCommenterToggle
 
 " ctrlp
 nnoremap <F11> :silent! write <Bar> CtrlPMixed<CR>
-let g:ctrlp_map = '<F99>'  " Not used
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_reuse_window = 'quickfix'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+let g:ctrlp_map = "<F99>"  " Not used
+let g:ctrlp_cmd = "CtrlP"
+let g:ctrlp_reuse_window = "quickfix"
+let g:ctrlp_working_path_mode = "ra"
+let g:ctrlp_user_command = [".git", "cd %s && git ls-files"]
 let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/](tmp|blib|cover_db|nytprof|pdldb|site)$',
-    \ 'file': '\v\nytprof$',
+    \ "dir":  "\v[\/](tmp|blib|cover_db|nytprof|pdldb|site)$",
+    \ "file": "\v\nytprof$",
     \ }
 let g:ctrlp_extensions = [
-    \ 'mixed', 'menu', 'tag', 'yankring', 'changes', 'cmdline'
+    \ "mixed", "menu", "tag", "yankring", "changes", "cmdline"
     \ ]
 let g:ctrlp_mruf_relative = 1
 let g:ctrlp_use_caching = 0
-let g:ctrlp_match_window = 'bottom,order:ttb,min:25,max:25,results:25'
+let g:ctrlp_match_window = "bottom,order:ttb,min:25,max:25,results:25"
 let g:ctrlp_match_current_file = 1
 let g:ctrlp_prompt_mappings = {
-    \ 'PrtBS()': ['<bs>', '<c-]>'],
-    \ 'PrtDelete()': ['<del>'],
-    \ 'PrtDeleteWord()': ['<c-w>'],
-    \ 'PrtClear()': ['<c-u>'],
-    \ 'PrtSelectMove("j")': ['<c-j>', '<down>'],
-    \ 'PrtSelectMove("k")': ['<c-k>', '<up>', 'OA'],
-    \ 'PrtSelectMove("t")': ['<Home>', '<kHome>'],
-    \ 'PrtSelectMove("b")': ['<End>', '<kEnd>'],
-    \ 'PrtSelectMove("u")': ['<PageUp>', '<kPageUp>'],
-    \ 'PrtSelectMove("d")': ['<PageDown>', '<kPageDown>'],
-    \ 'PrtHistory(-1)': ['<c-n>'],
-    \ 'PrtHistory(1)': ['<c-p>'],
-    \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
-    \ 'AcceptSelection("h")': ['<c-x>', '<c-cr>', '<c-s>'],
-    \ 'AcceptSelection("t")': ['<c-t>'],
-    \ 'AcceptSelection("v")': ['<c-v>', '<RightMouse>'],
-    \ 'ToggleFocus()': ['<s-tab>'],
-    \ 'ToggleRegex()': ['<c-r>'],
-    \ 'ToggleByFname()': ['<c-d>'],
-    \ 'ToggleType(1)': ['<c-f>', '<c-up>', '<F11>'],
-    \ 'ToggleType(-1)': ['<c-b>', '<c-down>'],
-    \ 'PrtExpandDir()': ['<tab>'],
-    \ 'PrtInsert("c")': ['<MiddleMouse>', '<insert>'],
-    \ 'PrtInsert()': ['<c-\>'],
-    \ 'PrtCurStart()': ['<c-a>'],
-    \ 'PrtCurEnd()': ['<c-e>'],
-    \ 'PrtCurLeft()': ['<c-h>', '<left>', '<c-^>'],
-    \ 'PrtCurRight()': ['<c-l>', '<right>'],
-    \ 'PrtClearCache()': ['<F5>'],
-    \ 'PrtDeleteEnt()': ['<F7>'],
-    \ 'CreateNewFile()': ['<c-y>'],
-    \ 'MarkToOpen()': ['<c-z>'],
-    \ 'OpenMulti()': ['<c-o>'],
-    \ 'PrtExit()': ['<esc>', '<c-c>', '<c-g>'],
+    \ "PrtBS()": ["<bs>", "<c-]>"],
+    \ "PrtDelete()": ["<del>"],
+    \ "PrtDeleteWord()": ["<c-w>"],
+    \ "PrtClear()": ["<c-u>"],
+    \ "PrtSelectMove('j')": ["<c-j>", "<down>"],
+    \ "PrtSelectMove('k')": ["<c-k>", "<up>", "OA"],
+    \ "PrtSelectMove('t')": ["<Home>", "<kHome>"],
+    \ "PrtSelectMove('b')": ["<End>", "<kEnd>"],
+    \ "PrtSelectMove('u')": ["<PageUp>", "<kPageUp>"],
+    \ "PrtSelectMove('d')": ["<PageDown>", "<kPageDown>"],
+    \ "PrtHistory(-1)": ["<c-n>"],
+    \ "PrtHistory(1)": ["<c-p>"],
+    \ "AcceptSelection('e')": ["<cr>", "<2-LeftMouse>"],
+    \ "AcceptSelection('h')": ["<c-x>", "<c-cr>", "<c-s>"],
+    \ "AcceptSelection('t')": ["<c-t>"],
+    \ "AcceptSelection('v')": ["<c-v>", "<RightMouse>"],
+    \ "ToggleFocus()": ["<s-tab>"],
+    \ "ToggleRegex()": ["<c-r>"],
+    \ "ToggleByFname()": ["<c-d>"],
+    \ "ToggleType(1)": ["<c-f>", "<c-up>", "<F11>"],
+    \ "ToggleType(-1)": ["<c-b>", "<c-down>"],
+    \ "PrtExpandDir()": ["<tab>"],
+    \ "PrtInsert('c')": ["<MiddleMouse>", "<insert>"],
+    \ "PrtInsert()": ["<c-\>"],
+    \ "PrtCurStart()": ["<c-a>"],
+    \ "PrtCurEnd()": ["<c-e>"],
+    \ "PrtCurLeft()": ["<c-h>", "<left>", "<c-^>"],
+    \ "PrtCurRight()": ["<c-l>", "<right>"],
+    \ "PrtClearCache()": ["<F5>"],
+    \ "PrtDeleteEnt()": ["<F7>"],
+    \ "CreateNewFile()": ["<c-y>"],
+    \ "MarkToOpen()": ["<c-z>"],
+    \ "OpenMulti()": ["<c-o>"],
+    \ "PrtExit()": ["<esc>", "<c-c>", "<c-g>"],
     \ }
 
 " fzf
 command! FZFMru call fzf#run({
-\ 'source':  reverse(s:all_files()),
-\ 'sink':    'edit',
-\ 'options': '-m -x +s',
-\ 'down':    '40%' })
+\ "source":  reverse(s:all_files()),
+\ "sink":    "edit",
+\ "options": "-m -x +s",
+\ "down":    "40%" })
 
 function! s:all_files()
   return extend(
   \ filter(copy(v:oldfiles),
-  \        "v:val !~ 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
-  \ map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'))
+  \        "v:val !~ "fugitive:\\|NERD_tree\\|^/tmp/\\|.git/""),
+  \ map(filter(range(1, bufnr("$")), "buflisted(v:val)"), "bufname(v:val)"))
 endfunction
 
 function! FZFExecute()
   " Remove trailing new line to make it work with tmux splits
-  let directory = substitute(system('git rev-parse --show-toplevel'), '\n$', '', '')
+  let directory = substitute(system("git rev-parse --show-toplevel"), "\n$", "", "")
   if !v:shell_error
-    call fzf#run({'sink': 'e', 'dir': directory, 'source': 'git ls-files', 'tmux_height': '40%'})
+    call fzf#run({"sink": "e", "dir": directory, "source": "git ls-files", "tmux_height": "40%"})
   else
     FZF
   endif
@@ -568,19 +568,19 @@ endfunction
 command! FZFExecute call FZFExecute()
 
 " unite
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#matcher_default#use(["matcher_fuzzy"])
 let g:unite_enable_start_insert = 1
 let g:unite_split_rule = "botright"
-let g:unite_data_directory = expand($HOME . '/.unite')
+let g:unite_data_directory = expand($HOME . "/.unite")
 
 " Shorten the default update date of 500ms
 let g:unite_update_time = 200
 
 let g:unite_source_file_mru_limit = 1000
-let g:unite_cursor_line_highlight = 'TabLineSel'
+let g:unite_cursor_line_highlight = "TabLineSel"
 
-let g:unite_source_file_mru_filename_format = ':~:.'
-let g:unite_source_file_mru_time_format = ''
+let g:unite_source_file_mru_filename_format = ":~:."
+let g:unite_source_file_mru_time_format = ""
 
 " Map space to the prefix for Unite
 nnoremap [unite] <Nop>
@@ -657,18 +657,18 @@ abbr ,, =>
 function! MyToHtml(line1, line2)
     " make sure to generate in the correct format
     let old_css = 1
-    if exists('g:html_use_css')
+    if exists("g:html_use_css")
         let old_css = g:html_use_css
     endif
     let g:html_use_css = 0
 
     " generate and delete unneeded lines
-    exec a:line1.','.a:line2.'TOhtml'
+    exec a:line1.",".a:line2."TOhtml"
     %g/<body/normal k$dgg
 
     " convert body to a table
-    %s/<body\s*\(bgcolor="[^"]*"\)\s*text=\("[^"]*"\)\s*onload='JumpToLine();'>/<table \1 cellPadding=0><tr><td><font color=\2>/
-    %s#</body>\(.\|\n\)*</html>#\='</font></td></tr></table>'#i
+    %s/<body\s*\(bgcolor="[^"]*"\)\s*text=\("[^"]*"\)\s*onload="JumpToLine();">/<table \1 cellPadding=0><tr><td><font color=\2>/
+    %s#</body>\(.\|\n\)*</html>#\="</font></td></tr></table>"#i
 
     " solarised colours
     %s/808080/002b36/g  " base03 - background
@@ -690,12 +690,12 @@ function! MyToHtml(line1, line2)
 endfunction
 command! -range=% MyToHtml :call MyToHtml(<line1>,<line2>)
 
-let s:homerc = expand($HOME . '/.vimrc.local')
+let s:homerc = expand($HOME . "/.vimrc.local")
 if filereadable(s:homerc)
-    exec 'source ' . s:homerc
+    exec "source " . s:homerc
 endif
 
-let s:localrc = expand('./.vimrc.local')
+let s:localrc = expand("./.vimrc.local")
 if filereadable(s:localrc)
-    exec 'source ' . s:localrc
+    exec "source " . s:localrc
 endif
