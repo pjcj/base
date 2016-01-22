@@ -293,8 +293,9 @@ LS_OPTIONS=
 
 zshrc_load_status 'path'
 
-PATH=~/bin:~/g/local_base/utils:~/g/base/utils:~/g/sw/bin:~/g/sw/usr/bin:$PATH
-PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin:~/.local/bin
+PATH=~/.local/bin:~/g/go/bin:~/bin:~/g/sw/bin:~/g/sw/usr/bin:$PATH
+PATH=~/g/local_base/utils:~/g/base/utils:$PATH
+PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
 
 typeset -U path
 typeset -U manpath
@@ -388,6 +389,7 @@ glsa()    { git lg --all --simplify-by-decoration "$@" }
 go()      { git co "$@" }
 gs()      { git st "$@" }
 gw()      { git wtf -A "$@" }
+golang()  { /usr/bin/go "$@" }
 hg()      { fc -li 1 | grep "$@" }
 ll()      { f --color "$@" | m -r -X }
 mn()      { nroff -man "$@" | m }
@@ -407,12 +409,11 @@ z()       { dzil "$@" }
 zb()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil build "$@" }
 zt()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil test "$@" }
 
-
-function tm() {
+tm() {
     [[ -z "$1" ]] && { echo "usage: tm <session>" >&2; return 1; }
     tmux has -t $1 && tmux attach -d -t $1 || tmux new -s $1
 }
-function __tmux-sessions() {
+__tmux-sessions() {
     local expl
     local -a sessions
     sessions=( ${${(f)"$(command tmux list-sessions)"}/:[ $'\t']##/:} )
@@ -430,6 +431,7 @@ hash -d local_base=~/g/local_base
 
 zshrc_load_status 'environment'
 
+export GOPATH=~/g/go
 export LANG=en_GB.UTF-8
 export LESSOPEN="|lesspipe.sh %s"
 export LESS=-RM
