@@ -137,6 +137,7 @@ zshrc_load_status 'setting environment'
 
 fpath=(
     ~/{lib/zsh,.zsh,g/base/zsh}/{functions,scripts}(N)
+    ~/g/go/src/github.com/motemen/ghq/zsh(N)
     $fpath
 )
 typeset -U fpath
@@ -536,10 +537,16 @@ if [[ -r ~/.zshrc.${HOST%%.*} ]]; then
     . ~/.zshrc.${HOST%%.*}
 fi
 
-setopt NO_ksh_glob
+# setopt NO_ksh_glob
+
+zshrc_load_status 'application specific setup'
+
+for f in \
+    ~/.fzf.zsh
+do
+    [ -f $f ] && source $f
+done
 
 # Clear up after status display
 
 echo -n "\r"
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
