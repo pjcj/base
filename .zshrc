@@ -11,7 +11,7 @@ zshrc_load_status 'plugins'
 
 zplug "pjcj/k"
 # https://github.com/tj/git-extras/blob/master/Commands.md
-zplug "tj/git-extras", do:"make install PREFIX=~/g/sw"
+zplug "tj/git-extras", do:"make install PREFIX=$HOME/g/sw"
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-history-substring-search"
 # zsh-syntax-highlighting must be loaded after executing compinit command and
