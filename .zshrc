@@ -473,8 +473,9 @@ if [ "$(whoami)" = "root" ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
 
 perlv () { perl -e '$t = -e "Makefile"; $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`; s|.*/(.*)/bin/perl.*|$1 |; s/^usr $//; s/perl-// if $t; print' }
 
-ZSH_THEME_GIT_PROMPT_CACHE=
 source $(ghq list -p zsh-git-prompt)/zshrc.sh
+GIT_PROMPT_EXECUTABLE="haskell"
+ZSH_THEME_GIT_PROMPT_CACHE=
 ZSH_THEME_GIT_PROMPT_PREFIX=""
 ZSH_THEME_GIT_PROMPT_SUFFIX=" "
 ZSH_THEME_GIT_PROMPT_SEPARATOR=""
