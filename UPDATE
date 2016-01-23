@@ -11,7 +11,7 @@ $ v (for vim or nvim)
 :PlugInstall
 :PlugUpdate
 
-$ pip install --upgrade --user git+git://github.com/Lokaltog/powerline
+$ pip install --upgrade --user git+git://github.com/powerline/powerline
 
 [tmux]
 <ctrl-A> U all

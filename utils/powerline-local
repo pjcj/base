@@ -1,4 +1,0 @@
-#!/bin/sh
-
-~/g/sw/powerline-daemon/powerline-client -c ext.tmux.theme=pjcj "$@"
-# ~/g/base/powerline/scripts/powerline -c ext.tmux.theme=pjcj "$@"

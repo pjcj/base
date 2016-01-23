@@ -8,7 +8,7 @@ It includes config files for:
 * [tmux](http://tmux.sourceforge.net/)
 * [zsh](http://www.zsh.org/)
 * [vim](http://www.vim.org/)
-* [powerline](https://github.com/Lokaltog/powerline)
+* [powerline](https://github.com/powerline/powerline)
 * [git](http://www.git-scm.com/)
 
 Colours are Solarized Dark.
