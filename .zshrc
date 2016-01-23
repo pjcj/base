@@ -452,6 +452,22 @@ if [[ -e ~/perl5/perlbrew/etc/bashrc ]] then
     complete -F _perlbrew_compgen pb
 fi
 
+zshrc_load_status "external files"
+
+for f in \
+    ~/.fzf.zsh                 \
+    /etc/zsh_command_not_found \
+    ~/.zshrc.local             \
+    ~/.zshrc.${HOST%%.*}
+do
+    if [[ -r $f ]]; then
+        zshrc_load_status "$f"
+        . $f
+    fi
+done
+
+# from command-not-found package
+
 zshrc_load_status "prompt"
 
 setopt prompt_subst
@@ -473,34 +489,7 @@ ZSH_THEME_GIT_PROMPT_CLEAN=""
 PROMPT='$(git_super_status)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
 RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %T%{$reset_color%}'
 
-zshrc_load_status "command-not-found"
-# from command-not-found package
-if [[ -r /etc/zsh_command_not_found ]]; then
-    zshrc_load_status "/etc/zsh_command_not_found"
-    . /etc/zsh_command_not_found
-fi
-
-zshrc_load_status "local environment"
-
-if [[ -r ~/.zshrc.local ]]; then
-    zshrc_load_status ".zshrc.local"
-    . ~/.zshrc.local
-fi
-
-if [[ -r ~/.zshrc.${HOST%%.*} ]]; then
-    zshrc_load_status ".zshrc.${HOST%%.*}"
-    . ~/.zshrc.${HOST%%.*}
-fi
-
 # setopt NO_ksh_glob
-
-zshrc_load_status "application specific setup"
-
-for f in \
-    ~/.fzf.zsh
-do
-    [ -f $f ] && source $f
-done
 
 # Clear up after status display
 
