@@ -162,8 +162,8 @@ URxvt.matcher.pattern.1:      \\bwww\\.[\\w-]+\\.[\\w./?&@#-=]*[\\w/-]
 *color5:                  S_magenta
 *color6:                  S_cyan
 *color7:                  S_base2
-*color9:                  S_orange
 *color8:                  S_base03
+*color9:                  S_orange
 *color10:                 S_base01
 *color11:                 S_base00
 *color12:                 S_base0
