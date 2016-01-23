@@ -20,6 +20,9 @@ $ pip install --upgrade --user git+git://github.com/powerline/powerline
 <ctrl-A> I
 <ctrl-A> U all
 
+$ ghq import -u < ghq.repos
+then ghq look into all the updated repos and build and install
+
 $ cd ~/g/sw/build/sxhkd
 $ git fetch
 $ git rebase
