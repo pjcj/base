@@ -20,7 +20,6 @@ Plug 'majutsushi/tagbar'                                                  " <F2>
 Plug 'nathanaelkane/vim-indent-guides'                           " at 80 and 132
 Plug 'pjcj/vim-hl-var'
 Plug 'saltstack/salt-vim'                                    " salt highlighting
-Plug 'scrooloose/nerdcommenter'                                              " -
 Plug 'scrooloose/nerdtree'                                                " <F1>
 Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
 Plug 'sjl/gundo.vim'                                                       " ,gu
@@ -28,6 +27,7 @@ Plug 'Spaceghost/vim-matchit'                                                " %
 Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
 Plug 'terryma/vim-multiple-cursors'                                         " ^n
 Plug 'tpope/vim-abolish'               " :%Subvert/facilit{y,ies}/building{,s}/g
+Plug 'tpope/vim-commentary'                                                 " gc
 Plug 'tpope/vim-dispatch'                          " asynchronous build and test
 Plug 'tpope/vim-eunuch'                                          " Unix commands
 Plug 'tpope/vim-fugitive'                                  " :Gdiff :Gstatus ,gg
@@ -478,9 +478,6 @@ vmap <Enter> <Plug>(EasyAlign)
 nmap <Leader>a <Plug>(EasyAlign)
 
 cmap w!! w !sudo tee % >/dev/null
-
-let NERDSpaceDelims = 1
-map - <Plug>NERDCommenterToggle
 
 " if &term == "rxvt-unicode-256color"
     " let &t_SI = "\<Esc>[3 q"
