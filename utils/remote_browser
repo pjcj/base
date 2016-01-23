@@ -1,0 +1,6 @@
+#!/bin/sh
+
+url=$1
+# echo $1
+nohup sensible-browser $1 >/dev/null 2>&1 &
+sleep 1
