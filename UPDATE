@@ -5,6 +5,9 @@ $ git stash
 $ git rebase
 $ git stash pop
 
+$ restart
+$ zplug update
+
 $ v (for vim or nvim)
 :PlugUpgrade
 :PlugClean
@@ -14,6 +17,7 @@ $ v (for vim or nvim)
 $ pip install --upgrade --user git+git://github.com/powerline/powerline
 
 [tmux]
+<ctrl-A> I
 <ctrl-A> U all
 
 $ cd ~/g/sw/build/sxhkd
