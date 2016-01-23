@@ -426,6 +426,7 @@ compdef __tmux-sessions tm
 zshrc_load_status "hashed directories"
 
 hash -d g=~/g
+hash -d sw=~/g/sw
 hash -d dc=~/g/perl/Devel--Cover
 hash -d am=~/g/perl/AMeasure
 hash -d base=~/g/base
