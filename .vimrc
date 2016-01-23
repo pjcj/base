@@ -26,6 +26,7 @@ Plug 'sjl/gundo.vim'                                                       " ,gu
 Plug 'Spaceghost/vim-matchit'                                                " %
 Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
 Plug 'terryma/vim-multiple-cursors'                                         " ^n
+Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'tpope/vim-abolish'               " :%Subvert/facilit{y,ies}/building{,s}/g
 Plug 'tpope/vim-commentary'                                                 " gc
 Plug 'tpope/vim-dispatch'                          " asynchronous build and test
@@ -369,7 +370,6 @@ au FocusLost * silent! wa
 set guioptions=ag
 
 nnoremap <silent> <F1> :NERDTreeToggle<CR>
-" nnoremap <silent> <F2> :TlistToggle<CR>
 nnoremap <silent> <F2> :TagbarToggle<CR>
 nmap <F3> 
 nnoremap <F4> :execute "tjump " . expand("<cword>")<CR>
