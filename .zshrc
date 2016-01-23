@@ -9,6 +9,7 @@ source ~/.zplug/zplug
 
 zshrc_load_status "plugins"
 
+zplug "oknowton/zsh-dwim"
 zplug "pjcj/k"
 # https://github.com/tj/git-extras/blob/master/Commands.md
 zplug "tj/git-extras", do:"make install PREFIX=$HOME/g/sw"
