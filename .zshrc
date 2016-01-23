@@ -7,7 +7,7 @@ zshrc_load_status "plug"
 
 source ~/.zplug/zplug
 
-zshrc_load_status 'plugins'
+zshrc_load_status "plugins"
 
 zplug "pjcj/k"
 # https://github.com/tj/git-extras/blob/master/Commands.md
@@ -26,10 +26,10 @@ zplug load
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern root)
 # To have paths coloured instead of underlined
-ZSH_HIGHLIGHT_STYLES[path]='fg=cyan'
-ZSH_HIGHLIGHT_STYLES[root]='underline'
+ZSH_HIGHLIGHT_STYLES[path]="fg=cyan"
+ZSH_HIGHLIGHT_STYLES[root]="underline"
 
-zshrc_load_status 'setting options'
+zshrc_load_status "setting options"
 
 setopt                        \
        all_export             \
@@ -133,7 +133,7 @@ setopt                        \
     NO_xtrace                 \
        zle
 
-zshrc_load_status 'setting environment'
+zshrc_load_status "setting environment"
 
 fpath=(
     ~/{lib/zsh,.zsh,g/base/zsh}/{functions,scripts}(N)
@@ -143,10 +143,10 @@ fpath=(
 typeset -U fpath
 
 # Ignore these corrections
-CORRECT_IGNORE='[._]*'
+CORRECT_IGNORE="[._]*"
 
 # Choose word delimiter characters in line editor
-WORDCHARS=''
+WORDCHARS=""
 
 # Save a large history
 HISTFILE=~/.zshhistory
@@ -170,39 +170,39 @@ WATCHFMT="[%B%t%b] %B%n%b has %a %B%l%b from %B%M%b"
 
 KEYTIMEOUT=1
 
-zshrc_load_status 'ls colours'
+zshrc_load_status "ls colours"
 if which dircolors >&/dev/null; then
     source =(dircolors -b ~/dircolours)
 fi
 
-zshrc_load_status 'completion system'
+zshrc_load_status "completion system"
 
 autoload -U compinit
 compinit -u
 zmodload -i zsh/complist
 autoload -U zargs
 
-zstyle ':completion:*' menu select
-zstyle ':completion:*' show-ambiguity true
-zstyle ':completion:*' ambiguous true
-zstyle ':completion:*' list-colors ''
+zstyle ":completion:*" menu select
+zstyle ":completion:*" show-ambiguity true
+zstyle ":completion:*" ambiguous true
+zstyle ":completion:*" list-colors ""
 # _ and - are interchangeable
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' \
-                                    'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ":completion:*" matcher-list "m:{a-zA-Z-_}={A-Za-z_-}" \
+                                    "r:|[._-]=* r:|=*" "l:|=* r:|=*"
 
-zstyle ':completion:*:*:kill:*:processes' list-colors \
-           '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
-zstyle ':completion:*:*:*:*:processes' \
+zstyle ":completion:*:*:kill:*:processes" list-colors \
+           "=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01"
+zstyle ":completion:*:*:*:*:processes" \
            command "ps -u $USER -o pid,user,comm -w -w"
 
 # disable named-directories autocompletion
-zstyle ':completion:*:cd:*' tag-order local-directories directory-stack \
+zstyle ":completion:*:cd:*" tag-order local-directories directory-stack \
                             path-directories
 
-zstyle ':completion::complete:*' use-cache 1
+zstyle ":completion::complete:*" use-cache 1
 
 # Don't complete uninteresting users
-zstyle ':completion:*:*:*:users' ignored-patterns                             \
+zstyle ":completion:*:*:*:users" ignored-patterns                             \
         adm amanda apache at avahi avahi-autoipd beaglidx bin cacti canna     \
         clamav daemon dbus distcache dnsmasq dovecot fax ftp games gdm        \
         gkrellmd gopher hacluster haldaemon halt hsqldb ident junkbust kdm    \
@@ -210,9 +210,9 @@ zstyle ':completion:*:*:*:users' ignored-patterns                             \
         named netdump news nfsnobody nobody nscd ntp nut nx obsrun openvpn    \
         operator pcap polkitd postfix postgres privoxy pulse pvm quagga radvd \
         rpc rpcuser rpm rtkit scard shutdown squid sshd statd svn sync tftp   \
-        usbmux uucp vcsa wwwrun xfs '_*'
+        usbmux uucp vcsa wwwrun xfs "_*"
 # ... unless we really want to.
-zstyle '*' single-ignored show
+zstyle "*" single-ignored show
 
 # Local completion
 
@@ -234,22 +234,22 @@ compdef _git   gw=git-wtf
 compdef _dzil  z=dzil
 
 _git-branch-full-delete() { __git_branch_names }
-zstyle ':completion:*:*:git:*' user-commands \
-    branch-full-delete:'delete local and remote branches'
+zstyle ":completion:*:*:git:*" user-commands \
+    branch-full-delete:"delete local and remote branches"
 
 _git-origin-branch-move() { __git_branch_names }
-zstyle ':completion:*:*:git:*' user-commands \
-    origin-branch-move:'move branch to its origin'
+zstyle ":completion:*:*:git:*" user-commands \
+    origin-branch-move:"move branch to its origin"
 
 _git-fpush() { __git_branch_names }
-zstyle ':completion:*:*:git:*' user-commands \
-    fpush:'force push even when the remote forbids it'
+zstyle ":completion:*:*:git:*" user-commands \
+    fpush:"force push even when the remote forbids it"
 
-zshrc_load_status 'ftp'
+zshrc_load_status "ftp"
 autoload -U zfinit
 zfinit
 
-zshrc_load_status 'key bindings'
+zshrc_load_status "key bindings"
 
 bindkey -v -m 2> /dev/null
 
@@ -258,27 +258,27 @@ zle -N history-beginning-search-backward-end \
      history-search-end
 zle -N history-beginning-search-forward-end \
      history-search-end
-bindkey '^[[A' history-beginning-search-backward-end
-bindkey '^[[B' history-beginning-search-forward-end
-bindkey '^[OA' history-beginning-search-backward-end
-bindkey '^[OB' history-beginning-search-forward-end
+bindkey "^[[A" history-beginning-search-backward-end
+bindkey "^[[B" history-beginning-search-forward-end
+bindkey "^[OA" history-beginning-search-backward-end
+bindkey "^[OB" history-beginning-search-forward-end
 
 # zmodload zsh/terminfo
 # bindkey "$terminfo[kcuu1]" history-substring-search-up
 # bindkey "$terminfo[kcud1]" history-substring-search-down
-# bindkey '^[[A' history-substring-search-up
-# bindkey '^[[B' history-substring-search-down
+# bindkey "^[[A" history-substring-search-up
+# bindkey "^[[B" history-substring-search-down
 
 autoload -U history-beginning-search-menu-space-end \
        history-beginning-search-menu
 zle -N history-beginning-search-menu-space-end \
        history-beginning-search-menu
-bindkey '^X' history-beginning-search-menu-space-end
+bindkey "^X" history-beginning-search-menu-space-end
 
-bindkey '^O' push-line-or-edit
-bindkey '^P' accept-and-infer-next-history
+bindkey "^O" push-line-or-edit
+bindkey "^P" accept-and-infer-next-history
 
-zshrc_load_status 'miscellaneous'
+zshrc_load_status "miscellaneous"
 
 autoload -U url-quote-magic && zle -N self-insert url-quote-magic
 
@@ -292,7 +292,7 @@ TIMEFMT="  Timing report for %J
 
 LS_OPTIONS=
 
-zshrc_load_status 'path'
+zshrc_load_status "path"
 
 PATH=~/.local/bin:~/g/go/bin:~/bin:~/g/sw/bin:~/g/sw/usr/bin:$PATH
 PATH=~/g/local_base/utils:~/g/base/utils:$PATH
@@ -303,12 +303,12 @@ typeset -U manpath
 path=($^path(N))
 manpath=($^manpath(N))
 
-zshrc_load_status 'aliases'
+zshrc_load_status "aliases"
 
-alias dm='fc -e - d=m -1'
+alias dm="fc -e - d=m -1"
 alias h="fc -li"
 alias hh="fc -li 1"
-alias lu='fc -e - lsq=usq -1'
+alias lu="fc -e - lsq=usq -1"
 alias mkdir="nocorrect mkdir"
 alias m=less
 alias n=make
@@ -322,7 +322,7 @@ alias mv="mv -bv --backup=numbered"
 alias pl="ps -o user,pid,pgid,pcpu,pmem,osz,rss,tty,s,stime,time,args"
 alias pp="pl -A | sort -k 4"
 
-zshrc_load_status 'functions'
+zshrc_load_status "functions"
 
 if which nvim >&/dev/null; then
     export EDITOR=nvim
@@ -418,11 +418,11 @@ __tmux-sessions() {
     local expl
     local -a sessions
     sessions=( ${${(f)"$(command tmux list-sessions)"}/:[ $'\t']##/:} )
-    _describe -t sessions 'sessions' sessions "$@"
+    _describe -t sessions "sessions" sessions "$@"
 }
 compdef __tmux-sessions tm
 
-zshrc_load_status 'hashed directories'
+zshrc_load_status "hashed directories"
 
 hash -d g=~/g
 hash -d dc=~/g/perl/Devel--Cover
@@ -430,13 +430,13 @@ hash -d am=~/g/perl/AMeasure
 hash -d base=~/g/base
 hash -d local_base=~/g/local_base
 
-zshrc_load_status 'environment'
+zshrc_load_status "environment"
 
 export GOPATH=~/g/go
 export LANG=en_GB.UTF-8
 export LESSOPEN="|lesspipe.sh %s"
 export LESS=-RM
-export NOPASTE_SERVICES='Gist Pastie Snitch Shadowcat'
+export NOPASTE_SERVICES="Gist Pastie Snitch Shadowcat"
 export PAGER=less
 export TERMINFO=~/.terminfo
 export TOP="-I all"
@@ -451,7 +451,7 @@ if [[ -e ~/perl5/perlbrew/etc/bashrc ]] then
     complete -F _perlbrew_compgen pb
 fi
 
-zshrc_load_status 'prompt'
+zshrc_load_status "prompt"
 
 setopt prompt_subst
 autoload -U colors && colors # Enable colors in prompt
@@ -518,17 +518,17 @@ perlv () { perl -e '$t = -e "Makefile"; $_ = $t ? `grep "FULLPERL = " Makefile` 
 PROMPT='$(git_prompt_info)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
 RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %T%{$reset_color%}'
 
-zshrc_load_status 'command-not-found'
+zshrc_load_status "command-not-found"
 # from command-not-found package
 if [[ -r /etc/zsh_command_not_found ]]; then
-    zshrc_load_status '/etc/zsh_command_not_found'
+    zshrc_load_status "/etc/zsh_command_not_found"
     . /etc/zsh_command_not_found
 fi
 
-zshrc_load_status 'local environment'
+zshrc_load_status "local environment"
 
 if [[ -r ~/.zshrc.local ]]; then
-    zshrc_load_status '.zshrc.local'
+    zshrc_load_status ".zshrc.local"
     . ~/.zshrc.local
 fi
 
@@ -539,7 +539,7 @@ fi
 
 # setopt NO_ksh_glob
 
-zshrc_load_status 'application specific setup'
+zshrc_load_status "application specific setup"
 
 for f in \
     ~/.fzf.zsh
