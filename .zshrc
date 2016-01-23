@@ -3,11 +3,9 @@ zshrc_load_status () {
     echo -n "\r.zshrc load: $* ... \e[0K"
 }
 
-zshrc_load_status "plug"
+zshrc_load_status "plugins"
 
 source ~/.zplug/zplug
-
-zshrc_load_status "plugins"
 
 zplug "oknowton/zsh-dwim"
 zplug "pjcj/k"
@@ -19,10 +17,7 @@ zplug "zsh-users/zsh-completions"
 # sourcing other plugins
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
 
-if ! zplug check; then
-    zplug install
-fi
-
+if ! zplug check; then zplug install; fi
 zplug load
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern root)
