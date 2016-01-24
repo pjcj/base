@@ -14,6 +14,9 @@ curl -fLo ~/.zplug/zplug --create-dirs https://git.io/zplug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
+aptitude install golang
+golang get github.com/motemen/ghq
+
 $ ghq import -u < ghq.repos
 # then ghq look into all the updated repos and build and install
 
