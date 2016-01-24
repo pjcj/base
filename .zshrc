@@ -386,7 +386,7 @@ glsa()    { git lg --all --simplify-by-decoration "$@" }
 go()      { git co "$@" }
 gs()      { git st "$@" }
 gw()      { git wtf -A "$@" }
-golang()  { /usr/bin/go "$@" }
+golang()  { command go "$@" }
 hg()      { fc -li 1 | grep "$@" }
 ll()      { f --color "$@" | m -r -X }
 mn()      { nroff -man "$@" | m }
