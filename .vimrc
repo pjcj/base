@@ -240,11 +240,20 @@ au BufReadPost * endif
 
 syntax enable
 set background=dark
+" let g:solarized_contrast="high"
+" let g:solarized_visibility="normal"
 colorscheme solarized
 highlight clear SignColumn
-" let g:solarized_contrast="normal"
-" let g:solarized_termcolors=256
 set t_Co=256
+" highlight link diffAdded Constant
+
+nmap <C-S-P> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_indent_levels         = 40
@@ -318,13 +327,13 @@ nnoremap <leader>gg :Gcommit -v<CR>
 augroup gitgutter
     autocmd BufEnter * call GitGutter()
 augroup END
-highlight link GitGutterAdd DiffAdd
-highlight link GitGutterChange DiffChange
-highlight link GitGutterDelete DiffDelete
-highlight link GitGutterChangeDelete DiffDelete
-highlight link GitGutterAddLine DiffAdd
-highlight link GitGutterChangeLine DiffChange
-highlight link GitGutterDeleteLine DiffDelete
+highlight link GitGutterAdd              DiffAdd
+highlight link GitGutterChange           DiffChange
+highlight link GitGutterDelete           DiffDelete
+highlight link GitGutterChangeDelete     DiffDelete
+highlight link GitGutterAddLine          DiffAdd
+highlight link GitGutterChangeLine       DiffChange
+highlight link GitGutterDeleteLine       DiffDelete
 highlight link GitGutterChangeDeleteLine DiffDelete
 let g:gitgutter_signs           = 1
 let g:gitgutter_highlight_lines = 0
