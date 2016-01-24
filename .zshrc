@@ -12,10 +12,10 @@ zplug "pjcj/k"
 # https://github.com/tj/git-extras/blob/master/Commands.md
 zplug "tj/git-extras", do:"make install PREFIX=$HOME/g/sw"
 zplug "zsh-users/zsh-completions"
-# zplug "zsh-users/zsh-history-substring-search"
 # zsh-syntax-highlighting must be loaded after executing compinit command and
 # sourcing other plugins
-zplug "zsh-users/zsh-syntax-highlighting", nice:10
+zplug "zsh-users/zsh-syntax-highlighting",      nice:10
+# zplug "zsh-users/zsh-history-substring-search", nice:11
 
 if ! zplug check; then zplug install; fi
 zplug load
