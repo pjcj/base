@@ -8,8 +8,8 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'bling/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'ervandew/supertab'
-Plug 'gregsexton/gitv'                                                       " =
-Plug 'honza/dockerfile.vim'
+Plug 'gregsexton/gitv'                                                   " :gitv
+Plug 'honza/dockerfile.vim'                                      " docker syntax
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/calendar.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
