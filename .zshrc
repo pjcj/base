@@ -450,17 +450,21 @@ fi
 
 zshrc_load_status "external files"
 
-for f in \
-    ~/.fzf.zsh                 \
+load() {
+    for f in $@; do
+        if [[ -r $f ]]; then
+            zshrc_load_status "$f"
+            . $f
+        fi
+    done
+}
+
+load \
     /etc/zsh_command_not_found \
+    ~/.gvm/scripts/gvm         \
+    ~/.fzf.zsh                 \
     ~/.zshrc.local             \
     ~/.zshrc.${HOST%%.*}
-do
-    if [[ -r $f ]]; then
-        zshrc_load_status "$f"
-        . $f
-    fi
-done
 
 # from command-not-found package
 
@@ -473,8 +477,14 @@ if [ "$(whoami)" = "root" ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
 
 perlv () { perl -e '$t = -e "Makefile"; $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`; s|.*/(.*)/bin/perl.*|$1 |; s/^usr $//; s/perl-// if $t; print' }
 
-source $(ghq list -p zsh-git-prompt)/zshrc.sh
-GIT_PROMPT_EXECUTABLE="haskell"
+
+prompt_root=$(ghq list -p zsh-git-prompt)
+load $prompt_root/zshrc.sh
+if [[ -d $prompt_root/.stack-work ]] then
+    GIT_PROMPT_EXECUTABLE="haskell"
+else
+    GIT_PROMPT_EXECUTABLE="python"
+fi
 ZSH_THEME_GIT_PROMPT_CACHE=
 ZSH_THEME_GIT_PROMPT_PREFIX=""
 ZSH_THEME_GIT_PROMPT_SUFFIX=" "
