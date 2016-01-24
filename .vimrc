@@ -47,6 +47,7 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
 Plug 'soh335/unite-perl-module'
 Plug 'yuku-t/unite-git'
 
+" Plug 'junegunn/gv.vim'                                         " :GV :GV! gb q
 " Plug 'msanders/snipmate.vim'
 " Plug 'Raimondi/delimitMate'         " insert mode quote/bracket autocompletion
 " Plug 'tpope/vim-obsession'
