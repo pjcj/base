@@ -3,7 +3,7 @@
 *~
 *.pyo
 *.pyc
-tags
+tags*
 .config/ranger/bookmarks
 .config/ranger/history
 .config/ranger/tagged
