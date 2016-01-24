@@ -167,6 +167,7 @@ set icon
 set incsearch
 set joinspaces
 set laststatus=2
+set lazyredraw
 set list
 set listchars=tab:»\ ,trail:·
 " set makeprg=nmake
