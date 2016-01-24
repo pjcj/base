@@ -55,6 +55,7 @@ URxvt*mouseWheelScrollPage:   false
 URxvt*cutchars:               `,;*|()<>[]{}
 ! URxvt*letterSpace:            -1
 ! URxvt*fade:                   0
+URxvt.intensityStyles:        false
 URxvt.keysym.Insert:          \001\001p
 URxvt.keysym.Home:            \001\001n
 URxvt.keysym.Delete:          \001p
