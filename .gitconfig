@@ -54,8 +54,6 @@
         omv = origin-branch-move
 [github]
         user = pjcj
-[include]
-        path = .gitconfig.local
 [push]
         default = current
 [url "git://github.com/"]
@@ -65,3 +63,5 @@
         autoupdate = true
 [ghq]
         root = ~/g/ghq
+[include]
+        path = .gitconfig.local
