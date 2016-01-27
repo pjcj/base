@@ -495,8 +495,6 @@ ZSH_THEME_GIT_PROMPT_CLEAN=""
 PROMPT='$(git_super_status)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
 RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %T%{$reset_color%}'
 
-# setopt NO_ksh_glob
-
 # Clear up after status display
 
 echo -n "\r"
