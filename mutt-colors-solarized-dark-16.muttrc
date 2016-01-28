@@ -32,8 +32,8 @@ color markers       red             white
 color attachment    white           default         
 color search        brightmagenta   default         
 #color status        J_black         J_status        
-color status        brightyellow    black           
-color indicator     brightblack     yellow          
+color status        yellow          black           
+color indicator     brightblack     blue
 color tree          yellow          default                                     # arrow in threads
 
 # basic monocolor screen
@@ -54,7 +54,7 @@ color index         brightred       default         "~E"                        
 color index         blue            default         "~N"                        # new messages
 color index         blue            default         "~O"                        # old messages
 color index         brightmagenta   default         "~Q"                        # messages that have been replied to
-color index         brightgreen     default         "~R"                        # read messages
+color index         default         default         "~R"                        # read messages
 color index         blue            default         "~U"                        # unread messages
 color index         blue            default         "~U~$"                      # unread, unreferenced messages
 color index         brightyellow    default         "~v"                        # messages part of a collapsed thread
@@ -62,7 +62,7 @@ color index         brightyellow    default         "~P"                        
 color index         cyan            default         "~p!~F"                     # messages to me
 color index         cyan            default         "~N~p!~F"                   # new messages to me
 color index         cyan            default         "~U~p!~F"                   # unread messages to me
-color index         brightgreen     default         "~R~p!~F"                   # messages to me
+color index         default         default         "~R~p!~F"                   # messages to me
 color index         red             default         "~F"                        # flagged messages
 color index         red             default         "~F~p"                      # flagged messages to me
 color index         red             default         "~N~F"                      # new flagged messages
