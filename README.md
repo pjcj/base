@@ -4,6 +4,7 @@ This is the base system that I put onto any machine on which I am developing.
 It includes config files for:
 
 * [bspwm](https://github.com/baskerville/bspwm)
+* [sxhkd](https://github.com/baskerville/sxhkd)
 * Xdefaults, including [urxvt](http://software.schmorp.de/pkg/rxvt-unicode.html)
 * [tmux](http://tmux.sourceforge.net/)
 * [zsh](http://www.zsh.org/)
