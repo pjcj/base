@@ -7,3 +7,4 @@ if [ $(hostname) = "pj" ]; then
   firefox&
 fi
 urxvt&
+nm-applet&
