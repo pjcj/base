@@ -25,6 +25,7 @@ Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
 Plug 'sjl/gundo.vim'                                                       " ,gu
 Plug 'Spaceghost/vim-matchit'                                                " %
 Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
+Plug 'suan/vim-instant-markdown'
 Plug 'terryma/vim-multiple-cursors'                                         " ^n
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'tpope/vim-abolish'               " :%Subvert/facilit{y,ies}/building{,s}/g
