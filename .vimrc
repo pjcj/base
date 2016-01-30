@@ -553,31 +553,6 @@ let g:ctrlp_prompt_mappings = {
     \ "PrtExit()": ["<esc>", "<c-c>", "<c-g>"],
     \ }
 
-" fzf
-command! FZFMru call fzf#run({
-\ "source":  reverse(s:all_files()),
-\ "sink":    "edit",
-\ "options": "-m -x +s",
-\ "down":    "40%" })
-
-function! s:all_files()
-  return extend(
-  \ filter(copy(v:oldfiles),
-  \        "v:val !~ "fugitive:\\|NERD_tree\\|^/tmp/\\|.git/""),
-  \ map(filter(range(1, bufnr("$")), "buflisted(v:val)"), "bufname(v:val)"))
-endfunction
-
-function! FZFExecute()
-  " Remove trailing new line to make it work with tmux splits
-  let directory = substitute(system("git rev-parse --show-toplevel"), "\n$", "", "")
-  if !v:shell_error
-    call fzf#run({"sink": "e", "dir": directory, "source": "git ls-files", "tmux_height": "40%"})
-  else
-    FZF
-  endif
-endfunction
-command! FZFExecute call FZFExecute()
-
 " unite
 call unite#filters#matcher_default#use(["matcher_fuzzy"])
 let g:unite_enable_start_insert = 1
