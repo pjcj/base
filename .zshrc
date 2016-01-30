@@ -500,3 +500,5 @@ RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %T%{$reset_color%}'
 # Clear up after status display
 
 echo -n "\r"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
