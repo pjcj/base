@@ -5,7 +5,8 @@ call plug#begin()
 Plug 'airblade/vim-gitgutter'                              " ,hn ,hp ,hv ,hs ,hr
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 Plug 'altercation/vim-colors-solarized'
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'ervandew/supertab'
 Plug 'gregsexton/gitv'                                                   " :gitv
@@ -277,6 +278,7 @@ function! Setup_indent_guides()
 endfunction
 autocmd VimEnter,Colorscheme * call Setup_indent_guides()
 
+let g:airline_theme='solarized'
 let g:airline_powerline_fonts = 1
 
 au BufNewFile,BufReadPost template/* set ft=tt2html
