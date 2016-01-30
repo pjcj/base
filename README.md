@@ -5,7 +5,6 @@ It includes config files for:
 
 * [bspwm](https://github.com/baskerville/bspwm) (Tiling window manager)
 * [sxhkd](https://github.com/baskerville/sxhkd) (X hotkey daemon)
-* [candybar](https://github.com/Lokaltog/candybar) (Window manager status bar)
 * Xdefaults, including [st](http://git.suckless.org/st/) and
   [urxvt](http://software.schmorp.de/pkg/rxvt-unicode.html)
 * [tmux](http://tmux.sourceforge.net/)
