@@ -1,3 +1,13 @@
+diff --git c/.gitignore w/.gitignore
+new file mode 100644
+index 0000000..00907bc
+--- /dev/null
++++ w/.gitignore
+@@ -0,0 +1,4 @@
++config.h
++st
++st.o
++tags
 diff --git c/Makefile w/Makefile
 index 6158ab2..d58ed60 100644
 --- c/Makefile
@@ -12,7 +22,7 @@ index 6158ab2..d58ed60 100644
  dist: clean
  	@echo creating dist tarball
 diff --git c/config.def.h w/config.def.h
-index fd09d72..337a6f0 100644
+index fd09d72..a2087f7 100644
 --- c/config.def.h
 +++ w/config.def.h
 @@ -5,8 +5,9 @@
@@ -21,12 +31,21 @@ index fd09d72..337a6f0 100644
   */
 -static char font[] = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
 -static int borderpx = 2;
-+// static char font[] = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
++/* static char font[] = "Liberation Mono:pixelsize=12:antialias=true:autohint=true"; */
 +static char font[] = "Inconsolata for Powerline:pixelsize=16:antialias=false";
-+static int borderpx = 1;
++static int borderpx = 0;
  
  /*
   * What program is execed by st depends of these precedence rules:
+@@ -32,7 +33,7 @@ static float chscale = 1.0;
+  *
+  * More advanced example: " `'\"()[]{}"
+  */
+-static char worddelimiters[] = " ";
++static char worddelimiters[] = " `'\"()[]{}";
+ 
+ /* selection timeouts (in milliseconds) */
+ static unsigned int doubleclicktimeout = 300;
 @@ -42,8 +43,8 @@ static unsigned int tripleclicktimeout = 600;
  static int allowaltscreen = 1;
  
