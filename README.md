@@ -3,22 +3,26 @@
 This is the base system that I put onto any machine on which I am developing.
 It includes config files for:
 
-* [bspwm](https://github.com/baskerville/bspwm)
-* [sxhkd](https://github.com/baskerville/sxhkd)
-* Xdefaults, including [urxvt](http://software.schmorp.de/pkg/rxvt-unicode.html)
+* [bspwm](https://github.com/baskerville/bspwm) (Window manager)
+* [sxhkd](https://github.com/baskerville/sxhkd) (X hotkey daemon)
+* Xdefaults, including [st](http://git.suckless.org/st/) and
+  [urxvt](http://software.schmorp.de/pkg/rxvt-unicode.html)
 * [tmux](http://tmux.sourceforge.net/)
 * [zsh](http://www.zsh.org/)
 * [vim](http://www.vim.org/)
 * [powerline](https://github.com/powerline/powerline)
 * [git](http://www.git-scm.com/)
 
-Colours are Solarized Dark.
+Colours are Solarized Dark slightly altered to make the dark background colours
+a little darker.
 
-The zsh config uses [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) but
-only for the prompt and the cpanm, tmuxinator and zsh-syntax-highlighting
-plugins.
+The zsh config uses [zplug](https://github.com/b4b4r07/zplug) and the following
+plugins:
 
-The vim config uses [Vundle](https://github.com/gmarik/Vundle.vim) and the
+* [zsh-completions](https://github.com/zsh-users/zsh-completions)
+* [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
+
+The vim config uses [vim-plug](https://github.com/junegunn/vim-plug) and the
 following plugins:
 
 * [vim-gitgutter](https://github.com/airblade/vim-gitgutter)
