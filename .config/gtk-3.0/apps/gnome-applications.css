@@ -47,7 +47,7 @@ PanelApplet .button {
     border-color: transparent;
     background-color: @panel_bg_color;
     background-image: none;
-    color: #586e75;
+    color: @panel_fg_color;
 }
 
 PanelApplet .button:active {
@@ -56,7 +56,6 @@ PanelApplet .button:active {
     border-color: shade(#6c71c4, 0.8);
     background-color: shade(#6c71c4, 0.8);
     background-image: none;
-    color: @panel_fg_color;
 }
 
 PanelApplet .button:prelight {
