@@ -1,6 +1,7 @@
 #!/bin/sh
 
 xrdb -merge .Xdefaults
+xsetroot -bg black
 numlockx on
 gnome-panel &
 urxvt&
