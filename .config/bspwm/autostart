@@ -1,10 +1,11 @@
 #!/bin/sh
 
 xrdb -merge .Xdefaults
-gnome-panel&
-if [ $(hostname) = "pj" ]; then
-  thunderbird&
-  firefox&
-fi
+numlockx on
+gnome-panel &
 urxvt&
-nm-applet&
+nm-applet &
+if [ $(hostname) = "pj" ]; then
+  thunderbird &
+  firefox &
+fi
