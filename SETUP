@@ -20,6 +20,8 @@ golang get github.com/motemen/ghq
 $ ghq import -u < ghq.repos
 # then ghq look into all the updated repos and build and install
 
+$ sudo npm -g install instant-markdown-d
+
 exit
 
 # TODO - do we need tmuxinator now?
