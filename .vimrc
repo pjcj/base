@@ -456,7 +456,7 @@ nnoremap <leader>sd :setlocal spell spelllang=de_ch<CR>
 nnoremap <leader>so :set nospell<CR>
 
 " paste
-map <leader>p :set paste!<CR>
+nnoremap <leader>p :set paste!<CR>
 
 " yankring
 map <leader>m :YRShow<CR>
@@ -635,6 +635,8 @@ augroup END
 " let &t_SI = "\<Esc>[5 q"
 " let &t_SR = "\<Esc>[3 q"
 " let &t_EI = "\<Esc>[2 q"
+
+nmap - gcc
 
 " abbr
 abbr ,, =>
