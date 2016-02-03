@@ -5,8 +5,6 @@ call plug#begin()
 Plug 'airblade/vim-gitgutter'                              " ,hn ,hp ,hv ,hs ,hr
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 Plug 'altercation/vim-colors-solarized'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'ervandew/supertab'
 Plug 'gregsexton/gitv'                                                   " :gitv
@@ -36,6 +34,8 @@ Plug 'tpope/vim-fugitive'                                  " :Gdiff :Gstatus ,gg
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
 Plug 'vasconcelloslf/vim-interestingwords'                           " ,k ,K n N
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
 Plug 'zirrostig/vim-schlepp'                               " highlight then hjkl
 
