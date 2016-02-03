@@ -5,6 +5,7 @@ call plug#begin()
 Plug 'airblade/vim-gitgutter'                              " ,hn ,hp ,hv ,hs ,hr
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 Plug 'altercation/vim-colors-solarized'
+Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'ervandew/supertab'
 Plug 'gregsexton/gitv'                                                   " :gitv
