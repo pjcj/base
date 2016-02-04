@@ -4,7 +4,7 @@ xrdb -merge .Xdefaults
 xsetroot -bg black
 numlockx on
 gnome-panel &
-urxvt&
+/home/pjcj/g/sw/bin/st&
 nm-applet &
 if [ $(hostname) = "pj" ]; then
   thunderbird &

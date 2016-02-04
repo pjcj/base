@@ -1,0 +1,159 @@
+diff --git c/.gitignore w/.gitignore
+new file mode 100644
+index 0000000..00907bc
+--- /dev/null
++++ w/.gitignore
+@@ -0,0 +1,4 @@
++config.h
++st
++st.o
++tags
+diff --git c/Makefile w/Makefile
+index 6158ab2..d58ed60 100644
+--- c/Makefile
++++ w/Makefile
+@@ -29,7 +29,7 @@ st: ${OBJ}
+ 
+ clean:
+ 	@echo cleaning
+-	@rm -f st ${OBJ} st-${VERSION}.tar.gz
++	@rm -f st ${OBJ} st-${VERSION}.tar.gz config.h
+ 
+ dist: clean
+ 	@echo creating dist tarball
+diff --git c/config.def.h w/config.def.h
+index fd09d72..a2087f7 100644
+--- c/config.def.h
++++ w/config.def.h
+@@ -5,8 +5,9 @@
+  *
+  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
+  */
+-static char font[] = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
+-static int borderpx = 2;
++/* static char font[] = "Liberation Mono:pixelsize=12:antialias=true:autohint=true"; */
++static char font[] = "Inconsolata for Powerline:pixelsize=16:antialias=false";
++static int borderpx = 0;
+ 
+ /*
+  * What program is execed by st depends of these precedence rules:
+@@ -32,7 +33,7 @@ static float chscale = 1.0;
+  *
+  * More advanced example: " `'\"()[]{}"
+  */
+-static char worddelimiters[] = " ";
++static char worddelimiters[] = " `'\"()[]{}";
+ 
+ /* selection timeouts (in milliseconds) */
+ static unsigned int doubleclicktimeout = 300;
+@@ -42,8 +43,8 @@ static unsigned int tripleclicktimeout = 600;
+ static int allowaltscreen = 1;
+ 
+ /* frames per second st should at maximum draw to the screen */
+-static unsigned int xfps = 120;
+-static unsigned int actionfps = 30;
++static unsigned int xfps = 240;
++static unsigned int actionfps = 60;
+ 
+ /*
+  * blinking timeout (set to 0 to disable blinking) for the terminal blinking
+@@ -69,42 +70,33 @@ static unsigned int tabspaces = 8;
+ 
+ /* Terminal colors (16 first used in escape sequence) */
+ static const char *colorname[] = {
+-	/* 8 normal colors */
+-	"black",
+-	"red3",
+-	"green3",
+-	"yellow3",
+-	"blue2",
+-	"magenta3",
+-	"cyan3",
+-	"gray90",
+-
+-	/* 8 bright colors */
+-	"gray50",
+-	"red",
+-	"green",
+-	"yellow",
+-	"#5c5cff",
+-	"magenta",
+-	"cyan",
+-	"white",
+-
+-	[255] = 0,
+-
+-	/* more colors can be added after 255 to use with DefaultXX */
+-	"#cccccc",
+-	"#555555",
++    /* solarized dark */
++    "#022731",  /*  0: black    */
++    "#dc322f",  /*  1: red      */
++    "#859900",  /*  2: green    */
++    "#b58900",  /*  3: yellow   */
++    "#268bd2",  /*  4: blue     */
++    "#d33682",  /*  5: magenta  */
++    "#2aa198",  /*  6: cyan     */
++    "#eee8d5",  /*  7: white    */
++    "#001920",  /*  8: brblack  */
++    "#cb4b16",  /*  9: brred    */
++    "#586e75",  /* 10: brgreen  */
++    "#657b83",  /* 11: bryellow */
++    "#839496",  /* 12: brblue   */
++    "#6c71c4",  /* 13: brmagenta*/
++    "#93a1a1",  /* 14: brcyan   */
++    "#fdf6e3",  /* 15: brwhite  */
+ };
+ 
+-
+ /*
+  * Default colors (colorname index)
+  * foreground, background, cursor, reverse cursor
+  */
+-static unsigned int defaultfg = 7;
+-static unsigned int defaultbg = 0;
+-static unsigned int defaultcs = 256;
+-static unsigned int defaultrcs = 257;
++static unsigned int defaultfg = 12;
++static unsigned int defaultbg = 8;
++static unsigned int defaultcs = 14;
++static unsigned int defaultrcs = 15;
+ 
+ /*
+  * Default shape of cursor
+@@ -245,8 +237,8 @@ static Key key[] = {
+ 	{ XK_KP_Delete,     ControlMask,    "\033[3;5~",    +1,    0,    0},
+ 	{ XK_KP_Delete,     ShiftMask,      "\033[2K",      -1,    0,    0},
+ 	{ XK_KP_Delete,     ShiftMask,      "\033[3;2~",    +1,    0,    0},
+-	{ XK_KP_Delete,     XK_ANY_MOD,     "\033[P",       -1,    0,    0},
+-	{ XK_KP_Delete,     XK_ANY_MOD,     "\033[3~",      +1,    0,    0},
++	{ XK_KP_Delete,     XK_ANY_MOD,     "\033[P",       +1,    0,    0},
++	{ XK_KP_Delete,     XK_ANY_MOD,     "\033[3~",      -1,    0,    0},
+ 	{ XK_KP_Multiply,   XK_ANY_MOD,     "\033Oj",       +2,    0,    0},
+ 	{ XK_KP_Add,        XK_ANY_MOD,     "\033Ok",       +2,    0,    0},
+ 	{ XK_KP_Enter,      XK_ANY_MOD,     "\033OM",       +2,    0,    0},
+@@ -300,8 +292,9 @@ static Key key[] = {
+ 	{ XK_Delete,        ControlMask,    "\033[3;5~",    +1,    0,    0},
+ 	{ XK_Delete,        ShiftMask,      "\033[2K",      -1,    0,    0},
+ 	{ XK_Delete,        ShiftMask,      "\033[3;2~",    +1,    0,    0},
+-	{ XK_Delete,        XK_ANY_MOD,     "\033[P",       -1,    0,    0},
+-	{ XK_Delete,        XK_ANY_MOD,     "\033[3~",      +1,    0,    0},
++	/* { XK_Delete,        XK_ANY_MOD,     "\033[P",       +1,    0,    0}, */
++	{ XK_Delete,        XK_ANY_MOD,     "\033[3~",      -1,    0,    0},
++	{ XK_Delete,        XK_ANY_MOD,     "\033[3~",       0,    0,    0},
+ 	{ XK_BackSpace,     XK_NO_MOD,      "\177",          0,    0,    0},
+ 	{ XK_Home,          ShiftMask,      "\033[2J",       0,   -1,    0},
+ 	{ XK_Home,          ShiftMask,      "\033[1;2H",     0,   +1,    0},
+diff --git c/config.mk w/config.mk
+index 81e3e47..00eefa4 100644
+--- c/config.mk
++++ w/config.mk
+@@ -4,7 +4,7 @@ VERSION = 0.6
+ # Customize below to fit your system
+ 
+ # paths
+-PREFIX = /usr/local
++PREFIX = /home/pjcj/g/sw
+ MANPREFIX = ${PREFIX}/share/man
+ 
+ X11INC = /usr/X11R6/include
