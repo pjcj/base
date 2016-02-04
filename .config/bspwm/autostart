@@ -1,10 +1,12 @@
 #!/bin/sh
 
+PATH=/home/pjcj/g/sw/bin:$PATH
+
 xrdb -merge .Xdefaults
 xsetroot -bg black
 numlockx on
 gnome-panel &
-/home/pjcj/g/sw/bin/st&
+st&
 nm-applet &
 if [ $(hostname) = "pj" ]; then
   thunderbird &
