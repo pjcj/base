@@ -5,7 +5,7 @@ It includes config files for:
 
 * [bspwm](https://github.com/baskerville/bspwm) (Tiling window manager)
 * [sxhkd](https://github.com/baskerville/sxhkd) (X hotkey daemon)
-* Xdefaults, including [st](http://git.suckless.org/st/) and
+* Xdefaults, including [st](http://st.suckless.org/) and
   [urxvt](http://software.schmorp.de/pkg/rxvt-unicode.html)
 * [tmux](http://tmux.sourceforge.net/)
 * [zsh](http://www.zsh.org/)
@@ -15,6 +15,13 @@ It includes config files for:
 
 Colours are Solarized Dark slightly altered to make the dark background colours
 a little darker.
+
+Cutting edge software (newer than that packaged) is managed with
+[ghq](https://github.com/motemen/ghq) and includes the following repositories:
+
+* [st](http://git.suckless.org/st/)
+* [zsh](git://zsh.git.sf.net/gitroot/zsh/zsh)
+* [neovim](https://github.com/neovim/neovim)
 
 The zsh config uses [zplug](https://github.com/b4b4r07/zplug) and the following
 plugins:

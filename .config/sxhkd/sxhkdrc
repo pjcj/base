@@ -138,3 +138,7 @@ super + Escape
 # lockscreen
 ctrl + alt + l
     gnome-screensaver-command -a
+
+# xte
+super + y ; n
+    xdotool sleep 0.1 type --clearmodifiers --delay 12 labcde
