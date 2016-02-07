@@ -22,6 +22,7 @@ Cutting edge software (newer than that packaged) is managed with
 * [st](http://git.suckless.org/st/)
 * [zsh](git://zsh.git.sf.net/gitroot/zsh/zsh)
 * [neovim](https://github.com/neovim/neovim)
+* [tmux](https://github.com/tmux/tmux)
 
 The zsh config uses [zplug](https://github.com/b4b4r07/zplug) and the following
 plugins:
