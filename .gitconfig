@@ -59,7 +59,7 @@
 [url "git://github.com/"]
         insteadOf = github:
 [rerere]
-        enabled = 1
+        enabled = true
         autoupdate = true
 [ghq]
         root = ~/g/ghq
