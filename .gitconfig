@@ -10,6 +10,8 @@
         linenumber = red
         match = green
         separator = magenta
+[core]
+        whitespace = trailing-space,space-before-tab,tab-in-indent
 [pack]
         threads = 0
 [diff]
