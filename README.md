@@ -20,9 +20,15 @@ Cutting edge software (newer than that packaged) is managed with
 [ghq](https://github.com/motemen/ghq) and includes the following repositories:
 
 * [st](http://git.suckless.org/st/)
+* [urxvt (with true colour support)](https://github.com/spudowiar/rxvt-unicode)
 * [zsh](git://zsh.git.sf.net/gitroot/zsh/zsh)
+* [zsh-git-prompt](https://github.com/olivierverdier/zsh-git-prompt)
 * [neovim](https://github.com/neovim/neovim)
 * [tmux](https://github.com/tmux/tmux)
+* [bspwm](https://github.com/baskerville/bspwm)
+* [sxhkd](https://github.com/baskerville/sxhkd)
+* [xdotool](https://github.com/jordansissel/xdotool)
+* [urlview](https://github.com/sigpipe/urlview)
 
 The zsh config uses [zplug](https://github.com/b4b4r07/zplug) and the following
 plugins:
