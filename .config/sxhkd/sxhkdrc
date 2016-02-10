@@ -139,6 +139,14 @@ super + Escape
 ctrl + alt + l
     gnome-screensaver-command -a
 
-# xte
+# xdotool
+super + y ; u
+    xdotool sleep 0.1 type --clearmodifiers --delay 12 pjcj
 super + y ; n
-    xdotool sleep 0.1 type --clearmodifiers --delay 12 labcde
+    xdotool sleep 0.1 type --clearmodifiers --delay 12 "Paul Johnson"
+super + y ; e
+    xdotool sleep 0.1 type --clearmodifiers --delay 12 paul@pjcj.net
+
+# apps
+super + a ; f
+    firefox&
