@@ -136,6 +136,8 @@ endif
 call plug#end()
 
 if has ("nvim")
+    " Use head matcher instead of fuzzy matcher
+    call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
     tnoremap <Esc> <C-\><C-n>
 endif
 
