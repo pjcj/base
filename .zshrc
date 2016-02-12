@@ -406,6 +406,7 @@ wh()      { . uwh "$@" }
 z()       { dzil "$@" }
 zb()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil build "$@" }
 zt()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil test "$@" }
+= ()       { echo "$@" | bc -l }
 
 tm() {
     [[ -z "$1" ]] && { echo "usage: tm <session>" >&2; return 1; }
