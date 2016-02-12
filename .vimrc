@@ -64,7 +64,7 @@ elseif has ("nvim")
     let g:deoplete#disable_auto_complete        = 0
     let g:deoplete#auto_completion_start_length = 2
     let g:deoplete#sources                      = {}
-    let g:deoplete#sources._           = ["buffer", "tag", "file", "dictionary"]
+    let g:deoplete#sources._ = ["member", "buffer", "tag", "file", "dictionary"]
 
     Plug 'benekastah/neomake'
 elseif has ("nvim") || !has ("lua")
@@ -138,6 +138,13 @@ call plug#end()
 if has ("nvim")
     " Use head matcher instead of fuzzy matcher
     call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
+    " Order completions.
+    call deoplete#custom#set('member',     'rank', 450)
+    call deoplete#custom#set('buffer',     'rank', 400)
+    call deoplete#custom#set('file',       'rank', 300)
+    call deoplete#custom#set('tag',        'rank', 200)
+    call deoplete#custom#set('dictionary', 'rank', 100)
+    de
     tnoremap <Esc> <C-\><C-n>
 endif
 
