@@ -434,7 +434,7 @@ zshrc_load_status "environment"
 export GOPATH=~/g/go
 export LANG=en_GB.UTF-8
 export LESSOPEN="|lesspipe.sh %s"
-export LESS=-RM
+export LESS='--no-init --LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS'
 export NOPASTE_SERVICES="Gist Pastie Snitch Shadowcat"
 export PAGER=less
 export TERMINFO=~/.terminfo
