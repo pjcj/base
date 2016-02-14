@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# set -x
+
+cd ~/g/base
+
+ghq import -u < ghq.repos
+
+cat ghq.repos | while read repo; do
+    sw=$(basename $repo)
+    dir=$(ghq list -p | grep $sw)
+    cd $dir
+    echo building $sw
+    build
+done
