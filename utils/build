@@ -34,6 +34,12 @@ case "$dir" in
         make check
         make install || echo make install expected to fail
         ;;
+    tmux)
+        export LIBEVENT_CFLAGS="-I$sw/include"
+        export LIBEVENT_LIBS="-L$sw/lib -Wl,-rpath=$sw/lib -levent"
+        configure
+        make check install
+        ;;
     zsh-git-prompt)
         stack setup
         stack build && stack install
