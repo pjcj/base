@@ -3,12 +3,17 @@
 set -ex
 
 dir=$(basename $(pwd))
+sw=$HOME/g/sw
 
 case "$dir" in
   htop)
       [ -f ./configure ] || ./autogen.sh
-      ./configure --prefix=$HOME/g/sw
+      ./configure --prefix=$sw
       make check install
+    ;;
+  neovim)
+      make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
+           CMAKE_BUILD_TYPE=Release test install
     ;;
   *)
     echo Unknown directory "$dir"
