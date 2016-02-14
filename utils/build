@@ -1,33 +1,42 @@
 #!/bin/sh
 
-set -ex
+set -e
 
 dir=$(basename $(pwd))
 sw=$HOME/g/sw
 
+configure() {
+    [ -f ./configure ] || ./autogen.sh
+    ./configure --prefix=$sw "$@"
+}
+
 case "$dir" in
-  urlview|htop)
-      [ -f ./configure ] || ./autogen.sh
-      ./configure --prefix=$sw
-      make check install
-    ;;
-  neovim)
-      make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
-           CMAKE_BUILD_TYPE=Release test install
-    ;;
-  st)
-      make clean install
-    ;;
-  sxhkd|bspwm)
-      make PREFIX=$sw all install
-    ;;
-  xdotool)
-      make PREFIX=$sw all test install
-      sudo ldconfig
-    ;;
-  *)
-    echo Unknown directory "$dir"
-    ;;
+    urlview|htop)
+        configure
+        make check install
+        ;;
+    neovim)
+        make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
+            CMAKE_BUILD_TYPE=Release test install
+        ;;
+    st)
+        make clean install
+        ;;
+    sxhkd|bspwm)
+        make PREFIX=$sw all install
+        ;;
+    xdotool)
+        make PREFIX=$sw all test install
+        sudo ldconfig
+        ;;
+    zsh)
+        configure --enable-pcre
+        make check
+        make install || echo make install expected to fail
+        ;;
+    *)
+        echo Unknown directory "$dir"
+        ;;
 esac
 
 echo "built $dir"
