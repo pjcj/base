@@ -17,7 +17,7 @@ Plug 'junegunn/vim-easy-align'                                     " = ^X<regex>
 Plug 'kshenoy/vim-signature'                          " mx dmx m, m. m<Space> m/
 Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
 Plug 'majutsushi/tagbar'                                                  " <F2>
-Plug 'nathanaelkane/vim-indent-guides'                           " at 80 and 132
+Plug 'nathanaelkane/vim-indent-guides'    " configured for indent of two or four
 Plug 'pjcj/vim-hl-var'
 Plug 'saltstack/salt-vim'                                    " salt highlighting
 Plug 'scrooloose/nerdtree'                                                " <F1>
