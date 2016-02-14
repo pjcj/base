@@ -34,8 +34,12 @@ case "$dir" in
         make check
         make install || echo make install expected to fail
         ;;
+    zsh-git-prompt)
+        stack setup
+        stack build && stack install
+        ;;
     *)
-        echo Unknown directory "$dir"
+        echo unknown directory "$dir"
         ;;
 esac
 
