@@ -8,6 +8,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'ervandew/supertab'
+Plug 'gioele/vim-autoswap'                        " deal with swapfiles sensibly
 Plug 'gregsexton/gitv'                                                   " :gitv
 Plug 'honza/dockerfile.vim'                                      " docker syntax
 Plug 'inside/vim-search-pulse'
