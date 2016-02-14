@@ -18,6 +18,9 @@ case "$dir" in
   st)
       make clean install
     ;;
+  sxhkd|bspwm)
+      make all install PREFIX=$sw
+    ;;
   *)
     echo Unknown directory "$dir"
     ;;
