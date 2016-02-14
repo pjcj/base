@@ -15,6 +15,9 @@ case "$dir" in
       make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
            CMAKE_BUILD_TYPE=Release test install
     ;;
+  st)
+      make clean install
+    ;;
   *)
     echo Unknown directory "$dir"
     ;;
