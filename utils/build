@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -ex
+
+dir=$(basename $(pwd))
+
+case "$dir" in
+  htop)
+      [ -f ./configure ] || ./autogen.sh
+      ./configure --prefix=$HOME/g/sw
+      make check install
+    ;;
+  *)
+    echo Unknown directory "$dir"
+    ;;
+esac
