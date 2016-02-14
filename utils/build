@@ -6,7 +6,7 @@ dir=$(basename $(pwd))
 sw=$HOME/g/sw
 
 case "$dir" in
-  htop)
+  urlview|htop)
       [ -f ./configure ] || ./autogen.sh
       ./configure --prefix=$sw
       make check install
@@ -19,9 +19,15 @@ case "$dir" in
       make clean install
     ;;
   sxhkd|bspwm)
-      make all install PREFIX=$sw
+      make PREFIX=$sw all install
+    ;;
+  xdotool)
+      make PREFIX=$sw all test install
+      sudo ldconfig
     ;;
   *)
     echo Unknown directory "$dir"
     ;;
 esac
+
+echo "built $dir"
