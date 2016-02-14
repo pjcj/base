@@ -1,12 +1,12 @@
-spudowiar/rxvt-unicode
-http://git.suckless.org/st/
-olivierverdier/zsh-git-prompt
+http://git.suckless.org/st
 neovim/neovim.git
-sigpipe/urlview
 baskerville/sxhkd.git
 baskerville/bspwm.git
 git://zsh.git.sf.net/gitroot/zsh/zsh
+olivierverdier/zsh-git-prompt
+libevent/libevent
 tmux/tmux
+sigpipe/urlview
 jordansissel/xdotool
 hishamhm/htop
-libevent/libevent
+spudowiar/rxvt-unicode
