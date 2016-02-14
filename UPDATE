@@ -6,7 +6,6 @@ $ git rebase
 $ git stash pop
 
 $ restart
-$ zplug update
 
 $ v (for vim or nvim)
 :PlugUpgrade
@@ -14,23 +13,4 @@ $ v (for vim or nvim)
 :PlugInstall
 :PlugUpdate
 
-$ pip install --upgrade --user git+git://github.com/powerline/powerline
-
-[tmux]
-<ctrl-A> I
-<ctrl-A> U all
-
-$ ghq import -u < ghq.repos
-then ghq look into all the updated repos and build and install
-
-$ cd ~/g/sw/build/sxhkd
-$ git fetch
-$ git rebase
-$ make
-$ make install PREFIX=~/g/sw
-
-$ cd ~/g/sw/build/bspwm
-$ git fetch
-$ git rebase
-$ make
-$ make install PREFIX=~/g/sw
+$ build_all

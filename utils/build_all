@@ -4,11 +4,22 @@
 
 cd ~/g/base
 
+~/.tmux/plugins/tpm/bindings/clean_plugins
+~/.tmux/plugins/tpm/bindings/install_plugins
+~/.tmux/plugins/tpm/scripts/update_plugin_prompt_handler.sh all
+
+cd ~/g/base
+zplug update
+
+pip install --upgrade --user git+git://github.com/powerline/powerline
+
+cd ~/g/base
 ghq import -u < ghq.repos
 
 cat ghq.repos | while read repo; do
     sw=$(basename $repo)
     dir=$(ghq list -p | grep $sw)
+    # echo $repo, $sw, $dir
     cd $dir
     echo building $sw
     build

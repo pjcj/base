@@ -1,7 +1,7 @@
 http://git.suckless.org/st
-neovim/neovim.git
-baskerville/sxhkd.git
-baskerville/bspwm.git
+neovim/neovim
+baskerville/sxhkd
+baskerville/bspwm
 git://zsh.git.sf.net/gitroot/zsh/zsh
 olivierverdier/zsh-git-prompt
 libevent/libevent
