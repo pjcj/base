@@ -1,18 +1,10 @@
 To update utilities:
 
 $ git fetch
-$ git stash
-$ git rebase
-$ git stash pop
+$ git rebase --autostash
 
 $ restart
 $ zplug clean
 $ zplug update
-
-$ v (for vim or nvim)
-:PlugUpgrade
-:PlugClean
-:PlugInstall
-:PlugUpdate
 
 $ build_all
