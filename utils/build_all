@@ -8,9 +8,12 @@ cd ~/g/base
 ~/.tmux/plugins/tpm/bindings/install_plugins
 ~/.tmux/plugins/tpm/scripts/update_plugin_prompt_handler.sh all
 
-cd ~/g/base
-zplug update
+$EDITOR -c PlugUpgrade -c qa
+$EDITOR -c PlugClean   -c qa
+$EDITOR -c PlugInstall -c qa
+$EDITOR -c PlugUpdate  -c qa
 
+cd ~/g/base
 pip install --upgrade --user git+git://github.com/powerline/powerline
 
 cd ~/g/base

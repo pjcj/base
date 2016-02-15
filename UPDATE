@@ -6,6 +6,8 @@ $ git rebase
 $ git stash pop
 
 $ restart
+$ zplug clean
+$ zplug update
 
 $ v (for vim or nvim)
 :PlugUpgrade
