@@ -312,6 +312,7 @@ au FileType xhtml,xml,html,tt2html setlocal sw=2
 au FileType * exe("setl dict^=".$VIMRUNTIME."/syntax/".&filetype.".vim")
 
 let g:gutentags_exclude = ["blib"]
+" can be extended with "*/sub/path" if required
 
 " taglist plugin
 let Tlist_Use_SingleClick      = 1
