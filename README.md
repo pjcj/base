@@ -33,8 +33,13 @@ Cutting edge software (newer than that packaged) is managed with
 The zsh config uses [zplug](https://github.com/b4b4r07/zplug) and the following
 plugins:
 
-* [zsh-completions](https://github.com/zsh-users/zsh-completions)
+* [zsh-completions](https://github.com/zsh-users/zsh-completions) (extra
+  completions)
 * [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
+  (hightlighting on the command line)
+* [zsh-dwim](https://github.com/ton/zsh-dwim) (predict next command with ^U)
+* [git-extras](https://github.com/tj/git-extras) (additional git commands)
+* [k](https://github.com/supercrabtree/k) (ls extended)
 
 The vim config uses [vim-plug](https://github.com/junegunn/vim-plug) and the
 following plugins:
