@@ -299,10 +299,10 @@ au BufNewFile,BufReadPost *.tt       set ft=tt2html
 au BufNewFile,BufReadPost *.t        set ft=perl
 au BufNewFile,BufReadPost *.pd       set ft=perl
 
-au BufRead *tmp/ml/mutt-*            setlocal tw=72 spell spelllang=en_gb
+au BufRead *tmp/ml/mutt-* setlocal colorcolumn=72 tw=72 spell spelllang=en_gb
 
 au Filetype perl source ~/.vim/local/perl_local.vim
-au Filetype gitcommit setlocal colorcolumn=50,80 tw=72 spell spelllang=en_gb
+au Filetype gitcommit setlocal colorcolumn=50,72 tw=72 spell spelllang=en_gb
 
 autocmd InsertLeave * if expand("%") != "" | update | endif
 
