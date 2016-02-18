@@ -39,6 +39,7 @@ Plug 'vasconcelloslf/vim-interestingwords'                           " ,k ,K n N
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'zirrostig/vim-schlepp'                               " highlight then hjkl
 
 Plug 'Shougo/unite.vim'                                         " <space><space>
