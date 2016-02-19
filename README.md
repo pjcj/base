@@ -37,7 +37,7 @@ plugins:
   completions)
 * [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
   (hightlighting on the command line)
-* [zsh-dwim](https://github.com/ton/zsh-dwim) (predict next command with ^U)
+* [zsh-dwim](https://github.com/oknowton/zsh-dwim) (predict next command with ^U)
 * [git-extras](https://github.com/tj/git-extras) (additional git commands)
 * [k](https://github.com/supercrabtree/k) (ls extended)
 
