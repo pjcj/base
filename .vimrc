@@ -498,10 +498,10 @@ highlight SyntasticErrorSign   ctermbg=0 ctermfg=1 cterm=bold
 highlight SyntasticWarningSign ctermbg=0 ctermfg=5 cterm=bold
 
 " delimitMate
-imap § <C-G>g
-let delimitMate_expand_space         = 1
-let delimitMate_expand_cr            = 2
-let delimitMate_expand_inside_quotes = 1
+" imap § <C-G>g
+" let delimitMate_expand_space         = 1
+" let delimitMate_expand_cr            = 2
+" let delimitMate_expand_inside_quotes = 1
 
 vmap <Enter> <Plug>(EasyAlign)
 nmap <Leader>a <Plug>(EasyAlign)
