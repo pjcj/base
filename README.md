@@ -47,7 +47,6 @@ following plugins:
 * [vim-gitgutter](https://github.com/airblade/vim-gitgutter)
 * [vitality.vim](https://github.com/akracun/vitality.vim)
 * [vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
-* [vim-airline](https://github.com/bling/vim-airline)
 * [csv.vim](https://github.com/chrisbra/csv.vim)
 * [supertab](https://github.com/ervandew/supertab)
 * [tabular](https://github.com/godlygeek/tabular)
@@ -69,3 +68,5 @@ following plugins:
 * [vim-fugitive](https://github.com/tpope/vim-fugitive)
 * [vim-surround](https://github.com/tpope/vim-surround)
 * [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
+* [vim-airline](https://github.com/vim-airline/vim-airline)
+* [vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)
