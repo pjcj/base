@@ -405,7 +405,7 @@ nnoremap <S-F4> :tnext<CR>
 nnoremap <M-F4> :tprev<CR>
 " map OS <M-F4>
 nnoremap <F5> :execute "silent make" <Bar> botright copen<CR><C-L>
-nnoremap <S-F5> :w<CR>:SyntasticCheck<CR>:ll<CR>
+nnoremap <S-F5> :w<CR>:SyntasticCheck<CR>:Errors<CR>
 nnoremap <F6> :cprevious<CR>
 nnoremap <S-F6> :lprevious<CR>
 nnoremap <F7> :cnext<CR>
