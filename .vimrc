@@ -480,32 +480,36 @@ nnoremap <leader>p :set paste!<CR>
 
 " yankring
 map <leader>m :YRShow<CR>
-let g:yankring_max_history = 1000
-let g:yankring_min_element_length = 2
-let g:yankring_max_element_length = 40000 " 40K
-let g:yankring_max_display = 500
-let g:yankring_window_height = 25
+let g:yankring_max_history         = 1000
+let g:yankring_min_element_length  = 2
+let g:yankring_max_element_length  = 40000  " 40K
+let g:yankring_max_display         = 500
+let g:yankring_window_height       = 25
 let g:yankring_manage_numbered_reg = 1
-let g:yankring_history_dir = "$HOME/.vim"
+let g:yankring_history_dir         = "$HOME/.vim"
 
 " syntastic
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_mode_map = { "mode": "active",
-    \ "active_filetypes": [],
-    \ "passive_filetypes": [] }
+let g:syntastic_check_on_open            = 1
+let g:syntastic_check_on_wq              = 0
+let g:syntastic_aggregate_errors         = 1  " doesn't seem to work
+let g:syntastic_sort_aggregated_errors   = 1
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_auto_jump = 3
-let g:syntastic_enable_signs = 1
-let g:syntastic_error_symbol = "✗"
-let g:syntastic_warning_symbol = "⚠"
+let g:syntastic_auto_loc_list            = 1
+let g:syntastic_auto_jump                = 3
+let g:syntastic_enable_signs             = 1
+let g:syntastic_error_symbol             = "✗"
+let g:syntastic_warning_symbol           = "⚠"
+let g:syntastic_style_error_symbol       = "✗"
+let g:syntastic_style_warning_symbol     = "⚠"
 highlight SyntasticErrorSign   ctermbg=0 ctermfg=1 cterm=bold
 highlight SyntasticWarningSign ctermbg=0 ctermfg=5 cterm=bold
 
-let g:syntastic_perl_checkers = ["perl"]
+let g:syntastic_mode_map = { "mode": "active",
+    \ "active_filetypes":  [],
+    \ "passive_filetypes": [] }
+let g:syntastic_perl_checkers       = ["perl"]
 let g:syntastic_enable_perl_checker = 1
-let g:syntastic_shell_checkers = ["shellcheck"]
+let g:syntastic_shell_checkers      = ["sh", "shellcheck", "checkbashisms"]
 
 " delimitMate
 " imap § <C-G>g
@@ -525,73 +529,73 @@ cmap w!! w !sudo tee % >/dev/null
 
 " ctrlp
 nnoremap <F11> :silent! write <Bar> CtrlPMixed<CR>
-let g:ctrlp_map = "<F99>"  " Not used
-let g:ctrlp_cmd = "CtrlP"
-let g:ctrlp_reuse_window = "quickfix"
-let g:ctrlp_working_path_mode = "ra"
-let g:ctrlp_user_command = [".git", "cd %s && git ls-files"]
-let g:ctrlp_custom_ignore = {
+let g:ctrlp_map                = "<F99>"  " Not used
+let g:ctrlp_cmd                = "CtrlP"
+let g:ctrlp_reuse_window       = "quickfix"
+let g:ctrlp_working_path_mode  = "ra"
+let g:ctrlp_user_command       = [".git", "cd %s && git ls-files"]
+let g:ctrlp_custom_ignore      = {
     \ "dir":  "\v[\/](tmp|blib|cover_db|nytprof|pdldb|site)$",
     \ "file": "\v\nytprof$",
     \ }
-let g:ctrlp_extensions = [
+let g:ctrlp_extensions         = [
     \ "mixed", "menu", "tag", "yankring", "changes", "cmdline"
     \ ]
-let g:ctrlp_mruf_relative = 1
-let g:ctrlp_use_caching = 0
-let g:ctrlp_match_window = "bottom,order:ttb,min:25,max:25,results:25"
+let g:ctrlp_mruf_relative      = 1
+let g:ctrlp_use_caching        = 0
+let g:ctrlp_match_window       = "bottom,order:ttb,min:25,max:25,results:25"
 let g:ctrlp_match_current_file = 1
-let g:ctrlp_prompt_mappings = {
-    \ "PrtBS()": ["<bs>", "<c-]>"],
-    \ "PrtDelete()": ["<del>"],
-    \ "PrtDeleteWord()": ["<c-w>"],
-    \ "PrtClear()": ["<c-u>"],
-    \ "PrtSelectMove('j')": ["<c-j>", "<down>"],
-    \ "PrtSelectMove('k')": ["<c-k>", "<up>", "OA"],
-    \ "PrtSelectMove('t')": ["<Home>", "<kHome>"],
-    \ "PrtSelectMove('b')": ["<End>", "<kEnd>"],
-    \ "PrtSelectMove('u')": ["<PageUp>", "<kPageUp>"],
-    \ "PrtSelectMove('d')": ["<PageDown>", "<kPageDown>"],
-    \ "PrtHistory(-1)": ["<c-n>"],
-    \ "PrtHistory(1)": ["<c-p>"],
+let g:ctrlp_prompt_mappings    = {
+    \ "PrtBS()":              ["<bs>", "<c-]>"],
+    \ "PrtDelete()":          ["<del>"],
+    \ "PrtDeleteWord()":      ["<c-w>"],
+    \ "PrtClear()":           ["<c-u>"],
+    \ "PrtSelectMove('j')":   ["<c-j>", "<down>"],
+    \ "PrtSelectMove('k')":   ["<c-k>", "<up>", "OA"],
+    \ "PrtSelectMove('t')":   ["<Home>", "<kHome>"],
+    \ "PrtSelectMove('b')":   ["<End>", "<kEnd>"],
+    \ "PrtSelectMove('u')":   ["<PageUp>", "<kPageUp>"],
+    \ "PrtSelectMove('d')":   ["<PageDown>", "<kPageDown>"],
+    \ "PrtHistory(-1)":       ["<c-n>"],
+    \ "PrtHistory(1)":        ["<c-p>"],
     \ "AcceptSelection('e')": ["<cr>", "<2-LeftMouse>"],
     \ "AcceptSelection('h')": ["<c-x>", "<c-cr>", "<c-s>"],
     \ "AcceptSelection('t')": ["<c-t>"],
     \ "AcceptSelection('v')": ["<c-v>", "<RightMouse>"],
-    \ "ToggleFocus()": ["<s-tab>"],
-    \ "ToggleRegex()": ["<c-r>"],
-    \ "ToggleByFname()": ["<c-d>"],
-    \ "ToggleType(1)": ["<c-f>", "<c-up>", "<F11>"],
-    \ "ToggleType(-1)": ["<c-b>", "<c-down>"],
-    \ "PrtExpandDir()": ["<tab>"],
-    \ "PrtInsert('c')": ["<MiddleMouse>", "<insert>"],
-    \ "PrtInsert()": ["<c-\>"],
-    \ "PrtCurStart()": ["<c-a>"],
-    \ "PrtCurEnd()": ["<c-e>"],
-    \ "PrtCurLeft()": ["<c-h>", "<left>", "<c-^>"],
-    \ "PrtCurRight()": ["<c-l>", "<right>"],
-    \ "PrtClearCache()": ["<F5>"],
-    \ "PrtDeleteEnt()": ["<F7>"],
-    \ "CreateNewFile()": ["<c-y>"],
-    \ "MarkToOpen()": ["<c-z>"],
-    \ "OpenMulti()": ["<c-o>"],
-    \ "PrtExit()": ["<esc>", "<c-c>", "<c-g>"],
+    \ "ToggleFocus()":        ["<s-tab>"],
+    \ "ToggleRegex()":        ["<c-r>"],
+    \ "ToggleByFname()":      ["<c-d>"],
+    \ "ToggleType(1)":        ["<c-f>", "<c-up>", "<F11>"],
+    \ "ToggleType(-1)":       ["<c-b>", "<c-down>"],
+    \ "PrtExpandDir()":       ["<tab>"],
+    \ "PrtInsert('c')":       ["<MiddleMouse>", "<insert>"],
+    \ "PrtInsert()":          ["<c-\>"],
+    \ "PrtCurStart()":        ["<c-a>"],
+    \ "PrtCurEnd()":          ["<c-e>"],
+    \ "PrtCurLeft()":         ["<c-h>", "<left>", "<c-^>"],
+    \ "PrtCurRight()":        ["<c-l>", "<right>"],
+    \ "PrtClearCache()":      ["<F5>"],
+    \ "PrtDeleteEnt()":       ["<F7>"],
+    \ "CreateNewFile()":      ["<c-y>"],
+    \ "MarkToOpen()":         ["<c-z>"],
+    \ "OpenMulti()":          ["<c-o>"],
+    \ "PrtExit()":            ["<esc>", "<c-c>", "<c-g>"],
     \ }
 
 " unite
 call unite#filters#matcher_default#use(["matcher_fuzzy"])
-let g:unite_enable_start_insert = 1
-let g:unite_split_rule = "botright"
-let g:unite_data_directory = expand($HOME . "/.unite")
+let g:unite_enable_start_insert             = 1
+let g:unite_split_rule                      = "botright"
+let g:unite_data_directory                  = expand($HOME . "/.unite")
 
 " Shorten the default update date of 500ms
-let g:unite_update_time = 200
+let g:unite_update_time                     = 200
 
-let g:unite_source_file_mru_limit = 1000
-let g:unite_cursor_line_highlight = "TabLineSel"
+let g:unite_source_file_mru_limit           = 1000
+let g:unite_cursor_line_highlight           = "TabLineSel"
 
 let g:unite_source_file_mru_filename_format = ":~:."
-let g:unite_source_file_mru_time_format = ""
+let g:unite_source_file_mru_time_format     = ""
 
 " Map space to the prefix for Unite
 nnoremap [unite] <Nop>
