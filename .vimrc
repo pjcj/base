@@ -21,6 +21,7 @@ Plug 'nathanaelkane/vim-indent-guides'    " configured for indent of two or four
 Plug 'pjcj/vim-hl-var'
 Plug 'saltstack/salt-vim'                                    " salt highlighting
 Plug 'scrooloose/nerdtree'                                                " <F1>
+Plug 'scrooloose/syntastic'
 Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
 Plug 'sjl/gundo.vim'                                                       " ,gu
 Plug 'Spaceghost/vim-matchit'                                                " %
@@ -86,8 +87,6 @@ elseif has ("nvim") || !has ("lua")
     let g:ycm_auto_trigger                                  = 1
     let g:ycm_cache_omnifunc                                = 0
 else
-    Plug 'scrooloose/syntastic'
-
     " echo "neocomplete"
     Plug 'Shougo/neocomplete.vim'
     let g:acp_enableAtStartup                           = 0
