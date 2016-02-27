@@ -402,18 +402,14 @@ nnoremap <silent> <F2> :TagbarToggle<CR>
 nmap <F3> 
 nnoremap <F4> :execute "tjump " . expand("<cword>")<CR>
 nnoremap <S-F4> :tnext<CR>
-map [26~ <S-F4>
 nnoremap <M-F4> :tprev<CR>
 " map OS <M-F4>
 nnoremap <F5> :execute "silent make" <Bar> botright copen<CR><C-L>
 nnoremap <S-F5> :w<CR>:SyntasticCheck<CR>:ll<CR>
-map [28~ <S-F5>
 nnoremap <F6> :cprevious<CR>
 nnoremap <S-F6> :lprevious<CR>
-map [29~ <S-F6>
 nnoremap <F7> :cnext<CR>
 nnoremap <S-F7> :lnext<CR>
-map [31~ <S-F7>
 nnoremap <F8> :execute "silent grep! " . expand("<cword>") <Bar> botright copen<CR><C-L>
 nnoremap <F9> :cclose<Bar>:lclose<CR>
 nnoremap <silent> <F10> w
@@ -428,6 +424,15 @@ nnoremap <F12> 
 imap <F2> sub {<CR>my $self = shift;<CR>my () = @_;<CR>}<ESC>%hi<Space>
 imap <F3> $self->{}<ESC>i
 imap <F4> $self->
+
+map [26~ <S-F4>
+map [28~ <S-F5>
+map [29~ <S-F6>
+map [31~ <S-F7>
+map <F16> <S-F4>
+map <F17> <S-F5>
+map <F18> <S-F6>
+map <F19> <S-F7>
 
 nnoremap <leader>gu :GundoToggle<CR>
 
