@@ -2,7 +2,9 @@
 
 # set -x
 
-cd ~/g/base
+gobase() { cd ~/g/base || exit 1; }
+
+gobase
 
 ~/.tmux/plugins/tpm/bindings/clean_plugins
 ~/.tmux/plugins/tpm/bindings/install_plugins
@@ -13,17 +15,17 @@ $EDITOR -c PlugClean   -c qa
 $EDITOR -c PlugInstall -c qa
 $EDITOR -c PlugUpdate  -c qa
 
-cd ~/g/base
+gobase
 pip install --upgrade --user git+git://github.com/powerline/powerline
 
-cd ~/g/base
+gobase
 ghq import -u < ghq.repos
 
-cat ghq.repos | while read repo; do
-    sw=$(basename $repo)
-    dir=$(ghq list -p | grep $sw)
+while read -r repo; do
+    sw=$(basename "$repo")
+    dir=$(ghq list -p | grep "$sw")
     # echo $repo, $sw, $dir
-    cd $dir
-    echo building $sw
+    cd "$dir" || exit 1
+    echo building "$sw"
     build
-done
+done < ghq.repos
