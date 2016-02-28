@@ -9,7 +9,7 @@ Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'ervandew/supertab'
 Plug 'gioele/vim-autoswap'                        " deal with swapfiles sensibly
-Plug 'gregsexton/gitv'                                                   " :gitv
+Plug 'gregsexton/gitv'                                                   " <F10>
 Plug 'honza/dockerfile.vim'                                      " docker syntax
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/calendar.vim'
@@ -412,7 +412,10 @@ nnoremap <F7> :cnext<CR>
 nnoremap <S-F7> :lnext<CR>
 nnoremap <F8> :execute "silent grep! " . expand("<cword>") <Bar> botright copen<CR><C-L>
 nnoremap <F9> :cclose<Bar>:lclose<CR>
-nnoremap <silent> <F10> w
+nnoremap <silent> <S-F9> w
+nnoremap <F10> :Gitv --all<CR>
+nnoremap <S-F10> :Gitv! --all<CR>
+vnoremap <S-F10> :Gitv! --all<CR>
 nnoremap <Home> 1G
 nnoremap <End> Gz-
 nnoremap <PageUp> 0
@@ -449,6 +452,11 @@ endfunction
 
 let g:SuperTabMappingForward  = "<s-tab>"
 let g:SuperTabMappingBackward = "<tab>"
+
+let g:Gitv_WipeAllOnClose      = 1
+let g:Gitv_WrapLines           = 0
+let g:Gitv_OpenPreviewOnLaunch = 1
+let g:Gitv_CommitStep          = 100
 
 inoremap # X<BS>#
 cnoremap <C-w> <C-I>
