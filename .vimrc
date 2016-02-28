@@ -412,10 +412,10 @@ nnoremap <F7> :cnext<CR>
 nnoremap <S-F7> :lnext<CR>
 nnoremap <F8> :execute "silent grep! " . expand("<cword>") <Bar> botright copen<CR><C-L>
 nnoremap <F9> :cclose<Bar>:lclose<CR>
-nnoremap <silent> <S-F9> w
-nnoremap <F10> :Gitv --all<CR>
-nnoremap <S-F10> :Gitv! --all<CR>
-vnoremap <S-F10> :Gitv! --all<CR>
+nnoremap <silent> <S-F10> w
+nnoremap § :Gitv --all<CR>
+nnoremap ° :Gitv! --all<CR>
+vnoremap ° :Gitv! --all<CR>
 nnoremap <Home> 1G
 nnoremap <End> Gz-
 nnoremap <PageUp> 0
@@ -428,14 +428,16 @@ imap <F2> sub {<CR>my $self = shift;<CR>my () = @_;<CR>}<ESC>%hi<Space>
 imap <F3> $self->{}<ESC>i
 imap <F4> $self->
 
-map [26~ <S-F4>
-map [28~ <S-F5>
-map [29~ <S-F6>
-map [31~ <S-F7>
-map <F16> <S-F4>
-map <F17> <S-F5>
-map <F18> <S-F6>
-map <F19> <S-F7>
+map [26~   <S-F4>
+map [28~   <S-F5>
+map [29~   <S-F6>
+map [31~   <S-F7>
+map [21;2~ <S-F10>
+map <F16>    <S-F4>
+map <F17>    <S-F5>
+map <F18>    <S-F6>
+map <F19>    <S-F7>
+map <F22>    <S-F10>
 
 nnoremap <leader>gu :GundoToggle<CR>
 
