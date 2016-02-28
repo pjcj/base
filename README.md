@@ -3,15 +3,16 @@
 This is the base system that I put onto any machine on which I am developing.
 It includes config files for:
 
-* [bspwm](https://github.com/baskerville/bspwm) (Tiling window manager)
+* [bspwm](https://github.com/baskerville/bspwm) (tiling window manager)
 * [sxhkd](https://github.com/baskerville/sxhkd) (X hotkey daemon)
 * Xdefaults, including [st](http://st.suckless.org/) and
-  [urxvt](http://software.schmorp.de/pkg/rxvt-unicode.html)
-* [tmux](http://tmux.sourceforge.net/)
-* [zsh](http://www.zsh.org/)
-* [vim](http://www.vim.org/)
-* [powerline](https://github.com/powerline/powerline)
-* [git](http://www.git-scm.com/)
+  [urxvt](http://software.schmorp.de/pkg/rxvt-unicode.html) (terminal emulators)
+* [tmux](https://tmux.github.io/) (terminal multiplexer)
+* [zsh](http://www.zsh.org/) (shell)
+* [vim](http://www.vim.org/) or [neovim](https://github.com/neovim/neovim)
+  (editors)
+* [powerline](https://github.com/powerline/powerline) (status line for tmux)
+* [git](http://www.git-scm.com/) (version control)
 
 Colours are Solarized Dark slightly altered to make the dark background colours
 a little darker.
@@ -22,13 +23,14 @@ Cutting edge software (newer than that packaged) is managed with
 * [st](http://git.suckless.org/st/)
 * [urxvt (with true colour support)](https://github.com/spudowiar/rxvt-unicode)
 * [zsh](git://zsh.git.sf.net/gitroot/zsh/zsh)
-* [zsh-git-prompt](https://github.com/olivierverdier/zsh-git-prompt)
+* [zsh-git-prompt](https://github.com/olivierverdier/zsh-git-prompt) (prompt for
+  zsh including git status)
 * [neovim](https://github.com/neovim/neovim)
 * [tmux](https://github.com/tmux/tmux)
 * [bspwm](https://github.com/baskerville/bspwm)
 * [sxhkd](https://github.com/baskerville/sxhkd)
-* [xdotool](https://github.com/jordansissel/xdotool)
-* [urlview](https://github.com/sigpipe/urlview)
+* [xdotool](https://github.com/jordansissel/xdotool) (automate X input)
+* [urlview](https://github.com/sigpipe/urlview) (extract URLs from text)
 
 The zsh config uses [zplug](https://github.com/b4b4r07/zplug) and the following
 plugins:
@@ -44,13 +46,18 @@ plugins:
 The vim config uses [vim-plug](https://github.com/junegunn/vim-plug) and the
 following plugins:
 
-* [vim-gitgutter](https://github.com/airblade/vim-gitgutter)
-* [vitality.vim](https://github.com/akracun/vitality.vim)
+* [vim-gitgutter](https://github.com/airblade/vim-gitgutter) (show git changes
+  in gutter)
+* [vitality.vim](https://github.com/akracun/vitality.vim) (focus lost and gained
+  inside tmux)
 * [vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
-* [vim-sxhkdrc](https://github.com/baskerville/vim-sxhkdrc)
-* [ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim)
-* [supertab](https://github.com/ervandew/supertab)
-* [vim-autoswap](https://github.com/gioele/vim-autoswap)
+  (solarized colours)
+* [vim-sxhkdrc](https://github.com/baskerville/vim-sxhkdrc) (syntax
+  highlighting)
+* [ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim) (fuzzy finder)
+* [supertab](https://github.com/ervandew/supertab) (tab completion)
+* [vim-autoswap](https://github.com/gioele/vim-autoswap) (deal with swap files
+  intelligently)
 * [gitv](https://github.com/gregsexton/gitv)
 * [dockerfile](https://github.com/honza/dockerfile)
 * [vim-search-pulse](https://github.com/inside/vim-search-pulse)
