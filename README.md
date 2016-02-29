@@ -59,7 +59,7 @@ following plugins:
 * [vim-autoswap](https://github.com/gioele/vim-autoswap) (deal with swap files
   intelligently)
 * [gitv](https://github.com/gregsexton/gitv) (gitk-alike)
-* [dockerfile](https://github.com/honza/dockerfile)
+* [dockerfile](https://github.com/honza/dockerfile) (docker syntax)
 * [vim-search-pulse](https://github.com/inside/vim-search-pulse)
 * [calendar](https://github.com/itchyny/calendar)
 * [vim-easy-align](https://github.com/junegunn/vim-easy-align)

@@ -10,7 +10,7 @@ Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'ervandew/supertab'
 Plug 'gioele/vim-autoswap'                        " deal with swapfiles sensibly
 Plug 'gregsexton/gitv'                                                   " <F10>
-Plug 'honza/dockerfile.vim'                                      " docker syntax
+Plug 'docker/docker', { 'rtp': '/contrib/syntax/vim/' }          " docker syntax
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/calendar.vim'
 Plug 'junegunn/vim-easy-align'                                     " = ^X<regex>
