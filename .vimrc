@@ -11,7 +11,7 @@ Plug 'ervandew/supertab'
 Plug 'gioele/vim-autoswap'                        " deal with swapfiles sensibly
 Plug 'gregsexton/gitv'                                                   " <F10>
 Plug 'docker/docker', { 'rtp': '/contrib/syntax/vim/' }          " docker syntax
-Plug 'inside/vim-search-pulse'
+Plug 'inside/vim-search-pulse'                                           " * n N
 Plug 'itchyny/calendar.vim'
 Plug 'junegunn/vim-easy-align'                                     " = ^X<regex>
 Plug 'kshenoy/vim-signature'                          " mx dmx m, m. m<Space> m/
@@ -380,11 +380,21 @@ nmap <silent> abc6 <Plug>JumpDiffCharNextEnd
 let g:calendar_google_calendar = 1
 let g:calendar_google_task     = 1
 
+" get vim-search-pulse and vim-interestingwords working together
 let g:vim_search_pulse_disable_auto_mappings = 1
-nmap n n<Plug>Pulse
-nmap N N<Plug>Pulse
-nmap * *<Plug>Pulse``
-" cmap <enter> <Plug>PulseFirst
+let g:vim_search_pulse_mode = 'cursor_line'
+nmap * *``:call search_pulse#Pulse()<CR>
+nnoremap <silent> <leader>k :call InterestingWords('n')<CR>
+vnoremap <silent> <leader>k :call InterestingWords('v')<CR>
+nnoremap <silent> <leader>K :call UncolorAllWords()<CR>
+nnoremap <silent> n :call WordNavigation(1)<CR>:call search_pulse#Pulse()<CR>
+nnoremap <silent> N :call WordNavigation(0)<CR>:call search_pulse#Pulse()<CR>
+augroup Pulse
+    autocmd! User PrePulse
+    autocmd! User PostPulse
+    autocmd  User PrePulse  set cursorcolumn
+    autocmd  User PostPulse set nocursorcolumn
+augroup END
 
 vmap <unique> k <Plug>SchleppUp
 vmap <unique> j <Plug>SchleppDown

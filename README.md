@@ -60,7 +60,8 @@ following plugins:
   intelligently)
 * [gitv](https://github.com/gregsexton/gitv) (gitk-alike)
 * [dockerfile](https://github.com/honza/dockerfile) (docker syntax)
-* [vim-search-pulse](https://github.com/inside/vim-search-pulse)
+* [vim-search-pulse](https://github.com/inside/vim-search-pulse) (pulse on
+  search)
 * [calendar](https://github.com/itchyny/calendar)
 * [vim-easy-align](https://github.com/junegunn/vim-easy-align)
 * [vim-signature](https://github.com/kshenoy/vim-signature)
