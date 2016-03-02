@@ -62,17 +62,22 @@ following plugins:
 * [dockerfile](https://github.com/honza/dockerfile) (docker syntax)
 * [vim-search-pulse](https://github.com/inside/vim-search-pulse) (pulse on
   search)
-* [vim-easy-align](https://github.com/junegunn/vim-easy-align)
-* [vim-signature](https://github.com/kshenoy/vim-signature)
-* [vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)
-* [tagbar](https://github.com/majutsushi/tagbar)
+* [vim-easy-align](https://github.com/junegunn/vim-easy-align) (vertical
+  alignment)
+* [vim-signature](https://github.com/kshenoy/vim-signature) (show marks)
+* [vim-gutentags](https://github.com/ludovicchabant/vim-gutentags) (generate
+  tags dynamically)
+* [tagbar](https://github.com/majutsushi/tagbar) (display tags)
 * [vim-indent-guides](https://github.com/nathanaelkane/vim-indent-guides)
-* [vim-hl-var](https://github.com/pjcj/vim-hl-var)
-* [salt-vim](https://github.com/saltstack/salt-vim)
-* [nerdtree](https://github.com/scrooloose/nerdtree)
-* [syntastic](https://github.com/scrooloose/syntastic)
-* [ctrlp-extensions](https://github.com/sgur/ctrlp-extensions)
-* [gundo.vim](https://github.com/sjl/gundo.vim)
+  (guidelines for indentation)
+* [vim-hl-var](https://github.com/pjcj/vim-hl-var) (highlight variable under
+  cursor)
+* [salt-vim](https://github.com/saltstack/salt-vim) (salt syntax)
+* [nerdtree](https://github.com/scrooloose/nerdtree) (file tree)
+* [syntastic](https://github.com/scrooloose/syntastic) (syntax checking)
+* [ctrlp-extensions](https://github.com/sgur/ctrlp-extensions) (cmdline, yank
+  and menu for ctrlp)
+* [gundo.vim](https://github.com/sjl/gundo.vim) (visuals undo tree)
 * [vim-matchit](https://github.com/Spaceghost/vim-matchit)
 * [quickfix-reflector](https://github.com/stefandtw/quickfix-reflector)
 * [vim-instant-markdown](https://github.com/suan/vim-instant-markdown)
