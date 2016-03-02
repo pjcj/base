@@ -12,7 +12,6 @@ Plug 'gioele/vim-autoswap'                        " deal with swapfiles sensibly
 Plug 'gregsexton/gitv'                                                   " <F10>
 Plug 'docker/docker', { 'rtp': '/contrib/syntax/vim/' }          " docker syntax
 Plug 'inside/vim-search-pulse'                                           " * n N
-Plug 'itchyny/calendar.vim'
 Plug 'junegunn/vim-easy-align'                                     " = ^X<regex>
 Plug 'kshenoy/vim-signature'                          " mx dmx m, m. m<Space> m/
 Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
@@ -52,6 +51,7 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
 Plug 'soh335/unite-perl-module'
 Plug 'yuku-t/unite-git'
 
+" Plug 'itchyny/calendar.vim'
 " Plug 'junegunn/gv.vim'                                         " :GV :GV! gb q
 " Plug 'msanders/snipmate.vim'
 " Plug 'Raimondi/delimitMate'         " insert mode quote/bracket autocompletion
