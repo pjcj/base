@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/home/pjcj/g/sw/bin/st vim "$@"
