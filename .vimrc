@@ -526,7 +526,7 @@ highlight SyntasticWarningSign ctermbg=0 ctermfg=5 cterm=bold
 
 let g:syntastic_mode_map = { "mode": "active",
     \ "active_filetypes":  [],
-    \ "passive_filetypes": [] }
+    \ "passive_filetypes": ["xml"] }
 let g:syntastic_perl_checkers       = ["perl"]
 let g:syntastic_enable_perl_checker = 1
 let g:syntastic_shell_checkers      = ["sh", "shellcheck", "checkbashisms"]
