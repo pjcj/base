@@ -25,7 +25,8 @@ while read -r repo; do
     sw=$(basename "$repo")
     dir=$(ghq list -p | grep "$sw")
     # echo $repo, $sw, $dir
-    cd "$dir" || exit 1
+    # cd "$dir" || exit 1
+    cd "$dir"
     echo building "$sw"
     build
 done < ghq.repos
