@@ -78,31 +78,42 @@ following plugins:
 * [ctrlp-extensions](https://github.com/sgur/ctrlp-extensions) (cmdline, yank
   and menu for ctrlp)
 * [gundo](https://github.com/sjl/gundo.vim) (visuals undo tree)
-* [vim-matchit](https://github.com/Spaceghost/vim-matchit) (extended "%"
-  matching)
+* [vim-matchit](https://github.com/Spaceghost/vim-matchit) (extended % matching)
 * [quickfix-reflector](https://github.com/stefandtw/quickfix-reflector.vim)
   (edit text in quickfix window)
 * [vim-instant-markdown](https://github.com/suan/vim-instant-markdown) (show
   markdown in browser as it is edited)
 * [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
-* [vim-abolish](https://github.com/tpope/vim-abolish)
-* [vim-commentary](https://github.com/tpope/vim-commentary)
-* [vim-dispatch](https://github.com/tpope/vim-dispatch)
-* [vim-eunuch](https://github.com/tpope/vim-eunuch)
-* [vim-fugitive](https://github.com/tpope/vim-fugitive)
-* [vim-repeat](https://github.com/tpope/vim-repeat)
-* [vim-surround](https://github.com/tpope/vim-surround)
+  (concurrent editing)
+* [vim-abolish](https://github.com/tpope/vim-abolish) (handle word variants)
+* [vim-commentary](https://github.com/tpope/vim-commentary) (code comments)
+* [vim-dispatch](https://github.com/tpope/vim-dispatch) (asynchronous jobs)
+* [vim-eunuch](https://github.com/tpope/vim-eunuch) (unix commands)
+* [vim-fugitive](https://github.com/tpope/vim-fugitive) (work with git)
+* [vim-repeat](https://github.com/tpope/vim-repeat) (make . work more often)
+* [vim-surround](https://github.com/tpope/vim-surround) (manage surrounding
+  characters)
 * [vim-interestingwords](https://github.com/vasconcelloslf/vim-interestingwords)
-* [vim-airline](https://github.com/vim-airline/vim-airline)
+  (highlighting and navigation)
+* [vim-airline](https://github.com/vim-airline/vim-airline) (status line)
 * [vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)
-* [diffchar](https://github.com/vim-scripts/diffchar.vim)
-* [nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin)
-* [vim-schlepp](https://github.com/zirrostig/vim-schlepp)
-* [unite](https://github.com/Shougo/unite.vim)
-* [unite-grep-vcs](https://github.com/lambdalisue/unite-grep-vcs)
-* [yankround](https://github.com/LeafCage/yankround.vim)
+  (status line themes)
+* [diffchar](https://github.com/vim-scripts/diffchar.vim) (show diffs by
+  character)
+* [nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin) (show
+  git status against files)
+* [vim-schlepp](https://github.com/zirrostig/vim-schlepp) (move blocks of text)
+
+
+* [unite](https://github.com/Shougo/unite.vim) (ctrl-p-like interface)
+* [unite-grep-vcs](https://github.com/lambdalisue/unite-grep-vcs) (git grep for
+  unite)
+* [yankround](https://github.com/LeafCage/yankround.vim) (yank history for
+  unite)
 * [unite-search-history](https://github.com/mpendse/unite-search-history)
-* [neomru](https://github.com/Shougo/neomru.vim)
-* [vimproc](https://github.com/Shougo/vimproc.vim)
-* [unite-perl-module](https://github.com/soh335/unite-perl-module)
-* [unite-git](https://github.com/yuku-t/unite-git)
+  (history for unite)
+* [neomru](https://github.com/Shougo/neomru.vim) (MRU for unite)
+* [vimproc](https://github.com/Shougo/vimproc.vim) (asynchronous processes)
+* [unite-perl-module](https://github.com/soh335/unite-perl-module) (integrate
+  Perl modules into unite)
+* [unite-git](https://github.com/yuku-t/unite-git) (git in unite)
