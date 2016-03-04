@@ -382,7 +382,7 @@ let g:calendar_google_task     = 1
 
 " get vim-search-pulse and vim-interestingwords working together
 let g:vim_search_pulse_disable_auto_mappings = 1
-let g:vim_search_pulse_mode = 'cursor_line'
+let g:vim_search_pulse_mode = 'pattern'  " or cursor_line
 nmap * *``:call search_pulse#Pulse()<CR>
 nnoremap <silent> <leader>k :call InterestingWords('n')<CR>
 vnoremap <silent> <leader>k :call InterestingWords('v')<CR>
