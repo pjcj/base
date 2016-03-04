@@ -42,7 +42,7 @@ Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'zirrostig/vim-schlepp'                               " highlight then hjkl
 
-Plug 'Shougo/unite.vim'                                         " <space><space>
+Plug 'Shougo/unite.vim'                                " <space><space> <space>s
 Plug 'lambdalisue/unite-grep-vcs'
 Plug 'LeafCage/yankround.vim'
 Plug 'mpendse/unite-search-history'
