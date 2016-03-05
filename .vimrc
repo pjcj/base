@@ -4,7 +4,6 @@ call plug#begin()
 
 Plug 'airblade/vim-gitgutter'                              " ,hn ,hp ,hv ,hs ,hr
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
-Plug 'altercation/vim-colors-solarized'
 Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'ervandew/supertab'
@@ -59,8 +58,9 @@ Plug 'yuku-t/unite-git'
 " Plug 'vim-scripts/YankRing.vim'
 " YankRing messes up xp unless min_element_length is 1, in which case it's slow
 
-if hostname() =~ "^am1"
-elseif has ("nvim")
+if has ("nvim")
+    Plug 'pjcj/neovim-colors-solarized-truecolor-only'
+
     Plug 'Shougo/deoplete.nvim'
     let g:deoplete#enable_at_startup            = 1
     let g:neocomplete#enable_smart_case         = 1
@@ -87,6 +87,8 @@ elseif has ("nvim") || !has ("lua")
     let g:ycm_auto_trigger                                  = 1
     let g:ycm_cache_omnifunc                                = 0
 else
+    Plug 'altercation/vim-colors-solarized'
+
     " echo "neocomplete"
     Plug 'Shougo/neocomplete.vim'
     let g:acp_enableAtStartup                           = 0
@@ -253,13 +255,14 @@ au BufReadPost *   normal `"
 au BufReadPost * endif
 
 syntax enable
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set background=dark
 " let g:solarized_contrast="high"
 " let g:solarized_visibility="normal"
 colorscheme solarized
 highlight Comment cterm=italic
 highlight clear SignColumn
-set t_Co=256
+" set t_Co=256
 " highlight link diffAdded Constant
 
 nmap <C-S-P> :call <SID>SynStack()<CR>
