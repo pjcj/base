@@ -315,6 +315,8 @@ au FileType * exe("setl dict^=".$VIMRUNTIME."/syntax/".&filetype.".vim")
 let g:gutentags_exclude = ["blib"]
 " can be extended with "*/sub/path" if required
 
+let NERDTreeShowHidden=1
+
 " taglist plugin
 let Tlist_Use_SingleClick      = 1
 let Tlist_Use_Right_Window     = 1
