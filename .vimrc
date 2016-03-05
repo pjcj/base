@@ -6,11 +6,12 @@ Plug 'airblade/vim-gitgutter'                              " ,hn ,hp ,hv ,hs ,hr
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
+Plug 'docker/docker', { 'rtp': '/contrib/syntax/vim/' }          " docker syntax
 Plug 'ervandew/supertab'
 Plug 'gioele/vim-autoswap'                        " deal with swapfiles sensibly
 Plug 'gregsexton/gitv'                                                   " <F10>
-Plug 'docker/docker', { 'rtp': '/contrib/syntax/vim/' }          " docker syntax
 Plug 'inside/vim-search-pulse'                                           " * n N
+Plug 'jszakmeister/vim-togglecursor'             " change cursor shape on insert
 Plug 'junegunn/vim-easy-align'                                     " = ^X<regex>
 Plug 'kshenoy/vim-signature'                          " mx dmx m, m. m<Space> m/
 Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
@@ -57,11 +58,6 @@ Plug 'yuku-t/unite-git'
 " Plug 'tpope/vim-obsession'
 " Plug 'vim-scripts/YankRing.vim'
 " YankRing messes up xp unless min_element_length is 1, in which case it's slow
-
-" Plug 'jszakmeister/vim-togglecursor'
-" let g:togglecursor_disable_neovim = 1
-" let g:togglecursor_disable_tmux   = 1
-" let g:togglecursor_force          = "xterm"
 
 if has ("nvim")
     Plug 'pjcj/neovim-colors-solarized-truecolor-only'
@@ -667,28 +663,6 @@ augroup EscapeUnite
     autocmd!
     autocmd FileType unite call s:EscapeUnite()
 augroup END
-
-" cursor configuration: blinking upright bar cursor in insert mode,
-" solid block in normal mode, blinking underline in replace mode
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-
-" explicit setting of terminial characteristics not needed for nvim
-" let &t_SI = "\<Esc>[5 q"
-" let &t_SR = "\<Esc>[3 q"
-" let &t_EI = "\<Esc>[1 q"
-
-" none of this seems to be working in tmux
-" function! s:TmuxEscape(line)
-    " Tmux has an escape hatch for talking to the real terminal.  Use it.
-    " let escaped_line = substitute(a:line, "\<Esc>", "\<Esc>\<Esc>", 'g')
-    " return "\<Esc>Ptmux;" . escaped_line . "\<Esc>\\"
-" endfunction
-
-" if exists('$TMUX')
-    " let &t_SI = s:TmuxEscape("\<Esc>[5 q")
-    " let &t_SR = s:TmuxEscape("\<Esc>[3 q")
-    " let &t_EI = s:TmuxEscape("\<Esc>[1 q")
-" endif
 
 nmap - gcc
 
