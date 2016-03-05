@@ -58,6 +58,11 @@ Plug 'yuku-t/unite-git'
 " Plug 'vim-scripts/YankRing.vim'
 " YankRing messes up xp unless min_element_length is 1, in which case it's slow
 
+" Plug 'jszakmeister/vim-togglecursor'
+" let g:togglecursor_disable_neovim = 1
+" let g:togglecursor_disable_tmux   = 1
+" let g:togglecursor_force          = "xterm"
+
 if has ("nvim")
     Plug 'pjcj/neovim-colors-solarized-truecolor-only'
 
@@ -547,11 +552,6 @@ nmap <Leader>a <Plug>(EasyAlign)
 
 cmap w!! w !sudo tee % >/dev/null
 
-" if &term == "rxvt-unicode-256color"
-    " let &t_SI = "\<Esc>[3 q"
-    " let &t_EI = "\<Esc>[0 q"
-" endif
-
 " ctrlp
 nnoremap <F11> :silent! write <Bar> CtrlPMixed<CR>
 let g:ctrlp_map                = "<F99>"  " Not used
@@ -686,10 +686,25 @@ augroup END
 
 " cursor configuration: blinking upright bar cursor in insert mode,
 " solid block in normal mode, blinking underline in replace mode
-" let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
+" explicit setting of terminial characteristics not needed for nvim
 " let &t_SI = "\<Esc>[5 q"
 " let &t_SR = "\<Esc>[3 q"
-" let &t_EI = "\<Esc>[2 q"
+" let &t_EI = "\<Esc>[1 q"
+
+" none of this seems to be working in tmux
+" function! s:TmuxEscape(line)
+    " Tmux has an escape hatch for talking to the real terminal.  Use it.
+    " let escaped_line = substitute(a:line, "\<Esc>", "\<Esc>\<Esc>", 'g')
+    " return "\<Esc>Ptmux;" . escaped_line . "\<Esc>\\"
+" endfunction
+
+" if exists('$TMUX')
+    " let &t_SI = s:TmuxEscape("\<Esc>[5 q")
+    " let &t_SR = s:TmuxEscape("\<Esc>[3 q")
+    " let &t_EI = s:TmuxEscape("\<Esc>[1 q")
+" endif
 
 nmap - gcc
 
