@@ -152,7 +152,6 @@ if has ("nvim")
     call deoplete#custom#set('file',       'rank', 300)
     call deoplete#custom#set('tag',        'rank', 200)
     call deoplete#custom#set('dictionary', 'rank', 100)
-    de
     tnoremap <Esc> <C-\><C-n>
 endif
 
