@@ -181,6 +181,7 @@ set mousemodel=popup_setpos
 set number
 " set patchmode=.org
 set path=,,.,/usr/include
+set relativenumber
 set report=1
 set ruler
 set scrolloff=3
