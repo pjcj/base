@@ -62,6 +62,8 @@ following plugins:
 * [dockerfile](https://github.com/honza/dockerfile) (docker syntax)
 * [vim-search-pulse](https://github.com/inside/vim-search-pulse) (pulse on
   search)
+* [vim-togglecursor](https://github.com/jszakmeister/vim-togglecursor) (change
+  cursor shape on insert)
 * [vim-easy-align](https://github.com/junegunn/vim-easy-align) (vertical
   alignment)
 * [vim-signature](https://github.com/kshenoy/vim-signature) (show marks)
