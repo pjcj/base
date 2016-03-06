@@ -46,12 +46,15 @@ plugins:
 The vim config uses [vim-plug](https://github.com/junegunn/vim-plug) and the
 following plugins:
 
+* [deoplete](https://github.com/Shougo/deoplete.nvim) (completion)
+* [neomake](https://github.com/benekastah/neomake) (syntax checking)
 * [vim-gitgutter](https://github.com/airblade/vim-gitgutter) (show git changes
   in gutter)
 * [vitality.vim](https://github.com/akracun/vitality.vim) (focus lost and gained
   inside tmux)
 * [vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
-  (solarized colours)
+* [neovim-colors-solarized-truecolor-only](https://github.com/pjcj/neovim-colors-solarized-truecolor-only)
+  (my version of truecolour solarized colours)
 * [vim-sxhkdrc](https://github.com/baskerville/vim-sxhkdrc) (syntax
   highlighting)
 * [ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim) (fuzzy finder)
