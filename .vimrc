@@ -519,8 +519,8 @@ let g:syntastic_error_symbol             = "✗"
 let g:syntastic_warning_symbol           = "⚠"
 let g:syntastic_style_error_symbol       = "✗"
 let g:syntastic_style_warning_symbol     = "⚠"
-highlight SyntasticErrorSign   ctermbg=0 ctermfg=1 cterm=bold
-highlight SyntasticWarningSign ctermbg=0 ctermfg=5 cterm=bold
+highlight SyntasticErrorSign   ctermbg=0 ctermfg=1 cterm=bold guibg=#022731 guifg=#dc322f
+highlight SyntasticWarningSign ctermbg=0 ctermfg=5 cterm=bold guibg=#022731 guifg=#b58900
 
 let g:syntastic_mode_map = { "mode": "active",
     \ "active_filetypes":  [],
