@@ -272,14 +272,14 @@ function! Setup_indent_guides()
     if &shiftwidth < 3
         let g:indent_guides_guide_size  = 0
         let g:indent_guides_auto_colors = 0
-        hi IndentGuidesEven  ctermbg=black
+        hi IndentGuidesEven  ctermbg=black guibg=#022731
         " echo "small: " &shiftwidth
     else
         let g:indent_guides_guide_size  = 1
         let g:indent_guides_start_level = 2
         let g:indent_guides_auto_colors = 0
-        hi IndentGuidesOdd  ctermbg=black
-        hi IndentGuidesEven ctermbg=black
+        hi IndentGuidesOdd  ctermbg=black guibg=#022731
+        hi IndentGuidesEven ctermbg=black guibg=#022731
         " echo "big: " &shiftwidth
     endif
 endfunction
