@@ -253,8 +253,26 @@ set background=dark
 " let g:solarized_contrast="high"
 " let g:solarized_visibility="normal"
 colorscheme solarized
+let s:base03  = "#001920"
+let s:base02  = "#022731"
+let s:base01  = "#586e75"
+let s:base00  = "#657b83"
+let s:base0   = "#839496"
+let s:base1   = "#93a1a1"
+let s:base2   = "#eee8d5"
+let s:base3   = "#fdf6e3"
+let s:yellow  = "#b58900"
+let s:orange  = "#cb4b16"
+let s:red     = "#dc322f"
+let s:magenta = "#d33682"
+let s:violet  = "#6c71c4"
+let s:blue    = "#268bd2"
+let s:cyan    = "#2aa198"
+let s:green   = "#859900"
+
 highlight Comment cterm=italic
 highlight clear SignColumn
+highlight SpecialKey guibg=s:base3
 " set t_Co=256
 " highlight link diffAdded Constant
 
@@ -272,14 +290,14 @@ function! Setup_indent_guides()
     if &shiftwidth < 3
         let g:indent_guides_guide_size  = 0
         let g:indent_guides_auto_colors = 0
-        hi IndentGuidesEven  ctermbg=black guibg=#022731
+        hi IndentGuidesEven  ctermbg=black guibg=s:base2
         " echo "small: " &shiftwidth
     else
         let g:indent_guides_guide_size  = 1
         let g:indent_guides_start_level = 2
         let g:indent_guides_auto_colors = 0
-        hi IndentGuidesOdd  ctermbg=black guibg=#022731
-        hi IndentGuidesEven ctermbg=black guibg=#022731
+        hi IndentGuidesOdd  ctermbg=black guibg=s:base2
+        hi IndentGuidesEven ctermbg=black guibg=s:base2
         " echo "big: " &shiftwidth
     endif
 endfunction
@@ -519,8 +537,8 @@ let g:syntastic_error_symbol             = "✗"
 let g:syntastic_warning_symbol           = "⚠"
 let g:syntastic_style_error_symbol       = "✗"
 let g:syntastic_style_warning_symbol     = "⚠"
-highlight SyntasticErrorSign   ctermbg=0 ctermfg=1 cterm=bold guibg=#022731 guifg=#dc322f
-highlight SyntasticWarningSign ctermbg=0 ctermfg=5 cterm=bold guibg=#022731 guifg=#b58900
+highlight SyntasticErrorSign   ctermbg=0 ctermfg=1 cterm=bold guibg=s:base2 guifg=s:red
+highlight SyntasticWarningSign ctermbg=0 ctermfg=5 cterm=bold guibg=s:base2 guifg=s:yellow
 
 let g:syntastic_mode_map = { "mode": "active",
     \ "active_filetypes":  [],
