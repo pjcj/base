@@ -545,7 +545,7 @@ let g:syntastic_mode_map = { "mode": "active",
     \ "passive_filetypes": ["xml", "c"] }
 let g:syntastic_perl_checkers       = ["perl"]
 let g:syntastic_enable_perl_checker = 1
-let g:syntastic_shell_checkers      = ["sh", "shellcheck", "checkbashisms"]
+let g:syntastic_shell_checkers      = ["shellcheck", "checkbashisms"]
 
 " delimitMate
 " imap § <C-G>g
