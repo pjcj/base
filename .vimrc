@@ -725,6 +725,9 @@ function! MyToHtml(line1, line2)
     exec a:line1.','.a:line2.'TOhtml'
     %g/<body/normal k$dgg
 
+    " vint: -ProhibitCommandWithUnintendedSideEffect
+    " vint: -ProhibitCommandRelyOnUser
+
     " convert body to a table
     %s/<body\s*\(bgcolor="[^"]*"\)\s*text=\("[^"]*"\)\s*onload="JumpToLine();">/<table \1 cellPadding=0><tr><td><font color=\2>/
     %s#</body>\(.\|\n\)*</html>#\="</font></td></tr></table>"#i
@@ -742,6 +745,9 @@ function! MyToHtml(line1, line2)
     " font
     %s/monospace/inconsolata,monospace/g
 
+    " vint: +ProhibitCommandRelyOnUser
+    " vint: +ProhibitCommandWithUnintendedSideEffect
+    "
     redraw  " no hit enter ...
 
     " restore old setting
