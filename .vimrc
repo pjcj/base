@@ -476,6 +476,7 @@ function! Tab_or_complete()
         return "\<C-P>"
     else
         return "\<C-V>\<Tab>"
+    endif
 endfunction
 " inoremap <Tab> <C-R>=Tab_or_complete()<CR>
 
