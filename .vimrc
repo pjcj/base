@@ -1,3 +1,5 @@
+set encoding=utf-8
+scriptencoding utf-8
 filetype off
 
 call plug#begin()
@@ -153,7 +155,6 @@ set backup
 set backupcopy=yes,breakhardlink
 set backupdir=~/g/tmp/vim/
 set backupext=.bak
-set nocompatible
 set clipboard=unnamedplus  " yanks, deletes and changes go into + clipboard
 set colorcolumn=80,120
 set complete=.,w,b,u,U,k/usr/dict/words,i,t
@@ -161,7 +162,6 @@ set cmdheight=3
 set dictionary=/usr/dict/words
 set diffopt=filler,vertical
 set directory=>~/g/tmp/vim/
-set encoding=utf-8
 set errorformat=%f:%l:%m
 set expandtab
 set exrc
