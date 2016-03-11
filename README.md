@@ -90,6 +90,9 @@ following plugins:
   markdown in browser as it is edited)
 * [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
   (concurrent editing)
+* [vim-tmux](https://github.com/tmux-plugins/vim-tmux) (tmux syntax highlighting
+  and more)
+* [vint-syntastic](https://github.com/todesking/vint-syntastic) (vim linter)
 * [vim-abolish](https://github.com/tpope/vim-abolish) (handle word variants)
 * [vim-commentary](https://github.com/tpope/vim-commentary) (code comments)
 * [vim-dispatch](https://github.com/tpope/vim-dispatch) (asynchronous jobs)

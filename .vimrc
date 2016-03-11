@@ -28,6 +28,7 @@ Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
 Plug 'suan/vim-instant-markdown'
 Plug 'terryma/vim-multiple-cursors'                                         " ^n
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
+Plug 'todesking/vint-syntastic'                                     " vim linter
 Plug 'tpope/vim-abolish'               " :%Subvert/facilit{y,ies}/building{,s}/g
 Plug 'tpope/vim-commentary'                                                 " gc
 Plug 'tpope/vim-dispatch'                          " asynchronous build and test
@@ -546,6 +547,7 @@ let g:syntastic_mode_map = { "mode": "active",
 let g:syntastic_perl_checkers       = ["perl"]
 let g:syntastic_enable_perl_checker = 1
 let g:syntastic_shell_checkers      = ["shellcheck", "checkbashisms"]
+let g:syntastic_vim_checkers        = ['vint']
 
 " delimitMate
 " imap § <C-G>g
