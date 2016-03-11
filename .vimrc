@@ -733,8 +733,8 @@ function! MyToHtml(line1, line2)
     %s#</body>\(.\|\n\)*</html>#\="</font></td></tr></table>"#i
 
     " solarised colours
-    %s/808080/002b36/g  " base03 - background
-    %s/000000/073642/g  " base02 - gutter
+    %s/808080/001920/g  " base03 - background
+    %s/000000/022731/g  " base02 - gutter
     %s/8080ff/839496/g  " base0  - body text
     %s/00ff00/93a1a1/g  " base1  - line numbers
     %s/008000/b58900/g  " yellow - sub
