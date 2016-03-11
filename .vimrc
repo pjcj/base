@@ -729,7 +729,7 @@ function! MyToHtml(line1, line2)
     %s/<body\s*\(bgcolor="[^"]*"\)\s*text=\("[^"]*"\)\s*onload="JumpToLine();">/<table \1 cellPadding=0><tr><td><font color=\2>/
     %s#</body>\(.\|\n\)*</html>#\="</font></td></tr></table>"#i
 
-    " solarised colours
+    " solarized colours
     %s/808080/001920/g  " base03 - background
     %s/000000/022731/g  " base02 - gutter
     %s/8080ff/839496/g  " base0  - body text
