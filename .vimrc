@@ -220,9 +220,6 @@ set wildmode=list:longest,full
 set whichwrap=19
 set writebackup
 
-" for Vim 7.3
-" set relativenumber
-
 let mapleader = ','
 
 " alter regex handling to "normal" syntax
