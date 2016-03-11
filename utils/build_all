@@ -17,6 +17,7 @@ $EDITOR -c PlugUpdate  -c qa
 
 gobase
 pip install --upgrade --user git+git://github.com/powerline/powerline
+pip3 install --upgrade --user vim-vint
 
 gobase
 ghq import -u < ghq.repos
