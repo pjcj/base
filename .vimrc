@@ -112,11 +112,14 @@ else
     Plug 'c9s/perlomni.vim'
     let g:neocomplete#sources#omni#input_patterns = {}
     let g:neocomplete#force_omni_input_patterns   = {}
-    autocmd FileType css           setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python        setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
+    augroup omni_filetypes
+        autocmd!
+        autocmd FileType css           setlocal omnifunc=csscomplete#CompleteCSS
+        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+        autocmd FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
+        autocmd FileType python        setlocal omnifunc=pythoncomplete#Complete
+        autocmd FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
+    augroup END
     " For perlomni.vim setting.
     " https://github.com/c9s/perlomni.vim
     let g:neocomplete#sources#omni#input_patterns.perl =
@@ -244,9 +247,12 @@ let java_highlight_java_lang_ids=1
 let java_highlight_functions='style'
 
 " Save position of cursor in file
-au BufReadPost * if line("'\"") != 0
-au BufReadPost *   normal `"
-au BufReadPost * endif
+augroup save_position
+    autocmd!
+    autocmd BufReadPost * if line("'\"") != 0
+    autocmd BufReadPost *   normal `"
+    autocmd BufReadPost * endif
+augroup END
 
 syntax enable
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -307,25 +313,28 @@ autocmd VimEnter,Colorscheme * call Setup_indent_guides()
 let g:airline_theme='solarized'
 let g:airline_powerline_fonts = 1
 
-au BufNewFile,BufReadPost template/* set ft=tt2html
-au BufNewFile,BufReadPost *.tt2      set ft=tt2html
-au BufNewFile,BufReadPost *.tt       set ft=tt2html
-au BufNewFile,BufReadPost *.t        set ft=perl
-au BufNewFile,BufReadPost *.pd       set ft=perl
+augroup file_types
+    autocmd!
+    autocmd BufNewFile,BufReadPost template/* set ft=tt2html
+    autocmd BufNewFile,BufReadPost *.tt2      set ft=tt2html
+    autocmd BufNewFile,BufReadPost *.tt       set ft=tt2html
+    autocmd BufNewFile,BufReadPost *.t        set ft=perl
+    autocmd BufNewFile,BufReadPost *.pd       set ft=perl
 
-au BufRead *tmp/ml/mutt-* setlocal colorcolumn=72 tw=72 spell spelllang=en_gb
+    autocmd BufRead *tmp/ml/mutt-* setlocal colorcolumn=72 tw=72 spell spelllang=en_gb
 
-au Filetype perl source ~/.vim/local/perl_local.vim
-au Filetype gitcommit setlocal colorcolumn=50,72 tw=72 spell spelllang=en_gb
+    autocmd Filetype perl source ~/.vim/local/perl_local.vim
+    autocmd Filetype gitcommit setlocal colorcolumn=50,72 tw=72 spell spelllang=en_gb
 
-autocmd InsertLeave * if expand("%") != "" | update | endif
+    autocmd InsertLeave * if expand("%") != "" | update | endif
 
-" closetag plugin
-" au Filetype html,xml,xsl source ~/.vim/plugin/closetag.vim
-au FileType xhtml,xml,html,tt2html so ~/.vim/plugin/html_autoclosetag.vim
-au FileType xhtml,xml,html,tt2html setlocal sw=2
+    " closetag plugin
+    " autocmd Filetype html,xml,xsl source ~/.vim/plugin/closetag.vim
+    autocmd FileType xhtml,xml,html,tt2html so ~/.vim/plugin/html_autoclosetag.vim
+    autocmd FileType xhtml,xml,html,tt2html setlocal sw=2
 
-au FileType * exe("setl dict^=".$VIMRUNTIME."/syntax/".&filetype.".vim")
+    autocmd FileType * exe("setl dict^=".$VIMRUNTIME."/syntax/".&filetype.".vim")
+augroup END
 
 let g:gutentags_exclude = ['blib']
 " can be extended with "*/sub/path" if required
@@ -356,11 +365,15 @@ let g:tagbar_show_linenumbers = 0
 let g:tagbar_singleclick      = 1
 let g:tagbar_autoshowtag      = 1
 
-autocmd BufReadPost fugitive://* set bufhidden=delete
-autocmd QuickFixCmdPost *grep* cwindow
+augroup git
+    autocmd!
+    autocmd BufReadPost fugitive://* set bufhidden=delete
+    autocmd QuickFixCmdPost *grep* cwindow
+augroup END
 nnoremap <leader>gg :Gcommit -v<CR>
 
 augroup gitgutter
+    autocmd!
     autocmd BufEnter * call GitGutter()
 augroup END
 highlight link GitGutterAdd              DiffAdd
@@ -407,8 +420,7 @@ nnoremap <silent> <leader>K :call UncolorAllWords()<CR>
 nnoremap <silent> n :call WordNavigation(1)<CR>:call search_pulse#Pulse()<CR>
 nnoremap <silent> N :call WordNavigation(0)<CR>:call search_pulse#Pulse()<CR>
 augroup Pulse
-    autocmd! User PrePulse
-    autocmd! User PostPulse
+    autocmd!
     autocmd  User PrePulse  set cursorcolumn
     autocmd  User PostPulse set nocursorcolumn
 augroup END
@@ -420,7 +432,10 @@ vmap <unique> l <Plug>SchleppRight
 nnoremap k gk
 nnoremap j gj
 
-au FocusLost * silent! wa
+augroup autowrite
+    autocmd!
+    autocmd FocusLost * silent! wa
+augroup END
 
 set guioptions=ag
 
