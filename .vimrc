@@ -487,7 +487,7 @@ nnoremap <leader>gu :GundoToggle<CR>
 nnoremap <C-M-h> :set hls!<cr><bar>:echo "HLSearch: " . strpart("OffOn",3*&hlsearch,3)<cr>
 
 function! Tab_or_complete()
-    if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+    if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~# '^\w'
         return "\<C-P>"
     else
         return "\<C-V>\<Tab>"
