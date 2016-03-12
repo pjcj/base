@@ -274,11 +274,32 @@ let s:blue    = '#268bd2'
 let s:cyan    = '#2aa198'
 let s:green   = '#859900'
 
+function! Set_colour(group, part, colour)
+    execute 'highlight ' . a:group . ' ' . a:part . '=' . a:colour
+endfunc
+
 highlight Comment cterm=italic
-highlight clear SignColumn
-highlight SpecialKey guibg=s:base3
-" set t_Co=256
-" highlight link diffAdded Constant
+call Set_colour('SpecialKey',   'guibg', s:base03)
+call Set_colour('SpellBad',     'guibg', s:red   )
+call Set_colour('SpellBad',     'guifg', s:base03)
+call Set_colour('SpellBad',     'gui',   'NONE'  )
+call Set_colour('SpellCap',     'guibg', s:orange)
+call Set_colour('SpellCap',     'guifg', s:base03)
+call Set_colour('SpellCap',     'gui',   'NONE'  )
+call Set_colour('SpellRare',    'guibg', s:yellow)
+call Set_colour('SpellRare',    'guifg', s:base03)
+call Set_colour('SpellRare',    'gui',   'NONE'  )
+call Set_colour('SpellLocal',   'guibg', s:blue  )
+call Set_colour('SpellLocal',   'guifg', s:base03)
+call Set_colour('SpellLocal',   'gui',   'NONE'  )
+call Set_colour('LineNr',       'guibg', s:base03)
+call Set_colour('CursorLineNr', 'guibg', s:base03)
+call Set_colour('DiffAdd',      'guibg', s:base03)
+call Set_colour('DiffChange',   'guibg', s:base03)
+call Set_colour('DiffDelete',   'guibg', s:base03)
+call Set_colour('Search',       'guibg', s:violet)
+call Set_colour('Search',       'guifg', s:base03)
+call Set_colour('Search',       'gui',   'NONE'  )
 
 nmap <C-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
