@@ -25,6 +25,7 @@ sudo pip2 install --upgrade neovim
 sudo pip3 install --upgrade neovim
 
 gobase
+golang get -u github.com/motemen/ghq
 ghq import -u < ghq.repos
 
 while read -r repo; do
