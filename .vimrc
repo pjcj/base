@@ -459,33 +459,33 @@ augroup END
 
 set guioptions=ag
 
-nnoremap <F1> :GitGutterStageHunk<CR>
-nnoremap <F2> :GitGutterPrevHunk<CR>
-nnoremap <F3> :GitGutterNextHunk<CR>
-nnoremap <S-F1> :NERDTreeToggle<CR>
-nnoremap <S-F2> :TagbarToggle<CR>
-nnoremap <F4> :execute "tjump " . expand("<cword>")<CR>
-nnoremap <S-F4> :tnext<CR>
-nnoremap <M-F4> :tprev<CR>
-nnoremap <F5> :execute "silent make" <Bar> botright copen<CR><C-L>
-nnoremap <S-F5> :w<CR>:SyntasticCheck<CR>:Errors<CR>
-nnoremap <F6> :cprevious<CR>
-nnoremap <S-F6> :lprevious<CR>
-nnoremap <F7> :cnext<CR>
-nnoremap <S-F7> :lnext<CR>
-nnoremap <F8> :execute "silent grep! " . expand("<cword>") <Bar> botright copen<CR><C-L>
-nnoremap <F9> :cclose<Bar>:lclose<Bar>:pclose<CR>
-nnoremap <silent> <S-F10> w
-nnoremap § :Gitv --all<CR>
-nnoremap ° :Gitv! --all<CR>
-vnoremap ° :Gitv! --all<CR>
-nnoremap <Home> 1G
-nnoremap <End> Gz-
-nnoremap <PageUp> 0
+nnoremap <F1>       :GitGutterStageHunk<CR>
+nnoremap <F2>       :GitGutterPrevHunk<CR>
+nnoremap <F3>       :GitGutterNextHunk<CR>
+nnoremap <S-F1>     :NERDTreeToggle<CR>
+nnoremap <S-F2>     :TagbarToggle<CR>
+nnoremap <F4>       :execute "tjump " . expand("<cword>")<CR>
+nnoremap <S-F4>     :tnext<CR>
+nnoremap <M-F4>     :tprev<CR>
+nnoremap <F5>       :execute "silent make" <Bar> botright copen<CR><C-L>
+nnoremap <S-F5>     :w<CR>:SyntasticCheck<CR>:Errors<CR>
+nnoremap <F6>       :cprevious<CR>
+nnoremap <S-F6>     :lprevious<CR>
+nnoremap <F7>       :cnext<CR>
+nnoremap <S-F7>     :lnext<CR>
+nnoremap <F8>       :execute "silent grep! " . expand("<cword>") <Bar> botright copen<CR><C-L>
+nnoremap <F9>       :cclose<Bar>:lclose<Bar>:pclose<CR>
+nnoremap <silent>   <S-F10> w
+nnoremap §          :Gitv --all<CR>
+nnoremap °          :Gitv! --all<CR>
+vnoremap °          :Gitv! --all<CR>
+nnoremap <Home>     1G
+nnoremap <End>      Gz-
+nnoremap <PageUp>   0
 nnoremap <PageDown> 0
-nnoremap <Insert> [[(z<CR>]]
-nnoremap <Del> j]](z<CR>]]
-nnoremap <F12> 
+nnoremap <Insert>   [[(z<CR>]]
+nnoremap <Del>      j]](z<CR>]]
+nnoremap <F12>      
 
 imap <F2> sub {<CR>my $self = shift;<CR>my () = @_;<CR>}<ESC>%hi<Space>
 imap <F3> $self->{}<ESC>i
