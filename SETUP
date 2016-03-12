@@ -17,10 +17,12 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 aptitude install golang
 golang get github.com/motemen/ghq
 
-$ ghq import -u < ghq.repos
+ghq import -u < ghq.repos
 # then ghq look into all the updated repos and build and install
 
-$ sudo npm -g install instant-markdown-d
+sudo npm -g install instant-markdown-d
+
+echo "Start tmux and then run build_all"
 
 exit
 
