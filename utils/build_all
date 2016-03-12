@@ -19,6 +19,11 @@ gobase
 pip install --upgrade --user git+git://github.com/powerline/powerline
 pip3 install --upgrade --user vim-vint
 
+# for neovim:
+sudo aptitude install python3-pip
+sudo pip2 install --upgrade neovim
+sudo pip3 install --upgrade neovim
+
 gobase
 ghq import -u < ghq.repos
 
