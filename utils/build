@@ -21,12 +21,17 @@ case "$dir" in
         ;;
     neovim)
         make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
-            CMAKE_BUILD_TYPE=Release test install
+             CMAKE_BUILD_TYPE=Release test install
         ;;
     st)
         make clean install
         ;;
     sxhkd|bspwm)
+        sudo aptitude install libxcb-util0-dev libxcb-keysyms1-dev         \
+             libxcb-xinerama0-dev libxcb-randr0-dev libxcb-icccm4-dev      \
+             libxcb-ewmh1-dev install xcb libxcb-util0-dev libxcb-ewmh-dev \
+             libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev       \
+             libxcb-xinerama0-dev libxcb-ewmh2
         make PREFIX="$sw" all install
         ;;
     xdotool)
