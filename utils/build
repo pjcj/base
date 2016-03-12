@@ -24,14 +24,16 @@ case "$dir" in
              CMAKE_BUILD_TYPE=Release test install
         ;;
     st)
+        sudo aptitude -y install fontconfig libfontconfig1-dev \
+            libfreetype6 libfreetype6-dev libxft-dev
         make clean install
         ;;
     sxhkd|bspwm)
-        sudo aptitude install libxcb-util0-dev libxcb-keysyms1-dev         \
-             libxcb-xinerama0-dev libxcb-randr0-dev libxcb-icccm4-dev      \
-             libxcb-ewmh1-dev install xcb libxcb-util0-dev libxcb-ewmh-dev \
-             libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev       \
-             libxcb-xinerama0-dev libxcb-ewmh2
+        sudo aptitude -y install libxcb-util0-dev libxcb-keysyms1-dev     \
+            libxcb-xinerama0-dev libxcb-randr0-dev libxcb-icccm4-dev      \
+            libxcb-ewmh1-dev install xcb libxcb-util0-dev libxcb-ewmh-dev \
+            libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev       \
+            libxcb-xinerama0-dev libxcb-ewmh2
         make PREFIX="$sw" all install
         ;;
     xdotool)
