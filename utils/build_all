@@ -11,13 +11,12 @@ gobase
 ~/.tmux/plugins/tpm/scripts/update_plugin_prompt_handler.sh all
 
 # for neovim:
-sudo aptitude install python3-pip
-sudo pip2 install --upgrade neovim
-sudo pip3 install --upgrade neovim
-
-gobase
-pip install --upgrade --user git+git://github.com/powerline/powerline
+sudo aptitude -y install \
+    python-pip python-setuptools \
+    python3-pip python3-setuptools
+pip3 install --upgrade --user neovim
 pip3 install --upgrade --user vim-vint
+pip install --upgrade --user git+git://github.com/powerline/powerline
 
 sudo npm -g install instant-markdown-d
 
@@ -27,7 +26,7 @@ $EDITOR -c PlugInstall -c qa
 $EDITOR -c PlugUpdate  -c qa
 
 gobase
-sudo aptitude install golang
+sudo aptitude -y install golang
 command go get -u github.com/motemen/ghq
 ghq import -u < ghq.repos
 
