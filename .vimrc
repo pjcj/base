@@ -409,7 +409,8 @@ let g:gitgutter_eager           = 1
 nnoremap <leader>hn :GitGutterNextHunk<CR>
 nnoremap <leader>hp :GitGutterPrevHunk<CR>
 nnoremap <leader>hv :GitGutterPreviewHunk<CR>
-" ,hs: stage, ,hr: revert
+nnoremap <leader>hs :GitGutterStageHunk<CR>
+nnoremap <leader>hr :GitGutterRevertHunk<CR>
 
 let g:SignatureMarkTextHLDynamic = 1
 
@@ -457,9 +458,11 @@ augroup END
 
 set guioptions=ag
 
-nnoremap <silent> <F1> :NERDTreeToggle<CR>
-nnoremap <silent> <F2> :TagbarToggle<CR>
-nmap <F3> 
+nnoremap <F1> :GitGutterStageHunk<CR>
+nnoremap <F2> :GitGutterPrevHunk<CR>
+nnoremap <F3> :GitGutterNextHunk<CR>
+nnoremap <S-F1> :NERDTreeToggle<CR>
+nnoremap <S-F2> :TagbarToggle<CR>
 nnoremap <F4> :execute "tjump " . expand("<cword>")<CR>
 nnoremap <S-F4> :tnext<CR>
 nnoremap <M-F4> :tprev<CR>
