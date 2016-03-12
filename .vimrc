@@ -276,7 +276,7 @@ endfunc
 
 highlight Comment cterm=italic
 call Set_colour('SpecialKey',   'guibg', s:base03)
-call Set_colour('SpellBad',     'guibg', s:red   )
+call Set_colour('SpellBad',     'guibg', s:violet)
 call Set_colour('SpellBad',     'guifg', s:base03)
 call Set_colour('SpellBad',     'gui',   'NONE'  )
 call Set_colour('SpellCap',     'guibg', s:orange)
