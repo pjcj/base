@@ -1,5 +1,3 @@
-ps -elf | grep -q '[p]arcellite' || parcellite &|
-
 _dc() {
     reply=(`utils/dc options`)
 }
