@@ -24,8 +24,11 @@ sudo aptitude install python3-pip
 sudo pip2 install --upgrade neovim
 sudo pip3 install --upgrade neovim
 
+sudo npm -g install instant-markdown-d
+
 gobase
-golang get -u github.com/motemen/ghq
+sudo aptitude install golang
+command go get -u github.com/motemen/ghq
 ghq import -u < ghq.repos
 
 while read -r repo; do
