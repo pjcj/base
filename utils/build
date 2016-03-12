@@ -38,9 +38,10 @@ case "$dir" in
     sxhkd|bspwm)
         sudo aptitude -y install libxcb-util0-dev libxcb-keysyms1-dev     \
             libxcb-xinerama0-dev libxcb-randr0-dev libxcb-icccm4-dev      \
-            libxcb-ewmh1-dev install xcb libxcb-util0-dev libxcb-ewmh-dev \
+            libxcb-ewmh1-dev xcb libxcb-util0-dev libxcb-ewmh-dev         \
             libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev       \
-            libxcb-xinerama0-dev libxcb-ewmh2
+            libxcb-xinerama0-dev libxcb-ewmh2                             \
+            gnome-panel
         make PREFIX="$sw" all install
         ;;
     xdotool)
