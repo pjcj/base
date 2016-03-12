@@ -439,14 +439,14 @@ nnoremap <silent> n :call WordNavigation(1)<CR>:call search_pulse#Pulse()<CR>
 nnoremap <silent> N :call WordNavigation(0)<CR>:call search_pulse#Pulse()<CR>
 augroup Pulse
     autocmd!
-    autocmd  User PrePulse  set cursorcolumn
-    autocmd  User PostPulse set nocursorcolumn
+    autocmd User PrePulse  set cursorcolumn
+    autocmd User PostPulse set nocursorcolumn
 augroup END
 
-vmap <unique> k <Plug>SchleppUp
-vmap <unique> j <Plug>SchleppDown
-vmap <unique> h <Plug>SchleppLeft
-vmap <unique> l <Plug>SchleppRight
+vnoremap <unique> k <Plug>SchleppUp
+vnoremap <unique> j <Plug>SchleppDown
+vnoremap <unique> h <Plug>SchleppLeft
+vnoremap <unique> l <Plug>SchleppRight
 nnoremap k gk
 nnoremap j gj
 
@@ -463,7 +463,6 @@ nmap <F3> 
 nnoremap <F4> :execute "tjump " . expand("<cword>")<CR>
 nnoremap <S-F4> :tnext<CR>
 nnoremap <M-F4> :tprev<CR>
-" map OS <M-F4>
 nnoremap <F5> :execute "silent make" <Bar> botright copen<CR><C-L>
 nnoremap <S-F5> :w<CR>:SyntasticCheck<CR>:Errors<CR>
 nnoremap <F6> :cprevious<CR>
