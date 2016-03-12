@@ -565,8 +565,12 @@ let g:syntastic_error_symbol             = '✗'
 let g:syntastic_warning_symbol           = '⚠'
 let g:syntastic_style_error_symbol       = '✗'
 let g:syntastic_style_warning_symbol     = '⚠'
-highlight SyntasticErrorSign   ctermbg=0 ctermfg=1 cterm=bold guibg=s:base2 guifg=s:red
-highlight SyntasticWarningSign ctermbg=0 ctermfg=5 cterm=bold guibg=s:base2 guifg=s:yellow
+highlight SyntasticErrorSign   ctermbg=0 ctermfg=1 cterm=bold
+highlight SyntasticWarningSign ctermbg=0 ctermfg=5 cterm=bold
+call Set_colour('SyntasticErrorSign',   'guibg', s:base03)
+call Set_colour('SyntasticErrorSign',   'guifg', s:red   )
+call Set_colour('SyntasticWarningSign', 'guibg', s:base03)
+call Set_colour('SyntasticWarningSign', 'guifg', s:yellow)
 
 let g:syntastic_mode_map = { 'mode': 'active',
     \ 'active_filetypes':  [],
