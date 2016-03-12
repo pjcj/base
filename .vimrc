@@ -169,7 +169,6 @@ set errorformat=%f:%l:%m
 set expandtab
 set exrc
 set formatoptions=tcrqnl
-" set grepprg=tcgrep\ -nrq
 set grepprg=git\ grep\ -nw
 set guifont=inconsolata\ \for\ powerline\ 12
 set history=1000
@@ -180,14 +179,12 @@ set laststatus=2
 set lazyredraw
 set list
 set listchars=tab:»\ ,trail:·
-" set makeprg=nmake
 set modelines=0
 set mouse=a
 set mousefocus
 set mousehide
 set mousemodel=popup_setpos
 set number
-" set patchmode=.org
 set path=,,.,/usr/include
 set report=1
 set ruler
