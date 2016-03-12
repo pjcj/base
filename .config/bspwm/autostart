@@ -6,9 +6,9 @@ xrdb -merge .Xdefaults
 xsetroot -bg black
 numlockx on
 gnome-panel &
-st&
-nm-applet &
-if [ $(hostname) = "pj" ]; then
-  thunderbird &
-  firefox &
+st &
+# nm-applet &
+if [ "$(hostname)" = "pj" ]; then
+    thunderbird &
+    firefox &
 fi
