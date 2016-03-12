@@ -496,6 +496,9 @@ map [28~   <S-F5>
 map [29~   <S-F6>
 map [31~   <S-F7>
 map [21;2~ <S-F10>
+map <F13>    <S-F1>
+map <F14>    <S-F2>
+map <F15>    <S-F3>
 map <F16>    <S-F4>
 map <F17>    <S-F5>
 map <F18>    <S-F6>
