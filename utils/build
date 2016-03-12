@@ -11,7 +11,13 @@ configure() {
 }
 
 case "$dir" in
-    urlview|htop)
+    urlview)
+        autoreconf -vfi
+        configure
+        make check install
+        ;;
+    htop)
+        sudo aptitude -y install libncursesw5-dev
         configure
         make check install
         ;;
@@ -20,6 +26,7 @@ case "$dir" in
         make install
         ;;
     neovim)
+        sudo aptitude -y install libtool-bin
         make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
              CMAKE_BUILD_TYPE=Release test install
         ;;
@@ -37,11 +44,15 @@ case "$dir" in
         make PREFIX="$sw" all install
         ;;
     xdotool)
+        sudo aptitude -y install libxinerama-dev x11proto-xinerama-dev \
+            libxkbcommon-dev
         make PREFIX="$sw" all test install
         sudo ldconfig
         ;;
     zsh)
+        autoreconf -vfi
         configure --enable-pcre
+        make
         make check
         make install || echo make install expected to fail
         ;;
