@@ -470,7 +470,7 @@ nnoremap <S-F6> :lprevious<CR>
 nnoremap <F7> :cnext<CR>
 nnoremap <S-F7> :lnext<CR>
 nnoremap <F8> :execute "silent grep! " . expand("<cword>") <Bar> botright copen<CR><C-L>
-nnoremap <F9> :cclose<Bar>:lclose<CR>
+nnoremap <F9> :cclose<Bar>:lclose<Bar>:pclose<CR>
 nnoremap <silent> <S-F10> w
 nnoremap § :Gitv --all<CR>
 nnoremap ° :Gitv! --all<CR>
