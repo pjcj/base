@@ -406,6 +406,7 @@ let g:gitgutter_signs           = 1
 let g:gitgutter_highlight_lines = 0
 let g:gitgutter_realtime        = 1
 let g:gitgutter_eager           = 1
+let g:gitgutter_map_keys        = 0
 nnoremap <leader>hn :GitGutterNextHunk<CR>
 nnoremap <leader>hp :GitGutterPrevHunk<CR>
 nnoremap <leader>hv :GitGutterPreviewHunk<CR>
