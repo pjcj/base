@@ -502,7 +502,7 @@ map <F22>    <S-F10>
 nnoremap <leader>gu :GundoToggle<CR>
 
 " This toggles the hlsearch flag, then reports the current state of the flag.
-nnoremap <C-M-h> :set hls!<cr><bar>:echo "HLSearch: " . strpart("OffOn",3*&hlsearch,3)<cr>
+nnoremap <C-M-h> :set hls!<CR><BAR>:echo "HLSearch: " . strpart("OffOn",3*&hlsearch,3)<CR>
 
 function! Tab_or_complete()
     if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~# '^\w'
