@@ -5,10 +5,13 @@ PATH=/home/pjcj/g/sw/bin:$PATH
 xrdb -merge .Xdefaults
 xsetroot -bg black
 numlockx on
-gnome-panel &
-st &
-# nm-applet &
-if [ "$(hostname)" = "pj" ]; then
-    thunderbird &
-    firefox &
-fi
+(
+    sleep 1
+    gnome-panel &
+    st &
+    # nm-applet &
+    if [ "$(hostname)" = "pj" ]; then
+        thunderbird &
+        firefox &
+    fi
+) &
