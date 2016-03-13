@@ -72,6 +72,11 @@ case "$dir" in
     shellcheck)
         cabal update && cabal install --prefix="$sw"
         ;;
+    skype)
+        sudo dpkg --add-architecture i386
+        sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
+        sudo aptitude update && sudo aptitude -y install skype
+        ;;
     *)
         echo unknown directory "$dir"
         ;;
