@@ -295,6 +295,8 @@ call Set_colour('DiffDelete',   'guibg', s:base03)
 call Set_colour('Search',       'guibg', s:violet)
 call Set_colour('Search',       'guifg', s:base03)
 call Set_colour('Search',       'gui',   'NONE'  )
+call Set_colour('TabLineSel',   'guibg', s:base03)
+call Set_colour('TabLineSel',   'guifg', s:violet)
 
 nmap <C-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
