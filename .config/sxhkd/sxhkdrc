@@ -139,6 +139,12 @@ super + Escape
 ctrl + alt + l
     gnome-screensaver-command -a
 
+# suspend and hibernate
+ctrl + alt + h
+    sudo pm-hibernate
+ctrl + alt + s
+    sudo pm-suspend-hybrid
+
 # xdotool
 super + y ; u
     xdotool sleep 0.1 type --clearmodifiers --delay 12 pjcj
