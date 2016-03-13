@@ -2,7 +2,9 @@
 
 set -e
 
-dir=$(basename "$(pwd)")
+dir=$1
+test -z "$dir" && dir=$(basename "$(pwd)")
+
 sw=$HOME/g/sw
 
 configure() {
