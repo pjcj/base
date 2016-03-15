@@ -13,5 +13,6 @@ numlockx on
     if [ "$(hostname)" = "pj" ]; then
         thunderbird &
         firefox &
+        st irssi &
     fi
 ) &
