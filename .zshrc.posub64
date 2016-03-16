@@ -1,8 +1,4 @@
-ps -elf | grep -q '[p]arcellite' || parcellite &|
-
-_dc() {
-    reply=(`utils/dc options`)
-}
+_dc() { reply=(`utils/dc options`) }
 compctl -K _dc dc
 
 export DEVEL_COVER_CPUS=4
