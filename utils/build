@@ -77,6 +77,13 @@ case "$dir" in
         sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
         sudo aptitude update && sudo aptitude -y install skype
         ;;
+    ClipIt)
+        sudo aptitude -y install autopoint
+        ./autogen.sh
+        configure
+        make
+        make install
+        ;;
     *)
         echo unknown directory "$dir"
         ;;
