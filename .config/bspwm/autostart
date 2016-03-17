@@ -8,6 +8,7 @@ numlockx on
 (
     sleep 1
     gnome-panel &
+    clipit -d &
     st &
     # nm-applet &
     if [ "$(hostname)" = "pj" ]; then
