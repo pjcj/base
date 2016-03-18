@@ -84,6 +84,11 @@ case "$dir" in
         make
         make install
         ;;
+    PathPicker)
+        set -x
+        target="$sw/bin/fpp"
+        [ -e "$target" ] || ln -s "$(pwd)/fpp" "$target"
+        ;;
     *)
         echo unknown directory "$dir"
         ;;
