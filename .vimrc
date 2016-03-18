@@ -726,6 +726,7 @@ augroup EscapeUnite
 augroup END
 
 nmap - gcc
+vmap - gc
 
 " abbr
 abbr ,, =>
