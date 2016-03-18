@@ -727,6 +727,10 @@ augroup END
 
 nmap - gcc
 vmap - gc
+augroup Commentary
+    autocmd!
+    autocmd FileType crontab setlocal commentstring=#\ %s
+augroup END
 
 " abbr
 abbr ,, =>
