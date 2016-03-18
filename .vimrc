@@ -441,8 +441,8 @@ nnoremap <silent> n :call WordNavigation(1)<CR>:call search_pulse#Pulse()<CR>
 nnoremap <silent> N :call WordNavigation(0)<CR>:call search_pulse#Pulse()<CR>
 augroup Pulse
     autocmd!
-    autocmd User PrePulse  set cursorcolumn
-    autocmd User PostPulse set nocursorcolumn
+    autocmd User PrePulse  set cursorline! cursorcolumn!
+    autocmd User PostPulse set cursorline! cursorcolumn!
 augroup END
 
 vnoremap <unique> k <Plug>SchleppUp
