@@ -337,10 +337,12 @@ augroup file_types
     autocmd BufNewFile,BufReadPost *.tt       set ft=tt2html
     autocmd BufNewFile,BufReadPost *.t        set ft=perl
     autocmd BufNewFile,BufReadPost *.pd       set ft=perl
+    " autocmd BufNewFile             *.pm       0r ~/.vim/templates/Module.pm
+    " autocmd BufNewFile             *.pl       0r ~/.vim/templates/Program.pl
+    " autocmd BufNewFile             *.t        0r ~/.vim/templates/Test.t
 
     autocmd BufRead *tmp/ml/mutt-* setlocal colorcolumn=72 tw=72 spell spelllang=en_gb
 
-    autocmd Filetype perl source ~/.vim/local/perl_local.vim
     autocmd Filetype gitcommit setlocal colorcolumn=50,72 tw=72 spell spelllang=en_gb
 
     autocmd InsertLeave * if expand("%") != "" | update | endif
@@ -585,6 +587,7 @@ let g:syntastic_perl_checkers       = ['perl']
 let g:syntastic_enable_perl_checker = 1
 let g:syntastic_shell_checkers      = ['sh', 'shellcheck', 'checkbashisms']
 let g:syntastic_vim_checkers        = ['vint']
+let g:syntastic_perl_perl_exec      = 'perl -Mblib'
 
 " delimitMate
 " imap § <C-G>g
