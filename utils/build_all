@@ -21,7 +21,7 @@ pip install --upgrade --user git+git://github.com/powerline/powerline
 sudo npm -g install instant-markdown-d
 
 $EDITOR -c PlugUpgrade -c qa
-$EDITOR -c PlugClean   -c qa
+# $EDITOR -c PlugClean   -c qa
 $EDITOR -c PlugInstall -c qa
 $EDITOR -c PlugUpdate  -c qa
 
