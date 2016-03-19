@@ -274,6 +274,7 @@ function! Set_colour(group, part, colour)
 endfunc
 
 highlight Comment cterm=italic
+call Set_colour('Normal',       'guifg', s:violet)
 call Set_colour('SpecialKey',   'guibg', s:base03)
 call Set_colour('SpellBad',     'guibg', s:violet)
 call Set_colour('SpellBad',     'guifg', s:base03)
