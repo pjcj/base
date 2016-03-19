@@ -12,6 +12,13 @@ configure() {
     ./configure --prefix="$sw" "$@"
 }
 
+exit_unless_x() {
+    if ! xset q > /dev/null 2>&1; then
+        echo "not running under X, ignoring $dir"
+        exit
+    fi
+}
+
 case "$dir" in
     urlview)
         autoreconf -vfi
@@ -24,6 +31,7 @@ case "$dir" in
         make check install
         ;;
     libevent)
+        exit_unless_x
         configure
         make install
         ;;
@@ -33,11 +41,13 @@ case "$dir" in
              CMAKE_BUILD_TYPE=Release test install
         ;;
     st)
+        exit_unless_x
         sudo aptitude -y install fontconfig libfontconfig1-dev \
             libfreetype6 libfreetype6-dev libxft-dev
         make clean install
         ;;
     sxhkd|bspwm)
+        exit_unless_x
         sudo aptitude -y install libxcb-util0-dev libxcb-keysyms1-dev     \
             libxcb-xinerama0-dev libxcb-randr0-dev libxcb-icccm4-dev      \
             libxcb-ewmh1-dev xcb libxcb-util0-dev libxcb-ewmh-dev         \
@@ -47,6 +57,7 @@ case "$dir" in
         make PREFIX="$sw" all install
         ;;
     xdotool)
+        exit_unless_x
         sudo aptitude -y install libxinerama-dev x11proto-xinerama-dev \
             libxkbcommon-dev
         make PREFIX="$sw" all test install
@@ -73,11 +84,13 @@ case "$dir" in
         cabal update && cabal install --prefix="$sw"
         ;;
     skype)
+        exit_unless_x
         sudo dpkg --add-architecture i386
         sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
         sudo aptitude update && sudo aptitude -y install skype
         ;;
     ClipIt)
+        exit_unless_x
         sudo aptitude -y install autopoint
         ./autogen.sh
         configure
