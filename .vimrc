@@ -437,7 +437,9 @@ let g:calendar_google_task     = 1
 " get vim-search-pulse and vim-interestingwords working together
 let g:vim_search_pulse_disable_auto_mappings = 1
 let g:vim_search_pulse_mode = 'pattern'  " or cursor_line
-let g:interestingWordsGUIColors = ['#72b5e4', '#f0c53f', '#ff8784', '#c5c7f1', '#c2d735', '#78d3cc', '#ea8336']
+let g:interestingWordsGUIColors =
+    \ ['#72b5e4', '#f0c53f', '#ff8784', '#c5c7f1',
+    \  '#c2d735', '#78d3cc', '#ea8336']
 " nmap * *``:call search_pulse#Pulse()<CR>
 nmap * :call InterestingWords('n')<CR>
 nnoremap <silent> <leader>k :call InterestingWords('n')<CR>
@@ -479,7 +481,8 @@ nnoremap <F6>       :cprevious<CR>
 nnoremap <S-F6>     :lprevious<CR>
 nnoremap <F7>       :cnext<CR>
 nnoremap <S-F7>     :lnext<CR>
-nnoremap <F8>       :execute "silent grep! " . expand("<cword>") <Bar> botright copen<CR><C-L>
+nnoremap <F8>       :execute "silent grep! " . expand("<cword>")
+                        \ <Bar> botright copen<CR><C-L>
 nnoremap <F9>       :cclose<Bar>:lclose<Bar>:pclose<CR>
 nnoremap <silent>   <S-F10> w
 nnoremap §          :Gitv --all<CR>
