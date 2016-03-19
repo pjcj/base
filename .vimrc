@@ -341,9 +341,12 @@ augroup file_types
     " autocmd BufNewFile             *.pl       0r ~/.vim/templates/Program.pl
     " autocmd BufNewFile             *.t        0r ~/.vim/templates/Test.t
 
-    autocmd BufRead *tmp/ml/mutt-* setlocal colorcolumn=72 tw=72 spell spelllang=en_gb
+    autocmd Filetype perl setlocal path+=lib
 
-    autocmd Filetype gitcommit setlocal colorcolumn=50,72 tw=72 spell spelllang=en_gb
+    autocmd BufRead *tmp/ml/mutt-*
+        \ setlocal colorcolumn=72 tw=72 spell spelllang=en_gb
+    autocmd Filetype gitcommit
+        \ setlocal colorcolumn=50,72 tw=72 spell spelllang=en_gb
 
     autocmd InsertLeave * if expand("%") != "" | update | endif
 
