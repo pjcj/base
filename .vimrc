@@ -681,36 +681,46 @@ nnoremap [unite] <Nop>
 nmap <space> [unite]
 
 " General fuzzy search
-nnoremap <silent> [unite]<space> :<C-u>Unite
-    \ -buffer-name=files buffer file_mru bookmark git_modified git_untracked git_cached<CR>
+nnoremap <silent> [unite]<space>
+    \ :<C-u>Unite -buffer-name=files buffer
+    \ file_mru bookmark git_modified git_untracked git_cached<CR>
 
 " Quick registers
-nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
+nnoremap <silent> [unite]r
+    \ :<C-u>Unite -buffer-name=register register<CR>
 
 " Quick yank history
-nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<CR>
+nnoremap <silent> [unite]y
+    \ :<C-u>Unite -buffer-name=yanks history/yank<CR>
 
 " Quick perl modules
-nnoremap <silent> [unite]p :<C-u>Unite -buffer-name=perl_modules perl-module/cpan<CR>
+nnoremap <silent> [unite]p
+    \ :<C-u>Unite -buffer-name=perl_modules perl-module/cpan<CR>
 
 " Quick sources
-nnoremap <silent> [unite]s :<C-u>Unite -buffer-name=sources source<CR>
+nnoremap <silent> [unite]s
+    \ :<C-u>Unite -buffer-name=sources source<CR>
 
 " Quickly switch lcd
 nnoremap <silent> [unite]d
-      \ :<C-u>Unite -buffer-name=change-cwd -default-action=cd directory_mru directory_rec/async<CR>
+    \ :<C-u>Unite -buffer-name=change-cwd -default-action=cd
+    \ directory_mru directory_rec/async<CR>
 
 " Quick file search
-nnoremap <silent> [unite]f :<C-u>Unite -buffer-name=files file_rec/async file/new<CR>
+nnoremap <silent> [unite]f
+    \ :<C-u>Unite -buffer-name=files file_rec/async file/new<CR>
 
 " Quick grep from cwd
-nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=grep grep/git<CR>
+nnoremap <silent> [unite]g
+    \ :<C-u>Unite -buffer-name=grep grep/git<CR>
 
 " Quick help
-nnoremap <silent> [unite]h :<C-u>Unite -buffer-name=help help<CR>
+nnoremap <silent> [unite]h
+    \ :<C-u>Unite -buffer-name=help help<CR>
 
 " Quick commands
-nnoremap <silent> [unite]c :<C-u>Unite -buffer-name=commands command<CR>
+nnoremap <silent> [unite]c
+    \ :<C-u>Unite -buffer-name=commands command<CR>
 
 " Custom Unite settings
 function! s:EscapeUnite()
