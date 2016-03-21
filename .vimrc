@@ -6,6 +6,7 @@ call plug#begin()
 
 Plug 'airblade/vim-gitgutter'                              " ,hn ,hp ,hv ,hs ,hr
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
+Plug 'amperser/proselint', { 'rtp': '/plugins/vim/syntastic_proselint' }
 Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'docker/docker', { 'rtp': '/contrib/syntax/vim/' }          " docker syntax
@@ -589,11 +590,12 @@ call Set_colour('SyntasticWarningSign', 'guifg', s:yellow)
 let g:syntastic_mode_map = { 'mode': 'active',
     \ 'active_filetypes':  [],
     \ 'passive_filetypes': ['xml', 'c'] }
-let g:syntastic_perl_checkers       = ['perl']
 let g:syntastic_enable_perl_checker = 1
+let g:syntastic_perl_perl_exec      = 'perl -Mblib'
+let g:syntastic_markdown_checkers   = ['proselint']
+let g:syntastic_perl_checkers       = ['perl']
 let g:syntastic_shell_checkers      = ['sh', 'shellcheck', 'checkbashisms']
 let g:syntastic_vim_checkers        = ['vint']
-let g:syntastic_perl_perl_exec      = 'perl -Mblib'
 
 " delimitMate
 " imap § <C-G>g
