@@ -91,7 +91,7 @@ case "$dir" in
         ;;
     ClipIt)
         exit_unless_x
-        sudo aptitude -y install autopoint
+        sudo aptitude -y install autopoint intltool
         ./autogen.sh
         configure
         make
