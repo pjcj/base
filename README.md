@@ -26,11 +26,15 @@ Cutting edge software (newer than that packaged) is managed with
 * [zsh-git-prompt](https://github.com/olivierverdier/zsh-git-prompt) (prompt for
   zsh including git status)
 * [neovim](https://github.com/neovim/neovim)
-* [tmux](https://github.com/tmux/tmux)
+* [tmux](https://github.com/tmux/tmux) and
+  [libevent](https://github.com/libevent/libevent)
 * [bspwm](https://github.com/baskerville/bspwm)
 * [sxhkd](https://github.com/baskerville/sxhkd)
 * [xdotool](https://github.com/jordansissel/xdotool) (automate X input)
 * [urlview](https://github.com/sigpipe/urlview) (extract URLs from text)
+* [shellcheck](https://github.com/koalaman/shellcheck) (shell linter)
+* [Clipit](https://github.com/shantzu/ClipIt) (clipboard manager)
+* [PathPicker](https://github.com/facebook/PathPicker) (file selecter)
 
 The zsh config uses [zplug](https://github.com/b4b4r07/zplug) and the following
 plugins:
