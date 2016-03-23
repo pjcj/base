@@ -50,71 +50,71 @@ plugins:
 The vim config uses [vim-plug](https://github.com/junegunn/vim-plug) and the
 following plugins:
 
-* [deoplete](https://github.com/Shougo/deoplete.nvim) (completion)
-* [neomake](https://github.com/benekastah/neomake) (syntax checking)
-* [vim-gitgutter](https://github.com/airblade/vim-gitgutter) (show git changes
-  in gutter)
-* [vitality.vim](https://github.com/akracun/vitality.vim) (focus lost and gained
-  inside tmux)
-* [vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
-* [neovim-colors-solarized-truecolor-only](https://github.com/pjcj/neovim-colors-solarized-truecolor-only)
-  (my version of truecolour solarized colours)
-* [vim-sxhkdrc](https://github.com/baskerville/vim-sxhkdrc) (syntax
-  highlighting)
-* [ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim) (fuzzy finder)
-* [supertab](https://github.com/ervandew/supertab) (tab completion)
-* [vim-autoswap](https://github.com/gioele/vim-autoswap) (deal with swap files
-  intelligently)
-* [gitv](https://github.com/gregsexton/gitv) (gitk-alike)
-* [dockerfile](https://github.com/honza/dockerfile) (docker syntax)
-* [vim-search-pulse](https://github.com/inside/vim-search-pulse) (pulse on
-  search)
-* [vim-togglecursor](https://github.com/jszakmeister/vim-togglecursor) (change
-  cursor shape on insert)
-* [vim-easy-align](https://github.com/junegunn/vim-easy-align) (vertical
-  alignment)
-* [vim-signature](https://github.com/kshenoy/vim-signature) (show marks)
-* [vim-gutentags](https://github.com/ludovicchabant/vim-gutentags) (generate
-  tags dynamically)
-* [tagbar](https://github.com/majutsushi/tagbar) (display tags)
-* [vim-indent-guides](https://github.com/nathanaelkane/vim-indent-guides)
-  (guidelines for indentation)
-* [vim-hl-var](https://github.com/pjcj/vim-hl-var) (highlight variable under
-  cursor)
-* [salt-vim](https://github.com/saltstack/salt-vim) (salt syntax)
-* [nerdtree](https://github.com/scrooloose/nerdtree) (file tree)
-* [syntastic](https://github.com/scrooloose/syntastic) (syntax checking)
 * [ctrlp-extensions](https://github.com/sgur/ctrlp-extensions) (cmdline, yank
   and menu for ctrlp)
+* [ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim) (fuzzy finder)
+* [deoplete](https://github.com/Shougo/deoplete.nvim) (completion)
+* [diffchar](https://github.com/vim-scripts/diffchar.vim) (show diffs by
+  character)
+* [dockerfile](https://github.com/honza/dockerfile) (docker syntax)
+* [gitv](https://github.com/gregsexton/gitv) (gitk-alike)
 * [gundo](https://github.com/sjl/gundo.vim) (visuals undo tree)
-* [vim-matchit](https://github.com/Spaceghost/vim-matchit) (extended % matching)
+* [neomake](https://github.com/benekastah/neomake) (syntax checking)
+* [neovim-colors-solarized-truecolor-only](https://github.com/pjcj/neovim-colors-solarized-truecolor-only)
+  (my version of truecolour solarized colours)
+* [nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin) (show
+  git status against files)
+* [nerdtree](https://github.com/scrooloose/nerdtree) (file tree)
 * [quickfix-reflector](https://github.com/stefandtw/quickfix-reflector.vim)
   (edit text in quickfix window)
-* [vim-instant-markdown](https://github.com/suan/vim-instant-markdown) (show
-  markdown in browser as it is edited)
-* [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
-  (concurrent editing)
-* [vim-tmux](https://github.com/tmux-plugins/vim-tmux) (tmux syntax highlighting
-  and more)
-* [vint-syntastic](https://github.com/todesking/vint-syntastic) (vim linter)
+* [salt-vim](https://github.com/saltstack/salt-vim) (salt syntax)
+* [supertab](https://github.com/ervandew/supertab) (tab completion)
+* [syntastic](https://github.com/scrooloose/syntastic) (syntax checking)
+* [tagbar](https://github.com/majutsushi/tagbar) (display tags)
 * [vim-abolish](https://github.com/tpope/vim-abolish) (handle word variants)
-* [vim-commentary](https://github.com/tpope/vim-commentary) (code comments)
-* [vim-dispatch](https://github.com/tpope/vim-dispatch) (asynchronous jobs)
-* [vim-eunuch](https://github.com/tpope/vim-eunuch) (unix commands)
-* [vim-fugitive](https://github.com/tpope/vim-fugitive) (work with git)
-* [vim-repeat](https://github.com/tpope/vim-repeat) (make . work more often)
-* [vim-surround](https://github.com/tpope/vim-surround) (manage surrounding
-  characters)
-* [vim-interestingwords](https://github.com/vasconcelloslf/vim-interestingwords)
-  (highlighting and navigation)
 * [vim-airline](https://github.com/vim-airline/vim-airline) (status line)
 * [vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)
   (status line themes)
-* [diffchar](https://github.com/vim-scripts/diffchar.vim) (show diffs by
-  character)
-* [nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin) (show
-  git status against files)
+* [vim-autoswap](https://github.com/gioele/vim-autoswap) (deal with swap files
+  intelligently)
+* [vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
+* [vim-commentary](https://github.com/tpope/vim-commentary) (code comments)
+* [vim-dispatch](https://github.com/tpope/vim-dispatch) (asynchronous jobs)
+* [vim-easy-align](https://github.com/junegunn/vim-easy-align) (vertical
+  alignment)
+* [vim-eunuch](https://github.com/tpope/vim-eunuch) (unix commands)
+* [vim-fugitive](https://github.com/tpope/vim-fugitive) (work with git)
+* [vim-gitgutter](https://github.com/airblade/vim-gitgutter) (show git changes
+  in gutter)
+* [vim-gutentags](https://github.com/ludovicchabant/vim-gutentags) (generate
+  tags dynamically)
+* [vim-hl-var](https://github.com/pjcj/vim-hl-var) (highlight variable under
+  cursor)
+* [vim-indent-guides](https://github.com/nathanaelkane/vim-indent-guides)
+  (guidelines for indentation)
+* [vim-instant-markdown](https://github.com/suan/vim-instant-markdown) (show
+  markdown in browser as it is edited)
+* [vim-interestingwords](https://github.com/vasconcelloslf/vim-interestingwords)
+  (highlighting and navigation)
+* [vim-matchit](https://github.com/Spaceghost/vim-matchit) (extended % matching)
+* [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
+  (concurrent editing)
+* [vim-repeat](https://github.com/tpope/vim-repeat) (make . work more often)
 * [vim-schlepp](https://github.com/zirrostig/vim-schlepp) (move blocks of text)
+* [vim-search-pulse](https://github.com/inside/vim-search-pulse) (pulse on
+  search)
+* [vim-signature](https://github.com/kshenoy/vim-signature) (show marks)
+* [vim-surround](https://github.com/tpope/vim-surround) (manage surrounding
+  characters)
+* [vim-sxhkdrc](https://github.com/baskerville/vim-sxhkdrc) (syntax
+  highlighting)
+* [vim-tmux](https://github.com/tmux-plugins/vim-tmux) (tmux syntax highlighting
+  and more)
+* [vim-togglecursor](https://github.com/jszakmeister/vim-togglecursor) (change
+  cursor shape on insert)
+* [vint-syntastic](https://github.com/todesking/vint-syntastic) (vim linter)
+* [vitality.vim](https://github.com/akracun/vitality.vim) (focus lost and gained
+  inside tmux)
 
 
 * [unite](https://github.com/Shougo/unite.vim) (ctrl-p-like interface)
