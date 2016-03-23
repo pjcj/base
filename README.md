@@ -65,6 +65,7 @@ following plugins:
 * [nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin) (show
   git status against files)
 * [nerdtree](https://github.com/scrooloose/nerdtree) (file tree)
+* [proselint](https://github.com/amperser/proselint) (text linter)
 * [quickfix-reflector](https://github.com/stefandtw/quickfix-reflector.vim)
   (edit text in quickfix window)
 * [salt-vim](https://github.com/saltstack/salt-vim) (salt syntax)
