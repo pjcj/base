@@ -4,56 +4,59 @@ filetype off
 
 call plug#begin()
 
-Plug 'airblade/vim-gitgutter'                              " ,hn ,hp ,hv ,hs ,hr
-Plug 'akracun/vitality.vim'                           " deal with focus for tmux
-Plug 'amperser/proselint', { 'rtp': '/plugins/vim/syntastic_proselint' }
-Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
-Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
-Plug 'docker/docker', { 'rtp': '/contrib/syntax/vim/' }          " docker syntax
-Plug 'ervandew/supertab'
-Plug 'gioele/vim-autoswap'                        " deal with swapfiles sensibly
-Plug 'gregsexton/gitv'                                                   " <F10>
-Plug 'inside/vim-search-pulse'                                           " * n N
-Plug 'jszakmeister/vim-togglecursor'             " change cursor shape on insert
-Plug 'junegunn/vim-easy-align'                                     " = ^X<regex>
-Plug 'kshenoy/vim-signature'                          " mx dmx m, m. m<Space> m/
-Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
-Plug 'majutsushi/tagbar'                                                  " <F2>
-Plug 'nathanaelkane/vim-indent-guides'    " configured for indent of two or four
-Plug 'pjcj/vim-hl-var'
-Plug 'saltstack/salt-vim'                                    " salt highlighting
-Plug 'scrooloose/nerdtree'                                                " <F1>
-Plug 'scrooloose/syntastic'
+" !sort -t/ -k2
 Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
+Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
+Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
+Plug 'docker/docker', { 'rtp': '/contrib/syntax/vim/' }          " docker syntax
+Plug 'gregsexton/gitv'                                                   " <F10>
 Plug 'sjl/gundo.vim'                                                       " ,gu
-Plug 'Spaceghost/vim-matchit'                                                " %
+Plug 'scrooloose/nerdtree'                                                " <F1>
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'amperser/proselint', { 'rtp': '/plugins/vim/syntastic_proselint' }
 Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
-Plug 'suan/vim-instant-markdown'
-Plug 'terryma/vim-multiple-cursors'                                         " ^n
-Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
-Plug 'todesking/vint-syntastic'                                     " vim linter
+Plug 'saltstack/salt-vim'                                    " salt highlighting
+Plug 'ervandew/supertab'
+Plug 'scrooloose/syntastic'
+Plug 'majutsushi/tagbar'                                                  " <F2>
 Plug 'tpope/vim-abolish'               " :%Subvert/facilit{y,ies}/building{,s}/g
-Plug 'tpope/vim-commentary'                                                 " gc
-Plug 'tpope/vim-dispatch'                          " asynchronous build and test
-Plug 'tpope/vim-eunuch'                                          " Unix commands
-Plug 'tpope/vim-fugitive'                                  " :Gdiff :Gstatus ,gg
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
-Plug 'vasconcelloslf/vim-interestingwords'                           " ,k ,K n N
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
-Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'gioele/vim-autoswap'                        " deal with swapfiles sensibly
+Plug 'tpope/vim-commentary'                                                 " gc
+Plug 'tpope/vim-dispatch'                          " asynchronous build and test
+Plug 'junegunn/vim-easy-align'                                     " = ^X<regex>
+Plug 'tpope/vim-eunuch'                                          " Unix commands
+Plug 'tpope/vim-fugitive'                                  " :Gdiff :Gstatus ,gg
+Plug 'airblade/vim-gitgutter'                              " ,hn ,hp ,hv ,hs ,hr
+Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
+Plug 'pjcj/vim-hl-var'
+Plug 'nathanaelkane/vim-indent-guides'    " configured for indent of two or four
+Plug 'suan/vim-instant-markdown'
+Plug 'vasconcelloslf/vim-interestingwords'                           " ,k ,K n N
+Plug 'Spaceghost/vim-matchit'                                                " %
+Plug 'terryma/vim-multiple-cursors'                                         " ^n
+Plug 'tpope/vim-repeat'
 Plug 'zirrostig/vim-schlepp'                               " highlight then hjkl
+Plug 'inside/vim-search-pulse'                                           " * n N
+Plug 'kshenoy/vim-signature'                          " mx dmx m, m. m<Space> m/
+Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
+Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
+Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
+Plug 'jszakmeister/vim-togglecursor'             " change cursor shape on insert
+Plug 'todesking/vint-syntastic'                                     " vim linter
+Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 
 Plug 'Shougo/unite.vim'                                " <space><space> <space>s
-Plug 'lambdalisue/unite-grep-vcs'
-Plug 'LeafCage/yankround.vim'
-Plug 'mpendse/unite-search-history'
-Plug 'Shougo/neomru.vim'                                         " MRU for unite
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
-Plug 'soh335/unite-perl-module'
+
+" Unite plugins
+Plug 'Shougo/neomru.vim'                                         " MRU for unite
 Plug 'yuku-t/unite-git'
+Plug 'lambdalisue/unite-grep-vcs'
+Plug 'soh335/unite-perl-module'
+Plug 'mpendse/unite-search-history'
+Plug 'LeafCage/yankround.vim'
 
 " Plug 'itchyny/calendar.vim'
 " Plug 'junegunn/gv.vim'                                         " :GV :GV! gb q
