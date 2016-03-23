@@ -118,14 +118,16 @@ following plugins:
 
 
 * [unite](https://github.com/Shougo/unite.vim) (ctrl-p-like interface)
+* [vimproc](https://github.com/Shougo/vimproc.vim) (asynchronous processes)
+
+
+* [neomru](https://github.com/Shougo/neomru.vim) (MRU for unite)
+* [unite-git](https://github.com/yuku-t/unite-git) (git in unite)
 * [unite-grep-vcs](https://github.com/lambdalisue/unite-grep-vcs) (git grep for
   unite)
-* [yankround](https://github.com/LeafCage/yankround.vim) (yank history for
-  unite)
-* [unite-search-history](https://github.com/mpendse/unite-search-history)
-  (history for unite)
-* [neomru](https://github.com/Shougo/neomru.vim) (MRU for unite)
-* [vimproc](https://github.com/Shougo/vimproc.vim) (asynchronous processes)
 * [unite-perl-module](https://github.com/soh335/unite-perl-module) (integrate
   Perl modules into unite)
-* [unite-git](https://github.com/yuku-t/unite-git) (git in unite)
+* [unite-search-history](https://github.com/mpendse/unite-search-history)
+  (history for unite)
+* [yankround](https://github.com/LeafCage/yankround.vim) (yank history for
+  unite)
