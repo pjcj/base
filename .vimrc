@@ -445,7 +445,7 @@ let g:interestingWordsGUIColors =
     \ ['#72b5e4', '#f0c53f', '#ff8784', '#c5c7f1',
     \  '#c2d735', '#78d3cc', '#ea8336']
 " nmap * *``:call search_pulse#Pulse()<CR>
-nmap * :call InterestingWords('n')<CR>
+nmap * *``:call InterestingWords('n')<CR>:set nohls<CR>
 nnoremap <silent> <leader>k :call InterestingWords('n')<CR>
 vnoremap <silent> <leader>k :call InterestingWords('v')<CR>
 nnoremap <silent> <leader>K :call UncolorAllWords()<CR>
