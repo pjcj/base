@@ -295,11 +295,6 @@ PATH=~/.local/bin:~/g/go/bin:~/bin:~/g/sw/bin:~/g/sw/usr/bin:$PATH
 PATH=~/g/local_base/utils:~/g/base/utils:$PATH
 PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
 
-typeset -U path
-typeset -U manpath
-path=($^path(N))
-manpath=($^manpath(N))
-
 zshrc_load_status "aliases"
 
 alias dm="fc -e - d=m -1"
@@ -445,13 +440,6 @@ export VISUAL=$EDITOR
 
 [[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim
 
-if [[ -e ~/perl5/perlbrew/etc/bashrc ]] then
-    . ~/perl5/perlbrew/etc/bashrc 2>/dev/null
-    . ~/perl5/perlbrew/etc/perlbrew-completion.bash
-    pb() { TEST_JOBS=9 perlbrew "$@" }
-    complete -F _perlbrew_compgen pb
-fi
-
 zshrc_load_status "external files"
 
 load() {
@@ -468,6 +456,20 @@ load \
     ~/.gvm/scripts/gvm         \
     ~/.zshrc.local             \
     ~/.zshrc.${HOST%%.*}
+
+[[ -z $PERLBREW_ROOT ]] && export PERLBREW_ROOT=$"$HOME/perl5/perlbrew"
+if [[ -e $PERLBREW_ROOT/etc/bashrc ]] then
+    . $PERLBREW_ROOT/etc/bashrc 2>/dev/null
+    . $PERLBREW_ROOT/etc/perlbrew-completion.bash
+    PATH=$PERLBREW_ROOT/bin:$PATH
+    pb() { TEST_JOBS=9 perlbrew -j9 "$@" }
+    complete -F _perlbrew_compgen pb
+fi
+
+typeset -U path
+typeset -U manpath
+path=($^path(N))
+manpath=($^manpath(N))
 
 # from command-not-found package
 
