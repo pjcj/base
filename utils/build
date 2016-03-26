@@ -37,6 +37,7 @@ case "$dir" in
         ;;
     neovim)
         sudo aptitude -y install libtool-bin
+        git clean -dxf
         make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
              CMAKE_BUILD_TYPE=Release test install
         ;;
