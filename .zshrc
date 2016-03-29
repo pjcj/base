@@ -373,7 +373,7 @@ gb()      { git branch "$@" }
 gc()      { git commit -v "$@" }
 gd()      { git diff "$@" }
 gdw()     { git diffwords "$@" }
-gf()      { git fetch "$@" }
+gf()      { git fetch --prune "$@" }
 gg()      { git grep -n "$@" }
 ggv()     { git grep -O$EDITOR "$@" }
 gl()      { git lg --all "$@" }
