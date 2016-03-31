@@ -226,6 +226,8 @@ compdef _git   gl=git-log
 compdef _git   gls=git-log
 compdef _git   glsa=git-log
 compdef _git   go=git-checkout
+compdef _git   gp=git-push
+compdef _git   gpo=git-push
 compdef _git   gr=git-rebase
 compdef _git   gs=git-status
 compdef _git   gw=git-wtf
@@ -381,6 +383,8 @@ gl()      { git lg --all "$@" }
 gls()     { git lg --simplify-by-decoration "$@" }
 glsa()    { git lg --all --simplify-by-decoration "$@" }
 go()      { git co "$@" }
+gp()      { git push "$@" }
+gpo()     { git push origin "$@" }
 gr()      { git rebase --preserve-merges "$@" }
 gs()      { git st "$@" }
 gw()      { git wtf -A "$@" }
