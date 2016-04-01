@@ -272,13 +272,14 @@ let s:violet  = '#6c71c4'
 let s:blue    = '#268bd2'
 let s:cyan    = '#2aa198'
 let s:green   = '#859900'
+let s:normal  = '#9599dc'
 
 function! Set_colour(group, part, colour)
     execute 'highlight ' . a:group . ' ' . a:part . '=' . a:colour
 endfunc
 
 highlight Comment cterm=italic
-call Set_colour('Normal',       'guifg', '#9599dc')
+call Set_colour('Normal',       'guifg', s:normal )
 call Set_colour('SpecialKey',   'guibg', s:base03 )
 call Set_colour('SpellBad',     'guibg', s:violet )
 call Set_colour('SpellBad',     'guifg', s:base03 )
