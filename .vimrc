@@ -758,6 +758,7 @@ nmap - gcc
 vmap - gc
 augroup Commentary
     autocmd!
+    autocmd FileType apache  setlocal commentstring=#\ %s
     autocmd FileType crontab setlocal commentstring=#\ %s
 augroup END
 
