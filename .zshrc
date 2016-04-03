@@ -218,6 +218,7 @@ compdef _make  n
 compdef _git   g=git
 compdef _git   gb=git-branch
 compdef _git   gc=git-commit
+compdef _git   gca=git-commit
 compdef _git   gd=git-diff
 compdef _git   gvd=git-diff
 compdef _git   gf=git-fetch
@@ -374,6 +375,7 @@ f()       { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
 g()       { git "$@" }
 gb()      { git branch "$@" }
 gc()      { git commit -v "$@" }
+gca()     { git commit --amend -v "$@" }
 gd()      { git diff "$@" }
 gdw()     { git diffwords "$@" }
 gf()      { git fetch --prune "$@" }
