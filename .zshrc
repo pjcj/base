@@ -230,6 +230,9 @@ compdef _git   go=git-checkout
 compdef _git   gp=git-push
 compdef _git   gpo=git-push
 compdef _git   gr=git-rebase
+compdef _git   gra=git-rebase
+compdef _git   grc=git-rebase
+compdef _git   gri=git-rebase
 compdef _git   gs=git-status
 compdef _git   gw=git-wtf
 compdef _dzil  z=dzil
@@ -388,6 +391,9 @@ go()      { git co "$@" }
 gp()      { git push "$@" }
 gpo()     { git push origin "$@" }
 gr()      { git rebase --preserve-merges "$@" }
+gra()     { git rebase --abort "$@" }
+grc()     { git rebase --continue "$@" }
+gri()     { git rebase --preserve-merges -i "$@" }
 gs()      { git st "$@" }
 gw()      { git wtf -A "$@" }
 golang()  { command go "$@" }
