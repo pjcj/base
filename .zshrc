@@ -301,6 +301,7 @@ zshrc_load_status "path"
 PATH=~/.local/bin:~/g/go/bin:~/bin:~/g/sw/bin:~/g/sw/usr/bin:$PATH
 PATH=~/g/local_base/utils:~/g/base/utils:$PATH
 PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
+MANPATH=~/g/sw/share/man
 
 zshrc_load_status "aliases"
 
