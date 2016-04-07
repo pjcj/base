@@ -689,7 +689,7 @@ nmap <space> [unite]
 " General fuzzy search
 nnoremap <silent> [unite]<space>
     \ :<C-u>Unite -buffer-name=files buffer
-    \ file_mru bookmark git_modified git_untracked git_cached<CR>
+    \ bookmark git_modified git_untracked file_mru git_cached<CR>
 
 " Quick registers
 nnoremap <silent> [unite]r
