@@ -669,6 +669,9 @@ let g:ctrlp_prompt_mappings    = {
 
 " unite
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#custom#source('file_mru', 'matchers',
+    \ ['matcher_project_files', 'matcher_fuzzy'])
+
 let g:unite_enable_start_insert             = 1
 let g:unite_split_rule                      = 'botright'
 let g:unite_data_directory                  = expand($HOME . '/.unite')
