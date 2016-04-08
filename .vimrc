@@ -672,13 +672,22 @@ let g:ctrlp_prompt_mappings    = {
     \ }
 
 " unite
+" Use the fuzzy matcher
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
+
+" Only use project files
 call unite#custom#source('file_mru', 'matchers',
     \ ['matcher_project_files', 'matcher_fuzzy'])
+
+" Increase max candidates
+call unite#custom#source('file,file_rec,file_rec/async,grep', 'max_candidates',
+    \ 10000)
 
 let g:unite_enable_start_insert             = 1
 let g:unite_split_rule                      = 'botright'
 let g:unite_data_directory                  = expand($HOME . '/.unite')
+let g:unite_prompt                          = '❯ '
+let g:unite_marked_icon                     = '•'
 
 " Shorten the default update time of 500ms
 let g:unite_update_time                     = 200
