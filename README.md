@@ -127,8 +127,8 @@ following plugins:
 * [unite-git](https://github.com/yuku-t/unite-git) (git in unite)
 * [unite-grep-vcs](https://github.com/lambdalisue/unite-grep-vcs) (git grep for
   unite)
-* [unite-outline](https://github.com/Shougo/unite-perl-module) (outline for
-  unite)
+* [unite-help](https://github.com/Shougo/unite-help) (help for unite)
+* [unite-outline](https://github.com/Shougo/unite-outline) (outline for unite)
 * [unite-perl-module](https://github.com/soh335/unite-perl-module) (integrate
   Perl modules into unite)
 * [unite-search-history](https://github.com/mpendse/unite-search-history)

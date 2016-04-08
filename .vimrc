@@ -54,6 +54,7 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
 Plug 'Shougo/neomru.vim'                                         " MRU for unite
 Plug 'yuku-t/unite-git'
 Plug 'lambdalisue/unite-grep-vcs'
+Plug 'Shougo/unite-help'
 Plug 'Shougo/unite-outline'
 Plug 'soh335/unite-perl-module'
 Plug 'mpendse/unite-search-history'
