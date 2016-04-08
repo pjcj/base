@@ -17,8 +17,9 @@ It includes config files for:
 Colours are Solarized Dark slightly altered to make the dark background colours
 a little darker.
 
-Cutting edge software (newer than that packaged) is managed with
-[ghq](https://github.com/motemen/ghq) and includes the following repositories:
+Unpackaged software, or software that is newer than packaged versions, is
+managed with [ghq](https://github.com/motemen/ghq) and includes the following
+repositories:
 
 * [st](http://git.suckless.org/st/)
 * [urxvt (with true colour support)](https://github.com/spudowiar/rxvt-unicode)
