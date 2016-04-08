@@ -8,6 +8,7 @@ ln -s g/base/{.notion,.vimrc,.Xdefaults,.vim,.nvim,.tmux.conf} ~
 [[ -d ~/.config ]] || mkdir ~/.config
 ln -s ~/g/base/.config/* ~/.config
 ( cd ~ && ln -s g/base/.zshrc* . )
+( cd ~ && ln -s g/base/.sxhkdrc* . )
 sudo ln -s ~/g/base/bspwm.desktop /usr/share/xsessions
 sudo ln -s ~/g/base/bspwm-session /usr/local/bin
 
