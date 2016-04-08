@@ -731,30 +731,14 @@ nnoremap <silent> [unite]h
 nnoremap <silent> [unite]c
     \ :<C-u>Unite -buffer-name=commands command<CR>
 
-" Custom Unite settings
-function! s:EscapeUnite()
-    augroup CloseUniteBuffer
-        autocmd!
-        autocmd InsertEnter <buffer>
-            \ let b:close = 0 |
-            \ let g:udt = &updatetime |
-            \ set updatetime=3
-
-        autocmd InsertLeave <buffer>
-            \ let b:close = 1
-
-        autocmd BufLeave,CursorHold <buffer>
-            \ let &updatetime = g:udt |
-            \ unlet g:udt
-
-        autocmd CursorHold <buffer>
-            \ if b:close | close | endif
-    augroup END
+function! s:unite_settings()
+    imap <buffer> <Esc> <Plug>(unite_exit)
+    nmap <buffer> <Esc> <Plug>(unite_exit)
 endfunction
 
 augroup EscapeUnite
     autocmd!
-    autocmd FileType unite call s:EscapeUnite()
+    autocmd FileType unite call s:unite_settings()
 augroup END
 
 nmap - gcc
