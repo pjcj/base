@@ -54,6 +54,7 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
 Plug 'Shougo/neomru.vim'                                         " MRU for unite
 Plug 'yuku-t/unite-git'
 Plug 'lambdalisue/unite-grep-vcs'
+Plug 'Shougo/unite-outline'
 Plug 'soh335/unite-perl-module'
 Plug 'mpendse/unite-search-history'
 Plug 'tsukkee/unite-tag'
@@ -735,6 +736,10 @@ nnoremap <silent> [unite]c
 " Quick tags
 nnoremap <silent> [unite]t
     \ :<C-u>Unite -buffer-name=tags tag<CR>
+
+" Quick outline
+nnoremap <silent> [unite]o
+    \ :<C-u>Unite -buffer-name=outline outline<CR>
 
 function! s:unite_settings()
     imap <buffer> <Esc> <Plug>(unite_exit)
