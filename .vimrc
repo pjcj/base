@@ -56,6 +56,7 @@ Plug 'yuku-t/unite-git'
 Plug 'lambdalisue/unite-grep-vcs'
 Plug 'soh335/unite-perl-module'
 Plug 'mpendse/unite-search-history'
+Plug 'tsukkee/unite-tag'
 Plug 'LeafCage/yankround.vim'
 
 " Plug 'itchyny/calendar.vim'
@@ -730,6 +731,10 @@ nnoremap <silent> [unite]h
 " Quick commands
 nnoremap <silent> [unite]c
     \ :<C-u>Unite -buffer-name=commands command<CR>
+
+" Quick tags
+nnoremap <silent> [unite]t
+    \ :<C-u>Unite -buffer-name=tags tag<CR>
 
 function! s:unite_settings()
     imap <buffer> <Esc> <Plug>(unite_exit)

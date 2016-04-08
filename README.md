@@ -130,5 +130,6 @@ following plugins:
   Perl modules into unite)
 * [unite-search-history](https://github.com/mpendse/unite-search-history)
   (history for unite)
+* [tsukkee/unite-tag](https://github.com/tsukkee/unite-tag) (tags for unite)
 * [yankround](https://github.com/LeafCage/yankround.vim) (yank history for
   unite)
