@@ -134,5 +134,6 @@ following plugins:
 * [unite-search-history](https://github.com/mpendse/unite-search-history)
   (history for unite)
 * [unite-tag](https://github.com/tsukkee/unite-tag) (tags for unite)
+* [unite-unicode](https://github.com/sanford1/unite-unicode) (unicode for unite)
 * [yankround](https://github.com/LeafCage/yankround.vim) (yank history for
   unite)

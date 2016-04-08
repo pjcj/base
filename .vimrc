@@ -59,6 +59,7 @@ Plug 'Shougo/unite-outline'
 Plug 'soh335/unite-perl-module'
 Plug 'mpendse/unite-search-history'
 Plug 'tsukkee/unite-tag'
+Plug 'sanford1/unite-unicode'
 Plug 'LeafCage/yankround.vim'
 
 " Plug 'itchyny/calendar.vim'
