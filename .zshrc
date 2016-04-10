@@ -472,7 +472,7 @@ load \
     ~/.zshrc.local             \
     ~/.zshrc.${HOST%%.*}
 
-[[ -z $PERLBREW_ROOT ]] && export PERLBREW_ROOT=$"$HOME/perl5/perlbrew"
+[[ -z $PERLBREW_ROOT ]] && export PERLBREW_ROOT="$HOME/perl5/perlbrew"
 if [[ -e $PERLBREW_ROOT/etc/bashrc ]] then
     . $PERLBREW_ROOT/etc/bashrc 2>/dev/null
     . $PERLBREW_ROOT/etc/perlbrew-completion.bash
