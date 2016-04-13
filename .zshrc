@@ -401,7 +401,7 @@ golang()  { command go "$@" }
 hg()      { fc -li 1 | grep "$@" }
 ll()      { f --color "$@" | m -r -X }
 mn()      { nroff -man "$@" | m }
-mutt()    { command mutt }
+mutt()    { mkdir -p /tmp/ml && command mutt }
 pm()      { pod2man "$@" | mn }
 restart() { exec $SHELL "$@" }
 rtunnel() { ssh -N -f -R 9999:localhost:22 "$@" }
