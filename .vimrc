@@ -210,7 +210,7 @@ set suffixes=.d,.e,.o,.org,.bak,~
 set tabstop=8
 set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags
 set tagrelative
-set textwidth=80
+set textwidth=0
 set title
 set ttimeoutlen=50
 set ttyfast
@@ -350,7 +350,7 @@ augroup file_types
     " autocmd BufNewFile             *.pl       0r ~/.vim/templates/Program.pl
     " autocmd BufNewFile             *.t        0r ~/.vim/templates/Test.t
 
-    autocmd Filetype perl setlocal path+=lib
+    autocmd Filetype perl setlocal path+=lib tw=80
 
     autocmd BufRead *tmp/ml/mutt-*
         \ setlocal colorcolumn=72 tw=72 spell spelllang=en_gb
