@@ -88,12 +88,12 @@ if has ('nvim')
     " let g:neomake_serialize                = 1
     " let g:neomake_serialize_abort_on_error = 1
     " let g:neomake_verbose                  = 2
-    " let g:neomake_sh_enabled_checkers      = ["shellcheck"]
-    " let g:neomake_vim_enabled_checkers     = ["vint"]
+    " let g:neomake_sh_enabled_checkers      = ['shellcheck']
+    " let g:neomake_vim_enabled_checkers     = ['vint']
 else
     Plug 'altercation/vim-colors-solarized'
 
-    " echo "neocomplete"
+    " echo 'neocomplete'
     Plug 'Shougo/neocomplete.vim'
     let g:acp_enableAtStartup                           = 0
     let g:neocomplete#enable_at_startup                 = 1
@@ -226,7 +226,7 @@ set writebackup
 
 let mapleader = ','
 
-" alter regex handling to "normal" syntax
+" alter regex handling to 'normal' syntax
 nnoremap / /\v
 vnoremap / /\v
 
@@ -257,8 +257,8 @@ augroup END
 syntax enable
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set background=dark
-" let g:solarized_contrast="high"
-" let g:solarized_visibility="normal"
+" let g:solarized_contrast='high'
+" let g:solarized_visibility='normal'
 colorscheme solarized
 let s:base03  = '#001920'
 let s:base02  = '#022731'
@@ -324,14 +324,14 @@ function! Setup_indent_guides()
     if &shiftwidth < 3
         let g:indent_guides_guide_size  = 0
         let g:indent_guides_auto_colors = 0
-        " echo "small: " &shiftwidth
+        " echo 'small: ' &shiftwidth
     else
         let g:indent_guides_guide_size  = 1
         let g:indent_guides_start_level = 2
         let g:indent_guides_auto_colors = 0
         hi IndentGuidesOdd ctermbg=black
         call Set_colour('IndentGuidesOdd', 'guibg', s:base02)
-        " echo "big: " &shiftwidth
+        " echo 'big: ' &shiftwidth
     endif
 endfunction
 autocmd VimEnter,Colorscheme * call Setup_indent_guides()
@@ -368,7 +368,7 @@ augroup file_types
 augroup END
 
 let g:gutentags_exclude = ['blib']
-" can be extended with "*/sub/path" if required
+" can be extended with '*/sub/path' if required
 
 let NERDTreeShowHidden=1
 
