@@ -319,9 +319,6 @@ alias u=popd
 alias cp="cp -bv --backup=numbered"
 alias mv="mv -bv --backup=numbered"
 
-alias pl="ps -o user,pid,pgid,pcpu,pmem,osz,rss,tty,s,stime,time,args"
-alias pp="pl -A | sort -k 4"
-
 zshrc_load_status "functions"
 
 if which nvim >&/dev/null; then
@@ -402,7 +399,9 @@ hg()      { fc -li 1 | grep "$@" }
 ll()      { f --color "$@" | m -r -X }
 mn()      { nroff -man "$@" | m }
 mutt()    { mkdir -p /tmp/ml && command mutt }
+pl()      { ps -o user,pid,pgid,pcpu,pmem,osz,rss,tty,s,stime,time,args "$@" }
 pm()      { pod2man "$@" | mn }
+pp()      { pl -A "$@" | sort -k 4 }
 restart() { exec $SHELL "$@" }
 rtunnel() { ssh -N -f -R 9999:localhost:22 "$@" }
 s()       { gnome-open "$@" }
