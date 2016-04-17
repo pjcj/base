@@ -10,7 +10,7 @@ numlockx on
     gnome-panel &
     clipit -d &
     st &
-    # nm-applet &
+    sudo nm-applet &
     if [ "$(hostname)" = "pj" ]; then
         thunderbird &
         firefox &
