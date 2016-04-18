@@ -316,9 +316,6 @@ alias p="pp|head"
 alias tf="tail -f"
 alias u=popd
 
-alias cp="cp -bv --backup=numbered"
-alias mv="mv -bv --backup=numbered"
-
 zshrc_load_status "functions"
 
 if which nvim >&/dev/null; then
@@ -369,6 +366,7 @@ v() {
 }
 
 cd()      { c "$@" && d }
+cp()      { cp -bv --backup=numbered "$@" }
 ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
 dh()      { f --color "$@" | head }
 ds()      { f -d "$@" }
@@ -399,6 +397,7 @@ hg()      { fc -li 1 | grep "$@" }
 ll()      { f --color "$@" | m -r -X }
 mn()      { nroff -man "$@" | m }
 mutt()    { mkdir -p /tmp/ml && command mutt }
+mv()      { mv -bv --backup=numbered "$@" }
 pl()      { ps -o user,pid,pgid,pcpu,pmem,osz,rss,tty,s,stime,time,args "$@" }
 pm()      { pod2man "$@" | mn }
 pp()      { pl -A "$@" | sort -k 4 }
