@@ -305,10 +305,6 @@ MANPATH=~/g/sw/share/man:$MANPATH
 
 zshrc_load_status "aliases"
 
-alias dm="fc -e - d=m -1"
-alias h="fc -li"
-alias hh="fc -li 1"
-alias lu="fc -e - lsq=usq -1"
 alias mkdir="nocorrect mkdir"
 alias m=less
 alias n=make
@@ -369,6 +365,7 @@ cd()      { c "$@" && d }
 cp()      { cp -bv --backup=numbered "$@" }
 ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
 dh()      { f --color "$@" | head }
+dm()      { fc -e - d=m -1 }
 ds()      { f -d "$@" }
 f()       { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
 g()       { git "$@" }
@@ -393,8 +390,11 @@ gri()     { git rebase --preserve-merges -i "$@" }
 gs()      { git st "$@" }
 gw()      { git wtf -A "$@" }
 golang()  { command go "$@" }
+h() { fc -li }
 hg()      { fc -li 1 | grep "$@" }
+hh() { fc -li 1 }
 ll()      { f --color "$@" | m -r -X }
+lu() { fc -e - lsq=usq -1 }
 mn()      { nroff -man "$@" | m }
 mutt()    { mkdir -p /tmp/ml && command mutt }
 mv()      { mv -bv --backup=numbered "$@" }
