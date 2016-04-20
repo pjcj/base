@@ -310,7 +310,6 @@ alias m=less
 alias n=make
 alias p="pp|head"
 alias tf="tail -f"
-alias u=popd
 
 zshrc_load_status "functions"
 
@@ -348,6 +347,8 @@ d() {
         f "$@"
     fi
 }
+
+u() { popd }
 
 v() {
     if test $# != 1 -o -r "$1"; then
