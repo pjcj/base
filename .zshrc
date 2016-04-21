@@ -303,8 +303,6 @@ PATH=~/g/local_base/utils:~/g/base/utils:$PATH
 PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
 MANPATH=~/g/sw/share/man:$MANPATH
 
-zshrc_load_status "aliases"
-
 zshrc_load_status "functions"
 
 if which nvim >&/dev/null; then
@@ -414,7 +412,7 @@ wh()      { . uwh "$@" }
 z()       { dzil "$@" }
 zb()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil build "$@" }
 zt()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil test "$@" }
-= ()       { echo "$@" | bc -l }
+= ()      { echo "$@" | bc -l }
 
 tm() {
     [[ -z "$1" ]] && { echo "usage: tm <session>" >&2; return 1; }
