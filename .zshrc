@@ -303,6 +303,10 @@ PATH=~/g/local_base/utils:~/g/base/utils:$PATH
 PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
 MANPATH=~/g/sw/share/man:${MANPATH:-manpath}
 
+zshrc_load_status "aliases"
+
+alias mkdir "nocorrect mkdir"
+
 zshrc_load_status "functions"
 
 if which nvim >&/dev/null; then
@@ -389,7 +393,6 @@ hh()      { fc -li 1 }
 ll()      { f --color "$@" | m -r -X }
 lu()      { fc -e - lsq=usq -1 }
 m()       { less "$@" }
-mkdir()   { nocorrect mkdir "$@" }
 mn()      { nroff -man "$@" | m }
 mutt()    { mkdir -p /tmp/ml && command mutt "$@" }
 mv()      { mv -bv --backup=numbered "$@" }
