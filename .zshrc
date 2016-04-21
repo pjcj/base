@@ -305,12 +305,6 @@ MANPATH=~/g/sw/share/man:$MANPATH
 
 zshrc_load_status "aliases"
 
-alias mkdir="nocorrect mkdir"
-alias m=less
-alias n=make
-alias p="pp|head"
-alias tf="tail -f"
-
 zshrc_load_status "functions"
 
 if which nvim >&/dev/null; then
@@ -391,14 +385,18 @@ gri()     { git rebase --preserve-merges -i "$@" }
 gs()      { git st "$@" }
 gw()      { git wtf -A "$@" }
 golang()  { command go "$@" }
-h() { fc -li }
+h()       { fc -li }
 hg()      { fc -li 1 | grep "$@" }
-hh() { fc -li 1 }
+hh()      { fc -li 1 }
 ll()      { f --color "$@" | m -r -X }
-lu() { fc -e - lsq=usq -1 }
+lu()      { fc -e - lsq=usq -1 }
+m()       { less }
+mkdir()   { "nocorrect mkdir" }
 mn()      { nroff -man "$@" | m }
 mutt()    { mkdir -p /tmp/ml && command mutt }
 mv()      { mv -bv --backup=numbered "$@" }
+n()       { make }
+p()       { "pp|head" }
 pl()      { ps -o user,pid,pgid,pcpu,pmem,osz,rss,tty,s,stime,time,args "$@" }
 pm()      { pod2man "$@" | mn }
 pp()      { pl -A "$@" | sort -k 4 }
@@ -409,6 +407,7 @@ tg()      { tcgrep -brun "$@" }
 tmux()    { command tmux -u2 "$@" }
 tojpg()   { for f ("$@") { echo "$f"; j=`echo $f(:r)`; convert "$f" "$j.jpg" } }
 t()       { TERM=xterm-color tig --all "$@" }
+tf()      { "tail -f" }
 ud()      { u "$@"; d }
 uu()      { uuencode "$@" "$@" | mailx -s "$@" paul@pjcj.net }
 wh()      { . uwh "$@" }
