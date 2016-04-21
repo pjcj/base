@@ -52,7 +52,7 @@ case "$dir" in
             make clean install
             mv "$sw/bin/st" "$sw/bin/st$f"
         done
-        ln -s "$sw/bin/st16" "$sw/bin/st"
+        ln -s "$sw/bin/st${FONTSIZE:-16}" "$sw/bin/st"
         ;;
     sxhkd|bspwm)
         exit_unless_x
