@@ -359,7 +359,7 @@ v() {
 }
 
 cd()      { c "$@" && d }
-cp()      { cp -bv --backup=numbered "$@" }
+cp()      { command cp -bv --backup=numbered "$@" }
 ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
 dh()      { f --color "$@" | head }
 dm()      { fc -e - d=m -1 }
@@ -395,7 +395,7 @@ lu()      { fc -e - lsq=usq -1 }
 m()       { less "$@" }
 mn()      { nroff -man "$@" | m }
 mutt()    { mkdir -p /tmp/ml && command mutt "$@" }
-mv()      { mv -bv --backup=numbered "$@" }
+mv()      { command mv -bv --backup=numbered "$@" }
 n()       { make "$@" }
 p()       { pp | head }
 pl()      { ps -o user,pid,pgid,pcpu,pmem,osz,rss,tty,s,stime,time,args "$@" }
