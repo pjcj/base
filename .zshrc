@@ -480,6 +480,11 @@ if [[ -e $PERLBREW_ROOT/etc/bashrc ]] then
     complete -F _perlbrew_compgen pb
 fi
 
+if [[ -e "$HOME/.plenv" ]] then
+    export PATH="$HOME/.plenv/bin:$PATH"
+    eval "$(plenv init - zsh)"
+fi
+
 typeset -U path
 typeset -U manpath
 path=($^path(N))
