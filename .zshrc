@@ -417,6 +417,12 @@ zb()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil build "$@" }
 zt()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil test "$@" }
 = ()      { echo "$@" | bc -l }
 
+setup_plenv() {
+    git clone https://github.com/tokuhirom/plenv.git ~/.plenv
+    git clone https://github.com/tokuhirom/Perl-Build.git \
+        ~/.plenv/plugins/perl-build/
+}
+
 tm() {
     [[ -z "$1" ]] && { echo "usage: tm <session>" >&2; return 1; }
     tmux has -t $1 && tmux attach -d -t $1 || tmux new -s $1
