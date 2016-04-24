@@ -2,6 +2,10 @@ set encoding=utf-8
 scriptencoding utf-8
 filetype off
 
+function! DoRemote(arg)
+    UpdateRemotePlugins
+endfunction
+
 call plug#begin()
 
 " !sort -t/ -k2
@@ -73,7 +77,7 @@ Plug 'LeafCage/yankround.vim'
 if has ('nvim')
     Plug 'pjcj/neovim-colors-solarized-truecolor-only'
 
-    Plug 'Shougo/deoplete.nvim'
+    Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
     let g:deoplete#enable_at_startup            = 1
     let g:neocomplete#enable_smart_case         = 1
     let g:deoplete#disable_auto_complete        = 0
