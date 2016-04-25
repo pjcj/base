@@ -533,8 +533,7 @@ nnoremap <leader>gu :GundoToggle<CR>
 nnoremap <leader><space> :set hls!<CR><BAR>
                        \ :echo "HLSearch: " . strpart("OffOn",3*&hlsearch,3)<CR>
 
-let g:SuperTabMappingForward  = '<s-tab>'
-let g:SuperTabMappingBackward = '<tab>'
+let g:SuperTabDefaultCompletionType = '<c-n>'
 
 let g:Gitv_WipeAllOnClose      = 1
 let g:Gitv_WrapLines           = 0
