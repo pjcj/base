@@ -363,8 +363,6 @@ augroup file_types
 
     autocmd InsertLeave * if expand("%") != "" | update | endif
 
-    " closetag plugin
-    " autocmd Filetype html,xml,xsl source ~/.vim/plugin/closetag.vim
     autocmd FileType xhtml,xml,html,tt2html so ~/.vim/plugin/html_autoclosetag.vim
     autocmd FileType xhtml,xml,html,tt2html setlocal sw=2
 
