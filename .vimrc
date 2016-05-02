@@ -50,6 +50,7 @@ Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'jszakmeister/vim-togglecursor'             " change cursor shape on insert
 Plug 'todesking/vint-syntastic'                                     " vim linter
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
+Plug 'wellle/tmux-complete.vim'
 
 Plug 'Shougo/unite.vim'                                " <space><space> <space>s
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
@@ -83,7 +84,10 @@ if has ('nvim')
     let g:deoplete#disable_auto_complete        = 0
     let g:deoplete#auto_completion_start_length = 2
     let g:deoplete#sources                      = {}
-    let g:deoplete#sources._ = ['member', 'buffer', 'tag', 'file', 'dictionary']
+    let g:deoplete#sources._                    =
+        \ ['member', 'buffer', 'tag', 'file', 'tmux-complete', 'dictionary']
+
+    let g:tmuxcomplete#trigger = ''
 
     " Plug 'benekastah/neomake'
     " autocmd! BufWritePost,BufEnter * Neomake
