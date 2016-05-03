@@ -23,6 +23,7 @@ Plug 'saltstack/salt-vim'                                    " salt highlighting
 Plug 'ervandew/supertab'
 Plug 'scrooloose/syntastic'
 Plug 'majutsushi/tagbar'                                                  " <F2>
+Plug 'wellle/tmux-complete.vim'
 Plug 'tpope/vim-abolish'               " :%Subvert/facilit{y,ies}/building{,s}/g
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -50,7 +51,6 @@ Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'jszakmeister/vim-togglecursor'             " change cursor shape on insert
 Plug 'todesking/vint-syntastic'                                     " vim linter
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
-Plug 'wellle/tmux-complete.vim'
 
 Plug 'Shougo/unite.vim'                                " <space><space> <space>s
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
