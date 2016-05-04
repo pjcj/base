@@ -73,6 +73,8 @@ following plugins:
 * [supertab](https://github.com/ervandew/supertab) (tab completion)
 * [syntastic](https://github.com/scrooloose/syntastic) (syntax checking)
 * [tagbar](https://github.com/majutsushi/tagbar) (display tags)
+* [tmux-complete](https://github.com/wellle/tmux-complete.vim) (completion from
+  tmux buffers)
 * [vim-abolish](https://github.com/tpope/vim-abolish) (handle word variants)
 * [vim-airline](https://github.com/vim-airline/vim-airline) (status line)
 * [vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)
