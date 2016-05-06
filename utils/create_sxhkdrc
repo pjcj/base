@@ -1,0 +1,7 @@
+#!/bin/bash
+
+rc=~/.config/sxhkd/sxhkdrc
+cp "$rc.base" "$rc"
+for f in ~/.sxhkdrc.local ~/.sxhkdrc.${HOST:-default}; do
+    [[ -r $f ]] && cat "$f" >> "$rc"
+done
