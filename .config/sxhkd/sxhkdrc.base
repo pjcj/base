@@ -125,8 +125,11 @@ super + @button{1-3}
 # wm independent hotkeys
 #
 
-super + Return
+super + Return ; super + Return
     st
+
+super + Return ; Return
+    st2
 
 super + space
     dmenu_run -b -i -fn '-*-courier-bold-r-*-*-24-*-*-*-*-*-iso8859-*'
