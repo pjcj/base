@@ -403,6 +403,7 @@ pm()      { pod2man "$@" | mn }
 pp()      { pl -A "$@" | sort -k 4 }
 restart() { exec $SHELL "$@" }
 rtunnel() { ssh -N -f -R 9999:localhost:22 "$@" }
+rr()      { ranger "$@" }
 s()       { gnome-open "$@" }
 tg()      { tcgrep -brun "$@" }
 tmux()    { command tmux -u2 "$@" }
