@@ -216,6 +216,7 @@ zstyle "*" single-ignored show
 compdef _which wh
 compdef _make  n
 compdef _git   g=git
+compdef _git   ga=git-add
 compdef _git   gb=git-branch
 compdef _git   gc=git-commit
 compdef _git   gca=git-commit
@@ -366,6 +367,7 @@ dm()      { fc -e - d=m -1 }
 ds()      { f -d "$@" }
 f()       { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
 g()       { git "$@" }
+ga()      { git add "$@" }
 gb()      { git branch "$@" }
 gc()      { git commit -v "$@" }
 gca()     { git commit --amend -v "$@" }
