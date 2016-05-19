@@ -263,7 +263,7 @@ augroup save_position
 augroup END
 
 syntax enable
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+set termguicolors
 set background=dark
 " let g:solarized_contrast='high'
 " let g:solarized_visibility='normal'
