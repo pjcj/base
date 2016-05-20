@@ -618,7 +618,10 @@ let g:syntastic_vim_checkers        = ['vint']
 " let delimitMate_expand_inside_quotes = 1
 
 vmap <Enter> <Plug>(EasyAlign)
-nmap <Leader>a <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+" Format HTML tables (good for selenium IDE)
+vmap ,at :EasyAlign*/<tr>/<CR><Bar>gv<Bar>:EasyAlign*/<\/tr>/<CR><Bar>gv<Bar>:EasyAlign*/<td>/r0l0<CR><Bar>gv<Bar>:EasyAlign*/<\/td>/r0l0<CR>
 
 cmap w!! w !sudo tee % >/dev/null
 
