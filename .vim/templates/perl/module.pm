@@ -8,6 +8,11 @@ use Data::Dumper;
 use Encode;
 use Moose;
 use Unicode::Normalize qw( NFC NFD NFKC NFKD );
+use namespace::autoclean;
+
+
+
+__PACKAGE__->meta->make_immutable;
 
 "
 Careful, now!
