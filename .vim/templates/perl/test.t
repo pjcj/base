@@ -15,3 +15,13 @@ binmode STDERR, ":encoding(UTF-8)";
 plan tests => 5;
 
 is 1, 1, "First test";
+
+__END__
+
+=head1 LICENCE
+
+Copyright 2016, Paul Johnson (paul@pjcj.net) http://www.pjcj.net
+
+This software is free.  It is licensed under the same terms as Perl itself.
+
+=cut
