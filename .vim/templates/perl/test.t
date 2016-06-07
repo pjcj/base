@@ -1,4 +1,4 @@
-#!/usr/bin/perl -CSAD
+#!/usr/bin/perl
 
 use 5.18.2;
 use warnings;
@@ -12,9 +12,12 @@ binmode STDIN,  ":encoding(UTF-8)";
 binmode STDOUT, ":encoding(UTF-8)";
 binmode STDERR, ":encoding(UTF-8)";
 
-plan tests => 5;
+sub main {
+    is 1, 1, "First test";
+}
 
-is 1, 1, "First test";
+main;
+done_testing;
 
 __END__
 
