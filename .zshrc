@@ -459,6 +459,7 @@ export NOPASTE_SERVICES="Gist Pastie Snitch Shadowcat"
 export PAGER=less
 export TERMINFO=~/.terminfo
 export TOP="-I all"
+export TEMPLATE_DIR=~/.vim/templates
 export VISUAL=$EDITOR
 
 [[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim

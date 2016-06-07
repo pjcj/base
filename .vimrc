@@ -354,9 +354,9 @@ augroup file_types
     autocmd BufNewFile,BufReadPost *.tt       set ft=tt2html
     autocmd BufNewFile,BufReadPost *.t        set ft=perl
     autocmd BufNewFile,BufReadPost *.pd       set ft=perl
-    autocmd BufNewFile             *.pm       0r ~/.vim/templates/module.pm
-    autocmd BufNewFile             *.pl       0r ~/.vim/templates/program.pl
-    autocmd BufNewFile             *.t        0r ~/.vim/templates/test.t
+    autocmd BufNewFile             *.pm       0r $TEMPLATE_DIR/perl/module.pm
+    autocmd BufNewFile             *.pl       0r $TEMPLATE_DIR/perl/program.pl
+    autocmd BufNewFile             *.t        0r $TEMPLATE_DIR/perl/test.t
 
     autocmd Filetype perl setlocal path+=lib tw=80
 

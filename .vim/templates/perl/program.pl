@@ -1,14 +1,17 @@
-#!/usr/bin/perl
-
-# Copyright 2016, Paul Johnson (paul@pjcj.net) http://www.pjcj.net
-
-# This software is free.  It is licensed under the same terms as Perl itself.
+#!/usr/bin/perl -CSAD
 
 use 5.18.2;
 use warnings;
+use utf8::all;
 
 use Data::Dumper;
+use Encode;
 use Getopt::Long;
+use Unicode::Normalize qw( NFC NFD NFKC NFKD );
+
+binmode STDIN,  ":encoding(UTF-8)";
+binmode STDOUT, ":encoding(UTF-8)";
+binmode STDERR, ":encoding(UTF-8)";
 
 my $Defaults = {
     debug   => 0,

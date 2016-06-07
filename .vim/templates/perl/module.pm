@@ -1,13 +1,13 @@
 package XXX;
 
-# Copyright 2016, Paul Johnson (paul@pjcj.net) http://www.pjcj.net
-
-# This software is free.  It is licensed under the same terms as Perl itself.
-
 use 5.18.2;
 use warnings;
+use utf8::all;
 
+use Data::Dumper;
+use Encode;
 use Moose;
+use Unicode::Normalize qw( NFC NFD NFKC NFKD );
 
 "
 Careful, now!
