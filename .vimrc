@@ -344,8 +344,9 @@ function! Setup_indent_guides()
 endfunction
 autocmd VimEnter,Colorscheme * call Setup_indent_guides()
 
-let g:airline_theme='solarized'
-let g:airline_powerline_fonts = 1
+let g:airline_theme                  = 'solarized'
+let g:airline_powerline_fonts        = 1
+let g:airline_solarized_normal_green = 1
 
 augroup file_types
     autocmd!
