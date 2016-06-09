@@ -431,7 +431,7 @@ nnoremap <leader>hn :GitGutterNextHunk<CR>
 nnoremap <leader>hp :GitGutterPrevHunk<CR>
 nnoremap <leader>hv :GitGutterPreviewHunk<CR>
 nnoremap <leader>hs :GitGutterStageHunk<CR>
-nnoremap <leader>hr :GitGutterRevertHunk<CR>
+nnoremap <leader>hr :GitGutterUndoHunk<CR>
 
 let g:SignatureMarkTextHLDynamic = 1
 
