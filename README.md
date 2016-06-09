@@ -75,6 +75,8 @@ following plugins:
 * [tagbar](https://github.com/majutsushi/tagbar) (display tags)
 * [tmux-complete](https://github.com/wellle/tmux-complete.vim) (completion from
   tmux buffers)
+* [unicode](https://github.com/chrisbra/unicode.vim) (unicode table, search,
+  complete)
 * [vim-abolish](https://github.com/tpope/vim-abolish) (handle word variants)
 * [vim-airline](https://github.com/vim-airline/vim-airline) (status line)
 * [vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)
