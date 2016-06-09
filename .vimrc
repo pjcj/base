@@ -408,7 +408,9 @@ augroup git
     autocmd BufReadPost fugitive://* set bufhidden=delete
     autocmd QuickFixCmdPost *grep* cwindow
 augroup END
+nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gg :Gcommit -v<CR>
+nnoremap <leader>gs :Gstatus<CR>
 
 augroup gitgutter
     autocmd!
