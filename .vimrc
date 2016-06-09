@@ -15,14 +15,14 @@ Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
 Plug 'docker/docker', { 'rtp': '/contrib/syntax/vim/' }          " docker syntax
 Plug 'gregsexton/gitv'                                                   " <F10>
 Plug 'sjl/gundo.vim'                                                       " ,gu
-Plug 'scrooloose/nerdtree'                                                " <F1>
+Plug 'scrooloose/nerdtree'                                              " <S-F1>
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'amperser/proselint', { 'rtp': '/plugins/vim/syntastic_proselint' }
 Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
 Plug 'saltstack/salt-vim'                                    " salt highlighting
 Plug 'ervandew/supertab'
 Plug 'scrooloose/syntastic'
-Plug 'majutsushi/tagbar'                                                  " <F2>
+Plug 'majutsushi/tagbar'                                                " <S-F2>
 Plug 'wellle/tmux-complete.vim'
 Plug 'tpope/vim-abolish'               " :%Subvert/facilit{y,ies}/building{,s}/g
 Plug 'vim-airline/vim-airline'
