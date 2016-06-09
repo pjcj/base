@@ -23,7 +23,7 @@ Plug 'saltstack/salt-vim'                                    " salt highlighting
 Plug 'ervandew/supertab'
 Plug 'scrooloose/syntastic'
 Plug 'majutsushi/tagbar'                                                " <S-F2>
-Plug 'wellle/tmux-complete.vim'
+Plug 'wellle/tmux-complete.vim'                       " complete from tmux panes
 Plug 'tpope/vim-abolish'               " :%Subvert/facilit{y,ies}/building{,s}/g
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
