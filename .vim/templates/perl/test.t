@@ -4,13 +4,12 @@ use 5.18.2;
 use warnings;
 use utf8::all;
 
+use Carp::Always;
 use Encode;
 use Test::More;
 use Unicode::Normalize qw( NFC NFD NFKC NFKD );
 
-binmode STDIN,  ":encoding(UTF-8)";
-binmode STDOUT, ":encoding(UTF-8)";
-binmode STDERR, ":encoding(UTF-8)";
+binmode $_, ":encoding(UTF-8)" for *STDIN, *STDOUT, *STDERR;
 
 sub main {
     is 1, 1, "First test";
