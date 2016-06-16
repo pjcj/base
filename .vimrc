@@ -784,7 +784,9 @@ augroup Commentary
 augroup END
 
 " abbr
-abbr ,, =>
+iabbr ,, =>
+iabbr op, open my $fh, "<", $filename or die "Can't open $filename: $!";<CR>
+          \close $fh or die "Can't close $filename: $!";
 
 function! MyToHtml(line1, line2)
     " make sure to generate in the correct format
