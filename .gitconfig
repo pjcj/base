@@ -66,5 +66,7 @@
         autoupdate = true
 [ghq]
         root = ~/g/ghq
+[tig]
+        commit-order = topo
 [include]
         path = .gitconfig.local
