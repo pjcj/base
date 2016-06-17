@@ -6,31 +6,6 @@ gobase() { cd ~/g/base || exit 1; }
 
 gobase
 
-~/.tmux/plugins/tpm/bindings/clean_plugins
-~/.tmux/plugins/tpm/bindings/install_plugins
-~/.tmux/plugins/tpm/scripts/update_plugin_prompt_handler.sh all
-
-# for neovim:
-sudo aptitude -y install \
-    python-pip python-setuptools \
-    python3-pip python3-setuptools
-pip3 install --upgrade --user neovim
-pip3 install --upgrade --user vim-vint
-pip3 install --upgrade --user proselint
-pip install --upgrade --user git+git://github.com/powerline/powerline
-
-sudo npm -g install instant-markdown-d
-
-$EDITOR -c PlugUpgrade -c qa
-# $EDITOR -c PlugClean   -c qa
-$EDITOR -c PlugInstall -c qa
-$EDITOR -c PlugUpdate  -c qa
-
-gobase
-sudo aptitude -y install golang
-command go get -u github.com/motemen/ghq
-ghq import -u < ghq.repos
-
 while read -r repo; do
     sw=$(basename "$repo")
     dir=$(ghq list -p | grep "$sw")
