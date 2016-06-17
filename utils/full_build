@@ -29,6 +29,5 @@ $EDITOR -c PlugUpdate  -c qa
 gobase
 sudo aptitude -y install golang
 command go get -u github.com/motemen/ghq
-ghq import -u < ghq.repos
 
 build_all

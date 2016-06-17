@@ -6,6 +6,8 @@ gobase() { cd ~/g/base || exit 1; }
 
 gobase
 
+ghq import -u < ghq.repos
+
 while read -r repo; do
     sw=$(basename "$repo")
     dir=$(ghq list -p | grep "$sw")
