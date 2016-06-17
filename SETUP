@@ -4,7 +4,7 @@
 # . ./SETUP
 
 ln -s g/base/{dircolours,utils,.abcde.conf,.gitconfig,.urlview} ~
-ln -s g/base/{.notion,.vimrc,.Xdefaults,.vim,.nvim,.tmux.conf} ~
+ln -s g/base/{.vimrc,.Xdefaults,.vim,.nvim,.tmux.conf} ~
 [[ -d ~/.config ]] || mkdir ~/.config
 ln -s ~/g/base/.config/* ~/.config
 ( cd ~ && ln -s g/base/.zshrc* . )
