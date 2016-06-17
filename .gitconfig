@@ -68,5 +68,6 @@
         root = ~/g/ghq
 [tig]
         commit-order = topo
+        line-graphics = default
 [include]
         path = .gitconfig.local
