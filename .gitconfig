@@ -69,5 +69,8 @@
 [tig]
         commit-order = topo
         line-graphics = default
+[tig "bind"]
+        # Cherry-pick current commit onto current branch
+        generic = C !git cherry-pick %(commit)
 [include]
         path = .gitconfig.local
