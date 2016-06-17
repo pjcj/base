@@ -480,6 +480,10 @@ vnoremap <unique> l <Plug>SchleppRight
 nnoremap k gk
 nnoremap j gj
 
+" unicode
+nmap ,dg <Plug>(MakeDigraph)
+vmap ,dg <Plug>(MakeDigraph)
+
 augroup autowrite
     autocmd!
     autocmd FocusLost * silent! wa
