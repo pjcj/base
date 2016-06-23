@@ -69,6 +69,7 @@
 [tig]
         commit-order = topo
         line-graphics = default
+        show-id = true
 [tig "bind"]
         # Cherry-pick current commit onto current branch
         generic = C !git cherry-pick %(commit)
