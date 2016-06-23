@@ -221,6 +221,7 @@ compdef _git   gb=git-branch
 compdef _git   gc=git-commit
 compdef _git   gca=git-commit
 compdef _git   gd=git-diff
+compdef _git   gds=git-diff
 compdef _git   gvd=git-diff
 compdef _git   gf=git-fetch
 compdef _git   gg=git-grep
@@ -372,6 +373,7 @@ gb()      { git branch "$@" }
 gc()      { git commit -v "$@" }
 gca()     { git commit --amend -v "$@" }
 gd()      { git diff "$@" }
+gds()     { git diff --stat "$@" }
 gdw()     { git diffwords "$@" }
 gf()      { git fetch --prune "$@" }
 gg()      { git grep -n "$@" }
