@@ -459,7 +459,13 @@ let g:vim_search_pulse_disable_auto_mappings = 1
 let g:vim_search_pulse_mode = 'pattern'  " or cursor_line
 let g:interestingWordsGUIColors =
     \ ['#72b5e4', '#f0c53f', '#ff8784', '#c5c7f1',
-    \  '#c2d735', '#78d3cc', '#ea8336']
+    \  '#c2d735', '#78d3cc', '#ea8336', '#e43542',
+    \  '#ebab35', '#ebe735', '#aadd32', '#dcca6b',
+    \  '#219286', '#2f569c', '#ffb577', '#5282a4',
+    \  '#edfccf', '#67064c', '#f5bca7', '#95c474',
+    \  '#dece83', '#de9783', '#f2e700', '#e9e9e9',
+    \  '#69636d', '#626b98', '#f5f5a7', '#dcca6b',
+    \  '#b72a83', '#6f2b9d', '#69636d', '#2f569c']
 " nmap * *``:call search_pulse#Pulse()<CR>
 nmap * *``:call InterestingWords('n')<CR>:set nohls<CR>
 nnoremap <silent> <leader>k :call InterestingWords('n')<CR>
