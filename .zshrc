@@ -230,6 +230,7 @@ compdef _git   gls=git-log
 compdef _git   glsa=git-log
 compdef _git   go=git-checkout
 compdef _git   gp=git-push
+compdef _git   gpf=git-push
 compdef _git   gpo=git-push
 compdef _git   gr=git-rebase
 compdef _git   gra=git-rebase
@@ -383,6 +384,7 @@ gls()     { git lg --simplify-by-decoration "$@" }
 glsa()    { git lg --all --simplify-by-decoration "$@" }
 go()      { git co "$@" }
 gp()      { git push "$@" }
+gpf()     { git push --force-with-lease "$@" }
 gpo()     { git push origin "$@" }
 gr()      { git rebase --preserve-merges "$@" }
 gra()     { git rebase --abort "$@" }
