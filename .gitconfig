@@ -55,6 +55,7 @@
         ignored = !git ls-files -v | grep "^[[:lower:]]"
         bmv = branch -f
         omv = origin-branch-move
+        bmvp = "!f() { git bmv $1 $2 && git push origin --force-with-lease $1; }; f"
 [github]
         user = pjcj
 [push]
