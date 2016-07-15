@@ -356,9 +356,9 @@ augroup file_types
     autocmd BufNewFile,BufReadPost *.tt       set ft=tt2html
     autocmd BufNewFile,BufReadPost *.t        set ft=perl
     autocmd BufNewFile,BufReadPost *.pd       set ft=perl
-    autocmd BufNewFile             *.pm       0r $TEMPLATE_DIR/perl/module.pm
-    autocmd BufNewFile             *.pl       0r $TEMPLATE_DIR/perl/program.pl
-    autocmd BufNewFile             *.t        0r $TEMPLATE_DIR/perl/test.t
+    autocmd BufNewFile * :exe 'r! file_template -p ' . &path . ' <afile>'
+    autocmd BufNewFile * :exe 'normal ggdd'
+    autocmd BufNewFile * /^[ \t]*[#] *implementation/
 
     autocmd Filetype perl setlocal path+=lib tw=80
 
