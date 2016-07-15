@@ -232,6 +232,7 @@ compdef _git   go=git-checkout
 compdef _git   gp=git-push
 compdef _git   gpf=git-push
 compdef _git   gpo=git-push
+compdef _git   gpof=git-push
 compdef _git   gr=git-rebase
 compdef _git   gra=git-rebase
 compdef _git   grc=git-rebase
@@ -386,6 +387,7 @@ go()      { git co "$@" }
 gp()      { git push "$@" }
 gpf()     { git push --force-with-lease "$@" }
 gpo()     { git push origin "$@" }
+gpof()    { git push origin --force-with-lease "$@" }
 gr()      { git rebase --preserve-merges "$@" }
 gra()     { git rebase --abort "$@" }
 grc()     { git rebase --continue "$@" }
