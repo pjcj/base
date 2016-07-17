@@ -50,7 +50,9 @@ sub main {
     my ($type) = $file =~ /(\.\w*)$/;
     $type //= ".pl";
     my $dir = $ENV{TEMPLATE_DIR} || path("$0/../templates")->realpath;
-    my $template = path("$dir/template$type")->slurp_utf8;
+    my $tfile = path("$dir/template$type");
+    return 0 unless $tfile->exists;
+    my $template = $tfile->slurp_utf8;
     my $vars = {
         FILE => $file,
         TYPE => $type,
