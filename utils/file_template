@@ -1,4 +1,4 @@
-#!/usr/bin/perl -CSAD
+#!/usr/bin/env perl
 
 use 5.18.2;
 use warnings;
