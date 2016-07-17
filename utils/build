@@ -107,9 +107,15 @@ case "$dir" in
         make install
         ;;
     PathPicker)
-        set -x
         target="$sw/bin/fpp"
         [ -e "$target" ] || ln -s "$(pwd)/fpp" "$target"
+        ;;
+    diff-so-fancy)
+        cp -a diff-so-fancy third_party/diff-highlight/diff-highlight \
+              third_party/ansi-reveal \
+            "$sw/bin"
+        mkdir -p "$sw/bin/lib"
+        cp -a lib/diff-so-fancy.pl "$sw/bin/lib"
         ;;
     *)
         echo unknown directory "$dir"

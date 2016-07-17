@@ -10,7 +10,23 @@
         linenumber = red
         match = green
         separator = magenta
+[color "diff"]
+        meta = yellow
+        commit = green
+        frag = magenta
+        old = 196 ; red
+        new = 41 ; green
+        whitespace = blue reverse
+[color "diff-highlight"]
+        ; these are all defaults in accordance with above
+        oldNormal = 196
+        oldHighlight = 196 reverse
+        newNormal = 41
+        newHighlight = 41 reverse
+[diff-so-fancy]
+    markEmptyLines = false
 [core]
+        pager = diff-so-fancy | less --tabs=8 -RFX --tilde --pattern='^(Date|added|deleted|modified): '
         whitespace = trailing-space,space-before-tab,tab-in-indent
 [pack]
         threads = 0
