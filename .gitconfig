@@ -14,11 +14,11 @@
         meta = yellow
         commit = green
         frag = magenta
-        old = "#dc322f"  ; standard red
+        old = "#dc322f"
         new = "#25ad2e"
         whitespace = blue reverse
 [color "diff-highlight"]
-        oldNormal = "#dc320f"  ; standard red
+        oldNormal = "#dc320f"
         newNormal = "#25ad2e"
         oldHighlight = "#ff8166 #400200"
         newHighlight = "#4dbf77 #003203"
