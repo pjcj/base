@@ -26,7 +26,7 @@
 [diff-so-fancy]
     markEmptyLines = false
 [core]
-        pager = diff-so-fancy | less --tabs=8 -RFX --tilde --pattern='^(Date|added|deleted|modified): '
+        pager = diff-so-fancy | less --tabs=8 -RFX --tilde
         whitespace = trailing-space,space-before-tab,tab-in-indent
 [pack]
         threads = 0
