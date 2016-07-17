@@ -287,6 +287,8 @@ let s:cyan    = '#2aa198'
 let s:green   = '#859900'
 let s:normal  = '#9599dc'
 
+let s:rgreen  = '#25ad2e'  " a nice green for diffs (opposite of s:red)
+
 function! Set_colour(group, part, colour)
     execute 'highlight ' . a:group . ' ' . a:part . '=' . a:colour
 endfunc
@@ -309,8 +311,10 @@ call Set_colour('SpellLocal',   'gui',   'NONE'   )
 call Set_colour('LineNr',       'guibg', s:base03 )
 call Set_colour('CursorLineNr', 'guibg', s:base03 )
 call Set_colour('DiffAdd',      'guibg', s:base03 )
+call Set_colour('DiffAdd',      'guifg', s:rgreen )
 call Set_colour('DiffChange',   'guibg', s:base03 )
 call Set_colour('DiffDelete',   'guibg', s:base03 )
+call Set_colour('diffAdded',    'guifg', s:rgreen )
 call Set_colour('Search',       'guibg', s:violet )
 call Set_colour('Search',       'guifg', s:base03 )
 call Set_colour('Search',       'gui',   'NONE'   )
