@@ -46,6 +46,7 @@ case "$dir" in
         exit_unless_x
         sudo aptitude -y install fontconfig libfontconfig1-dev \
             libfreetype6 libfreetype6-dev libxft-dev
+        rm -f "$sw/bin/st" "$sw/bin/st2"
         for f in $(seq 10 20); do
             perl -pi -e "s/Inconsolata for Powerline:pixelsize=\K\d\d/$f/" \
                 config.def.h
