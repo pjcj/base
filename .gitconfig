@@ -1,94 +1,87 @@
 [user]
-        name = Paul Johnson
-        email = paul@pjcj.net
+    name = Paul Johnson
+    email = paul@pjcj.net
 [color]
-        ui = auto
+    ui = auto
 [color.grep]
-        context = blue
-        filename = cyan
-        function = yellow
-        linenumber = red
-        match = green
-        separator = magenta
+    context = blue
+    filename = cyan
+    function = yellow
+    linenumber = red
+    match = green
+    separator = magenta
 [color "diff"]
-        meta = yellow
-        commit = green
-        frag = magenta
-        old = "#dc322f"
-        new = "#25ad2e"
-        whitespace = blue reverse
+    meta = yellow
+    commit = green
+    frag = magenta
+    old = "#dc322f"
+    new = "#25ad2e"
+    whitespace = blue reverse
 [color "diff-highlight"]
-        oldNormal = "#dc320f"
-        newNormal = "#25ad2e"
-        oldHighlight = "#ff8166 #400200"
-        newHighlight = "#4dbf77 #003203"
+    oldNormal = "#dc320f"
+    newNormal = "#25ad2e"
+    oldHighlight = "#ff8166 #400200"
+    newHighlight = "#4dbf77 #003203"
 [diff-so-fancy]
-    markEmptyLines = false
-    stripLeadingSymbols = true
+markEmptyLines = false
+stripLeadingSymbols = true
 [core]
-        pager = diff-so-fancy | less --tabs=8 -RFX --tilde
-        whitespace = trailing-space,space-before-tab,tab-in-indent
+    pager = diff-so-fancy | less --tabs=8 -RFX --tilde
+    whitespace = trailing-space,space-before-tab,tab-in-indent
 [pack]
-        threads = 0
+    threads = 0
 [diff]
-        renamelimit = 0
-        renames = copies
-        mnemonicprefix = true
+    renamelimit = 0
+    renames = copies
+    mnemonicprefix = true
 [mergetool "gvimdiff3"]
-        cmd = gvim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+    cmd = gvim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 [mergetool "vimdiff3"]
-        cmd = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+    cmd = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 [merge]
-        tool = vimdiff3
-        conflictstyle = diff3
+    tool = vimdiff3
+    conflictstyle = diff3
 [alias]
-        distclean = clean -dxf
-        st = status -sb
-        ci = commit
-        co = checkout
-        br = branch
-        bc = branch-current
-        bfd = branch-full-delete
-        alias = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
-        lc = log ORIG_HEAD.. --stat --no-merges
-        whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
-        graphviz = "!f() { echo 'digraph git {'; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g'; echo '}'; }; f"
-        lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-        lge = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)%an <%ae>%Creset' --abbrev-commit --date=relative
-        lgm = "!f() { git lg $( git reflog | awk '{print $1}' ); }; f"
-        lga = "!f() { git lg $( git fsck --no-reflog | awk '/dangling commit/ {print $3}' ); }; f"
-        lgn = "!f() { git log --graph --pretty=format:'%Cred%H%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --date=relative $@ | git name-rev --stdin --name-only; }; f | less"
-        vgc = repack -f -a -d --depth=250 --window=250
-        nvgc = !ionice -n7 nice -n20 git vgc
-        amend = commit -a --amend -C HEAD
-        diffwords = diff --word-diff
-        praise = blame -w
-        archeology = blame -w -M -C -n
-        wtf = !git-wtf
-        latest = for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname:short)  %(authorname)'
-        ignore = !git update-index --assume-unchanged
-        unignore = !git update-index --no-assume-unchanged
-        ignored = !git ls-files -v | grep "^[[:lower:]]"
-        bmv = branch -f
-        omv = origin-branch-move
-        bmvp = "!f() { git bmv $1 $2 && git push origin --force-with-lease $1; }; f"
+    distclean = clean -dxf
+    st = status -sb
+    ci = commit
+    co = checkout
+    br = branch
+    bc = branch-current
+    bfd = branch-full-delete
+    alias = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
+    lc = log ORIG_HEAD.. --stat --no-merges
+    whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+    graphviz = "!f() { echo 'digraph git {'; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g'; echo '}'; }; f"
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    lge = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)%an <%ae>%Creset' --abbrev-commit --date=relative
+    lgm = "!f() { git lg $( git reflog | awk '{print $1}' ); }; f"
+    lga = "!f() { git lg $( git fsck --no-reflog | awk '/dangling commit/ {print $3}' ); }; f"
+    lgn = "!f() { git log --graph --pretty=format:'%Cred%H%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --date=relative $@ | git name-rev --stdin --name-only; }; f | less"
+    vgc = repack -f -a -d --depth=250 --window=250
+    nvgc = !ionice -n7 nice -n20 git vgc
+    amend = commit -a --amend -C HEAD
+    diffwords = diff --word-diff
+    praise = blame -w
+    archeology = blame -w -M -C -n
+    wtf = !git-wtf
+    latest = for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname:short)  %(authorname)'
+    ignore = !git update-index --assume-unchanged
+    unignore = !git update-index --no-assume-unchanged
+    ignored = !git ls-files -v | grep "^[[:lower:]]"
+    bmv = branch -f
+    omv = origin-branch-move
+    bmvp = "!f() { git bmv $1 $2 && git push origin --force-with-lease $1; }; f"
 [github]
-        user = pjcj
+    user = pjcj
 [push]
-        default = current
+    default = current
 [url "git://github.com/"]
-        insteadOf = github:
+    insteadOf = github:
 [rerere]
-        enabled = true
-        autoupdate = true
+    enabled = true
+    autoupdate = true
 [ghq]
-        root = ~/g/ghq
-[tig]
-        commit-order = topo
-        line-graphics = default
-        show-id = true
-[tig "bind"]
-        # Cherry-pick current commit onto current branch
-        generic = C !git cherry-pick %(commit)
+    root = ~/g/ghq
 [include]
-        path = .gitconfig.local
+    path = .gitconfig.local

@@ -1,0 +1,18 @@
+# from ~/g/sw/etc/tigrc
+
+set commit-order = topo
+set line-graphics = default
+
+set main-view = line-number:no,interval=5 id:yes date:default author:full commit-title:yes,graph,refs,overflow=no
+
+set git-colors = no
+# set git-colors = \
+    # diff.new=diff-add \
+    # diff.old=diff-del
+
+# color "+"    green   default
+# color " +"   green   default
+# color "-"    red     default
+# color " -"   red     default
+
+bind generic C !git cherry-pick %(commit)
