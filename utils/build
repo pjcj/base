@@ -118,6 +118,10 @@ case "$dir" in
         mkdir -p "$sw/bin/lib"
         cp -a lib/diff-so-fancy.pl "$sw/bin/lib"
         ;;
+    tig)
+        configure
+        make test install
+        ;;
     *)
         echo unknown directory "$dir"
         ;;
