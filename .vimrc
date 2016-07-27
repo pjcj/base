@@ -84,6 +84,7 @@ if has ('nvim')
     let g:neocomplete#enable_smart_case         = 1
     let g:deoplete#disable_auto_complete        = 0
     let g:deoplete#auto_completion_start_length = 2
+    let g:deoplete#tag#cache_limit_size         = 10000000  " 10MB
     let g:deoplete#sources                      = {}
     let g:deoplete#sources._                    =
         \ ['member', 'buffer', 'tag', 'file', 'tmux-complete', 'dictionary']
