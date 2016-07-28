@@ -23,7 +23,7 @@
     oldHighlight = "#ff8166 #400200"
     newHighlight = "#4dbf77 #003203"
 [diff-so-fancy]
-    markEmptyLines = false
+    markEmptyLines = true
     stripLeadingSymbols = true
 [core]
     pager = diff-so-fancy | less --tabs=8 -RFX --tilde
