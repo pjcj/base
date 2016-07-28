@@ -377,7 +377,7 @@ gca()     { git commit --amend -v "$@" }
 gd()      { git diff "$@" }
 gds()     { git diff --stat "$@" }
 gdw()     { git diffwords "$@" }
-gf()      { git fetch --prune "$@" }
+gf()      { git fetch --prune --all "$@" }
 gg()      { git grep -n "$@" }
 ggv()     { git grep -O$EDITOR "$@" }
 gl()      { git lg --all "$@" }
