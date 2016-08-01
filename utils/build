@@ -2,8 +2,16 @@
 
 set -e
 
-dir=$1
-test -z "$dir" && dir=$(basename "$(pwd)")
+dist=$1
+if [ "$dist" ]; then
+    dir=$(ghq list -p | grep "$dist$")
+    echo "$dist", "$dir"
+    cd "$dir" || exit 1
+    echo building "$dist"
+fi
+
+dir=$(basename "$(pwd)")
+echo dir "$dir"
 
 sw=$HOME/g/sw
 
