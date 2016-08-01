@@ -82,11 +82,12 @@ case "$dir" in
         sudo ldconfig
         ;;
     zsh)
+        git checkout "$(git tag | grep -v dev | grep -v test | tail -1)"
         autoreconf -vfi
         configure --enable-pcre
         make
         make check
-        make install || echo make install expected to fail
+        make install || echo make install expected to fail - docs not built
         ;;
     tmux)
         export LIBEVENT_CFLAGS="-I$sw/include"
