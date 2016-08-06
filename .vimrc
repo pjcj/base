@@ -631,7 +631,7 @@ let g:syntastic_perl_perl_exec      = 'perl -Mblib'
 let g:syntastic_markdown_checkers   = ['proselint']
 let g:syntastic_perl_checkers       = ['perl']
 let g:syntastic_shell_checkers      = ['sh', 'shellcheck', 'checkbashisms']
-let g:syntastic_vim_checkers        = ['vint']
+let g:syntastic_vim_checkers        = ['vint --enable-neovim']
 
 " delimitMate
 " imap § <C-G>g
