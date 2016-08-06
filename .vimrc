@@ -484,10 +484,10 @@ augroup Pulse
     autocmd User PostPulse set cursorline! cursorcolumn!
 augroup END
 
-vnoremap <unique> k <Plug>SchleppUp
-vnoremap <unique> j <Plug>SchleppDown
-vnoremap <unique> h <Plug>SchleppLeft
-vnoremap <unique> l <Plug>SchleppRight
+vmap <unique> k <Plug>SchleppUp
+vmap <unique> j <Plug>SchleppDown
+vmap <unique> h <Plug>SchleppLeft
+vmap <unique> l <Plug>SchleppRight
 nnoremap k gk
 nnoremap j gj
 
