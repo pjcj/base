@@ -14,12 +14,13 @@ gobase
 sudo aptitude -y install \
     python-pip python-setuptools \
     python3-pip python3-setuptools
-pip3 install --upgrade --user neovim
-pip3 install --upgrade --user vim-vint
-pip3 install --upgrade --user proselint
+pip3 install --upgrade --user neovim vim-vint proselint
 pip install --upgrade --user git+git://github.com/powerline/powerline
 
 sudo npm -g install instant-markdown-d
+
+# urlwatch
+pip3 install --upgrade --user pyyaml minidb requests keyring chump urlwatch
 
 $EDITOR -c PlugUpgrade -c qa
 # $EDITOR -c PlugClean   -c qa
