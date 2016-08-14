@@ -124,8 +124,8 @@ case "$dir" in
         cp -a diff-so-fancy third_party/diff-highlight/diff-highlight \
               third_party/ansi-reveal \
             "$sw/bin"
-        mkdir -p "$sw/bin/lib"
-        cp -a lib/diff-so-fancy.pl "$sw/bin/lib"
+        mkdir -p "$sw/bin/libexec"
+        cp -a libexec/diff-so-fancy.pl "$sw/bin/libexec"
         perl -pi -e 's/my \$ansi_color_regex = qr.*\K3/4/' "$sw/bin/lib/diff-so-fancy.pl"
         ;;
     tig)
