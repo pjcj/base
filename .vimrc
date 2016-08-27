@@ -75,7 +75,7 @@ Plug 'LeafCage/yankround.vim'
 " Plug 'vim-scripts/YankRing.vim'
 " YankRing messes up xp unless min_element_length is 1, in which case it's slow
 
-if has ('nvim')
+if has('nvim')
     Plug 'pjcj/neovim-colors-solarized-truecolor-only'
 
     Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
@@ -154,7 +154,7 @@ endif
 
 call plug#end()
 
-if has ('nvim')
+if has('nvim')
     " Use head matcher instead of fuzzy matcher
     call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
     " Order completions.
@@ -264,11 +264,13 @@ augroup save_position
 augroup END
 
 syntax enable
-set termguicolors
 set background=dark
-" let g:solarized_contrast='high'
-" let g:solarized_visibility='normal'
-colorscheme solarized
+if has('nvim')
+    set termguicolors
+    " let g:solarized_contrast='high'
+    " let g:solarized_visibility='normal'
+    colorscheme solarized
+endif
 let s:base03  = '#001920'
 let s:base02  = '#022731'
 let s:base01  = '#586e75'
