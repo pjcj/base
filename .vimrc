@@ -459,6 +459,8 @@ let g:calendar_google_calendar = 1
 let g:calendar_google_task     = 1
 
 " get vim-search-pulse and vim-interestingwords working together
+" stop plugin overwriting mappings
+map <leader>interestingwords <Plug>InterestingWords
 let g:vim_search_pulse_disable_auto_mappings = 1
 let g:vim_search_pulse_mode = 'pattern'  " or cursor_line
 let g:interestingWordsGUIColors =
