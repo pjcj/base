@@ -483,6 +483,11 @@ vnoremap <silent> <leader>k :call InterestingWords('v')<CR>
 nnoremap <silent> <leader>K :call UncolorAllWords()<CR>
 nnoremap <silent> n :call WordNavigation(1)<CR>:call search_pulse#Pulse()<CR>
 nnoremap <silent> N :call WordNavigation(0)<CR>:call search_pulse#Pulse()<CR>
+" This toggles the hlsearch flag, then reports the current state of the flag.
+nnoremap <leader><space> :set hls!<CR><BAR>
+                       \ :call UncolorAllWords()<CR><BAR>
+                       \ :echo "HLSearch: " . strpart("OffOn",3*&hlsearch,3)<CR>
+
 augroup Pulse
     autocmd!
     autocmd User PrePulse  set cursorline! cursorcolumn!
@@ -555,10 +560,6 @@ map <F19>    <S-F7>
 map <F22>    <S-F10>
 
 nnoremap <leader>gu :GundoToggle<CR>
-
-" This toggles the hlsearch flag, then reports the current state of the flag.
-nnoremap <leader><space> :set hls!<CR><BAR>
-                       \ :echo "HLSearch: " . strpart("OffOn",3*&hlsearch,3)<CR>
 
 let g:SuperTabDefaultCompletionType = '<c-n>'
 
