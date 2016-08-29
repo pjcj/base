@@ -474,7 +474,6 @@ let g:interestingWordsGUIColors =
     \  '#dece83', '#de9783', '#f2e700', '#e9e9e9',
     \  '#69636d', '#626b98', '#f5f5a7', '#dcca6b',
     \  '#b72a83', '#6f2b9d', '#69636d', '#2f569c']
-" nmap * *``:call search_pulse#Pulse()<CR>
 nmap <silent> * *``:call InterestingWords('n')<CR>
     \ :set nohls<CR>
     \ :call search_pulse#Pulse()<CR>
@@ -517,7 +516,7 @@ nnoremap <F2>       :GitGutterPrevHunk<CR>
 nnoremap <F3>       :GitGutterNextHunk<CR>
 nnoremap <S-F1>     :NERDTreeToggle<CR>
 nnoremap <S-F2>     :TagbarToggle<CR>
-nnoremap <F4>       :execute "tjump " . expand("<cword>")<CR>
+nnoremap <F4>       :execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<CR>
 nnoremap <S-F4>     :tnext<CR>
 nnoremap <M-F4>     :tprev<CR>
 nnoremap <F5>       :execute "silent make" <Bar> botright copen<CR><C-L>
