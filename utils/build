@@ -54,8 +54,10 @@ case "$build" in
         make install
         ;;
     neovim)
-        sudo aptitude -y install \
-            libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
+        if [ !"$ISOSX" ]; then
+            sudo aptitude -y install \
+                libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
+        fi
         git clean -dxf
         make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
              CMAKE_BUILD_TYPE=Release test install
