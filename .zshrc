@@ -5,7 +5,7 @@ zshrc_load_status () {
 
 zshrc_load_status "plugins"
 
-source ~/.zplug/zplug
+source ~/.zplug/init.zsh
 
 zplug "oknowton/zsh-dwim"                                                   # ^U
 zplug "supercrabtree/k"
