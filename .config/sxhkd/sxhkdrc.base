@@ -136,7 +136,7 @@ super + space
 
 # make sxhkd reload its configuration files:
 super + Escape
-    create_sxhkdrc && pkill -USR1 -x sxhkd
+    create_sxhkdrc; pkill -USR1 -x sxhkd
 
 # lockscreen
 ctrl + alt + l
