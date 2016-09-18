@@ -382,7 +382,7 @@ augroup file_types
     " autocmd FileType * exe("setl dict^=".$VIMRUNTIME."/syntax/".&filetype.".vim")
 augroup END
 
-let g:gutentags_exclude = ['blib']
+let g:gutentags_exclude = ['blib', 'tmp']
 " can be extended with '*/sub/path' if required
 
 let NERDTreeShowHidden=1
