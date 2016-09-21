@@ -1,8 +1,7 @@
 #!/bin/sh
 
-branch=$1
-test -z $branch && echo "branch required" 1>&2 && exit 1
-
-git branch -D $branch
-git push origin --delete $branch
-git remote prune origin
+for branch in "$@"; do
+    git branch -D $branch
+    git push origin --delete $branch
+    git remote prune origin
+done
