@@ -470,6 +470,9 @@ let g:calendar_google_task     = 1
 
 " get vim-search-pulse and vim-interestingwords working together
 " stop plugin overwriting mappings
+function! Pulse()
+    call search_pulse#Pulse()
+endfunc
 map <leader>interestingwords <Plug>InterestingWords
 let g:vim_search_pulse_disable_auto_mappings = 1
 let g:vim_search_pulse_mode = 'pattern'  " or cursor_line
@@ -484,12 +487,12 @@ let g:interestingWordsGUIColors =
     \  '#b72a83', '#6f2b9d', '#69636d', '#2f569c']
 nmap <silent> * *``:call InterestingWords('n')<CR>
     \ :set nohls<CR>
-    \ :call search_pulse#Pulse()<CR>
+    \ :call Pulse()<CR>
 nnoremap <silent> <leader>k :call InterestingWords('n')<CR>
 vnoremap <silent> <leader>k :call InterestingWords('v')<CR>
 nnoremap <silent> <leader>K :call UncolorAllWords()<CR>
-nnoremap <silent> n :call WordNavigation(1)<CR>:call search_pulse#Pulse()<CR>
-nnoremap <silent> N :call WordNavigation(0)<CR>:call search_pulse#Pulse()<CR>
+nnoremap <silent> n :call WordNavigation(1)<CR>:call Pulse()<CR>
+nnoremap <silent> N :call WordNavigation(0)<CR>:call Pulse()<CR>
 " This toggles the hlsearch flag, then reports the current state of the flag.
 nnoremap <leader><space> :set hls!<CR><BAR>
                        \ :call UncolorAllWords()<CR><BAR>
@@ -524,16 +527,19 @@ nnoremap <F2>       :GitGutterPrevHunk<CR>
 nnoremap <F3>       :GitGutterNextHunk<CR>
 nnoremap <S-F1>     :NERDTreeToggle<CR>
 nnoremap <S-F2>     :TagbarToggle<CR>
-nnoremap <F4>       :execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<CR>
-nnoremap <S-F4>     :tnext<CR>
-nnoremap <M-F4>     :tprev<CR>
+nnoremap <F4>       :execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"
+                        \ <Bar> :call Pulse()<CR>
+nnoremap <S-F4>     :tnext<Bar>:call Pulse()<CR>
+nnoremap <M-F4>     :tprev<Bar>:call Pulse()<CR>
 nnoremap <F5>       :execute "silent make" <Bar> botright copen<CR><C-L>
 nnoremap <S-F5>     :w<CR>:SyntasticCheck<CR>:Errors<CR>
-nnoremap <F6>       :cprevious<CR>
-nnoremap <S-F6>     :lprevious<CR>
-nnoremap <F7>       :cnext<CR>
-nnoremap <S-F7>     :lnext<CR>
-nnoremap <F8>       :execute "silent grep! " . expand("<cword>")
+nnoremap <F6>       :cprevious<Bar>:call Pulse()<CR>
+nnoremap <S-F6>     :lprevious<Bar>:call Pulse()<CR>
+nnoremap <F7>       :cnext<Bar>:call Pulse()<CR>
+nnoremap <S-F7>     :lnext<Bar>:call Pulse()<CR>
+nnoremap <F8>       *:execute "silent grep! -w " . expand("<cword>")
+                        \ <Bar> botright copen<CR><C-L>
+nnoremap <F10>     *:execute "silent grep! " . expand("<cword>")
                         \ <Bar> botright copen<CR><C-L>
 nnoremap <F9>       :cclose<Bar>:lclose<Bar>:pclose<CR>
 nnoremap <silent>   <S-F10> w
