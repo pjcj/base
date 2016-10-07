@@ -13,7 +13,6 @@ Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
 Plug 'docker/docker', { 'rtp': '/contrib/syntax/vim/' }          " docker syntax
-Plug 'gregsexton/gitv'                                                   " <F10>
 Plug 'sjl/gundo.vim'                                                       " ,gu
 Plug 'scrooloose/nerdtree'                                              " <S-F1>
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -67,6 +66,7 @@ Plug 'tsukkee/unite-tag'
 Plug 'sanford1/unite-unicode'
 Plug 'LeafCage/yankround.vim'
 
+" Plug 'gregsexton/gitv'                                                 " <F10>
 " Plug 'itchyny/calendar.vim'
 " Plug 'junegunn/gv.vim'                                         " :GV :GV! gb q
 " Plug 'msanders/snipmate.vim'
