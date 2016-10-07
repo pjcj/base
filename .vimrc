@@ -186,7 +186,6 @@ set errorformat=%f:%l:%m
 set expandtab
 set exrc
 set formatoptions=tcrqnl
-set grepprg=git\ grep\ -nw
 set guifont=inconsolata\ \for\ powerline\ 12
 set history=1000
 set icon
@@ -232,6 +231,13 @@ set wildmenu
 set wildmode=list:longest,full
 set whichwrap=19
 set writebackup
+
+if executable('rg')
+    set grepprg=rg\ --no-heading\ --hidden\ --vimgrep
+    set grepformat=%f:%l:%c:%m
+else
+    set grepprg=git\ grep\ -n
+endif
 
 let mapleader = ','
 
