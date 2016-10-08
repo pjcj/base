@@ -515,6 +515,8 @@ vnoremap <silent> <leader>k :call InterestingWords('v')<CR>
 nnoremap <silent> <leader>K :call UncolorAllWords()<CR>
 nnoremap <silent> n :call WordNavigation(1)<CR>:call Pulse()<CR>
 nnoremap <silent> N :call WordNavigation(0)<CR>:call Pulse()<CR>
+cmap <silent> <expr> <enter> search_pulse#PulseFirst()
+
 " This toggles the hlsearch flag, then reports the current state of the flag.
 nnoremap <leader><space> :set hls!<BAR>
                        \ :call UncolorAllWords()<BAR>
