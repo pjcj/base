@@ -14,8 +14,10 @@ Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
 Plug 'docker/docker', { 'rtp': '/contrib/syntax/vim/' }          " docker syntax
 Plug 'sjl/gundo.vim'                                                       " ,gu
-Plug 'scrooloose/nerdtree'                                              " <S-F1>
+Plug 'haya14busa/incsearch-fuzzy.vim'
+Plug 'haya14busa/incsearch.vim'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'scrooloose/nerdtree'                                              " <S-F1>
 Plug 'amperser/proselint', { 'rtp': '/plugins/vim/syntastic_proselint' }
 Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
 Plug 'saltstack/salt-vim'                                    " salt highlighting
@@ -516,6 +518,21 @@ nnoremap <silent> <leader>K :call UncolorAllWords()<CR>
 nnoremap <silent> n :call WordNavigation(1)<CR>:call Pulse()<CR>
 nnoremap <silent> N :call WordNavigation(0)<CR>:call Pulse()<CR>
 cmap <silent> <expr> <enter> search_pulse#PulseFirst()
+
+function! s:config_fuzzyall(...) abort
+  return extend(copy({
+  \   'converters': [
+  \     incsearch#config#fuzzy#converter(),
+  \     incsearch#config#fuzzyspell#converter()
+  \   ],
+  \ }), get(a:, 1, {}))
+endfunction
+
+noremap <silent><expr> z/ incsearch#go(<SID>config_fuzzyall())
+noremap <silent><expr> z? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
+noremap <silent><expr> zg? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
+
+map / <Plug>(incsearch-forward)
 
 " This toggles the hlsearch flag, then reports the current state of the flag.
 nnoremap <leader><space> :set hls!<BAR>
