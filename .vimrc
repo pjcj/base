@@ -497,6 +497,7 @@ augroup END
 map <leader>interestingwords <Plug>InterestingWords
 let g:vim_search_pulse_disable_auto_mappings = 1
 let g:vim_search_pulse_mode = 'pattern'  " or cursor_line
+let g:vim_search_pulse_duration = 100
 let g:interestingWordsGUIColors =
     \ ['#72b5e4', '#f0c53f', '#ff8784', '#c5c7f1',
     \  '#c2d735', '#78d3cc', '#ea8336', '#e43542',
