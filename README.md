@@ -60,6 +60,10 @@ following plugins:
 * [dockerfile](https://github.com/honza/dockerfile) (docker syntax)
 * [gitv](https://github.com/gregsexton/gitv) (gitk-alike)
 * [gundo](https://github.com/sjl/gundo.vim) (visuals undo tree)
+* [incsearch-fuzzy](https://github.com/haya14busa/incsearch-fuzzy.vim) (fuzzy
+  search)
+* [incsearch](https://github.com/haya14busa/incsearch.vim) (show all matches on
+  incsearch)
 * [neomake](https://github.com/benekastah/neomake) (syntax checking)
 * [neovim-colors-solarized-truecolor-only](https://github.com/pjcj/neovim-colors-solarized-truecolor-only)
   (my version of truecolour solarized colours)

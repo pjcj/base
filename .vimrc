@@ -14,15 +14,15 @@ Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
 Plug 'docker/docker', { 'rtp': '/contrib/syntax/vim/' }          " docker syntax
 Plug 'sjl/gundo.vim'                                                       " ,gu
-Plug 'haya14busa/incsearch-fuzzy.vim'
-Plug 'haya14busa/incsearch.vim'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'haya14busa/incsearch-fuzzy.vim'                                       " z/
+Plug 'haya14busa/incsearch.vim'                  " show all matches on incsearch
+Plug 'Xuyuanp/nerdtree-git-plugin'                          " show changed files
 Plug 'scrooloose/nerdtree'                                              " <S-F1>
 Plug 'amperser/proselint', { 'rtp': '/plugins/vim/syntastic_proselint' }
 Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
 Plug 'saltstack/salt-vim'                                    " salt highlighting
 Plug 'ervandew/supertab'
-Plug 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'                                    " syntax checking
 Plug 'majutsushi/tagbar'                                                " <S-F2>
 Plug 'wellle/tmux-complete.vim'                       " complete from tmux panes
 Plug 'chrisbra/unicode.vim'        " unicode table, search, complete, ^X^Z, ^X^G
@@ -38,7 +38,7 @@ Plug 'tpope/vim-fugitive'                                  " :Gdiff :Gstatus ,gg
 Plug 'airblade/vim-gitgutter'                  " <F3>,hn <F2>,hp ,hv <F1>,hs ,hr
 Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
 Plug 'nathanaelkane/vim-indent-guides'    " configured for indent of two or four
-Plug 'suan/vim-instant-markdown'
+Plug 'suan/vim-instant-markdown'                       " show mardown in browser
 Plug 'vasconcelloslf/vim-interestingwords'                           " ,k ,K n N
 Plug 'Spaceghost/vim-matchit'                                                " %
 Plug 'terryma/vim-multiple-cursors'                                         " ^n
