@@ -494,6 +494,9 @@ augroup Pulse
     autocmd!
     autocmd User PrePulse  call Pulse_on()
     autocmd User PostPulse call Pulse_off()
+    " Pulses the first match after hitting the enter keyan
+    autocmd! User IncSearchExecute
+    autocmd User IncSearchExecute :call search_pulse#Pulse()
 augroup END
 
 map <leader>interestingwords <Plug>InterestingWords
@@ -517,15 +520,15 @@ vnoremap <silent> <leader>k :call InterestingWords('v')<CR>
 nnoremap <silent> <leader>K :call UncolorAllWords()<CR>
 nnoremap <silent> n :call WordNavigation(1)<CR>:call Pulse()<CR>
 nnoremap <silent> N :call WordNavigation(0)<CR>:call Pulse()<CR>
-cmap <silent> <expr> <enter> search_pulse#PulseFirst()
 
 function! s:config_fuzzyall(...) abort
-  return extend(copy({
-  \   'converters': [
-  \     incsearch#config#fuzzy#converter(),
-  \     incsearch#config#fuzzyspell#converter()
-  \   ],
-  \ }), get(a:, 1, {}))
+    set hls
+    return extend(copy({
+        \   'converters': [
+        \     incsearch#config#fuzzy#converter(),
+        \     incsearch#config#fuzzyspell#converter()
+        \   ],
+        \ }), get(a:, 1, {}))
 endfunction
 
 noremap <silent><expr> z/ incsearch#go(<SID>config_fuzzyall())
