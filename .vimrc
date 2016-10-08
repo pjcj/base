@@ -317,8 +317,8 @@ call Set_colour('SpellLocal',   'guibg', s:green  )
 call Set_colour('SpellLocal',   'guifg', s:base03 )
 call Set_colour('SpellLocal',   'gui',   'NONE'   )
 call Set_colour('LineNr',       'guibg', s:base03 )
-call Set_colour('CursorLine',   'guibg', s:base01 )
-call Set_colour('CursorColumn', 'guibg', s:base01 )
+call Set_colour('CursorLine',   'guibg', s:base02 )
+call Set_colour('CursorColumn', 'guibg', s:base02 )
 call Set_colour('CursorLineNr', 'guibg', s:base03 )
 call Set_colour('DiffAdd',      'guibg', s:base03 )
 call Set_colour('DiffAdd',      'guifg', s:rgreen )
@@ -470,9 +470,30 @@ let g:calendar_google_task     = 1
 
 " get vim-search-pulse and vim-interestingwords working together
 " stop plugin overwriting mappings
+function! Pulse_col(colour)
+    call Set_colour('CursorLine',   'guibg', a:colour )
+    call Set_colour('CursorColumn', 'guibg', a:colour )
+endfunc
+function! Pulse_on()
+    let s:ccl = &cursorline
+    set cursorline
+    set cursorcolumn
+    call Pulse_col(s:yellow)
+endfunc
+function! Pulse_off()
+    let &cursorline   = s:ccl
+    let &cursorcolumn = s:ccl
+    call Pulse_col(s:base02)
+endfunc
 function! Pulse()
     call search_pulse#Pulse()
 endfunc
+augroup Pulse
+    autocmd!
+    autocmd User PrePulse  call Pulse_on()
+    autocmd User PostPulse call Pulse_off()
+augroup END
+
 map <leader>interestingwords <Plug>InterestingWords
 let g:vim_search_pulse_disable_auto_mappings = 1
 let g:vim_search_pulse_mode = 'pattern'  " or cursor_line
@@ -497,12 +518,6 @@ nnoremap <silent> N :call WordNavigation(0)<CR>:call Pulse()<CR>
 nnoremap <leader><space> :set hls!<CR><BAR>
                        \ :call UncolorAllWords()<CR><BAR>
                        \ :echo "HLSearch: " . strpart("OffOn",3*&hlsearch,3)<CR>
-
-augroup Pulse
-    autocmd!
-    autocmd User PrePulse  set cursorline! cursorcolumn!
-    autocmd User PostPulse set cursorline! cursorcolumn!
-augroup END
 
 vmap <unique> k <Plug>SchleppUp
 vmap <unique> j <Plug>SchleppDown
