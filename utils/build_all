@@ -12,3 +12,5 @@ while read -r repo; do
     sw=$(basename "$repo")
     build "$sw"
 done < ghq.repos
+
+build rg
