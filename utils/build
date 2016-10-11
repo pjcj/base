@@ -1,17 +1,26 @@
 #!/bin/sh
 
-set -e
-
 dist=$1
 if [ "$dist" ]; then
     dir=$(ghq list -p | grep "$dist$")
-    echo "$dist", "$dir"
-    cd "$dir" || exit 1
-    echo building "$dist"
+    # echo "$dist", "$dir"
+    if [ "$dir" ]; then
+        cd "$dir" || exit 1
+    fi
+    # echo building "$dist"
 fi
 
-dir=$(basename "$(pwd)")
-echo dir "$dir"
+set -e
+
+build="$dir"
+if [ -z "$dir" ]; then
+    if [ "$dist" ]; then
+        build="$dist"
+    else
+        build=$(basename "$(pwd)")
+    fi
+fi
+echo build "$build"
 
 sw=$HOME/g/sw
 
@@ -22,12 +31,12 @@ configure() {
 
 exit_unless_x() {
     if ! xset q > /dev/null 2>&1; then
-        echo "not running under X, ignoring $dir"
+        echo "not running under X, ignoring $build"
         exit
     fi
 }
 
-case "$dir" in
+case "$build" in
     urlview)
         autoreconf -vfi
         configure
@@ -139,9 +148,22 @@ case "$dir" in
         git checkout "$(git tag | grep -v rc | tail -1)"
         make prefix="$sw" all install
         ;;
+    rg)
+        gh="https://github.com"
+        tar=$(wget -O - -o /dev/null $gh/BurntSushi/ripgrep/releases | \
+              grep x86_64-unknown-linux-musl.tar.gz | head -1 |        \
+              perl -ne 'print $1 if /"(.*?)"/')
+        url="$gh/$tar"
+        wget -O /tmp/rg.tgz "$url"
+        dir="/tmp/rg"
+        (rm -rf $dir; mkdir -p $dir && chdir $dir && tar xvzf /tmp/rg.tgz)
+        ls -alR $dir
+        mv $dir/*/rg "$sw/bin"
+        mv $dir/*/rg.1 "$sw/man/man1"
+        ;;
     *)
         echo unknown directory "$dir"
         ;;
 esac
 
-echo "built $dir"
+echo "built $build"
