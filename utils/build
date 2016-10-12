@@ -148,6 +148,11 @@ case "$build" in
         git checkout "$(git tag | grep -v rc | tail -1)"
         make prefix="$sw" all install
         ;;
+    caps2esc)
+        sudo aptitude -y install libudev-dev libevdev-dev
+        gcc -std=gnu99 caps2esc.c -o caps2esc -I/usr/include/libevdev-1.0 -levdev -ludev
+        cp caps2esc "$sw/bin"
+        ;;
     rg)
         gh="https://github.com"
         tar=$(wget -O - -o /dev/null $gh/BurntSushi/ripgrep/releases | \
