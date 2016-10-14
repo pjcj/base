@@ -576,9 +576,9 @@ nnoremap <F6>       :cprevious<Bar>:call Pulse()<CR>
 nnoremap <S-F6>     :lprevious<Bar>:call Pulse()<CR>
 nnoremap <F7>       :cnext<Bar>:call Pulse()<CR>
 nnoremap <S-F7>     :lnext<Bar>:call Pulse()<CR>
-nnoremap <F8>       *:execute "silent grep! -w " . expand("<cword>")
+nnoremap <F8>       *``:execute "silent grep! -w " . expand("<cword>")
                         \ <Bar> botright copen<CR><C-L>
-nnoremap <F10>     *:execute "silent grep! " . expand("<cword>")
+nnoremap <F10>      *``:execute "silent grep! " . expand("<cword>")
                         \ <Bar> botright copen<CR><C-L>
 nnoremap <F9>       :cclose<Bar>:lclose<Bar>:pclose<CR>
 nnoremap <silent>   <S-F10> w
