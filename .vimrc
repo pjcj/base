@@ -236,7 +236,7 @@ set whichwrap=19
 set writebackup
 
 if executable('rg')
-    set grepprg=rg\ --no-heading\ --hidden\ --vimgrep
+    set grepprg=rg\ --no-heading\ --hidden\ --vimgrep\ --case-sensitive
     set grepformat=%f:%l:%c:%m
 else
     set grepprg=git\ grep\ -n
