@@ -773,6 +773,12 @@ call unite#custom#source('file_mru', 'matchers',
 call unite#custom#source('file,file_rec,file_rec/async,grep', 'max_candidates',
     \ 10000)
 
+if executable('rg')
+    let g:unite_source_rec_async_command = [
+            \ 'rg', '--files',
+        \ ]
+endif
+
 let g:unite_enable_start_insert             = 1
 let g:unite_split_rule                      = 'botright'
 let g:unite_data_directory                  = expand($HOME . '/.unite')
@@ -795,7 +801,7 @@ nmap <space> [unite]
 " General fuzzy search
 nnoremap <silent> [unite]<space>
     \ :<C-u>Unite -buffer-name=files buffer
-    \ bookmark git_modified git_untracked file_mru git_cached tag<CR>
+    \ bookmark git_modified git_untracked file_mru file_rec/async tag<CR>
 
 " Quick registers
 nnoremap <silent> [unite]r
