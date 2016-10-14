@@ -775,7 +775,7 @@ call unite#custom#source('file,file_rec,file_rec/async,grep', 'max_candidates',
 
 if executable('rg')
     let g:unite_source_rec_async_command = [
-            \ 'rg', '--files',
+            \ 'rg', '--files', '--hidden', '-g', '!.git',
         \ ]
 endif
 
