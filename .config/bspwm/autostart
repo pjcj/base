@@ -6,7 +6,7 @@ xrdb -merge .Xdefaults
 xsetroot -bg black
 numlockx on
 gnome-settings-daemon --replace > /dev/null 2>&1 &
-sudo nice -n -20 caps2esc >|caps2esc.log 2>|caps2esc.err &
+sudo nice -n -20 =caps2esc >|caps2esc.log 2>|caps2esc.err &
 (
     sleep 1
     gnome-panel &
