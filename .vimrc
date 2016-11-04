@@ -360,7 +360,7 @@ function! Setup_indent_guides()
         " echo 'big: ' &shiftwidth
     endif
 endfunction
-autocmd VimEnter,Colorscheme * call Setup_indent_guides()
+autocmd BufEnter,Colorscheme * call Setup_indent_guides()
 
 let g:airline_theme                  = 'solarized'
 let g:airline_powerline_fonts        = 1
