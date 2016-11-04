@@ -13,7 +13,7 @@ fi
 set -e
 
 build="$dir"
-if [ -z "$dir" ]; then
+if ! [ -z "$dir" ]; then
     if [ "$dist" ]; then
         build="$dist"
     else
