@@ -167,6 +167,9 @@ case "$build" in
         mv $dir/*/rg "$sw/bin"
         mv $dir/*/rg.1 "$sw/man/man1"
         ;;
+    rxvt-unicode)
+        # ignore for now
+        ;;
     *)
         echo unknown directory "$dir"
         ;;
