@@ -345,17 +345,18 @@ endfunc
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_indent_levels         = 40
 function! Setup_indent_guides()
-    hi IndentGuidesEven ctermbg=black
+    " hi IndentGuidesEven ctermbg=black
     call Set_colour('IndentGuidesEven', 'guibg', s:base02)
     if &shiftwidth < 3
         let g:indent_guides_guide_size  = 0
         let g:indent_guides_auto_colors = 0
+        call Set_colour('IndentGuidesOdd', 'guibg', 'NONE')
         " echo 'small: ' &shiftwidth
     else
         let g:indent_guides_guide_size  = 1
         let g:indent_guides_start_level = 2
         let g:indent_guides_auto_colors = 0
-        hi IndentGuidesOdd ctermbg=black
+        " hi IndentGuidesOdd ctermbg=black
         call Set_colour('IndentGuidesOdd', 'guibg', s:base02)
         " echo 'big: ' &shiftwidth
     endif
