@@ -36,6 +36,13 @@ exit_unless_x() {
     fi
 }
 
+exit_if_vm() {
+    if [ "$ISVM" ]; then
+        echo "running as VM, ignoring $build"
+        exit
+    fi
+}
+
 case "$build" in
     urlview)
         autoreconf -vfi
@@ -149,6 +156,7 @@ case "$build" in
         make prefix="$sw" all install
         ;;
     caps2esc)
+        exit_if_vm
         exit_unless_x
         sudo aptitude -y install libudev-dev libevdev-dev
         gcc -std=gnu99 caps2esc.c -o caps2esc -I/usr/include/libevdev-1.0 -levdev -ludev

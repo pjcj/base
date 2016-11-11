@@ -468,6 +468,8 @@ export TOP="-I all"
 export TEMPLATE_DIR=~base/templates
 export VISUAL=$EDITOR
 
+grep -q '^flags.* hypervisor' /proc/cpuinfo; export ISVM=$?
+
 [[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim
 
 zshrc_load_status "external files"
