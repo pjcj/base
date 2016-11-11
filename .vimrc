@@ -36,6 +36,7 @@ Plug 'tpope/vim-dispatch'                          " asynchronous build and test
 Plug 'junegunn/vim-easy-align'                                     " = ^X<regex>
 Plug 'tpope/vim-eunuch'                                          " Unix commands
 Plug 'tpope/vim-fugitive'                                  " :Gdiff :Gstatus ,gg
+Plug 'tommcdo/vim-fugitive-blame-ext'                           " extend :Gblame
 Plug 'airblade/vim-gitgutter'                  " <F3>,hn <F2>,hp ,hv <F1>,hs ,hr
 Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
 Plug 'nathanaelkane/vim-indent-guides'    " configured for indent of two or four
