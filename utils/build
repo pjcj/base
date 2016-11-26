@@ -1,26 +1,18 @@
 #!/bin/sh
 
-dist=$1
-if [ "$dist" ]; then
-    dir=$(ghq list -p | grep "$dist$")
-    # echo "$dist", "$dir"
+# set -x
+
+build=$1
+if [ "$build" ]; then
+    dir=$(ghq list -p | grep "$build$")
     if [ "$dir" ]; then
         cd "$dir" || exit 1
     fi
-    # echo building "$dist"
 fi
 
 set -e
 
-build="$dir"
-if ! [ -z "$dir" ]; then
-    if [ "$dist" ]; then
-        build="$dist"
-    else
-        build=$(basename "$(pwd)")
-    fi
-fi
-echo build "$build"
+echo build "${build:=$(basename "$(pwd)")}"
 
 sw=$HOME/g/sw
 
@@ -179,7 +171,7 @@ case "$build" in
         # ignore for now
         ;;
     *)
-        echo unknown directory "$dir"
+        echo unknown build "$build"
         ;;
 esac
 
