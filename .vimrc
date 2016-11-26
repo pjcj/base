@@ -803,7 +803,7 @@ nmap <space> [unite]
 " General fuzzy search
 nnoremap <silent> [unite]<space>
     \ :<C-u>Unite -buffer-name=files buffer
-    \ bookmark git_modified git_untracked file_mru file_rec/async tag<CR>
+    \ bookmark git_modified git_untracked file_mru file_rec/async file/new<CR>
 
 " Quick registers
 nnoremap <silent> [unite]r
