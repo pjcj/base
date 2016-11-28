@@ -468,7 +468,8 @@ export TOP="-I all"
 export TEMPLATE_DIR=~base/templates
 export VISUAL=$EDITOR
 
-grep -q '^flags.* hypervisor' /proc/cpuinfo; export ISVM=$?
+export ISVM=0
+(sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
 
 [[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim
 
