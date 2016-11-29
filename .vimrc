@@ -379,7 +379,7 @@ augroup file_types
     autocmd BufNewFile * :exe 'normal ggdd'
     autocmd BufNewFile * /^[ \t]*[#] *implementation/
 
-    autocmd Filetype perl setlocal path+=lib tw=80
+    autocmd Filetype perl setlocal path+=lib
 
     autocmd BufRead *tmp/ml/mutt-*
         \ setlocal colorcolumn=72 tw=72 spell spelllang=en_gb
