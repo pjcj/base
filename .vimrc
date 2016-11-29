@@ -772,8 +772,8 @@ call unite#custom#source('file_mru', 'matchers',
     \ ['matcher_project_files', 'matcher_fuzzy'])
 
 " Increase max candidates
-call unite#custom#source('file,file_rec,file_rec/async,grep', 'max_candidates',
-    \ 10000)
+call unite#custom#source('file,file_rec,file_rec/git,file_rec/neovim,grep',
+    \ 'max_candidates', 10000)
 
 if executable('rg')
     let g:unite_source_rec_async_command = [
@@ -803,7 +803,7 @@ nmap <space> [unite]
 " General fuzzy search
 nnoremap <silent> [unite]<space>
     \ :<C-u>Unite -buffer-name=files buffer
-    \ bookmark git_modified git_untracked file_mru file_rec/async file/new<CR>
+    \ bookmark git_modified git_untracked file_mru file_rec/neovim file/new<CR>
 
 " Quick registers
 nnoremap <silent> [unite]r
@@ -828,7 +828,7 @@ nnoremap <silent> [unite]d
 
 " Quick file search
 nnoremap <silent> [unite]f
-    \ :<C-u>Unite -buffer-name=files file_rec/async file/new<CR>
+    \ :<C-u>Unite -buffer-name=files file_rec/neovim file/new<CR>
 
 " Quick grep from cwd
 nnoremap <silent> [unite]g
