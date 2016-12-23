@@ -162,8 +162,10 @@ case "$build" in
         url="$gh/$tar"
         wget -O /tmp/rg.tgz "$url"
         dir="/tmp/rg"
-        (rm -rf $dir; mkdir -p $dir && chdir $dir && tar xvzf /tmp/rg.tgz)
+        (rm -rf $dir; mkdir -p $dir && cd $dir && tar xvzf /tmp/rg.tgz)
         ls -alR $dir
+        mkdir -p /Users/pjcj/g/sw/bin
+        mkdir -p /Users/pjcj/g/sw/man/man1
         mv $dir/*/rg "$sw/bin"
         mv $dir/*/rg.1 "$sw/man/man1"
         ;;
