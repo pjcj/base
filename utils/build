@@ -15,6 +15,8 @@ set -e
 echo build "${build:=$(basename "$(pwd)")}"
 
 sw=$HOME/g/sw
+mkdir -p $sw/bin
+mkdir -p $sw/man/man1
 
 configure() {
     [ -f ./configure ] || ./autogen.sh
@@ -164,8 +166,6 @@ case "$build" in
         dir="/tmp/rg"
         (rm -rf $dir; mkdir -p $dir && cd $dir && tar xvzf /tmp/rg.tgz)
         ls -alR $dir
-        mkdir -p /Users/pjcj/g/sw/bin
-        mkdir -p /Users/pjcj/g/sw/man/man1
         mv $dir/*/rg "$sw/bin"
         mv $dir/*/rg.1 "$sw/man/man1"
         ;;
