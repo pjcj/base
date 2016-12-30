@@ -469,7 +469,12 @@ export TEMPLATE_DIR=~base/templates
 export VISUAL=$EDITOR
 
 export ISVM=0
-(sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
+export ISOSX=0
+if [[ $(uname) == "Darwin" ]]; then
+    ISOSX=1
+else
+    (sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
+fi
 
 [[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim
 
