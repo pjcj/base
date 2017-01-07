@@ -473,7 +473,9 @@ export ISOSX=0
 if [[ $(uname) == "Darwin" ]]; then
     ISOSX=1
 else
-    (sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
+    if which dmidecode >&/dev/null; then
+        (sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
+    fi
 fi
 
 [[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim
