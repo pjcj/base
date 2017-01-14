@@ -1,6 +1,9 @@
 #!/usr/bin/zsh
 
 command which $1
+echo
+command whence -afps $1
+echo
 echo PATH is $PATH
 perl -e '
 for my $file (@ARGV) {
