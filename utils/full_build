@@ -30,9 +30,6 @@ $EDITOR -c PlugInstall -c qa
 $EDITOR -c PlugUpdate  -c qa
 
 gobase
-perl -pi -e "s/if has\('gui_running'\)\K/ || (has('nvim') && &termguicolors)/" \
-            .vim/plugged/vim-interestingwords/plugin/interestingwords.vim
-
 sudo aptitude -y install golang
 command go get -u github.com/motemen/ghq
 
