@@ -12,7 +12,6 @@ call plug#begin()
 Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
-Plug 'docker/docker', { 'rtp': '/contrib/syntax/vim/' }          " docker syntax
 Plug 'gregsexton/gitv'
 Plug 'sjl/gundo.vim'                                                       " ,gu
 Plug 'haya14busa/incsearch-fuzzy.vim'                                       " z/
@@ -44,6 +43,7 @@ Plug 'suan/vim-instant-markdown'                       " show mardown in browser
 Plug 'vasconcelloslf/vim-interestingwords'                           " ,k ,K n N
 Plug 'Spaceghost/vim-matchit'                                                " %
 Plug 'terryma/vim-multiple-cursors'                                         " ^n
+Plug 'sheerun/vim-polyglot'                                 " extra syntax files
 Plug 'tpope/vim-repeat'
 Plug 'zirrostig/vim-schlepp'                               " highlight then hjkl
 Plug 'inside/vim-search-pulse'                                           " * n N
