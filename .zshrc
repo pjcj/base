@@ -499,9 +499,10 @@ load \
 
 [[ -z $PERLBREW_ROOT ]] && export PERLBREW_ROOT="$HOME/perl5/perlbrew"
 if [[ -e $PERLBREW_ROOT/etc/bashrc ]] then
+    __path=$PATH
     . $PERLBREW_ROOT/etc/bashrc 2>/dev/null
     . $PERLBREW_ROOT/etc/perlbrew-completion.bash
-    PATH=$PERLBREW_ROOT/bin:$PATH
+    PATH=$PERLBREW_ROOT/bin:$__path
     pb() { TEST_JOBS=9 perlbrew -j9 "$@" }
     complete -F _perlbrew_compgen pb
 fi
