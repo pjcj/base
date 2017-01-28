@@ -363,12 +363,10 @@ v() {
 }
 
 cd()      { c "$@" && d }
-cp()      { command cp -bv --backup=numbered "$@" }
 ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
 dh()      { f --color "$@" | head }
 dm()      { fc -e - d=m -1 }
 ds()      { f -d "$@" }
-f()       { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
 g()       { git "$@" }
 ga()      { git add "$@" }
 gb()      { git branch "$@" }
@@ -403,7 +401,6 @@ lu()      { fc -e - lsq=usq -1 }
 m()       { less "$@" }
 mn()      { nroff -man "$@" | m }
 mutt()    { mkdir -p /tmp/ml && command mutt "$@" }
-mv()      { command mv -bv --backup=numbered "$@" }
 n()       { make "$@" }
 p()       { pp | head }
 pl()      { ps -o user,pid,pgid,pcpu,pmem,osz,rss,tty,s,stime,time,args "$@" }
@@ -472,10 +469,17 @@ export ISVM=0
 export ISOSX=0
 if [[ $(uname) == "Darwin" ]]; then
     ISOSX=1
+    cp()      { command cp -v "$@" }
+    f()       { ls -ABhl "$@" }
+    mv()      { command mv -v "$@" }
 else
     if which dmidecode >&/dev/null; then
         (sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
     fi
+    (sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
+    cp()      { command cp -bv --backup=numbered "$@" }
+    f()       { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
+    mv()      { command mv -bv --backup=numbered "$@" }
 fi
 
 [[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim

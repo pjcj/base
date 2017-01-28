@@ -11,10 +11,15 @@ gobase
 ~/.tmux/plugins/tpm/scripts/update_plugin_prompt_handler.sh all
 
 # for neovim:
-if [ !"$ISOSX" ]; then
+if [ "$ISOSX" ]; then
+    brew update
+    brew upgrade
+else
     sudo aptitude -y install \
         python-pip python-setuptools \
         python3-pip python3-setuptools
+    sudo aptitude -y install golang
+    command go get -u github.com/motemen/ghq
 fi
 pip3 install --upgrade --user neovim vim-vint proselint
 pip install --upgrade --user git+git://github.com/powerline/powerline
@@ -30,7 +35,7 @@ $EDITOR -c PlugInstall -c qa
 $EDITOR -c PlugUpdate  -c qa
 
 gobase
-perl -pi -e "s/if has\('gui_running'\)\K/ || (has('nvim') && &termguicolors)/" \
+perl -pi -e "s/if has\('gui_running'\)\K$/ || (has('nvim') && &termguicolors)/" \
             .vim/plugged/vim-interestingwords/plugin/interestingwords.vim
 
 sudo aptitude -y install golang
