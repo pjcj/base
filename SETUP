@@ -24,6 +24,8 @@ echo "Start tmux and then run build_all"
 
 exit
 
+Set up theme with https://github.com/ferdi265/numix-solarized-gtk-theme
+
 # TODO - do we need tmuxinator now?
 # sudo gem install tmuxinator
 
