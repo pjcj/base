@@ -18,11 +18,9 @@ Plug 'haya14busa/incsearch-fuzzy.vim'                                       " z/
 Plug 'haya14busa/incsearch.vim'                  " show all matches on incsearch
 Plug 'Xuyuanp/nerdtree-git-plugin'                          " show changed files
 Plug 'scrooloose/nerdtree'                                              " <S-F1>
-Plug 'amperser/proselint', { 'rtp': '/plugins/vim/syntastic_proselint' }
 Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
 Plug 'saltstack/salt-vim'                                    " salt highlighting
 Plug 'ervandew/supertab'
-Plug 'scrooloose/syntastic'                                    " syntax checking
 Plug 'majutsushi/tagbar'                                                " <S-F2>
 Plug 'wellle/tmux-complete.vim'                       " complete from tmux panes
 Plug 'chrisbra/unicode.vim'        " unicode table, search, complete, ^X^Z, ^X^G
@@ -52,8 +50,8 @@ Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
 Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'jszakmeister/vim-togglecursor'             " change cursor shape on insert
-Plug 'todesking/vint-syntastic'                                     " vim linter
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
+Plug 'w0rp/ale'                                                " syntax checking
 
 Plug 'Shougo/unite.vim'                                " <space><space> <space>s
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
@@ -573,7 +571,6 @@ nnoremap <F4>       :execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$
 nnoremap <S-F4>     :tnext<Bar>:call Pulse()<CR>
 nnoremap <M-F4>     :tprev<Bar>:call Pulse()<CR>
 nnoremap <F5>       :execute "silent make" <Bar> botright copen<CR><C-L>
-nnoremap <S-F5>     :w<CR>:SyntasticCheck<CR>:Errors<CR>
 nnoremap <F6>       :cprevious<Bar>:call Pulse()<CR>
 nnoremap <S-F6>     :lprevious<Bar>:call Pulse()<CR>
 nnoremap <F7>       :cnext<Bar>:call Pulse()<CR>
@@ -664,35 +661,25 @@ let g:yankring_window_height       = 25
 let g:yankring_manage_numbered_reg = 1
 let g:yankring_history_dir         = '$HOME/.vim'
 
-" syntastic
-let g:syntastic_check_on_open            = 0
-let g:syntastic_check_on_wq              = 0
-let g:syntastic_aggregate_errors         = 1  " doesn't seem to work
-let g:syntastic_sort_aggregated_errors   = 1
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list            = 1
-let g:syntastic_auto_jump                = 1
-let g:syntastic_enable_signs             = 1
-let g:syntastic_error_symbol             = '✗'
-let g:syntastic_warning_symbol           = '⚠'
-let g:syntastic_style_error_symbol       = '✗'
-let g:syntastic_style_warning_symbol     = '⚠'
-highlight SyntasticErrorSign   ctermbg=0 ctermfg=1 cterm=bold
-highlight SyntasticWarningSign ctermbg=0 ctermfg=5 cterm=bold
-call Set_colour('SyntasticErrorSign',   'guibg', s:base03)
-call Set_colour('SyntasticErrorSign',   'guifg', s:red   )
-call Set_colour('SyntasticWarningSign', 'guibg', s:base03)
-call Set_colour('SyntasticWarningSign', 'guifg', s:yellow)
+" ALE
+let g:ale_open_list            = 1
+let g:ale_lint_on_text_changed = 1
+let g:ale_lint_on_enter        = 0
+let g:ale_lint_on_save         = 1
+let g:ale_lint_delay           = 200
+let g:ale_set_quickfix         = 1
+let g:ale_sign_error           = '✗'
+let g:ale_sign_warning         = '⚠'
 
-let g:syntastic_mode_map = { 'mode': 'active',
-    \ 'active_filetypes':  [],
-    \ 'passive_filetypes': ['xml', 'c'] }
-let g:syntastic_enable_perl_checker = 1
-let g:syntastic_perl_perl_exec      = 'perl -Mblib'
-let g:syntastic_markdown_checkers   = ['proselint']
-let g:syntastic_perl_checkers       = ['perl']
-let g:syntastic_shell_checkers      = ['sh', 'shellcheck', 'checkbashisms']
-let g:syntastic_vim_checkers        = ['vint --enable-neovim']
+" let g:syntastic_mode_map = { 'mode': 'active',
+"     \ 'active_filetypes':  [],
+"     \ 'passive_filetypes': ['xml', 'c'] }
+" let g:syntastic_enable_perl_checker = 1
+" let g:syntastic_perl_perl_exec      = 'perl -Mblib'
+" let g:syntastic_markdown_checkers   = ['proselint']
+" let g:syntastic_perl_checkers       = ['perl']
+" let g:syntastic_shell_checkers      = ['sh', 'shellcheck', 'checkbashisms']
+" let g:syntastic_vim_checkers        = ['vint --enable-neovim']
 
 " delimitMate
 " imap § <C-G>g
