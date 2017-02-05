@@ -341,11 +341,11 @@ c() {
 }
 
 d() {
-    if which k >&/dev/null; then
-        k -h "$@"
-    else
+    # if which k >&/dev/null; then
+        # k -h "$@"
+    # else
         f "$@"
-    fi
+    # fi
 }
 
 u() { popd }
