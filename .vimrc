@@ -820,6 +820,7 @@ nmap <space> [unite]
 
 " General fuzzy search
 nnoremap <silent> [unite]<space>
+    \ :w<CR>
     \ :<C-u>Unite -buffer-name=files buffer
     \ bookmark git_modified git_untracked file_mru file_rec/neovim file/new<CR>
 
