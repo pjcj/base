@@ -231,7 +231,7 @@ else
     set grepprg=git\ grep\ -n
 endif
 
-let mapleader = ','
+let g:mapleader = ','
 
 " alter regex handling to 'normal' syntax
 nnoremap / /\v
@@ -245,13 +245,13 @@ set hlsearch
 
 " Java options
 set cinoptions+=j1  " anonymous classes
-let java_comment_strings=1
-let java_highlight_java_lang_ids=1
-let java_highlight_all=1
-let java_highlight_debug=1
-let java_ignore_javadoc=1
-let java_highlight_java_lang_ids=1
-let java_highlight_functions='style'
+let g:java_comment_strings=1
+let g:java_highlight_java_lang_ids=1
+let g:java_highlight_all=1
+let g:java_highlight_debug=1
+let g:java_ignore_javadoc=1
+let g:java_highlight_java_lang_ids=1
+let g:java_highlight_functions='style'
 
 " Save position of cursor in file
 augroup save_position
@@ -386,20 +386,20 @@ augroup END
 let g:gutentags_exclude = ['blib', 'tmp']
 " can be extended with '*/sub/path' if required
 
-let NERDTreeShowHidden=1
+let g:NERDTreeShowHidden=1
 
 " taglist plugin
-let Tlist_Use_SingleClick      = 1
-let Tlist_Use_Right_Window     = 1
-let Tlist_Auto_Open            = 0
-let Tlist_Show_One_File        = 0
-let Tlist_WinWidth             = 32
-let Tlist_Compact_Format       = 1
-let Tlist_Exit_OnlyWindow      = 1
-let Tlist_File_Fold_Auto_Close = 1
-let Tlist_Process_File_Always  = 1
-let Tlist_Enable_Fold_Column   = 0
-let Tlist_Show_Menu            = 1
+let g:Tlist_Use_SingleClick      = 1
+let g:Tlist_Use_Right_Window     = 1
+let g:Tlist_Auto_Open            = 0
+let g:Tlist_Show_One_File        = 0
+let g:Tlist_WinWidth             = 32
+let g:Tlist_Compact_Format       = 1
+let g:Tlist_Exit_OnlyWindow      = 1
+let g:Tlist_File_Fold_Auto_Close = 1
+let g:Tlist_Process_File_Always  = 1
+let g:Tlist_Enable_Fold_Column   = 0
+let g:Tlist_Show_Menu            = 1
 
 let g:tagbar_width            = 32
 let g:tagbar_autoclose        = 1
@@ -513,7 +513,7 @@ nnoremap <silent> n :call WordNavigation(1)<CR>:call Pulse()<CR>
 nnoremap <silent> N :call WordNavigation(0)<CR>:call Pulse()<CR>
 
 function! s:config_fuzzyall(...) abort
-    set hls
+    set hlsearch
     return extend(copy({
         \   'converters': [
         \     incsearch#config#fuzzy#converter(),
@@ -874,9 +874,9 @@ iabbr op, open my $fh, "<", $filename or die "Can't open $filename: $!";<CR>
 
 function! MyToHtml(line1, line2)
     " make sure to generate in the correct format
-    let old_css = 1
+    let l:old_css = 1
     if exists('g:html_use_css')
-        let old_css = g:html_use_css
+        let l:old_css = g:html_use_css
     endif
     let g:html_use_css = 0
 
@@ -910,7 +910,7 @@ function! MyToHtml(line1, line2)
     redraw  " no hit enter ...
 
     " restore old setting
-    let g:html_use_css = old_css
+    let g:html_use_css = l:old_css
 endfunction
 command! -range=% MyToHtml :call MyToHtml(<line1>,<line2>)
 
