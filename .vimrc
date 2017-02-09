@@ -9,6 +9,7 @@ endfunction
 call plug#begin()
 
 " !sort -t/ -k2
+Plug 'w0rp/ale'                                                " syntax checking
 Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
@@ -32,8 +33,8 @@ Plug 'tpope/vim-commentary'                                                 " gc
 Plug 'tpope/vim-dispatch'                          " asynchronous build and test
 Plug 'junegunn/vim-easy-align'                                     " = ^X<regex>
 Plug 'tpope/vim-eunuch'                                          " Unix commands
-Plug 'tpope/vim-fugitive'                                  " :Gdiff :Gstatus ,gg
 Plug 'tommcdo/vim-fugitive-blame-ext'                           " extend :Gblame
+Plug 'tpope/vim-fugitive'                                  " :Gdiff :Gstatus ,gg
 Plug 'airblade/vim-gitgutter'                  " <F3>,hn <F2>,hp ,hv <F1>,hs ,hr
 Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
 Plug 'nathanaelkane/vim-indent-guides'    " configured for indent of two or four
@@ -51,7 +52,6 @@ Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'jszakmeister/vim-togglecursor'             " change cursor shape on insert
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
-Plug 'w0rp/ale'                                                " syntax checking
 
 Plug 'Shougo/unite.vim'                                " <space><space> <space>s
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
