@@ -15,8 +15,8 @@ set -e
 echo build "${build:=$(basename "$(pwd)")}"
 
 sw=$HOME/g/sw
-mkdir -p $sw/bin
-mkdir -p $sw/man/man1
+mkdir -p "$sw/bin"
+mkdir -p "$sw/man/man1"
 
 configure() {
     [ -f ./configure ] || ./autogen.sh
@@ -54,7 +54,7 @@ case "$build" in
         make install
         ;;
     neovim)
-        if [ !"$ISOSX" ]; then
+        if [ ! "$ISOSX" ]; then
             sudo aptitude -y install \
                 libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
         fi
