@@ -571,6 +571,7 @@ nnoremap <F4>       :execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$
 nnoremap <S-F4>     :tnext<Bar>:call Pulse()<CR>
 nnoremap <M-F4>     :tprev<Bar>:call Pulse()<CR>
 nnoremap <F5>       :execute "silent make" <Bar> botright copen<CR><C-L>
+nnoremap <S-F5>     :cc<CR>
 nnoremap <F6>       :cprevious<Bar>:call Pulse()<CR>
 nnoremap <S-F6>     :lprevious<Bar>:call Pulse()<CR>
 nnoremap <F7>       :cnext<Bar>:call Pulse()<CR>
@@ -580,6 +581,9 @@ nnoremap <F8>       *``:execute "silent grep! -w " . expand("<cword>")
 nnoremap <S-F8>     *``:execute "silent grep! " . expand("<cword>")
                         \ <Bar> botright copen<CR><C-L>
 nnoremap <F9>       :cclose<Bar>:lclose<Bar>:pclose<CR>
+nnoremap <S-F9>     :copen<CR>
+nnoremap <C-F9>     :lopen<CR>
+
 nnoremap <silent>   <S-F10> w
 nnoremap §          :Gitv --all<CR>
 vnoremap §          :Gitv --all<CR>
@@ -597,11 +601,6 @@ imap <F2> sub {<CR>my $self = shift;<CR>my () = @_;<CR>}<ESC>%hi<Space>
 imap <F3> $self->{}<ESC>i
 imap <F4> $self->
 
-map [26~   <S-F4>
-map [28~   <S-F5>
-map [29~   <S-F6>
-map [31~   <S-F7>
-map [21;2~ <S-F10>
 map <F13>    <S-F1>
 map <F14>    <S-F2>
 map <F15>    <S-F3>
@@ -609,7 +608,38 @@ map <F16>    <S-F4>
 map <F17>    <S-F5>
 map <F18>    <S-F6>
 map <F19>    <S-F7>
+map <F20>    <S-F8>
+map <F21>    <S-F9>
 map <F22>    <S-F10>
+map <F23>    <S-F11>
+map <F24>    <S-F12>
+
+map <F25>    <C-F1>
+map <F26>    <C-F2>
+map <F27>    <C-F3>
+map <F28>    <C-F4>
+map <F29>    <C-F5>
+map <F30>    <C-F6>
+map <F31>    <C-F7>
+map <F32>    <C-F8>
+map <F33>    <C-F9>
+map <F34>    <C-F10>
+map <F35>    <C-F11>
+map <F36>    <C-F12>
+
+" not working with neovim
+map <F37>    <M-F1>
+map <F38>    <M-F2>
+map <F39>    <M-F3>
+map <F40>    <M-F4>
+map <F41>    <M-F5>
+map <F42>    <M-F6>
+map <F43>    <M-F7>
+map <F44>    <M-F8>
+map <F45>    <M-F9>
+map <F46>    <M-F10>
+map <F47>    <M-F11>
+map <F48>    <M-F12>
 
 nnoremap <leader>gu :GundoToggle<CR>
 
