@@ -351,6 +351,7 @@ d() {
 u() { popd }
 
 v() {
+    local PERL5LIB=$VPERL5LIB
     if test $# != 1 -o -r "$1"; then
         command $EDITOR "${@}"
     else
