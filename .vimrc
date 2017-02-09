@@ -562,10 +562,11 @@ nnoremap <S-F4>     :tnext<Bar>:call Pulse()<CR>
 nnoremap <M-F4>     :tprev<Bar>:call Pulse()<CR>
 nnoremap <F5>       :execute "silent make" <Bar> botright copen<CR><C-L>
 nnoremap <S-F5>     :cc<CR>
+nnoremap <C-F5>     :ll<CR>
 nnoremap <F6>       :cprevious<Bar>:call Pulse()<CR>
-nnoremap <S-F6>     :lprevious<Bar>:call Pulse()<CR>
+nnoremap <C-F6>     :lprevious<Bar>:call Pulse()<CR>
 nnoremap <F7>       :cnext<Bar>:call Pulse()<CR>
-nnoremap <S-F7>     :lnext<Bar>:call Pulse()<CR>
+nnoremap <C-F7>     :lnext<Bar>:call Pulse()<CR>
 nnoremap <F8>       *``:execute "silent grep! -w " . expand("<cword>")
                         \ <Bar> botright copen<CR><C-L>
 nnoremap <S-F8>     *``:execute "silent grep! " . expand("<cword>")
@@ -688,7 +689,7 @@ let g:ale_lint_on_text_changed = 1
 let g:ale_lint_on_enter        = 1
 let g:ale_lint_on_save         = 1
 let g:ale_lint_delay           = 200
-let g:ale_set_quickfix         = 1
+let g:ale_set_quickfix         = 0
 let g:ale_sign_error           = '✗'
 let g:ale_sign_warning         = '⚠'
 
