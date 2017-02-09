@@ -91,16 +91,6 @@ if has('nvim')
         \ ['member', 'buffer', 'tag', 'file', 'tmux-complete', 'dictionary']
 
     let g:tmuxcomplete#trigger = ''
-
-    " Plug 'benekastah/neomake'
-    " autocmd! BufWritePost,BufEnter * Neomake
-    " let g:neomake_list_height              = 10
-    " let g:neomake_open_list                = 2
-    " let g:neomake_serialize                = 1
-    " let g:neomake_serialize_abort_on_error = 1
-    " let g:neomake_verbose                  = 2
-    " let g:neomake_sh_enabled_checkers      = ['shellcheck']
-    " let g:neomake_vim_enabled_checkers     = ['vint']
 else
     Plug 'altercation/vim-colors-solarized'
 
