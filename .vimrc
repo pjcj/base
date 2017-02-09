@@ -692,16 +692,6 @@ let g:ale_set_quickfix         = 1
 let g:ale_sign_error           = '✗'
 let g:ale_sign_warning         = '⚠'
 
-" let g:syntastic_mode_map = { 'mode': 'active',
-"     \ 'active_filetypes':  [],
-"     \ 'passive_filetypes': ['xml', 'c'] }
-" let g:syntastic_enable_perl_checker = 1
-" let g:syntastic_perl_perl_exec      = 'perl -Mblib'
-" let g:syntastic_markdown_checkers   = ['proselint']
-" let g:syntastic_perl_checkers       = ['perl']
-" let g:syntastic_shell_checkers      = ['sh', 'shellcheck', 'checkbashisms']
-" let g:syntastic_vim_checkers        = ['vint --enable-neovim']
-
 " delimitMate
 " imap § <C-G>g
 " let delimitMate_expand_space         = 1
