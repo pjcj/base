@@ -662,7 +662,8 @@ let g:yankring_manage_numbered_reg = 1
 let g:yankring_history_dir         = '$HOME/.vim'
 
 " ALE
-let g:ale_open_list            = 1
+let g:ale_open_list            = 0
+let g:ale_echo_cursor          = 1
 let g:ale_lint_on_text_changed = 1
 let g:ale_lint_on_enter        = 0
 let g:ale_lint_on_save         = 1
