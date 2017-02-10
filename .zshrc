@@ -305,7 +305,7 @@ zshrc_load_status "path"
 PATH=~/.local/bin:~/g/go/bin:~/bin:~/g/sw/bin:~/g/sw/usr/bin:$PATH
 PATH=~/g/local_base/utils:~/g/base/utils:$PATH
 PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
-# MANPATH=~/g/sw/share/man:${MANPATH:-manpath}
+MANPATH=~/g/sw/share/man:/usr/share/man:${MANPATH:-manpath}
 
 zshrc_load_status "aliases"
 
@@ -505,9 +505,11 @@ load \
 [[ -z $PERLBREW_ROOT ]] && export PERLBREW_ROOT="$HOME/perl5/perlbrew"
 if [[ -e $PERLBREW_ROOT/etc/bashrc ]] then
     __path=$PATH
+    __manpath=$MANPATH
     . $PERLBREW_ROOT/etc/bashrc 2>/dev/null
     . $PERLBREW_ROOT/etc/perlbrew-completion.bash
     PATH=$PERLBREW_ROOT/bin:$__path
+    MANPATH=${MANPATH:-manpath}:$__manpath
     pb() { TEST_JOBS=9 perlbrew -j9 "$@" }
     complete -F _perlbrew_compgen pb
 fi
