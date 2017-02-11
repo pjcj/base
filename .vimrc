@@ -1,6 +1,6 @@
 set encoding=utf-8
 scriptencoding utf-8
-filetype off
+filetype       off
 
 function! DoRemote(arg)
     UpdateRemotePlugins
@@ -10,6 +10,7 @@ call plug#begin()
 
 " !sort -t/ -k2
 Plug 'w0rp/ale'                                                " syntax checking
+Plug 'maralla/completor.vim'                                        " completion
 Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
@@ -19,6 +20,7 @@ Plug 'haya14busa/incsearch-fuzzy.vim'                                       " z/
 Plug 'haya14busa/incsearch.vim'                  " show all matches on incsearch
 Plug 'Xuyuanp/nerdtree-git-plugin'                          " show changed files
 Plug 'scrooloose/nerdtree'                                              " <S-F1>
+Plug 'c9s/perlomni.vim'                                         " for completion
 Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
 Plug 'saltstack/salt-vim'                                    " salt highlighting
 Plug 'ervandew/supertab'
@@ -52,8 +54,6 @@ Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'jszakmeister/vim-togglecursor'             " change cursor shape on insert
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
-Plug 'maralla/completor.vim'
-Plug 'c9s/perlomni.vim'
 
 Plug 'Shougo/unite.vim'                                " <space><space> <space>s
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
@@ -174,13 +174,13 @@ set hlsearch
 
 " Java options
 set cinoptions+=j1  " anonymous classes
-let g:java_comment_strings=1
-let g:java_highlight_java_lang_ids=1
-let g:java_highlight_all=1
-let g:java_highlight_debug=1
-let g:java_ignore_javadoc=1
-let g:java_highlight_java_lang_ids=1
-let g:java_highlight_functions='style'
+let g:java_comment_strings         = 1
+let g:java_highlight_java_lang_ids = 1
+let g:java_highlight_all           = 1
+let g:java_highlight_debug         = 1
+let g:java_ignore_javadoc          = 1
+let g:java_highlight_java_lang_ids = 1
+let g:java_highlight_functions     = 'style'
 
 " Save position of cursor in file
 augroup save_position
@@ -222,35 +222,35 @@ function! Set_colour(group, part, colour)
     execute 'highlight ' . a:group . ' ' . a:part . '=' . a:colour
 endfunc
 
-highlight Comment cterm=italic
-call Set_colour('Normal',       'guifg', s:normal )
-call Set_colour('SpecialKey',   'guibg', s:base03 )
-call Set_colour('SpellBad',     'guibg', s:violet )
-call Set_colour('SpellBad',     'guifg', s:base03 )
-call Set_colour('SpellBad',     'gui',   'NONE'   )
-call Set_colour('SpellCap',     'guibg', s:blue   )
-call Set_colour('SpellCap',     'guifg', s:base03 )
-call Set_colour('SpellCap',     'gui',   'NONE'   )
-call Set_colour('SpellRare',    'guibg', s:yellow )
-call Set_colour('SpellRare',    'guifg', s:base03 )
-call Set_colour('SpellRare',    'gui',   'NONE'   )
-call Set_colour('SpellLocal',   'guibg', s:green  )
-call Set_colour('SpellLocal',   'guifg', s:base03 )
-call Set_colour('SpellLocal',   'gui',   'NONE'   )
-call Set_colour('LineNr',       'guibg', s:base03 )
-call Set_colour('CursorLine',   'guibg', s:base02 )
-call Set_colour('CursorColumn', 'guibg', s:base02 )
-call Set_colour('CursorLineNr', 'guibg', s:base03 )
-call Set_colour('DiffAdd',      'guibg', s:base03 )
-call Set_colour('DiffAdd',      'guifg', s:rgreen )
-call Set_colour('DiffChange',   'guibg', s:base03 )
-call Set_colour('DiffDelete',   'guibg', s:base03 )
-call Set_colour('diffAdded',    'guifg', s:rgreen )
-call Set_colour('Search',       'guibg', s:violet )
-call Set_colour('Search',       'guifg', s:base03 )
-call Set_colour('Search',       'gui',   'NONE'   )
-call Set_colour('TabLineSel',   'guibg', s:base03 )
-call Set_colour('TabLineSel',   'guifg', s:violet )
+highlight Comment cterm = italic
+call Set_colour('Normal',       'guifg', s:normal)
+call Set_colour('SpecialKey',   'guibg', s:base03)
+call Set_colour('SpellBad',     'guibg', s:violet)
+call Set_colour('SpellBad',     'guifg', s:base03)
+call Set_colour('SpellBad',     'gui',   'NONE'  )
+call Set_colour('SpellCap',     'guibg', s:blue  )
+call Set_colour('SpellCap',     'guifg', s:base03)
+call Set_colour('SpellCap',     'gui',   'NONE'  )
+call Set_colour('SpellRare',    'guibg', s:yellow)
+call Set_colour('SpellRare',    'guifg', s:base03)
+call Set_colour('SpellRare',    'gui',   'NONE'  )
+call Set_colour('SpellLocal',   'guibg', s:green )
+call Set_colour('SpellLocal',   'guifg', s:base03)
+call Set_colour('SpellLocal',   'gui',   'NONE'  )
+call Set_colour('LineNr',       'guibg', s:base03)
+call Set_colour('CursorLine',   'guibg', s:base02)
+call Set_colour('CursorColumn', 'guibg', s:base02)
+call Set_colour('CursorLineNr', 'guibg', s:base03)
+call Set_colour('DiffAdd',      'guibg', s:base03)
+call Set_colour('DiffAdd',      'guifg', s:rgreen)
+call Set_colour('DiffChange',   'guibg', s:base03)
+call Set_colour('DiffDelete',   'guibg', s:base03)
+call Set_colour('diffAdded',    'guifg', s:rgreen)
+call Set_colour('Search',       'guibg', s:violet)
+call Set_colour('Search',       'guifg', s:base03)
+call Set_colour('Search',       'gui',   'NONE'  )
+call Set_colour('TabLineSel',   'guibg', s:base03)
+call Set_colour('TabLineSel',   'guifg', s:violet)
 
 nmap <C-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
@@ -260,10 +260,8 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), "synIDattr(v:val, 'name')")
 endfunc
 
-let g:completor_min_chars = 1
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:completor_perl_omni_trigger = '->'
+let g:completor_min_chars                 = 1
+let g:completor_perl_omni_trigger         = '->'
 
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_indent_levels         = 40
@@ -317,10 +315,10 @@ augroup file_types
     " autocmd FileType * exe("setl dict^=".$VIMRUNTIME."/syntax/".&filetype.".vim")
 augroup END
 
-let g:gutentags_exclude = ['blib', 'tmp']
+let g:gutentags_exclude          = ['blib', 'tmp']
 " can be extended with '*/sub/path' if required
 
-let g:NERDTreeShowHidden=1
+let g:NERDTreeShowHidden         = 1
 
 " taglist plugin
 let g:Tlist_Use_SingleClick      = 1
@@ -335,16 +333,16 @@ let g:Tlist_Process_File_Always  = 1
 let g:Tlist_Enable_Fold_Column   = 0
 let g:Tlist_Show_Menu            = 1
 
-let g:tagbar_width            = 32
-let g:tagbar_autoclose        = 1
-let g:tagbar_autofocus        = 1
-let g:tagbar_sort             = 1
-let g:tagbar_compact          = 1
-let g:tagbar_indent           = 1
-let g:tagbar_show_visibility  = 1
-let g:tagbar_show_linenumbers = 0
-let g:tagbar_singleclick      = 1
-let g:tagbar_autoshowtag      = 1
+let g:tagbar_width               = 32
+let g:tagbar_autoclose           = 1
+let g:tagbar_autofocus           = 1
+let g:tagbar_sort                = 1
+let g:tagbar_compact             = 1
+let g:tagbar_indent              = 1
+let g:tagbar_show_visibility     = 1
+let g:tagbar_show_linenumbers    = 0
+let g:tagbar_singleclick         = 1
+let g:tagbar_autoshowtag         = 1
 
 augroup git
     autocmd!
@@ -380,9 +378,9 @@ nnoremap <leader>hr :GitGutterUndoHunk<CR>
 
 let g:SignatureMarkTextHLDynamic = 1
 
-let g:vitality_tumx_can_focus = 1
+let g:vitality_tumx_can_focus    = 1
 
-let g:csv_autocmd_arrange = 1
+let g:csv_autocmd_arrange        = 1
 
 " diffchar sets defaults if these aren't set
 nmap <silent> abc1 <Plug>ToggleDiffCharAllLines
@@ -426,9 +424,9 @@ augroup END
 
 map <leader>interestingwords <Plug>InterestingWords
 let g:vim_search_pulse_disable_auto_mappings = 1
-let g:vim_search_pulse_mode = 'pattern'  " or cursor_line
-let g:vim_search_pulse_duration = 100
-let g:interestingWordsGUIColors =
+let g:vim_search_pulse_mode                  = 'pattern'  " or cursor_line
+let g:vim_search_pulse_duration              = 100
+let g:interestingWordsGUIColors              =
     \ ['#72b5e4', '#f0c53f', '#ff8784', '#c5c7f1',
     \  '#c2d735', '#78d3cc', '#ea8336', '#e43542',
     \  '#ebab35', '#ebe735', '#aadd32', '#dcca6b',
@@ -574,10 +572,10 @@ endif
 
 let g:SuperTabDefaultCompletionType = '<c-n>'
 
-let g:Gitv_WipeAllOnClose      = 1
-let g:Gitv_WrapLines           = 0
-let g:Gitv_OpenPreviewOnLaunch = 1
-let g:Gitv_CommitStep          = 100
+let g:Gitv_WipeAllOnClose           = 1
+let g:Gitv_WrapLines                = 0
+let g:Gitv_OpenPreviewOnLaunch      = 1
+let g:Gitv_CommitStep               = 100
 
 inoremap # X<BS>#
 cnoremap <C-w> <C-I>
@@ -621,15 +619,15 @@ let g:yankring_manage_numbered_reg = 1
 let g:yankring_history_dir         = '$HOME/.vim'
 
 " ALE
-let g:ale_open_list            = 0
-let g:ale_echo_cursor          = 1
-let g:ale_lint_on_text_changed = 1
-let g:ale_lint_on_enter        = 1
-let g:ale_lint_on_save         = 1
-let g:ale_lint_delay           = 200
-let g:ale_set_quickfix         = 0
-let g:ale_sign_error           = '✗'
-let g:ale_sign_warning         = '⚠'
+let g:ale_open_list                = 0
+let g:ale_echo_cursor              = 1
+let g:ale_lint_on_text_changed     = 1
+let g:ale_lint_on_enter            = 1
+let g:ale_lint_on_save             = 1
+let g:ale_lint_delay               = 200
+let g:ale_set_quickfix             = 0
+let g:ale_sign_error               = '✗'
+let g:ale_sign_warning             = '⚠'
 
 " delimitMate
 " imap § <C-G>g
