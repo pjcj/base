@@ -52,6 +52,8 @@ Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'jszakmeister/vim-togglecursor'             " change cursor shape on insert
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
+Plug 'maralla/completor.vim'
+Plug 'c9s/perlomni.vim'
 
 Plug 'Shougo/unite.vim'                                " <space><space> <space>s
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
@@ -79,84 +81,11 @@ Plug 'LeafCage/yankround.vim'
 
 if has('nvim')
     Plug 'pjcj/neovim-colors-solarized-truecolor-only'
-
-    Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-    let g:deoplete#enable_at_startup            = 1
-    let g:neocomplete#enable_smart_case         = 1
-    let g:deoplete#disable_auto_complete        = 0
-    let g:deoplete#auto_completion_start_length = 2
-    let g:deoplete#tag#cache_limit_size         = 10000000  " 10MB
-    let g:deoplete#sources                      = {}
-    let g:deoplete#sources._                    =
-        \ ['member', 'buffer', 'tag', 'file', 'tmux-complete', 'dictionary']
-
-    let g:tmuxcomplete#trigger = ''
 else
     Plug 'altercation/vim-colors-solarized'
-
-    " echo 'neocomplete'
-    Plug 'Shougo/neocomplete.vim'
-    let g:acp_enableAtStartup                           = 0
-    let g:neocomplete#enable_at_startup                 = 1
-    let g:neocomplete#enable_smart_case                 = 1
-    let g:neocomplete#sources#syntax#min_keyword_length = 1
-    let g:neocomplete#same_filetypes                    = {}
-    let g:neocomplete#same_filetypes._                  = '_'
-    let g:neocomplete#skip_auto_completion_time         = ''
-    let g:neocomplete#sources                           = {}
-    let g:neocomplete#sources._                         = ['buffer']
-    let g:neocomplete#sources.cpp                       = ['buffer', 'dictionary']
-    let g:neocomplete#keyword_patterns                  = {}
-    let g:neocomplete#keyword_patterns.xml              = '\h\w*'
-    let g:neocomplete#text_mode_filetypes               = {}
-    let g:neocomplete#text_mode_filetypes.xml           = 1
-
-    let g:neocomplete#sources#dictionary#dictionaries = {
-        \ 'default'  : '',
-        \ 'vimshell' : $HOME.'/.vimshell_hist',
-        \ 'scheme'   : $HOME.'/.gosh_completions'
-        \ }
-
-    " Enable heavy omni completion.
-    Plug 'c9s/perlomni.vim'
-    let g:neocomplete#sources#omni#input_patterns = {}
-    let g:neocomplete#force_omni_input_patterns   = {}
-    augroup omni_filetypes
-        autocmd!
-        autocmd FileType css           setlocal omnifunc=csscomplete#CompleteCSS
-        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-        autocmd FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
-        autocmd FileType python        setlocal omnifunc=pythoncomplete#Complete
-        autocmd FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
-    augroup END
-    " For perlomni.vim setting.
-    " https://github.com/c9s/perlomni.vim
-    let g:neocomplete#sources#omni#input_patterns.perl =
-        \ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-    let g:neocomplete#enable_onmi_fallback = 1
-    let g:neocomplete#fallback_mappings =
-        \ ["\<C-x>\<C-o>", "\<C-x>\<C-n>"]
-    function! sqlcomplete#Complete(findstart, base)
-        if a:findstart
-            return -1
-        endif
-        return []
-    endfunc
 endif
 
 call plug#end()
-
-if has('nvim')
-    " Use head matcher instead of fuzzy matcher
-    call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
-    " Order completions.
-    call deoplete#custom#set('member',     'rank', 450)
-    call deoplete#custom#set('buffer',     'rank', 400)
-    call deoplete#custom#set('file',       'rank', 300)
-    call deoplete#custom#set('tag',        'rank', 200)
-    call deoplete#custom#set('dictionary', 'rank', 100)
-    tnoremap <Esc> <C-\><C-n>
-endif
 
 filetype plugin indent on
 
@@ -330,6 +259,11 @@ function! <SID>SynStack()
   endif
   echo map(synstack(line('.'), col('.')), "synIDattr(v:val, 'name')")
 endfunc
+
+let g:completor_min_chars = 1
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:completor_perl_omni_trigger = '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_indent_levels         = 40
@@ -633,6 +567,10 @@ map <F47>    <M-F11>
 map <F48>    <M-F12>
 
 nnoremap <leader>gu :GundoToggle<CR>
+
+if has('nvim')
+    tnoremap <Esc> <C-\><C-n>
+endif
 
 let g:SuperTabDefaultCompletionType = '<c-n>'
 
