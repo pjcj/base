@@ -350,6 +350,21 @@ d() {
 
 u() { popd }
 
+man() {
+    env \
+        LESS_TERMCAP_mb=$'\e[1;31m'      \
+        LESS_TERMCAP_md=$'\e[1;31m'      \
+        LESS_TERMCAP_me=$'\e[0m'         \
+        LESS_TERMCAP_se=$'\e[0m'         \
+        LESS_TERMCAP_so=$'\e[0;37;102m'  \
+        LESS_TERMCAP_ue=$'\e[0m'         \
+        LESS_TERMCAP_us=$'\e[4;32m'      \
+        PAGER=/usr/bin/less              \
+        _NROFF_U=1                       \
+        PATH=${HOME}/bin:${PATH}         \
+    man "$@"
+}
+
 v() {
     local PERL5LIB=$VPERL5LIB
     if test $# != 1 -o -r "$1"; then
