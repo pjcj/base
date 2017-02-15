@@ -34,6 +34,7 @@
     renamelimit = 0
     renames = copies
     mnemonicprefix = true
+    algorithm = patience
 [mergetool "gvimdiff3"]
     cmd = gvim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 [mergetool "vimdiff3"]
