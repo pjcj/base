@@ -263,7 +263,10 @@ function! <SID>SynStack()
 endfunc
 
 let g:completor_min_chars                 = 1
-" let g:completor_perl_omni_trigger         = '->'
+" let g:completor_perl_omni_trigger       = '->'
+
+let g:UltiSnipsJumpForwardTrigger         = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger        = '<s-tab>'
 
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_indent_levels         = 40
