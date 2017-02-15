@@ -26,6 +26,7 @@ Plug 'saltstack/salt-vim'                                    " salt highlighting
 Plug 'ervandew/supertab'
 Plug 'majutsushi/tagbar'                                                " <S-F2>
 Plug 'wellle/tmux-complete.vim'                       " complete from tmux panes
+Plug 'SirVer/ultisnips'
 Plug 'chrisbra/unicode.vim'        " unicode table, search, complete, ^X^Z, ^X^G
 Plug 'tpope/vim-abolish'               " :%Subvert/facilit{y,ies}/building{,s}/g
 Plug 'vim-airline/vim-airline'
@@ -49,6 +50,7 @@ Plug 'tpope/vim-repeat'
 Plug 'zirrostig/vim-schlepp'                               " highlight then hjkl
 Plug 'inside/vim-search-pulse'                                           " * n N
 Plug 'kshenoy/vim-signature'                          " mx dmx m, m. m<Space> m/
+Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
 Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
@@ -396,8 +398,8 @@ let g:calendar_google_task     = 1
 " get vim-search-pulse and vim-interestingwords working together
 " stop plugin overwriting mappings
 function! Pulse_col(colour)
-    call Set_colour('CursorLine',   'guibg', a:colour )
-    call Set_colour('CursorColumn', 'guibg', a:colour )
+    call Set_colour('CursorLine',   'guibg', a:colour)
+    call Set_colour('CursorColumn', 'guibg', a:colour)
 endfunc
 function! Pulse_on()
     let s:ccl = &cursorline
@@ -843,7 +845,7 @@ function! MyToHtml(line1, line2)
 
     " vint: +ProhibitCommandRelyOnUser
     " vint: +ProhibitCommandWithUnintendedSideEffect
-    "
+
     redraw  " no hit enter ...
 
     " restore old setting
