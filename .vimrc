@@ -33,6 +33,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'gioele/vim-autoswap'                        " deal with swapfiles sensibly
 Plug 'tpope/vim-commentary'                                                 " gc
+Plug 'chrisbra/vim-diff-enhanced'                        " change diff algorithm
 Plug 'tpope/vim-dispatch'                          " asynchronous build and test
 Plug 'junegunn/vim-easy-align'                                     " = ^X<regex>
 Plug 'tpope/vim-eunuch'                                          " Unix commands
