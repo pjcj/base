@@ -9,6 +9,7 @@ endfunction
 call plug#begin()
 
 " !sort -t/ -k2
+Plug 'rstacruz/sparkup'                                            " HTML helper
 Plug 'w0rp/ale'                                                " syntax checking
 Plug 'maralla/completor.vim'                                        " completion
 Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
@@ -314,7 +315,6 @@ augroup file_types
 
     autocmd InsertLeave * if expand("%") != "" | update | endif
 
-    autocmd FileType xhtml,xml,html,tt2html so ~/.vim/plugin/html_autoclosetag.vim
     autocmd FileType xhtml,xml,html,tt2html setlocal sw=2
 
     " This prevents deoplete autocompletion from working.
