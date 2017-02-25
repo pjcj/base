@@ -10,7 +10,6 @@ call plug#begin()
 
 " !sort -t/ -k2
 
-Plug 'FooSoft/vim-argwrap'                       " wrap arguments to multi-lines
 Plug 'w0rp/ale'                                                " syntax checking
 Plug 'maralla/completor.vim'                                        " completion
 Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
@@ -34,6 +33,7 @@ Plug 'chrisbra/unicode.vim'        " unicode table, search, complete, ^X^Z, ^X^G
 Plug 'tpope/vim-abolish'               " :%Subvert/facilit{y,ies}/building{,s}/g
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'FooSoft/vim-argwrap'                       " wrap arguments to multi-lines
 Plug 'gioele/vim-autoswap'                        " deal with swapfiles sensibly
 Plug 'tpope/vim-commentary'                                                 " gc
 Plug 'ap/vim-css-color'                             " add colour to descriptions
@@ -41,6 +41,7 @@ Plug 'chrisbra/vim-diff-enhanced'                        " change diff algorithm
 Plug 'tpope/vim-dispatch'                          " asynchronous build and test
 Plug 'junegunn/vim-easy-align'                                     " = ^X<regex>
 Plug 'tpope/vim-eunuch'                                          " Unix commands
+Plug 'kopischke/vim-fetch'                      " use line numbers in file paths
 Plug 'tommcdo/vim-fugitive-blame-ext'                           " extend :Gblame
 Plug 'tpope/vim-fugitive'                                  " :Gdiff :Gstatus ,gg
 Plug 'airblade/vim-gitgutter'                  " <F3>,hn <F2>,hp ,hv <F1>,hs ,hr
@@ -61,6 +62,7 @@ Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'jszakmeister/vim-togglecursor'             " change cursor shape on insert
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
+
 Plug 'Shougo/unite.vim'                                " <space><space> <space>s
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
 
