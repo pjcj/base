@@ -10,6 +10,7 @@ call plug#begin()
 
 " !sort -t/ -k2
 
+Plug 'FooSoft/vim-argwrap'                       " wrap arguments to multi-lines
 Plug 'w0rp/ale'                                                " syntax checking
 Plug 'maralla/completor.vim'                                        " completion
 Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
@@ -466,6 +467,10 @@ noremap <silent><expr> z? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
 noremap <silent><expr> zg? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
 
 map / <Plug>(incsearch-forward)
+
+nnoremap <silent> <leader>a :ArgWrap<CR>
+let g:argwrap_padded_braces = '[{'
+let g:argwrap_tail_comma    = 1
 
 " This toggles the hlsearch flag, then reports the current state of the flag.
 nnoremap <leader><space> :set hls!<BAR>
