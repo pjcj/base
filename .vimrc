@@ -9,7 +9,7 @@ endfunction
 call plug#begin()
 
 " !sort -t/ -k2
-Plug 'rstacruz/sparkup'                                            " HTML helper
+
 Plug 'w0rp/ale'                                                " syntax checking
 Plug 'maralla/completor.vim'                                        " completion
 Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
@@ -24,6 +24,7 @@ Plug 'scrooloose/nerdtree'                                              " <S-F1>
 Plug 'c9s/perlomni.vim'                                         " for completion
 Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
 Plug 'saltstack/salt-vim'                                    " salt highlighting
+Plug 'rstacruz/sparkup'                                            " HTML helper
 Plug 'ervandew/supertab'
 Plug 'majutsushi/tagbar'                                                " <S-F2>
 Plug 'wellle/tmux-complete.vim'                       " complete from tmux panes
@@ -34,6 +35,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'gioele/vim-autoswap'                        " deal with swapfiles sensibly
 Plug 'tpope/vim-commentary'                                                 " gc
+Plug 'ap/vim-css-color'                             " add colour to descriptions
 Plug 'chrisbra/vim-diff-enhanced'                        " change diff algorithm
 Plug 'tpope/vim-dispatch'                          " asynchronous build and test
 Plug 'junegunn/vim-easy-align'                                     " = ^X<regex>
@@ -58,7 +60,6 @@ Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'jszakmeister/vim-togglecursor'             " change cursor shape on insert
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
-
 Plug 'Shougo/unite.vim'                                " <space><space> <space>s
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
 
