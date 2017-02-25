@@ -514,6 +514,7 @@ load() {
 load \
     /etc/zsh_command_not_found \
     ~/.gvm/scripts/gvm         \
+    ~/.fzf.zsh                 \
     ~/.zshrc.local             \
     ~/.zshrc.${HOST%%.*}
 
@@ -533,6 +534,8 @@ if [[ -e "$HOME/.plenv" ]] then
     export PATH="$HOME/.plenv/bin:$PATH"
     eval "$(plenv init - zsh)"
 fi
+
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
 typeset -U path
 typeset -U manpath

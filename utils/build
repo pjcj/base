@@ -171,6 +171,9 @@ case "$build" in
         mv $dir/*/rg "$sw/bin"
         mv $dir/*/rg.1 "$sw/man/man1"
         ;;
+    fzf)
+        ./install --all
+        ;;
     rxvt-unicode)
         # ignore for now
         ;;
