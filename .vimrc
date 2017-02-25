@@ -444,7 +444,7 @@ let g:interestingWordsGUIColors              =
     \  '#edfccf', '#67064c', '#f5bca7', '#95c474',
     \  '#dece83', '#de9783', '#f2e700', '#e9e9e9',
     \  '#69636d', '#626b98', '#f5f5a7', '#dcca6b',
-    \  '#b72a83', '#6f2b9d', '#69636d', '#2f569c']
+    \  '#b72a83', '#6f2b9d', '#69636d', '#5f569c']
 nmap <silent> * *``:call InterestingWords('n')<CR>
     \ :set nohls<CR>
     \ :call Pulse()<CR>
