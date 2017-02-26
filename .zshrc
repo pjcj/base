@@ -365,19 +365,6 @@ man() {
     man "$@"
 }
 
-v() {
-    local PERL5LIB=$VPERL5LIB
-    if test $# != 1 -o -r "$1"; then
-        command $EDITOR "${@}"
-    else
-        local args
-        args=(${(s.:.)1})
-        [[ $#args == 2 && $args[2] == <-> ]] \
-            && command $EDITOR "$args[1]" +$args[2] \
-            || command $EDITOR "$args[1]"
-    fi
-}
-
 cd()      { c "$@" && d }
 ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
 dh()      { f --color "$@" | head }
@@ -433,6 +420,7 @@ t()       { TERM=xterm-color tig --all "$@" }
 tf()      { tail -f "$@" }
 ud()      { u "$@"; d }
 uu()      { uuencode "$@" "$@" | mailx -s "$@" paul@pjcj.net }
+v()       { command $EDITOR "$@" }
 wh()      { . uwh "$@" }
 z()       { dzil "$@" }
 zb()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil build "$@" }
