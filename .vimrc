@@ -10,7 +10,8 @@ call plug#begin()
 
 " !sort -t/ -k2
 
-Plug 'w0rp/ale'                                                " syntax checking
+" Plug 'w0rp/ale'                                              " syntax checking
+Plug 'pjcj/ale'                                " until my pull request is merged
 Plug 'maralla/completor.vim'                                        " completion
 Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
@@ -643,6 +644,8 @@ let g:ale_lint_delay               = 200
 let g:ale_set_quickfix             = 0
 let g:ale_sign_error               = '✗'
 let g:ale_sign_warning             = '⚠'
+let g:ale_perl_perl_executable     = '/home/pjcj/g/base/utils/ale_perl'
+let g:ale_perl_perl_options        = '-Mblib'
 
 " delimitMate
 " imap § <C-G>g

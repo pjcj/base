@@ -1,0 +1,8 @@
+#!/bin/bash
+
+log=/tmp/ale_perl.log
+
+date >> $log
+echo "$@" >> $log
+
+perl -X -c -Mwarnings -Ilib "$@" 2>&1 | grep -v set_first_init_and_end
