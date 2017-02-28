@@ -31,11 +31,18 @@ repositories:
   [libevent](https://github.com/libevent/libevent)
 * [bspwm](https://github.com/baskerville/bspwm)
 * [sxhkd](https://github.com/baskerville/sxhkd)
+* [git](https://github.com/git/git)
+* [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy) (better git diffs)
+* [tig](https://github.com/jonas/tig) (git viewer)
+* [caps2esc](https://github.com/oblitum/caps2esc) (make capslock useful)
 * [xdotool](https://github.com/jordansissel/xdotool) (automate X input)
+* [Clipit](https://github.com/shantzu/ClipIt) (clipboard manager)
 * [urlview](https://github.com/sigpipe/urlview) (extract URLs from text)
 * [shellcheck](https://github.com/koalaman/shellcheck) (shell linter)
-* [Clipit](https://github.com/shantzu/ClipIt) (clipboard manager)
+* [fzf](https://github.com/junegunn/fzf) (fuzzy finder)
 * [PathPicker](https://github.com/facebook/PathPicker) (file selecter)
+* [htop](https://github.com/hishamhm/htop) (better top)
+* [hosts](https://github.com/StevenBlack/hosts) (safe hosts file)
 
 The zsh config uses [zplug](https://github.com/b4b4r07/zplug) and the following
 plugins:
