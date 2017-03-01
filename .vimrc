@@ -88,11 +88,7 @@ Plug 'LeafCage/yankround.vim'
 " Plug 'vim-scripts/YankRing.vim'
 " YankRing messes up xp unless min_element_length is 1, in which case it's slow
 
-if has('nvim')
-    Plug 'pjcj/neovim-colors-solarized-truecolor-only'
-else
-    Plug 'altercation/vim-colors-solarized'
-endif
+Plug 'pjcj/neovim-colors-solarized-truecolor-only'
 
 call plug#end()
 
@@ -201,12 +197,11 @@ augroup END
 
 syntax enable
 set background=dark
-if has('nvim')
-    set termguicolors
-    " let g:solarized_contrast='high'
-    " let g:solarized_visibility='normal'
-    colorscheme solarized
-endif
+set termguicolors
+" let g:solarized_contrast='high'
+" let g:solarized_visibility='normal'
+colorscheme solarized
+
 let s:base03  = '#001920'
 let s:base02  = '#022731'
 let s:base01  = '#586e75'
@@ -231,7 +226,7 @@ function! Set_colour(group, part, colour)
     execute 'highlight ' . a:group . ' ' . a:part . '=' . a:colour
 endfunc
 
-highlight Comment cterm = italic
+" highlight Comment cterm = italic
 call Set_colour('Normal',       'guifg', s:normal)
 call Set_colour('SpecialKey',   'guibg', s:base03)
 call Set_colour('SpellBad',     'guibg', s:violet)
@@ -428,7 +423,7 @@ augroup Pulse
     autocmd!
     autocmd User PrePulse  call Pulse_on()
     autocmd User PostPulse call Pulse_off()
-    " Pulses the first match after hitting the enter keyan
+    " Pulses the first match after hitting the enter key
     autocmd! User IncSearchExecute
     autocmd User IncSearchExecute :call search_pulse#Pulse()
 augroup END
