@@ -18,3 +18,4 @@ tmp/
 .vim/shada/
 .config/gtk-3.0/bookmarks
 .config/sxhkd/sxhkdrc
+zsh/functions/_docker

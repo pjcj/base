@@ -6,6 +6,12 @@ gobase() { cd ~/g/base || exit 1; }
 
 gobase
 
+zplug clear
+zplug install
+curl -SL https://raw.githubusercontent.com/docker/docker/master/contrib/completion/zsh/_docker \
+    >| /home/pjcj/g/base/zsh/functions/_docker
+rm -f ~/.zcompdump; compinit
+
 ~/.tmux/plugins/tpm/bindings/clean_plugins
 ~/.tmux/plugins/tpm/bindings/install_plugins
 ~/.tmux/plugins/tpm/scripts/update_plugin_prompt_handler.sh all
