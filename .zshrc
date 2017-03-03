@@ -8,7 +8,7 @@ zshrc_load_status "plugins"
 source ~/.zplug/init.zsh
 
 zplug "oknowton/zsh-dwim"                                                   # ^U
-zplug "supercrabtree/k"
+# zplug "supercrabtree/k"
 # https://github.com/tj/git-extras/blob/master/Commands.md
 zplug "tj/git-extras", hook-build:"make install PREFIX=$HOME/g/sw"
 # zplug "plugins/git-extras", from:oh-my-zsh
