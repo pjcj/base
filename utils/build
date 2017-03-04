@@ -94,7 +94,10 @@ case "$build" in
         sudo ldconfig
         ;;
     zsh)
-        git checkout "$(git tag | grep -v dev | grep -v test | tail -1)"
+        v=$(git tag | grep -v dev | grep -v test | tail -1)
+        [ "$v" = "$ZSH_VERSION" ] && exit
+        cp ~/.zshhistory ~/.zshhistory.$(date +"%Y%m%d")
+        git checkout "$v"
         autoreconf -vfi
         configure --enable-pcre
         make
