@@ -7,16 +7,10 @@ zshrc_load_status "plugins"
 
 source ~/.zplug/init.zsh
 
-# zplug "oknowton/zsh-dwim"                                                   # ^U
-# zplug "supercrabtree/k"
 # https://github.com/tj/git-extras/blob/master/Commands.md
 zplug "tj/git-extras", hook-build:"make install PREFIX=$HOME/g/sw"
-# zplug "plugins/git-extras", from:oh-my-zsh
 zplug "zsh-users/zsh-completions"
-# zsh-syntax-highlighting must be loaded after executing compinit command and
-# sourcing other plugins
-zplug "zsh-users/zsh-syntax-highlighting",      defer:1
-# zplug "zsh-users/zsh-history-substring-search", defer:2
+zplug "zsh-users/zsh-syntax-highlighting"
 
 if ! zplug check; then zplug install; fi
 zplug load
