@@ -99,7 +99,7 @@ case "$build" in
     zsh)
         v=$(git tag | grep -v dev | grep -v test | tail -1)
         [ "$v" = "$ZSH_VERSION" ] && exit
-        cp ~/.zshhistory ~/.zshhistory.$(date +"%Y%m%d")
+        cp ~/.zshhistory ~/.zshhistory."$(date +'%Y%m%d')"
         git checkout "$v"
         autoreconf -vfi
         configure --enable-pcre
@@ -109,7 +109,7 @@ case "$build" in
         ;;
     tmux)
         v=$(git tag | tail -1)
-        [ "$v" = $(tmux -V) ] && exit
+        [ "$v" = "$(tmux -V)" ] && exit
         git checkout "$v"
         export LIBEVENT_CFLAGS="-I$sw/include"
         export LIBEVENT_LIBS="-L$sw/lib -Wl,-rpath=$sw/lib -levent"
