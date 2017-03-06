@@ -2,7 +2,7 @@
 
 set -e
 
-apt-get -y remove docker docker-engine || echo no present
+apt-get -y remove docker docker-engine || echo not present
 apt-get update
 apt-get -y install \
     "linux-image-extra-$(uname -r)" \
