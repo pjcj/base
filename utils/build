@@ -54,6 +54,9 @@ case "$build" in
         make install
         ;;
     neovim)
+        v=$(git tag | tail -1)
+        [ "NVIM $v" = "$(nvim -v | head -1)" ] && exit
+        git checkout "$v"
         if [ ! "$ISOSX" ]; then
             sudo aptitude -y install \
                 libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
