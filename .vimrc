@@ -167,10 +167,6 @@ endif
 
 let g:mapleader = ','
 
-" alter regex handling to 'normal' syntax
-nnoremap / /\v
-vnoremap / /\v
-
 set ignorecase
 set smartcase
 set incsearch
@@ -464,7 +460,7 @@ noremap <silent><expr> z/ incsearch#go(<SID>config_fuzzyall())
 noremap <silent><expr> z? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
 noremap <silent><expr> zg? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
 
-map / <Plug>(incsearch-forward)
+map / :set hls<CR><Plug>(incsearch-forward)
 
 nnoremap <silent> <leader>a :ArgWrap<CR>
 let g:argwrap_padded_braces = '[{'
