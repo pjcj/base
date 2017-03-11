@@ -4,7 +4,7 @@
 
 build=$1
 if [ "$build" ]; then
-    dir=$(ghq list -p | grep "$build$")
+    dir=$(ghq list -p | grep -w "$build$")
     if [ "$dir" ]; then
         cd "$dir" || exit 1
     fi
@@ -64,6 +64,28 @@ case "$build" in
         git clean -dxf
         make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
              CMAKE_BUILD_TYPE=Release test install
+        ;;
+    vim)
+        if [ ! "$ISOSX" ]; then
+            sudo aptitude -y install \
+                libncurses5-dev libgnome2-dev libgnomeui-dev \
+                libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
+                libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
+                python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev
+        fi
+        git clean -dxf
+        ./configure --with-features=huge \
+            --enable-multibyte \
+            --enable-rubyinterp=yes \
+            --enable-pythoninterp=yes \
+            --enable-python3interp=yes \
+            --enable-perlinterp=yes \
+            --enable-luainterp=yes \
+            --enable-gui=gtk2 --enable-cscope \
+            --prefix="$sw"
+        make VIMRUNTIMEDIR="$sw/share/vim/vim80" test install
+            # --with-python-config-dir=/usr/lib/python2.7/config \
+            # --with-python3-config-dir=/usr/lib/python3.5/config \
         ;;
     st)
         exit_unless_x
