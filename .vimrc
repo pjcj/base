@@ -10,8 +10,7 @@ call plug#begin()
 
 " !sort -t/ -k2
 
-" Plug 'w0rp/ale'                                              " syntax checking
-Plug 'pjcj/ale'                                " until my pull request is merged
+Plug 'w0rp/ale'                                                " syntax checking
 Plug 'maralla/completor.vim'                                        " completion
 Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
