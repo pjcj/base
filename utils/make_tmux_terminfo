@@ -2,7 +2,10 @@
 
 # create new tmux terminfo entries with italics
 
-cat <<EOF|tic -x -
+tmp=/tmp/tmux_terminfo
+rm -f $tmp
+
+cat <<EOF > $tmp
 tmux|tmux terminal multiplexer,
         ritm=\E[23m, rmso=\E[27m, sitm=\E[3m, smso=\E[7m, Ms@,
         use=xterm+tmux, use=screen,
@@ -10,3 +13,7 @@ tmux|tmux terminal multiplexer,
 tmux-256color|tmux with 256 colors,
         use=st-256color, use=tmux,
 EOF
+
+tic -x $tmp
+
+rm -f $tmp
