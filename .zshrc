@@ -284,13 +284,8 @@ zshrc_load_status "miscellaneous"
 
 autoload -U url-quote-magic && zle -N self-insert url-quote-magic
 
-REPORTTIME=15
-# export TIMEFMT="  Timing report for %J
-#   %E %P  %U user + %S system  %W swaps  %Mk mem
-#   %X shared + %D unshared = %Kk  %F major + %R minor pf
-#   %I+%O io  %r rx + %s tx messages  %w+%c waits"
-TIMEFMT="  Timing report for %J
-  %E %P  %U user + %S system  %W swaps  %Mk mem"
+REPORTTIME=1
+TIMEFMT="  %J  %E %P  %U user + %S system  %W swaps  %Mk mem"
 
 LS_OPTIONS=
 
