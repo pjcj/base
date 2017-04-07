@@ -32,6 +32,7 @@ cleanup() {
 
 main() {
     ((verbose)) && pi "Running $*"
+    [ -z "${1:-}" ] && pf "Missing argument"
     case "$1" in
         # implementation
         options)
