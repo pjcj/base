@@ -3,18 +3,8 @@ set -euo pipefail
 # set -x
 # IFS=$'\n\t'
 
-usage() {
-    echo <<EOT
-$0 --help
-EOT
-    exit 0
-}
-verbose=0
-expr "$*" : ".*--help"    > /dev/null && usage
-expr "$*" : ".*--verbose" > /dev/null && verbose=1
-
 script=$(basename "$0")
-dir=$(dirname "$0")
+dir=$(readlink -f "$(dirname "$0")/../..")
 readonly LOG_FILE="/tmp/$script.log"
 _p() { l=$1; shift; echo "$l: $script $*" | tee -a "$LOG_FILE" >&2; }
 pt() { _p "[TRACE]  " "$*";                                         }
@@ -23,6 +13,26 @@ pi() { _p "[INFO]   " "$*";                                         }
 pw() { _p "[WARNING]" "$*";                                         }
 pe() { _p "[ERROR]  " "$*";                                         }
 pf() { _p "[FATAL]  " "$*"; exit 1;                                 }
+
+usage() {
+    cat <<EOT
+$script --help
+$script --verbose
+$script options
+EOT
+    exit 0
+}
+
+verbose=0
+expr "$*" : ".*--help"    > /dev/null && usage
+expr "$*" : ".*--verbose" > /dev/null && verbose=1
+
+cleanup() {
+    declare -r res=$?
+    ((verbose)) && pi "Cleaning up"
+    exit $res
+}
+
 
 cleanup() {
     declare -r res=$?
