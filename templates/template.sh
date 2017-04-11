@@ -4,7 +4,7 @@ set -euo pipefail
 # IFS=$'\n\t'
 
 script=$(basename "$0")
-dir=$(readlink -f "$(dirname "$0")/../..")
+dir=$(readlink -f "$(dirname "$0")")
 readonly LOG_FILE="/tmp/$script.log"
 _p() { l=$1; shift; echo "$l: $script $*" | tee -a "$LOG_FILE" >&2; }
 pt() { _p "[TRACE]  " "$*";                                         }
