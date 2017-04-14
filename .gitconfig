@@ -40,6 +40,7 @@
 [mergetool "vimdiff3"]
     cmd = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 [merge]
+    ff = only
     tool = vimdiff3
     conflictstyle = diff3
 [alias]
@@ -73,15 +74,18 @@
     bmv = branch -f
     omv = origin-branch-move
     bmvp = "!f() { git bmv $1 $2 && git push origin --force-with-lease $1; }; f"
-[github]
-    user = pjcj
 [push]
     default = current
-[url "git://github.com/"]
-    insteadOf = github:
+    followTags = true
+[status]
+    showUntrackedFiles = all
 [rerere]
     enabled = true
     autoupdate = true
+[github]
+    user = pjcj
+[url "git://github.com/"]
+    insteadOf = github:
 [ghq]
     root = ~/g/ghq
 [include]
