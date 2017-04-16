@@ -21,6 +21,7 @@ Plug 'haya14busa/incsearch-fuzzy.vim'                                       " z/
 Plug 'haya14busa/incsearch.vim'                  " show all matches on incsearch
 Plug 'Xuyuanp/nerdtree-git-plugin'                          " show changed files
 Plug 'scrooloose/nerdtree'                                              " <S-F1>
+Plug 'chr4/nginx.vim'
 Plug 'c9s/perlomni.vim'                                         " for completion
 Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
 Plug 'saltstack/salt-vim'                                    " salt highlighting

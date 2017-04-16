@@ -77,6 +77,7 @@ following plugins:
 * [nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin) (show
   git status against files)
 * [nerdtree](https://github.com/scrooloose/nerdtree) (file tree)
+* [nginx](https://github.com/chr4/nginx.vim) (nginx syntax)
 * [perlomni](https://github.com/c9s/perlomni.vim) (perl omni completion)
 * [quickfix-reflector](https://github.com/stefandtw/quickfix-reflector.vim)
   (edit text in quickfix window)
