@@ -33,13 +33,6 @@ cleanup() {
     exit $res
 }
 
-
-cleanup() {
-    declare -r res=$?
-    ((verbose)) && pi "Cleaning up"
-    exit $res
-}
-
 main() {
     ((verbose)) && pi "Running $*"
     [ -z "${1:-}" ] && pf "Missing argument"
