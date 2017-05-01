@@ -130,9 +130,9 @@ case "$build" in
         make install || echo make install expected to fail - docs not built
         ;;
     tmux)
-        v=$(git tag | tail -1)
-        [ "$v" = "$(tmux -V)" ] && exit
-        git checkout "$v"
+        # v=$(git tag | tail -1)
+        # [ "$v" = "$(tmux -V)" ] && exit
+        # git checkout "$v"
         export LIBEVENT_CFLAGS="-I$sw/include"
         export LIBEVENT_LIBS="-L$sw/lib -Wl,-rpath=$sw/lib -levent"
         configure
