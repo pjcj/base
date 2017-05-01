@@ -63,6 +63,7 @@ Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'jszakmeister/vim-togglecursor'             " change cursor shape on insert
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
+Plug 'google/vim-searchindex'
 
 Plug 'Shougo/unite.vim'                                " <space><space> <space>s
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
@@ -437,14 +438,32 @@ let g:interestingWordsGUIColors              =
     \  '#dece83', '#de9783', '#f2e700', '#e9e9e9',
     \  '#69636d', '#626b98', '#f5f5a7', '#dcca6b',
     \  '#b72a83', '#6f2b9d', '#69636d', '#5f569c']
-nmap <silent> * *``:call InterestingWords('n')<CR>
-    \ :set nohls<CR>
-    \ :call Pulse()<CR>
+augroup SearchIndex
+    autocmd!
+    autocmd VimEnter * call <SID>OverridePluginSettings()
+    function! Sindex()
+        let l:prev = @/
+        let @/ = '\<'.  expand('<cword>') . '\>'
+        " if l:prev ==# @/
+            :execute "normal \<Plug>SearchIndex"
+        " endif
+        " echo 'Sindex ' . l:prev . ' ' . @/
+        let @/ = l:prev
+    endfunction
+    function! s:OverridePluginSettings()
+        nmap <silent> * *``:call InterestingWords('n')<CR>
+            \ :set nohls<CR>
+            \ :call Pulse()<CR>
+            \ <Plug>SearchIndex
+        " nmap <silent> n :call Sindex()<CR>:call WordNavigation(1)<CR>:call Pulse()<CR>
+        " nmap <silent> n <Plug>SearchIndex<BAR>:call WordNavigation(1)<CR>:call Pulse()<CR>
+        nmap <silent> n :call WordNavigation(1)<CR>:call Pulse()<CR><Plug>SearchIndex
+        nmap <silent> N :call WordNavigation(0)<CR>:call Pulse()<CR><Plug>SearchIndex
+    endfunction
+augroup END
 nnoremap <silent> <leader>k :call InterestingWords('n')<CR>
 vnoremap <silent> <leader>k :call InterestingWords('v')<CR>
 nnoremap <silent> <leader>K :call UncolorAllWords()<CR>
-nnoremap <silent> n :call WordNavigation(1)<CR>:call Pulse()<CR>
-nnoremap <silent> N :call WordNavigation(0)<CR>:call Pulse()<CR>
 
 function! s:config_fuzzyall(...) abort
     set hlsearch
