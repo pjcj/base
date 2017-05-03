@@ -481,10 +481,6 @@ noremap <silent><expr> zg? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
 
 map / :set hls<CR><Plug>(incsearch-forward)
 
-nnoremap <silent> <leader>a :ArgWrap<CR>
-let g:argwrap_padded_braces = '[{'
-let g:argwrap_tail_comma    = 1
-
 " This toggles the hlsearch flag, then reports the current state of the flag.
 nnoremap <leader><space> :set hls!<BAR>
                        \ :call UncolorAllWords()<BAR>
@@ -496,6 +492,11 @@ vmap <unique> h <Plug>SchleppLeft
 vmap <unique> l <Plug>SchleppRight
 nnoremap k gk
 nnoremap j gj
+
+" argwrap
+nnoremap <silent> <leader>a :ArgWrap<CR>
+let g:argwrap_padded_braces = '[{'
+let g:argwrap_tail_comma    = 1
 
 " unicode
 nmap ,dg <Plug>(MakeDigraph)
