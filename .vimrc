@@ -353,7 +353,7 @@ augroup git
     autocmd QuickFixCmdPost *grep* cwindow
 augroup END
 nnoremap <leader>gd :Gdiff<CR>
-nnoremap <leader>gg :Gcommit -v<CR>
+nnoremap <leader>gg :Gcommit -v<CR>O
 nnoremap <leader>gs :Gstatus<CR>
 
 augroup gitgutter
