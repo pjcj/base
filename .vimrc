@@ -61,7 +61,6 @@ Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
 Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
-Plug 'jszakmeister/vim-togglecursor'             " change cursor shape on insert
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 Plug 'google/vim-searchindex'
 
@@ -260,6 +259,9 @@ function! <SID>SynStack()
   endif
   echo map(synstack(line('.'), col('.')), "synIDattr(v:val, 'name')")
 endfunc
+
+set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
+" let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 let g:completor_min_chars                 = 1
 " let g:completor_perl_omni_trigger       = '->'
