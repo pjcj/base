@@ -395,7 +395,7 @@ mn()      { nroff -man "$@" | m }
 mutt()    { mkdir -p /tmp/ml && command mutt "$@" }
 n()       { make "$@" }
 p()       { pp | head }
-pl()      { ps -o user,pid,pgid,pcpu,pmem,osz,rss,tty,s,stime,time,args "$@" }
+pl()      { ps -o user,pid,ppid,pcpu,pmem,osz,rss,tty,s,stime,time,args "$@" }
 pm()      { pod2man "$@" | mn }
 pp()      { pl -A "$@" | sort -k 4 }
 restart() { exec $SHELL "$@" }
