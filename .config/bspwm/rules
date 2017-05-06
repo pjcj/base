@@ -1,0 +1,8 @@
+bspc rule -a Firefox:Navigator -o node=@^1:^1:/1/1
+bspc rule -a st-256color:st-256color -o node=@^1:^1:/1/2/1
+bspc rule -a st-256color:st-256color -o node=@^1:^1:/1/2/2
+bspc rule -a st-256color:st-256color -o node=@^1:^1:/2/1
+bspc rule -a st-256color:st-256color -o node=@^1:^1:/2/2/1/1
+bspc rule -a st-256color:st-256color -o node=@^1:^1:/2/2/1/2
+bspc rule -a st-256color:st-256color -o node=@^1:^1:/2/2/2/1
+bspc rule -a st-256color:st-256color -o node=@^1:^1:/2/2/2/2

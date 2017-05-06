@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 PATH=/home/pjcj/g/sw/bin:$PATH
 
@@ -12,11 +12,30 @@ indicator-keylock &
     sleep 1
     gnome-panel &
     clipit -d &
-    st &
     sudo nm-applet &
     if [ "$(hostname)" = "pj" ]; then
+        st &
         thunderbird &
         firefox &
         st irssi &
+    elif [ "$(hostname)" = "posub64" ]; then
+        do_sleep() { sleep 0.25; }
+        bspc wm -l ~/g/base/.config/bspwm/layout
+        # shellcheck disable=SC1090
+        . ~/g/base/.config/bspwm/rules
+        firefox &
+        st16 &
+        do_sleep
+        st16 ssh am1 &
+        do_sleep
+        st18 &
+        do_sleep
+        st14 ssh cp1 &
+        do_sleep
+        st16 &
+        do_sleep
+        st16 &
+        do_sleep
+        st14 &
     fi
 ) &
