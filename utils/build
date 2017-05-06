@@ -110,6 +110,11 @@ case "$build" in
             libxcb-xinerama0-dev libxcb-ewmh2                             \
             gnome-panel
         make PREFIX="$sw" all install
+        if [ "$build" = "bspwm" ]; then
+            cp examples/receptacles/extract_canvas \
+               examples/receptacles/induce_rules \
+               "$sw/bin"
+        fi
         ;;
     xdotool)
         exit_unless_x
