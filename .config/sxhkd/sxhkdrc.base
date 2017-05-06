@@ -165,3 +165,5 @@ super + a ; f
     firefox&
 super + a ; a
     firefox -new-tab -url `xclip -o`
+
+# vim: ft=sxhkdrc
