@@ -617,7 +617,6 @@ vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
 " delete trailing whitespace
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=""<CR>
 
-nnoremap <leader>q gqip
 nnoremap <leader>v V`]
 
 " change single quotes to double
