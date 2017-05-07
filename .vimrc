@@ -619,8 +619,9 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=""<CR>
 
 nnoremap <leader>v V`]
 
-" change single quotes to double
+" change quotes
 nmap <leader>qq cs'"
+nmap <leader>qQ cs"'
 
 " toggle cursorline and cursorcolumn
 nnoremap <Leader>ccl :set cursorline! cursorcolumn!<CR>
