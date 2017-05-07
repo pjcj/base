@@ -65,6 +65,10 @@ Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 
+Plug 'sunaku/vim-shortcut'                                                " , ,,
+Plug '/home/pjcj/g/ghq/github.com/junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+
 Plug 'Shougo/unite.vim'                                " <space><space> <space>s
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
 
@@ -92,6 +96,8 @@ Plug 'LeafCage/yankround.vim'
 Plug 'pjcj/neovim-colors-solarized-truecolor-only'
 
 call plug#end()
+
+runtime plugin/shortcut.vim
 
 filetype plugin indent on
 
@@ -838,6 +844,15 @@ augroup END
 " clever-f
 let g:clever_f_fix_key_direction     = 1    " f is always forwards, F backwards
 let g:clever_f_chars_match_any_signs = ';'  " ; matches all signs
+
+Shortcut show shortcut menu and run chosen shortcut
+    \ noremap <silent> <Leader><Leader> :Shortcuts<Return>
+
+Shortcut fallback to shortcut menu on partial entry
+    \ noremap <silent> <Leader> :Shortcuts<Return>
+
+Shortcut! f  find character
+Shortcut! f; find all signs
 
 " abbr
 iabbr ,, =>
