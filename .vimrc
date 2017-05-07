@@ -11,6 +11,7 @@ call plug#begin()
 " !sort -t/ -k2
 
 Plug 'w0rp/ale'                                                " syntax checking
+Plug 'rhysd/clever-f.vim'                                           " f F t T f;
 Plug 'maralla/completor.vim'                                        " completion
 Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
@@ -55,6 +56,7 @@ Plug 'terryma/vim-multiple-cursors'                                         " ^n
 Plug 'sheerun/vim-polyglot'                                 " extra syntax files
 Plug 'tpope/vim-repeat'
 Plug 'zirrostig/vim-schlepp'                               " highlight then hjkl
+Plug 'google/vim-searchindex'
 Plug 'inside/vim-search-pulse'                                           " * n N
 Plug 'kshenoy/vim-signature'                          " mx dmx m, m. m<Space> m/
 Plug 'honza/vim-snippets'
@@ -62,7 +64,6 @@ Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
 Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
-Plug 'google/vim-searchindex'
 
 Plug 'Shougo/unite.vim'                                " <space><space> <space>s
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
@@ -833,6 +834,10 @@ augroup Commentary
     autocmd FileType apache  setlocal commentstring=#\ %s
     autocmd FileType crontab setlocal commentstring=#\ %s
 augroup END
+
+" clever-f
+let g:clever_f_fix_key_direction     = 1    " f is always forwards, F backwards
+let g:clever_f_chars_match_any_signs = ';'  " ; matches all signs
 
 " abbr
 iabbr ,, =>
