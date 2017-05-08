@@ -98,7 +98,13 @@ Plug 'pjcj/neovim-colors-solarized-truecolor-only'
 
 call plug#end()
 
+let g:mapleader = ','
+
 runtime plugin/shortcut.vim
+Shortcut show shortcut menu and run chosen shortcut
+    \ noremap <silent> <Leader><Leader> :Shortcuts<Return>
+Shortcut fallback to shortcut menu on partial entry
+    \ noremap <silent> <Leader> :Shortcuts<Return>
 
 filetype plugin indent on
 
@@ -172,8 +178,6 @@ if executable('rg')
 else
     set grepprg=git\ grep\ -n
 endif
-
-let g:mapleader = ','
 
 set ignorecase
 set smartcase
@@ -849,12 +853,6 @@ augroup END
 " clever-f
 let g:clever_f_fix_key_direction     = 1    " f is always forwards, F backwards
 let g:clever_f_chars_match_any_signs = ';'  " ; matches all signs
-
-Shortcut show shortcut menu and run chosen shortcut
-    \ noremap <silent> <Leader><Leader> :Shortcuts<Return>
-
-Shortcut fallback to shortcut menu on partial entry
-    \ noremap <silent> <Leader> :Shortcuts<Return>
 
 Shortcut! f  find character
 Shortcut! f; find all signs
