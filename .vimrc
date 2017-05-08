@@ -631,19 +631,21 @@ nnoremap <leader>v V`]
 nmap <leader>qq cs'"
 nmap <leader>qQ cs"'
 
-" toggle cursorline and cursorcolumn
-nnoremap <Leader>ccl :set cursorline! cursorcolumn!<CR>
+Shortcut toggle cursorline and cursorcolumn
+    \ nnoremap <Leader>ccl :set cursorline! cursorcolumn!<CR>
 
-" Devel::Cover coverage information
-nnoremap <Leader>c :source cover_db/coverage.vim<CR>
+Shortcut show coverage information in gutter
+    \ nnoremap <Leader>c :source cover_db/coverage.vim<CR>
 
-" spelling
-nnoremap <leader>se :setlocal spell spelllang=en_gb<CR>
-nnoremap <leader>sd :setlocal spell spelllang=de_ch<CR>
-nnoremap <leader>so :set nospell<CR>
+Shortcut spellcheck with British English
+    \ nnoremap <leader>se :setlocal spell spelllang=en_gb<CR>
+Shortcut spellcheck with Swiss German
+    \ nnoremap <leader>sd :setlocal spell spelllang=de_ch<CR>
+Shortcut turn off spellchecking
+    \ nnoremap <leader>so :set nospell<CR>
 
-" paste
-nnoremap <leader>p :set paste!<CR>
+Shortcut toggle paste option
+    \ nnoremap <leader>p :set paste!<CR>
 
 " yankring
 " map <leader>m :YRShow<CR>
