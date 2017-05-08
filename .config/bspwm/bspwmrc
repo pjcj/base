@@ -27,7 +27,7 @@ fi
 
 # bspc rule -a Firefox     desktop=II
 bspc rule -a chromium-browser desktop=II
-bspc rule -a Thunderbird desktop=II
+# bspc rule -a Thunderbird desktop=II
 
 # bspc rule -a Gimp desktop=^8 follow=on floating=on
 # bspc rule -a mplayer2 floating=on
