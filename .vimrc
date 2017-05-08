@@ -41,7 +41,6 @@ Plug 'tpope/vim-commentary'                                                 " gc
 Plug 'ap/vim-css-color'                             " add colour to descriptions
 Plug 'chrisbra/vim-diff-enhanced'                        " change diff algorithm
 Plug 'tpope/vim-dispatch'                          " asynchronous build and test
-Plug 'junegunn/vim-easy-align'                                     " = ^X<regex>
 Plug 'tpope/vim-eunuch'                                          " Unix commands
 Plug 'kopischke/vim-fetch'                      " use line numbers in file paths
 Plug 'tommcdo/vim-fugitive-blame-ext'                           " extend :Gblame
@@ -51,6 +50,7 @@ Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
 Plug 'nathanaelkane/vim-indent-guides'    " configured for indent of two or four
 Plug 'suan/vim-instant-markdown'                       " show mardown in browser
 Plug 'lfv89/vim-interestingwords'                                    " ,k ,K n N
+Plug 'tommcdo/vim-lion'                                              " alignment
 Plug 'Spaceghost/vim-matchit'                                                " %
 Plug 'terryma/vim-multiple-cursors'                                         " ^n
 Plug 'sheerun/vim-polyglot'                                 " extra syntax files
@@ -853,6 +853,10 @@ Shortcut fallback to shortcut menu on partial entry
 
 Shortcut! f  find character
 Shortcut! f; find all signs
+
+let g:lion_squeeze_spaces = 1
+Shortcut! gl align with spaces to right
+Shortcut! gL align with spaces to left
 
 " abbr
 iabbr ,, =>
