@@ -24,6 +24,20 @@ echo "Start tmux and then run build_all"
 
 exit
 
+# For OSX
+
+mkdir ~/g/tmp
+cd ~/g/tmp
+brew install wget npm autoconf cmake pkgconfig automake libtool gettext ctags fzf rg
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py --user
+PATH=~/Library/Python/2.7/bin:$PATH
+PATH=~/go/bin:$PATH
+
+
+
+
+
 Set up theme with https://github.com/ferdi265/numix-solarized-gtk-theme
 
 # TODO - do we need tmuxinator now?
