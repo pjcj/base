@@ -619,17 +619,18 @@ cnoremap <C-w> <C-I>
 
 map! <S-Insert> <C-R>*
 
-" Allow p to paste current copy buffer onto currently selected text.
-vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
+Shortcut (v) paste current copy buffer onto currently selected text
+    \ vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
 
-" delete trailing whitespace
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/=""<CR>
+Shortcut delete trailing whitespace
+    \ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=""<CR>
 
 nnoremap <leader>v V`]
 
-" change quotes
-nmap <leader>qq cs'"
-nmap <leader>qQ cs"'
+Shortcut change quotes from ' to "
+    \ nmap <leader>qq cs'"
+Shortcut change quotes from " to '
+    \ nmap <leader>qQ cs"'
 
 Shortcut toggle cursorline and cursorcolumn
     \ nnoremap <Leader>ccl :set cursorline! cursorcolumn!<CR>
@@ -683,6 +684,7 @@ nmap ga <Plug>(EasyAlign)
 vmap ,at :EasyAlign*/<tr>/r0l0<CR><Bar>gv<Bar>:EasyAlign*/<td>/r0l0<CR><Bar>gv<Bar>:EasyAlign*/<\/tr>/r0l0<CR>
 
 cmap w!! w !sudo tee % >/dev/null
+Shortcut! :w!! write file as superuser
 
 " ctrlp
 nnoremap <F11> :silent! write <Bar> CtrlPMixed<CR>
