@@ -19,20 +19,20 @@ rm -f ~/.zcompdump; compinit
 if [ "$ISOSX" ]; then
     brew update
     brew upgrade
+    pip3=pip
+    npm -g install instant-markdown-d
 else
     sudo aptitude -y install \
         python-pip python-setuptools \
         python3-pip python3-setuptools
     sudo aptitude -y install golang
-    command go get -u github.com/motemen/ghq
+    sudo npm -g install instant-markdown-d
 fi
-pip3 install --upgrade --user neovim vim-vint proselint
+$pip3 install --upgrade --user neovim vim-vint proselint
 pip install --upgrade --user git+git://github.com/powerline/powerline
 
-sudo npm -g install instant-markdown-d
-
 # urlwatch
-pip3 install --upgrade --user pyyaml minidb requests keyring chump urlwatch
+$pip3 install --upgrade --user pyyaml minidb requests keyring chump urlwatch
 
 $EDITOR -c PlugUpgrade -c qa
 # $EDITOR -c PlugClean   -c qa
@@ -40,10 +40,9 @@ $EDITOR -c PlugInstall -c qa
 $EDITOR -c PlugUpdate  -c qa
 
 gobase
-perl -pi -e "s/if has\('gui_running'\)\K$/ || (has('nvim') && &termguicolors)/" \
-            .vim/plugged/vim-interestingwords/plugin/interestingwords.vim
+# perl -pi -e "s/if has\('gui_running'\)\K$/ || (has('nvim') && &termguicolors)/" \
+            # .vim/plugged/vim-interestingwords/plugin/interestingwords.vim
 
-sudo aptitude -y install golang
 command go get -u github.com/motemen/ghq
 
 build_all
