@@ -465,6 +465,7 @@ if [[ $(uname) == "Darwin" ]]; then
     cp()      { command cp -v "$@" }
     f()       { ls -ABhl "$@" }
     mv()      { command mv -v "$@" }
+    PATH=~/Library/Python/2.7/bin:~/go/bin:$PATH  # $OSX
 else
     if which dmidecode >&/dev/null; then
         (sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
