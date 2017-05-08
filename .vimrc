@@ -67,6 +67,7 @@ Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 
 Plug 'sunaku/vim-shortcut'                                                " , ,,
 Plug '/home/pjcj/g/ghq/github.com/junegunn/fzf'
+Plug '/usr/local/Cellar/fzf/0.16.7'
 Plug 'junegunn/fzf.vim'
 
 Plug 'Shougo/unite.vim'                                " <space><space> <space>s
