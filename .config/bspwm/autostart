@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PATH=~/g/sw/bin:$PATH
+PATH=/home/pjcj/g/sw/bin:$PATH
 
 xrdb -merge .Xdefaults
 xsetroot -bg black
