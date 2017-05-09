@@ -616,6 +616,11 @@ map <F48>    <M-F12>
 
 nnoremap <leader>gu :GundoToggle<CR>
 
+Shortcut move to previous edit location
+    \ nnoremap g, g;
+Shortcut move to next edit location
+    \ nnoremap g. g,
+
 if has('nvim')
     tnoremap <Esc> <C-\><C-n>
 endif
