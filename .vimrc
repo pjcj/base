@@ -391,11 +391,16 @@ let g:gitgutter_highlight_lines = 0
 let g:gitgutter_realtime        = 1
 let g:gitgutter_eager           = 1
 let g:gitgutter_map_keys        = 0
-nnoremap <leader>hn :GitGutterNextHunk<CR>
-nnoremap <leader>hp :GitGutterPrevHunk<CR>
-nnoremap <leader>hv :GitGutterPreviewHunk<CR>
-nnoremap <leader>hs :GitGutterStageHunk<CR>
-nnoremap <leader>hr :GitGutterUndoHunk<CR>
+Shortcut move to next hunk
+    \ nnoremap <leader>hn :GitGutterNextHunk<CR>
+Shortcut move to previous hunk
+    \ nnoremap <leader>hp :GitGutterPrevHunk<CR>
+Shortcut preview current hunk
+    \ nnoremap <leader>hv :GitGutterPreviewHunk<CR>
+Shortcut stage current hunk
+    \ nnoremap <leader>hs :GitGutterStageHunk<CR>
+Shortcut stage current hunk
+    \ nnoremap <leader>hr :GitGutterUndoHunk<CR>
 
 let g:SignatureMarkTextHLDynamic = 1
 
