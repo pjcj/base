@@ -50,7 +50,7 @@ Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
 Plug 'nathanaelkane/vim-indent-guides'    " configured for indent of two or four
 Plug 'suan/vim-instant-markdown'                       " show mardown in browser
 Plug 'lfv89/vim-interestingwords'                                    " ,k ,K n N
-Plug 'tommcdo/vim-lion'                                              " alignment
+Plug 'tommcdo/vim-lion'                                       " alignment, gl gL
 Plug 'Spaceghost/vim-matchit'                                                " %
 Plug 'terryma/vim-multiple-cursors'                                         " ^n
 Plug 'sheerun/vim-polyglot'                                 " extra syntax files
