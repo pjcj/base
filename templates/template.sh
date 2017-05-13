@@ -39,7 +39,7 @@ main() {
     case "$1" in
         # implementation
         options)
-            perl -nE 'say $1 =~ s/"//gr =~ s/\s*\|\s*/\n/gr if /^ {8}"?([a-zA-Z0-9_ "|\\]+)"?(?:\)|\s*\|\s*\\)$/ && $1 !~ /^_/' < "$0"
+            perl -nE 'say $1 =~ s/"//gr =~ s/\s*\|\s*/\n/gr if /^ {8}"?([a-zA-Z0-9_ "|\\-]+)"?(?:\)|\s*\|\s*\\)$/ && $1 !~ /^_/' < "$0"
             ;;
         *)
             pf "Unknown option: $1"
