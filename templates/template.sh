@@ -1,7 +1,5 @@
 #!/bin/bash
 set -euo pipefail
-# set -x
-# IFS=$'\n\t'
 
 script=$(basename "$0")
 dir=$(readlink -f "$(dirname "$0")")
@@ -23,15 +21,35 @@ EOT
     exit 0
 }
 
-verbose=0
-expr "$*" : ".*--help"    > /dev/null && usage
-expr "$*" : ".*--verbose" > /dev/null && verbose=1
-
 cleanup() {
     declare -r res=$?
     ((verbose)) && pi "Cleaning up"
     exit $res
 }
+
+PATH="$dir:$PATH"
+verbose=0
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -h|--help)
+            usage
+            shift
+            ;;
+        -v|--verbose)
+            verbose=1
+            set -x
+            shift
+            ;;
+        # -d|--driver)
+            # driver="$2"
+            # shift 2
+            # ;;
+        *)
+            break
+            ;;
+    esac
+done
 
 main() {
     ((verbose)) && pi "Running $*"
