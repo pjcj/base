@@ -15,7 +15,7 @@ pf() { _p "[FATAL]  " "$*"; exit 1;                                 }
 usage() {
     cat <<EOT
 $script --help
-$script --verbose
+$script --trace --verbose
 $script options
 EOT
     exit 0
@@ -36,9 +36,12 @@ while [ $# -gt 0 ]; do
             usage
             shift
             ;;
+        -t|--trace)
+            set -x
+            shift
+            ;;
         -v|--verbose)
             verbose=1
-            set -x
             shift
             ;;
         # -d|--driver)
