@@ -41,6 +41,7 @@ Plug 'tpope/vim-commentary'                                                 " gc
 Plug 'ap/vim-css-color'                             " add colour to descriptions
 Plug 'chrisbra/vim-diff-enhanced'                        " change diff algorithm
 Plug 'tpope/vim-dispatch'                          " asynchronous build and test
+Plug 'junegunn/vim-easy-align'                                     " = ^X<regex>
 Plug 'tpope/vim-eunuch'                                          " Unix commands
 Plug 'kopischke/vim-fetch'                      " use line numbers in file paths
 Plug 'tommcdo/vim-fugitive-blame-ext'                           " extend :Gblame
