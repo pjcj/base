@@ -31,6 +31,7 @@ Plug 'ervandew/supertab'
 Plug 'majutsushi/tagbar'                                                " <S-F2>
 Plug 'wellle/tmux-complete.vim'                       " complete from tmux panes
 Plug 'SirVer/ultisnips'
+Plug 'mbbill/undotree'                                                     " ,gu
 Plug 'chrisbra/unicode.vim'        " unicode table, search, complete, ^X^Z, ^X^G
 Plug 'tpope/vim-abolish'               " :%Subvert/facilit{y,ies}/building{,s}/g
 Plug 'vim-airline/vim-airline'
@@ -614,7 +615,8 @@ map <F46>    <M-F10>
 map <F47>    <M-F11>
 map <F48>    <M-F12>
 
-nnoremap <leader>gu :GundoToggle<CR>
+Shortcut toggle undo tree
+    \ nnoremap <leader>gu :UndotreeToggle<CR>
 
 Shortcut move to previous edit location
     \ nnoremap g, g;
