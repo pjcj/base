@@ -166,7 +166,7 @@ set ttyfast
 set updatetime=250
 set undodir=~/g/tmp/vim
 set undofile
-set undolevels=1000
+set undolevels=10000
 set viminfo='50
 set wildmenu
 set wildmode=list:longest,full
