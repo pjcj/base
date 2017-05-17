@@ -17,7 +17,6 @@ Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
 Plug 'gregsexton/gitv'
-Plug 'sjl/gundo.vim'                                                       " ,gu
 Plug 'haya14busa/incsearch-fuzzy.vim'                                       " z/
 Plug 'haya14busa/incsearch.vim'                  " show all matches on incsearch
 Plug 'Xuyuanp/nerdtree-git-plugin'                          " show changed files
