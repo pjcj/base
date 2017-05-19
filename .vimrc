@@ -510,10 +510,10 @@ noremap <silent><expr> zg/ incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
 
 map / :set hls<CR><Plug>(incsearch-forward)
 
-" This toggles the hlsearch flag, then reports the current state of the flag.
-nnoremap <leader><space> :set hls!<BAR>
-                       \ :call UncolorAllWords()<BAR>
-                       \ :echo "HLSearch: " . strpart("OffOn",3*&hlsearch,3)<CR>
+Shortcut toggle search highlighting
+    \ nnoremap <leader><space> :set hls!<BAR>
+        \ :call UncolorAllWords()<BAR>
+        \ :echo "HLSearch: " . strpart("OffOn",3*&hlsearch,3)<CR>
 
 vmap <unique> k <Plug>SchleppUp
 vmap <unique> j <Plug>SchleppDown
