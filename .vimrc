@@ -515,12 +515,18 @@ Shortcut toggle search highlighting
         \ :call UncolorAllWords()<BAR>
         \ :echo "HLSearch: " . strpart("OffOn",3*&hlsearch,3)<CR>
 
-vmap <unique> k <Plug>SchleppUp
-vmap <unique> j <Plug>SchleppDown
-vmap <unique> h <Plug>SchleppLeft
-vmap <unique> l <Plug>SchleppRight
-nnoremap k gk
-nnoremap j gj
+Shortcut schlepp up
+    \ vmap <unique> k <Plug>SchleppUp
+Shortcut schlepp down
+    \ vmap <unique> j <Plug>SchleppDown
+Shortcut schlepp left
+    \ vmap <unique> h <Plug>SchleppLeft
+Shortcut schlepp right
+    \ vmap <unique> l <Plug>SchleppRight
+Shortcut move up one logical line
+    \ nnoremap k gk
+Shortcut move down one logical line
+    \ nnoremap j gj
 
 " argwrap
 nnoremap <silent> <leader>a :ArgWrap<CR>
