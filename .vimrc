@@ -820,58 +820,58 @@ let g:unite_cursor_line_highlight           = 'TabLineSel'
 let g:unite_source_file_mru_filename_format = ':~:.'
 let g:unite_source_file_mru_time_format     = ''
 
-" Map space to the prefix for Unite
 nnoremap [unite] <Nop>
-nmap <space> [unite]
+Shortcut unite
+    \ nmap <space> [unite]
 
-" General fuzzy search
-nnoremap <silent> [unite]<space>
+Shortcut unite general fuzzy search
+    \ nnoremap <silent> [unite]<space>
     \ :<C-u>Unite -buffer-name=files buffer
     \ bookmark git_modified git_untracked file_mru file_rec/neovim file/new<CR>
 
-" Quick registers
-nnoremap <silent> [unite]r
+Shortcut unite registers
+    \ nnoremap <silent> [unite]r
     \ :<C-u>Unite -buffer-name=register register<CR>
 
-" Quick yank history
-nnoremap <silent> [unite]y
+Shortcut unite yank history
+    \ nnoremap <silent> [unite]y
     \ :<C-u>Unite -buffer-name=yanks history/yank<CR>
 
-" Quick perl modules
-nnoremap <silent> [unite]p
+Shortcut unite perl modules
+    \ nnoremap <silent> [unite]p
     \ :<C-u>Unite -buffer-name=perl_modules perl-module/cpan<CR>
 
-" Quick sources
-nnoremap <silent> [unite]s
+Shortcut unite sources
+    \ nnoremap <silent> [unite]s
     \ :<C-u>Unite -buffer-name=sources source<CR>
 
-" Quickly switch lcd
-nnoremap <silent> [unite]d
+Shortcut unite switch lcd
+    \ nnoremap <silent> [unite]d
     \ :<C-u>Unite -buffer-name=change-cwd -default-action=cd
     \ directory_mru directory_rec/async<CR>
 
-" Quick file search
-nnoremap <silent> [unite]f
+Shortcut unite file search
+    \ nnoremap <silent> [unite]f
     \ :<C-u>Unite -buffer-name=files file_rec/neovim file/new<CR>
 
-" Quick grep from cwd
-nnoremap <silent> [unite]g
+Shortcut unite grep from cwd
+    \ nnoremap <silent> [unite]g
     \ :<C-u>Unite -buffer-name=grep grep/git<CR>
 
-" Quick help
-nnoremap <silent> [unite]h
+Shortcut unite help
+    \ nnoremap <silent> [unite]h
     \ :<C-u>Unite -buffer-name=help help<CR>
 
-" Quick commands
-nnoremap <silent> [unite]c
+Shortcut unite commands
+    \ nnoremap <silent> [unite]c
     \ :<C-u>Unite -buffer-name=commands command<CR>
 
-" Quick tags
-nnoremap <silent> [unite]t
+Shortcut unite tags
+    \ nnoremap <silent> [unite]t
     \ :<C-u>Unite -buffer-name=tags tag<CR>
 
-" Quick outline
-nnoremap <silent> [unite]o
+Shortcut unite outline
+    \ nnoremap <silent> [unite]o
     \ :<C-u>Unite -buffer-name=outline outline<CR>
 
 function! s:unite_settings()
