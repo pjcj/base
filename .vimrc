@@ -485,9 +485,11 @@ augroup SearchIndex
         nmap <silent> N :call WordNavigation(0)<CR>:call Pulse()<CR><Plug>SearchIndex
     endfunction
 augroup END
-nnoremap <silent> <leader>k :call InterestingWords('n')<CR>
-vnoremap <silent> <leader>k :call InterestingWords('v')<CR>
-nnoremap <silent> <leader>K :call UncolorAllWords()<CR>
+Shortcut toggle highlighting of interesting words
+    \ nnoremap <silent> <leader>k :call InterestingWords('n')<CR>
+    \|vnoremap <silent> <leader>k :call InterestingWords('v')<CR>
+Shortcut turn off highlighting of interesting words
+    \ nnoremap <silent> <leader>K :call UncolorAllWords()<CR>
 
 function! s:config_fuzzyall(...) abort
     set hlsearch
