@@ -533,9 +533,17 @@ Shortcut toggle argument wrapping
 let g:argwrap_padded_braces = '[{'
 let g:argwrap_tail_comma    = 1
 
-" unicode
-nmap ,dg <Plug>(MakeDigraph)
-vmap ,dg <Plug>(MakeDigraph)
+Shortcut generate digraph from characters
+    \ nmap ,dg <Plug>(MakeDigraph)
+    \|vmap ,dg <Plug>(MakeDigraph)
+Shortcut describe character under cursor
+    \ nmap ga <Plug>(UnicodeGA)
+Shortcut! :UnicodeTable<CR> show table of all unicode characters
+Shortcut! :Digraphs<CR> show digraph table
+Shortcut! :Digraphs!<CR> show extended digraph table
+Shortcut! :Digraphs! show digraph table matching argument
+Shortcut! <C-X><C-G> complete as gigraph
+Shortcut! <C-X><C-Z> complete as unicode
 
 augroup autowrite
     autocmd!
