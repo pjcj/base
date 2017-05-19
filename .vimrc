@@ -884,8 +884,9 @@ augroup EscapeUnite
     autocmd FileType unite call s:unite_settings()
 augroup END
 
-nmap - gcc
-vmap - gc
+Shortcut - (nv) comment
+    \ nmap - gcc
+    \|vmap - gc
 augroup Commentary
     autocmd!
     autocmd FileType apache  setlocal commentstring=#\ %s
@@ -895,7 +896,6 @@ augroup END
 " clever-f
 let g:clever_f_fix_key_direction     = 1    " f is always forwards, F backwards
 let g:clever_f_chars_match_any_signs = ';'  " ; matches all signs
-
 Shortcut! f  find character
 Shortcut! f; find all signs
 
