@@ -671,7 +671,8 @@ Shortcut (v) paste current copy buffer onto currently selected text
 Shortcut delete trailing whitespace
     \ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=""<CR>
 
-nnoremap <leader>v V`]
+Shortcut select lines to end of previous yanked or changed text
+    \ nnoremap <leader>v V`]
 
 Shortcut change quotes from ' to "
     \ nmap <leader>qq cs'"
