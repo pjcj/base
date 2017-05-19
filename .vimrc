@@ -528,8 +528,8 @@ Shortcut move up one logical line
 Shortcut move down one logical line
     \ nnoremap j gj
 
-" argwrap
-nnoremap <silent> <leader>a :ArgWrap<CR>
+Shortcut toggle argument wrapping
+    \ nnoremap <silent> <leader>a :ArgWrap<CR>
 let g:argwrap_padded_braces = '[{'
 let g:argwrap_tail_comma    = 1
 
