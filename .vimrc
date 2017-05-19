@@ -501,9 +501,12 @@ function! s:config_fuzzyall(...) abort
         \ }), get(a:, 1, {}))
 endfunction
 
+Shortcut! z/ incremental fuzzy search forward
 noremap <silent><expr> z/ incsearch#go(<SID>config_fuzzyall())
+Shortcut! z? incremental fuzzy search backward
 noremap <silent><expr> z? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
-noremap <silent><expr> zg? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
+Shortcut! zg/ incremental fuzzy search backward without morning
+noremap <silent><expr> zg/ incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
 
 map / :set hls<CR><Plug>(incsearch-forward)
 
