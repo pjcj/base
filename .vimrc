@@ -717,7 +717,6 @@ let g:ale_perl_perl_options        = '-Mblib'
 
 vmap <Enter> <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
 " Format HTML tables (good for selenium IDE)
 vmap ,at :EasyAlign*/<tr>/r0l0<CR><Bar>gv<Bar>:EasyAlign*/<td>/r0l0<CR><Bar>gv<Bar>:EasyAlign*/<\/tr>/r0l0<CR>
 
