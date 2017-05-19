@@ -485,7 +485,7 @@ augroup SearchIndex
         nmap <silent> N :call WordNavigation(0)<CR>:call Pulse()<CR><Plug>SearchIndex
     endfunction
 augroup END
-Shortcut toggle highlighting of interesting words
+Shortcut (nv) toggle highlighting of interesting words
     \ nnoremap <silent> <leader>k :call InterestingWords('n')<CR>
     \|vnoremap <silent> <leader>k :call InterestingWords('v')<CR>
 Shortcut turn off highlighting of interesting words
@@ -515,13 +515,13 @@ Shortcut toggle search highlighting
         \ :call UncolorAllWords()<BAR>
         \ :echo "HLSearch: " . strpart("OffOn",3*&hlsearch,3)<CR>
 
-Shortcut schlepp up
+Shortcut (v) schlepp up
     \ vmap <unique> k <Plug>SchleppUp
-Shortcut schlepp down
+Shortcut (v) schlepp down
     \ vmap <unique> j <Plug>SchleppDown
-Shortcut schlepp left
+Shortcut (v) schlepp left
     \ vmap <unique> h <Plug>SchleppLeft
-Shortcut schlepp right
+Shortcut (v) schlepp right
     \ vmap <unique> l <Plug>SchleppRight
 Shortcut move up one logical line
     \ nnoremap k gk
@@ -533,7 +533,7 @@ Shortcut toggle argument wrapping
 let g:argwrap_padded_braces = '[{'
 let g:argwrap_tail_comma    = 1
 
-Shortcut generate digraph from characters
+Shortcut (nv) generate digraph from characters
     \ nmap ,dg <Plug>(MakeDigraph)
     \|vmap ,dg <Plug>(MakeDigraph)
 Shortcut describe character under cursor
