@@ -214,6 +214,7 @@ compdef _git   ga=git-add
 compdef _git   gb=git-branch
 compdef _git   gc=git-commit
 compdef _git   gca=git-commit
+compdef _git   gcae=git-commit
 compdef _git   gd=git-diff
 compdef _git   gds=git-diff
 compdef _git   gvd=git-diff
@@ -364,6 +365,7 @@ ga()      { git add "$@" }
 gb()      { git branch "$@" }
 gc()      { git commit -v "$@" }
 gca()     { git commit --amend -v "$@" }
+gcae()    { git commit --amend --no-edit "$@" }
 gd()      { git diff "$@" }
 gds()     { git diff --stat "$@" }
 gdw()     { git diffwords "$@" }
