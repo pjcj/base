@@ -718,6 +718,11 @@ let g:ale_sign_warning             = '⚠'
 let g:ale_perl_perl_executable     = '/home/pjcj/g/base/utils/ale_perl'
 let g:ale_perl_perl_options        = '-Mblib'
 
+Shortcut jump to next error
+    \ nmap <silent> <C-J> <Plug>(ale_next_wrap)
+Shortcut jump to previous error
+    \ nmap <silent> <C-K> <Plug>(ale_previous_wrap)
+
 " delimitMate
 " imap § <C-G>g
 " let delimitMate_expand_space         = 1
