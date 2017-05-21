@@ -1,6 +1,4 @@
-#
 # bspwm hotkeys
-#
 
 # quit bspwm normally
 super + alt + Escape
@@ -22,9 +20,7 @@ super + z
 super + g
     bspc node -s biggest
 
-#
 # state/flags
-#
 
 # set the window state
 super + {t,shift + t,s,f}
@@ -34,9 +30,7 @@ super + {t,shift + t,s,f}
 super + ctrl + {x,y,z}
     bspc node -g {locked,sticky,private}
 
-#
 # focus/swap
-#
 
 # focus the node in the given direction
 super + {_,shift + }{h,j,k,l}
@@ -68,9 +62,7 @@ super + {o,i}
 super + {_,shift + }{1-9,0}
     bspc {desktop -f,node -d} '^{1-9,10}'
 
-#
 # preselect
-#
 
 # preselect the direction
 super + ctrl + {h,j,k,l}
@@ -88,9 +80,7 @@ super + ctrl + space
 super + ctrl + shift + space
     bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
-#
 # resize tiled/floating
-#
 
 # expand the tiled space in the given direction
 super + alt + {h,j,k,l}
@@ -110,9 +100,7 @@ super + {_,shift} + r
     $insert && bspc node -i || \
     for win in `bspc query -N -n .leaf.\!window`; do bspc node $win -k ; done;
 
-#
 # wm independent hotkeys
-#
 
 super + Return ; super + Return
     st
