@@ -39,13 +39,13 @@ indicator-keylock &
         do_sleep
         st16 ssh am1 &
         do_sleep
-        st18 &
+        st16 &
         do_sleep
         st14 ssh cp1 &
         do_sleep
-        st16 &
+        st14 &
         do_sleep
-        st16 &
+        st14 &
         do_sleep
         st14 &
     fi
