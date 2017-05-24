@@ -447,7 +447,6 @@ hash -d local_base=~/g/local_base
 
 zshrc_load_status "environment"
 
-export BSPWM_SOCKET=/tmp/bspwm-socket
 export GOPATH=~/g/go
 export LANG=en_GB.UTF-8
 export LANGUAGE=en_GB.UTF-8

@@ -3,7 +3,7 @@
 # run this script to configure the basics of the system
 # . ./SETUP
 
-ln -s g/base/{dircolours,utils,.abcde.conf,.gitconfig,.urlview} ~
+ln -s g/base/{dircolours,utils,.abcde.conf,.gitconfig,.profile,.urlview} ~
 ln -s g/base/{.vimrc,.Xdefaults,.vim,.nvim,.tmux.conf,.tigrc} ~
 [[ -d ~/.config ]] || mkdir ~/.config
 ln -s ~/g/base/.config/* ~/.config
