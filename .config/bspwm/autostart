@@ -48,5 +48,7 @@ indicator-keylock &
         st14 &
         do_sleep
         st14 &
+        do_sleep
+        st14 &
     fi
 ) &
