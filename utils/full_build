@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env zsh
 
 # set -x
 
@@ -6,6 +6,7 @@ gobase() { cd ~/g/base || exit 1; }
 
 gobase
 
+source ~/.zplug/init.zsh
 zplug clear
 curl -SL https://raw.githubusercontent.com/docker/docker/master/contrib/completion/zsh/_docker \
     >| /home/pjcj/g/base/zsh/functions/_docker
