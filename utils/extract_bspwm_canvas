@@ -1,0 +1,17 @@
+#!/usr/bin/env perl
+
+use 5.18.2;
+use warnings;
+
+use Regexp::Common qw /balanced/;
+
+local $\;
+my $json = <>;
+for ($json) {
+    s/"clientsCount":\K\d+/0/g;
+    s/"focusedNodeId":\K\d+/0/g;
+    s/"focusHistory":\K$RE{balanced}{-parens=>'[]'}/[]/g;
+    s/"stackingList":\K$RE{balanced}{-parens=>'[]'}/[]/g;
+    s/"client":\K$RE{balanced}{-parens=>'{}'}/null/g;
+}
+print $json;
