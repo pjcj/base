@@ -460,8 +460,8 @@ export TOP="-I all"
 export TEMPLATE_DIR=~base/templates
 export VISUAL=$EDITOR
 
-export ISVM=0
-export ISOSX=0
+export ISVM=
+export ISOSX=
 if [[ $(uname) == "Darwin" ]]; then
     ISOSX=1
     cp()      { command cp -v "$@" }
