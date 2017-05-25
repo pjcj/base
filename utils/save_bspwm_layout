@@ -1,0 +1,7 @@
+#!/bin/bash
+set -euo pipefail
+
+h=$(hostname)
+
+bspc wm -d | extract_bspwm_canvas > ~/g/base/.config/bspwm/layout."$h"
+bspc wm -d | induce_rules >| ~/g/base/.config/bspwm/rules."$h"
