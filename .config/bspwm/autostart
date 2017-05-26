@@ -28,13 +28,13 @@ indicator-keylock &
         do_sleep
         st14 &
         do_sleep
+        st10 &
+        do_sleep
+        st10 ssh h &
+        do_sleep
+        st10 ssh am1 &
+        do_sleep
         st12 &
-        do_sleep
-        st12 ssh h &
-        do_sleep
-        st12 ssh am1 &
-        do_sleep
-        st14 &
     elif [ "$hostname" = "posub64" ]; then
         firefox &
         st16 &
