@@ -24,15 +24,17 @@ indicator-keylock &
     if [ "$hostname" = "pj" ]; then
         firefox &
         thunderbird &
-        st irssi &
+        st12 irssi &
         do_sleep
-        st &
+        st14 &
         do_sleep
-        st ssh h.pjcj.net &
+        st12 &
         do_sleep
-        st ssh h.pjcj.net &
+        st12 ssh h &
         do_sleep
-        st &
+        st12 ssh am1 &
+        do_sleep
+        st14 &
     elif [ "$hostname" = "posub64" ]; then
         firefox &
         st16 &
