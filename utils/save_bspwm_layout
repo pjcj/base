@@ -4,4 +4,6 @@ set -euo pipefail
 h=$(hostname)
 
 bspc wm -d | extract_bspwm_canvas > ~/g/base/.config/bspwm/layout."$h"
+# bspc wm -d | extract_canvas | json_pp -t json -json_opt pretty,canonical > \
+    # ~/g/base/.config/bspwm/layout."$h"
 bspc wm -d | induce_rules >| ~/g/base/.config/bspwm/rules."$h"
