@@ -901,7 +901,10 @@ augroup END
 " clever-f
 let g:clever_f_fix_key_direction     = 1    " f is always forwards, F backwards
 let g:clever_f_chars_match_any_signs = ';'  " ; matches all signs
-Shortcut! f  find character
+Shortcut! f  find character forwards
+Shortcut! F  find character backwards
+Shortcut! t  to character forwards
+Shortcut! T  to character backwards
 Shortcut! f; find all signs
 
 let g:lion_squeeze_spaces = 1
