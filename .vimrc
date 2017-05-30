@@ -400,7 +400,7 @@ Shortcut preview current hunk
     \ nnoremap <leader>hv :GitGutterPreviewHunk<CR>
 Shortcut stage current hunk
     \ nnoremap <leader>hs :GitGutterStageHunk<CR>
-Shortcut stage current hunk
+Shortcut undo current hunk
     \ nnoremap <leader>hr :GitGutterUndoHunk<CR>
 
 let g:SignatureMarkTextHLDynamic = 1
@@ -552,9 +552,12 @@ augroup END
 
 set guioptions=ag
 
-nnoremap <F1>       :GitGutterStageHunk<CR>
-nnoremap <F2>       :GitGutterPrevHunk<CR>
-nnoremap <F3>       :GitGutterNextHunk<CR>
+Shortcut stage current hunk
+    \ nnoremap <F1>       :GitGutterStageHunk<CR>
+Shortcut move to previous hunk
+    \ nnoremap <F2>       :GitGutterPrevHunk<CR>
+Shortcut move to next hunk
+    \ nnoremap <F3>       :GitGutterNextHunk<CR>
 nnoremap <C-F1>     :GitGutterPreviewHunk<CR>
 nnoremap <S-F1>     :NERDTreeToggle<CR>
 nnoremap <S-F2>     :TagbarToggle<CR>
