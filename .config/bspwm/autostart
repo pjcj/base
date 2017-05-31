@@ -31,7 +31,7 @@ indicator-keylock &
         st10 &
         do_sleep
         st10 ssh h &
-        do_sleep
+        sleep 3
         st10 ssh am1 &
         do_sleep
         st12 &
