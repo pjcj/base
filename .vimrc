@@ -919,6 +919,11 @@ iabbr ,, =>
 iabbr op, open my $fh, "<", $filename or die "Can't open $filename: $!";<CR>
           \close $fh or die "Can't close $filename: $!";
 
+" shortcuts
+
+Shortcut! gJ join without adding spaces
+
+" functions
 function! MyToHtml(line1, line2)
     " make sure to generate in the correct format
     let l:old_css = 1
