@@ -43,6 +43,9 @@
     ff = only
     tool = vimdiff3
     conflictstyle = diff3
+[merge "keep_ours"]
+    name = always keep our version during merge
+    driver = true
 [alias]
     distclean = clean -dxf
     st = status -sb
