@@ -22,6 +22,7 @@ indicator-keylock &
     # shellcheck disable=SC1090
     [ -e "$confdir/rules.$hostname" ] && . "$confdir/rules.$hostname"
     if [ "$hostname" = "pj" ]; then
+        rm -rf "$HOME"/.ssh/tmp/*
         firefox &
         thunderbird &
         st12 irssi &
