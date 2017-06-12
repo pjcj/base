@@ -805,7 +805,7 @@ call unite#custom#source('file_mru', 'matchers',
 
 " Increase max candidates
 call unite#custom#source('file,file_rec,file_rec/git,file_rec/neovim,grep',
-    \ 'max_candidates', 10000)
+    \ 'max_candidates', 100)
 
 if executable('rg')
     let g:unite_source_rec_async_command = [
@@ -822,7 +822,7 @@ let g:unite_marked_icon                     = '•'
 " Shorten the default update time of 500ms
 let g:unite_update_time                     = 200
 
-let g:unite_source_file_mru_limit           = 1000
+let g:unite_source_file_mru_limit           = 25
 let g:unite_cursor_line_highlight           = 'TabLineSel'
 
 let g:unite_source_file_mru_filename_format = ':~:.'
