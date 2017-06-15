@@ -741,6 +741,7 @@ cmap w!! w !sudo tee % >/dev/null
 Shortcut! :w!! write file as superuser
 
 " ctrlp
+Shortcut! <F11> CtrlP
 nnoremap <F11> :silent! write <Bar> CtrlPMixed<CR>
 let g:ctrlp_map                = '<F99>'  " Not used
 let g:ctrlp_cmd                = 'CtrlP'
