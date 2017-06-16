@@ -559,7 +559,8 @@ Shortcut move to previous hunk
 Shortcut move to next hunk
     \ nnoremap <F3>       :GitGutterNextHunk<CR>
 nnoremap <C-F1>     :GitGutterPreviewHunk<CR>
-nnoremap <S-F1>     :NERDTreeToggle<CR>
+Shortcut toggle NERDTree filesystem viewer
+    \ nnoremap <S-F1>     :NERDTreeToggle<CR>
 nnoremap <S-F2>     :TagbarToggle<CR>
 nnoremap <F4>       :execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"
                         \ <Bar> :call Pulse()<CR>
