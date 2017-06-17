@@ -561,7 +561,8 @@ Shortcut move to next hunk
 nnoremap <C-F1>     :GitGutterPreviewHunk<CR>
 Shortcut toggle NERDTree filesystem viewer
     \ nnoremap <S-F1>     :NERDTreeToggle<CR>
-nnoremap <S-F2>     :TagbarToggle<CR>
+Shortcut toggle tagbar subroutine funtion method viewer
+    \ nnoremap <S-F2>     :TagbarToggle<CR>
 nnoremap <F4>       :execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"
                         \ <Bar> :call Pulse()<CR>
 nnoremap <S-F4>     :tnext<Bar>:call Pulse()<CR>
