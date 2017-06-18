@@ -563,10 +563,14 @@ Shortcut toggle NERDTree filesystem viewer
     \ nnoremap <S-F1>     :NERDTreeToggle<CR>
 Shortcut toggle tagbar subroutine funtion method viewer
     \ nnoremap <S-F2>     :TagbarToggle<CR>
-nnoremap <F4>       :execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"
+Shortcut jump to tag
+    \ nnoremap <F4>       :execute "tjump /^\\(_build_\\)\\?" .
+                        \ expand("<cword>") . "$"
                         \ <Bar> :call Pulse()<CR>
-nnoremap <S-F4>     :tnext<Bar>:call Pulse()<CR>
-nnoremap <M-F4>     :tprev<Bar>:call Pulse()<CR>
+Shortcut jump to next tag
+    \ nnoremap <S-F4>     :tnext<Bar>:call Pulse()<CR>
+Shortcut jump to previous tag
+    \ nnoremap <M-F4>     :tprev<Bar>:call Pulse()<CR>
 nnoremap <F5>       :execute "silent make" <Bar> botright copen<CR><C-L>
 nnoremap <S-F5>     :cc<CR>
 nnoremap <C-F5>     :ll<CR>
