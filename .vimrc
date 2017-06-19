@@ -571,9 +571,12 @@ Shortcut jump to next tag
     \ nnoremap <S-F4>     :tnext<Bar>:call Pulse()<CR>
 Shortcut jump to previous tag
     \ nnoremap <M-F4>     :tprev<Bar>:call Pulse()<CR>
-nnoremap <F5>       :execute "silent make" <Bar> botright copen<CR><C-L>
-nnoremap <S-F5>     :cc<CR>
-nnoremap <C-F5>     :ll<CR>
+Shortcut run make
+    \ nnoremap <F5>       :execute "silent make" <Bar> botright copen<CR><C-L>
+Shortcut display current error from quickfix list
+    \ nnoremap <S-F5>     :cc<CR>
+Shortcut display current error from location list
+    \ nnoremap <C-F5>     :ll<CR>
 nnoremap <F6>       :cprevious<Bar>:call Pulse()<CR>
 nnoremap <C-F6>     :lprevious<Bar>:call Pulse()<CR>
 nnoremap <F7>       :cnext<Bar>:call Pulse()<CR>
