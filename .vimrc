@@ -28,6 +28,7 @@ Plug 'saltstack/salt-vim'                                    " salt highlighting
 Plug 'rstacruz/sparkup'                                            " HTML helper
 Plug 'ervandew/supertab'
 Plug 'majutsushi/tagbar'                                                " <S-F2>
+Plug 'wellle/targets.vim'                                " add * | and _ targets
 Plug 'wellle/tmux-complete.vim'                       " complete from tmux panes
 Plug 'SirVer/ultisnips'
 Plug 'mbbill/undotree'                                                     " ,gu
