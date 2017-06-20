@@ -35,6 +35,11 @@ PATH=~/Library/Python/2.7/bin:$PATH
 PATH=~/go/bin:$PATH
 
 
+# for cp1
+
+sudo aptitude install python3-dev
+wget https://bootstrap.pypa.io/get-pip.py
+python3 get-pip.py --user
 
 
 
