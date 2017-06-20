@@ -341,6 +341,14 @@ let g:gutentags_ctags_exclude    = ['blib', 'tmp']
 
 let g:NERDTreeShowHidden         = 1
 
+function! NERDTreeRefresh()
+    if &filetype == "nerdtree"
+        silent exe substitute(mapcheck("R"), "<CR>", "", "")
+    endif
+endfunction
+
+autocmd BufEnter * call NERDTreeRefresh()
+
 " taglist plugin
 let g:Tlist_Use_SingleClick      = 1
 let g:Tlist_Use_Right_Window     = 1
