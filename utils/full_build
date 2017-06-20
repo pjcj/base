@@ -23,6 +23,7 @@ if [ "$ISOSX" ]; then
     pip3=pip
     npm -g install instant-markdown-d
 else
+    pip3=pip3
     sudo aptitude -y install \
         python-pip python-setuptools \
         python3-pip python3-setuptools
