@@ -38,6 +38,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'FooSoft/vim-argwrap'                              " wrap multiline args ,a
 Plug 'gioele/vim-autoswap'                        " deal with swapfiles sensibly
+Plug 'alvan/vim-closetag'                                      " close tags > >>
 Plug 'tpope/vim-commentary'                                                 " gc
 Plug 'ap/vim-css-color'                             " add colour to descriptions
 Plug 'chrisbra/vim-diff-enhanced'                        " change diff algorithm
@@ -750,6 +751,9 @@ Shortcut jump to previous error
 " let delimitMate_expand_space         = 1
 " let delimitMate_expand_cr            = 2
 " let delimitMate_expand_inside_quotes = 1
+
+" closetag
+let g:closetag_filenames = "*.html,*.xhtml,*.tt"
 
 vmap <Enter> <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
