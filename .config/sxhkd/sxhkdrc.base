@@ -17,8 +17,8 @@ super + z
     bspc query -N -n focused.automatic && bspc node -n last.!automatic || bspc node last.leaf -n focused
 
 # swap the current node and the biggest node
-super + g
-    bspc node -s biggest
+super + {_,shift} + g
+    bspc node -s {biggest.active,biggest}
 
 # state/flags
 
