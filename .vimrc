@@ -54,7 +54,7 @@ Plug 'nathanaelkane/vim-indent-guides'    " configured for indent of two or four
 Plug 'michaeljsmith/vim-indent-object'      " objects based on indentation ii AI
 Plug 'suan/vim-instant-markdown'                       " show mardown in browser
 Plug 'lfv89/vim-interestingwords'                                    " ,k ,K n N
-Plug 'tommcdo/vim-lion'                                       " alignment, gl gL
+Plug 'tommcdo/vim-lion'                                 " alignment, gl gL glip=
 Plug 'Spaceghost/vim-matchit'                                                " %
 Plug 'terryma/vim-multiple-cursors'                                         " ^n
 Plug 'sheerun/vim-polyglot'                                 " extra syntax files
