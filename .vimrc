@@ -588,10 +588,14 @@ Shortcut display current error from quickfix list
     \ nnoremap <S-F5>     :cc<CR>
 Shortcut display current error from location list
     \ nnoremap <C-F5>     :ll<CR>
-nnoremap <F6>       :cprevious<Bar>:call Pulse()<CR>
-nnoremap <C-F6>     :lprevious<Bar>:call Pulse()<CR>
-nnoremap <F7>       :cnext<Bar>:call Pulse()<CR>
-nnoremap <C-F7>     :lnext<Bar>:call Pulse()<CR>
+Shortcut jump to previous error from quickfix list
+    \ nnoremap <F6>       :cprevious<Bar>:call Pulse()<CR>
+Shortcut jump to previous error from location list
+    \ nnoremap <C-F6>     :lprevious<Bar>:call Pulse()<CR>
+Shortcut jump to next error from quickfix list
+    \ nnoremap <F7>       :cnext<Bar>:call Pulse()<CR>
+Shortcut jump to next error from location list
+    \ nnoremap <C-F7>     :lnext<Bar>:call Pulse()<CR>
 nnoremap <F8>       *``:execute "silent grep! -w " . expand("<cword>")
                         \ <Bar> botright copen<CR><C-L>
 nnoremap <S-F8>     *``:execute "silent grep! " . expand("<cword>")
