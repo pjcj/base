@@ -576,8 +576,8 @@ Shortcut toggle tagbar subroutine funtion method viewer
     \ nnoremap <S-F2>     :TagbarToggle<CR>
 Shortcut jump to tag
     \ nnoremap <F4>       :execute "tjump /^\\(_build_\\)\\?" .
-                        \ expand("<cword>") . "$"
-                        \ <Bar> :call Pulse()<CR>
+        \ expand("<cword>") . "$"
+        \ <Bar> :call Pulse()<CR>
 Shortcut jump to next tag
     \ nnoremap <S-F4>     :tnext<Bar>:call Pulse()<CR>
 Shortcut jump to previous tag
@@ -596,10 +596,12 @@ Shortcut jump to next error from quickfix list
     \ nnoremap <F7>       :cnext<Bar>:call Pulse()<CR>
 Shortcut jump to next error from location list
     \ nnoremap <C-F7>     :lnext<Bar>:call Pulse()<CR>
-nnoremap <F8>       *``:execute "silent grep! -w " . expand("<cword>")
-                        \ <Bar> botright copen<CR><C-L>
-nnoremap <S-F8>     *``:execute "silent grep! " . expand("<cword>")
-                        \ <Bar> botright copen<CR><C-L>
+Shortcut grep for exact word under cursor
+    \ nnoremap <F8>       *``:execute "silent grep! -w " . expand("<cword>")
+        \ <Bar> botright copen<CR><C-L>
+Shortcut grep for word under cursor
+    \ nnoremap <S-F8>     *``:execute "silent grep! " . expand("<cword>")
+        \ <Bar> botright copen<CR><C-L>
 nnoremap <F9>       :cclose<Bar>:lclose<Bar>:pclose<CR>
 nnoremap <S-F9>     :copen<CR>
 nnoremap <C-F9>     :lopen<CR>
