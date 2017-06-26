@@ -6,6 +6,7 @@ tmp=/tmp/tmux_terminfo
 rm -f $tmp
 
 if [ "$ISOSX" ]; then
+    echo making terminfo for OSX
     cat <<EOF > $tmp
 tmux|tmux terminal multiplexer,
         am, km, mir, msgr, xenl,
@@ -67,6 +68,7 @@ tmux-256color|tmux with 256 colors,
         tbc=\E[3g, tsl=\E]0;,
 EOF
 else
+    echo making terminfo for linux
     cat <<EOF > $tmp
 tmux|tmux terminal multiplexer,
         ritm=\E[23m, rmso=\E[27m, sitm=\E[3m, smso=\E[7m, Ms@,
