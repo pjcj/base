@@ -25,6 +25,8 @@ else
     bspc monitor -d I II III IV V VI
 fi
 
+(sleep 3; bspc config -m "$(bspc query -M | awk "NR == 1")" bottom_padding 24)&
+
 # bspc rule -a Firefox     desktop=II
 bspc rule -a chromium-browser desktop=II
 # bspc rule -a Thunderbird desktop=II
