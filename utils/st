@@ -29,6 +29,7 @@ cleanup() {
 
 PATH="$scrdir:$PATH"
 verbose=0
+size=14
 
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -44,6 +45,10 @@ while [ $# -gt 0 ]; do
             verbose=1
             shift
             ;;
+        -s|--size)
+            size="$2"
+            shift 2
+            ;;
         *)
             break
             ;;
@@ -51,19 +56,9 @@ while [ $# -gt 0 ]; do
 done
 
 main() {
-    ((verbose)) && pi "Running $*"
-    case "${1:-}" in
-        options)
-            perl -nE 'say $1 =~ s/"//gr =~ s/\s*\|\s*/\n/gr' \
-                -E 'if /^ {8}"?([a-zA-Z0-9_ "|\\-]+)"?(?:\)|\s*\|\s*\\)$/' \
-                -E '&& $1 !~ /^_/' < "$0"
-            ;;
-        *)
-            size="${1-14}"
-            ~/g/sw/bin/st -f \
-                "Inconsolata for Powerline NF:pixelsize=$size:antialias=false"
-            ;;
-    esac
+    ~/g/sw/bin/st -f \
+        "Inconsolata for Powerline NF:pixelsize=$size:antialias=false" \
+        "$@"
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
