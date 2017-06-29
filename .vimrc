@@ -609,7 +609,8 @@ Shortcut open quickfix list window
 Shortcut open location list window
     \ nnoremap <C-F9>     :lopen<CR>
 
-nnoremap <silent>   <S-F10> w
+Shortcut switch windows
+    \ nnoremap <silent>   <S-F10> w
 nnoremap §          :Gitv --all<CR>
 vnoremap §          :Gitv --all<CR>
 nnoremap °          :Gitv! --all<CR>
