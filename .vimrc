@@ -22,6 +22,7 @@ Plug 'haya14busa/incsearch.vim'                  " show all matches on incsearch
 Plug 'Xuyuanp/nerdtree-git-plugin'                          " show changed files
 Plug 'scrooloose/nerdtree'                                              " <S-F1>
 Plug 'chr4/nginx.vim'
+Plug 'bfredl/nvim-miniyank'
 Plug 'c9s/perlomni.vim'                                         " for completion
 Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
 Plug 'saltstack/salt-vim'                                    " salt highlighting
@@ -87,9 +88,6 @@ Plug 'mpendse/unite-search-history'
 Plug 'tsukkee/unite-tag'
 Plug 'sanford1/unite-unicode'
 Plug 'LeafCage/yankround.vim'
-
-" Plug 'vim-scripts/YankRing.vim'
-" YankRing messes up xp unless min_element_length is 1, in which case it's slow
 
 Plug 'pjcj/neovim-colors-solarized-truecolor-only'
 
@@ -721,15 +719,13 @@ Shortcut turn off spellchecking
 Shortcut toggle paste option
     \ nnoremap <leader>p :set paste!<CR>
 
-" yankring
-" map <leader>m :YRShow<CR>
-" let g:yankring_max_history         = 1000
-" let g:yankring_min_element_length  = 2
-" let g:yankring_max_element_length  = 40000  " 40K
-" let g:yankring_max_display         = 500
-" let g:yankring_window_height       = 25
-" let g:yankring_manage_numbered_reg = 1
-" let g:yankring_history_dir         = '$HOME/.vim'
+" miniyank
+Shortcut paste with miniyank
+    \ map p <Plug>(miniyank-autoput)
+Shortcut paste with miniyank
+    \ map P <Plug>(miniyank-autoPut)
+Shortcut cycle though miniyank buffer
+    \ map <C-Y> <Plug>(miniyank-cycle)
 
 " ALE
 let g:ale_open_list                = 0
@@ -779,7 +775,7 @@ let g:ctrlp_custom_ignore      = {
     \ 'file': "\v\nytprof$",
     \ }
 let g:ctrlp_extensions         = [
-    \ 'mixed', 'menu', 'tag', 'yankring', 'changes', 'cmdline'
+    \ 'mixed', 'menu', 'tag', 'changes', 'cmdline'
     \ ]
 let g:ctrlp_mruf_relative      = 1
 let g:ctrlp_use_caching        = 0
