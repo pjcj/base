@@ -45,10 +45,9 @@ sub get_options {
 sub main {
     get_options;
 
-    my ($file) = @{$O->{args}};
-    pd file => $file if $O->{verbose};
-    my ($type) = $file =~ /(\.\w*)$/;
-    $type //= ".pl";
+    my ($file, $type) = @{$O->{args}};
+    $type = defined $type ? ".$type" : ($file =~ /(\.\w*)$/)[0] // ".pl";
+    pd file => $file, $type if $O->{verbose};
     my $dir = $ENV{TEMPLATE_DIR} || path("$0/../templates")->realpath;
     my $tfile = path("$dir/template$type");
     return 0 unless $tfile->exists;
