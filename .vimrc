@@ -602,10 +602,14 @@ Shortcut open location list window
 
 Shortcut switch windows
     \ nnoremap <silent>   <S-F10> w
-nnoremap §          :Gitv --all<CR>
-vnoremap §          :Gitv --all<CR>
-nnoremap °          :Gitv! --all<CR>
-vnoremap °          :Gitv! --all<CR>
+Shortcut open gitv in browser mode
+    \ nnoremap §          :Gitv --all<CR>
+Shortcut open gitv in browser mode
+    \ vnoremap §          :Gitv --all<CR>
+Shortcut open gitv in file mode
+    \ nnoremap °          :Gitv! --all<CR>
+Shortcut open gitv in file mode
+    \ vnoremap °          :Gitv! --all<CR>
 nnoremap <Home>     1G
 nnoremap <End>      Gz-
 nnoremap <PageUp>   0
