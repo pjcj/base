@@ -56,7 +56,6 @@ Plug 'suan/vim-instant-markdown'                       " show mardown in browser
 Plug 'lfv89/vim-interestingwords'                                    " ,k ,K n N
 Plug 'tommcdo/vim-lion'                                 " alignment, gl gL glip=
 Plug 'Spaceghost/vim-matchit'                                                " %
-Plug 'terryma/vim-multiple-cursors'                                         " ^n
 Plug 'sheerun/vim-polyglot'                                 " extra syntax files
 Plug 'tpope/vim-repeat'
 Plug 'zirrostig/vim-schlepp'                               " highlight then hjkl
