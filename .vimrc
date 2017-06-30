@@ -720,12 +720,15 @@ Shortcut toggle paste option
     \ nnoremap <leader>p :set paste!<CR>
 
 " miniyank
+let g:miniyank_maxitems = 1000
+let g:miniyank_filename = $HOME."/.vim/.miniyank.mpack"
 Shortcut paste with miniyank
     \ map p <Plug>(miniyank-autoput)
 Shortcut paste with miniyank
     \ map P <Plug>(miniyank-autoPut)
-Shortcut cycle though miniyank buffer
+Shortcut cycle forwards though miniyank buffer
     \ map <C-Y> <Plug>(miniyank-cycle)
+Shortcut! g- cycle backwards though miniyank buffer
 
 " ALE
 let g:ale_open_list                = 0
