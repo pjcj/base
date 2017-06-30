@@ -720,8 +720,10 @@ Shortcut toggle paste option
     \ nnoremap <leader>p :set paste!<CR>
 
 " miniyank
-let g:miniyank_maxitems = 1000
-let g:miniyank_filename = $HOME."/.vim/.miniyank.mpack"
+let g:miniyank_maxitems        = 1000
+let g:miniyank_filename        = $HOME."/.vim/.miniyank.mpack"
+let g:miniyank_delete_maxlines = 10000
+
 Shortcut paste with miniyank
     \ map p <Plug>(miniyank-autoput)
 Shortcut paste with miniyank
