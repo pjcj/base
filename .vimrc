@@ -89,7 +89,6 @@ Plug 'tsukkee/unite-tag'
 Plug 'sanford1/unite-unicode'
 Plug 'LeafCage/yankround.vim'
 
-" Plug 'itchyny/calendar.vim'
 " Plug 'msanders/snipmate.vim'
 " Plug 'Raimondi/delimitMate'         " insert mode quote/bracket autocompletion
 " Plug 'tpope/vim-obsession'
@@ -422,9 +421,6 @@ nmap <silent> abc3 <Plug>JumpDiffCharPrevStart
 nmap <silent> abc4 <Plug>JumpDiffCharNextStart
 nmap <silent> abc5 <Plug>JumpDiffCharPrevEnd
 nmap <silent> abc6 <Plug>JumpDiffCharNextEnd
-
-let g:calendar_google_calendar = 1
-let g:calendar_google_task     = 1
 
 " get vim-search-pulse and vim-interestingwords working together
 " stop plugin overwriting mappings
