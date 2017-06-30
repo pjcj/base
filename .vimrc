@@ -16,7 +16,7 @@ Plug 'maralla/completor.vim'                                        " completion
 Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
-Plug 'gregsexton/gitv'
+Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'haya14busa/incsearch-fuzzy.vim'                                       " z/
 Plug 'haya14busa/incsearch.vim'                  " show all matches on incsearch
 Plug 'Xuyuanp/nerdtree-git-plugin'                          " show changed files
@@ -89,7 +89,6 @@ Plug 'tsukkee/unite-tag'
 Plug 'sanford1/unite-unicode'
 Plug 'LeafCage/yankround.vim'
 
-" Plug 'gregsexton/gitv'                                                 " <F10>
 " Plug 'itchyny/calendar.vim'
 " Plug 'junegunn/gv.vim'                                         " :GV :GV! gb q
 " Plug 'msanders/snipmate.vim'
@@ -685,10 +684,12 @@ endif
 
 let g:SuperTabDefaultCompletionType = '<c-n>'
 
+let g:Gitv_CommitStep               = 100
+let g:Gitv_OpenHorizontal           = 1
+let g:Gitv_OpenPreviewOnLaunch      = 1
+let g:Gitv_TruncateCommitSubjects   = 1
 let g:Gitv_WipeAllOnClose           = 1
 let g:Gitv_WrapLines                = 0
-let g:Gitv_OpenPreviewOnLaunch      = 1
-let g:Gitv_CommitStep               = 100
 
 inoremap # X<BS>#
 cnoremap <C-w> <C-I>
