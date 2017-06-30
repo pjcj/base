@@ -318,9 +318,6 @@ augroup file_types
     autocmd BufNewFile,BufReadPost *.tt       set ft=tt2html
     autocmd BufNewFile,BufReadPost *.t        set ft=perl
     autocmd BufNewFile,BufReadPost *.pd       set ft=perl
-    autocmd BufNewFile * :exe 'r! file_template -p ' . &path . ' <afile>'
-    autocmd BufNewFile * :exe 'normal ggdd'
-    autocmd BufNewFile * /^[ \t]*[#] *implementation/
 
     autocmd Filetype perl setlocal path+=lib
 
@@ -947,6 +944,15 @@ Shortcut! f; find all signs
 let g:lion_squeeze_spaces = 1
 Shortcut! gl align with spaces to right
 Shortcut! gL align with spaces to left
+
+function! NewFile(type)
+    exe 'normal ggdG'
+    exe 'r! file_template -path ' . &path . ' ' . expand('%:p') . ' ' . a:type
+    exe 'normal ggdd'
+    /^[ \t]*[#] *implementation/
+    w
+endfunction
+command! -nargs=? NewFile :call NewFile(<q-args>)
 
 " abbr
 iabbr ,, =>
