@@ -12,7 +12,7 @@ tmp/
 .vim/bundle/
 .vim/plugged/
 .vim/.netrwhist
-.vim/yankring_history_v2.txt
+.vim/.miniyank.mpack
 .vim/autoload/plug.vim*
 .vim/spell/
 .vim/shada/
