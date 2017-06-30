@@ -89,7 +89,6 @@ Plug 'tsukkee/unite-tag'
 Plug 'sanford1/unite-unicode'
 Plug 'LeafCage/yankround.vim'
 
-" Plug 'tpope/vim-obsession'
 " Plug 'vim-scripts/YankRing.vim'
 " YankRing messes up xp unless min_element_length is 1, in which case it's slow
 
