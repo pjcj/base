@@ -89,7 +89,6 @@ Plug 'tsukkee/unite-tag'
 Plug 'sanford1/unite-unicode'
 Plug 'LeafCage/yankround.vim'
 
-" Plug 'msanders/snipmate.vim'
 " Plug 'Raimondi/delimitMate'         " insert mode quote/bracket autocompletion
 " Plug 'tpope/vim-obsession'
 " Plug 'vim-scripts/YankRing.vim'
