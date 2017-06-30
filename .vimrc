@@ -90,7 +90,6 @@ Plug 'sanford1/unite-unicode'
 Plug 'LeafCage/yankround.vim'
 
 " Plug 'itchyny/calendar.vim'
-" Plug 'junegunn/gv.vim'                                         " :GV :GV! gb q
 " Plug 'msanders/snipmate.vim'
 " Plug 'Raimondi/delimitMate'         " insert mode quote/bracket autocompletion
 " Plug 'tpope/vim-obsession'
