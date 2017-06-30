@@ -748,12 +748,6 @@ Shortcut jump to next error
 Shortcut jump to previous error
     \ nmap <silent> <C-K> <Plug>(ale_previous_wrap)
 
-" delimitMate
-" imap § <C-G>g
-" let delimitMate_expand_space         = 1
-" let delimitMate_expand_cr            = 2
-" let delimitMate_expand_inside_quotes = 1
-
 " closetag
 let g:closetag_filenames = "*.html,*.xhtml,*.tt"
 
