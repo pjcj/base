@@ -69,11 +69,13 @@ Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 
+" FZF
 Plug 'sunaku/vim-shortcut'                                                " , ,,
 Plug '/home/pjcj/g/ghq/github.com/junegunn/fzf'
 Plug '/usr/local/Cellar/fzf/0.16.7'
 Plug 'junegunn/fzf.vim'
 
+" Unite
 Plug 'Shougo/unite.vim'                                " <space><space> <space>s
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
 
