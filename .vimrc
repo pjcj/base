@@ -182,6 +182,10 @@ else
     set grepprg=git\ grep\ -n
 endif
 
+if has('nvim')
+    set inccommand=split
+endif
+
 " Java options
 set cinoptions+=j1  " anonymous classes
 let g:java_comment_strings         = 1
