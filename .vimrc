@@ -492,10 +492,10 @@ Shortcut turn off highlighting of interesting words
 function! s:config_fuzzyall(...) abort
     set hlsearch
     return extend(copy({
-        \   'converters': [
-        \     incsearch#config#fuzzy#converter(),
-        \     incsearch#config#fuzzyspell#converter()
-        \   ],
+        \     'converters': [
+        \         incsearch#config#fuzzy#converter(),
+        \         incsearch#config#fuzzyspell#converter()
+        \     ],
         \ }), get(a:, 1, {}))
 endfunction
 
