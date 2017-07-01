@@ -644,8 +644,8 @@ map <F34>    <C-F10>
 map <F35>    <C-F11>
 map <F36>    <C-F12>
 
-" not working with neovim
 map <F37>    <M-F1>
+" not working with neovim
 map <F38>    <M-F2>
 map <F39>    <M-F3>
 map <F40>    <M-F4>
