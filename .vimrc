@@ -113,9 +113,9 @@ set backupcopy=yes,breakhardlink
 set backupdir=~/g/tmp/vim/
 set backupext=.bak
 set clipboard=unnamedplus  " yanks, deletes and changes go into + clipboard
+set cmdheight=3
 set colorcolumn=80,120
 set complete=.,w,b,u,U,k/usr/share/dict/words,i,t
-set cmdheight=3
 set dictionary=/usr/share/dict/words
 set diffopt=filler,vertical
 set directory=>~/g/tmp/vim/
@@ -125,7 +125,9 @@ set exrc
 set formatoptions=tcrqnl
 set guifont=inconsolata\ \for\ powerline\ 12
 set history=1000
+set hlsearch
 set icon
+set ignorecase
 set incsearch
 set joinspaces
 set laststatus=2
@@ -137,36 +139,37 @@ set mouse=a
 set mousefocus
 set mousehide
 set mousemodel=popup_setpos
+set nosmartindent
+set nosmarttab
 set number
 set path=,,.,/usr/include
 set report=1
 set ruler
 set scrolloff=3
 set shell=zsh
+set shiftround
 set shiftwidth=4
 set showcmd
 set showmatch
 set showmode
-set nosmartindent
-set nosmarttab
-set shiftround
+set smartcase
 set softtabstop=0
 set suffixes=.d,.e,.o,.org,.bak,~
 set tabstop=8
-set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags
 set tagrelative
+set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags
 set textwidth=0
 set title
 set ttimeoutlen=50
 set ttyfast
-set updatetime=250
 set undodir=~/g/tmp/vim
 set undofile
 set undolevels=10000
+set updatetime=250
 set viminfo='50
+set whichwrap=19
 set wildmenu
 set wildmode=list:longest,full
-set whichwrap=19
 set writebackup
 
 if executable('rg')
@@ -175,12 +178,6 @@ if executable('rg')
 else
     set grepprg=git\ grep\ -n
 endif
-
-set ignorecase
-set smartcase
-set incsearch
-set showmatch
-set hlsearch
 
 " Java options
 set cinoptions+=j1  " anonymous classes
