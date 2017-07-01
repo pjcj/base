@@ -264,10 +264,10 @@ call Set_colour('TabLineSel',   'guifg', s:violet)
 Shortcut! <C-S-P> show syntax class of item under cursor
 nmap <C-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
-  if !exists('*synstack')
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), "synIDattr(v:val, 'name')")
+    if !exists('*synstack')
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), "synIDattr(v:val, 'name')")
 endfunc
 
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
@@ -735,17 +735,17 @@ Shortcut cycle forwards though miniyank buffer
 Shortcut! g- cycle backwards though miniyank buffer
 
 " ALE
-let g:ale_open_list                = 0
-let g:ale_echo_cursor              = 1
-let g:ale_lint_on_text_changed     = 1
-let g:ale_lint_on_enter            = 1
-let g:ale_lint_on_save             = 1
-let g:ale_lint_delay               = 200
-let g:ale_set_quickfix             = 0
-let g:ale_sign_error               = '✗'
-let g:ale_sign_warning             = '⚠'
-let g:ale_perl_perl_executable     = '/home/pjcj/g/base/utils/ale_perl'
-let g:ale_perl_perl_options        = '-Mblib'
+let g:ale_open_list            = 0
+let g:ale_echo_cursor          = 1
+let g:ale_lint_on_text_changed = 1
+let g:ale_lint_on_enter        = 1
+let g:ale_lint_on_save         = 1
+let g:ale_lint_delay           = 200
+let g:ale_set_quickfix         = 0
+let g:ale_sign_error           = '✗'
+let g:ale_sign_warning         = '⚠'
+let g:ale_perl_perl_executable = '/home/pjcj/g/base/utils/ale_perl'
+let g:ale_perl_perl_options    = '-Mblib'
 
 Shortcut jump to next error
     \ nmap <silent> <C-J> <Plug>(ale_next_wrap)
