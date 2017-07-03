@@ -943,7 +943,7 @@ Shortcut! gl align with spaces to right
 Shortcut! gL align with spaces to left
 
 function! NewFile(type)
-    exe 'normal ggdG'
+    " exe 'normal ggdG'
     exe 'r! file_template -path ' . &path . ' ' . expand('%:p') . ' ' . a:type
     exe 'normal ggdd'
     /^[ \t]*[#] *implementation/
