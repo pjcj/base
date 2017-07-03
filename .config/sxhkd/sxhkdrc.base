@@ -103,10 +103,10 @@ super + {_,shift} + r
 # wm independent hotkeys
 
 super + Return ; super + Return
-    st ${FONTSIZE:-14}
+    st -s ${FONTSIZE:-14}
 
 super + Return ; Return
-    st ${FONTSIZE:-16}
+    st -s ${FONTSIZE2:-16}
 
 super + space
     dmenu_run -b -i -fn '-*-courier-bold-r-*-*-24-*-*-*-*-*-iso8859-*'
