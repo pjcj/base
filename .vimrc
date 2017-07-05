@@ -616,8 +616,8 @@ nnoremap <PageUp>   0
 nnoremap <PageDown> 0
 nnoremap <Insert>   [[(z<CR>]]
 nnoremap <Del>      j]](z<CR>]]
-Shortcut switch to previous buffer
-    \ nnoremap <F12>      
+Shortcut! <F12> switch to previous buffer
+nnoremap <F12>      
 
 imap <F2> sub {<CR>my $self = shift;<CR>my () = @_;<CR>}<ESC>%hi<Space>
 imap <F3> $self->{}<ESC>i
