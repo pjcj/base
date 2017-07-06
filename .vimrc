@@ -705,6 +705,7 @@ Shortcut delete trailing whitespace
 Shortcut select lines to end of previous yanked or changed text
     \ nnoremap <leader>v V`]
 
+Shortcut cs change quotes from to
 Shortcut change quotes from ' to "
     \ nmap <leader>qq cs'"
 Shortcut change quotes from " to '
