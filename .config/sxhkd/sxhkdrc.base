@@ -132,6 +132,11 @@ super + y ; n
     xdotool sleep 0.1 type --clearmodifiers --delay 12 "Paul Johnson"
 super + y ; e
     xdotool sleep 0.1 type --clearmodifiers --delay 12 paul@pjcj.net
+super + y ; s
+    xdotool sleep 0.1 type --clearmodifiers --delay 12 "sudo -s"       && \
+    xdotool           key  --clearmodifiers            Return          && \
+    xdotool sleep 1   type --clearmodifiers --delay 12 "y"             && \
+    xdotool           key  --clearmodifiers            Return
 
 # apps
 super + a ; f
