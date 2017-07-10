@@ -163,13 +163,11 @@ case "$build" in
         [ -e "$target" ] || ln -s "$(pwd)/fpp" "$target"
         ;;
     diff-so-fancy)
-        cp -a diff-so-fancy third_party/diff-highlight/diff-highlight \
-              third_party/ansi-reveal \
-            "$sw/bin"
-        dir="$sw/bin/libexec"
-        mkdir -p "$dir"
-        cp -a libexec/diff-so-fancy.pl "$dir"
-        perl -pi -e 's/my \$ansi_color_regex = qr.*\K3/4/' "$dir/diff-so-fancy.pl"
+        bin="$sw/bin"
+        cp -a third_party/build_fatpack/diff-so-fancy \
+              third_party/ansi-reveal/ansi-reveal.pl  \
+              "$bin"
+        perl -pi -e 's/my \$ansi_color_regex = qr.*\K3/4/' "$bin/diff-so-fancy"
         ;;
     tig)
         configure
