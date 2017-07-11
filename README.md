@@ -53,7 +53,6 @@ plugins:
   (hightlighting on the command line)
 * [zsh-dwim](https://github.com/oknowton/zsh-dwim) (predict next command with ^U)
 * [git-extras](https://github.com/tj/git-extras) (additional git commands)
-* [k](https://github.com/supercrabtree/k) (ls extended)
 
 The vim config uses [vim-plug](https://github.com/junegunn/vim-plug) and the
 following plugins:
