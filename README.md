@@ -58,6 +58,7 @@ The vim config uses [vim-plug](https://github.com/junegunn/vim-plug) and the
 following plugins:
 
 * [ale](https://github.com/w0rp/ale) (syntax checking)
+* [clever-f](https://github.com/rhysd/clever-f.vim) (extends f and t)
 * [completor](https://github.com/maralla/completor.vim) (completion)
 * [ctrlp-extensions](https://github.com/sgur/ctrlp-extensions) (cmdline, yank
   and menu for ctrlp)
