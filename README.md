@@ -65,7 +65,6 @@ following plugins:
 * [ctrlp](https://github.com/ctrlpvim/ctrlp.vim) (fuzzy finder)
 * [diffchar](https://github.com/vim-scripts/diffchar.vim) (show diffs by
   character)
-* [dockerfile](https://github.com/honza/dockerfile) (docker syntax)
 * [gitv](https://github.com/gregsexton/gitv) (gitk-alike)
 * [gundo](https://github.com/sjl/gundo.vim) (visuals undo tree)
 * [incsearch-fuzzy](https://github.com/haya14busa/incsearch-fuzzy.vim) (fuzzy
