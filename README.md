@@ -66,7 +66,6 @@ following plugins:
 * [diffchar](https://github.com/vim-scripts/diffchar.vim) (show diffs by
   character)
 * [gitv](https://github.com/gregsexton/gitv) (gitk-alike)
-* [gundo](https://github.com/sjl/gundo.vim) (visuals undo tree)
 * [incsearch-fuzzy](https://github.com/haya14busa/incsearch-fuzzy.vim) (fuzzy
   search)
 * [incsearch](https://github.com/haya14busa/incsearch.vim) (show all matches on
