@@ -115,7 +115,6 @@ following plugins:
   in gutter)
 * [vim-gutentags](https://github.com/ludovicchabant/vim-gutentags) (generate
   tags dynamically)
-  cursor)
 * [vim-indent-guides](https://github.com/nathanaelkane/vim-indent-guides)
   (guidelines for indentation)
 * [vim-instant-markdown](https://github.com/suan/vim-instant-markdown) (show
