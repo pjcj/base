@@ -96,7 +96,7 @@ following plugins:
 * [vim-argwrap](https://github.com/FooSoft/vim-argwrap) (wrap multiline args)
 * [vim-autoswap](https://github.com/gioele/vim-autoswap) (deal with swap files
   intelligently)
-* [vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
+* [vim-closetag](https://github.com/alvan/vim-closetag) (close tags)
 * [vim-commentary](https://github.com/tpope/vim-commentary) (code comments)
 * [vim-css-color](https://github.com/ap/vim-css-color) (add colour to
   descriptions)
@@ -117,29 +117,33 @@ following plugins:
   tags dynamically)
 * [vim-indent-guides](https://github.com/nathanaelkane/vim-indent-guides)
   (guidelines for indentation)
+* [vim-indent-guides](https://github.com/michaeljsmith/vim-indent-object)
+  (objects based on indentation)
 * [vim-instant-markdown](https://github.com/suan/vim-instant-markdown) (show
   markdown in browser as it is edited)
 * [vim-interestingwords](https://github.com/vasconcelloslf/vim-interestingwords)
   (highlighting and navigation)
+* [vim-lion](https://github.com/tommcdo/vim-lion) (alignment)
 * [vim-matchit](https://github.com/Spaceghost/vim-matchit) (extended % matching)
-* [vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
-  (concurrent editing)
 * [vim-polyglot](https://github.com/sheerun/vim-polyglot) (extra syntax files)
 * [vim-repeat](https://github.com/tpope/vim-repeat) (make . work more often)
 * [vim-schlepp](https://github.com/zirrostig/vim-schlepp) (move blocks of text)
 * [vim-search-pulse](https://github.com/inside/vim-search-pulse) (pulse on
   search)
 * [vim-signature](https://github.com/kshenoy/vim-signature) (show marks)
+* [vim-snippets](https://github.com/honza/vim-snippets) (snippets)
 * [vim-surround](https://github.com/tpope/vim-surround) (manage surrounding
   characters)
 * [vim-sxhkdrc](https://github.com/baskerville/vim-sxhkdrc) (syntax
   highlighting)
 * [vim-tmux](https://github.com/tmux-plugins/vim-tmux) (tmux syntax highlighting
   and more)
-* [vim-togglecursor](https://github.com/jszakmeister/vim-togglecursor) (change
-  cursor shape on insert)
 * [vitality](https://github.com/akracun/vitality.vim) (focus lost and gained
   inside tmux)
+
+
+* [vim-shortcut](https://github.com/sunaku/vim-shortcut) (describe shortcuts)
+* [fzf](https://github.com/junegunn/fzf.vim) (fuzzy finder)
 
 
 * [unite](https://github.com/Shougo/unite.vim) (ctrl-p-like interface)
