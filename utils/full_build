@@ -33,6 +33,9 @@ fi
 $pip3 install --upgrade --user neovim vim-vint proselint
 pip install --upgrade --user git+git://github.com/powerline/powerline
 
+gem install colorls
+gem update colorls
+
 # urlwatch
 $pip3 install --upgrade --user pyyaml minidb requests keyring chump urlwatch
 
