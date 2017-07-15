@@ -214,6 +214,11 @@ case "$build" in
         cp "$font" "$fonts"
         fc-cache -vf "$fonts"
         ;;
+    ruby)
+        sudo apt-add-repository ppa:brightbox/ruby-ng
+        sudo apt-get update
+        sudo apt-get install ruby2.4 ruby2.4-dev
+        ;;
     *)
         echo unknown build "$build"
         ;;
