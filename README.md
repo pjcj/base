@@ -85,6 +85,8 @@ following plugins:
 * [tagbar](https://github.com/majutsushi/tagbar) (display tags)
 * [tmux-complete](https://github.com/wellle/tmux-complete.vim) (completion from
   tmux buffers)
+* [ultisnips](https://github.com/SirVer/ultisnips) (snippets)
+* [undotree](https://github.com/mbbill/undotree) (undo tree management)
 * [unicode](https://github.com/chrisbra/unicode.vim) (unicode table, search,
   complete)
 * [vim-abolish](https://github.com/tpope/vim-abolish) (handle word variants)
