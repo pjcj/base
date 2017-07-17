@@ -11,7 +11,7 @@ test -z "$new" && err
 
 git replace "$original" "$new"
 git filter-branch -- --all
-# git filter-branch -- "$new.."
+# git filter-branch -- "$new..releng"
 git replace -d "$original"
 # echo 'when everything looks good'
 git for-each-ref --format="%(refname)" refs/original/ | xargs -n 1 git update-ref -d
