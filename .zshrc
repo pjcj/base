@@ -330,13 +330,7 @@ c() {
     fi
 }
 
-d() {
-    # if which k >&/dev/null; then
-        # k -h "$@"
-    # else
-        f "$@"
-    # fi
-}
+d() { f "$@" }
 
 u() { popd }
 
