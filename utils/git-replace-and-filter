@@ -3,6 +3,8 @@
 # first run git checkout $original
 # then git commit --amend as required
 
+set -e
+
 err() { echo "Usage: $0 original new" 1>&2 && exit 1; }
 original=$1
 new=$2
@@ -10,8 +12,8 @@ test -z "$original" && err
 test -z "$new" && err
 
 git replace "$original" "$new"
-git filter-branch -- --all
-# git filter-branch -- "$new..releng"
+# git filter-branch -- --all
+git branch -a --contains="$original" | perl -ne 's/^..//; s/^remotes\///; print unless / -> /' | xargs git filter-branch "^$new"
 git replace -d "$original"
 # echo 'when everything looks good'
 git for-each-ref --format="%(refname)" refs/original/ | xargs -n 1 git update-ref -d
