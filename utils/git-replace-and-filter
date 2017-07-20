@@ -13,7 +13,10 @@ test -z "$new" && err
 
 git replace "$original" "$new"
 # git filter-branch -- --all
-git branch -a --contains="$original" | perl -ne 's/^..//; s/^remotes\///; print unless / -> /' | xargs git filter-branch "^$new"
+git branch -a --contains="$original" | \
+    perl -ne 's/^..//; s/^remotes\///; print unless / -> /' | \
+    xargs git filter-branch "^$new"
 git replace -d "$original"
 # echo 'when everything looks good'
-git for-each-ref --format="%(refname)" refs/original/ | xargs -n 1 git update-ref -d
+git for-each-ref --format="%(refname)" refs/original/ | \
+    xargs -n 1 git update-ref -d
