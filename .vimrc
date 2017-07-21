@@ -127,6 +127,7 @@ set expandtab
 set exrc
 set formatoptions=tcrqnl
 set guifont=inconsolata\ \for\ powerline\ 12
+set hidden  " needed for completor
 set history=1000
 set hlsearch
 set icon
