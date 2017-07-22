@@ -205,6 +205,11 @@ case "$build" in
     plenv)
         rm -f ~/.plenv
         ln -s "$(pwd)" ~/.plenv
+        if [ ! -z "$PLENV_VERSIONS" ]; then
+            rm -f ~/.plenv/versions
+            mkdir -p "$PLENV_VERSIONS"
+            ln -s "$PLENV_VERSIONS" ~/.plenv/versions
+        fi
         ;;
     Perl-Build)
         mkdir -p ~/.plenv/plugins
