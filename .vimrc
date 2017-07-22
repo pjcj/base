@@ -309,6 +309,8 @@ let g:airline_theme                  = 'solarized'
 let g:airline_powerline_fonts        = 1
 let g:airline_solarized_normal_green = 1
 
+let g:autoswap_detect_tmux = 1  " switch to open tmux pane
+
 augroup file_types
     autocmd!
     autocmd BufNewFile,BufReadPost template/* set ft=tt2html
