@@ -609,13 +609,13 @@ Shortcut grep for exact word under cursor
 Shortcut grep for word under cursor
     \ nnoremap <S-F8>     *``:execute "silent grep! " . expand("<cword>")
         \ <Bar> botright copen<CR><C-L>
-Shortcut grep for visual selection
+Shortcut (v) grep for visual selection
     \ vnoremap <C-F8> :<C-U>GrepVisual<CR>
 Shortcut close quickfix, location and preview list windows
     \ nnoremap <F9>       :cclose<Bar>:lclose<Bar>:pclose<CR>
 Shortcut open quickfix list window
     \ nnoremap <S-F9>     :copen<CR>
-Shortcut (v) open location list window
+Shortcut open location list window
     \ nnoremap <C-F9>     :lopen<CR>
 Shortcut switch windows
     \ nnoremap <silent>   <S-F10> w
