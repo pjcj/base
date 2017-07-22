@@ -208,7 +208,9 @@ case "$build" in
         ;;
     Perl-Build)
         mkdir -p ~/.plenv/plugins
-        ln -s "$(pwd)" ~/.plenv/plugins/perl-build
+        pb=~/.plenv/plugins/perl-build
+        rm -f "$pb"
+        ln -s "$(pwd)" "$pb"
         ;;
     rxvt-unicode)
         # ignore for now
