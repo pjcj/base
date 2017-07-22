@@ -472,7 +472,7 @@ augroup SearchIndex
         let l:prev = @/
         let @/ = '\<'.  expand('<cword>') . '\>'
         " if l:prev ==# @/
-            :execute "normal \<Plug>SearchIndex"
+            execute "normal \<Plug>SearchIndex"
         " endif
         " echo 'Sindex ' . l:prev . ' ' . @/
         let @/ = l:prev
