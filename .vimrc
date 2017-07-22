@@ -398,9 +398,9 @@ let g:gitgutter_highlight_lines = 0
 let g:gitgutter_realtime        = 1
 let g:gitgutter_eager           = 1
 let g:gitgutter_map_keys        = 0
-Shortcut move to next hunk
+Shortcut jump to next hunk
     \ nnoremap <leader>hn :GitGutterNextHunk<CR>
-Shortcut move to previous hunk
+Shortcut jump to previous hunk
     \ nnoremap <leader>hp :GitGutterPrevHunk<CR>
 Shortcut preview current hunk
     \ nnoremap <leader>hv :GitGutterPreviewHunk<CR>
@@ -571,9 +571,9 @@ command! GrepVisual call Grep_visual(s:get_visual_selection())
 
 Shortcut stage current hunk
     \ nnoremap <F1>       :GitGutterStageHunk<CR>
-Shortcut move to previous hunk
+Shortcut jump to previous hunk
     \ nnoremap <F2>       :GitGutterPrevHunk<CR>
-Shortcut move to next hunk
+Shortcut jump to next hunk
     \ nnoremap <F3>       :GitGutterNextHunk<CR>
 Shortcut preview hunk
     \ nnoremap <C-F1>     :GitGutterPreviewHunk<CR>
@@ -690,9 +690,9 @@ let g:undotree_HighlightSyntaxChange = 'CursorLine'
 Shortcut toggle undo tree
     \ nnoremap <leader>gu :UndotreeToggle<CR>
 
-Shortcut move to previous edit location
+Shortcut jump to previous edit location
     \ nnoremap g, g;
-Shortcut move to next edit location
+Shortcut jump to next edit location
     \ nnoremap g. g,
 
 if has('nvim')
