@@ -555,6 +555,20 @@ augroup END
 
 set guioptions=ag
 
+function! s:get_visual_selection()
+    let [lnum1, col1] = getpos("'<")[1:2]
+    let [lnum2, col2] = getpos("'>")[1:2]
+    let lines = getline(lnum1, lnum2)
+    let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[0] = lines[0][col1 - 1:]
+    return join(lines, " ")
+endfunction
+function! Grep_visual(text)
+    " execute "silent grep! '" . a:text . "'"
+    execute "silent grep! " . a:text
+endfunction
+command! GrepVisual call Grep_visual(s:get_visual_selection())
+
 Shortcut stage current hunk
     \ nnoremap <F1>       :GitGutterStageHunk<CR>
 Shortcut move to previous hunk
@@ -594,13 +608,14 @@ Shortcut grep for exact word under cursor
 Shortcut grep for word under cursor
     \ nnoremap <S-F8>     *``:execute "silent grep! " . expand("<cword>")
         \ <Bar> botright copen<CR><C-L>
+Shortcut grep for visual selection
+    \ vnoremap <C-F8> :<C-U>GrepVisual<CR>
 Shortcut close quickfix, location and preview list windows
     \ nnoremap <F9>       :cclose<Bar>:lclose<Bar>:pclose<CR>
 Shortcut open quickfix list window
     \ nnoremap <S-F9>     :copen<CR>
 Shortcut open location list window
     \ nnoremap <C-F9>     :lopen<CR>
-
 Shortcut switch windows
     \ nnoremap <silent>   <S-F10> w
 Shortcut open gitv in browser mode
