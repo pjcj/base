@@ -504,8 +504,8 @@ if [[ -e $PERLBREW_ROOT/etc/bashrc ]] then
     complete -F _perlbrew_compgen pb
 fi
 
-if [[ -e "$HOME/.plenv" ]] then
-    export PATH="$HOME/.plenv/bin:$PATH"
+if [[ -e ~/.plenv ]] then
+    export PATH=~/.plenv/bin:$PATH
     eval "$(plenv init - zsh)"
 fi
 
