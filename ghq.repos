@@ -19,3 +19,5 @@ git/git
 oblitum/caps2esc
 junegunn/fzf
 vim/vim
+tokuhirom/plenv
+tokuhirom/Perl-Build.git

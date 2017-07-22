@@ -202,6 +202,14 @@ case "$build" in
     fzf)
         ./install --all
         ;;
+    plenv)
+        rm -f ~/.plenv
+        ln -s "$(pwd)" ~/.plenv
+        ;;
+    Perl-Build)
+        mkdir -p ~/.plenv/plugins
+        ln -s "$(pwd)" ~/.plenv/plugins/perl-build
+        ;;
     rxvt-unicode)
         # ignore for now
         ;;
