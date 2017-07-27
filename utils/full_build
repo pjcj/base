@@ -8,9 +8,13 @@ gobase
 
 source ~/.zplug/init.zsh
 zplug clear
-curl -SL https://raw.githubusercontent.com/docker/docker/master/contrib/completion/zsh/_docker \
-    >| /home/pjcj/g/base/zsh/functions/_docker
-rm -f ~/.zcompdump; compinit
+curl -SL https://github.com/docker/cli/raw/master/contrib/completion/zsh/_docker \
+    >| ~/g/base/zsh/functions/_docker
+curl -SL https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose \
+    >| ~/g/base/zsh/functions/_docker-compose
+curl -SL https://raw.githubusercontent.com/docker/machine/master/contrib/completion/zsh/_docker-machine \
+    >| ~/g/base/zsh/functions/_docker-machine
+rm -f ~/.zcompdump; autoload -Uz compinit && compinit -i
 
 ~/.tmux/plugins/tpm/bindings/clean_plugins
 ~/.tmux/plugins/tpm/bindings/install_plugins

@@ -19,3 +19,5 @@ tmp/
 .config/gtk-3.0/bookmarks
 .config/sxhkd/sxhkdrc
 zsh/functions/_docker
+zsh/functions/_docker-compose
+zsh/functions/_docker-machine
