@@ -7,4 +7,4 @@ $ restart
 $ zplug clean
 $ zplug update
 
-$ build_all
+$ full_build
