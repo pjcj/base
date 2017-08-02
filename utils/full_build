@@ -51,8 +51,6 @@ $EDITOR -c PlugUpdate  -c qa
 $EDITOR -c UnicodeDownload -c qa
 
 gobase
-# perl -pi -e "s/if has\('gui_running'\)\K$/ || (has('nvim') && &termguicolors)/" \
-            # .vim/plugged/vim-interestingwords/plugin/interestingwords.vim
 
 command go get -u github.com/motemen/ghq
 
