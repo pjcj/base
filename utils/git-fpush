@@ -1,6 +1,6 @@
 #!/bin/sh
 
-branch=${1-`git branch-current`}
-test -z $branch && echo "branch required" 1>&2 && exit 1
+branch="${1-$(git branch-current)}"
+test -z "$branch" && echo "branch required" 1>&2 && exit 1
 
-git push origin --delete $branch && git push -u origin $branch
+git push origin --delete "$branch" && git push -u origin "$branch"
