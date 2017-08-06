@@ -78,14 +78,3 @@ cd ~
 mkdir -p ~/.tmux/plugins
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 tmux source-file ~/.tmux.conf
-
-aptitude install libxcb-util0-dev libxcb-keysyms1-dev libxcb-xinerama0-dev \
-                 libxcb-randr0-dev libxcb-icccm4-dev libxcb-ewmh1-dev
-aptitude install xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libxcb-ewmh2
-git clone https://github.com/baskerville/sxhkd.git
-make install PREFIX=~/g/sw
-git clone https://github.com/baskerville/bspwm.git
-make install PREFIX=~/g/sw
-
-sudo ln -s ~base/bspwm.desktop /usr/share/xsessions
-sudo ln -s ~/g/sw/bin/{bspwm-session,sxhkd,bspc,bspwm} /usr/local/bin
