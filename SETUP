@@ -46,9 +46,6 @@ python3 get-pip.py --user
 
 Set up theme with https://github.com/ferdi265/numix-solarized-gtk-theme
 
-# TODO - do we need tmuxinator now?
-# sudo gem install tmuxinator
-
 # if necessary
 # either
 # sudo aptitude install python-pip
