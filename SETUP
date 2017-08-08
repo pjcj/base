@@ -60,16 +60,6 @@ sudo aptitude install python3-pip
 sudo pip2 install neovim
 sudo pip3 install neovim
 
-# if necessary
-# sudo aptitude install libncurses-dev
-# cd ~/g/sw/build
-# wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
-# wget https://sourceforge.net/projects/levent/files/libevent/libevent-2.0/libevent-2.0.22-stable.tar.gz
-# ./configure --prefix=~/g/sw
-# wget http://downloads.sourceforge.net/tmux/tmux-2.0.tar.gz
-# export LIBEVENT_CFLAGS="-I/home/pjcj/g/sw/include"
-# export LIBEVENT_LIBS="-L/home/pjcj/g/sw/lib -Wl,-rpath=/home/pjcj/g/sw/lib -levent"
-# ./configure --prefix=~/g/sw
 
 cd ~
 mkdir -p ~/.tmux/plugins
