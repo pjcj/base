@@ -43,22 +43,7 @@ wget https://bootstrap.pypa.io/get-pip.py
 python3 get-pip.py --user
 
 
-
 Set up theme with https://github.com/ferdi265/numix-solarized-gtk-theme
-
-# if necessary
-# either
-# sudo aptitude install python-pip
-# or
-# wget --no-check-certificate https://bootstrap.pypa.io/get-pip.py
-# python get-pip.py
-
-pip install --upgrade --user git+git://github.com/powerline/powerline
-
-# for neovim:
-sudo aptitude install python3-pip
-sudo pip2 install neovim
-sudo pip3 install neovim
 
 
 cd ~
