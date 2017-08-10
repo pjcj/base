@@ -566,8 +566,7 @@ function! s:get_visual_selection()
     return join(lines, " ")
 endfunction
 function! Grep_visual(text)
-    " execute "silent grep! '" . a:text . "'"
-    execute "silent grep! " . a:text
+    execute "silent grep! '" . a:text . "'"
 endfunction
 command! GrepVisual call Grep_visual(s:get_visual_selection())
 
