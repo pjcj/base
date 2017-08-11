@@ -681,6 +681,8 @@ map <F46>    <M-F10>
 map <F47>    <M-F11>
 map <F48>    <M-F12>
 
+map <Leader>f8 <C-F8>
+
 let g:undotree_WindowLayout          = 1
 let g:undotree_ShortIndicators       = 1
 let g:undotree_SetFocusWhenToggle    = 1
