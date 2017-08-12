@@ -972,6 +972,8 @@ function! NewFile(type)
     w
 endfunction
 command! -nargs=? NewFile :call NewFile(<q-args>)
+Shortcut add new file template
+    \ nnoremap <leader>n :NewFile<CR>
 
 " abbr
 iabbr ,, =>
