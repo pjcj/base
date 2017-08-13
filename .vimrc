@@ -966,7 +966,7 @@ Shortcut! gL align with spaces to left
 
 function! NewFile(type)
     " exe 'normal ggdG'
-    exe 'r! file_template -path ' . &path . ' ' . expand('%:p') . ' ' . a:type
+    exe 'r! file_template -path ' . &path . ' ' . expand('%') . ' ' . a:type
     exe 'normal ggdd'
     /^[ \t]*[#] *implementation/
     w
