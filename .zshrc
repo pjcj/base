@@ -233,6 +233,7 @@ compdef _git   gra=git-rebase
 compdef _git   grc=git-rebase
 compdef _git   gri=git-rebase
 compdef _git   gs=git-status
+compdef _git   gsh=git-show
 compdef _git   gw=git-wtf
 compdef _dzil  z=dzil
 
@@ -379,6 +380,7 @@ gra()     { git rebase --abort "$@" }
 grc()     { git rebase --continue "$@" }
 gri()     { git rebase --preserve-merges -i "$@" }
 gs()      { git st "$@" }
+gsh()     { git show "$@" }
 gw()      { git wtf -A "$@" }
 golang()  { command go "$@" }
 h()       { fc -li "$@" }
