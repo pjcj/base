@@ -81,15 +81,15 @@ __END__
 
 =head1 NAME
 
-xxx - ...
+file_template - generate a new file from a template
 
 =head1 SYNOPSIS
 
- xxx
+ file_template [filename] [type]
 
 =head1 DESCRIPTION
 
-...
+Generates a new file from a template
 
 =head1 OPTIONS
 
