@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# Run st (terminal) with Inconsolata font and specified font size.
+
 set -euo pipefail
 
 script=$(basename "$0")
