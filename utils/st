@@ -68,7 +68,3 @@ if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
     trap cleanup EXIT INT
     main "$@"
 fi
-
-# For zsh completion:
-# _utils/st() { reply=($(utils/st options)) }
-# compctl -K _utils/st utils/st
