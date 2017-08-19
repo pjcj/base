@@ -1,3 +1,5 @@
 #!/bin/sh
 
+# start editor in new terminal window
+
 /home/pjcj/g/sw/bin/st nvim "$@"
