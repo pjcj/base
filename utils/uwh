@@ -1,16 +1,7 @@
-#!/usr/bin/zsh
+#!/usr/bin/env zsh
 
-command which $1
-echo
-command whence -afps $1
-echo
 echo PATH is $PATH
-perl -e '
-for my $file (@ARGV) {
-    for my $dir (split(/:/, $ENV{PATH})) {
-        if (-f (my $path = "$dir/$file") && -x _) {
-            system "ls", "-ld", $path;
-        }
-    }
-}
-' $1
+echo
+command whence -cm "$@"
+echo
+command whence --afpSvm "$@"
