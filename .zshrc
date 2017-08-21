@@ -408,7 +408,6 @@ tf()      { tail -f "$@" }
 ud()      { u "$@"; d }
 uu()      { uuencode "$@" "$@" | mailx -s "$@" paul@pjcj.net }
 v()       { command $EDITOR "$@" }
-wh()      { . uwh "$@" }
 z()       { dzil "$@" }
 zb()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil build "$@" }
 zt()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil test "$@" }
@@ -418,6 +417,14 @@ setup_plenv() {
     git clone https://github.com/tokuhirom/plenv.git ~/.plenv
     git clone https://github.com/tokuhirom/Perl-Build.git \
         ~/.plenv/plugins/perl-build/
+}
+
+wh() {
+    echo PATH is $PATH
+    echo
+    command whence -cm "$@"
+    echo
+    command whence --afpSvm "$@"
 }
 
 tm() {

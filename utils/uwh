@@ -1,7 +1,0 @@
-#!/usr/bin/env zsh
-
-echo PATH is $PATH
-echo
-command whence -cm "$@"
-echo
-command whence --afpSvm "$@"
