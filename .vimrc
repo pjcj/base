@@ -963,6 +963,8 @@ Shortcut! f; find all signs
 let g:lion_squeeze_spaces = 0
 Shortcut! gl align with spaces to right
 Shortcut! gL align with spaces to left
+Shortcut align single line subs
+    \ map <leader>gls gl/}$<CR>
 
 function! NewFile(type)
     " exe 'normal ggdG'
