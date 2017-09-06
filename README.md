@@ -66,6 +66,8 @@ following plugins:
 * [diffchar](https://github.com/vim-scripts/diffchar.vim) (show diffs by
   character)
 * [gitv](https://github.com/gregsexton/gitv) (gitk-alike)
+* [davinche/godown-vim](https://github.com/davinche/godown-vim) (show markdown
+  in browser as it is edited)
 * [incsearch-fuzzy](https://github.com/haya14busa/incsearch-fuzzy.vim) (fuzzy
   search)
 * [incsearch](https://github.com/haya14busa/incsearch.vim) (show all matches on
@@ -119,8 +121,6 @@ following plugins:
   (guidelines for indentation)
 * [vim-indent-guides](https://github.com/michaeljsmith/vim-indent-object)
   (objects based on indentation)
-* [vim-instant-markdown](https://github.com/suan/vim-instant-markdown) (show
-  markdown in browser as it is edited)
 * [vim-interestingwords](https://github.com/vasconcelloslf/vim-interestingwords)
   (highlighting and navigation)
 * [vim-lion](https://github.com/tommcdo/vim-lion) (alignment)
