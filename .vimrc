@@ -52,7 +52,7 @@ Plug 'airblade/vim-gitgutter'                  " <F3>,hn <F2>,hp ,hv <F1>,hs ,hr
 Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
 Plug 'nathanaelkane/vim-indent-guides'    " configured for indent of two or four
 Plug 'michaeljsmith/vim-indent-object'      " objects based on indentation ii AI
-Plug 'suan/vim-instant-markdown'                       " show mardown in browser
+Plug 'davinche/godown-vim'                             " show mardown in browser
 Plug 'lfv89/vim-interestingwords'                                    " ,k ,K n N
 Plug 'tommcdo/vim-lion'                                 " alignment, gl gL glip=
 Plug 'Spaceghost/vim-matchit'                                                " %
@@ -416,6 +416,8 @@ let g:SignatureMarkTextHLDynamic = 1
 let g:vitality_tumx_can_focus    = 1
 
 let g:csv_autocmd_arrange        = 1
+
+let g:godown_autorun             = 1
 
 " diffchar sets defaults if these aren't set
 nmap <silent> abc1 <Plug>ToggleDiffCharAllLines

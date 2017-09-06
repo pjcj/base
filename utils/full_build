@@ -25,14 +25,12 @@ if [ "$ISOSX" ]; then
     brew update
     brew upgrade
     pip3=pip
-    npm -g install instant-markdown-d
 else
     pip3=pip3
     sudo aptitude -y install \
         python-pip python-setuptools \
         python3-pip python3-setuptools
     sudo aptitude -y install golang
-    sudo npm -g install instant-markdown-d
 fi
 sudo aptitude install python3-pip
 sudo pip2 install --upgrade neovim
