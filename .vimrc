@@ -987,6 +987,9 @@ iabbr op, open my $fh, "<", $filename or die "Can't open $filename: $!";<CR>
 " shortcuts
 
 Shortcut! gJ join without adding spaces
+Shortcut! gu change to lower-case
+Shortcut! gU change to upper-case
+Shortcut! g~ toggle case
 
 " functions
 function! MyToHtml(line1, line2)
