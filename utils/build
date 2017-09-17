@@ -119,13 +119,15 @@ case "$build" in
     zsh)
         v=$(git tag | grep -v dev | grep -v test | tail -1)
         [ "$v" = "zsh-$ZSH_VERSION" ] && exit
-        cp ~/.zshhistory ~/.zshhistory."$(date +'%Y%m%d')"
+        oldhist=~/.zshhistory."$(date +'%Y%m%d')"
+        cp ~/.zshhistory "$oldhist"
         git checkout "$v"
         autoreconf -vfi
         configure --enable-pcre
         make
         make check
         make install || echo make install expected to fail - docs not built
+        cp "$oldhist" ~/.zshhistory
         ;;
     tmux)
         # v=$(git tag | tail -1)
