@@ -1,10 +1,16 @@
-To update utilities:
+#!/bin/echo Must be run as . ./UPDATE - read the file for more details:
 
-$ git fetch
-$ git rebase --autostash
+# This script is not to be run directly.  The required steps are:
+#
+# 1. Update the base git repository
+#    $ git fetch
+#    $ git rebase --autostash
+# 2. Restart the shell
+#    $ restart
+# 3. Source this script
+#    $ . ./UPDATE
 
-$ restart
-$ zplug clean
-$ zplug update
+# zplug clean
+zplug update
 
-$ full_build
+full_build
