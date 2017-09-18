@@ -68,6 +68,8 @@ Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 
+Plug 'bokutin/mason2.vim'                           " mason2 syntax highlighting
+
 " FZF
 Plug 'sunaku/vim-shortcut'                                                " , ,,
 Plug '/home/pjcj/g/ghq/github.com/junegunn/fzf'
@@ -328,7 +330,7 @@ augroup file_types
 
     autocmd InsertLeave * if expand("%") != "" | update | endif
 
-    autocmd FileType xhtml,xml,html,tt2html setlocal sw=2
+    autocmd FileType xhtml,xml,html,tt2html,mason2 setlocal sw=2
 
     " This prevents deoplete autocompletion from working.
     " autocmd FileType * exe("setl dict^=".$VIMRUNTIME."/syntax/".&filetype.".vim")
