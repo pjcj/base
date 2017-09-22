@@ -323,6 +323,7 @@ augroup file_types
     autocmd BufNewFile,BufReadPost *.tt       set ft=tt2html
     autocmd BufNewFile,BufReadPost *.t        set ft=perl
     autocmd BufNewFile,BufReadPost *.pd       set ft=perl
+    autocmd BufNewFile,BufReadPost *.mc       set ft=mason
 
     autocmd Filetype perl setlocal path+=lib
 
@@ -333,7 +334,7 @@ augroup file_types
 
     autocmd InsertLeave * if expand("%") != "" | update | endif
 
-    autocmd FileType xhtml,xml,html,tt2html,mason2 setlocal sw=2
+    autocmd FileType xhtml,xml,html,tt2html,mason setlocal sw=2
 
     " This prevents deoplete autocompletion from working.
     " autocmd FileType * exe("setl dict^=".$VIMRUNTIME."/syntax/".&filetype.".vim")
