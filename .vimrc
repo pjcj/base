@@ -23,7 +23,6 @@ Plug 'haya14busa/incsearch.vim'                  " show all matches on incsearch
 Plug 'Xuyuanp/nerdtree-git-plugin'                          " show changed files
 Plug 'scrooloose/nerdtree'                                              " <S-F1>
 Plug 'chr4/nginx.vim'
-Plug 'c9s/perlomni.vim'                                         " for completion
 Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
 Plug 'saltstack/salt-vim'                                    " salt highlighting
 Plug 'rstacruz/sparkup'                                            " HTML helper
@@ -68,10 +67,11 @@ Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 
-Plug 'bokutin/mason2.vim'                           " mason2 syntax highlighting
+" Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
     \ 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
 Plug 'vim-perl/vim-perl6'
+Plug 'c9s/perlomni.vim'                                         " for completion
 
 " FZF
 Plug 'sunaku/vim-shortcut'                                                " , ,,
