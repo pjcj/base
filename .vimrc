@@ -69,6 +69,8 @@ Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 
 Plug 'bokutin/mason2.vim'                           " mason2 syntax highlighting
+Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
+    \ 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
 
 " FZF
 Plug 'sunaku/vim-shortcut'                                                " , ,,
