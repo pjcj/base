@@ -60,7 +60,7 @@ done
 
 main() {
     ~/g/sw/bin/st -f \
-        "Inconsolata for Powerline NF:pixelsize=$size:antialias=false" \
+        "Inconsolata NF:pixelsize=$size:antialias=false" \
         "$@"
 }
 
