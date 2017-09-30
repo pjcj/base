@@ -32,7 +32,7 @@ index fd09d72..a2087f7 100644
 -static char font[] = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
 -static int borderpx = 2;
 +/* static char font[] = "Liberation Mono:pixelsize=12:antialias=true:autohint=true"; */
-+static char font[] = "Inconsolata for Powerline:pixelsize=16:antialias=false";
++static char font[] = "Inconsolata NF:pixelsize=16:antialias=false";
 +static int borderpx = 0;
  
  /*
