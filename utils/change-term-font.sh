@@ -2,7 +2,7 @@
 # Written by Yu-Jie Lin
 
 FONTNAME='Envy Code R'
-FONTNAME='Inconsolata for Powerline'
+FONTNAME='Inconsolata NF'
 FONTSIZE='16'
 FONTSTYLE='Regular'
 
