@@ -17,6 +17,8 @@ while getopts "f:s:S:" opt; do
     S)
       FONTSTYLE="$OPTARG"
       ;;
+    *)
+      echo "Unrecognised flag $opt"
   esac
 done
 
