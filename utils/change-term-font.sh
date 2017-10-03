@@ -7,19 +7,19 @@ FONTSIZE='16'
 FONTSTYLE='Regular'
 
 while getopts "f:s:S:" opt; do
-  case $opt in
-    f)
-      FONTNAME="$OPTARG"
-      ;;
-    s)
-      FONTSIZE="$OPTARG"
-      ;;
-    S)
-      FONTSTYLE="$OPTARG"
-      ;;
-    *)
-      echo "Unrecognised flag $opt"
-  esac
+    case $opt in
+        f)
+            FONTNAME="$OPTARG"
+            ;;
+        s)
+            FONTSIZE="$OPTARG"
+            ;;
+        S)
+            FONTSTYLE="$OPTARG"
+            ;;
+        *)
+            echo "Unrecognised flag $opt"
+    esac
 done
 
 FONT="xft:$FONTNAME:style=$FONTSTYLE:size=$FONTSIZE:antialias=false"
