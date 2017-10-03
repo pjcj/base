@@ -1,5 +1,6 @@
 #!/bin/bash
-# Written by Yu-Jie Lin
+
+# Originally written by Yu-Jie Lin
 
 FONTNAME='Envy Code R'
 FONTNAME='Inconsolata NF'
