@@ -47,6 +47,8 @@
     name = always keep our version during merge
     driver = true
 [alias]
+    git = !exec git
+    g   = !exec git
     distclean = clean -dxf
     st = status -sb
     ci = commit
