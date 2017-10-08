@@ -41,6 +41,7 @@
     cmd                 = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 [merge]
     ff                  = only
+    stat                = true
     tool                = vimdiff3
     conflictstyle       = diff3
 [merge "keep_ours"]
