@@ -200,7 +200,21 @@ case "$build" in
         (rm -rf $dir; mkdir -p $dir && cd $dir && tar xvzf /tmp/rg.tgz)
         ls -alR $dir
         mv $dir/*/rg "$sw/bin"
-        mv $dir/*/rg.1 "$sw/man/man1"
+        mv $dir/*/rg.1 "$sw/share/man/man1"
+        ;;
+    fd)
+        gh="https://github.com"
+        tar=$(wget -O - -o /dev/null $gh/sharkdp/fd/releases  | \
+              grep x86_64-unknown-linux-musl.tar.gz | head -1 | \
+              perl -ne 'print $1 if /"(.*?)"/')
+        url="$gh/$tar"
+        wget -O /tmp/fd.tgz "$url"
+        dir="/tmp/fd"
+        (rm -rf $dir; mkdir -p $dir && cd $dir && tar xvzf /tmp/fd.tgz)
+        ls -alR $dir
+        mv $dir/*/fd "$sw/bin"
+        mv $dir/*/fd.1 "$sw/share/man/man1"
+        mv $dir/*/autocomplete/_fd "$sw/share/zsh/site-functions"
         ;;
     fzf)
         ./install --all
