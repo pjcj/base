@@ -14,4 +14,5 @@ while read -r repo; do
 done < ghq.repos
 
 build rg
+build fd
 build font
