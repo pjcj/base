@@ -968,7 +968,7 @@ Shortcut! t  to character forwards
 Shortcut! T  to character backwards
 Shortcut! f; find all signs
 
-let g:lion_squeeze_spaces = 0
+let g:lion_squeeze_spaces = 1
 Shortcut! gl align with spaces to right
 Shortcut! gL align with spaces to left
 Shortcut align single line subs
