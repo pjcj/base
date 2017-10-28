@@ -25,6 +25,7 @@ Plug 'scrooloose/nerdtree'                                              " <S-F1>
 Plug 'chr4/nginx.vim'
 Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
 Plug 'saltstack/salt-vim'                                    " salt highlighting
+Plug 'andrewradev/sideways.vim'
 Plug 'rstacruz/sparkup'                                            " HTML helper
 Plug 'ervandew/supertab'
 Plug 'majutsushi/tagbar'                                                " <S-F2>
@@ -977,6 +978,16 @@ endfunction
 command! -nargs=? NewFile :call NewFile(<q-args>)
 Shortcut add new file template
     \ nnoremap <leader>n :NewFile<CR>
+
+Shortcut move argument left
+    \ nnoremap <leader>sh :SidewaysLeft<cr>
+Shortcut move argument right
+    \ nnoremap <leader>sl :SidewaysRight<cr>
+" define argument objects
+omap aa <Plug>SidewaysArgumentTextobjA
+xmap aa <Plug>SidewaysArgumentTextobjA
+omap ia <Plug>SidewaysArgumentTextobjI
+xmap ia <Plug>SidewaysArgumentTextobjI
 
 " abbr
 iabbr ,, =>
