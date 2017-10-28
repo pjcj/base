@@ -53,6 +53,7 @@ Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
 Plug 'nathanaelkane/vim-indent-guides'    " configured for indent of two or four
 Plug 'michaeljsmith/vim-indent-object'      " objects based on indentation ii AI
 Plug 'lfv89/vim-interestingwords'                                    " ,k ,K n N
+Plug 'farmergreg/vim-lastplace'                           " save cursor position
 Plug 'tommcdo/vim-lion'                                 " alignment, gl gL glip=
 Plug 'Spaceghost/vim-matchit'                                                " %
 Plug 'sheerun/vim-polyglot'                                 " extra syntax files
@@ -201,14 +202,6 @@ let g:java_highlight_debug         = 1
 let g:java_ignore_javadoc          = 1
 let g:java_highlight_java_lang_ids = 1
 let g:java_highlight_functions     = 'style'
-
-" Save position of cursor in file
-augroup save_position
-    autocmd!
-    autocmd BufReadPost * if line("'\"") != 0
-    autocmd BufReadPost *   normal `"
-    autocmd BufReadPost * endif
-augroup END
 
 syntax enable
 set background=dark
