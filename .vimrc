@@ -319,8 +319,6 @@ augroup file_types
     autocmd BufNewFile,BufReadPost *.pd       set ft=perl
     autocmd BufNewFile,BufReadPost *.mc       set ft=mason
 
-    autocmd Filetype perl setlocal path+=lib
-
     autocmd BufRead *tmp/ml/mutt-*
         \ setlocal colorcolumn=72 tw=72 spell spelllang=en_gb
     autocmd Filetype gitcommit
