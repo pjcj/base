@@ -2,6 +2,6 @@
 
 rc=~/.config/sxhkd/sxhkdrc
 cp "$rc.base" "$rc"
-for f in ~/.sxhkdrc.local ~/.sxhkdrc.${HOST:-default}; do
+for f in ~/.sxhkdrc.${HOST:-default} ~/.sxhkdrc.local; do
     [[ -r $f ]] && cat "$f" >> "$rc"
 done
