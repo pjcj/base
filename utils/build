@@ -217,7 +217,10 @@ case "$build" in
         mv $dir/*/autocomplete/_fd "$sw/share/zsh/site-functions"
         ;;
     fzf)
-        ./install --all
+        ./install --all --no-bash --no-zsh
+        cp -a bin/* "$sw/bin"
+        mkdir -p "$sw/etc/zsh"
+        cp -a shell/*.zsh "$sw/etc/zsh"
         ;;
     plenv)
         rm -f ~/.plenv
