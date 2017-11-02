@@ -522,9 +522,9 @@ if [[ -e ~/.plenv ]] then
     eval "$(plenv init - zsh)"
 fi
 
-export FZF_DEFAULT_COMMAND="fd"
+export FZF_DEFAULT_COMMAND="fd --hidden --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="fd -t d"
+export FZF_ALT_C_COMMAND="fd --hidden --exclude .git --type d"
 
 typeset -U path
 typeset -U manpath
