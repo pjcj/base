@@ -68,6 +68,7 @@ Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
 Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
+Plug 'Shougo/denite.nvim'
 
 " Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
@@ -845,6 +846,7 @@ let g:ctrlp_prompt_mappings    = {
     \ 'PrtExit()':            ['<esc>', '<c-c>', '<c-g>'],
     \ }
 
+if 0
 " unite
 " Use the fuzzy matcher
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
@@ -941,6 +943,41 @@ augroup EscapeUnite
     autocmd!
     autocmd FileType unite call s:unite_settings()
 augroup END
+endif
+
+" Denite
+:nnoremap <silent> <space><space> :Denite buffer file_mru file_rec
+    \ -highlight-mode-insert=Search -reversed -smartcase -unique
+    \ -sorters=sorter_sublime,converter_relative_abbr<CR>
+
+call denite#custom#map(
+    \ 'insert',
+    \ '<Down>',
+    \ '<denite:move_to_next_line>',
+    \ 'noremap'
+    \)
+call denite#custom#map(
+    \ 'insert',
+    \ '<Up>',
+    \ '<denite:move_to_previous_line>',
+    \ 'noremap'
+    \)
+
+call denite#custom#var('grep', 'command', ['rg'])
+call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading', '--hidden'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
+
+call denite#custom#option('default', 'prompt', '❯')
+
+call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+call denite#custom#var('file_rec/git', 'command',
+    \ ['git', 'ls-files', '-co', '--exclude-standard'])
+nnoremap <silent> <C-p> :<C-u>Denite
+    \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
+
 
 Shortcut - (nv) comment
     \ nmap - gcc
