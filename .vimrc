@@ -799,7 +799,7 @@ let g:ctrlp_reuse_window       = 'quickfix'
 let g:ctrlp_working_path_mode  = 'ra'
 let g:ctrlp_user_command       = ['.git', 'cd %s && git ls-files']
 let g:ctrlp_custom_ignore      = {
-    \ 'dir':  '\v[\/](tmp|blib|cover_db|nytprof|pdldb|site)$',
+    \ 'dir':  '\v[\/](tmp|blib|cover_db|nytprof)$',
     \ 'file': "\v\nytprof$",
     \ }
 let g:ctrlp_extensions         = [
