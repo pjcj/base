@@ -947,8 +947,11 @@ endif
 
 " Denite
 nnoremap <silent> <space><space> :Denite buffer file_mru file_rec
-    \ -highlight-mode-insert=SpellLocal -reversed -smartcase -unique
-    \ -sorters=sorter_sublime,converter_relative_abbr<CR>
+    \ -highlight-mode-insert=SpellLocal -reversed -unique
+    \ -sorters=sorter_sublime,converter_relative_abbr,matcher_ignore_globs<CR>
+
+call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+    \ [ '.git/', 'tmp/', 'blib/', 'cover_db/', 'nytprof*', 'tags*' ])
 
 call denite#custom#map(
     \ 'insert',
