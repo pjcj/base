@@ -946,12 +946,35 @@ augroup END
 endif
 
 " Denite
-nnoremap <silent> <space><space> :Denite buffer file_mru file_rec
-    \ -highlight-mode-insert=SpellLocal -reversed -unique
-    \ -sorters=sorter_sublime,converter_relative_abbr,matcher_ignore_globs<CR>
 
-call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-    \ [ '.git/', 'tmp/', 'blib/', 'cover_db/', 'nytprof*', 'tags*' ])
+nmap <space> [denite]
+nnoremap [denite] <Nop>
+
+nnoremap <silent> [denite]<space> :<C-u>Denite buffer file_mru file_rec
+    \ -highlight-mode-insert=SpellLocal -reversed -unique
+    \ -sorters=converter_relative_abbr<CR>
+    " \ -sorters=converter_relative_abbr,matcher_ignore_globs<CR>
+
+nnoremap <silent> [denite]f :<C-u>Denite file_rec
+    \ -highlight-mode-insert=SpellLocal -reversed -unique
+    \ -sorters=converter_relative_abbr<CR>
+
+call denite#custom#source(
+    \ '_', 'sorters', ['sorter_sublime'])
+
+call denite#custom#var('file_rec', 'command',
+    \ [ 'fd', '--hidden',
+    \     '--exclude', '*.git/',
+    \     '--exclude', '/tmp/',
+    \     '--exclude', '/blib/',
+    \     '--exclude', '/cover_db/',
+    \     '--exclude', '/nytprof*',
+    \     '--exclude', '/tags',
+    \     '.'
+    \ ])
+
+" call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+    " \ [ '.git/', 'tmp/', 'blib/', 'cover_db/', 'nytprof*', 'tags*' ])
 
 call denite#custom#map(
     \ 'insert',
