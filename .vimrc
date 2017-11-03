@@ -946,8 +946,8 @@ augroup END
 endif
 
 " Denite
-:nnoremap <silent> <space><space> :Denite buffer file_mru file_rec
-    \ -highlight-mode-insert=Search -reversed -smartcase -unique
+nnoremap <silent> <space><space> :Denite buffer file_mru file_rec
+    \ -highlight-mode-insert=SpellLocal -reversed -smartcase -unique
     \ -sorters=sorter_sublime,converter_relative_abbr<CR>
 
 call denite#custom#map(
