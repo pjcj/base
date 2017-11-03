@@ -950,17 +950,24 @@ endif
 nmap <space> [denite]
 nnoremap [denite] <Nop>
 
-nnoremap <silent> [denite]<space> :<C-u>Denite buffer file_mru file_rec
-    \ -highlight-mode-insert=SpellLocal -reversed -unique
-    \ -sorters=converter_relative_abbr<CR>
-    " \ -sorters=converter_relative_abbr,matcher_ignore_globs<CR>
+nnoremap <silent> [denite]<space> :<C-u>Denite buffer file_mru file_rec<CR>
 
-nnoremap <silent> [denite]f :<C-u>Denite file_rec
-    \ -highlight-mode-insert=SpellLocal -reversed -unique
-    \ -sorters=converter_relative_abbr<CR>
+nnoremap <silent> [denite]r :<C-u>Denite -resume -refresh<CR>
+nnoremap <silent> [denite]f :<C-u>Denite file_rec<CR>
+nnoremap <silent> [denite]b :<C-u>Denite buffer file_old -default-action=switch<CR>
+nnoremap <silent> [denite]d :<C-u>Denite directory_rec -default-action=cd<CR>
+" nnoremap <silent> [denite]v :<C-u>Denite register -buffer-name=register<CR>
+xnoremap <silent> [denite]v :<C-u>Denite register -buffer-name=register -default-action=replace<CR>
+nnoremap <silent> [denite]l :<C-u>Denite location_list -buffer-name=list<CR>
+nnoremap <silent> [denite]q :<C-u>Denite quickfix -buffer-name=list<CR>
+nnoremap <silent> [denite]n :<C-u>Denite dein<CR>
+nnoremap <silent> [denite]g :<C-u>Denite grep<CR>
+nnoremap <silent> [denite]j :<C-u>Denite jump change file_point<CR>
+nnoremap <silent> [denite]o :<C-u>Denite outline<CR>
+nnoremap <silent> [denite]t :<C-u>Denite tag<CR>
 
-call denite#custom#source(
-    \ '_', 'sorters', ['sorter_sublime'])
+call denite#custom#source('_', 'sorters', ['sorter_sublime'])
+call denite#custom#source('file_mru', 'converters', ['converter_relative_abbr'])
 
 call denite#custom#var('file_rec', 'command',
     \ [ 'fd', '--hidden',
@@ -972,6 +979,12 @@ call denite#custom#var('file_rec', 'command',
     \     '--exclude', '/tags',
     \     '.'
     \ ])
+
+call denite#custom#option('_', {
+    \ 'prompt': '❯',
+    \ 'reversed': v:true
+    \ })
+    " \ 'highlight_mode_insert': 'SpellLocal',
 
 " call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
     " \ [ '.git/', 'tmp/', 'blib/', 'cover_db/', 'nytprof*', 'tags*' ])
@@ -995,8 +1008,6 @@ call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
 call denite#custom#var('grep', 'separator', ['--'])
 call denite#custom#var('grep', 'final_opts', [])
-
-call denite#custom#option('default', 'prompt', '❯')
 
 call denite#custom#alias('source', 'file_rec/git', 'file_rec')
 call denite#custom#var('file_rec/git', 'command',
