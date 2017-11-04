@@ -982,9 +982,10 @@ call denite#custom#var('file_rec', 'command',
 
 call denite#custom#option('_', {
     \ 'prompt': '❯',
+    \ 'highlight_matched_char': 'Todo',
+    \ 'highlight_mode_insert': 'CursorLine',
     \ 'reversed': v:true
     \ })
-    " \ 'highlight_mode_insert': 'SpellLocal',
 
 " call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
     " \ [ '.git/', 'tmp/', 'blib/', 'cover_db/', 'nytprof*', 'tags*' ])
