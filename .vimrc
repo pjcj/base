@@ -330,7 +330,8 @@ augroup file_types
     autocmd FileType xhtml,xml,html,tt2html,mason setlocal sw=2
 
     " This prevents deoplete autocompletion from working.
-    " autocmd FileType * exe("setl dict^=".$VIMRUNTIME."/syntax/".&filetype.".vim")
+    autocmd FileType *
+        \ exe("setl dict^=".$VIMRUNTIME."/syntax/".&filetype.".vim")
 augroup END
 
 let g:gutentags_ctags_exclude    = ['blib', 'tmp']
