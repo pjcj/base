@@ -1009,11 +1009,11 @@ call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
 call denite#custom#var('grep', 'separator', ['--'])
 call denite#custom#var('grep', 'final_opts', [])
 
-call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-call denite#custom#var('file_rec/git', 'command',
-    \ ['git', 'ls-files', '-co', '--exclude-standard'])
-nnoremap <silent> <C-p> :<C-u>Denite
-    \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
+" call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+" call denite#custom#var('file_rec/git', 'command',
+    " \ ['git', 'ls-files', '-co', '--exclude-standard'])
+" nnoremap <silent> <C-p> :<C-u>Denite
+    " \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
 
 
 Shortcut - (nv) comment
