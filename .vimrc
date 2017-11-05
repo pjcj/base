@@ -25,7 +25,7 @@ Plug 'scrooloose/nerdtree'                                              " <S-F1>
 Plug 'chr4/nginx.vim'
 Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
 Plug 'saltstack/salt-vim'                                    " salt highlighting
-Plug 'andrewradev/sideways.vim'
+Plug 'andrewradev/sideways.vim'              " operate on arglists ,sh ,sl aa ia
 Plug 'rstacruz/sparkup'                                            " HTML helper
 Plug 'ervandew/supertab'
 Plug 'majutsushi/tagbar'                                                " <S-F2>
