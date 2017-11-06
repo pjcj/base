@@ -967,7 +967,7 @@ nnoremap <silent> [denite]f :<C-u>Denite file_rec<CR>
 nnoremap <silent> [denite]b :<C-u>Denite buffer file_old -default-action=switch<CR>
 nnoremap <silent> [denite]d :<C-u>Denite directory_rec -default-action=cd<CR>
 " nnoremap <silent> [denite]v :<C-u>Denite register -buffer-name=register<CR>
-xnoremap <silent> [denite]v :<C-u>Denite register -buffer-name=register -default-action=replace<CR>
+nnoremap <silent> [denite]v :<C-u>Denite register -buffer-name=register -default-action=replace<CR>
 nnoremap <silent> [denite]l :<C-u>Denite location_list -buffer-name=list<CR>
 nnoremap <silent> [denite]q :<C-u>Denite quickfix -buffer-name=list<CR>
 nnoremap <silent> [denite]n :<C-u>Denite dein<CR>
