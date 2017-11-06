@@ -88,6 +88,8 @@ Plug 'Shougo/unite.vim'                                " <space><space> <space>s
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
 
 " Unite plugins
+
+let g:neomru#file_mru_limit = 8
 Plug 'Shougo/neomru.vim'                                         " MRU for unite
 Plug 'yuku-t/unite-git'
 Plug 'lambdalisue/unite-grep-vcs'
