@@ -69,6 +69,7 @@ Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 Plug 'Shougo/denite.nvim'
+Plug 'chemzqm/denite-extra'
 
 " Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
