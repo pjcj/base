@@ -951,10 +951,16 @@ endif
 
 " Denite
 
-nmap <space> [denite]
 nnoremap [denite] <Nop>
+Shortcut denite
+    \ nmap <space> [denite]
 
-nnoremap <silent> [denite]<space> :<C-u>Denite buffer file_mru file_rec<CR>
+Shortcut denite general fuzzy search
+    \ nnoremap <silent> [denite]<space>
+    \ :<C-u>Denite -buffer-name=files
+    \ buffer unite:git_modified unite:git_untracked file_mru file_rec<CR>
+
+" nnoremap <silent> [denite]<space> :<C-u>Denite buffer file_mru file_rec<CR>
 
 nnoremap <silent> [denite]r :<C-u>Denite -resume -refresh<CR>
 nnoremap <silent> [denite]f :<C-u>Denite file_rec<CR>
