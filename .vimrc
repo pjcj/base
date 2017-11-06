@@ -970,7 +970,6 @@ nnoremap <silent> [denite]d :<C-u>Denite directory_rec -default-action=cd<CR>
 nnoremap <silent> [denite]v :<C-u>Denite register -buffer-name=register -default-action=replace<CR>
 nnoremap <silent> [denite]l :<C-u>Denite location_list -buffer-name=list<CR>
 nnoremap <silent> [denite]q :<C-u>Denite quickfix -buffer-name=list<CR>
-nnoremap <silent> [denite]n :<C-u>Denite dein<CR>
 nnoremap <silent> [denite]g :<C-u>Denite grep<CR>
 nnoremap <silent> [denite]j :<C-u>Denite jump change file_point<CR>
 nnoremap <silent> [denite]o :<C-u>Denite outline<CR>
