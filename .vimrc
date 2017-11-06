@@ -985,7 +985,8 @@ call denite#custom#option('_', {
     \ 'prompt': '❯',
     \ 'highlight_matched_char': 'Todo',
     \ 'highlight_mode_insert': 'CursorLine',
-    \ 'reversed': v:true
+    \ 'reversed': v:true,
+    \ 'winheight': 30
     \ })
 
 " call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
