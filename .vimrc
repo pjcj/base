@@ -964,7 +964,10 @@ Shortcut denite resume
     \ nnoremap <silent> [denite]r
     \ :<C-u>Denite -resume -refresh<CR>
 
-nnoremap <silent> [denite]f :<C-u>Denite file_rec<CR>
+Shortcut denite files recursively
+    \ nnoremap <silent> [denite]f
+    \ :<C-u>Denite file_rec<CR>
+
 nnoremap <silent> [denite]b :<C-u>Denite buffer file_old -default-action=switch<CR>
 nnoremap <silent> [denite]d :<C-u>Denite directory_rec -default-action=cd<CR>
 " nnoremap <silent> [denite]v :<C-u>Denite register -buffer-name=register<CR>
