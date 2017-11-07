@@ -960,9 +960,10 @@ Shortcut denite general fuzzy search
     \ :<C-u>Denite -buffer-name=files
     \ buffer unite:git_modified unite:git_untracked file_mru file_rec<CR>
 
-" nnoremap <silent> [denite]<space> :<C-u>Denite buffer file_mru file_rec<CR>
+Shortcut denite resume
+    \ nnoremap <silent> [denite]r
+    \ :<C-u>Denite -resume -refresh<CR>
 
-nnoremap <silent> [denite]r :<C-u>Denite -resume -refresh<CR>
 nnoremap <silent> [denite]f :<C-u>Denite file_rec<CR>
 nnoremap <silent> [denite]b :<C-u>Denite buffer file_old -default-action=switch<CR>
 nnoremap <silent> [denite]d :<C-u>Denite directory_rec -default-action=cd<CR>
