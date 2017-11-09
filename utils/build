@@ -131,9 +131,9 @@ case "$build" in
         compaudit | xargs chmod go-w
         ;;
     tmux)
-        # v=$(git tag | tail -1)
-        # [ "$v" = "$(tmux -V)" ] && exit
-        # git checkout "$v"
+        v=$(git tag | tail -1)
+        [ "$v" = "$(tmux -V)" ] && exit
+        git checkout "$v"
         export LIBEVENT_CFLAGS="-I$sw/include"
         export LIBEVENT_LIBS="-L$sw/lib -Wl,-rpath=$sw/lib -levent"
         configure
