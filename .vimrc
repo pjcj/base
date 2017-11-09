@@ -688,6 +688,13 @@ map <F48>    <M-F12>
 
 map <Leader>f8 <C-F8>
 
+Shortcut swap with the word on the left
+    \ nnoremap <Leader><Left>
+    \ "_yiw?\v\w+\_W+%#<CR>:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o><C-l>
+Shortcut swap with the word on the right
+    \ nnoremap <Leader><Right>
+    \ "_yiw:s/\v(%#\w+)(\_W+)(\w+)/\3\2\1/<CR><C-o>/\v\w+\_W+<CR><C-l>
+
 let g:undotree_WindowLayout          = 1
 let g:undotree_ShortIndicators       = 1
 let g:undotree_SetFocusWhenToggle    = 1
