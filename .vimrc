@@ -995,7 +995,10 @@ Shortcut denite show quickfix list
     \ nnoremap <silent> [denite]q
     \ :<C-u>Denite quickfix -buffer-name=list<CR>
 
-nnoremap <silent> [denite]g :<C-u>Denite grep<CR>
+Shortcut denite grep
+    \ nnoremap <silent> [denite]g
+    \ :<C-u>Denite grep<CR>
+
 nnoremap <silent> [denite]j :<C-u>Denite jump change file_point<CR>
 nnoremap <silent> [denite]o :<C-u>Denite outline<CR>
 nnoremap <silent> [denite]t :<C-u>Denite tag<CR>
