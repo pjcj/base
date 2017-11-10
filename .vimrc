@@ -1008,7 +1008,9 @@ Shortcut denite outline
     \ nnoremap <silent> [denite]o
     \ :<C-u>Denite unite:outline<CR>
 
-nnoremap <silent> [denite]t :<C-u>Denite tag<CR>
+Shortcut denite tags
+    \ nnoremap <silent> [denite]t
+    \ :<C-u>Denite tag<CR>
 
 call denite#custom#source('_', 'sorters', ['sorter_sublime'])
 call denite#custom#source('file_mru', 'converters', ['converter_relative_abbr'])
