@@ -188,7 +188,7 @@ set wildmode=list:longest,full
 set writebackup
 
 if executable('rg')
-    set grepprg=rg\ --no-heading\ --hidden\ --glob\ '!.git'\ --vimgrep\ --case-sensitive
+    set grepprg=rg\ --no-heading\ --hidden\ --glob\ '!.git'\ --vimgrep
     set grepformat=%f:%l:%c:%m
 else
     set grepprg=git\ grep\ -n
