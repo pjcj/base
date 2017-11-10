@@ -1039,7 +1039,8 @@ call denite#custom#map(
     \)
 
 call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading', '--hidden'])
+call denite#custom#var('grep', 'default_opts',
+    \ ['--vimgrep', '--no-heading', '--hidden', '--glob', '!.git'])
 call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
 call denite#custom#var('grep', 'separator', ['--'])
