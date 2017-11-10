@@ -983,8 +983,10 @@ Shortcut denite change directory
     \ nnoremap <silent> [denite]d
     \ :<C-u>Denite directory_rec -default-action=cd<CR>
 
-" nnoremap <silent> [denite]v :<C-u>Denite register -buffer-name=register<CR>
-nnoremap <silent> [denite]v :<C-u>Denite register -buffer-name=register -default-action=replace<CR>
+Shortcut denite insert from register
+    \ nnoremap <silent> [denite]v
+    \ :<C-u>Denite register -buffer-name=register<CR>
+
 nnoremap <silent> [denite]l :<C-u>Denite location_list -buffer-name=list<CR>
 nnoremap <silent> [denite]q :<C-u>Denite quickfix -buffer-name=list<CR>
 nnoremap <silent> [denite]g :<C-u>Denite grep<CR>
