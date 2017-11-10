@@ -1020,6 +1020,11 @@ Shortcut denite tags
     \ nnoremap <silent> [denite]t
     \ :<C-u>Denite tag<CR>
 
+" denite commands seems not to be working
+Shortcut denite command
+    \ nnoremap <silent> [denite]o
+    \ :<C-u>Denite unite:command<CR>
+
 call denite#custom#source('_', 'sorters', ['sorter_sublime'])
 call denite#custom#source('file_mru', 'converters', ['converter_relative_abbr'])
 
