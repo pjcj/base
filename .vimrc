@@ -957,7 +957,6 @@ augroup END
 endif
 
 " Denite
-
 nnoremap [denite] <Nop>
 Shortcut denite
     \ nmap <space> [denite]
@@ -1028,6 +1027,11 @@ Shortcut denite command
 Shortcut denite help
     \ nnoremap <silent> [denite]h
     \ :<C-u>Denite help<CR>
+
+let g:unite_data_directory = expand($HOME . '/.unite')
+Shortcut denite perl modules
+    \ nnoremap <silent> [denite]p
+    \ :<C-u>Denite unite:perl-module/cpan -buffer-name=perl_modules<CR>
 
 call denite#custom#source('_', 'sorters', ['sorter_sublime'])
 call denite#custom#source('file_mru', 'converters', ['converter_relative_abbr'])
