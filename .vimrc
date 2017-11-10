@@ -83,23 +83,13 @@ Plug '/home/pjcj/g/ghq/github.com/junegunn/fzf'
 Plug '/usr/local/Cellar/fzf/0.16.7'
 Plug 'junegunn/fzf.vim'
 
-" Unite
-Plug 'Shougo/unite.vim'                                " <space><space> <space>s
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }                      " async library
-
-" Unite plugins
-
+" Unite and plugins for denite
 let g:neomru#file_mru_limit = 8
-Plug 'Shougo/neomru.vim'                                         " MRU for unite
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/neomru.vim'                                        " MRU for denite
 Plug 'yuku-t/unite-git'
-Plug 'lambdalisue/unite-grep-vcs'
-Plug 'Shougo/unite-help'
 Plug 'Shougo/unite-outline'
 Plug 'soh335/unite-perl-module'
-Plug 'mpendse/unite-search-history'
-Plug 'tsukkee/unite-tag'
-Plug 'sanford1/unite-unicode'
-Plug 'LeafCage/yankround.vim'
 
 Plug 'pjcj/neovim-colors-solarized-truecolor-only'
 
