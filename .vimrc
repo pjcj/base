@@ -1034,9 +1034,6 @@ call denite#custom#option('_', {
     \ 'winheight': 30
     \ })
 
-" call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-    " \ [ '.git/', 'tmp/', 'blib/', 'cover_db/', 'nytprof*', 'tags*' ])
-
 call denite#custom#map(
     \ 'insert',
     \ '<Down>',
