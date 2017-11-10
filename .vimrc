@@ -979,6 +979,14 @@ Shortcut denite old files
     \ nnoremap <silent> [denite]b
     \ :<C-u>Denite buffer file_old -default-action=switch<CR>
 
+call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+call denite#custom#var('file_rec/git', 'command',
+    \ ['git', 'ls-files', '-co', '--exclude-standard'])
+Shortcut denite git files
+    \ nnoremap <silent> [denite]i
+    \ :<C-u>Denite
+    \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
+
 Shortcut denite change directory
     \ nnoremap <silent> [denite]d
     \ :<C-u>Denite directory_rec -default-action=cd<CR>
@@ -1054,13 +1062,6 @@ call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
 call denite#custom#var('grep', 'separator', ['--'])
 call denite#custom#var('grep', 'final_opts', [])
-
-" call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-" call denite#custom#var('file_rec/git', 'command',
-    " \ ['git', 'ls-files', '-co', '--exclude-standard'])
-" nnoremap <silent> <C-p> :<C-u>Denite
-    " \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
-
 
 Shortcut - (nv) comment
     \ nmap - gcc
