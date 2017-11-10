@@ -1025,6 +1025,10 @@ Shortcut denite command
     \ nnoremap <silent> [denite]o
     \ :<C-u>Denite unite:command<CR>
 
+Shortcut denite help
+    \ nnoremap <silent> [denite]h
+    \ :<C-u>Denite help<CR>
+
 call denite#custom#source('_', 'sorters', ['sorter_sublime'])
 call denite#custom#source('file_mru', 'converters', ['converter_relative_abbr'])
 
