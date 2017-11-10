@@ -68,8 +68,6 @@ Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
 Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
-Plug 'Shougo/denite.nvim'
-Plug 'chemzqm/denite-extra'
 
 " Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
@@ -83,10 +81,12 @@ Plug '/home/pjcj/g/ghq/github.com/junegunn/fzf'
 Plug '/usr/local/Cellar/fzf/0.16.7'
 Plug 'junegunn/fzf.vim'
 
-" Unite and plugins for denite
+" Denite and unite, plugins for denite
 let g:neomru#file_mru_limit = 8
+Plug 'Shougo/denite.nvim'
+Plug 'chemzqm/denite-extra'
 Plug 'Shougo/unite.vim'
-Plug 'Shougo/neomru.vim'                                        " MRU for denite
+Plug 'Shougo/neomru.vim'
 Plug 'yuku-t/unite-git'
 Plug 'Shougo/unite-outline'
 Plug 'soh335/unite-perl-module'
