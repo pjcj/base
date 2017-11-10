@@ -12,9 +12,9 @@ call plug#begin()
 
 Plug 'w0rp/ale'                                                " syntax checking
 Plug 'rhysd/clever-f.vim'                                           " f F t T f;
-Plug 'maralla/completor.vim'                                        " completion
 Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
+Plug 'Shougo/deoplete.nvim'
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'davinche/godown-vim'                            " show markdown in browser
@@ -30,7 +30,7 @@ Plug 'rstacruz/sparkup'                                            " HTML helper
 Plug 'ervandew/supertab'
 Plug 'majutsushi/tagbar'                                                " <S-F2>
 Plug 'wellle/targets.vim'                                " add * | and _ targets
-Plug 'wellle/tmux-complete.vim'                       " complete from tmux panes
+Plug 'wellle/tmux-complete.vim'                       " deoplete from tmux panes
 Plug 'SirVer/ultisnips'
 Plug 'mbbill/undotree'                                                     " ,gu
 Plug 'chrisbra/unicode.vim'        " unicode table, search, complete, ^X^Z, ^X^G
@@ -271,6 +271,8 @@ endfunc
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
+let g:deoplete#enable_at_startup          = 1
+
 let g:completor_min_chars                 = 1
 " let g:completor_perl_omni_trigger       = '->'
 
@@ -321,10 +323,6 @@ augroup file_types
     autocmd InsertLeave * if expand("%") != "" | update | endif
 
     autocmd FileType xhtml,xml,html,tt2html,mason setlocal sw=2
-
-    " This prevents deoplete autocompletion from working.
-    autocmd FileType *
-        \ exe("setl dict^=".$VIMRUNTIME."/syntax/".&filetype.".vim")
 augroup END
 
 let g:gutentags_ctags_exclude    = ['blib', 'tmp']
