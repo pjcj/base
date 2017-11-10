@@ -920,10 +920,9 @@ Shortcut denite tags
     \ nnoremap <silent> [denite]t
     \ :<C-u>Denite tag<CR>
 
-" denite commands seems not to be working
 Shortcut denite command
     \ nnoremap <silent> [denite]o
-    \ :<C-u>Denite unite:command<CR>
+    \ :<C-u>Denite command<CR>
 
 Shortcut denite help
     \ nnoremap <silent> [denite]h
