@@ -916,7 +916,7 @@ Shortcut unite sources
     \ nnoremap <silent> [unite]s
     \ :<C-u>Unite -buffer-name=sources source<CR>
 
-Shortcut unite switch lcd
+Shortcut unite change directory
     \ nnoremap <silent> [unite]d
     \ :<C-u>Unite -buffer-name=change-cwd -default-action=cd
     \ directory_mru directory_rec/async<CR>
