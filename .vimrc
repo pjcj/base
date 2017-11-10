@@ -987,8 +987,14 @@ Shortcut denite insert from register
     \ nnoremap <silent> [denite]v
     \ :<C-u>Denite register -buffer-name=register<CR>
 
-nnoremap <silent> [denite]l :<C-u>Denite location_list -buffer-name=list<CR>
-nnoremap <silent> [denite]q :<C-u>Denite quickfix -buffer-name=list<CR>
+Shortcut denite show location list
+    \ nnoremap <silent> [denite]l
+    \ :<C-u>Denite location_list -buffer-name=list<CR>
+
+Shortcut denite show quickfix list
+    \ nnoremap <silent> [denite]q
+    \ :<C-u>Denite quickfix -buffer-name=list<CR>
+
 nnoremap <silent> [denite]g :<C-u>Denite grep<CR>
 nnoremap <silent> [denite]j :<C-u>Denite jump change file_point<CR>
 nnoremap <silent> [denite]o :<C-u>Denite outline<CR>
