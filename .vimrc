@@ -782,8 +782,8 @@ let g:ale_lint_delay           = 200
 let g:ale_set_quickfix         = 0
 let g:ale_sign_error           = '✗'
 let g:ale_sign_warning         = '⚠'
-let g:ale_perl_perl_executable = '/home/pjcj/g/base/utils/ale_perl'
-let g:ale_perl_perl_options    = '-Mblib'
+let g:ale_perl_perl_executable = glob('~/g/base/utils/ale_perl')
+let g:ale_perl_perl_options    = ''
 
 Shortcut jump to next error
     \ nmap <silent> <C-J> <Plug>(ale_next_wrap)
