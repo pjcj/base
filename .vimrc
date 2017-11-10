@@ -933,6 +933,10 @@ Shortcut denite perl modules
     \ nnoremap <silent> [denite]p
     \ :<C-u>Denite unite:perl-module/cpan -buffer-name=perl_modules<CR>
 
+Shortcut denite command history
+    \ nnoremap <silent> [denite]s
+    \ :<C-u>Denite command_history<CR>
+
 call denite#custom#source('_', 'sorters', ['sorter_sublime'])
 call denite#custom#source('file_mru', 'converters', ['converter_relative_abbr'])
 
