@@ -526,8 +526,8 @@ let g:argwrap_padded_braces = '[{'
 let g:argwrap_tail_comma    = 1
 
 Shortcut (nv) generate digraph from characters
-    \ nmap ,dg <Plug>(MakeDigraph)
-    \|vmap ,dg <Plug>(MakeDigraph)
+    \ nmap <leader>dg <Plug>(MakeDigraph)
+    \|vmap <leader>dg <Plug>(MakeDigraph)
 Shortcut describe character under cursor
     \ nmap ga <Plug>(UnicodeGA)
 Shortcut! :UnicodeTable<CR> show table of all unicode characters
