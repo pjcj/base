@@ -466,24 +466,15 @@ let g:interestingWordsGUIColors              =
 augroup SearchIndex
     autocmd!
     autocmd VimEnter * call <SID>OverridePluginSettings()
-    function! Sindex()
-        let l:prev = @/
-        let @/ = '\<'.  expand('<cword>') . '\>'
-        " if l:prev ==# @/
-            execute "normal \<Plug>SearchIndex"
-        " endif
-        " echo 'Sindex ' . l:prev . ' ' . @/
-        let @/ = l:prev
-    endfunction
     function! s:OverridePluginSettings()
         nmap <silent> * *``:call InterestingWords('n')<CR>
             \ :set nohls<CR>
             \ :call Pulse()<CR>
             \ <Plug>SearchIndex
-        " nmap <silent> n :call Sindex()<CR>:call WordNavigation(1)<CR>:call Pulse()<CR>
-        " nmap <silent> n <Plug>SearchIndex<BAR>:call WordNavigation(1)<CR>:call Pulse()<CR>
-        nmap <silent> n :call WordNavigation(1)<CR>:call Pulse()<CR><Plug>SearchIndex
-        nmap <silent> N :call WordNavigation(0)<CR>:call Pulse()<CR><Plug>SearchIndex
+        nmap <silent> n :call WordNavigation(1)<CR>
+            \ :call Pulse()<CR><Plug>SearchIndex
+        nmap <silent> N :call WordNavigation(0)<CR>
+            \ :call Pulse()<CR><Plug>SearchIndex
     endfunction
 augroup END
 Shortcut (nv) toggle highlighting of interesting words
