@@ -68,6 +68,7 @@ Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
 Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
+Plug 'Shougo/neco-syntax'
 
 " Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
@@ -272,6 +273,8 @@ set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 let g:deoplete#enable_at_startup          = 1
+let g:deoplete#auto_complete_delay        = 10
+call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 
 let g:completor_min_chars                 = 1
 " let g:completor_perl_omni_trigger       = '->'
