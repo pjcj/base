@@ -778,7 +778,9 @@ let g:closetag_filenames = "*.html,*.xhtml,*.tt"
 vmap <Enter> <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 " Format HTML tables (good for selenium IDE)
-vmap ,at :EasyAlign*/<tr>/r0l0<CR><Bar>gv<Bar>:EasyAlign*/<td>/r0l0<CR><Bar>gv<Bar>:EasyAlign*/<\/tr>/r0l0<CR>
+vmap <leader>at :EasyAlign*/<tr>/r0l0<CR><Bar>gv<Bar>
+               \:EasyAlign*/<td>/r0l0<CR><Bar>gv<Bar>
+               \:EasyAlign*/<\/tr>/r0l0<CR>
 
 cmap w!! w !sudo tee % >/dev/null
 Shortcut! :w!! write file as superuser
