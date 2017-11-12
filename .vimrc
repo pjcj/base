@@ -326,6 +326,11 @@ augroup file_types
     autocmd InsertLeave * if expand("%") != "" | update | endif
 
     autocmd FileType xhtml,xml,html,tt2html,mason setlocal sw=2
+
+    " close quickfix, location and preview list windows
+    autocmd FileType qf if mapcheck('<Esc>', 'n') ==# ''
+        \ | nnoremap <buffer><silent> <Esc> :cclose<Bar>lclose<Bar>:pclose<CR>
+        \ | endif
 augroup END
 
 let g:gutentags_ctags_exclude    = ['blib', 'tmp']
@@ -599,8 +604,7 @@ Shortcut grep for word under cursor
         \ <Bar> botright copen<CR><C-L>
 Shortcut (v) grep for visual selection
     \ vnoremap <C-F8> :<C-U>GrepVisual<CR>
-Shortcut close quickfix, location and preview list windows
-    \ nnoremap <F9>       :cclose<Bar>:lclose<Bar>:pclose<CR>
+" Note: F9 is now available
 Shortcut open quickfix list window
     \ nnoremap <S-F9>     :copen<CR>
 Shortcut open location list window
