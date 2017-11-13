@@ -59,10 +59,10 @@ following plugins:
 
 * [ale](https://github.com/w0rp/ale) (syntax checking)
 * [clever-f](https://github.com/rhysd/clever-f.vim) (extends f and t)
-* [completor](https://github.com/maralla/completor.vim) (completion)
 * [ctrlp-extensions](https://github.com/sgur/ctrlp-extensions) (cmdline, yank
   and menu for ctrlp)
 * [ctrlp](https://github.com/ctrlpvim/ctrlp.vim) (fuzzy finder)
+* [deoplete](https://github.com/Shougo/deoplete.nvim) (completion)
 * [diffchar](https://github.com/vim-scripts/diffchar.vim) (show diffs by
   character)
 * [gitv](https://github.com/gregsexton/gitv) (gitk-alike)
