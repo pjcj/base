@@ -66,8 +66,8 @@ following plugins:
 * [diffchar](https://github.com/vim-scripts/diffchar.vim) (show diffs by
   character)
 * [gitv](https://github.com/gregsexton/gitv) (gitk-alike)
-* [davinche/godown-vim](https://github.com/davinche/godown-vim) (show markdown
-  in browser as it is edited)
+* [godown-vim](https://github.com/davinche/godown-vim) (show markdown in
+  browser as it is edited)
 * [incsearch-fuzzy](https://github.com/haya14busa/incsearch-fuzzy.vim) (fuzzy
   search)
 * [incsearch](https://github.com/haya14busa/incsearch.vim) (show all matches on
