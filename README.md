@@ -130,6 +130,8 @@ following plugins:
 * [vim-polyglot](https://github.com/sheerun/vim-polyglot) (extra syntax files)
 * [vim-repeat](https://github.com/tpope/vim-repeat) (make . work more often)
 * [vim-schlepp](https://github.com/zirrostig/vim-schlepp) (move blocks of text)
+* [vim-searchindex](https://github.com/google/vim-searchindex) (show m/n for
+  searches)
 * [vim-search-pulse](https://github.com/inside/vim-search-pulse) (pulse on
   search)
 * [vim-signature](https://github.com/kshenoy/vim-signature) (show marks)

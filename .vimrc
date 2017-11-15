@@ -60,7 +60,7 @@ Plug 'Spaceghost/vim-matchit'                                                " %
 Plug 'sheerun/vim-polyglot'                                 " extra syntax files
 Plug 'tpope/vim-repeat'
 Plug 'zirrostig/vim-schlepp'                               " highlight then hjkl
-Plug 'google/vim-searchindex'
+Plug 'google/vim-searchindex'                            " show m/n for searches
 Plug 'inside/vim-search-pulse'                                           " * n N
 Plug 'kshenoy/vim-signature'                          " mx dmx m, m. m<Space> m/
 Plug 'honza/vim-snippets'
