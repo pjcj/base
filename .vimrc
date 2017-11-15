@@ -20,6 +20,7 @@ Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'davinche/godown-vim'                            " show markdown in browser
 Plug 'haya14busa/incsearch-fuzzy.vim'                                       " z/
 Plug 'haya14busa/incsearch.vim'                  " show all matches on incsearch
+Plug 'Shougo/neco-syntax'                                " for use with deoplete
 Plug 'Xuyuanp/nerdtree-git-plugin'                          " show changed files
 Plug 'scrooloose/nerdtree'                                              " <S-F1>
 Plug 'chr4/nginx.vim'
@@ -68,7 +69,6 @@ Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
 Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
-Plug 'Shougo/neco-syntax'
 
 " Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':

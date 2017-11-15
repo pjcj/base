@@ -72,6 +72,7 @@ following plugins:
   search)
 * [incsearch](https://github.com/haya14busa/incsearch.vim) (show all matches on
   incsearch)
+* [neco-syntax](https://github.com/Shougo/neco-syntax) (for use with deoplete)
 * [neovim-colors-solarized-truecolor-only](https://github.com/pjcj/neovim-colors-solarized-truecolor-only)
   (my version of truecolour solarized colours)
 * [nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin) (show
