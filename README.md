@@ -86,6 +86,7 @@ following plugins:
 * [sparkup](https://github.com/rstacruz/sparkup) (HTML helper)
 * [supertab](https://github.com/ervandew/supertab) (tab completion)
 * [tagbar](https://github.com/majutsushi/tagbar) (display tags)
+* [targets](https://github.com/wellle/targets.vim) (add * | and _ targets)
 * [tmux-complete](https://github.com/wellle/tmux-complete.vim) (completion from
   tmux buffers)
 * [ultisnips](https://github.com/SirVer/ultisnips) (snippets)
