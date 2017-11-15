@@ -79,7 +79,6 @@ following plugins:
   git status against files)
 * [nerdtree](https://github.com/scrooloose/nerdtree) (file tree)
 * [nginx](https://github.com/chr4/nginx.vim) (nginx syntax)
-* [perlomni](https://github.com/c9s/perlomni.vim) (perl omni completion)
 * [quickfix-reflector](https://github.com/stefandtw/quickfix-reflector.vim)
   (edit text in quickfix window)
 * [salt-vim](https://github.com/saltstack/salt-vim) (salt syntax)
@@ -145,6 +144,11 @@ following plugins:
   and more)
 * [vitality](https://github.com/akracun/vitality.vim) (focus lost and gained
   inside tmux)
+
+
+* [vim-perl](https://github.com/vim-perl/vim-perl) (perl functionality)
+* [vim-perl6](https://github.com/vim-perl/vim-perl6) (perl6 functionality)
+* [perlomni](https://github.com/c9s/perlomni.vim) (perl omni completion)
 
 
 * [vim-shortcut](https://github.com/sunaku/vim-shortcut) (describe shortcuts)
