@@ -909,7 +909,7 @@ Shortcut denite tags
     \ :<C-u>Denite tag<CR>
 
 Shortcut denite command
-    \ nnoremap <silent> [denite]o
+    \ nnoremap <silent> [denite]c
     \ :<C-u>Denite command<CR>
 
 Shortcut denite help
