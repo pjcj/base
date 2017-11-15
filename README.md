@@ -82,6 +82,7 @@ following plugins:
 * [quickfix-reflector](https://github.com/stefandtw/quickfix-reflector.vim)
   (edit text in quickfix window)
 * [salt-vim](https://github.com/saltstack/salt-vim) (salt syntax)
+* [sideways](https://andrewradev/sideways.vim) (operate on arglists)
 * [sparkup](https://github.com/rstacruz/sparkup) (HTML helper)
 * [supertab](https://github.com/ervandew/supertab) (tab completion)
 * [tagbar](https://github.com/majutsushi/tagbar) (display tags)
