@@ -79,6 +79,7 @@ following plugins:
   git status against files)
 * [nerdtree](https://github.com/scrooloose/nerdtree) (file tree)
 * [nginx](https://github.com/chr4/nginx.vim) (nginx syntax)
+* [nvim-miniyank](https://github.com/bfredl/nvim-miniyank) (yankring)
 * [quickfix-reflector](https://github.com/stefandtw/quickfix-reflector.vim)
   (edit text in quickfix window)
 * [salt-vim](https://github.com/saltstack/salt-vim) (salt syntax)
@@ -155,21 +156,11 @@ following plugins:
 * [fzf](https://github.com/junegunn/fzf.vim) (fuzzy finder)
 
 
-* [unite](https://github.com/Shougo/unite.vim) (ctrl-p-like interface)
-* [vimproc](https://github.com/Shougo/vimproc.vim) (asynchronous processes)
-
-
+* [denite](https://github.com/Shougo/denite.vim) (ctrl-p-like interface)
+* [denite-extra](https://github.com/chemzqm/denite-extra.vim) (extra sources)
+* [unite](https://github.com/Shougo/unite.vim) (for lagacy sources)
 * [neomru](https://github.com/Shougo/neomru.vim) (MRU for unite)
 * [unite-git](https://github.com/yuku-t/unite-git) (git in unite)
-* [unite-grep-vcs](https://github.com/lambdalisue/unite-grep-vcs) (git grep for
-  unite)
-* [unite-help](https://github.com/Shougo/unite-help) (help for unite)
 * [unite-outline](https://github.com/Shougo/unite-outline) (outline for unite)
 * [unite-perl-module](https://github.com/soh335/unite-perl-module) (integrate
   Perl modules into unite)
-* [unite-search-history](https://github.com/mpendse/unite-search-history)
-  (history for unite)
-* [unite-tag](https://github.com/tsukkee/unite-tag) (tags for unite)
-* [unite-unicode](https://github.com/sanford1/unite-unicode) (unicode for unite)
-* [yankround](https://github.com/LeafCage/yankround.vim) (yank history for
-  unite)
