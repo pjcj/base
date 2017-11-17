@@ -899,7 +899,6 @@ Shortcut denite jump and change
     \ nnoremap <silent> [denite]j
     \ :<C-u>Denite jump change file_point<CR>
 
-" denite outline seems not to be working
 Shortcut denite outline
     \ nnoremap <silent> [denite]o
     \ :<C-u>Denite unite:outline<CR>
