@@ -51,7 +51,8 @@ plugins:
   completions)
 * [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
   (hightlighting on the command line)
-* [zsh-dwim](https://github.com/oknowton/zsh-dwim) (predict next command with ^U)
+* [zsh-dwim](https://github.com/oknowton/zsh-dwim) (predict next command with
+  ^U)
 * [git-extras](https://github.com/tj/git-extras) (additional git commands)
 
 The vim config uses [vim-plug](https://github.com/junegunn/vim-plug) and the
@@ -122,8 +123,6 @@ following plugins:
   tags dynamically)
 * [vim-indent-guides](https://github.com/nathanaelkane/vim-indent-guides)
   (guidelines for indentation)
-* [vim-indent-guides](https://github.com/michaeljsmith/vim-indent-object)
-  (objects based on indentation)
 * [vim-interestingwords](https://github.com/vasconcelloslf/vim-interestingwords)
   (highlighting and navigation)
 * [vim-lion](https://github.com/tommcdo/vim-lion) (alignment)
@@ -146,15 +145,12 @@ following plugins:
 * [vitality](https://github.com/akracun/vitality.vim) (focus lost and gained
   inside tmux)
 
-
 * [vim-perl](https://github.com/vim-perl/vim-perl) (perl functionality)
 * [vim-perl6](https://github.com/vim-perl/vim-perl6) (perl6 functionality)
 * [perlomni](https://github.com/c9s/perlomni.vim) (perl omni completion)
 
-
 * [vim-shortcut](https://github.com/sunaku/vim-shortcut) (describe shortcuts)
 * [fzf](https://github.com/junegunn/fzf.vim) (fuzzy finder)
-
 
 * [denite](https://github.com/Shougo/denite.vim) (ctrl-p-like interface)
 * [denite-extra](https://github.com/chemzqm/denite-extra.vim) (extra sources)
