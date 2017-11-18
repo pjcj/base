@@ -1,0 +1,73 @@
+#!/bin/bash
+set -euo pipefail
+
+script=$(basename "$0")
+srcdir=$(readlink -f "$(dirname "$0")")
+readonly LOG_FILE="/tmp/$script.log"
+_p() { l=$1; shift; echo "$l $script: $*" | tee -a "$LOG_FILE" >&2; }
+pt() { _p "[TRACE]  " "$*";                                         }
+pd() { _p "[DEBUG]  " "$*";                                         }
+pi() { _p "[INFO]   " "$*";                                         }
+pw() { _p "[WARNING]" "$*";                                         }
+pe() { _p "[ERROR]  " "$*";                                         }
+pf() { _p "[FATAL]  " "$*"; exit 1;                                 }
+
+usage() {
+    cat <<EOT
+$script --help
+$script --trace --verbose
+$script options
+EOT
+    exit 0
+}
+
+cleanup() {
+    declare -r res=$?
+    ((verbose)) && pi "Cleaning up"
+    exit $res
+}
+
+PATH="$srcdir:$PATH"
+verbose=0
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -h|--help)
+            usage
+            shift
+            ;;
+        -t|--trace)
+            set -x
+            shift
+            ;;
+        -v|--verbose)
+            verbose=1
+            shift
+            ;;
+        --url)
+            url="$2"
+            shift 2
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
+
+main() {
+    # based on code from Mike Cramer,
+    # http://kiodane.tumblr.com/post/27508318036/wget-mirror-a-tumblr-site
+
+    mkdir -p $url
+    cd $url
+
+    # shellcheck disable=SC2140
+    wget -mpNHk -e robots=off --wait 0.25 \
+        -D .media.tumblr.com,$url -R "*avatar*","*\?*","*_[0-9][0-9][0-9].*" \
+        http://$url
+}
+
+if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
+    trap cleanup EXIT INT
+    main "$@"
+fi
