@@ -604,7 +604,8 @@ Shortcut grep for word under cursor
         \ <Bar> botright copen<CR><C-L>
 Shortcut (v) grep for visual selection
     \ vnoremap <C-F8> :<C-U>GrepVisual<CR>
-" Note: F9 is now available
+Shortcut only show current window
+    \ nnoremap <F9>       :only<CR>
 Shortcut open quickfix list window
     \ nnoremap <S-F9>     :copen<CR>
 Shortcut open location list window
