@@ -339,8 +339,8 @@ let g:gutentags_ctags_exclude    = ['blib', 'tmp']
 let g:NERDTreeShowHidden         = 1
 
 function! NERDTreeRefresh()
-    if &filetype == "nerdtree"
-        silent exe substitute(mapcheck("R"), "<CR>", "", "")
+    if &filetype == 'nerdtree'
+        silent exe substitute(mapcheck('R'), '<CR>', '', '')
     endif
 endfunction
 
