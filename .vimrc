@@ -344,7 +344,10 @@ function! NERDTreeRefresh()
     endif
 endfunction
 
-autocmd BufEnter * call NERDTreeRefresh()
+augroup nerdtree
+    autocmd!
+    autocmd BufEnter * call NERDTreeRefresh()
+augroup END
 
 " taglist plugin
 let g:Tlist_Use_SingleClick      = 1
