@@ -555,10 +555,10 @@ set guioptions=ag
 function! s:get_visual_selection()
     let [l:lnum1, l:col1] = getpos("'<")[1:2]
     let [l:lnum2, l:col2] = getpos("'>")[1:2]
-    let lines = getline(l:lnum1, l:lnum2)
-    let lines[-1] = lines[-1][: l:col2 - (&selection == 'inclusive' ? 1 : 2)]
-    let lines[0] = lines[0][l:col1 - 1:]
-    return join(lines, " ")
+    let l:lines = getline(l:lnum1, l:lnum2)
+    let l:lines[-1] = l:lines[-1][: l:col2 - (&selection == 'inclusive' ? 1 : 2)]
+    let l:lines[0] = l:lines[0][l:col1 - 1:]
+    return join(l:lines, " ")
 endfunction
 function! Grep_visual(text)
     execute "silent grep! '" . a:text . "'"
