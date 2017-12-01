@@ -752,7 +752,7 @@ Shortcut toggle paste option
 
 " miniyank
 let g:miniyank_maxitems        = 1000
-let g:miniyank_filename        = $HOME."/.vim/.miniyank.mpack"
+let g:miniyank_filename        = $HOME.'/.vim/.miniyank.mpack'
 let g:miniyank_delete_maxlines = 10000
 
 Shortcut paste with miniyank
