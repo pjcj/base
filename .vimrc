@@ -782,7 +782,7 @@ Shortcut jump to previous error
     \ nmap <silent> <C-K> <Plug>(ale_previous_wrap)
 
 " closetag
-let g:closetag_filenames = "*.html,*.xhtml,*.tt"
+let g:closetag_filenames = '*.html,*.xhtml,*.tt'
 
 vmap <Enter> <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
