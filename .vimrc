@@ -773,6 +773,8 @@ let g:ale_lint_delay           = 200
 let g:ale_set_quickfix         = 0
 let g:ale_sign_error           = '✗'
 let g:ale_sign_warning         = '⚠'
+
+let g:ale_linters              = {'perl' : ['perl']}
 let g:ale_perl_perl_executable = glob('~/g/base/utils/ale_perl')
 let g:ale_perl_perl_options    = ''
 
