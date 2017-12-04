@@ -501,6 +501,7 @@ load() {
 load \
     /etc/zsh_command_not_found \
     ~/.gvm/scripts/gvm         \
+    ~/g/sw/etc/zsh/*           \
     ~/.zshrc.local             \
     ~/.zshrc.${HOST%%.*}
 
