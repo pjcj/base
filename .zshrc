@@ -424,7 +424,7 @@ wh() {
     echo
     command whence -cm "$@"
     echo
-    command whence --afpSvm "$@"
+    command whence -afpSvm "$@"
 }
 
 bspwm_panel_space() {
