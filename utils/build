@@ -179,7 +179,7 @@ case "$build" in
         ;;
     git)
         sudo aptitude -y install libcurl4-openssl-dev gettext
-        git checkout "$(git tag | grep -v rc | tail -1)"
+        git checkout "$(git tag | grep -v rc | grep '^v' | sort -V | tail -1)"
         make prefix="$sw" all install
         ;;
     caps2esc)
