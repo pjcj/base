@@ -333,6 +333,10 @@ augroup file_types
         \ | endif
 augroup END
 
+" let g:html_indent_script1 = 'inc'
+" let g:html_indent_style1  = 'inc'
+" let g:html_indent_inctags = 'html,body,head,tbody,p,li,dd,dt,h1,h2,h3,h4,h5,h6,blockquote,section'
+
 let g:gutentags_ctags_exclude    = ['blib', 'tmp']
 " can be extended with '*/sub/path' if required
 
