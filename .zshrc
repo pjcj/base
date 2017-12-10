@@ -368,6 +368,7 @@ gf()      { git fetch --prune --all "$@" }
 gg()      { git grep -n "$@" }
 ggv()     { git grep -O$EDITOR "$@" }
 gl()      { git lg --all "$@" }
+gld()     { git lg --all  --date=iso "$@" }
 gls()     { git lg --simplify-by-decoration "$@" }
 glsa()    { git lg --all --simplify-by-decoration "$@" }
 go()      { git co "$@" }
