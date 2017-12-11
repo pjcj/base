@@ -144,14 +144,11 @@ following plugins:
   and more)
 * [vitality](https://github.com/akracun/vitality.vim) (focus lost and gained
   inside tmux)
-
 * [vim-perl](https://github.com/vim-perl/vim-perl) (perl functionality)
 * [vim-perl6](https://github.com/vim-perl/vim-perl6) (perl6 functionality)
 * [perlomni](https://github.com/c9s/perlomni.vim) (perl omni completion)
-
 * [vim-shortcut](https://github.com/sunaku/vim-shortcut) (describe shortcuts)
 * [fzf](https://github.com/junegunn/fzf.vim) (fuzzy finder)
-
 * [denite](https://github.com/Shougo/denite.vim) (ctrl-p-like interface)
 * [denite-extra](https://github.com/chemzqm/denite-extra.vim) (extra sources)
 * [unite](https://github.com/Shougo/unite.vim) (for lagacy sources)
