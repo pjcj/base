@@ -864,7 +864,7 @@ Shortcut denite
 Shortcut denite general fuzzy search
     \ nnoremap <silent> [denite]<space>
     \ :<C-u>Denite -buffer-name=files
-    \ buffer unite:git_modified unite:git_untracked file_mru file_rec<CR>
+    \ unite:git_modified unite:git_untracked buffer file_mru file_rec<CR>
 
 Shortcut denite resume
     \ nnoremap <silent> [denite]r
