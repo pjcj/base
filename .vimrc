@@ -127,7 +127,7 @@ set directory=>~/g/tmp/vim/
 set errorformat=%f:%l:%m
 set expandtab
 set exrc
-set formatoptions=tcrqnl
+set formatoptions=tcrqnlj
 set guifont=inconsolata\ \for\ powerline\ 12
 set hidden  " needed for completor
 set history=1000
