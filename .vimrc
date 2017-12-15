@@ -451,6 +451,7 @@ function! Pulse_off()
     call Pulse_col(s:base02)
 endfunc
 function! Pulse()
+    exe 'normal zz'
     call search_pulse#Pulse()
 endfunc
 augroup Pulse
