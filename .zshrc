@@ -11,6 +11,7 @@ source ~/.zplug/init.zsh
 zplug "tj/git-extras", hook-build:"make install PREFIX=$HOME/g/sw"
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting"
+# zplug "zdharma/fast-syntax-highlighting"  # not working for me
 
 if ! zplug check; then zplug install; fi
 zplug load
