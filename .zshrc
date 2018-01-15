@@ -187,10 +187,6 @@ zstyle ":completion:*:*:kill:*:processes" list-colors \
 zstyle ":completion:*:*:*:*:processes" \
            command "ps -u $USER -o pid,user,comm -w -w"
 
-# disable named-directories autocompletion
-zstyle ":completion:*:cd:*" tag-order local-directories directory-stack \
-                            path-directories
-
 zstyle ":completion::complete:*" use-cache 1
 
 # Don't complete uninteresting users
