@@ -69,6 +69,7 @@ Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
 Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
+Plug 'mattboehm/vim-unstack'                             " :UnstackFromSelection
 
 " Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
@@ -795,6 +796,10 @@ Shortcut jump to previous error
 
 " closetag
 let g:closetag_filenames = '*.html,*.xhtml,*.tt'
+
+" unstack
+let g:unstack_populate_quickfix = 1
+let g:unstack_open_tab          = 0
 
 vmap <Enter> <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
