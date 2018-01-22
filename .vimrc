@@ -868,6 +868,8 @@ let g:ctrlp_prompt_mappings    = {
     \ }
 
 " Denite
+call denite#custom#option('default', 'smartcase', v:true)
+
 nnoremap [denite] <Nop>
 Shortcut denite
     \ nmap <space> [denite]
