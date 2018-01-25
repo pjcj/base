@@ -548,7 +548,7 @@ Shortcut! :UnicodeTable<CR> show table of all unicode characters
 Shortcut! :Digraphs<CR> show digraph table
 Shortcut! :Digraphs!<CR> show extended digraph table
 Shortcut! :Digraphs! show digraph table matching argument
-Shortcut! <C-X><C-G> complete as gigraph
+Shortcut! <C-X><C-G> complete as digraph
 Shortcut! <C-X><C-Z> complete as unicode
 
 augroup autowrite
