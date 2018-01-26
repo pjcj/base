@@ -28,7 +28,7 @@ fi
 (sleep 3; bspc config -m "$(bspc query -M | awk "NR == 1")" bottom_padding 24)&
 
 # bspc rule -a Firefox     desktop=II
-bspc rule -a chromium-browser desktop=II
+bspc rule -a Chromium-browser desktop=II
 # bspc rule -a Thunderbird desktop=II
 
 # bspc rule -a Gimp desktop=^8 follow=on floating=on
