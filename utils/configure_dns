@@ -15,6 +15,7 @@ sub pd { say join " ", map ref() ? p $_ : $_ // "*undef*", @_ }
 my $Defaults = {
     debug   => 0,
     verbose => 0,
+    dkim    => 0,
 };
 
 our $O = {};
@@ -24,6 +25,7 @@ sub get_options {
         conf=s
         debug!
         verbose!
+        dkim!
         home_ip=s
     ));
     $o->{args} = [@ARGV];
@@ -60,23 +62,25 @@ sub write_files {
 
     chdir "/srv/$main/config" or die "Can't cd /srv/$main/config: $!";
     my $q = $O->{verbose} ? "" : " >/dev/null 2>&1";
-    system "openssl genrsa -out dkim.key 2048 -outform PEM$q";
-    system "touch /srv/$main/config/dkim";
+    if ($O->{dkim}) {
+        system "openssl genrsa -out dkim.key 2048 -outform PEM$q";
+        system "touch /srv/$main/config/dkim";
+    }
 
     my $files = {
         antispam        => "tag\n",
         default_forward => "paul\@pjcj.net\n",
-        dkim            => "",
         dmarc           => "v=DMARC1; p=none; " .
                            "rua=mailto:paul\@pjcj.net; sp=reject",
         spf             => "v=spf1 +a +mx a:$O->{home_domain} ~all",
         ttl             => "60\n",
         "blacklists/zen.spamhaus.org" => "",
     };
+    $files->{dkim} = "" if $O->{dkim};
 
     for my $d (@$domains) {
         chdir "/srv/$d/config" or die "Can't cd /srv/$d/config: $!";
-        system "cp /srv/$main/config/dkim.key ." unless $d eq $main;
+        system "cp /srv/$main/config/dkim.key ." if $O->{dkim} && $d ne $main;
         for my $f (sort keys %$files) {
             my $p = path($f);
             $p->remove;
@@ -136,6 +140,7 @@ The following command line options are supported:
  -i -info              - show documentation
  -v -version           - show version
 
+ -dkim                 - configure dkim
  -home_ip              - specify the home ipaddress
 
 =head1 DETAILS
