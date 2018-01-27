@@ -71,8 +71,8 @@ sub write_files {
         antispam        => "tag\n",
         default_forward => "paul\@pjcj.net\n",
         dkim            => $O->{dkim} ? "" : undef,
-        dmarc           => "v=DMARC1; p=none; " .
-                           "rua=mailto:paul\@pjcj.net; sp=reject",
+        dmarc           => $O->{dkim} ? "v=DMARC1; p=none; " .
+                           "rua=mailto:paul\@pjcj.net; sp=reject" : undef,
         spf             => "v=spf1 +a +mx a:$O->{home_domain} ~all",
         ttl             => "60\n",
         "blacklists/zen.spamhaus.org" => "",
