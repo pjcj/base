@@ -70,13 +70,13 @@ sub write_files {
     my $files = {
         antispam        => "tag\n",
         default_forward => "paul\@pjcj.net\n",
+        dkim            => $O->{dkim} ? "" : undef,
         dmarc           => "v=DMARC1; p=none; " .
                            "rua=mailto:paul\@pjcj.net; sp=reject",
         spf             => "v=spf1 +a +mx a:$O->{home_domain} ~all",
         ttl             => "60\n",
         "blacklists/zen.spamhaus.org" => "",
     };
-    $files->{dkim} = "" if $O->{dkim};
 
     for my $d (@$domains) {
         chdir "/srv/$d/config" or die "Can't cd /srv/$d/config: $!";
@@ -85,7 +85,7 @@ sub write_files {
             my $p = path($f);
             $p->remove;
             $p->parent->mkpath;
-            $p->spew($files->{$f} =~ s/%%/$d/gr);
+            $p->spew($files->{$f} =~ s/%%/$d/gr) if defined $files->{$f};
         }
         my $p = path("dns/$d.txt");
         path("dns/$d.txt")->append(<<EOT);
