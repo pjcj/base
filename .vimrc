@@ -68,8 +68,8 @@ Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
 Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
-Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 Plug 'mattboehm/vim-unstack'                             " :UnstackFromSelection
+Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 
 " Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
