@@ -869,6 +869,8 @@ let g:ctrlp_prompt_mappings    = {
     \ 'OpenMulti()':          ['<c-o>'],
     \ 'PrtExit()':            ['<esc>', '<c-c>', '<c-g>'],
     \ }
+let g:ctrlp_unicode_unicodedata_file =
+    \  glob('~/.vim/plugged/unicode.vim/autoload/unicode/UnicodeData.txt')
 
 " Denite
 call denite#custom#option('default', 'smartcase', v:true)
