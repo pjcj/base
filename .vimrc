@@ -12,8 +12,6 @@ call plug#begin()
 
 Plug 'w0rp/ale'                                                " syntax checking
 Plug 'rhysd/clever-f.vim'                                           " f F t T f;
-Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
-Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'Shougo/deoplete.nvim'
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
@@ -82,6 +80,11 @@ Plug 'sunaku/vim-shortcut'                                                " , ,,
 Plug '/home/pjcj/g/ghq/github.com/junegunn/fzf'
 Plug '/usr/local/Cellar/fzf/0.16.7'
 Plug 'junegunn/fzf.vim'
+
+" CtrlP
+Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
+Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
+Plug 'suy/vim-ctrlp-unicode'
 
 " Denite and unite, plugins for denite
 let g:neomru#file_mru_limit = 8
@@ -824,7 +827,7 @@ let g:ctrlp_custom_ignore      = {
     \ 'file': "\v\nytprof$",
     \ }
 let g:ctrlp_extensions         = [
-    \ 'mixed', 'menu', 'tag', 'changes', 'cmdline'
+    \ 'mixed', 'menu', 'tag', 'changes', 'cmdline', 'unicode'
     \ ]
 let g:ctrlp_mruf_relative      = 1
 let g:ctrlp_use_caching        = 0
