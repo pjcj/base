@@ -254,6 +254,16 @@ case "$build" in
         sudo apt-get update
         sudo apt-get install ruby2.4 ruby2.4-dev
         ;;
+    openssl)
+        v=$(git tag | grep OpenSSL_1 | tail -1)
+        o=$(openssl version | perl -pe 's/(OpenSSL [^ ]*).*/$1/; s/[ .]/_/g')
+        [ "$v" = "$o" ] && exit
+        git checkout "$v"
+        # shellcheck disable=SC2016
+        ./config --prefix="$sw" --openssldir="$sw/ssl" \
+                 -Wl,--enable-new-dtags,-rpath,'$(LIBRPATH)'
+        TOP="" make test install
+        ;;
     *)
         echo unknown build "$build"
         ;;
