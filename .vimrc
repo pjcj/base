@@ -832,7 +832,7 @@ let g:ctrlp_extensions         = [
     \ ]
 let g:ctrlp_mruf_relative      = 1
 let g:ctrlp_use_caching        = 0
-let g:ctrlp_match_window       = 'bottom,order:btt,min:25,max:25,results:25'
+let g:ctrlp_match_window       = 'bottom,order:btt,min:25,max:25,results:500'
 let g:ctrlp_match_current_file = 1
 let g:ctrlp_prompt_mappings    = {
     \ 'PrtBS()':              ['<bs>', '<c-]>'],
