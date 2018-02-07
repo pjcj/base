@@ -85,6 +85,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
 Plug 'sgur/ctrlp-extensions.vim'              " cmdline, yank and menu for ctrlp
 Plug 'suy/vim-ctrlp-unicode'
+Plug 'zeero/vim-ctrlp-help'
 
 " Denite and unite, plugins for denite
 let g:neomru#file_mru_limit = 8
@@ -827,7 +828,7 @@ let g:ctrlp_custom_ignore      = {
     \ 'file': "\v\nytprof$",
     \ }
 let g:ctrlp_extensions         = [
-    \ 'mixed', 'menu', 'tag', 'changes', 'cmdline', 'unicode'
+    \ 'mixed', 'menu', 'tag', 'changes', 'cmdline', 'help', 'unicode'
     \ ]
 let g:ctrlp_mruf_relative      = 1
 let g:ctrlp_use_caching        = 0
