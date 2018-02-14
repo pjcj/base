@@ -281,6 +281,16 @@ case "$build" in
         configure --enable-optimizations
         make test install
         ;;
+    harfbuzz)
+        git checkout "$(git tag | grep -v '[a-z]' | tail -1)"
+        git clean -dxf
+        install_pkg                                               \
+            gcc g++ libfreetype6-dev libglib2.0-dev libcairo2-dev \
+            autoconf automake libtool pkg-config ragel gtk-doc-tools
+        configure
+        make check  # can fail
+        makeinstall
+        ;;
     *)
         echo unknown build "$build"
         ;;
