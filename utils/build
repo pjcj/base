@@ -291,6 +291,14 @@ case "$build" in
         make check  # can fail
         makeinstall
         ;;
+    kitty)
+        git checkout "$(git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | tail -1)"
+        git clean -dxf
+        PKG_CONFIG_PATH="$sw/lib/pkgconfig:$(pkg-config --variable pc_path pkg-config)"
+        export PKG_CONFIG_PATH
+        echo $PKG_CONFIG_PATH
+        make
+        ;;
     *)
         echo unknown build "$build"
         ;;
