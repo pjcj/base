@@ -49,7 +49,7 @@ case "$build" in
         make check install
         ;;
     htop)
-        sudo aptitude -y install libncursesw5-dev
+        install_pkg libncursesw5-dev
         configure
         make check install
         ;;
@@ -63,7 +63,7 @@ case "$build" in
         [ "NVIM $v" = "$(nvim -v | head -1)" ] && exit
         git checkout "$v"
         if [ ! "$ISOSX" ]; then
-            sudo aptitude -y install \
+            install_pkg \
                 libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
         fi
         git clean -dxf
@@ -72,40 +72,42 @@ case "$build" in
         ;;
     vim)
         if [ ! "$ISOSX" ]; then
-            sudo aptitude -y install \
+            install_pkg \
                 libncurses5-dev libgnome2-dev libgnomeui-dev \
                 libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
                 libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
                 python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev
         fi
         git clean -dxf
-        ./configure --with-features=huge \
-            --enable-multibyte \
-            --enable-rubyinterp=yes \
-            --enable-pythoninterp=yes \
+        configure                      \
+            --with-features=huge       \
+            --enable-multibyte         \
+            --enable-rubyinterp=yes    \
+            --enable-pythoninterp=yes  \
             --enable-python3interp=yes \
-            --enable-perlinterp=yes \
-            --enable-luainterp=yes \
-            --enable-gui=gtk2 --enable-cscope \
-            --prefix="$sw"
+            --enable-perlinterp=yes    \
+            --enable-luainterp=yes     \
+            --enable-gui=gtk2          \
+            --enable-cscope
         make VIMRUNTIMEDIR="$sw/share/vim/vim80" test install
             # --with-python-config-dir=/usr/lib/python2.7/config \
             # --with-python3-config-dir=/usr/lib/python3.5/config \
         ;;
     st)
         exit_unless_x
-        sudo aptitude -y install fontconfig libfontconfig1-dev \
+        install_pkg fontconfig libfontconfig1-dev \
             libfreetype6 libfreetype6-dev libxft-dev
         make clean install
         make_tmux_terminfo
         ;;
     sxhkd|bspwm)
         exit_unless_x
-        sudo aptitude -y install libxcb-util0-dev libxcb-keysyms1-dev     \
-            libxcb-xinerama0-dev libxcb-randr0-dev libxcb-icccm4-dev      \
-            libxcb-ewmh1-dev xcb libxcb-util0-dev libxcb-ewmh-dev         \
-            libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev       \
-            libxcb-xinerama0-dev libxcb-ewmh2                             \
+        install_pkg \
+            libxcb-util0-dev libxcb-keysyms1-dev                     \
+            libxcb-xinerama0-dev libxcb-randr0-dev libxcb-icccm4-dev \
+            libxcb-ewmh1-dev xcb libxcb-util0-dev libxcb-ewmh-dev    \
+            libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev  \
+            libxcb-xinerama0-dev libxcb-ewmh2                        \
             gnome-panel
         make PREFIX="$sw" all install
         if [ "$build" = "bspwm" ]; then
@@ -116,8 +118,7 @@ case "$build" in
         ;;
     xdotool)
         exit_unless_x
-        sudo aptitude -y install libxinerama-dev x11proto-xinerama-dev \
-            libxkbcommon-dev
+        install_pkg libxinerama-dev x11proto-xinerama-dev libxkbcommon-dev
         make PREFIX="$sw" all test install
         sudo ldconfig
         ;;
@@ -149,18 +150,19 @@ case "$build" in
         stack build && stack install
         ;;
     shellcheck)
-        sudo aptitude -y install cabal-install
+        install_pkg cabal-install
         cabal update && cabal install --prefix="$sw" && cabal clean
         ;;
     skype)
         exit_unless_x
         sudo dpkg --add-architecture i386
-        sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
-        sudo aptitude update && sudo aptitude -y install skype
+        sudo add-apt-repository \
+            "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
+        install_pkg skype
         ;;
     ClipIt)
         exit_unless_x
-        sudo aptitude -y install autopoint intltool
+        install_pkg autopoint intltool
         ./autogen.sh
         configure
         make
@@ -183,15 +185,16 @@ case "$build" in
         make install
         ;;
     git)
-        sudo aptitude -y install libcurl4-openssl-dev gettext
+        install_pkg libcurl4-openssl-dev gettext
         git checkout "$(git tag | grep -v rc | grep '^v' | sort -V | tail -1)"
         make prefix="$sw" all install
         ;;
     caps2esc)
         exit_if_vm
         exit_unless_x
-        sudo aptitude -y install libudev-dev libevdev-dev
-        gcc -std=gnu99 caps2esc.c -o caps2esc -I/usr/include/libevdev-1.0 -levdev -ludev
+        install_pkg libudev-dev libevdev-dev
+        gcc -std=gnu99 caps2esc.c -o caps2esc \
+            -I/usr/include/libevdev-1.0 -levdev -ludev
         cp caps2esc "$sw/bin"
         ;;
     rg)
@@ -256,8 +259,7 @@ case "$build" in
         ;;
     ruby)
         sudo apt-add-repository ppa:brightbox/ruby-ng
-        sudo apt-get update
-        sudo apt-get install ruby2.4 ruby2.4-dev
+        install_pkg ruby2.4 ruby2.4-dev
         ;;
     openssl)
         v=$(git tag | grep OpenSSL_1 | tail -1)
