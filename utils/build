@@ -294,9 +294,18 @@ case "$build" in
     kitty)
         git checkout "$(git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | tail -1)"
         git clean -dxf
+        sudo apt-add-repository ppa:wayland.admin/daily-builds < /dev/null
+        sudo aptitude update
+        install_pkg                                                   \
+            linux-generic-lts-xenial xserver-xorg-core-lts-xenial     \
+            xserver-xorg-lts-xenial xserver-xorg-video-all-lts-xenial \
+            xserver-xorg-input-all-lts-xenial libwayland-egl1-mesa-lts-xenial \
+            libegl1-mesa-dev-lts-xenial
+        install_pkg                                         \
+            libglew-dev libxkbcommon-x11-dev libxcb-xkb-dev \
+            libwayland-protocols-dev libwayland-egl1
         PKG_CONFIG_PATH="$sw/lib/pkgconfig:$(pkg-config --variable pc_path pkg-config)"
         export PKG_CONFIG_PATH
-        echo $PKG_CONFIG_PATH
         make
         ;;
     *)
