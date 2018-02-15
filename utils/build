@@ -301,6 +301,7 @@ case "$build" in
         ;;
     *)
         echo unknown build "$build"
+        exit
         ;;
 esac
 
