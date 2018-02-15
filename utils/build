@@ -278,7 +278,7 @@ case "$build" in
             libncurses5-dev libbz2-dev liblzma-dev                            \
             libsqlite3-dev libffi-dev tcl-dev libgdbm-dev                     \
             libreadline-dev tk tk-dev
-        configure --enable-optimizations
+        configure --enable-optimizations --enable-shared LDFLAGS=-Wl,-rpath="$sw/lib"
         make test install
         ;;
     harfbuzz)
