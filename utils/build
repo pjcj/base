@@ -294,6 +294,9 @@ case "$build" in
     kitty)
         git checkout "$(git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | tail -1)"
         git clean -dxf
+        # We have an old version of wayland_scanner
+        perl -pi -e 's/(run_tool\(\[env.wayland_scanner, q, src, dest],)/os.system(env.wayland_scanner + " " + q + " < " + src + " > " + dest)\n
+# $1/; s/(desc=.Generating)/# $1/' glfw/glfw.py
         sudo apt-add-repository ppa:wayland.admin/daily-builds < /dev/null
         sudo aptitude update
         install_pkg                                                   \
