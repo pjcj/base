@@ -291,8 +291,8 @@ case "$build" in
             gcc g++ libfreetype6-dev libglib2.0-dev libcairo2-dev \
             autoconf automake libtool pkg-config ragel gtk-doc-tools
         configure
-        make check  # can fail
-        makeinstall
+        make check || true  # can fail
+        make install
         ;;
     kitty)
         git checkout "$(git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | tail -1)"
