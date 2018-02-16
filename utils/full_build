@@ -27,14 +27,14 @@ if [ "$ISOSX" ]; then
     pip3=pip
 else
     pip3=pip3
-    sudo aptitude -y install \
-        python-pip python-setuptools \
-        python3-pip python3-setuptools
+    # sudo aptitude -y install \
+        # python-pip python-setuptools \
+        # python3-pip python3-setuptools
     sudo aptitude -y install golang
 fi
-sudo aptitude install python3-pip
-sudo pip2 install --upgrade neovim
-sudo pip3 install --upgrade neovim
+# sudo aptitude install python3-pip
+# sudo pip2 install --upgrade neovim
+$pip3 install --upgrade neovim
 $pip3 install --upgrade --user vim-vint proselint
 pip install --upgrade --user git+git://github.com/powerline/powerline
 
