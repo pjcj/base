@@ -127,7 +127,9 @@ case "$build" in
         [ "$v" = "zsh-$ZSH_VERSION" ] && exit
         oldhist=~/.zshhistory."$(date +'%Y%m%d')"
         cp ~/.zshhistory "$oldhist"
+        install_pkg yodl
         git checkout "$v"
+        git clean -dxf
         autoreconf -vfi
         configure --enable-pcre
         make
