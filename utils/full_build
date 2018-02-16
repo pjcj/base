@@ -44,7 +44,7 @@ gem update colorls
 # urlwatch
 $pip3 install --upgrade --user pyyaml minidb requests keyring chump urlwatch
 
-#denite
+# denite
 $pip3 install --upgrade --user typing
 
 $EDITOR -c PlugUpgrade -c qa
