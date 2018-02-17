@@ -33,14 +33,14 @@ indicator-keylock &
         do_sleep
         st -s 10 ssh h &
         sleep 3
-        st -s 10 ssh am1 &
+        st -s 10 ssh pjcj.net &
         do_sleep
         st -s 12 &
     elif [ "$hostname" = "posub64" ]; then
         firefox &
         st -s 16 &
         do_sleep
-        st -s 16 ssh am1 &
+        st -s 16 ssh pjcj.net &
         do_sleep
         st -s 16 &
         do_sleep
