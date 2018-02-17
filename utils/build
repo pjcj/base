@@ -302,11 +302,11 @@ case "$build" in
 # $1/; s/(desc=.Generating)/# $1/' glfw/glfw.py
         sudo apt-add-repository ppa:wayland.admin/daily-builds < /dev/null
         sudo aptitude update
-        install_pkg                                                   \
-            linux-generic-lts-xenial xserver-xorg-core-lts-xenial     \
-            xserver-xorg-lts-xenial xserver-xorg-video-all-lts-xenial \
-            xserver-xorg-input-all-lts-xenial libwayland-egl1-mesa-lts-xenial \
-            libegl1-mesa-dev-lts-xenial
+        install_pkg                                                           \
+            linux-generic-lts-trusty xserver-xorg-core-lts-trusty             \
+            xserver-xorg-lts-trusty xserver-xorg-video-all-lts-trusty         \
+            xserver-xorg-input-all-lts-trusty libwayland-egl1-mesa-lts-trusty \
+            libegl1-mesa-dev-lts-trusty
         install_pkg                                         \
             libglew-dev libxkbcommon-x11-dev libxcb-xkb-dev \
             libwayland-protocols-dev libwayland-egl1
