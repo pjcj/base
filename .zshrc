@@ -520,6 +520,9 @@ if [[ -e ~/.plenv ]] then
     eval "$(plenv init - zsh)"
 fi
 
+export FZF_TMUX=1
+export FZF_TMUX_HEIGHT=40%
+export FZF_DEFAULT_OPTS="--height 40% --reverse --inline-info"
 export FZF_DEFAULT_COMMAND="fd --hidden --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --hidden --exclude .git --type d"
