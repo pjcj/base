@@ -490,6 +490,28 @@ fi
 
 [[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim
 
+zshrc_load_status "colours"
+
+export s_base03="#001920"
+export s_base02="#022731"
+export s_base01="#586e75"
+export s_base00="#657b83"
+export s_base0="#839496"
+export s_base1="#93a1a1"
+export s_base2="#eee8d5"
+export s_base3="#fdf6e3"
+export s_yellow="#b58900"
+export s_orange="#cb4b16"
+export s_red="#dc322f"
+export s_magenta="#d33682"
+export s_violet="#6c71c4"
+export s_blue="#268bd2"
+export s_cyan="#2aa198"
+export s_green="#859900"
+export s_normal="#9599dc"
+
+export s_rgreen="#25ad2e"  # a nice green for diffs (opposite of s:red)
+
 zshrc_load_status "external files"
 
 load() {
