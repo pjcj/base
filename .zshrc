@@ -444,6 +444,8 @@ __tmux-sessions() {
 }
 compdef __tmux-sessions tm
 
+fh() { print -z $(fc -li 1 | fzf-tmux +s --tac | sed -r 's/ *[0-9]+.{18}//') }
+
 zshrc_load_status "hashed directories"
 
 hash -d g=~/g
