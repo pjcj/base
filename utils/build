@@ -228,7 +228,7 @@ case "$build" in
         mv $dir/*/autocomplete/_fd "$sw/share/zsh/site-functions"
         ;;
     fzf)
-        ./install --all --no-bash --no-zsh
+        ./install --all --bin
         cp -a bin/* "$sw/bin"
         mkdir -p "$sw/etc/zsh"
         cp -a shell/*.zsh "$sw/etc/zsh"
