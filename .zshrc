@@ -279,6 +279,9 @@ bindkey "^X" history-beginning-search-menu-space-end
 bindkey "^O" push-line-or-edit
 bindkey "^P" accept-and-infer-next-history
 
+bindkey "^E" undefined-key
+bindkey "^Y" undefined-key
+
 zshrc_load_status "miscellaneous"
 
 autoload -U url-quote-magic && zle -N self-insert url-quote-magic
