@@ -549,7 +549,11 @@ fi
 
 export FZF_TMUX=1
 export FZF_TMUX_HEIGHT=40%
-export FZF_DEFAULT_OPTS="--height 40% --reverse --inline-info"
+export FZF_DEFAULT_OPTS="
+    --height 40% --reverse --inline-info
+    --color fg:-1,bg:-1,hl:$s_blue,fg+:$s_normal,bg+:$s_base02,hl+:$s_blue
+    --color info:$s_cyan,prompt:$s_violet,pointer:$s_green,marker:$s_base3,spinner:$s_yellow
+"
 export FZF_DEFAULT_COMMAND="fd --hidden --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --hidden --exclude .git --type d"
