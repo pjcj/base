@@ -79,7 +79,6 @@ Plug 'c9s/perlomni.vim'                                         " for completion
 Plug 'sunaku/vim-shortcut'                                                " , ,,
 Plug '/home/pjcj/g/ghq/github.com/junegunn/fzf'
 Plug '/usr/local/Cellar/fzf/0.16.7'
-Plug 'junegunn/fzf.vim'
 
 " CtrlP
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
