@@ -556,6 +556,7 @@ export FZF_DEFAULT_OPTS="
 "
 export FZF_DEFAULT_COMMAND="fd --hidden --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 export FZF_ALT_C_COMMAND="fd --hidden --exclude .git --type d"
 
 typeset -U path
