@@ -530,6 +530,8 @@ load \
     ~/.zshrc.local             \
     ~/.zshrc.${HOST%%.*}
 
+zshrc_load_status "perl"
+
 [[ -z $PERLBREW_ROOT ]] && export PERLBREW_ROOT="$HOME/perl5/perlbrew"
 if [[ -e $PERLBREW_ROOT/etc/bashrc ]] then
     __path=$PATH
@@ -547,6 +549,8 @@ if [[ -e ~/.plenv ]] then
     eval "$(plenv init - zsh)"
 fi
 
+zshrc_load_status "fzf"
+
 export FZF_TMUX=1
 export FZF_TMUX_HEIGHT=40%
 export FZF_DEFAULT_OPTS="
@@ -559,6 +563,31 @@ export FZF_CTRL_T_OPTS="--preview '(lesspipe.sh {} 2> /dev/null || cat {} || tre
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 export FZF_ALT_C_COMMAND="fd --hidden --exclude .git --type d"
+
+git-commit-sel() {
+    setopt localoptions pipefail 2> /dev/null
+    local get_sha="grep -o '[a-f0-9]\+' | head -1"
+    local cmd="echo {} | $get_sha | xargs -I% git show --color=always %"
+    gl --color | $(__fzfcmd) --ansi --tiebreak=index --preview="$cmd" "$@" | \
+        while read item; do
+        echo -n "${item}" | eval "$get_sha"
+    done
+    local ret=$?
+    echo
+    return $ret
+}
+
+fzf-git-commit-widget() {
+    LBUFFER="${LBUFFER}$(git-commit-sel)"
+    local ret=$?
+    zle redisplay
+    typeset -f zle-line-init >/dev/null && zle zle-line-init
+    return $ret
+}
+zle     -N   fzf-git-commit-widget
+bindkey '^G' fzf-git-commit-widget
+
+zshrc_load_status "paths"
 
 typeset -U path
 typeset -U manpath
