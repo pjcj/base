@@ -585,7 +585,31 @@ fzf-git-commit-widget() {
     return $ret
 }
 zle     -N   fzf-git-commit-widget
+
+git-tag-sel() {
+    setopt localoptions pipefail 2> /dev/null
+    local cmd="echo {} | xargs -I% git show --color=always %"
+    g tag | $(__fzfcmd) --tiebreak=index --preview="$cmd" "$@" | \
+        while read item; do
+        echo -n "${item}"
+    done
+    local ret=$?
+    echo
+    return $ret
+}
+
+fzf-git-tag-widget() {
+    LBUFFER="${LBUFFER}$(git-tag-sel)"
+    local ret=$?
+    zle redisplay
+    typeset -f zle-line-init >/dev/null && zle zle-line-init
+    return $ret
+}
+zle     -N   fzf-git-tag-widget
+
+bindkey '^F' fzf-file-widget
 bindkey '^G' fzf-git-commit-widget
+bindkey '^T' fzf-git-tag-widget
 
 zshrc_load_status "paths"
 
