@@ -607,8 +607,32 @@ fzf-git-tag-widget() {
 }
 zle -N fzf-git-tag-widget
 
+git-branch-sel() {
+    setopt localoptions pipefail 2> /dev/null
+    local get_full_branch="perl -pe 's/..([^ ]+) .*/\$1/'"
+    local get_branch="perl -pe 's/.*?(\w+) .*/\$1/'"
+    local cmd="echo {} | $get_full_branch | xargs -I% git show --color=always %"
+    gb -avv | $(__fzfcmd) --ansi --tiebreak=index --preview="$cmd" "$@" | \
+        while read item; do
+        echo -n "${item}" | eval "$get_branch"
+    done
+    local ret=$?
+    echo
+    return $ret
+}
+
+fzf-git-branch-widget() {
+    LBUFFER="${LBUFFER}$(git-branch-sel)"
+    local ret=$?
+    zle redisplay
+    typeset -f zle-line-init >/dev/null && zle zle-line-init
+    return $ret
+}
+zle -N fzf-git-branch-widget
+
 bindkey '^F' fzf-file-widget
 bindkey '^G' fzf-git-commit-widget
+bindkey '^B' fzf-git-branch-widget
 bindkey '^T' fzf-git-tag-widget
 
 zshrc_load_status "paths"
