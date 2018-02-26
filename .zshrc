@@ -584,7 +584,7 @@ fzf-git-commit-widget() {
     typeset -f zle-line-init >/dev/null && zle zle-line-init
     return $ret
 }
-zle     -N   fzf-git-commit-widget
+zle -N fzf-git-commit-widget
 
 git-tag-sel() {
     setopt localoptions pipefail 2> /dev/null
@@ -605,7 +605,7 @@ fzf-git-tag-widget() {
     typeset -f zle-line-init >/dev/null && zle zle-line-init
     return $ret
 }
-zle     -N   fzf-git-tag-widget
+zle -N fzf-git-tag-widget
 
 bindkey '^F' fzf-file-widget
 bindkey '^G' fzf-git-commit-widget
