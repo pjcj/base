@@ -612,7 +612,9 @@ git-branch-sel() {
     local get_full_branch="perl -pe 's/..([^ ]+) .*/\$1/'"
     local get_branch="perl -pe 's/.*?(\w+) .*/\$1/'"
     local cmd="echo {} | $get_full_branch | xargs -I% git show --color=always %"
-    gb -avv | $(__fzfcmd) --ansi --tiebreak=index --preview="$cmd" "$@" | \
+    local opts="-vv --sort=-committerdate --color=always"
+    (eval "gb $opts; gb -r $opts") | \
+        $(__fzfcmd) --ansi --tiebreak=index --preview="$cmd" "$@" | \
         while read item; do
         echo -n "${item}" | eval "$get_branch"
     done
