@@ -610,7 +610,7 @@ zle -N fzf-git-tag-widget
 git-branch-sel() {
     setopt localoptions pipefail 2> /dev/null
     local get_full_branch="perl -pe 's/..([^ ]+) .*/\$1/'"
-    local get_branch="perl -pe 's/.*?(\w+) .*/\$1/'"
+    local get_branch="perl -pe 's/.*?([-\w]+) .*/\$1/'"
     local cmd="echo {} | $get_full_branch | xargs -I% git show --color=always %"
     local opts="-vv --sort=-committerdate --color=always"
     (eval "gb $opts; gb -r $opts") | \
