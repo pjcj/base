@@ -618,7 +618,7 @@ Shortcut grep for word under cursor
 Shortcut (v) grep for visual selection
     \ vnoremap <C-F8> :<C-U>GrepVisual<CR>
 Shortcut only show current window
-    \ nnoremap <F9>       :only<CR>
+    \ nnoremap <F9>       :cclose<Bar>:lclose<Bar>:only<CR>
 Shortcut open quickfix list window
     \ nnoremap <S-F9>     :copen<CR>
 Shortcut open location list window
