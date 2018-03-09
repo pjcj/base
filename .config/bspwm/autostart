@@ -35,7 +35,7 @@ indicator-keylock &
         do_sleep
         st -s 10 &
         do_sleep
-        st -s 12 irssi &
+        st -s 14 irssi &
     elif [ "$hostname" = "posub64" ]; then
         firefox &
         st -s 16 &
