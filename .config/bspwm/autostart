@@ -25,17 +25,17 @@ indicator-keylock &
         rm -rf "$HOME"/.ssh/tmp/*
         firefox &
         thunderbird &
-        st -s 12 irssi &
-        do_sleep
-        st -s 14 &
-        do_sleep
-        st -s 10 &
+        st -s 12 &
         do_sleep
         st -s 10 ssh h &
         sleep 3
         st -s 10 ssh pjcj.net &
         do_sleep
-        st -s 12 &
+        st -s 14 &
+        do_sleep
+        st -s 10 &
+        do_sleep
+        st -s 12 irssi &
     elif [ "$hostname" = "posub64" ]; then
         firefox &
         st -s 16 &
