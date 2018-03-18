@@ -5,6 +5,12 @@ zshrc_load_status () {
 
 zshrc_load_status "plugins"
 
+# zsh-autoenv
+AUTOENV_FILE_ENTER=.autoenv.zsh
+AUTOENV_FILE_LEAVE=.autoenv.zsh
+AUTOENV_HANDLE_LEAVE=1
+AUTOENV_LOOK_UPWARDS=1
+
 source ~/.zplug/init.zsh
 
 # https://github.com/tj/git-extras/blob/master/Commands.md
@@ -12,6 +18,7 @@ zplug "tj/git-extras", hook-build:"make install PREFIX=$HOME/g/sw"
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting"
 # zplug "zdharma/fast-syntax-highlighting"  # not working for me
+zplug "Tarrasch/zsh-autoenv"
 
 if ! zplug check; then zplug install; fi
 zplug load
