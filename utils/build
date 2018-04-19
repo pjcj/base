@@ -294,6 +294,14 @@ case "$build" in
         make check || true  # can fail
         make install
         ;;
+    mosh)
+        git clean -dxf
+        install_pkg                                               \
+            protobuf-compiler libprotobuf-dev
+        configure
+        make check || true  # can fail
+        make install
+        ;;
     kitty)
         git checkout "$(git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | tail -1)"
         git clean -dxf

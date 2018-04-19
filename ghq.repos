@@ -26,3 +26,4 @@ python/cpython
 harfbuzz/harfbuzz
 kovidgoyal/kitty
 irssi/irssi
+mobile-shell/mosh
