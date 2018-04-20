@@ -39,7 +39,7 @@ exit_if_vm() {
 
 install_pkg() {
     # sudo aptitude update
-    sudo aptitude install "$@"
+    sudo aptitude -y install "$@"
 }
 
 case "$build" in
