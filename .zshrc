@@ -16,17 +16,11 @@ source ~/.zplug/init.zsh
 # https://github.com/tj/git-extras/blob/master/Commands.md
 zplug "tj/git-extras", hook-build:"make install PREFIX=$HOME/g/sw"
 zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-syntax-highlighting"
-# zplug "zdharma/fast-syntax-highlighting"  # not working for me
+zplug "zdharma/fast-syntax-highlighting"
 zplug "Tarrasch/zsh-autoenv"
 
 if ! zplug check; then zplug install; fi
 zplug load
-
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern root)
-# To have paths coloured instead of underlined
-ZSH_HIGHLIGHT_STYLES[path]="fg=cyan"
-ZSH_HIGHLIGHT_STYLES[root]="underline"
 
 zshrc_load_status "setting options"
 
@@ -291,7 +285,8 @@ bindkey "^Y" undefined-key
 
 zshrc_load_status "miscellaneous"
 
-autoload -U url-quote-magic && zle -N self-insert url-quote-magic
+# url-quote-magic breaks fast-syntax-highlighting
+# autoload -U url-quote-magic && zle -N self-insert url-quote-magic
 
 REPORTTIME=1
 TIMEFMT="  %J  %E %P  %U user + %S system  %W swaps  %Mk mem"
