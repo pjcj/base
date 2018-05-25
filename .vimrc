@@ -72,7 +72,8 @@ Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 " Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
     \ 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
-Plug 'skaji/syntax-check-perl'
+" Plug 'skaji/syntax-check-perl'
+Plug 'pjcj/syntax-check-perl'
 Plug 'vim-perl/vim-perl6'
 Plug 'c9s/perlomni.vim'                                         " for completion
 
