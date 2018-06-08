@@ -421,9 +421,8 @@ zt()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil test "$@" }
 = ()      { echo "$@" | bc -l }
 
 setup_plenv() {
-    git clone https://github.com/tokuhirom/plenv.git ~/.plenv
-    git clone https://github.com/tokuhirom/Perl-Build.git \
-        ~/.plenv/plugins/perl-build/
+    build plenv
+    build Perl-Build
 }
 
 wh() {
