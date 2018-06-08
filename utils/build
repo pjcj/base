@@ -328,6 +328,14 @@ case "$build" in
         configure
         make check install
         ;;
+    node)
+        curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash
+        sudo aptitude update
+        sudo aptitude install nodejs
+        mkdir -p "$NPM_PACKAGES"
+        echo "prefix=$NPM_PACKAGES" > ~/.npmrc
+        npm i -g ask-cli
+        ;;
     *)
         echo unknown build "$build"
         exit

@@ -293,12 +293,16 @@ TIMEFMT="  %J  %E %P  %U user + %S system  %W swaps  %Mk mem"
 
 LS_OPTIONS=
 
+export NPM_PACKAGES=~/g/sw/.npm-packages
+
 zshrc_load_status "path"
 
 PATH=~/.local/bin:~/g/go/bin:~/bin:~/g/sw/bin:~/g/sw/usr/bin:$PATH
+PATH=$NPM_PACKAGES/bin:$PATH
 PATH=~/g/local_base/utils:~/g/base/utils:$PATH
 PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
-MANPATH=~/g/sw/share/man:/usr/share/man:${MANPATH:-manpath}
+MANPATH=/usr/share/man:${MANPATH:-manpath}
+MANPATH=~/g/sw/share/man:$NPM_PACKAGES/share/man:$MANPATH
 
 zshrc_load_status "aliases"
 
