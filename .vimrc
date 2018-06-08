@@ -730,11 +730,6 @@ cnoremap <C-w> <C-I>
 
 map! <S-Insert> <C-R>*
 
-Shortcut unindent
-    \ vnoremap < <gv
-Shortcut indent
-    \ vnoremap > >gv
-
 Shortcut (v) paste current copy buffer onto currently selected text
     \ vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
 
