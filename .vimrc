@@ -68,6 +68,7 @@ Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'mattboehm/vim-unstack'                             " :UnstackFromSelection
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
+Plug 'christoomey/vim-conflicted'       " :Conflicted :GitNextConflict, dgu, dgl
 
 " Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
