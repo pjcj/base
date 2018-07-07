@@ -972,7 +972,7 @@ call denite#custom#map('insert', '<C-f>',
             \ 'ToggleSorter("sorter/sublime")', 'noremap expr nowait')
 
 call denite#custom#var('file_rec', 'command',
-    \ [ 'fd', '--hidden',
+    \ [ 'fd', '--hidden', '--no-ignore-vcs',
     \     '--exclude', '*.git/',
     \     '--exclude', '/tmp/',
     \     '--exclude', '/blib/',
