@@ -335,6 +335,8 @@ augroup file_types
     autocmd Filetype gitcommit
         \ setlocal colorcolumn=50,72 tw=72 spell spelllang=en_gb
 
+    " fake event do that completions area available to deoplete
+    autocmd BufReadPost * call deoplete#send_event('BufWritePost')
     " use dictionary in deoplete
     autocmd BufReadPost * setlocal dictionary+=/usr/share/dict/words
 
