@@ -279,8 +279,9 @@ endfunc
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
-let g:deoplete#enable_at_startup          = 1
+let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option('auto_complete_delay', 10)
+call deoplete#custom#option('min_pattern_length', 1)
 call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 " dictionary is already sorted
 call deoplete#custom#source('dictionary', 'sorters', [])
