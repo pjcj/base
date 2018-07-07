@@ -956,6 +956,21 @@ Shortcut denite command history
 call denite#custom#source('_', 'sorters', ['sorter/rank'])
 call denite#custom#source('file_mru', 'converters', ['converter_relative_abbr'])
 
+function! ToggleSorter(sorter) abort
+    let sorters = split(b:denite_context.sorters, ',')
+    let idx = index(sorters, a:sorter)
+    if idx < 0
+        call add(sorters, a:sorter)
+    else
+        call remove(sorters, idx)
+    endif
+    let b:denite_new_context = {}
+    let b:denite_new_context.sorters = join(sorters, ',')
+    return '<denite:nop>'
+endfunction
+call denite#custom#map('insert', '<C-f>',
+            \ 'ToggleSorter("sorter/sublime")', 'noremap expr nowait')
+
 call denite#custom#var('file_rec', 'command',
     \ [ 'fd', '--hidden',
     \     '--exclude', '*.git/',
