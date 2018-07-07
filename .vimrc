@@ -953,7 +953,7 @@ Shortcut denite command history
     \ nnoremap <silent> [denite]s
     \ :<C-u>Denite command_history<CR>
 
-call denite#custom#source('_', 'sorters', ['sorter_sublime'])
+call denite#custom#source('_', 'sorters', ['sorter/rank'])
 call denite#custom#source('file_mru', 'converters', ['converter_relative_abbr'])
 
 call denite#custom#var('file_rec', 'command',
