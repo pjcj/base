@@ -309,7 +309,9 @@ function! Setup_indent_guides()
         " echo 'big: ' &shiftwidth
     endif
 endfunction
-autocmd BufEnter,Colorscheme * call Setup_indent_guides()
+augroup colourscheme
+    autocmd BufEnter,Colorscheme * call Setup_indent_guides()
+augroup END
 
 let g:airline_theme                  = 'solarized'
 let g:airline_powerline_fonts        = 1
