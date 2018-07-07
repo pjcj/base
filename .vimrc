@@ -282,6 +282,7 @@ set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 let g:deoplete#enable_at_startup          = 1
 let g:deoplete#auto_complete_delay        = 10
 call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
+call deoplete#custom#var('buffer', 'require_same_filetype', v:false)
 
 let g:completor_min_chars                 = 1
 " let g:completor_perl_omni_trigger       = '->'
