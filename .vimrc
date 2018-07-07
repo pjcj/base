@@ -287,6 +287,12 @@ call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 call deoplete#custom#source('dictionary', 'sorters', [])
 call deoplete#custom#source('dictionary', 'min_pattern_length', 4)
 call deoplete#custom#var('buffer', 'require_same_filetype', v:false)
+" Order completions.
+call deoplete#custom#source('member',     'rank', 450)
+call deoplete#custom#source('buffer',     'rank', 400)
+call deoplete#custom#source('file',       'rank', 300)
+call deoplete#custom#source('tag',        'rank', 200)
+call deoplete#custom#source('dictionary', 'rank', 100)
 
 let g:completor_min_chars                 = 1
 " let g:completor_perl_omni_trigger       = '->'
