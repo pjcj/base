@@ -282,6 +282,9 @@ set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 let g:deoplete#enable_at_startup          = 1
 call deoplete#custom#option('auto_complete_delay', 10)
 call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
+" dictionary is already sorted
+call deoplete#custom#source('dictionary', 'sorters', [])
+call deoplete#custom#source('dictionary', 'min_pattern_length', 4)
 call deoplete#custom#var('buffer', 'require_same_filetype', v:false)
 
 let g:completor_min_chars                 = 1
@@ -330,6 +333,9 @@ augroup file_types
         \ setlocal colorcolumn=72 tw=72 spell spelllang=en_gb
     autocmd Filetype gitcommit
         \ setlocal colorcolumn=50,72 tw=72 spell spelllang=en_gb
+
+    " use dictionary in deoplete
+    autocmd BufReadPost * setlocal dictionary+=/usr/share/dict/words
 
     autocmd InsertLeave * if expand("%") != "" | update | endif
 
