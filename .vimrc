@@ -343,7 +343,9 @@ augroup file_types
         \ setlocal colorcolumn=50,72 tw=72 spell spelllang=en_gb
 
     " fake event do that completions area available to deoplete
-    autocmd BufReadPost * call deoplete#send_event('BufWritePost')
+    autocmd BufReadPost * if exists("g:deoplete#_context")
+        \ | call deoplete#send_event('BufWritePost')
+        \ | endif
     " use dictionary in deoplete
     autocmd BufReadPost * setlocal dictionary+=/usr/share/dict/words
 
