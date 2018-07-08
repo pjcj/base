@@ -286,6 +286,7 @@ call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 " dictionary is already sorted
 call deoplete#custom#source('dictionary', 'sorters', [])
 call deoplete#custom#source('dictionary', 'min_pattern_length', 4)
+call deoplete#custom#source('dictionary', 'matchers', ['matcher_head'])
 call deoplete#custom#var('buffer', 'require_same_filetype', v:false)
 " Order completions.
 call deoplete#custom#source('member',     'rank', 450)
