@@ -265,7 +265,7 @@ case "$build" in
         install_pkg ruby2.4 ruby2.4-dev
         ;;
     openssl)
-        v=$(git tag | grep OpenSSL_1 | tail -1)
+        v=$(git tag | grep OpenSSL_1 | grep -v - | tail -1)
         o=$(openssl version | perl -pe 's/(OpenSSL [^ ]*).*/$1/; s/[ .]/_/g')
         [ "$v" = "$o" ] && exit
         git checkout "$v"
