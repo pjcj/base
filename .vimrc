@@ -806,7 +806,8 @@ let g:ale_sign_error           = '✗'
 let g:ale_sign_warning         = '⚠'
 
 " let g:ale_linters              = {'perl' : ['perl', 'syntax-check']}
-let g:ale_linters              = {'perl' : ['syntax-check']}
+" let g:ale_linters              = {'perl' : ['syntax-check']}
+let g:ale_linters              = {'perl' : ['perl']}
 let g:ale_perl_perl_executable = glob('~/g/base/utils/ale_perl')
 let g:ale_perl_perl_options    = ''
 
