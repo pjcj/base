@@ -327,6 +327,8 @@ augroup END
 let g:airline_theme                  = 'solarized'
 let g:airline_powerline_fonts        = 1
 let g:airline_solarized_normal_green = 1
+let g:airline_section_z              =
+    \ airline#section#create(['%3p%% ', 'linenr', 'maxlinenr', ' :%3c%3V'])
 
 augroup file_types
     autocmd!
