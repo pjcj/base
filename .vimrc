@@ -342,7 +342,7 @@ augroup file_types
     autocmd Filetype gitcommit
         \ setlocal colorcolumn=50,72 tw=72 spell spelllang=en_gb
 
-    " fake event do that completions area available to deoplete
+    " fake event so that completions area available to deoplete
     autocmd BufReadPost * if exists("g:deoplete#_context")
         \ | call deoplete#send_event('BufWritePost')
         \ | endif
