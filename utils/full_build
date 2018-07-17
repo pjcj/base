@@ -35,8 +35,8 @@ $pip3 install --upgrade --user vim-vint proselint
 sudo aptitude -y install python-pip
 pip install --upgrade --user git+git://github.com/powerline/powerline  # python2
 
-sudo gem install colorls
-sudo gem update colorls
+# sudo gem install colorls
+# sudo gem update colorls
 
 # urlwatch
 $pip3 install --upgrade --user pyyaml minidb requests keyring chump urlwatch
