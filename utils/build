@@ -212,7 +212,7 @@ case "$build" in
         (rm -rf $dir; mkdir -p $dir && cd $dir && tar xvzf /tmp/rg.tgz)
         ls -alR $dir
         mv $dir/*/rg "$sw/bin"
-        mv $dir/*/rg.1 "$sw/share/man/man1"
+        mv $dir/*/doc/rg.1 "$sw/share/man/man1"
         ;;
     fd)
         gh="https://github.com"
