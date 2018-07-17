@@ -102,17 +102,17 @@ case "$build" in
         ;;
     sxhkd|bspwm)
         exit_unless_x
-        install_pkg \
+        install_pkg                                                  \
             libxcb-util0-dev libxcb-keysyms1-dev                     \
             libxcb-xinerama0-dev libxcb-randr0-dev libxcb-icccm4-dev \
-            libxcb-ewmh1-dev xcb libxcb-util0-dev libxcb-ewmh-dev    \
+            xcb libxcb-util0-dev libxcb-ewmh-dev                     \
             libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev  \
             libxcb-xinerama0-dev libxcb-ewmh2                        \
             gnome-panel
         make PREFIX="$sw" all install
         if [ "$build" = "bspwm" ]; then
             cp examples/receptacles/extract_canvas \
-               examples/receptacles/induce_rules \
+               examples/receptacles/induce_rules   \
                "$sw/bin"
         fi
         ;;
