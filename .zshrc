@@ -393,6 +393,7 @@ golang()  { command go "$@" }
 h()       { fc -li "$@" }
 hg()      { fc -li 1 | grep "$@" }
 hh()      { fc -li 1 }
+kitty()   { ~/.local/kitty.app/bin/kitty "$@" }
 ll()      { f --color "$@" | m -r -X }
 lu()      { fc -e - lsq=usq -1 }
 m()       { less "$@" }
