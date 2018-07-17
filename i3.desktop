@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=i3
+Comment=This session logs you into i3
+Exec=
+Icon=
+Type=XSession
