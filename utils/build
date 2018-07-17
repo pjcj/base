@@ -166,7 +166,7 @@ case "$build" in
         ;;
     ClipIt)
         exit_unless_x
-        install_pkg autopoint intltool
+        install_pkg autopoint intltool libgtk2.0-dev
         ./autogen.sh
         configure
         make
