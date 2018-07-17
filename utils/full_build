@@ -22,23 +22,18 @@ rm -f ~/.zcompdump; autoload -Uz compinit && compinit -i
 ~/.tmux/plugins/tpm/bindings/install_plugins
 ~/.tmux/plugins/tpm/scripts/update_plugin_prompt_handler.sh all
 
-# for neovim:
 if [ "$ISOSX" ]; then
     brew update
     brew upgrade
     pip3=pip
 else
     pip3=pip3
-    # sudo aptitude -y install \
-        # python-pip python-setuptools \
-        # python3-pip python3-setuptools
     sudo aptitude -y install golang
 fi
-# sudo aptitude install python3-pip
-# sudo pip2 install --upgrade neovim
 $pip3 install --upgrade neovim
 $pip3 install --upgrade --user vim-vint proselint
-pip install --upgrade --user git+git://github.com/powerline/powerline
+sudo aptitude -y install python-pip
+pip install --upgrade --user git+git://github.com/powerline/powerline  # python2
 
 sudo gem install colorls
 sudo gem update colorls
