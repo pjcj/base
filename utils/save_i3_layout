@@ -1,0 +1,9 @@
+#!/bin/bash
+set -euo pipefail
+
+readonly w=~/g/base/.config/i3/"workspace.$(hostname)"
+
+i3-save-tree --workspace 1 > "$w.1.json"
+i3-save-tree --workspace 6 > "$w.6.json"
+
+perl -pi -e 's|// ("class": "\^\w+\$"),|$1|' "$w".*
