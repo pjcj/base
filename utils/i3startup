@@ -1,0 +1,56 @@
+#!/bin/bash
+
+PATH=~/g/base/utils:~/g/sw/bin:$PATH
+
+xrdb -merge .Xdefaults
+xsetroot -bg black
+numlockx on
+[ "$ISVM" ] || sudo nice -n -20 /home/pjcj/g/sw/bin/caps2esc >|caps2esc.log 2>|caps2esc.err &
+# indicator-keylock &
+(
+    # hostname=$(hostname)
+    do_sleep() { sleep 0.25; }
+
+    do_sleep
+    gnome-panel &
+    clipit -d &
+    sudo nm-applet &
+
+    # confdir=~/g/base/.config/bspwm
+    # [ -e "$confdir/layout.$hostname" ] && bspc wm -l "$confdir/layout.$hostname"
+    # # shellcheck disable=SC1090
+    # [ -e "$confdir/rules.$hostname" ] && . "$confdir/rules.$hostname"
+    # if [ "$hostname" = "pj" ]; then
+        # rm -rf "$HOME"/.ssh/tmp/*
+        # firefox &
+        # thunderbird &
+        # st -s 12 &
+        # do_sleep
+        # st -s 10 ssh h &
+        # sleep 3
+        # st -s 10 ssh pjcj.net &
+        # do_sleep
+        # st -s 14 &
+        # do_sleep
+        # st -s 10 &
+        # do_sleep
+        # st -s 14 irssi &
+    # elif [ "$hostname" = "posub64" ]; then
+        # firefox &
+        # st -s 16 &
+        # do_sleep
+        # st -s 16 ssh pjcj.net &
+        # do_sleep
+        # st -s 16 &
+        # do_sleep
+        # st -s 14 ssh cp1 &
+        # do_sleep
+        # st -s 14 &
+        # do_sleep
+        # st -s 14 &
+        # do_sleep
+        # st -s 14 &
+        # do_sleep
+        # st -s 14 &
+    # fi
+) &

@@ -169,8 +169,7 @@ bar {
 }
 
 exec xrandr --output HDMI-3 --left-of LVDS-1
-exec caps2esc
-exec clipit -d
+exec i3startup
 exec --no-startup-id i3-msg 'workspace 2; exec firefox; workspace 1'
 exec --no-startup-id i3-msg 'workspace 6; exec thunderbird; workspace 1'
 exec --no-startup-id i3-msg 'workspace 1; exec st; workspace 1'
