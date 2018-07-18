@@ -59,9 +59,15 @@ while [ $# -gt 0 ]; do
 done
 
 main() {
-    ~/g/sw/bin/st -f \
-        "Inconsolata NF:pixelsize=$size:antialias=false" \
-        "$@"
+    kitty=~/.local/kitty.app/bin/kitty
+    [[ $(hostname) = "pj" ]] && exec $kitty "$@"
+    if [ -z "$ISVM" ] && [ -e $kitty ]; then
+        exec $kitty "$@"
+    else
+        exec ~/g/sw/bin/st -f \
+            "Inconsolata NF:pixelsize=$size:antialias=false" \
+            "$@"
+    fi
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
