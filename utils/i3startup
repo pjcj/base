@@ -3,6 +3,7 @@
 PATH=~/g/base/utils:~/g/sw/bin:$PATH
 
 xrdb -merge .Xdefaults
+xrandr --output HDMI-3 --left-of LVDS-1
 xsetroot -bg black
 xmodmap -e "pointer = 1 3 2"
 numlockx on
