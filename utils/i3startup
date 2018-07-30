@@ -8,6 +8,7 @@ xsetroot -bg black
 xmodmap -e "pointer = 1 3 2"
 numlockx on
 clipit -d &
+gnome-panel &
 [ "$ISVM" ] || sudo nice -n -20 ~/g/sw/bin/caps2esc >| ~/caps2esc.log 2>| ~/caps2esc.err &
 
 
