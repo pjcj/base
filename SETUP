@@ -9,12 +9,6 @@ ln -s g/base/{.vimrc,.Xdefaults,.vim,.nvim,.tmux.conf,.tigrc} ~
 [[ -d ~/.config ]] || mkdir ~/.config
 ln -s ~/g/base/.config/* ~/.config
 ( cd ~ && ln -s g/base/.zshrc* . )
-( cd ~ && ln -s g/base/.sxhkdrc* . )
-sudo ln -s ~/g/base/bspwm.desktop /usr/share/xsessions
-sudo ln -s ~/g/base/bspwm-session /usr/local/bin
-
-# mkdir ~/.mozilla/firefox/*.default*/chrome
-# cp ~/g/base/userContent.css ~/.mozilla/firefox/*.default*/chrome
 
 curl -sL --proto-redir -all,https \
     https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
