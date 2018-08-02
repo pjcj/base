@@ -68,7 +68,8 @@ case "$build" in
         fi
         git clean -dxf
         make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
-             CMAKE_BUILD_TYPE=Release test install
+             CMAKE_BUILD_TYPE=Release install
+             # CMAKE_BUILD_TYPE=Release test install
         ;;
     vim)
         if [ ! "$ISOSX" ]; then
