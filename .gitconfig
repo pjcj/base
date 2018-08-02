@@ -26,7 +26,7 @@
     markEmptyLines      = true
     stripLeadingSymbols = true
 [core]
-    pager               = diff-so-fancy | LESS= less --tabs=8 --tilde --no-init --LONG-PROMPT --ignore-case --RAW-CONTROL-CHARS
+    pager               = diff-so-fancy-wrapper | LESS= less --tabs=8 --tilde --no-init --LONG-PROMPT --ignore-case --RAW-CONTROL-CHARS
     whitespace          = trailing-space,space-before-tab,tab-in-indent
 [pack]
     threads             = 0
