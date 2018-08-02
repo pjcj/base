@@ -341,6 +341,14 @@ d() { f "$@" }
 
 u() { popd }
 
+v() {
+    if [ "$EDITOR" = "nvim" ]; then
+        command $EDITOR "$@"
+    else
+        command $EDITOR -u NONE "$@"
+    fi
+}
+
 man() {
     env \
         LESS_TERMCAP_mb=$'\e[1;31m'      \
@@ -415,7 +423,6 @@ t()       { TERM=xterm-color tig --all "$@" }
 tf()      { tail -f "$@" }
 ud()      { u "$@"; d }
 uu()      { uuencode "$@" "$@" | mailx -s "$@" paul@pjcj.net }
-v()       { command $EDITOR "$@" }
 z()       { dzil "$@" }
 zb()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil build "$@" }
 zt()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil test "$@" }
