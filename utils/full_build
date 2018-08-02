@@ -18,9 +18,11 @@ curl -SL https://raw.githubusercontent.com/perlpunk/shell-completions/master/zsh
     >| ~/g/base/zsh/functions/_dzil
 rm -f ~/.zcompdump; autoload -Uz compinit && compinit -i
 
-~/.tmux/plugins/tpm/bindings/clean_plugins
-~/.tmux/plugins/tpm/bindings/install_plugins
-~/.tmux/plugins/tpm/scripts/update_plugin_prompt_handler.sh all
+if [ -d ~/.tmux/plugins/tpm ]; then
+    ~/.tmux/plugins/tpm/bindings/clean_plugins
+    ~/.tmux/plugins/tpm/bindings/install_plugins
+    ~/.tmux/plugins/tpm/scripts/update_plugin_prompt_handler.sh all
+fi
 
 if [ "$ISOSX" ]; then
     brew update
