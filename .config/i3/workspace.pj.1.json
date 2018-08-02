@@ -12,7 +12,7 @@
             "border": "pixel",
             "floating": "auto_off",
             "layout": "splitv",
-            "percent": 0.5,
+            "percent": 0.41875,
             "type": "con",
             "nodes": [
                 {
@@ -25,13 +25,13 @@
                        "x": 0,
                        "y": 0
                     },
-                    "name": "logs:0:zsh - \"pj\" ",
+                    "name": "logs:0:ca - \"pj\" ",
                     "percent": 0.5,
                     "swallows": [
                        {
                        "class": "^kitty$"
                        // "instance": "^kitty$",
-                       // "title": "^logs\\:0\\:zsh\\ \\-\\ \\\"pj\\\"\\ $",
+                       // "title": "^logs\\:0\\:ca\\ \\-\\ \\\"pj\\\"\\ $",
                        // "transient_for": "^$"
                        }
                     ],
@@ -81,13 +81,13 @@
                "x": 0,
                "y": 0
             },
-            "name": "main:1:zsh - \"workspace-1.json (~/g/base) - NVIM\" ",
-            "percent": 0.5,
+            "name": "base:1:zsh - \"pj\" ",
+            "percent": 0.58125,
             "swallows": [
                {
                "class": "^kitty$"
                // "instance": "^kitty$",
-               // "title": "^main\\:1\\:zsh\\ \\-\\ \\\"workspace\\-1\\.json\\ \\(\\~\\/g\\/base\\)\\ \\-\\ NVIM\\\"\\ $",
+               // "title": "^base\\:1\\:zsh\\ \\-\\ \\\"pj\\\"\\ $",
                // "transient_for": "^$"
                }
             ],

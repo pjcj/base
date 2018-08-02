@@ -4,6 +4,29 @@
     "current_border_width": 1,
     "floating": "auto_off",
     "geometry": {
+       "height": 438,
+       "width": 1598,
+       "x": 0,
+       "y": 0
+    },
+    "name": "mail:0:zsh - \"posub64\" ",
+    "percent": 0.5,
+    "swallows": [
+       {
+       "class": "^kitty$"
+       // "instance": "^kitty$",
+       // "title": "^mail\\:0\\:zsh\\ \\-\\ \\\"posub64\\\"\\ $",
+       // "transient_for": "^$"
+       }
+    ],
+    "type": "con"
+}
+
+{
+    "border": "pixel",
+    "current_border_width": 1,
+    "floating": "auto_off",
+    "geometry": {
        "height": 876,
        "width": 1600,
        "x": 0,
@@ -18,29 +41,6 @@
        // "title": "^Inbox\\ \\-\\ Mozilla\\ Thunderbird$",
        // "transient_for": "^$",
        // "window_role": "^3pane$"
-       }
-    ],
-    "type": "con"
-}
-
-{
-    "border": "pixel",
-    "current_border_width": 1,
-    "floating": "auto_off",
-    "geometry": {
-       "height": 438,
-       "width": 1598,
-       "x": 0,
-       "y": 0
-    },
-    "name": "zsh",
-    "percent": 0.5,
-    "swallows": [
-       {
-       "class": "^kitty$"
-       // "instance": "^kitty$",
-       // "title": "^zsh$",
-       // "transient_for": "^$"
        }
     ],
     "type": "con"
