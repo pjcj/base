@@ -46,12 +46,14 @@ $pip3 install --upgrade --user pyyaml minidb requests keyring chump urlwatch
 # denite
 $pip3 install --upgrade --user typing
 
-$EDITOR -c PlugUpgrade -c qa
-# $EDITOR -c PlugClean   -c qa
-$EDITOR -c PlugInstall -c qa
-$EDITOR -c PlugUpdate  -c qa
+if [ "$EDITOR" = "nvim" ]; then
+    $EDITOR -c PlugUpgrade -c qa
+    # $EDITOR -c PlugClean   -c qa
+    $EDITOR -c PlugInstall -c qa
+    $EDITOR -c PlugUpdate  -c qa
 
-$EDITOR -c UnicodeDownload -c qa
+    $EDITOR -c UnicodeDownload -c qa
+fi
 
 gobase
 
