@@ -9,7 +9,7 @@ ln -bs g/base/{.vimrc,.Xdefaults,.vim,.nvim,.tmux.conf,.tigrc} ~
 ln -bs ~/g/base/.config/* ~/.config
 ( cd ~ && ln -bs g/base/.zshrc* . )
 
-curl -sL --proto-redir -all,https \
+ [[ -d ~/.zplug ]] || curl -sL --proto-redir -all,https \
     https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
