@@ -306,6 +306,8 @@ case "$build" in
         ;;
     kitty)
         curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+        mkdir -p ~/.terminfo/x
+        cp -a ~/.local/kitty.app/share/terminfo/x/xterm-kitty ~/.terminfo/x
         ;;
     kitty_from_source)
         git checkout "$(git tag | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | tail -1)"
