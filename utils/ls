@@ -1,0 +1,6 @@
+#!/bin/sh
+
+if [ -t 1 ]; then
+    eval $(dircolors -b ~/g/base/dircolours)
+fi
+exec /bin/ls "$@"

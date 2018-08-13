@@ -163,11 +163,6 @@ WATCHFMT="[%B%t%b] %B%n%b has %a %B%l%b from %B%M%b"
 
 KEYTIMEOUT=1
 
-zshrc_load_status "ls colours"
-if which dircolors >&/dev/null; then
-    source =(dircolors -b ~/dircolours)
-fi
-
 zshrc_load_status "completion system"
 
 autoload -U compinit
