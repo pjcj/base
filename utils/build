@@ -122,6 +122,7 @@ case "$build" in
         fi
         ;;
     xdotool)
+        [ "$(xdotool --version)" = "xdotool version 3.+20180814.1" ] && exit
         exit_unless_x
         install_pkg libxinerama-dev x11proto-xinerama-dev libxkbcommon-dev
         make PREFIX="$sw" all test install
