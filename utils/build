@@ -194,6 +194,9 @@ case "$build" in
         perl -pi -e 's/my \$ansi_color_regex = qr.*\K3/4/' "$bin/diff-so-fancy"
         ;;
     tig)
+        v=$(git tag | tail -1)
+        [ "$v" = "tig-$(tig --version | head -1 | awk '{print $3}')" ] && exit
+        git checkout "$v"
         configure
         make test || echo "make test expected to fail - don't know why"
         make install
