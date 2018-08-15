@@ -130,7 +130,7 @@ case "$build" in
         ;;
     zsh)
         v=$(git tag | grep -v dev | grep -v test | tail -1)
-        [ "$v" = "zsh-$ZSH_VERSION" ] && exit
+        [ "$v" = "zsh-$(zsh --version | awk '{print $2}')" ] && exit
         oldhist=~/.zshhistory."$(date +'%Y%m%d')"
         cp ~/.zshhistory "$oldhist"
         install_pkg yodl
