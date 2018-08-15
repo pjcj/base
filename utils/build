@@ -155,6 +155,7 @@ case "$build" in
         make check install
         ;;
     zsh-git-prompt)
+        [ "$(git rev-parse --short HEAD)" = "0a6c8b6" ] && exit
         install_pkg haskell-stack
         stack setup
         stack build && stack install
