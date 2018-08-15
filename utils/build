@@ -44,6 +44,7 @@ install_pkg() {
 
 case "$build" in
     urlview)
+        [ "$(git rev-parse --short HEAD)" = "08767aa" ] && exit
         autoreconf -vfi
         configure
         make check install
