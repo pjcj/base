@@ -60,7 +60,7 @@ done
 
 main() {
     kitty=~/.local/kitty.app/bin/kitty
-    [[ $(hostname) = "pj" ]] && exec $kitty "$@"
+    [[ $(hostname) = "posub64" ]] || exec $kitty "$@"
     if [ -z "$ISVM" ] && [ -e $kitty ]; then
         exec $kitty "$@"
     else
