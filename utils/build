@@ -358,8 +358,10 @@ case "$build" in
         make
         ;;
     irssi)
+        v=$(git tag | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | tail -1)
+        [ "$v" = "$(irssi --version | awk '{print $2}')" ] && exit
+        git checkout "$v"
         install_pkg libglib2.0-dev
-        git checkout "$(git tag | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | tail -1)"
         git clean -dxf
         configure
         make check install
