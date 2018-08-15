@@ -266,6 +266,8 @@ case "$build" in
         fi
         ;;
     Perl-Build)
+        v=$(git tag | tail -1)
+        git checkout "$v"
         mkdir -p ~/.plenv/plugins
         pb=~/.plenv/plugins/perl-build
         rm -f "$pb"
