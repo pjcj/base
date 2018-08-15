@@ -245,6 +245,9 @@ case "$build" in
         mv $dir/*/autocomplete/_fd "$sw/share/zsh/site-functions"
         ;;
     fzf)
+        v=$(git tag | sort -V | tail -1)
+        [ "$v" = "$(fzf --version | awk '{print $1}')" ] && exit
+        git checkout "$v"
         ./install --all --bin
         cp -a bin/* "$sw/bin"
         mkdir -p "$sw/etc/zsh"
