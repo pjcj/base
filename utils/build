@@ -322,6 +322,9 @@ case "$build" in
         make install
         ;;
     mosh)
+        v=$(git tag | grep -v rc | sed 's/mosh-//' | tail -1)
+        [ "$v" = "$(mosh --version | head -1 | awk '{print $2}')" ] && exit
+        git checkout "mosh-$v"
         git clean -dxf
         install_pkg                                               \
             protobuf-compiler libprotobuf-dev
