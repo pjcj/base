@@ -49,6 +49,9 @@ case "$build" in
         make check install
         ;;
     htop)
+        v=$(git tag | grep -v beta | tail -1)
+        [ "$v" = "$(htop --version | head -1 | awk '{print $2}')" ] && exit
+        git checkout "$v"
         install_pkg libncursesw5-dev
         configure
         make check install
