@@ -300,7 +300,9 @@ case "$build" in
         TOP="" make test install
         ;;
     cpython)
-        git checkout "$(git tag | grep -E '^v3\.[0-9]+\.[0-9]+$' | tail -1)"
+        v=$(git tag | grep -E '^v3\.[0-9]+\.[0-9]+$' | tail -1)
+        [ "$v" = "v$(python3 --version | awk '{print $2}')" ] && exit
+        git checkout "$v"
         git clean -dxf
         install_pkg build-essential git libexpat1-dev libssl-dev zlib1g-dev   \
             libncurses5-dev libbz2-dev liblzma-dev                            \
