@@ -161,6 +161,9 @@ case "$build" in
         stack build && stack install
         ;;
     shellcheck)
+        v=$(git tag | tail -1)
+        [ "$v" = "v$(shellcheck --version | head -2 | tail -1 | awk '{print $2}')" ] && exit
+        git checkout "$v"
         install_pkg cabal-install
         cabal update && cabal install --prefix="$sw" && cabal clean
         ;;
