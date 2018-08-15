@@ -254,6 +254,9 @@ case "$build" in
         cp -a shell/*.zsh "$sw/etc/zsh"
         ;;
     plenv)
+        v=$(git tag | grep -v '^v' | sort -V | tail -1)
+        [ "$v" = "$(plenv --version | awk '{print $2}')" ] && exit
+        git checkout "$v"
         rm -f ~/.plenv
         ln -s "$(pwd)" ~/.plenv
         if [ ! -z "$PLENV_VERSIONS" ]; then
