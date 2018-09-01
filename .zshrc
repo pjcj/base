@@ -399,7 +399,7 @@ hh()      { fc -li 1 }
 kitty()   { ~/.local/kitty.app/bin/kitty "$@" }
 ll()      { f --color "$@" | m -r -X }
 lu()      { fc -e - lsq=usq -1 }
-m()       { less "$@" }
+m()       { bat "$@" }
 mn()      { nroff -man "$@" | m }
 mutt()    { mkdir -p /tmp/ml && command mutt "$@" }
 n()       { make "$@" }
@@ -465,6 +465,7 @@ hash -d local_base=~/g/local_base
 
 zshrc_load_status "environment"
 
+export BAT_THEME="TwoDark"
 export GOPATH=~/g/go
 export LANG=en_GB.UTF-8
 export LANGUAGE=en_GB.UTF-8
