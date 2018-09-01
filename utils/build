@@ -24,7 +24,7 @@ configure() {
 }
 
 exit_unless_x() {
-    if ! xset q > /dev/null 2>&1; then
+    if ! DISPLAY=:0 xset q > /dev/null 2>&1; then
         echo "not running under X, ignoring $build"
         exit
     fi
