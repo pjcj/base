@@ -17,3 +17,4 @@ build rg
 build fd
 build font
 build kitty
+build bat
