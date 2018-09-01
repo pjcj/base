@@ -273,9 +273,6 @@ case "$build" in
         rm -f "$pb"
         ln -s "$(pwd)" "$pb"
         ;;
-    rxvt-unicode)
-        # ignore for now
-        ;;
     font)
         font=Inconsolata\ Nerd\ Font\ Complete\ Windows\ Compatible.otf
         fonts="$HOME/.fonts"

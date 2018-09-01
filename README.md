@@ -5,8 +5,7 @@ It includes config files for:
 
 * [bspwm](https://github.com/baskerville/bspwm) (tiling window manager)
 * [sxhkd](https://github.com/baskerville/sxhkd) (X hotkey daemon)
-* Xdefaults, including [st](http://st.suckless.org/) and
-  [urxvt](http://software.schmorp.de/pkg/rxvt-unicode.html) (terminal emulators)
+* Xdefaults
 * [tmux](https://tmux.github.io/) (terminal multiplexer)
 * [zsh](http://www.zsh.org/) (shell)
 * [vim](http://www.vim.org/) or [neovim](https://github.com/neovim/neovim)
@@ -22,7 +21,6 @@ managed with [ghq](https://github.com/motemen/ghq) and includes the following
 repositories:
 
 * [st](http://git.suckless.org/st/)
-* [urxvt (with true colour support)](https://github.com/spudowiar/rxvt-unicode)
 * [zsh](git://zsh.git.sf.net/gitroot/zsh/zsh)
 * [zsh-git-prompt](https://github.com/olivierverdier/zsh-git-prompt) (prompt for
   zsh including git status)
