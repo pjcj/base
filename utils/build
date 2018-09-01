@@ -371,6 +371,15 @@ case "$build" in
         echo "prefix=$NPM_PACKAGES" > ~/.npmrc
         npm i -g ask-cli
         ;;
+    bat)
+        gh="https://github.com"
+        deb=$(wget -O - -o /dev/null $gh/sharkdp/bat/releases | \
+              grep _amd64.deb | head -1 |                       \
+              perl -ne 'print $1 if /"(.*?)"/')
+        url="$gh/$deb"
+        wget -O /tmp/bat.deb "$url"
+        sudo dpkg -i /tmp/bat.deb
+        ;;
     *)
         echo unknown build "$build"
         exit
