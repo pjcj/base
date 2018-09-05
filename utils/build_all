@@ -16,3 +16,4 @@ done < ghq.repos
 build rg
 build fd
 build font
+build kitty
