@@ -33,6 +33,8 @@ else
     sudo aptitude -y install golang python-pip
 fi
 
+$pip3 install --upgrade pip
+
 $pip3 install --upgrade --user neovim
 $pip3 install --upgrade --user vim-vint proselint
 pip install --upgrade --user git+git://github.com/powerline/powerline  # python2
