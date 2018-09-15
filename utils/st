@@ -4,6 +4,8 @@
 
 set -euo pipefail
 
+# set -x; exec 2> /tmp/st.out
+
 script=$(basename "$0")
 scrdir=$(readlink -f "$(dirname "$0")")
 readonly LOG_FILE="/tmp/$script.log"
