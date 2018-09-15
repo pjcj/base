@@ -62,18 +62,19 @@ done
 
 main() {
     kitty=~/pjcj/.local/kitty.app/bin/kitty
-    st=~/g/sw/bin/st
     # we can't use $ISVM from zshrc as it isn't available in the window manager
-    (sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
-    if [ -z "$ISVM" ] && [ -e $kitty ]; then
+    [ -e $kitty ] && \
+        command -v dmidecode >&/dev/null && \
+        (sudo dmidecode -t system | grep -q VirtualBox) && \
         exec $kitty "$@"
-    elif [ -e $st ]; then
+
+    st=~/g/sw/bin/st
+    [ -e $st ] && \
         exec $st -f \
             "Inconsolata NF:pixelsize=$size:antialias=false" \
             "$@"
-    else
-        exec gnome-terminal
-    fi
+
+    exec gnome-terminal
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
