@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Run st (terminal) with Inconsolata font and specified font size.
+# Run terminal with Inconsolata font and specified font size if possible
 
 set -euo pipefail
 
