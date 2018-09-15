@@ -491,7 +491,6 @@ else
     if which dmidecode >&/dev/null; then
         (sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
     fi
-    (sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
     cp()      { command cp -bv --backup=numbered "$@" }
     f()       { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
     mv()      { command mv -bv --backup=numbered "$@" }
