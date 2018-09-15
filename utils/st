@@ -34,7 +34,7 @@ cleanup() {
 
 PATH="$scrdir:$PATH"
 verbose=0
-size=14
+size=20
 
 while [ $# -gt 0 ]; do
     case "$1" in
