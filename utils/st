@@ -61,14 +61,18 @@ while [ $# -gt 0 ]; do
 done
 
 main() {
-    kitty=~/.local/kitty.app/bin/kitty
-    [[ $(hostname) = "posub64" ]] || exec $kitty "$@"
+    kitty=/home/pjcj/.local/kitty.app/bin/kitty
+    st=/home/pjcj/g/sw/bin/st
+    # we can't use $ISVM from zshrc as it isn't available in the window manager
+    (sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
     if [ -z "$ISVM" ] && [ -e $kitty ]; then
         exec $kitty "$@"
-    else
-        exec ~/g/sw/bin/st -f \
+    elif [ -e $st ]; then
+        exec $st -f \
             "Inconsolata NF:pixelsize=$size:antialias=false" \
             "$@"
+    else
+        exec gnome-terminal
     fi
 }
 
