@@ -61,7 +61,7 @@ while [ $# -gt 0 ]; do
 done
 
 main() {
-    kitty=~/pjcj/.local/kitty.app/bin/kitty
+    kitty=~/.local/kitty.app/bin/kitty
     # we can't use $ISVM from zshrc as it isn't available in the window manager
     [ -e $kitty ] && \
         command -v dmidecode >&/dev/null && \
