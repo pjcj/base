@@ -1,6 +1,8 @@
 *.org
 *.bak
 *~
+*.tgz
+*.tar.gz
 *.pyo
 *.pyc
 tags*
