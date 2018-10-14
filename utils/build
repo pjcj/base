@@ -330,6 +330,7 @@ case "$build" in
         make install
         ;;
     kitty)
+        export PATH=/usr/bin:$PATH
         curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
         mkdir -p ~/.terminfo/x
         cp -a ~/.local/kitty.app/share/terminfo/x/xterm-kitty ~/.terminfo/x
