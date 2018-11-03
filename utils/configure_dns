@@ -93,6 +93,9 @@ sub write_files {
 # h
 +h.$d:$O->{home_ip}:60
 
+# skill
++skill.$d:$O->{home_ip}:60
+
 # CAA
 :$d:257:\\128\\005issueletsencrypt.org:86400
 EOT
