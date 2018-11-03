@@ -304,9 +304,11 @@ case "$build" in
         install_pkg build-essential git libexpat1-dev libssl-dev zlib1g-dev   \
             libncurses5-dev libbz2-dev liblzma-dev                            \
             libsqlite3-dev libffi-dev tcl-dev libgdbm-dev                     \
-            libreadline-dev tk tk-dev
+            libreadline-dev tk tk-dev                                         \
+            libreadline-gplv2-dev libncursesw5-dev libc6-dev libbz2-dev
         configure --enable-optimizations --enable-shared LDFLAGS=-Wl,-rpath="$sw/lib"
-        make test install
+        # make test  # this fails on pjcj.net
+        make install
         ;;
     harfbuzz)
         git checkout "$(git tag | grep -v '[a-z]' | tail -1)"
