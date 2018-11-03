@@ -97,7 +97,14 @@ sub write_files {
 +skill.$d:$O->{home_ip}:60
 
 # CAA
-:$d:257:\\128\\005issueletsencrypt.org:86400
+# letsencrypt
+:$d:257:\\000\\005\\151\\163\\163\\165\\145\\154\\145\\164\\163\\145\\156\\143\\162\\171\\160\\164\\056\\157\\162\\147
+# swisssign
+:$d:257:\\000\\005\\151\\163\\163\\165\\145\\163\\167\\151\\163\\163\\163\\151\\147\\156\\056\\143\\157\\155
+# :$d:257:\\128\\005issueletsencrypt.org:86400
+
+# domain owner check
+'$d:swisssign-check=I7PstNARKI4SesG1RvHLSEkXkZ0rniPVj0MhYePjoH:86400
 EOT
     }
     chdir "/srv" or die "Can't cd /srv: $!";
