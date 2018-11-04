@@ -498,6 +498,8 @@ fi
 
 [[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim
 
+eval "$(thefuck --alias ff)"
+
 zshrc_load_status "colours"
 
 export s_base03="#001920"
@@ -662,7 +664,6 @@ autoload -U colors && colors # Enable colors in prompt
 if [ "$(whoami)" = "root" ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
 
 perlv () { perl -e '$t = -e "Makefile"; $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`; s|.*/(.*)/bin/perl.*|$1 |; s/^usr $//; s/perl-// if $t; print' }
-
 
 prompt_root=$(ghq list -p zsh-git-prompt)
 load $prompt_root/zshrc.sh
