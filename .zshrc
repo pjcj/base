@@ -561,6 +561,14 @@ fi
 
 zshrc_load_status "fzf"
 
+# Commands:
+# Ctrl-F - file
+# Ctrl-R - history
+# Ctrl-G - git commit
+# Ctrl-B - git branch
+# Ctrl-T - git branch
+# Alt-C  - cd
+
 export FZF_TMUX=1
 export FZF_TMUX_HEIGHT=40%
 export FZF_DEFAULT_OPTS="
