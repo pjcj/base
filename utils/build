@@ -252,7 +252,7 @@ case "$build" in
         cp -a bin/* "$sw/bin"
         mkdir -p "$sw/etc/zsh"
         cp -a shell/*.zsh "$sw/etc/zsh"
-        perl -pi.bak -e 's/fzf-completion\(\) \{\K/\n  emulate -L zsh/' \
+        perl -pi -e 's/fzf-completion\(\) \{\K/\n  emulate -L zsh/' \
             "$sw/etc/zsh/completion.zsh"
         ;;
     plenv)
