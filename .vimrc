@@ -145,6 +145,7 @@ let g:ncm2_tagprefix#source = {
     \ 'priority': 2,
     \ }
 
+let g:ncm2#complete_length = [[1,2],[7,2]]
 
 
 if has('nvim')
