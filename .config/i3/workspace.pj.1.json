@@ -55,13 +55,13 @@
                                "x": 0,
                                "y": 0
                             },
-                            "name": "main:0:zsh - \"pjcj.net\" ",
+                            "name": "main:1:zsh - \"mail:0:zsh - \"mutt-posub64-1000-22960-7620088951612616981 (/tmp/ml) - NVIM\" \" ",
                             "percent": 1,
                             "swallows": [
                                {
                                "class": "^kitty$"
                                // "instance": "^kitty$",
-                               // "title": "^main\\:0\\:zsh\\ \\-\\ \\\"pjcj\\.net\\\"\\ $",
+                               // "title": "^main\\:1\\:zsh\\ \\-\\ \\\"mail\\:0\\:zsh\\ \\-\\ \\\"mutt\\-posub64\\-1000\\-22960\\-7620088951612616981\\ \\(\\/tmp\\/ml\\)\\ \\-\\ NVIM\\\"\\ \\\"\\ $",
                                // "transient_for": "^$"
                                }
                             ],
@@ -81,13 +81,13 @@
                "x": 0,
                "y": 0
             },
-            "name": "base:1:zsh - \"pj\" ",
+            "name": "base:1:zsh - \"[Plugins] (~/g/base) - NVIM\" ",
             "percent": 0.58125,
             "swallows": [
                {
                "class": "^kitty$"
                // "instance": "^kitty$",
-               // "title": "^base\\:1\\:zsh\\ \\-\\ \\\"pj\\\"\\ $",
+               // "title": "^base\\:1\\:zsh\\ \\-\\ \\\"\\[Plugins\\]\\ \\(\\~\\/g\\/base\\)\\ \\-\\ NVIM\\\"\\ $",
                // "transient_for": "^$"
                }
             ],
