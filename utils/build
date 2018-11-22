@@ -293,12 +293,14 @@ case "$build" in
         o=$(openssl version | perl -pe 's/(OpenSSL [^ ]*).*/$1/; s/[ .]/_/g')
         [ "$v" = "$o" ] && exit
         git checkout "$v"
-        # git checkout OpenSSL_1_0_2p
+        # git checkout OpenSSL_1_0_1u
         git distclean
         # shellcheck disable=SC2016
         ./config --prefix="$sw" --openssldir="$sw/ssl" \
                  -Wl,--enable-new-dtags,-rpath,'$(LIBRPATH)'
-        TOP="" make test install
+        make -j 5
+        TOP="" make -j 5 test
+        make -j 5 install
         ;;
     cpython)
         v=$(git tag | grep -E '^v3\.[0-9]+\.[0-9]+$' | tail -1)
