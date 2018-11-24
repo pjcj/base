@@ -71,7 +71,7 @@ case "$build" in
                 libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
         fi
         git clean -dxf
-        make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
+        make -j 12 CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
              CMAKE_BUILD_TYPE=Release install
              # CMAKE_BUILD_TYPE=Release test install
         ;;
