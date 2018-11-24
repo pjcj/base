@@ -12,13 +12,11 @@ call plug#begin()
 
 Plug 'w0rp/ale'                                                " syntax checking
 Plug 'rhysd/clever-f.vim'                                           " f F t T f;
-" Plug 'Shougo/deoplete.nvim'
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'davinche/godown-vim'                            " show markdown in browser
 Plug 'haya14busa/incsearch-fuzzy.vim'                                       " z/
 Plug 'haya14busa/incsearch.vim'                  " show all matches on incsearch
-Plug 'Shougo/neco-syntax'                                " for use with deoplete
 Plug 'Xuyuanp/nerdtree-git-plugin'                          " show changed files
 Plug 'scrooloose/nerdtree'                                              " <S-F1>
 Plug 'chr4/nginx.vim'
@@ -29,7 +27,6 @@ Plug 'rstacruz/sparkup'                                            " HTML helper
 Plug 'ervandew/supertab'
 Plug 'majutsushi/tagbar'                                                " <S-F2>
 Plug 'wellle/targets.vim'                                " add * | and _ targets
-Plug 'wellle/tmux-complete.vim'                       " deoplete from tmux panes
 Plug 'SirVer/ultisnips'
 Plug 'mbbill/undotree'                                                     " ,gu
 Plug 'chrisbra/unicode.vim'        " unicode table, search, complete, ^X^Z, ^X^G
@@ -74,7 +71,6 @@ Plug 'christoomey/vim-conflicted'       " :Conflicted :GitNextConflict, dgu, dgl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
     \ 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
 Plug 'skaji/syntax-check-perl'
-" Plug 'pjcj/syntax-check-perl'
 Plug 'vim-perl/vim-perl6'
 Plug 'c9s/perlomni.vim'                                         " for completion
 
@@ -101,41 +97,55 @@ Plug 'soh335/unite-perl-module'
 
 Plug 'pjcj/neovim-colors-solarized-truecolor-only'
 
+if 1
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'Shougo/neco-syntax'
+    Plug 'wellle/tmux-complete.vim'
+    let g:deoplete#enable_at_startup = 1
+    " call deoplete#custom#option('auto_complete_delay', 10)
+    " call deoplete#custom#option('min_pattern_length', 1)
+    " call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
+    " dictionary is already sorted
+    " call deoplete#custom#source('dictionary', 'sorters', [])
+    " call deoplete#custom#source('dictionary', 'min_pattern_length', 4)
+    " call deoplete#custom#source('dictionary', 'matchers', ['matcher_head'])
+    " call deoplete#custom#var('buffer', 'require_same_filetype', v:false)
+    " Order completions.
+    " call deoplete#custom#source('member',     'rank', 450)
+    " call deoplete#custom#source('buffer',     'rank', 400)
+    " call deoplete#custom#source('file',       'rank', 300)
+    " call deoplete#custom#source('tag',        'rank', 200)
+    " call deoplete#custom#source('dictionary', 'rank', 100)
+else
+    Plug 'ncm2/ncm2'
+    Plug 'roxma/nvim-yarp'
 
+    " enable ncm2 for all buffers
+    augroup ncm2
+        autocmd BufEnter * call ncm2#enable_for_buffer()
+    augroup END
 
-" assuming you're using vim-plug: https://github.com/junegunn/vim-plug
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
+    " see :help Ncm2PopupOpen for more information
+    set completeopt=noinsert,menuone,noselect
 
-" enable ncm2 for all buffers
-augroup ncm2
-    autocmd BufEnter * call ncm2#enable_for_buffer()
-augroup END
+    " NOTE: you need to install completion sources to get completions. Check
+    " our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
+    Plug 'ncm2/ncm2-bufword'
+    Plug 'ncm2/ncm2-tmux'
+    Plug 'ncm2/ncm2-path'
+    Plug 'ncm2/ncm2-github'
+    Plug 'ncm2/ncm2-tagprefix'
+    " Plug 'filipekiss/ncm2-look.vim'
+    Plug 'ncm2/ncm2-gtags'
+    Plug 'ncm2/ncm2-syntax'
+    " Plug 'ncm2/ncm2-neoinclude'
+    Plug 'wellle/tmux-complete.vim'
+    " Plug 'yuki-ycino/ncm2-dictionary'
 
-" IMPORTANTE: :help Ncm2PopupOpen for more information
-set completeopt=noinsert,menuone,noselect
-
-" NOTE: you need to install completion sources to get completions. Check
-" our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
-" Plug 'ncm2/ncm2-bufword'
-" Plug 'ncm2/ncm2-tmux'
-" Plug 'ncm2/ncm2-path'
-
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-github'
-Plug 'ncm2/ncm2-tagprefix'
-" Plug 'filipekiss/ncm2-look.vim'
-Plug 'ncm2/ncm2-gtags'
-Plug 'ncm2/ncm2-syntax'
-" Plug 'ncm2/ncm2-neoinclude'
-Plug 'wellle/tmux-complete.vim'
-" Plug 'yuki-ycino/ncm2-dictionary'
-
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'ncm2/ncm2-html-subscope'
-Plug 'ncm2/ncm2-markdown-subscope'
+    Plug 'ncm2/ncm2-ultisnips'
+    Plug 'ncm2/ncm2-html-subscope'
+    Plug 'ncm2/ncm2-markdown-subscope'
+end
 
 " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
 " found' messages
@@ -325,22 +335,6 @@ endfunc
 
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-
-let g:deoplete#enable_at_startup = 1
-" call deoplete#custom#option('auto_complete_delay', 10)
-" call deoplete#custom#option('min_pattern_length', 1)
-" call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
-" " dictionary is already sorted
-" call deoplete#custom#source('dictionary', 'sorters', [])
-" call deoplete#custom#source('dictionary', 'min_pattern_length', 4)
-" call deoplete#custom#source('dictionary', 'matchers', ['matcher_head'])
-" call deoplete#custom#var('buffer', 'require_same_filetype', v:false)
-" " Order completions.
-" call deoplete#custom#source('member',     'rank', 450)
-" call deoplete#custom#source('buffer',     'rank', 400)
-" call deoplete#custom#source('file',       'rank', 300)
-" call deoplete#custom#source('tag',        'rank', 200)
-" call deoplete#custom#source('dictionary', 'rank', 100)
 
 let g:completor_min_chars                 = 1
 " let g:completor_perl_omni_trigger       = '->'
