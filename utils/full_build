@@ -48,7 +48,7 @@ $pip3 install --upgrade --user pyyaml minidb requests keyring chump urlwatch
 # denite
 $pip3 install --upgrade --user typing
 
-$pip3 install --upgrade thefuck
+$pip3 install --upgrade --user thefuck
 
 if [ "$EDITOR" = "nvim" ]; then
     $EDITOR -c PlugUpgrade -c qa
