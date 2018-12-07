@@ -16,9 +16,6 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-# Keep socket across WM restarts for tmux
-export BSPWM_SOCKET=/tmp/bspwm-socket
-
 PATH="$HOME/g/base/utils:$PATH"
 
 # set PATH so it includes user's private bin if it exists
