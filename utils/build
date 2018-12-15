@@ -207,7 +207,7 @@ case "$build" in
         git checkout "$v"
         install_pkg libcurl4-openssl-dev gettext
         git checkout "$(git tag | grep -v rc | grep '^v' | sort -V | tail -1)"
-        make prefix="$sw" all install
+        make -j 12 prefix="$sw" all install
         ;;
     caps2esc)
         exit_if_vm
