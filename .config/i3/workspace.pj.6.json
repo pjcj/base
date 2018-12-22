@@ -1,91 +1,49 @@
 // vim:ts=4:sw=4:et
 {
-    // splitv split container with 1 children
     "border": "pixel",
+    "current_border_width": 3,
     "floating": "auto_off",
-    "layout": "splitv",
+    "geometry": {
+       "height": 1018,
+       "width": 1918,
+       "x": 0,
+       "y": 0
+    },
+    "name": "Inbox - Mozilla Thunderbird",
     "percent": 0.5,
-    "type": "con",
-    "nodes": [
-        {
-            "border": "pixel",
-            "current_border_width": 1,
-            "floating": "auto_off",
-            "geometry": {
-               "height": 876,
-               "width": 1600,
-               "x": 0,
-               "y": 0
-            },
-            "name": "Inbox - Mozilla Thunderbird",
-            "percent": 1,
-            "swallows": [
-               {
-               "class": "^Thunderbird$"
-               // "instance": "^Mail$",
-               // "title": "^Inbox\\ \\-\\ Mozilla\\ Thunderbird$",
-               // "transient_for": "^$",
-               // "window_role": "^3pane$"
-               }
-            ],
-            "type": "con"
-        }
-    ]
+    "swallows": [
+       {
+       "class": "^Thunderbird$"
+       // "instance": "^Mail$",
+       // "title": "^Inbox\\ \\-\\ Mozilla\\ Thunderbird$",
+       // "transient_for": "^$",
+       // "window_role": "^3pane$"
+       }
+    ],
+    "type": "con"
 }
 
 {
-    // splitv split container with 2 children
     "border": "pixel",
+    "current_border_width": 3,
     "floating": "auto_off",
-    "layout": "splitv",
+    "geometry": {
+       "height": 2042,
+       "width": 1277,
+       "x": 2562,
+       "y": 42
+    },
+    "name": "Slack - Software Engineering",
     "percent": 0.5,
-    "type": "con",
-    "nodes": [
-        {
-            "border": "pixel",
-            "current_border_width": 1,
-            "floating": "auto_off",
-            "geometry": {
-               "height": 438,
-               "width": 1598,
-               "x": 0,
-               "y": 0
-            },
-            "name": "zsh",
-            "percent": 0.5,
-            "swallows": [
-               {
-               "class": "^kitty$"
-               // "instance": "^kitty$",
-               // "title": "^zsh$",
-               // "transient_for": "^$"
-               }
-            ],
-            "type": "con"
-        },
-        {
-            "border": "pixel",
-            "current_border_width": 1,
-            "floating": "auto_off",
-            "geometry": {
-               "height": 414,
-               "width": 1598,
-               "x": 1921,
-               "y": 442
-            },
-            "name": "Slack - Software Engineering",
-            "percent": 0.5,
-            "swallows": [
-               {
-               "class": "^Slack$"
-               // "instance": "^slack$",
-               // "title": "^Slack\\ \\-\\ Software\\ Engineering$",
-               // "transient_for": "^$",
-               // "window_role": "^browser\\-window$"
-               }
-            ],
-            "type": "con"
-        }
-    ]
+    "swallows": [
+       {
+       "class": "^Slack$"
+       // "instance": "^slack$",
+       // "title": "^Slack\\ \\-\\ Software\\ Engineering$",
+       // "transient_for": "^$",
+       // "window_role": "^browser\\-window$"
+       }
+    ],
+    "type": "con"
 }
 
