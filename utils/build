@@ -10,6 +10,9 @@ if [ "$build" ]; then
     fi
 fi
 
+j=16
+b=__build__
+
 set -e
 
 echo build "${build:=$(basename "$(pwd)")}"
@@ -52,10 +55,13 @@ case "$build" in
     htop)
         v=$(git tag | grep -v beta | tail -1)
         [ "$v" = "$(htop --version | head -1 | awk '{print $2}')" ] && exit
-        git checkout "$v"
+        git checkout master
+        git branch -D $b || true
+        git checkout -b $b "$v"
         install_pkg libncursesw5-dev
         configure
-        make check install
+        make -j $j check install
+        git checkout master
         ;;
     libevent)
         exit_unless_x
@@ -65,15 +71,18 @@ case "$build" in
     neovim)
         v=$(git tag | tail -1)
         [ "NVIM $v" = "$(nvim -v | head -1)" ] && exit
-        git checkout "$v"
+        git checkout master
+        git branch -D $b || true
+        git checkout -b $b "$v"
         if [ ! "$ISOSX" ]; then
             install_pkg \
                 libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
         fi
         git clean -dxf
-        make -j 12 CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
+        make -j $j CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
              CMAKE_BUILD_TYPE=Release install
              # CMAKE_BUILD_TYPE=Release test install
+        git checkout master
         ;;
     vim)
         if [ ! "$ISOSX" ]; then
@@ -134,13 +143,16 @@ case "$build" in
         oldhist=~/.zshhistory."$(date +'%Y%m%d')"
         cp ~/.zshhistory "$oldhist"
         install_pkg yodl
-        git checkout "$v"
+        git checkout master
+        git branch -D $b || true
+        git checkout -b $b "$v"
         git clean -dxf
         autoreconf -vfi
         configure --enable-pcre
-        make
-        make check || echo sometimes make check fails
-        make install
+        make -j $j
+        make -j $j check || echo sometimes make check fails
+        make -j $j install
+        git checkout master
         cp "$oldhist" ~/.zshhistory
         # run this manually if necessry
         # compaudit | xargs -r chmod go-w
@@ -163,9 +175,12 @@ case "$build" in
     shellcheck)
         v=$(git tag | tail -1)
         [ "$v" = "v$(shellcheck --version | head -2 | tail -1 | awk '{print $2}')" ] && exit
-        git checkout "$v"
+        git checkout master
+        git branch -D $b || true
+        git checkout -b $b "$v"
         install_pkg cabal-install
-        cabal update && cabal install --prefix="$sw" && cabal clean
+        cabal update && cabal install --jobs=$j --prefix="$sw" && cabal clean
+        git checkout master
         ;;
     skype)
         exit_unless_x
@@ -196,18 +211,24 @@ case "$build" in
     tig)
         v=$(git tag | tail -1)
         [ "$v" = "tig-$(tig --version | head -1 | awk '{print $3}')" ] && exit
-        git checkout "$v"
+        git checkout master
+        git branch -D $b || true
+        git checkout -b $b "$v"
         configure
-        make test || echo "make test expected to fail - don't know why"
-        make install
+        make -j $j test || echo "make test expected to fail - don't know why"
+        make -j $j install
+        git checkout master
         ;;
     git)
         v=$(git tag | grep -v rc | grep '^v' | sort -V | tail -1)
         [ "$v" = "v$(git --version | awk '{print $3}')" ] && exit
-        git checkout "$v"
+        git checkout master
+        git branch -D $b || true
+        git checkout -b $b "$v"
         install_pkg libcurl4-openssl-dev gettext
         git checkout "$(git tag | grep -v rc | grep '^v' | sort -V | tail -1)"
-        make -j 12 prefix="$sw" all install
+        make -j $j prefix="$sw" all install
+        git checkout master
         ;;
     caps2esc)
         exit_if_vm
@@ -247,33 +268,42 @@ case "$build" in
     fzf)
         v=$(git tag | sort -V | tail -1)
         [ "$v" = "$(fzf --version | awk '{print $1}')" ] && exit
-        git checkout "$v"
+        git checkout master
+        git branch -D $b || true
+        git checkout -b $b "$v"
         ./install --all --bin
         cp -a bin/* "$sw/bin"
         mkdir -p "$sw/etc/zsh"
         cp -a shell/*.zsh "$sw/etc/zsh"
         perl -pi -e 's/fzf-completion\(\) \{\K/\n  emulate -L zsh/' \
             "$sw/etc/zsh/completion.zsh"
+        git checkout master
         ;;
     plenv)
         v=$(git tag | grep -v '^v' | sort -V | tail -1)
         [ "$v" = "$(plenv --version | awk '{print $2}')" ] && exit
-        git checkout "$v"
+        git checkout master
+        git branch -D $b || true
+        git checkout -b $b "$v"
         rm -f ~/.plenv
         ln -s "$(pwd)" ~/.plenv
-        if [ ! -z "$PLENV_VERSIONS" ]; then
+        if [ -n "$PLENV_VERSIONS" ]; then
             rm -f ~/.plenv/versions
             mkdir -p "$PLENV_VERSIONS"
             ln -s "$PLENV_VERSIONS" ~/.plenv/versions
         fi
+        git checkout master
         ;;
     Perl-Build)
         v=$(git tag | tail -1)
-        git checkout "$v"
+        git checkout master
+        git branch -D $b || true
+        git checkout -b $b "$v"
         mkdir -p ~/.plenv/plugins
         pb=~/.plenv/plugins/perl-build
         rm -f "$pb"
         ln -s "$(pwd)" "$pb"
+        git checkout master
         ;;
     font)
         font=Inconsolata\ Nerd\ Font\ Complete\ Windows\ Compatible.otf
@@ -292,20 +322,26 @@ case "$build" in
         v=$(git tag | grep OpenSSL_1 | grep -v - | tail -1)
         o=$(openssl version | perl -pe 's/(OpenSSL [^ ]*).*/$1/; s/[ .]/_/g')
         [ "$v" = "$o" ] && exit
+        git checkout master
+        git branch -D $b || true
+        git checkout -b $b "$v"
         git checkout "$v"
         # git checkout OpenSSL_1_0_1u
         git distclean
         # shellcheck disable=SC2016
         ./config --prefix="$sw" --openssldir="$sw/ssl" \
                  -Wl,--enable-new-dtags,-rpath,'$(LIBRPATH)'
-        make -j 5
-        TOP="" make -j 5 test
-        make -j 5 install
+        make -j $j
+        TOP="" make -j $j test
+        make -j $j install
+        git checkout master
         ;;
     cpython)
         v=$(git tag | grep -E '^v3\.[0-9]+\.[0-9]+$' | tail -1)
         [ "$v" = "v$(python3 --version | awk '{print $2}')" ] && exit
-        git checkout "$v"
+        git checkout master
+        git branch -D $b || true
+        git checkout -b $b "$v"
         git clean -dxf
         install_pkg build-essential git libexpat1-dev libssl-dev zlib1g-dev   \
             libncurses5-dev libbz2-dev liblzma-dev                            \
@@ -314,7 +350,8 @@ case "$build" in
             libreadline-gplv2-dev libncursesw5-dev libc6-dev libbz2-dev
         configure --enable-optimizations --enable-shared LDFLAGS=-Wl,-rpath="$sw/lib"
         # make test  # this fails on pjcj.net
-        make install
+        make -j $j install
+        git checkout master
         ;;
     harfbuzz)
         git checkout "$(git tag | grep -v '[a-z]' | tail -1)"
@@ -329,13 +366,16 @@ case "$build" in
     mosh)
         v=$(git tag | grep -v rc | sed 's/mosh-//' | tail -1)
         [ "$v" = "$(mosh --version | head -1 | awk '{print $2}')" ] && exit
-        git checkout "mosh-$v"
+        git checkout master
+        git branch -D $b || true
+        git checkout -b $b "mosh-$v"
         git clean -dxf
         install_pkg                                               \
             protobuf-compiler libprotobuf-dev
         configure
-        make check || true  # can fail
-        make install
+        make -j $j check || true  # can fail
+        make -j $j install
+        git checkout master
         ;;
     kitty)
         export PATH=/usr/bin:$PATH
@@ -366,11 +406,14 @@ case "$build" in
     irssi)
         v=$(git tag | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | tail -1)
         [ "$v" = "$(irssi --version | awk '{print $2}')" ] && exit
-        git checkout "$v"
         install_pkg libglib2.0-dev
+        git checkout master
+        git branch -D $b || true
+        git checkout -b $b "$v"
         git clean -dxf
         configure
-        make check install
+        make -j $j check install || true
+        git checkout master
         ;;
     node)
         curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash
