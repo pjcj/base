@@ -259,8 +259,8 @@ case "$build" in
         ;;
     shellcheck)
         v=$(git tag | tail -1)
-        sv=$(shellcheck --version | head -2 | tail -1 | awk '{print $2}')
-        ((force)) || { [ "$v" = "v$sv" ] && exit; }
+        iv="v$(shellcheck --version | head -2 | tail -1 | awk '{print $2}')"
+        ((force)) || { [ "$v" = "$iv" ] && exit; }
         git_co_build "$v"
         # install_pkg cabal-install
         # cabal update && cabal install --jobs="$j" --prefix="$sw" && cabal clean
@@ -298,25 +298,22 @@ case "$build" in
         ;;
     tig)
         v=$(git tag | tail -1)
-        [ "$v" = "tig-$(tig --version | head -1 | awk '{print $3}')" ] && exit
-        git checkout master
-        git branch -D "$b" || true
-        git checkout -b "$b" "$v"
+        iv="tig-$(tig --version | head -1 | awk '{print $3}')"
+        ((force)) || { [ "$v" = "$iv" ] && exit; }
+        git_co_build "$v"
         configure
         make -j "$j" test || pi "make test expected to fail - don't know why"
         make -j "$j" install
-        git checkout master
+        git_co_master
         ;;
     git)
         v=$(git tag | grep -v rc | grep '^v' | sort -V | tail -1)
-        [ "$v" = "v$(git --version | awk '{print $3}')" ] && exit
-        git checkout master
-        git branch -D "$b" || true
-        git checkout -b "$b" "$v"
+        iv="v$(git --version | awk '{print $3}')"
+        ((force)) || { [ "$v" = "$iv" ] && exit; }
+        git_co_build "$v"
         install_pkg libcurl4-openssl-dev gettext
-        git checkout "$(git tag | grep -v rc | grep '^v' | sort -V | tail -1)"
         make -j "$j" prefix="$sw" all install
-        git checkout master
+        git_co_master
         ;;
     caps2esc)
         exit_if_vm
