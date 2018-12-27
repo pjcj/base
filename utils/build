@@ -145,9 +145,7 @@ case "$build" in
         ((force)) || { \
             [ "NVIM $v" = "$(nvim -v | head -1)" ] && exit;
         }
-        git checkout master
-        git branch -D "$b" || true
-        git checkout -b "$b" "$v"
+        git_co_build "$v"
         if [ ! "$ISOSX" ]; then
             install_pkg \
                 libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
@@ -156,7 +154,7 @@ case "$build" in
         make -j "$j" CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
              CMAKE_BUILD_TYPE=Release install
              # CMAKE_BUILD_TYPE=Release test install
-        git checkout master
+        git_co_master
         ;;
     vim)
         if [ ! "$ISOSX" ]; then
@@ -211,31 +209,27 @@ case "$build" in
         }
         exit_unless_x
         install_pkg libxinerama-dev x11proto-xinerama-dev libxkbcommon-dev
-        git checkout master
-        git branch -D "$b" || true
-        git checkout -b "$b" master
-        git clean -dxf
+        git_co_build master
         make PREFIX="$sw" all test install
         pi "ldconfig fails"
         sudo ldconfig
-        git checkout master
+        git_co_master
         ;;
     zsh)
         v=$(git tag | grep -v dev | grep -v test | tail -1)
-        [ "$v" = "zsh-$(zsh --version | awk '{print $2}')" ] && exit
+        ((force)) || { \
+            [ "$v" = "zsh-$(zsh --version | awk '{print $2}')" ] && exit;
+        }
         oldhist=~/.zshhistory."$(date +'%Y%m%d')"
         cp ~/.zshhistory "$oldhist"
         install_pkg yodl
-        git checkout master
-        git branch -D "$b" || true
-        git checkout -b "$b" "$v"
-        git clean -dxf
+        git_co_build "$v"
         autoreconf -vfi
         configure --enable-pcre
         make -j "$j"
         make -j "$j" check || pi sometimes make check fails
         make -j "$j" install
-        git checkout master
+        git_co_master
         cp "$oldhist" ~/.zshhistory
         # run this manually if necessry
         # compaudit | xargs -r chmod go-w
