@@ -352,7 +352,7 @@ case "$build" in
         ((force)) || { [ "$v" = "$iv" ] && exit; }
         git_co_build "$v"
         ./install --all --bin
-        cp -a bin/* "$sw/bin"
+        cp -a bin/* "$sw/bin" || true
         mkdir -p "$sw/etc/zsh"
         cp -a shell/*.zsh "$sw/etc/zsh"
         perl -pi -e 's/fzf-completion\(\) \{\K/\n  emulate -L zsh/' \
