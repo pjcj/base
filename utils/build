@@ -415,20 +415,19 @@ case "$build" in
         ;;
     cpython)
         v=$(git tag | grep -E '^v3\.[0-9]+\.[0-9]+$' | tail -1)
-        [ "$v" = "v$(python3 --version | awk '{print $2}')" ] && exit
-        git checkout master
-        git branch -D "$b" || true
-        git checkout -b "$b" "$v"
-        git clean -dxf
+        iv="v$(python3 --version | awk '{print $2}')"
+        ((force)) || { [ "$v" = "$iv" ] && exit; }
+        git_co_build "$v"
         install_pkg build-essential git libexpat1-dev libssl-dev zlib1g-dev   \
             libncurses5-dev libbz2-dev liblzma-dev                            \
             libsqlite3-dev libffi-dev tcl-dev libgdbm-dev                     \
             libreadline-dev tk tk-dev                                         \
             libreadline-gplv2-dev libncursesw5-dev libc6-dev libbz2-dev
-        configure --enable-optimizations --enable-shared LDFLAGS=-Wl,-rpath="$sw/lib"
+        configure --enable-optimizations --enable-shared \
+            LDFLAGS=-Wl,-rpath="$sw/lib"
         # make test  # this fails on pjcj.net
         make -j "$j" install
-        git checkout master
+        git_co_master
         ;;
     harfbuzz)
         git checkout "$(git tag | grep -v '[a-z]' | tail -1)"
