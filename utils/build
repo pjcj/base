@@ -352,17 +352,16 @@ case "$build" in
         ;;
     fzf)
         v=$(git tag | sort -V | tail -1)
-        [ "$v" = "$(fzf --version | awk '{print $1}')" ] && exit
-        git checkout master
-        git branch -D "$b" || true
-        git checkout -b "$b" "$v"
+        iv="$(fzf --version | awk '{print $1}')"
+        ((force)) || { [ "$v" = "$iv" ] && exit; }
+        git_co_build "$v"
         ./install --all --bin
         cp -a bin/* "$sw/bin"
         mkdir -p "$sw/etc/zsh"
         cp -a shell/*.zsh "$sw/etc/zsh"
         perl -pi -e 's/fzf-completion\(\) \{\K/\n  emulate -L zsh/' \
             "$sw/etc/zsh/completion.zsh"
-        git checkout master
+        git_co_master
         ;;
     plenv)
         v=$(git tag | grep -v '^v' | sort -V | tail -1)
