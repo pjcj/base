@@ -247,10 +247,15 @@ case "$build" in
         git_co_master
         ;;
     zsh-git-prompt)
-        [ "$(git rev-parse --short HEAD)" = "0a6c8b6" ] && exit
+        v=0a6c8b6
+        ((force)) || { \
+            [ "$(git rev-parse --short HEAD)" = $v ] && exit;
+        }
+        git_co_build "$v"
         install_pkg haskell-stack
         stack setup
         stack build && stack install
+        git_co_master
         ;;
     shellcheck)
         v=$(git tag | tail -1)
