@@ -480,15 +480,14 @@ case "$build" in
         ;;
     irssi)
         v=$(git tag | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | tail -1)
-        [ "$v" = "$(irssi --version | awk '{print $2}')" ] && exit
+        iv="$(irssi --version | awk '{print $2}')"
+        ((force)) || { [ "$v" = "$iv" ] && exit; }
+        git_co_build "$v"
         install_pkg libglib2.0-dev
-        git checkout master
-        git branch -D "$b" || true
-        git checkout -b "$b" "$v"
-        git clean -dxf
         configure
-        make -j "$j" check install || true
-        git checkout master
+        # NOTE: parallel build fails here
+        make -j 1 check install || true
+        git_co_master
         ;;
     node)
         curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash
