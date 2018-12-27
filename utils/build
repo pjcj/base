@@ -401,21 +401,17 @@ case "$build" in
         ;;
     openssl)
         v=$(git tag | grep OpenSSL_1 | grep -v - | tail -1)
-        o=$(openssl version | perl -pe 's/(OpenSSL [^ ]*).*/$1/; s/[ .]/_/g')
-        [ "$v" = "$o" ] && exit
-        git checkout master
-        git branch -D "$b" || true
-        git checkout -b "$b" "$v"
-        git checkout "$v"
-        # git checkout OpenSSL_1_0_1u
-        git distclean
+        # v=OpenSSL_1_0_1u
+        iv=$(openssl version | perl -pe 's/(OpenSSL [^ ]*).*/$1/; s/[ .]/_/g')
+        ((force)) || { [ "$v" = "$iv" ] && exit; }
+        git_co_build "$v"
         # shellcheck disable=SC2016
         ./config --prefix="$sw" --openssldir="$sw/ssl" \
                  -Wl,--enable-new-dtags,-rpath,'$(LIBRPATH)'
         make -j "$j"
         TOP="" make -j "$j" test
         make -j "$j" install
-        git checkout master
+        git_co_master
         ;;
     cpython)
         v=$(git tag | grep -E '^v3\.[0-9]+\.[0-9]+$' | tail -1)
