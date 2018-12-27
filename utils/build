@@ -259,13 +259,16 @@ case "$build" in
         ;;
     shellcheck)
         v=$(git tag | tail -1)
-        [ "$v" = "v$(shellcheck --version | head -2 | tail -1 | awk '{print $2}')" ] && exit
-        git checkout master
-        git branch -D "$b" || true
-        git checkout -b "$b" "$v"
-        install_pkg cabal-install
-        cabal update && cabal install --jobs="$j" --prefix="$sw" && cabal clean
-        git checkout master
+        sv=$(shellcheck --version | head -2 | tail -1 | awk '{print $2}')
+        ((force)) || { [ "$v" = "v$sv" ] && exit; }
+        git_co_build "$v"
+        # install_pkg cabal-install
+        # cabal update && cabal install --jobs="$j" --prefix="$sw" && cabal clean
+        sd="shellcheck-$v"
+        wget "https://storage.googleapis.com/shellcheck/$sd.linux.x86_64.tar.xz"
+        tar --xz -xvf "$sd.linux.x86_64.tar.xz"
+        mv "$sd/shellcheck" "$sw/bin"
+        git_co_master
         ;;
     skype)
         exit_unless_x
