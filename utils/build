@@ -29,11 +29,11 @@ cleanup() {
 PATH="$srcdir:$PATH"
 verbose=0
 force=0
+build=
 j=16
 b=__build__
 
 while [ $# -gt 0 ]; do
-    pi "in [$1]"
     case "$1" in
         -h|--help)
             usage
@@ -194,11 +194,20 @@ case "$build" in
         fi
         ;;
     xdotool)
-        [ "$(xdotool --version)" = "xdotool version 3.+20180814.1" ] && exit
+        ((force)) || { \
+            [ "$(xdotool --version)" = "xdotool version 3.+20181227.1" ] && \
+            exit;
+        }
         exit_unless_x
         install_pkg libxinerama-dev x11proto-xinerama-dev libxkbcommon-dev
+        git checkout master
+        git branch -D "$b" || true
+        git checkout -b "$b" master
+        git clean -dxf
         make PREFIX="$sw" all test install
+        pi "ldconfig fails"
         sudo ldconfig
+        git checkout master
         ;;
     zsh)
         v=$(git tag | grep -v dev | grep -v test | tail -1)
