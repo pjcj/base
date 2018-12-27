@@ -119,10 +119,12 @@ git_co_master() {
 
 case "$build" in
     urlview)
-        [ "$(git rev-parse --short HEAD)" = "08767aa" ] && exit
+        v="$(git rev-parse --short HEAD)"
+        iv=08767aa
+        ((force)) || { [ "$v" = "$iv" ] && exit; }
         autoreconf -vfi
         configure
-        make check install
+        make -j "$j" check install
         ;;
     htop)
         v=$(git tag | grep -v beta | tail -1)
