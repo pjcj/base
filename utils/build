@@ -430,14 +430,15 @@ case "$build" in
         git_co_master
         ;;
     harfbuzz)
-        git checkout "$(git tag | grep -v '[a-z]' | tail -1)"
-        git clean -dxf
+        v="$(git tag | grep -v '[a-z]' | tail -1)"
+        git checkout "$v"
         install_pkg                                               \
             gcc g++ libfreetype6-dev libglib2.0-dev libcairo2-dev \
             autoconf automake libtool pkg-config ragel gtk-doc-tools
         configure
-        make check || true  # can fail
-        make install
+        make -j "$j" check || true  # can fail
+        make -j "$j" install
+        git_co_master
         ;;
     mosh)
         v=$(git tag | grep -v rc | sed 's/mosh-//' | tail -1)
