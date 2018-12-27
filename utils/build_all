@@ -1,20 +1,87 @@
-#!/bin/sh
+#!/bin/bash
+set -euo pipefail
 
-# set -x
+script=$(basename "$0")
+srcdir=$(readlink -f "$(dirname "$0")")
+readonly LOG_FILE="/tmp/$script.log"
+_p() { l=$1; shift; echo "$l $script: $*" | tee -a "$LOG_FILE" >&2; }
+pt() { _p "[TRACE]  " "$*";                                         }
+pd() { _p "[DEBUG]  " "$*";                                         }
+pi() { _p "[INFO]   " "$*";                                         }
+pw() { _p "[WARNING]" "$*";                                         }
+pe() { _p "[ERROR]  " "$*";                                         }
+pf() { _p "[FATAL]  " "$*"; exit 1;                                 }
+
+usage() {
+    cat <<EOT
+$script --help
+$script --trace --verbose
+$script options
+EOT
+    exit 0
+}
+
+cleanup() {
+    declare -r res=$?
+    ((verbose)) && pi "Cleaning up"
+    exit $res
+}
+
+PATH="$srcdir:$PATH"
+verbose=0
+force=0
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -h|--help)
+            usage
+            shift
+            ;;
+        -t|--trace)
+            set -x
+            shift
+            ;;
+        -v|--verbose)
+            verbose=1
+            shift
+            ;;
+        -f|--force)
+            force=1
+            shift
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
 
 gobase() { cd ~/g/base || exit 1; }
 
-gobase
+do_build() {
+    b="$1"
+    opts=
+    ((force)) && opts=--force
+    build $opts "$b"
+}
 
-ghq import -u < ghq.repos
+main () {
+    gobase
 
-while read -r repo; do
-    sw=$(basename "$repo")
-    build "$sw"
-done < ghq.repos
+    ghq import -u < ghq.repos
 
-build rg
-build fd
-build font
-build kitty
-build bat
+    while read -r repo; do
+        sw=$(basename "$repo")
+        do_build "$sw"
+    done < ghq.repos
+
+    do_build rg
+    do_build fd
+    do_build font
+    # do_build kitty
+    do_build bat
+}
+
+if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
+    trap cleanup EXIT INT
+    main "$@"
+fi
