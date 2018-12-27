@@ -248,7 +248,7 @@ case "$build" in
         iv="$(git rev-parse --short HEAD)"
         ((force)) || { [ "$v" = "$iv" ] && exit; }
         git_co_build "$v"
-        install_pkg haskell-stack
+        install_pkg stack
         stack setup
         stack build && stack install
         git_co_master
