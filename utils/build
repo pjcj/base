@@ -128,9 +128,8 @@ case "$build" in
         ;;
     htop)
         v=$(git tag | grep -v beta | tail -1)
-        ((force)) || { \
-            [ "$v" = "$(htop --version | head -1 | awk '{print $2}')" ] && exit;
-        }
+        iv="$(htop --version | head -1 | awk '{print $2}')"
+        ((force)) || { [ "$v" = "$iv" ] && exit; }
         git_co_build "$v"
         configure
         # TODO - sometimes parallel build seems to fail
@@ -144,9 +143,8 @@ case "$build" in
         ;;
     neovim)
         v=$(git tag | tail -1)
-        ((force)) || { \
-            [ "NVIM $v" = "$(nvim -v | head -1)" ] && exit;
-        }
+        iv="$(nvim -v | head -1)"
+        ((force)) || { [ "NVIM $v" = "$iv" ] && exit; }
         git_co_build "$v"
         if [ ! "$ISOSX" ]; then
             install_pkg \
@@ -205,11 +203,10 @@ case "$build" in
         fi
         ;;
     xdotool)
-        ((force)) || { \
-            [ "$(xdotool --version)" = "xdotool version 3.+20181227.1" ] && \
-            exit;
-        }
         exit_unless_x
+        v="xdotool version 3.+20181227.1"
+        iv="$(xdotool --version)"
+        ((force)) || { [ "$v" = "$iv" ] && exit; }
         install_pkg libxinerama-dev x11proto-xinerama-dev libxkbcommon-dev
         git_co_build master
         make PREFIX="$sw" all test install
@@ -219,9 +216,8 @@ case "$build" in
         ;;
     zsh)
         v=$(git tag | grep -v dev | grep -v test | tail -1)
-        ((force)) || { \
-            [ "$v" = "zsh-$(zsh --version | awk '{print $2}')" ] && exit;
-        }
+        iv="zsh-$(zsh --version | awk '{print $2}')"
+        ((force)) || { [ "$v" = "$iv" ] && exit; }
         oldhist=~/.zshhistory."$(date +'%Y%m%d')"
         cp ~/.zshhistory "$oldhist"
         install_pkg yodl
@@ -238,9 +234,8 @@ case "$build" in
         ;;
     tmux)
         v=$(git tag | tail -1)
-        ((force)) || { \
-            [ "$v" = "$(tmux -V)" ] && exit;
-        }
+        iv="(tmux -V)"
+        ((force)) || { [ "$v" = "$iv" ] && exit; }
         git_co_build "$v"
         export LIBEVENT_CFLAGS="-I$sw/include"
         export LIBEVENT_LIBS="-L$sw/lib -Wl,-rpath=$sw/lib -levent"
@@ -250,9 +245,8 @@ case "$build" in
         ;;
     zsh-git-prompt)
         v=0a6c8b6
-        ((force)) || { \
-            [ "$(git rev-parse --short HEAD)" = $v ] && exit;
-        }
+        iv="$(git rev-parse --short HEAD)"
+        ((force)) || { [ "$v" = "$iv" ] && exit; }
         git_co_build "$v"
         install_pkg haskell-stack
         stack setup
