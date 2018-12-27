@@ -104,6 +104,19 @@ install_pkg() {
     sudo aptitude -y install "$@"
 }
 
+git_co_build() {
+    branch="$1"
+    git checkout master
+    git branch -D "$b" || true
+    git checkout -b "$b" "$branch"
+    git clean -dxf
+}
+
+git_co_master() {
+    git branch -f master origin/master
+    git checkout master
+}
+
 case "$build" in
     urlview)
         [ "$(git rev-parse --short HEAD)" = "08767aa" ] && exit
@@ -116,13 +129,11 @@ case "$build" in
         ((force)) || { \
             [ "$v" = "$(htop --version | head -1 | awk '{print $2}')" ] && exit;
         }
-        git checkout master
-        git branch -D "$b" || true
-        git checkout -b "$b" "$v"
-        install_pkg libncursesw5-dev
+        git_co_build "$v"
         configure
+        # TODO - sometimes parallel build seems to fail
         make -j "$j" check install
-        git checkout master
+        git_co_master
         ;;
     libevent)
         exit_unless_x
