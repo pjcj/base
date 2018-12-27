@@ -132,8 +132,8 @@ case "$build" in
         ((force)) || { [ "$v" = "$iv" ] && exit; }
         git_co_build "$v"
         configure
-        # TODO - sometimes parallel build seems to fail
-        make -j "$j" check install
+        # NOTE: parallel build sometimes fails here
+        make -j 1 check install
         git_co_master
         ;;
     libevent)
