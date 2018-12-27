@@ -365,29 +365,26 @@ case "$build" in
         ;;
     plenv)
         v=$(git tag | grep -v '^v' | sort -V | tail -1)
-        [ "$v" = "$(plenv --version | awk '{print $2}')" ] && exit
-        git checkout master
-        git branch -D "$b" || true
-        git checkout -b "$b" "$v"
+        iv="$(plenv --version | awk '{print $2}')"
+        ((force)) || { [ "$v" = "$iv" ] && exit; }
+        git_co_build "$v"
         rm -f ~/.plenv
         ln -s "$(pwd)" ~/.plenv
-        if [ -n "$PLENV_VERSIONS" ]; then
+        if [ -n "${PLENV_VERSIONS-}" ]; then
             rm -f ~/.plenv/versions
             mkdir -p "$PLENV_VERSIONS"
             ln -s "$PLENV_VERSIONS" ~/.plenv/versions
         fi
-        git checkout master
+        git_co_master
         ;;
     Perl-Build)
         v=$(git tag | tail -1)
-        git checkout master
-        git branch -D "$b" || true
-        git checkout -b "$b" "$v"
+        git_co_build "$v"
         mkdir -p ~/.plenv/plugins
         pb=~/.plenv/plugins/perl-build
         rm -f "$pb"
         ln -s "$(pwd)" "$pb"
-        git checkout master
+        git_co_master
         ;;
     font)
         font=Inconsolata\ Nerd\ Font\ Complete\ Windows\ Compatible.otf
