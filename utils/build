@@ -236,12 +236,15 @@ case "$build" in
         ;;
     tmux)
         v=$(git tag | tail -1)
-        [ "$v" = "$(tmux -V)" ] && exit
-        git checkout "$v"
+        ((force)) || { \
+            [ "$v" = "$(tmux -V)" ] && exit;
+        }
+        git_co_build "$v"
         export LIBEVENT_CFLAGS="-I$sw/include"
         export LIBEVENT_LIBS="-L$sw/lib -Wl,-rpath=$sw/lib -levent"
         configure
         make check install
+        git_co_master
         ;;
     zsh-git-prompt)
         [ "$(git rev-parse --short HEAD)" = "0a6c8b6" ] && exit
