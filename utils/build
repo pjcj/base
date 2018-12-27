@@ -442,17 +442,15 @@ case "$build" in
         ;;
     mosh)
         v=$(git tag | grep -v rc | sed 's/mosh-//' | tail -1)
-        [ "$v" = "$(mosh --version | head -1 | awk '{print $2}')" ] && exit
-        git checkout master
-        git branch -D "$b" || true
-        git checkout -b "$b" "mosh-$v"
-        git clean -dxf
+        iv="$(mosh --version | head -1 | awk '{print $2}')"
+        ((force)) || { [ "$v" = "$iv" ] && exit; }
+        git_co_build "mosh-$v"
         install_pkg                                               \
             protobuf-compiler libprotobuf-dev
         configure
         make -j "$j" check || true  # can fail
         make -j "$j" install
-        git checkout master
+        git_co_master
         ;;
     kitty)
         export PATH=/usr/bin:$PATH
