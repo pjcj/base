@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -uo pipefail
 
 script=$(basename "$0")
 srcdir=$(readlink -f "$(dirname "$0")")
@@ -73,6 +73,8 @@ if [ "$build" ]; then
         cd "$dir" || exit 1
     fi
 fi
+
+set -e
 
 pi build "${build:=$(basename "$(pwd)")}"
 
