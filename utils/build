@@ -150,7 +150,8 @@ case "$build" in
         git_co_build "$v"
         if [ ! "$ISOSX" ]; then
             install_pkg \
-                libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
+                libtool libtool-bin autoconf automake cmake g++ pkg-config \
+                unzip libncursesw5-dev
         fi
         git clean -dxf
         make -j "$j" CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
