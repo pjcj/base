@@ -130,7 +130,11 @@ case "$build" in
         ;;
     htop)
         v=$(git tag | grep -v beta | tail -1)
-        iv="$(htop --version | head -1 | awk '{print $2}')"
+        if command -v htop >&/dev/null; then
+            iv="$(htop --version | head -1 | awk '{print $2}')"
+        else
+            iv=0
+        fi
         ((force)) || { [ "$v" = "$iv" ] && exit; }
         git_co_build "$v"
         configure
@@ -145,7 +149,11 @@ case "$build" in
         ;;
     neovim)
         v=$(git tag | tail -1)
-        iv="$(nvim -v | head -1)"
+        if command -v nvim >&/dev/null; then
+            iv="$(nvim -v | head -1)"
+        else
+            iv=0
+        fi
         ((force)) || { [ "NVIM $v" = "$iv" ] && exit; }
         git_co_build "$v"
         if [ ! "$ISOSX" ]; then
@@ -207,8 +215,12 @@ case "$build" in
         ;;
     xdotool)
         exit_unless_x
-        v="xdotool version 3.+20181227.1"
-        iv="$(xdotool --version)"
+        v="xdotool version 3.+20181228.1"
+        if command -v xdotool >&/dev/null; then
+            iv="$(xdotool --version)"
+        else
+            iv=0
+        fi
         ((force)) || { [ "$v" = "$iv" ] && exit; }
         install_pkg libxinerama-dev x11proto-xinerama-dev libxkbcommon-dev
         git_co_build master
@@ -258,7 +270,11 @@ case "$build" in
         ;;
     shellcheck)
         v=$(git tag | tail -1)
-        iv="v$(shellcheck --version | head -2 | tail -1 | awk '{print $2}')"
+        if command -v shellcheck >&/dev/null; then
+            iv="v$(shellcheck --version | head -2 | tail -1 | awk '{print $2}')"
+        else
+            iv=0
+        fi
         ((force)) || { [ "$v" = "$iv" ] && exit; }
         git_co_build "$v"
         # install_pkg cabal-install
@@ -351,7 +367,11 @@ case "$build" in
         ;;
     fzf)
         v=$(git tag | sort -V | tail -1)
-        iv="$(fzf --version | awk '{print $1}')"
+        if command -v fzf >&/dev/null; then
+            iv="$(fzf --version | awk '{print $1}')"
+        else
+            iv=0
+        fi
         ((force)) || { [ "$v" = "$iv" ] && exit; }
         git_co_build "$v"
         ./install --all --bin
@@ -364,7 +384,11 @@ case "$build" in
         ;;
     plenv)
         v=$(git tag | grep -v '^v' | sort -V | tail -1)
-        iv="$(plenv --version | awk '{print $2}')"
+        if command -v plenv >&/dev/null; then
+            iv="$(plenv --version | awk '{print $2}')"
+        else
+            iv=0
+        fi
         ((force)) || { [ "$v" = "$iv" ] && exit; }
         git_co_build "$v"
         rm -f ~/.plenv
@@ -441,7 +465,11 @@ case "$build" in
         ;;
     mosh)
         v=$(git tag | grep -v rc | sed 's/mosh-//' | tail -1)
-        iv="$(mosh --version | head -1 | awk '{print $2}')"
+        if command -v mosh >&/dev/null; then
+            iv="$(mosh --version | head -1 | awk '{print $2}')"
+        else
+            iv=0
+        fi
         ((force)) || { [ "$v" = "$iv" ] && exit; }
         git_co_build "mosh-$v"
         install_pkg                                               \
@@ -479,7 +507,11 @@ case "$build" in
         ;;
     irssi)
         v=$(git tag | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | tail -1)
-        iv="$(irssi --version | awk '{print $2}')"
+        if command -v irssi >&/dev/null; then
+            iv="$(irssi --version | awk '{print $2}')"
+        else
+            iv=0
+        fi
         ((force)) || { [ "$v" = "$iv" ] && exit; }
         git_co_build "$v"
         install_pkg libglib2.0-dev
