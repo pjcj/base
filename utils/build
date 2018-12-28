@@ -310,7 +310,7 @@ case "$build" in
         iv="v$(git --version | awk '{print $3}')"
         ((force)) || { [ "$v" = "$iv" ] && exit; }
         git_co_build "$v"
-        install_pkg libcurl4-openssl-dev gettext
+        install_pkg libcurl4-gnutls-dev zlib1g-dev gettext
         make -j "$j" prefix="$sw" all install
         git_co_master
         ;;
