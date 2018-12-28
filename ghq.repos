@@ -1,3 +1,4 @@
+openssl/openssl
 neovim/neovim
 git://zsh.git.sf.net/gitroot/zsh/zsh
 olivierverdier/zsh-git-prompt
@@ -13,7 +14,5 @@ oblitum/caps2esc
 junegunn/fzf
 tokuhirom/plenv
 tokuhirom/Perl-Build
-openssl/openssl
-python/cpython
 irssi/irssi
 mobile-shell/mosh
