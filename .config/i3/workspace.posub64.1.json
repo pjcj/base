@@ -1,32 +1,10 @@
 // vim:ts=4:sw=4:et
 {
-    "border": "pixel",
-    "current_border_width": 1,
-    "floating": "auto_off",
-    "geometry": {
-       "height": 504,
-       "width": 800,
-       "x": 0,
-       "y": 0
-    },
-    "name": "i3startup (~/g/base/utils) - NVIM",
-    "percent": 0.333333333333333,
-    "swallows": [
-       {
-       "class": "^st\\-256color$"
-       // "instance": "^st\\-256color$",
-       // "title": "^i3startup\\ \\(\\~\\/g\\/base\\/utils\\)\\ \\-\\ NVIM$"
-       }
-    ],
-    "type": "con"
-}
-
-{
     // splitv split container with 2 children
     "border": "pixel",
     "floating": "auto_off",
     "layout": "splitv",
-    "percent": 0.333333333333333,
+    "percent": 0.277604166666667,
     "type": "con",
     "nodes": [
         {
@@ -39,13 +17,13 @@
                "x": 0,
                "y": 0
             },
-            "name": "i3 (~/g/base/utils) - NVIM",
-            "percent": 0.5,
+            "name": "st",
+            "percent": 0.254605573925366,
             "swallows": [
                {
                "class": "^st\\-256color$"
                // "instance": "^st\\-256color$",
-               // "title": "^i3\\ \\(\\~\\/g\\/base\\/utils\\)\\ \\-\\ NVIM$"
+               // "title": "^st$"
                }
             ],
             "type": "con"
@@ -60,13 +38,13 @@
                "x": 0,
                "y": 0
             },
-            "name": "main:3:base - \"save_i3_layout (~/g/base/utils) - NVIM\" ",
-            "percent": 0.5,
+            "name": "st",
+            "percent": 0.745394426074634,
             "swallows": [
                {
                "class": "^st\\-256color$"
                // "instance": "^st\\-256color$",
-               // "title": "^main\\:3\\:base\\ \\-\\ \\\"save_i3_layout\\ \\(\\~\\/g\\/base\\/utils\\)\\ \\-\\ NVIM\\\"\\ $"
+               // "title": "^st$"
                }
             ],
             "type": "con"
@@ -75,24 +53,139 @@
 }
 
 {
+    // splitv split container with 2 children
     "border": "pixel",
-    "current_border_width": 1,
     "floating": "auto_off",
-    "geometry": {
-       "height": 504,
-       "width": 800,
-       "x": 0,
-       "y": 0
-    },
-    "name": "I3.pm = (/usr/share/perl5/AnyEvent) - NVIM",
-    "percent": 0.333333333333333,
-    "swallows": [
-       {
-       "class": "^st\\-256color$"
-       // "instance": "^st\\-256color$",
-       // "title": "^I3\\.pm\\ \\=\\ \\(\\/usr\\/share\\/perl5\\/AnyEvent\\)\\ \\-\\ NVIM$"
-       }
-    ],
-    "type": "con"
+    "layout": "splitv",
+    "percent": 0.414322916666667,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 1,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 504,
+               "width": 800,
+               "x": 0,
+               "y": 0
+            },
+            "name": "st",
+            "percent": 0.254605573925366,
+            "swallows": [
+               {
+               "class": "^st\\-256color$"
+               // "instance": "^st\\-256color$",
+               // "title": "^st$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "pixel",
+            "current_border_width": 1,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 504,
+               "width": 800,
+               "x": 0,
+               "y": 0
+            },
+            "name": "st",
+            "percent": 0.745394426074634,
+            "swallows": [
+               {
+               "class": "^st\\-256color$"
+               // "instance": "^st\\-256color$",
+               // "title": "^st$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+
+{
+    // splitv split container with 2 children
+    "border": "pixel",
+    "floating": "auto_off",
+    "layout": "splitv",
+    "percent": 0.308072916666667,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 1,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 504,
+               "width": 800,
+               "x": 0,
+               "y": 0
+            },
+            "name": "st",
+            "percent": 0.255077940481814,
+            "swallows": [
+               {
+               "class": "^st\\-256color$"
+               // "instance": "^st\\-256color$",
+               // "title": "^st$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            // splitv split container with 2 children
+            "border": "pixel",
+            "floating": "auto_off",
+            "layout": "splitv",
+            "percent": 0.744922059518186,
+            "type": "con",
+            "nodes": [
+                {
+                    "border": "pixel",
+                    "current_border_width": 1,
+                    "floating": "auto_off",
+                    "geometry": {
+                       "height": 504,
+                       "width": 800,
+                       "x": 0,
+                       "y": 0
+                    },
+                    "name": "st",
+                    "percent": 0.206721623335447,
+                    "swallows": [
+                       {
+                       "class": "^st\\-256color$"
+                       // "instance": "^st\\-256color$",
+                       // "title": "^st$"
+                       }
+                    ],
+                    "type": "con"
+                },
+                {
+                    "border": "pixel",
+                    "current_border_width": 1,
+                    "floating": "auto_off",
+                    "geometry": {
+                       "height": 504,
+                       "width": 800,
+                       "x": 0,
+                       "y": 0
+                    },
+                    "name": "st",
+                    "percent": 0.793278376664553,
+                    "swallows": [
+                       {
+                       "class": "^st\\-256color$"
+                       // "instance": "^st\\-256color$",
+                       // "title": "^st$"
+                       }
+                    ],
+                    "type": "con"
+                }
+            ]
+        }
+    ]
 }
 
