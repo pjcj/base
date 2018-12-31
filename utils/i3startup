@@ -55,7 +55,7 @@ main() {
     hostname=$(hostname)
     ((verbose)) && pi "Running on $hostname"
 
-    xrdb -merge .Xdefaults
+    xrdb -merge ~/.Xdefaults
     xsetroot -bg black
     clipit -d &
     gnome-panel &
