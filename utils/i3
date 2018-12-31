@@ -56,7 +56,8 @@ main() {
     h=$(hostname)
     cp "config.base" config;
     [ -e "config.$h" ] && cat "config.$h" >> config
-    exec /usr/bin/i3 "$*"
+    # shellcheck disable=SC2068
+    exec /usr/bin/i3 $@
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
