@@ -4,8 +4,8 @@
     "current_border_width": 1,
     "floating": "auto_off",
     "geometry": {
-       "height": 600,
-       "width": 800,
+       "height": 1950,
+       "width": 1024,
        "x": 0,
        "y": 0
     },
@@ -32,8 +32,8 @@
     "rect": {
        "height": 415,
        "width": 548,
-       "x": 13024,
-       "y": 1831
+       "x": 1648,
+       "y": 759
     },
     "type": "floating_con",
     "nodes": [
@@ -44,8 +44,8 @@
             "geometry": {
                "height": 395,
                "width": 544,
-               "x": 128,
-               "y": 102
+               "x": 1648,
+               "y": 777
             },
             "name": "Set Up an Existing Email Account",
             "percent": 1,

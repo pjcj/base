@@ -8,8 +8,8 @@ workspace 7 output LVDS-1
 workspace 8 output LVDS-1
 workspace 9 output LVDS-1
 
-exec --no-startup-id i3-msg 'workspace 1; append_layout ~/g/base/.config/i3/workspace.pj.1.json'
-exec --no-startup-id i3-msg 'workspace 6; append_layout ~/g/base/.config/i3/workspace.pj.6.json'
+exec --no-startup-id i3-msg 'workspace 1; append_layout ~/g/base/.config/i3/workspace.caub1.1.json'
+exec --no-startup-id i3-msg 'workspace 6; append_layout ~/g/base/.config/i3/workspace.caub1.6.json'
 exec --no-startup-id i3-msg 'workspace 2; exec firefox; workspace 1'
 exec --no-startup-id i3-msg 'workspace 6; exec thunderbird; workspace 1'
 exec --no-startup-id i3-msg 'workspace 1; exec st; workspace 1'
