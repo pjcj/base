@@ -2,6 +2,7 @@ openssl/openssl
 neovim/neovim
 git://zsh.git.sf.net/gitroot/zsh/zsh
 olivierverdier/zsh-git-prompt
+http://git.suckless.org/st
 sigpipe/urlview
 jordansissel/xdotool
 hishamhm/htop
