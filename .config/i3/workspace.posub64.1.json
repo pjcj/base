@@ -1,0 +1,98 @@
+// vim:ts=4:sw=4:et
+{
+    "border": "pixel",
+    "current_border_width": 1,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 504,
+       "width": 800,
+       "x": 0,
+       "y": 0
+    },
+    "name": "i3startup (~/g/base/utils) - NVIM",
+    "percent": 0.333333333333333,
+    "swallows": [
+       {
+       "class": "^st\\-256color$"
+       // "instance": "^st\\-256color$",
+       // "title": "^i3startup\\ \\(\\~\\/g\\/base\\/utils\\)\\ \\-\\ NVIM$"
+       }
+    ],
+    "type": "con"
+}
+
+{
+    // splitv split container with 2 children
+    "border": "pixel",
+    "floating": "auto_off",
+    "layout": "splitv",
+    "percent": 0.333333333333333,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 1,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 504,
+               "width": 800,
+               "x": 0,
+               "y": 0
+            },
+            "name": "i3 (~/g/base/utils) - NVIM",
+            "percent": 0.5,
+            "swallows": [
+               {
+               "class": "^st\\-256color$"
+               // "instance": "^st\\-256color$",
+               // "title": "^i3\\ \\(\\~\\/g\\/base\\/utils\\)\\ \\-\\ NVIM$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "pixel",
+            "current_border_width": 1,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 504,
+               "width": 800,
+               "x": 0,
+               "y": 0
+            },
+            "name": "main:3:base - \"save_i3_layout (~/g/base/utils) - NVIM\" ",
+            "percent": 0.5,
+            "swallows": [
+               {
+               "class": "^st\\-256color$"
+               // "instance": "^st\\-256color$",
+               // "title": "^main\\:3\\:base\\ \\-\\ \\\"save_i3_layout\\ \\(\\~\\/g\\/base\\/utils\\)\\ \\-\\ NVIM\\\"\\ $"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+
+{
+    "border": "pixel",
+    "current_border_width": 1,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 504,
+       "width": 800,
+       "x": 0,
+       "y": 0
+    },
+    "name": "I3.pm = (/usr/share/perl5/AnyEvent) - NVIM",
+    "percent": 0.333333333333333,
+    "swallows": [
+       {
+       "class": "^st\\-256color$"
+       // "instance": "^st\\-256color$",
+       // "title": "^I3\\.pm\\ \\=\\ \\(\\/usr\\/share\\/perl5\\/AnyEvent\\)\\ \\-\\ NVIM$"
+       }
+    ],
+    "type": "con"
+}
+

@@ -1,9 +1,25 @@
 #!/bin/bash
 set -euo pipefail
 
-readonly w=~/g/base/.config/i3/"workspace.$(hostname)"
+readonly hostname=$(hostname)
+readonly w=~/g/base/.config/i3/"workspace.$hostname"
+
+rm -f "$w".*
 
 i3-save-tree --workspace 1 > "$w.1.json"
-i3-save-tree --workspace 6 > "$w.6.json"
+
+case "$hostname" in
+    caub1)
+        i3-save-tree --workspace 6 > "$w.6.json"
+        ;;
+    pj)
+        i3-save-tree --workspace 6 > "$w.6.json"
+        ;;
+    posub64)
+        ;;
+    *)
+        pi "Unknown host: $hostname"
+        ;;
+esac
 
 perl -pi -e 's|// ("class": "\^[a-z0-9_\\-]+\$"),|$1|i' "$w".*
