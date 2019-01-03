@@ -436,10 +436,6 @@ wh() {
     command whence -afpSvm "$@"
 }
 
-bspwm_panel_space() {
-    bspc config -m "$(bspc query -M | awk "NR == 1")" bottom_padding 24
-}
-
 tm() {
     [[ -z "$1" ]] && { echo "usage: tm <session>" >&2; return 1; }
     tmux has -t $1 && tmux attach -d -t $1 || tmux new -s $1
