@@ -1,0 +1,20 @@
+workspace 1 output HDMI-3
+workspace 2 output HDMI-3
+workspace 3 output HDMI-3
+workspace 4 output HDMI-3
+workspace 5 output HDMI-3
+workspace 6 output LVDS-1
+workspace 7 output LVDS-1
+workspace 8 output LVDS-1
+workspace 9 output LVDS-1
+
+exec --no-startup-id i3-msg 'workspace 1; append_layout ~/g/base/.config/i3/workspace.pj.1.json'
+exec --no-startup-id i3-msg 'workspace 6; append_layout ~/g/base/.config/i3/workspace.pj.6.json'
+exec --no-startup-id i3-msg 'workspace 2; exec firefox; workspace 1'
+exec --no-startup-id i3-msg 'workspace 6; exec thunderbird; workspace 1'
+exec --no-startup-id i3-msg 'workspace 1; exec st; workspace 1'
+exec --no-startup-id i3-msg 'workspace 1; exec st; workspace 1'
+exec --no-startup-id i3-msg 'workspace 1; exec st; workspace 1'
+exec --no-startup-id i3-msg 'workspace 6; exec slack; workspace 1'
+# exec --no-startup-id i3-msg 'workspace 1; exec st -s 10 ssh h.pjcj.net; workspace 1'
+# exec --no-startup-id i3-msg 'workspace 1; exec st -s 10 ssh pjcj.net; workspace 1'

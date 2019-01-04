@@ -1,0 +1,49 @@
+// vim:ts=4:sw=4:et
+{
+    "border": "pixel",
+    "current_border_width": 1,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 831,
+       "width": 798,
+       "x": 0,
+       "y": 0
+    },
+    "name": "Inbox - Mozilla Thunderbird",
+    "percent": 0.5,
+    "swallows": [
+       {
+       "class": "^Thunderbird$"
+       // "instance": "^Mail$",
+       // "title": "^Inbox\\ \\-\\ Mozilla\\ Thunderbird$",
+       // "transient_for": "^$",
+       // "window_role": "^3pane$"
+       }
+    ],
+    "type": "con"
+}
+
+{
+    "border": "pixel",
+    "current_border_width": 1,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 831,
+       "width": 1598,
+       "x": 1921,
+       "y": 25
+    },
+    "name": "Slack - Software Engineering",
+    "percent": 0.5,
+    "swallows": [
+       {
+       "class": "^Slack$"
+       // "instance": "^slack$",
+       // "title": "^Slack\\ \\-\\ Software\\ Engineering$",
+       // "transient_for": "^$",
+       // "window_role": "^browser\\-window$"
+       }
+    ],
+    "type": "con"
+}
+

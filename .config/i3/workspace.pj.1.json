@@ -1,0 +1,89 @@
+// vim:ts=4:sw=4:et
+{
+    // splitv split container with 2 children
+    "border": "pixel",
+    "floating": "auto_off",
+    "layout": "splitv",
+    "percent": 0.468229166666667,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 1,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 528,
+               "width": 1016,
+               "x": 0,
+               "y": 0
+            },
+            "name": "zsh",
+            "percent": 0.5,
+            "swallows": [
+               {
+               "class": "^kitty$"
+               // "instance": "^kitty$",
+               // "title": "^zsh$",
+               // "transient_for": "^$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            // splitv split container with 1 children
+            "border": "pixel",
+            "floating": "auto_off",
+            "layout": "splitv",
+            "percent": 0.5,
+            "type": "con",
+            "nodes": [
+                {
+                    "border": "pixel",
+                    "current_border_width": 1,
+                    "floating": "auto_off",
+                    "geometry": {
+                       "height": 831,
+                       "width": 532,
+                       "x": 0,
+                       "y": 0
+                    },
+                    "name": "zsh",
+                    "percent": 1,
+                    "swallows": [
+                       {
+                       "class": "^kitty$"
+                       // "instance": "^kitty$",
+                       // "title": "^zsh$",
+                       // "transient_for": "^$"
+                       }
+                    ],
+                    "type": "con"
+                }
+            ]
+        }
+    ]
+}
+
+{
+    "border": "pixel",
+    "current_border_width": 1,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 528,
+       "width": 1016,
+       "x": 0,
+       "y": 0
+    },
+    "name": "st (~/g/base/utils) - NVIM",
+    "percent": 0.531770833333333,
+    "swallows": [
+       {
+       "class": "^kitty$"
+       // "instance": "^kitty$",
+       // "title": "^st\\ \\(\\~\\/g\\/base\\/utils\\)\\ \\-\\ NVIM$",
+       // "transient_for": "^$"
+       }
+    ],
+    "type": "con"
+}
+
