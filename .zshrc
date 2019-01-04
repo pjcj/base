@@ -408,6 +408,7 @@ pl()      { ps -o user,pid,ppid,pcpu,pmem,vsz,rss,tty,s,stime,time,args "$@" }
 pm()      { pod2man "$@" | mn }
 pp()      { pl -A "$@" | sort -k 4 }
 restart() { exec $SHELL "$@" }
+rssh()    { ssh -p 9999 "$@" localhost }
 rtunnel() { ssh -N -f -R 9999:localhost:22 "$@" }
 rr()      { ranger "$@" }
 s()       { gnome-open "$@" }
