@@ -70,7 +70,7 @@ main() {
     st=~/g/sw/bin/st
     [ -e $st ] && \
         exec $st -f \
-            "Inconsolata NF:pixelsize=$size:antialias=false" \
+            "Inconsolata NF:pixelsize=$size:antialias=true" \
             "$@"
 
     exec gnome-terminal
