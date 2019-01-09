@@ -4,7 +4,7 @@
     "border": "pixel",
     "floating": "auto_off",
     "layout": "splitv",
-    "percent": 0.452604166666667,
+    "percent": 0.445841115900383,
     "type": "con",
     "nodes": [
         {
@@ -65,7 +65,7 @@
        "y": 0
     },
     "name": "st",
-    "percent": 0.547395833333333,
+    "percent": 0.554158884099616,
     "swallows": [
        {
        "class": "^st\\-256color$"
