@@ -17,13 +17,13 @@
                "x": 0,
                "y": 0
             },
-            "name": "st",
+            "name": "cs:0:zsh - \"caub1\" ",
             "percent": 0.5,
             "swallows": [
                {
                "class": "^st\\-256color$"
                // "instance": "^st\\-256color$",
-               // "title": "^st$",
+               // "title": "^cs\\:0\\:zsh\\ \\-\\ \\\"caub1\\\"\\ $",
                // "transient_for": "^$"
                }
             ],
@@ -39,13 +39,13 @@
                "x": 0,
                "y": 0
             },
-            "name": "st",
+            "name": "main:1:zsh - \"mail:0:zsh - \"posub64\" \" ",
             "percent": 0.5,
             "swallows": [
                {
                "class": "^st\\-256color$"
                // "instance": "^st\\-256color$",
-               // "title": "^st$",
+               // "title": "^main\\:1\\:zsh\\ \\-\\ \\\"mail\\:0\\:zsh\\ \\-\\ \\\"posub64\\\"\\ \\\"\\ $",
                // "transient_for": "^$"
                }
             ],
@@ -64,13 +64,13 @@
        "x": 0,
        "y": 0
     },
-    "name": "st",
-    "percent": 0.554158884099616,
+    "name": "base:0:zsh - \"COMMIT_EDITMSG (~/g/base/.git) - NVIM\" ",
+    "percent": 0.554158884099617,
     "swallows": [
        {
        "class": "^st\\-256color$"
        // "instance": "^st\\-256color$",
-       // "title": "^st$",
+       // "title": "^base\\:0\\:zsh\\ \\-\\ \\\"COMMIT_EDITMSG\\ \\(\\~\\/g\\/base\\/\\.git\\)\\ \\-\\ NVIM\\\"\\ $",
        // "transient_for": "^$"
        }
     ],

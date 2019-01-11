@@ -9,57 +9,17 @@
        "x": 0,
        "y": 0
     },
-    "name": "Monday, 31 December 2018 - Mozilla Thunderbird",
+    "name": "general - Mozilla Thunderbird",
     "percent": 1,
     "swallows": [
        {
        "class": "^Thunderbird$"
        // "instance": "^Mail$",
-       // "title": "^Monday\\,\\ 31\\ December\\ 2018\\ \\-\\ Mozilla\\ Thunderbird$",
+       // "title": "^general\\ \\-\\ Mozilla\\ Thunderbird$",
        // "transient_for": "^$",
        // "window_role": "^3pane$"
        }
     ],
     "type": "con"
-}
-
-{
-    // floating_con with 1 children
-    "border": "pixel",
-    "floating": "auto_off",
-    "layout": "splith",
-    "percent": null,
-    "rect": {
-       "height": 415,
-       "width": 548,
-       "x": 1648,
-       "y": 759
-    },
-    "type": "floating_con",
-    "nodes": [
-        {
-            "border": "normal",
-            "current_border_width": 2,
-            "floating": "user_on",
-            "geometry": {
-               "height": 395,
-               "width": 544,
-               "x": 1648,
-               "y": 777
-            },
-            "name": "Set Up an Existing Email Account",
-            "percent": 1,
-            "swallows": [
-               {
-               "class": "^Thunderbird$"
-               // "instance": "^Mail$",
-               // "title": "^Set\\ Up\\ an\\ Existing\\ Email\\ Account$",
-               // "transient_for": "^$",
-               // "window_role": "^autoconfig$"
-               }
-            ],
-            "type": "con"
-        }
-    ]
 }
 
