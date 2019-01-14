@@ -97,7 +97,7 @@ Plug 'soh335/unite-perl-module'
 
 Plug 'pjcj/neovim-colors-solarized-truecolor-only'
 
-if 1
+if 0
     Plug 'Shougo/deoplete.nvim'
     Plug 'Shougo/neco-syntax'
     Plug 'wellle/tmux-complete.vim'
