@@ -14,7 +14,6 @@ AUTOENV_LOOK_UPWARDS=1
 source ~/.zplug/init.zsh
 
 # https://github.com/tj/git-extras/blob/master/Commands.md
-zplug "tj/git-extras", hook-build:"make install PREFIX=$HOME/g/sw"
 zplug "zsh-users/zsh-completions"
 zplug "zdharma/fast-syntax-highlighting"
 zplug "Tarrasch/zsh-autoenv"
