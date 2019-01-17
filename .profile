@@ -16,7 +16,7 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-PATH="$HOME/g/base/utils:$PATH"
+PATH="$HOME/g/base/utils:$HOME/g/sw/bin:$PATH"
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
