@@ -12,6 +12,7 @@
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
+        # shellcheck disable=1090
         . "$HOME/.bashrc"
     fi
 fi
@@ -30,3 +31,6 @@ export LC_CTYPE="en_GB.UTF-8"
 export LC_COLLATE="en_GB.UTF-8"
 
 export FONTSIZE=12
+
+# shellcheck disable=1090
+[ -r "$HOME/.profile.local" ] && . "$HOME.profile.local"
