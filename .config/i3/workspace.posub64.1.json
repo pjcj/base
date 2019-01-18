@@ -17,13 +17,13 @@
                "x": 0,
                "y": 0
             },
-            "name": "st",
+            "name": "cp1:2:cpc - \"cpancover1.default.cpancover.uk0.bigv.io\" ",
             "percent": 0.254605573925366,
             "swallows": [
                {
                "class": "^st\\-256color$"
                // "instance": "^st\\-256color$",
-               // "title": "^st$"
+               // "title": "^cp1\\:2\\:cpc\\ \\-\\ \\\"cpancover1\\.default\\.cpancover\\.uk0\\.bigv\\.io\\\"\\ $"
                }
             ],
             "type": "con"
@@ -38,13 +38,13 @@
                "x": 0,
                "y": 0
             },
-            "name": "st",
+            "name": "main:6:zsh - \"pu:6:pw - \"pw (~/g/docs) - NVIM\" \" ",
             "percent": 0.745394426074634,
             "swallows": [
                {
                "class": "^st\\-256color$"
                // "instance": "^st\\-256color$",
-               // "title": "^st$"
+               // "title": "^main\\:6\\:zsh\\ \\-\\ \\\"pu\\:6\\:pw\\ \\-\\ \\\"pw\\ \\(\\~\\/g\\/docs\\)\\ \\-\\ NVIM\\\"\\ \\\"\\ $"
                }
             ],
             "type": "con"
@@ -70,37 +70,47 @@
                "x": 0,
                "y": 0
             },
-            "name": "st",
+            "name": "COMMIT_EDITMSG (~/g/local_base/.git) - NVIM",
             "percent": 0.254605573925366,
             "swallows": [
                {
                "class": "^st\\-256color$"
                // "instance": "^st\\-256color$",
-               // "title": "^st$"
+               // "title": "^COMMIT_EDITMSG\\ \\(\\~\\/g\\/local_base\\/\\.git\\)\\ \\-\\ NVIM$"
                }
             ],
             "type": "con"
         },
         {
+            // tabbed split container with 1 children
             "border": "pixel",
-            "current_border_width": 1,
             "floating": "auto_off",
-            "geometry": {
-               "height": 504,
-               "width": 800,
-               "x": 0,
-               "y": 0
-            },
-            "name": "st",
+            "layout": "tabbed",
             "percent": 0.745394426074634,
-            "swallows": [
-               {
-               "class": "^st\\-256color$"
-               // "instance": "^st\\-256color$",
-               // "title": "^st$"
-               }
-            ],
-            "type": "con"
+            "type": "con",
+            "nodes": [
+                {
+                    "border": "pixel",
+                    "current_border_width": 1,
+                    "floating": "auto_off",
+                    "geometry": {
+                       "height": 504,
+                       "width": 800,
+                       "x": 0,
+                       "y": 0
+                    },
+                    "name": "base:0:zsh - \"posub64\" ",
+                    "percent": 1,
+                    "swallows": [
+                       {
+                       "class": "^st\\-256color$"
+                       // "instance": "^st\\-256color$",
+                       // "title": "^base\\:0\\:zsh\\ \\-\\ \\\"posub64\\\"\\ $"
+                       }
+                    ],
+                    "type": "con"
+                }
+            ]
         }
     ]
 }
@@ -123,13 +133,13 @@
                "x": 0,
                "y": 0
             },
-            "name": "st",
+            "name": "perf:0:zsh - \"caub1\" ",
             "percent": 0.255077940481814,
             "swallows": [
                {
                "class": "^st\\-256color$"
                // "instance": "^st\\-256color$",
-               // "title": "^st$"
+               // "title": "^perf\\:0\\:zsh\\ \\-\\ \\\"caub1\\\"\\ $"
                }
             ],
             "type": "con"
@@ -152,13 +162,13 @@
                        "x": 0,
                        "y": 0
                     },
-                    "name": "st",
+                    "name": "cs:0:zsh - \"caub1\" ",
                     "percent": 0.206721623335447,
                     "swallows": [
                        {
                        "class": "^st\\-256color$"
                        // "instance": "^st\\-256color$",
-                       // "title": "^st$"
+                       // "title": "^cs\\:0\\:zsh\\ \\-\\ \\\"caub1\\\"\\ $"
                        }
                     ],
                     "type": "con"
@@ -173,13 +183,13 @@
                        "x": 0,
                        "y": 0
                     },
-                    "name": "st",
+                    "name": "logs:0:zsh - \"caub1\" ",
                     "percent": 0.793278376664553,
                     "swallows": [
                        {
                        "class": "^st\\-256color$"
                        // "instance": "^st\\-256color$",
-                       // "title": "^st$"
+                       // "title": "^logs\\:0\\:zsh\\ \\-\\ \\\"caub1\\\"\\ $"
                        }
                     ],
                     "type": "con"
