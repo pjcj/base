@@ -64,6 +64,7 @@ main() {
     case "$hostname" in
         caub1)
             # slack &
+            xmodmap -e "pointer = 1 3 2"
             numlockx on
             ;;
         pj)
