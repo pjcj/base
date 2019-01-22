@@ -33,4 +33,4 @@ export LC_COLLATE="en_GB.UTF-8"
 export FONTSIZE=12
 
 # shellcheck disable=1090
-[ -r "$HOME/.profile.local" ] && . "$HOME/profile.local"
+[ -r "$HOME/.profile.local" ] && . "$HOME/.profile.local"
