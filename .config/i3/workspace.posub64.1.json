@@ -38,13 +38,13 @@
                "x": 0,
                "y": 0
             },
-            "name": "main:6:zsh - \"pu:6:pw - \"pw (~/g/docs) - NVIM\" \" ",
+            "name": "main:2:zsh - \"[Plugins] (~/g/base) - NVIM\" ",
             "percent": 0.745394426074634,
             "swallows": [
                {
                "class": "^st\\-256color$"
                // "instance": "^st\\-256color$",
-               // "title": "^main\\:6\\:zsh\\ \\-\\ \\\"pu\\:6\\:pw\\ \\-\\ \\\"pw\\ \\(\\~\\/g\\/docs\\)\\ \\-\\ NVIM\\\"\\ \\\"\\ $"
+               // "title": "^main\\:2\\:zsh\\ \\-\\ \\\"\\[Plugins\\]\\ \\(\\~\\/g\\/base\\)\\ \\-\\ NVIM\\\"\\ $"
                }
             ],
             "type": "con"
@@ -70,13 +70,13 @@
                "x": 0,
                "y": 0
             },
-            "name": "COMMIT_EDITMSG (~/g/local_base/.git) - NVIM",
-            "percent": 0.254605573925366,
+            "name": "st",
+            "percent": 0.117704280155642,
             "swallows": [
                {
                "class": "^st\\-256color$"
                // "instance": "^st\\-256color$",
-               // "title": "^COMMIT_EDITMSG\\ \\(\\~\\/g\\/local_base\\/\\.git\\)\\ \\-\\ NVIM$"
+               // "title": "^st$"
                }
             ],
             "type": "con"
@@ -86,7 +86,7 @@
             "border": "pixel",
             "floating": "auto_off",
             "layout": "tabbed",
-            "percent": 0.745394426074634,
+            "percent": 0.882295719844358,
             "type": "con",
             "nodes": [
                 {
@@ -99,13 +99,13 @@
                        "x": 0,
                        "y": 0
                     },
-                    "name": "base:0:zsh - \"posub64\" ",
+                    "name": "ca:1:zsh - \"COMMIT_EDITMSG + (~/g/work/dev/ca/.git) - NVIM\" ",
                     "percent": 1,
                     "swallows": [
                        {
                        "class": "^st\\-256color$"
                        // "instance": "^st\\-256color$",
-                       // "title": "^base\\:0\\:zsh\\ \\-\\ \\\"posub64\\\"\\ $"
+                       // "title": "^ca\\:1\\:zsh\\ \\-\\ \\\"COMMIT_EDITMSG\\ \\+\\ \\(\\~\\/g\\/work\\/dev\\/ca\\/\\.git\\)\\ \\-\\ NVIM\\\"\\ $"
                        }
                     ],
                     "type": "con"
@@ -133,13 +133,13 @@
                "x": 0,
                "y": 0
             },
-            "name": "perf:0:zsh - \"caub1\" ",
+            "name": "st",
             "percent": 0.255077940481814,
             "swallows": [
                {
                "class": "^st\\-256color$"
                // "instance": "^st\\-256color$",
-               // "title": "^perf\\:0\\:zsh\\ \\-\\ \\\"caub1\\\"\\ $"
+               // "title": "^st$"
                }
             ],
             "type": "con"
