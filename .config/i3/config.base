@@ -259,6 +259,10 @@ bindsym $mod+Shift+s mode "swap"
 # finds out, if available)
 bar {
     status_command i3status
+    colors {
+        background #001920
+        statusline #eee8d5
+    }
 }
 
 exec i3startup
