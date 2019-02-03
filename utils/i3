@@ -16,7 +16,8 @@ usage() {
     cat <<EOT
 $script --help
 $script --trace --verbose
-$script options
+$script --build_conf
+$script
 EOT
     exit 0
 }
@@ -25,6 +26,15 @@ cleanup() {
     declare -r res=$?
     ((verbose)) && pi "Cleaning up"
     exit $res
+}
+
+build_conf() {
+    dir=$(readlink -f "$srcdir/../.config/i3")
+    conf="$dir/config"
+    ((verbose)) && pi "building $conf"
+    h=$(hostname)
+    cp "$conf.base" "$conf"
+    [ -e "$conf.$h" ] && cat "$conf.$h" >> "$conf"
 }
 
 PATH="$srcdir:$PATH"
@@ -44,6 +54,10 @@ while [ $# -gt 0 ]; do
             verbose=1
             shift
             ;;
+        -b|--build_conf)
+            build_conf
+            exit 0
+            ;;
         *)
             break
             ;;
@@ -52,10 +66,7 @@ done
 
 main() {
     ((verbose)) && pi "Running $script"
-    cd "$srcdir/../.config/i3";
-    h=$(hostname)
-    cp "config.base" config;
-    [ -e "config.$h" ] && cat "config.$h" >> config
+    build_conf
     # shellcheck disable=SC2068
     exec /usr/bin/i3 $@
 }
