@@ -153,6 +153,7 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 bindsym Control+Shift+l exec i3lock -c 000000
+bindsym $mod+c exec "xsel -o | xsel -ib"
 
 mode "mark" {
     bindsym Escape mode "default"
