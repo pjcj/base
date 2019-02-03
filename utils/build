@@ -550,6 +550,18 @@ case "$build" in
             sudo aptitude install i3
         fi
         ;;
+    doit)
+        git pull
+        # autoconf  # this doesn't work to build configure correctly
+        git clean -dxf
+        rm -rf doit.tar.gz* doit
+        wget https://www.chiark.greenend.org.uk/~sgtatham/doit/doit.tar.gz
+        tar xvf doit.tar.gz
+        cd doit
+        configure
+        make install
+        cd "$sw/bin"
+        ;;
     *)
         pi unknown build "$build"
         exit

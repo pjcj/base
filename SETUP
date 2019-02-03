@@ -4,7 +4,7 @@
 # . ./SETUP
 
 ln -bs g/base/{utils,.abcde.conf,.gitconfig,.profile,.urlview} ~
-ln -bs g/base/{.vimrc,.Xdefaults,.vim,.nvim,.tmux.conf,.tigrc} ~
+ln -bs g/base/{.vimrc,.Xdefaults,.vim,.nvim,.tmux.conf,.tigrc,.doitrc} ~
 [[ -d ~/.config ]] || mkdir ~/.config
 ln -bs ~/g/base/.config/* ~/.config
 ( cd ~ && ln -bs g/base/.zshrc* . )
