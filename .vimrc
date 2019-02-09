@@ -145,18 +145,17 @@ else
     Plug 'ncm2/ncm2-ultisnips'
     Plug 'ncm2/ncm2-html-subscope'
     Plug 'ncm2/ncm2-markdown-subscope'
+
+    let g:ncm2_tagprefix#source = {
+        \ 'priority': 2,
+        \ }
+
+    let g:ncm2#complete_length = [[1,2],[7,2]]
 end
 
 " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
 " found' messages
 set shortmess+=c
-
-let g:ncm2_tagprefix#source = {
-    \ 'priority': 2,
-    \ }
-
-let g:ncm2#complete_length = [[1,2],[7,2]]
-
 
 if has('nvim')
     Plug 'bfredl/nvim-miniyank'                              " yankring <C-Y> g-
