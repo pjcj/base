@@ -16,6 +16,10 @@ curl -SL https://raw.githubusercontent.com/docker/machine/master/contrib/complet
     >| ~/g/base/zsh/functions/_docker-machine
 curl -SL https://raw.githubusercontent.com/perlpunk/shell-completions/master/zsh/_dzil \
     >| ~/g/base/zsh/functions/_dzil
+if [ "$ISOSX" ]; then
+    curl https://raw.githubusercontent.com/zsh-users/zsh/master/Completion/Unix/Command/_git \
+        >| ~/g/base/zsh/functions/_git
+fi
 rm -f ~/.zcompdump; autoload -Uz compinit && compinit -i
 
 if [ -d ~/.tmux/plugins/tpm ]; then
@@ -31,24 +35,24 @@ if [ "$ISOSX" ]; then
 else
     pip3=pip3
     sudo aptitude -y install golang python-pip
+
+    $pip3 install --upgrade pip
+
+    $pip3 install --upgrade --user neovim
+    $pip3 install --upgrade --user vim-vint proselint
+    $pip3 install --upgrade --user git+git://github.com/powerline/powerline
+
+    # sudo gem install colorls
+    # sudo gem update colorls
+
+    # urlwatch
+    $pip3 install --upgrade --user pyyaml minidb requests keyring chump urlwatch
+
+    # denite
+    $pip3 install --upgrade --user typing
+
+    $pip3 install --upgrade --user thefuck
 fi
-
-$pip3 install --upgrade pip
-
-$pip3 install --upgrade --user neovim
-$pip3 install --upgrade --user vim-vint proselint
-pip install --upgrade --user git+git://github.com/powerline/powerline  # python2
-
-# sudo gem install colorls
-# sudo gem update colorls
-
-# urlwatch
-$pip3 install --upgrade --user pyyaml minidb requests keyring chump urlwatch
-
-# denite
-$pip3 install --upgrade --user typing
-
-$pip3 install --upgrade --user thefuck
 
 if [ "$EDITOR" = "nvim" ]; then
     $EDITOR -c PlugUpgrade -c qa
@@ -59,8 +63,8 @@ if [ "$EDITOR" = "nvim" ]; then
     $EDITOR -c UnicodeDownload -c qa
 fi
 
-gobase
-
-command go get -u github.com/motemen/ghq
-
-build_all
+if [ $(uname) = Linux ]; then
+    gobase
+    command go get -u github.com/motemen/ghq
+    build_all
+fi
