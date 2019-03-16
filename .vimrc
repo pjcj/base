@@ -1174,6 +1174,13 @@ function! MyToHtml(line1, line2)
 endfunction
 command! -range=% MyToHtml :call MyToHtml(<line1>,<line2>)
 
+if has('mac')
+    let s:homerc = expand($HOME . '/.vimrc.macos')
+    if filereadable(s:homerc)
+        exec 'source ' . s:homerc
+    endif
+endif
+
 let s:homerc = expand($HOME . '/.vimrc.local')
 if filereadable(s:homerc)
     exec 'source ' . s:homerc
