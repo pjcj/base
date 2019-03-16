@@ -16,7 +16,7 @@ curl -SL https://raw.githubusercontent.com/docker/machine/master/contrib/complet
     >| ~/g/base/zsh/functions/_docker-machine
 curl -SL https://raw.githubusercontent.com/perlpunk/shell-completions/master/zsh/_dzil \
     >| ~/g/base/zsh/functions/_dzil
-if [ "$ISOSX" ]; then
+    if [ "$(uname)" == Darwin ]; then
     curl https://raw.githubusercontent.com/zsh-users/zsh/master/Completion/Unix/Command/_git \
         >| ~/g/base/zsh/functions/_git
 fi
@@ -28,7 +28,7 @@ if [ -d ~/.tmux/plugins/tpm ]; then
     ~/.tmux/plugins/tpm/scripts/update_plugin_prompt_handler.sh all
 fi
 
-if [ "$ISOSX" ]; then
+if [ "$(uname)" == Darwin ]; then
     brew update
     brew upgrade
     pip3=pip
