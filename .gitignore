@@ -25,3 +25,4 @@ tmp/
 zsh/functions/_docker
 zsh/functions/_docker-compose
 zsh/functions/_docker-machine
+zsh/functions/_git
