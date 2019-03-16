@@ -683,7 +683,7 @@ if [ "$(whoami)" = "root" ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
 
 perlv () { perl -e '$t = -e "Makefile"; $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`; s|.*/(.*)/bin/perl.*|$1 |; s/^usr $//; s/perl-// if $t; print' }
 
-if [ uname = Linux ]; then
+if [ $(uname) = Linux ]; then
     prompt_root=$(ghq list -p zsh-git-prompt)
 else
     prompt_root=/usr/local/Cellar/zsh-git-prompt/*
