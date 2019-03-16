@@ -480,17 +480,17 @@ export ISVM=
 export ISOSX=
 if [[ $(uname) == "Darwin" ]]; then
     ISOSX=1
-    cp()      { command cp -v "$@" }
-    f()       { ls -ABhl "$@" }
-    mv()      { command mv -v "$@" }
+    cp() { command gcp -bv --backup=numbered "$@" }
+    f()  { command gls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
+    mv() { command gmv -bv --backup=numbered "$@" }
     PATH=~/Library/Python/2.7/bin:~/go/bin:$PATH  # $OSX
 else
     if which dmidecode >&/dev/null; then
         (sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
     fi
-    cp()      { command cp -bv --backup=numbered "$@" }
-    f()       { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
-    mv()      { command mv -bv --backup=numbered "$@" }
+    cp() { command cp -bv --backup=numbered "$@" }
+    f()  { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
+    mv() { command mv -bv --backup=numbered "$@" }
 fi
 
 [[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim
