@@ -19,16 +19,6 @@ echo "Start tmux and then run full_build"
 
 exit
 
-# For OSX
-
-mkdir ~/g/tmp
-cd ~/g/tmp
-brew install wget npm autoconf cmake pkgconfig automake libtool gettext ctags fzf rg
-wget https://bootstrap.pypa.io/get-pip.py
-python get-pip.py --user
-PATH=~/Library/Python/2.7/bin:$PATH
-PATH=~/go/bin:$PATH
-
 
 # for cp1
 

@@ -16,7 +16,7 @@ curl -SL https://raw.githubusercontent.com/docker/machine/master/contrib/complet
     >| ~/g/base/zsh/functions/_docker-machine
 curl -SL https://raw.githubusercontent.com/perlpunk/shell-completions/master/zsh/_dzil \
     >| ~/g/base/zsh/functions/_dzil
-    if [ "$(uname)" == Darwin ]; then
+if [[ "$(uname)" == Darwin ]]; then
     curl https://raw.githubusercontent.com/zsh-users/zsh/master/Completion/Unix/Command/_git \
         >| ~/g/base/zsh/functions/_git
 fi
@@ -28,7 +28,58 @@ if [ -d ~/.tmux/plugins/tpm ]; then
     ~/.tmux/plugins/tpm/scripts/update_plugin_prompt_handler.sh all
 fi
 
-if [ "$(uname)" == Darwin ]; then
+if [[ "$(uname)" == Darwin ]]; then
+    if [ ! which brew >&/dev/null ]; then
+        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    fi
+
+    brew install        \
+        bat             \
+        coreutils       \
+        ctags           \
+        diff-so-fancy   \
+        fzf             \
+        fd              \
+        git             \
+        haskell-stack   \
+        htop            \
+        hub             \
+        mutt            \
+        neovim          \
+        pigz            \
+        ranger          \
+        ripgrep         \
+        thefuck         \
+        tig             \
+        tmux            \
+        w3m             \
+        wget            \
+        xz              \
+        zsh             \
+        zsh-completions \
+        zsh-git-prompt
+
+    brew cask install                  \
+        barrier                        \
+        clementine                     \
+        cyberduck                      \
+        dropbox                        \
+        font-inconsolata-for-powerline \
+        google-chrome                  \
+        iterm2                         \
+        karabiner-elements             \
+        sensiblesidebuttons            \
+        sequel-pro                     \
+        skype                          \
+        slack                          \
+        spotify                        \
+        the-unarchiver                 \
+        transmission                   \
+        tunnelblick                    \
+        vagrant                        \
+        virtualbox                     \
+        virtualbox-extension-pack
+
     brew update
     brew upgrade
     pip3=pip
@@ -54,7 +105,7 @@ else
     $pip3 install --upgrade --user thefuck
 fi
 
-if [ "$EDITOR" = "nvim" ]; then
+if [[ "$EDITOR" == "nvim" ]]; then
     $EDITOR -c PlugUpgrade -c qa
     # $EDITOR -c PlugClean   -c qa
     $EDITOR -c PlugInstall -c qa
@@ -63,7 +114,7 @@ if [ "$EDITOR" = "nvim" ]; then
     $EDITOR -c UnicodeDownload -c qa
 fi
 
-if [ $(uname) = Linux ]; then
+if [[ $(uname) == Linux ]]; then
     gobase
     command go get -u github.com/motemen/ghq
     build_all
