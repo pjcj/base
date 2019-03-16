@@ -1,6 +1,7 @@
 *.org
 *.bak
 *~
+.DS_Store
 *.tgz
 *.tar.gz
 *.pyo
