@@ -477,9 +477,7 @@ export TEMPLATE_DIR=~base/templates
 export VISUAL=$EDITOR
 
 export ISVM=
-export ISOSX=
-if [[ $(uname) == "Darwin" ]]; then
-    ISOSX=1
+if [[ $(uname) == Darwin ]]; then
     cp() { command gcp -bv --backup=numbered "$@" }
     f()  { command gls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
     mv() { command gmv -bv --backup=numbered "$@" }
