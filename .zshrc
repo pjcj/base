@@ -683,7 +683,12 @@ if [ "$(whoami)" = "root" ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
 
 perlv () { perl -e '$t = -e "Makefile"; $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`; s|.*/(.*)/bin/perl.*|$1 |; s/^usr $//; s/perl-// if $t; print' }
 
-prompt_root=$(ghq list -p zsh-git-prompt)
+if [ uname = Linux ]; then
+    prompt_root=$(ghq list -p zsh-git-prompt)
+else
+    prompt_root=/usr/local/Cellar/zsh-git-prompt/*
+fi
+
 load $prompt_root/zshrc.sh
 if [[ -d $prompt_root/.stack-work ]] then
     GIT_PROMPT_EXECUTABLE="haskell"
