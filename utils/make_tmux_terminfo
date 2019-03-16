@@ -5,8 +5,8 @@
 tmp=/tmp/tmux_terminfo
 rm -f $tmp
 
-if [ "$ISOSX" ]; then
-    echo making terminfo for OSX
+if [ "$(uname)" == Darwin ]; then
+    echo making terminfo for macOS
     cat <<EOF > $tmp
 tmux|tmux terminal multiplexer,
         am, km, mir, msgr, xenl,
