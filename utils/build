@@ -156,11 +156,6 @@ case "$build" in
         fi
         ((force)) || { [ "NVIM $v" = "$iv" ] && exit; }
         git_co_build "$v"
-        if [ ! "$ISOSX" ]; then
-            install_pkg \
-                libtool libtool-bin autoconf automake cmake g++ pkg-config \
-                unzip libncursesw5-dev
-        fi
         git clean -dxf
         make -j "$j" CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
              CMAKE_BUILD_TYPE=Release install
@@ -168,13 +163,6 @@ case "$build" in
         git_co_master
         ;;
     vim)
-        if [ ! "$ISOSX" ]; then
-            install_pkg \
-                libncurses5-dev libgnome2-dev libgnomeui-dev \
-                libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
-                libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
-                python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev
-        fi
         git clean -dxf
         configure                      \
             --with-features=huge       \
