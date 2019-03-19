@@ -490,7 +490,7 @@ if [[ $(uname) == Darwin ]]; then
     mv() { command gmv -bv --backup=numbered "$@" }
 elif [[ $(uname) == FreeBSD ]]; then
     cp() { command cp -v "$@" }
-    f()  { ls -ABhl "$@" }
+    f()  { ls -ABGhl "$@" }
     mv() { command mv -v "$@" }
 else
     if which dmidecode >&/dev/null; then
