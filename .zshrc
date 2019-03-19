@@ -477,12 +477,18 @@ export TOP="-I all"
 export TEMPLATE_DIR=~base/templates
 export VISUAL=$EDITOR
 
+if which python3 >&/dev/null; then
+    export PYTHON3=python3
+elif which python3.6 >&/dev/null; then
+    export PYTHON3=python3.6
+fi
+
 export ISVM=
 if [[ $(uname) == Darwin ]]; then
     cp() { command gcp -bv --backup=numbered "$@" }
     f()  { command gls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
     mv() { command gmv -bv --backup=numbered "$@" }
-elif [[ $(uname) == "FreeBSD" ]]; then
+elif [[ $(uname) == FreeBSD ]]; then
     cp() { command cp -v "$@" }
     f()  { ls -ABhl "$@" }
     mv() { command mv -v "$@" }
