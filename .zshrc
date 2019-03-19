@@ -486,7 +486,7 @@ fi
 export ISVM=
 if [[ $(uname) == Darwin ]]; then
     cp() { command gcp -bv --backup=numbered "$@" }
-    f()  { command gls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
+    f()  { command ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
     mv() { command gmv -bv --backup=numbered "$@" }
 elif [[ $(uname) == FreeBSD ]]; then
     cp() { command cp -v "$@" }

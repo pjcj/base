@@ -1,11 +1,11 @@
 #!/bin/sh
 
 if [ -t 1 ]; then
-    if [ $(uname) = Linux ]; then
+    if [[ $(uname) == Linux ]]; then
         eval $(dircolors -b ~/g/base/dircolours)
-    elif [ $(uname) = Darwin ]; then
+    elif [[ $(uname) == Darwin ]]; then
         eval $(gdircolors -b ~/g/base/dircolours)
-        exec /usr/local/bin/ls "$@"
+        exec /usr/local/bin/gls "$@"
     fi
 fi
 
