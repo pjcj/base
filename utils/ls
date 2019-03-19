@@ -8,4 +8,5 @@ if [ -t 1 ]; then
         exec /usr/local/bin/ls "$@"
     fi
 fi
+
 exec /bin/ls "$@"
