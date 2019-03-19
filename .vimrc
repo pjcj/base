@@ -1181,6 +1181,13 @@ if has('mac')
     endif
 endif
 
+if system('uname') =~ 'FreeBSD'
+    let s:homerc = expand($HOME . '/.vimrc.freebsd')
+    if filereadable(s:homerc)
+        exec 'source ' . s:homerc
+    endif
+endif
+
 let s:homerc = expand($HOME . '/.vimrc.local')
 if filereadable(s:homerc)
     exec 'source ' . s:homerc
