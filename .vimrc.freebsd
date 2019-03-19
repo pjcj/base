@@ -1,1 +1,2 @@
-let g:gutentags_ctags_executable = 'uctags'
+" TODO - doesn't seem to work
+" let g:gutentags_ctags_executable = '/usr/local/bin/uctags'
