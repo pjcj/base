@@ -360,7 +360,7 @@ man() {
 
 cd()      { c "$@" && d }
 ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
-dh()      { f --color "$@" | head }
+dh()      { f "$@" | head }
 dm()      { fc -e - d=m -1 }
 ds()      { f -d "$@" }
 g()       { git "$@" }
@@ -472,6 +472,7 @@ export LESS='--no-init --LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CO
 export NOPASTE_SERVICES="Gist Pastie Snitch Shadowcat"
 export PAGER=less
 export TERMINFO=~/.terminfo
+export TMOUT=0
 export TOP="-I all"
 export TEMPLATE_DIR=~base/templates
 export VISUAL=$EDITOR
@@ -481,7 +482,10 @@ if [[ $(uname) == Darwin ]]; then
     cp() { command gcp -bv --backup=numbered "$@" }
     f()  { command gls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
     mv() { command gmv -bv --backup=numbered "$@" }
-    PATH=~/Library/Python/2.7/bin:~/go/bin:$PATH  # $OSX
+elif [[ $(uname) == "FreeBSD" ]]; then
+    cp() { command cp -v "$@" }
+    f()  { ls -ABhl "$@" }
+    mv() { command mv -v "$@" }
 else
     if which dmidecode >&/dev/null; then
         (sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
@@ -681,33 +685,40 @@ if [ "$(whoami)" = "root" ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
 
 perlv () { perl -e '$t = -e "Makefile"; $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`; s|.*/(.*)/bin/perl.*|$1 |; s/^usr $//; s/perl-// if $t; print' }
 
-if [ $(uname) = Linux ]; then
-    prompt_root=$(ghq list -p zsh-git-prompt)
+if [[ $(uname) == "FreeBSD" ]]; then
+    prompt_root=~sw/zsh-git-prompt
+    PROMPT='%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
 else
-    prompt_root=/usr/local/Cellar/zsh-git-prompt/*
+    if [[ $(uname) == Linux ]]; then
+        prompt_root=$(ghq list -p zsh-git-prompt)
+    else
+        prompt_root=/usr/local/Cellar/zsh-git-prompt/*
+    fi
+
+    PROMPT='$(git_super_status)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
+
+    load $prompt_root/zshrc.sh
+    if [[ -d $prompt_root/.stack-work ]] then
+        GIT_PROMPT_EXECUTABLE="haskell"
+    else
+        GIT_PROMPT_EXECUTABLE="python"
+    fi
+
+    ZSH_THEME_GIT_PROMPT_CACHE=
+    ZSH_THEME_GIT_PROMPT_PREFIX=""
+    ZSH_THEME_GIT_PROMPT_SUFFIX=" "
+    ZSH_THEME_GIT_PROMPT_SEPARATOR=""
+    ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
+    ZSH_THEME_GIT_PROMPT_BRANCH="%{\e[38;5;13m%}"
+    ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}%{⦁%G%}"
+    ZSH_THEME_GIT_PROMPT_CONFLICTS="%{$fg[red]%}%{⋆%G%}"
+    ZSH_THEME_GIT_PROMPT_CHANGED="%{$fg[blue]%}%{+%G%}"
+    ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg[yellow]%}%{↓%G%}"
+    ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[yellow]%}%{↑%G%}"
+    ZSH_THEME_GIT_PROMPT_UNTRACKED="%{…%G%}"
+    ZSH_THEME_GIT_PROMPT_CLEAN=""
 fi
 
-load $prompt_root/zshrc.sh
-if [[ -d $prompt_root/.stack-work ]] then
-    GIT_PROMPT_EXECUTABLE="haskell"
-else
-    GIT_PROMPT_EXECUTABLE="python"
-fi
-ZSH_THEME_GIT_PROMPT_CACHE=
-ZSH_THEME_GIT_PROMPT_PREFIX=""
-ZSH_THEME_GIT_PROMPT_SUFFIX=" "
-ZSH_THEME_GIT_PROMPT_SEPARATOR=""
-ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
-ZSH_THEME_GIT_PROMPT_BRANCH="%{\e[38;5;13m%}"
-ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}%{⦁%G%}"
-ZSH_THEME_GIT_PROMPT_CONFLICTS="%{$fg[red]%}%{⋆%G%}"
-ZSH_THEME_GIT_PROMPT_CHANGED="%{$fg[blue]%}%{+%G%}"
-ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg[yellow]%}%{↓%G%}"
-ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[yellow]%}%{↑%G%}"
-ZSH_THEME_GIT_PROMPT_UNTRACKED="%{…%G%}"
-ZSH_THEME_GIT_PROMPT_CLEAN=""
-
-PROMPT='$(git_super_status)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
 RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %T%{$reset_color%}'
 
 # Clear up after status display
