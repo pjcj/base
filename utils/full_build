@@ -55,30 +55,34 @@ if [[ "$(uname)" == Darwin ]]; then
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     fi
 
-    brew install        \
-        bat             \
-        coreutils       \
-        ctags           \
-        diff-so-fancy   \
-        fzf             \
-        fd              \
-        git             \
-        haskell-stack   \
-        htop            \
-        hub             \
-        mutt            \
-        neovim          \
-        pigz            \
-        ranger          \
-        ripgrep         \
-        thefuck         \
-        tig             \
-        tmux            \
-        w3m             \
-        wget            \
-        xz              \
-        zsh             \
-        zsh-completions \
+    brew install         \
+        bat              \
+        cheatsheet       \
+        coreutils        \
+        ctags            \
+        diff-so-fancy    \
+        disk-inventory-x \
+        fzf              \
+        fd               \
+        git              \
+        haskell-stack    \
+        highlight        \
+        htop             \
+        hub              \
+        mutt             \
+        neovim           \
+        pigz             \
+        ranger           \
+        ripgrep          \
+        sshfs            \
+        thefuck          \
+        tig              \
+        tmux             \
+        w3m              \
+        wget             \
+        xz               \
+        zsh              \
+        zsh-completions  \
         zsh-git-prompt
 
     brew cask install                  \
@@ -90,6 +94,7 @@ if [[ "$(uname)" == Darwin ]]; then
         google-chrome                  \
         iterm2                         \
         karabiner-elements             \
+        mosh                           \
         sensiblesidebuttons            \
         sequel-pro                     \
         skype                          \
