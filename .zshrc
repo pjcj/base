@@ -17,6 +17,7 @@ source ~/.zplug/init.zsh
 zplug "zsh-users/zsh-completions"
 zplug "zdharma/fast-syntax-highlighting"
 zplug "Tarrasch/zsh-autoenv"
+zplug "agkozak/agkozak-zsh-prompt"
 
 if ! zplug check; then zplug install; fi
 zplug load
@@ -687,45 +688,65 @@ zshrc_load_status "prompt"
 setopt prompt_subst
 autoload -U colors && colors # Enable colors in prompt
 
-if [ "$(whoami)" = "root" ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
+if [ 1 = 0 ]; then
+    if [ "$(whoami)" = "root" ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
 
-perlv () { perl -e '$t = -e "Makefile"; $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`; s|.*/(.*)/bin/perl.*|$1 |; s/^usr $//; s/perl-// if $t; print' }
+    perlv () { perl -e '$t = -e "Makefile"; $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`; s|.*/(.*)/bin/perl.*|$1 |; s/^usr $//; s/perl-// if $t; print' }
 
-if [[ $(uname) == "FreeBSD" ]]; then
-    prompt_root=~sw/zsh-git-prompt
-    PROMPT='%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
+    if [[ $(uname) == "FreeBSD" ]]; then
+        prompt_root=~sw/zsh-git-prompt
+        PROMPT='%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
+    else
+        if [[ $(uname) == Linux ]]; then
+            prompt_root=$(ghq list -p zsh-git-prompt)
+        else
+            # prompt_root=/usr/local/Cellar/zsh-git-prompt/*
+            prompt_root=~sw/pkg/zsh-git-prompt
+        fi
+
+        PROMPT='$(git_super_status)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
+
+        load $prompt_root/zshrc.sh
+        if [[ -d $prompt_root/.stack-work ]] then
+            GIT_PROMPT_EXECUTABLE="haskell"
+        else
+            GIT_PROMPT_EXECUTABLE="python"
+        fi
+
+        ZSH_THEME_GIT_PROMPT_CACHE=
+        ZSH_THEME_GIT_PROMPT_PREFIX=""
+        ZSH_THEME_GIT_PROMPT_SUFFIX=" "
+        ZSH_THEME_GIT_PROMPT_SEPARATOR=""
+        ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
+        ZSH_THEME_GIT_PROMPT_BRANCH="%{\e[38;5;13m%}"
+        ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}%{⦁%G%}"
+        ZSH_THEME_GIT_PROMPT_CONFLICTS="%{$fg[red]%}%{⋆%G%}"
+        ZSH_THEME_GIT_PROMPT_CHANGED="%{$fg[blue]%}%{+%G%}"
+        ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg[yellow]%}%{↓%G%}"
+        ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[yellow]%}%{↑%G%}"
+        ZSH_THEME_GIT_PROMPT_UNTRACKED="%{…%G%}"
+        ZSH_THEME_GIT_PROMPT_CLEAN=""
+    fi
+
+    RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %T%{$reset_color%}'
 else
-    if [[ $(uname) == Linux ]]; then
-        prompt_root=$(ghq list -p zsh-git-prompt)
-    else
-        prompt_root=/usr/local/Cellar/zsh-git-prompt/*
-    fi
+    AGKOZAK_PROMPT_DIRTRIM=0
+    AGKOZAK_PROMPT_CHAR=( ❯ ❯ ❮ )
+    AGKOZAK_COLORS_USER_HOST=33
+    AGKOZAK_COLORS_PATH=magenta
+    AGKOZAK_COLORS_PROMPT_CHAR=magenta
+    AGKOZAK_COLORS_BRANCH_STATUS=yellow
+    AGKOZAK_CUSTOM_SYMBOLS=( '⇣⇡' '⇣' '⇡' '+' 'x' '!' '>' '?' )
 
-    PROMPT='$(git_super_status)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
+    AGKOZAK_CUSTOM_RPROMPT='%(3V.%F{${AGKOZAK_COLORS_BRANCH_STATUS}}%3v%f.) '
+    AGKOZAK_CUSTOM_RPROMPT+='%B%F{${AGKOZAK_COLORS_PATH}}%~%f%b '
+    AGKOZAK_CUSTOM_RPROMPT+='%F{blue}%*'
 
-    load $prompt_root/zshrc.sh
-    if [[ -d $prompt_root/.stack-work ]] then
-        GIT_PROMPT_EXECUTABLE="haskell"
-    else
-        GIT_PROMPT_EXECUTABLE="python"
-    fi
-
-    ZSH_THEME_GIT_PROMPT_CACHE=
-    ZSH_THEME_GIT_PROMPT_PREFIX=""
-    ZSH_THEME_GIT_PROMPT_SUFFIX=" "
-    ZSH_THEME_GIT_PROMPT_SEPARATOR=""
-    ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
-    ZSH_THEME_GIT_PROMPT_BRANCH="%{\e[38;5;13m%}"
-    ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}%{⦁%G%}"
-    ZSH_THEME_GIT_PROMPT_CONFLICTS="%{$fg[red]%}%{⋆%G%}"
-    ZSH_THEME_GIT_PROMPT_CHANGED="%{$fg[blue]%}%{+%G%}"
-    ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg[yellow]%}%{↓%G%}"
-    ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[yellow]%}%{↑%G%}"
-    ZSH_THEME_GIT_PROMPT_UNTRACKED="%{…%G%}"
-    ZSH_THEME_GIT_PROMPT_CLEAN=""
+    AGKOZAK_CUSTOM_PROMPT='%(?..%B%F{${AGKOZAK_COLORS_EXIT_STATUS}}(%?%)%f%b )'
+    AGKOZAK_CUSTOM_PROMPT+='%(!.%S%B.%B%F{${AGKOZAK_COLORS_USER_HOST}})%n%1v%(!.%b%s.%f%b)'
+    AGKOZAK_CUSTOM_PROMPT+=' %B%F{${AGKOZAK_COLORS_PROMPT_CHAR}}%h%f%b'
+    AGKOZAK_CUSTOM_PROMPT+='${AGKOZAK_PROMPT_WHITESPACE}${AGKOZAK_COLORS_PROMPT_CHAR:+%F{${AGKOZAK_COLORS_PROMPT_CHAR}\}}%(4V.${AGKOZAK_PROMPT_CHAR[3]:-:}.%(!.${AGKOZAK_PROMPT_CHAR[2]:-%#}.${AGKOZAK_PROMPT_CHAR[1]:-%#}))${AGKOZAK_COLORS_PROMPT_CHAR:+%f} '
 fi
-
-RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %T%{$reset_color%}'
 
 # Clear up after status display
 
