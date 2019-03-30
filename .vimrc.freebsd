@@ -1,2 +1,3 @@
 " TODO - doesn't seem to work
 " let g:gutentags_ctags_executable = '/usr/local/bin/uctags'
+let g:tagbar_ctags_bin = '/usr/local/bin/uctags'
