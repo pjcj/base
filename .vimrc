@@ -944,7 +944,7 @@ Shortcut denite
 Shortcut denite general fuzzy search
     \ nnoremap <silent> [denite]<space>
     \ :<C-u>Denite -buffer-name=files
-    \ unite:git_modified unite:git_untracked buffer file_mru file_rec<CR>
+    \ unite:git_modified unite:git_untracked buffer file_mru file/rec<CR>
 
 Shortcut denite resume
     \ nnoremap <silent> [denite]r
@@ -952,19 +952,19 @@ Shortcut denite resume
 
 Shortcut denite files recursively
     \ nnoremap <silent> [denite]f
-    \ :<C-u>Denite file_rec<CR>
+    \ :<C-u>Denite file/rec<CR>
 
 Shortcut denite old files
     \ nnoremap <silent> [denite]b
     \ :<C-u>Denite buffer file_old -default-action=switch<CR>
 
-call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-call denite#custom#var('file_rec/git', 'command',
+call denite#custom#alias('source', 'file/rec/git', 'file/rec')
+call denite#custom#var('file/rec/git', 'command',
     \ ['git', 'ls-files', '-co', '--exclude-standard'])
 Shortcut denite git files
     \ nnoremap <silent> [denite]i
     \ :<C-u>Denite
-    \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
+    \ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`<CR>
 
 Shortcut denite change directory
     \ nnoremap <silent> [denite]d
@@ -1033,7 +1033,7 @@ endfunction
 call denite#custom#map('insert', '<C-f>',
             \ 'ToggleSorter("sorter/sublime")', 'noremap expr nowait')
 
-call denite#custom#var('file_rec', 'command',
+call denite#custom#var('file/rec', 'command',
     \ [ 'fd', '--hidden', '--no-ignore-vcs',
     \     '--exclude', '*.git/',
     \     '--exclude', '/tmp/',
