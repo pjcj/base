@@ -69,6 +69,7 @@ if [[ "$(uname)" == Darwin ]]; then
         highlight        \
         htop             \
         hub              \
+        mosh             \
         mutt             \
         neovim           \
         pigz             \
@@ -94,7 +95,6 @@ if [[ "$(uname)" == Darwin ]]; then
         google-chrome                  \
         iterm2                         \
         karabiner-elements             \
-        mosh                           \
         sensiblesidebuttons            \
         sequel-pro                     \
         skype                          \
