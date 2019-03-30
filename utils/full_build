@@ -4,7 +4,7 @@
 
 gobase() { cd ~/g/base || exit 1; }
 
-gobase
+cd ~
 
 if [ ! -e .tmux.conf ]; then
     ln -s g/base/{utils,.abcde.conf,.gitconfig,.profile,.urlview} ~
@@ -27,6 +27,8 @@ if [ ! -d ~/.zplug/init.zsh ]; then
 fi
 source ~/.zplug/init.zsh
 zplug clear
+
+gobase
 
 curl -SL https://github.com/docker/cli/raw/master/contrib/completion/zsh/_docker \
     >| ~/g/base/zsh/functions/_docker
