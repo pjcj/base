@@ -66,6 +66,7 @@ Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'mattboehm/vim-unstack'                             " :UnstackFromSelection
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 Plug 'christoomey/vim-conflicted'       " :Conflicted :GitNextConflict, dgu, dgl
+Plug 'Shougo/neco-syntax'                                    " needed for denite
 
 " Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
@@ -99,7 +100,6 @@ Plug 'pjcj/neovim-colors-solarized-truecolor-only'
 
 if 0
     Plug 'Shougo/deoplete.nvim'
-    Plug 'Shougo/neco-syntax'
     Plug 'wellle/tmux-complete.vim'
     let g:deoplete#enable_at_startup = 1
     " call deoplete#custom#option('auto_complete_delay', 10)
@@ -119,7 +119,6 @@ if 0
 else
     Plug 'ncm2/ncm2'
     Plug 'roxma/nvim-yarp'
-    Plug 'Shougo/neco-syntax'
 
     " enable ncm2 for all buffers
     augroup ncm2
