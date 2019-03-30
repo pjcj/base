@@ -119,6 +119,7 @@ if 0
 else
     Plug 'ncm2/ncm2'
     Plug 'roxma/nvim-yarp'
+    Plug 'Shougo/neco-syntax'
 
     " enable ncm2 for all buffers
     augroup ncm2
