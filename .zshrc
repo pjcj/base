@@ -353,7 +353,6 @@ man() {
         LESS_TERMCAP_so=$'\e[0;37;102m'  \
         LESS_TERMCAP_ue=$'\e[0m'         \
         LESS_TERMCAP_us=$'\e[4;32m'      \
-        PAGER=/usr/bin/less              \
         _NROFF_U=1                       \
         PATH=${HOME}/bin:${PATH}         \
     man "$@"
@@ -471,7 +470,7 @@ export LC_ALL=en_GB.UTF-8
 export LESSOPEN="|lesspipe.sh %s"
 export LESS='--no-init --LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS'
 export NOPASTE_SERVICES="Gist Pastie Snitch Shadowcat"
-export PAGER=less
+export PAGER='bat -n'
 export TERMINFO=~/.terminfo
 export TMOUT=0
 export TOP="-I all"
