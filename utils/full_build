@@ -83,15 +83,34 @@ if [[ "$(uname)" == Darwin ]]; then
     brew update
     brew upgrade
     pip3=pip
+elif [[ "$(uname)" == FreeBSD ]]; then
+    sudo pkg install          \
+        bat                   \
+        diff-so-fancy         \
+        fd-find               \
+        fzf                   \
+        highlight             \
+        multitail             \
+        neovim                \
+        pigz                  \
+        pixz                  \
+        py36-pip              \
+        py36-powerline-status \
+        py36-ranger           \
+        ripgrep               \
+        thefuck               \
+        tig                   \
+        universal-ctags       \
+        wget                  \
+        zsh
+
+    sudo pkg upgrade
+    pip3=pip3-6
 else
     pip3=pip3
     sudo aptitude -y install golang python-pip
 
     $pip3 install --upgrade pip
-
-    $pip3 install --upgrade --user neovim
-    $pip3 install --upgrade --user vim-vint proselint
-    $pip3 install --upgrade --user git+git://github.com/powerline/powerline
 
     # sudo gem install colorls
     # sudo gem update colorls
@@ -99,13 +118,17 @@ else
     # urlwatch
     $pip3 install --upgrade --user pyyaml minidb requests keyring chump urlwatch
 
-    # denite
-    $pip3 install --upgrade --user typing
-
     $pip3 install --upgrade --user thefuck
 fi
 
 if [[ "$EDITOR" == "nvim" ]]; then
+    $pip3 install --upgrade --user neovim
+    $pip3 install --upgrade --user vim-vint proselint
+    $pip3 install --upgrade --user git+git://github.com/powerline/powerline
+
+    # denite
+    $pip3 install --upgrade --user typing
+
     $EDITOR -c PlugUpgrade -c qa
     # $EDITOR -c PlugClean   -c qa
     $EDITOR -c PlugInstall -c qa
