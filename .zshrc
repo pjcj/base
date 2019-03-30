@@ -731,6 +731,7 @@ if [ 1 = 0 ]; then
     RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %T%{$reset_color%}'
 else
     AGKOZAK_PROMPT_DIRTRIM=0
+    AGKOZAK_MULTILINE=0
     AGKOZAK_PROMPT_CHAR=( ❯ ❯ ❮ )
     AGKOZAK_COLORS_USER_HOST=33
     AGKOZAK_COLORS_PATH=magenta
