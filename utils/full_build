@@ -105,7 +105,7 @@ elif [[ "$(uname)" == FreeBSD ]]; then
         zsh
 
     sudo pkg upgrade
-    pip3=pip3-6
+    pip3=pip-3.6
 else
     pip3=pip3
     sudo aptitude -y install golang python-pip
