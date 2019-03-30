@@ -6,8 +6,14 @@ gobase() { cd ~/g/base || exit 1; }
 
 gobase
 
+if [ ! -d ~/.zplug/init.zsh ]; then
+    curl -sL --proto-redir -all,https \
+        https://raw.githubusercontent.com/zplug/installer/master/installer.zsh \
+        | zsh
+fi
 source ~/.zplug/init.zsh
 zplug clear
+
 curl -SL https://github.com/docker/cli/raw/master/contrib/completion/zsh/_docker \
     >| ~/g/base/zsh/functions/_docker
 curl -SL https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose \
