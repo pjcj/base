@@ -27,6 +27,7 @@ if [ ! -d ~/.zplug/init.zsh ]; then
 fi
 source ~/.zplug/init.zsh
 zplug clear
+zplug update
 
 gobase
 
