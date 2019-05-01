@@ -63,17 +63,22 @@ if [[ "$(uname)" == Darwin ]]; then
         ctags            \
         diff-so-fancy    \
         disk-inventory-x \
-        fzf              \
         fd               \
+        fzf              \
         git              \
         haskell-stack    \
         highlight        \
         htop             \
         hub              \
+        imagemagick@6    \
+        libmagic         \
         mosh             \
         mutt             \
         neovim           \
+        perl-build       \
         pigz             \
+        pkg-config       \
+        plenv            \
         ranger           \
         ripgrep          \
         sshfs            \
