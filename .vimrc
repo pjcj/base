@@ -706,7 +706,7 @@ nnoremap <Del>      j]](z<CR>]]
 Shortcut! <F12> switch to previous buffer
 nnoremap <F12>      
 
-imap <F2> sub {<CR>my $self = shift;<CR>my () = @_;<CR>}<ESC>%hi<Space>
+imap <F2> sub ($self) {<CR>}<ESC>kea<Space>
 imap <F3> $self->{}<ESC>i
 imap <F4> $self->
 
