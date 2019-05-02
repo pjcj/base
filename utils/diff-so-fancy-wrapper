@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if $(which diff-so-fancy); then
+if [ $(uname) = "FreeBSD" ] || $(which diff-so-fancy); then
     PERL5LIB= diff-so-fancy
 else
     cat
