@@ -5,7 +5,7 @@
 tmp=/tmp/tmux_terminfo
 rm -f $tmp
 
-if [ "$(uname)" == Darwin ]; then
+if [ "$(uname)" = Darwin ]; then
     echo making terminfo for macOS
     cat <<EOF > $tmp
 tmux|tmux terminal multiplexer,
