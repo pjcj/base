@@ -214,6 +214,8 @@ compdef _git   gvd=git-diff
 compdef _git   gf=git-fetch
 compdef _git   gg=git-grep
 compdef _git   gl=git-log
+compdef _git   gld=git-log
+compdef _git   gll=git-log
 compdef _git   gls=git-log
 compdef _git   glsa=git-log
 compdef _git   go=git-checkout
@@ -376,7 +378,8 @@ gf()      { git fetch --prune --all "$@" }
 gg()      { git grep -n "$@" }
 ggv()     { git grep -O$EDITOR "$@" }
 gl()      { git lg --all "$@" }
-gld()     { git lg --all  --date=iso "$@" }
+gll()     { git lg "$@" }
+gld()     { git lg --all --date=iso "$@" }
 gls()     { git lg --simplify-by-decoration "$@" }
 glsa()    { git lg --all --simplify-by-decoration "$@" }
 go()      { git co "$@" }
