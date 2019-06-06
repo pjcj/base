@@ -1029,8 +1029,8 @@ function! ToggleSorter(sorter) abort
     let b:denite_new_context.sorters = join(sorters, ',')
     return '<denite:nop>'
 endfunction
-call denite#custom#map('insert', '<C-f>',
-            \ 'ToggleSorter("sorter/sublime")', 'noremap expr nowait')
+" call denite#custom#map('insert', '<C-f>',
+            " \ 'ToggleSorter("sorter/sublime")', 'noremap expr nowait')
 
 call denite#custom#var('file/rec', 'command',
     \ [ 'fd', '--hidden', '--no-ignore-vcs',
@@ -1051,18 +1051,18 @@ call denite#custom#option('_', {
     \ 'winheight': 30
     \ })
 
-call denite#custom#map(
-    \ 'insert',
-    \ '<Down>',
-    \ '<denite:move_to_next_line>',
-    \ 'noremap'
-    \)
-call denite#custom#map(
-    \ 'insert',
-    \ '<Up>',
-    \ '<denite:move_to_previous_line>',
-    \ 'noremap'
-    \)
+" call denite#custom#map(
+    " \ 'insert',
+    " \ '<Down>',
+    " \ '<denite:move_to_next_line>',
+    " \ 'noremap'
+    " \)
+" call denite#custom#map(
+    " \ 'insert',
+    " \ '<Up>',
+    " \ '<denite:move_to_previous_line>',
+    " \ 'noremap'
+    " \)
 
 call denite#custom#var('grep', 'command', ['rg'])
 call denite#custom#var('grep', 'default_opts',
@@ -1071,6 +1071,19 @@ call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
 call denite#custom#var('grep', 'separator', ['--'])
 call denite#custom#var('grep', 'final_opts', [])
+
+function! s:denite_settings() abort
+    nnoremap <silent><buffer><expr> <CR>    denite#do_map('do_action')
+    nnoremap <silent><buffer><expr> p       denite#do_map('do_action','preview')
+    nnoremap <silent><buffer><expr> <C-c>   denite#do_map('quit')
+    nnoremap <silent><buffer><expr> i       denite#do_map('open_filter_buffer')
+    nnoremap <silent><buffer><expr> <Space> denite#do_map('toggle_select').'j'
+endfunction
+
+augroup Denite
+    autocmd!
+    autocmd FileType denite call s:denite_settings()
+augroup end
 
 Shortcut - (nv) comment
     \ nmap - gcc
