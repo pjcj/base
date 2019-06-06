@@ -575,7 +575,7 @@ zshrc_load_status "fzf"
 # Ctrl-R - history
 # Ctrl-G - git commit
 # Ctrl-B - git branch
-# Ctrl-T - git branch
+# Ctrl-T - git tag
 # Alt-C  - cd
 
 export FZF_TMUX=1
@@ -604,10 +604,12 @@ _fzf_compgen_dir() {
     fd --type d --hidden --follow --exclude ".git" . "$1"
 }
 
+_fzfgv="xargs -I % sh -c 'git show --color=always % | diff-so-fancy-wrapper'"
+
 git-commit-sel() {
     setopt localoptions pipefail 2> /dev/null
     local get_sha="grep -o '[a-f0-9]\+' | head -1"
-    local cmd="echo {} | $get_sha | xargs -I% git show --color=always %"
+    local cmd="echo {} | $get_sha | $_fzfgv"
     gl --color | $(__fzfcmd) --ansi --tiebreak=index --preview="$cmd" "$@" | \
         while read item; do
         echo -n "${item}" | eval "$get_sha"
@@ -628,7 +630,7 @@ zle -N fzf-git-commit-widget
 
 git-tag-sel() {
     setopt localoptions pipefail 2> /dev/null
-    local cmd="echo {} | xargs -I% git show --color=always %"
+    local cmd="echo {} | $_fzfgv"
     g tag | $(__fzfcmd) --tiebreak=index --preview="$cmd" "$@" | \
         while read item; do
         echo -n "${item}"
@@ -651,7 +653,7 @@ git-branch-sel() {
     setopt localoptions pipefail 2> /dev/null
     local get_full_branch="perl -pe 's/..([^ ]+) .*/\$1/'"
     local get_branch="perl -pe 's/.*?([-\w]+) .*/\$1/'"
-    local cmd="echo {} | $get_full_branch | xargs -I% git show --color=always %"
+    local cmd="echo {} | $get_full_branch | $_fzfgv"
     local opts="-vv --sort=-committerdate --color=always"
     (eval "gb $opts; gb -r $opts") | \
         $(__fzfcmd) --ansi --tiebreak=index --preview="$cmd" "$@" | \
