@@ -545,6 +545,7 @@ load \
     /etc/zsh_command_not_found \
     ~/.gvm/scripts/gvm         \
     ~/g/sw/etc/zsh/*(N)        \
+    /usr/local/Cellar/fzf/*/shell/key-bindings.zsh  \
     ~/.zshrc.local             \
     ~/.zshrc.${HOST%%.*}
 
