@@ -542,11 +542,11 @@ load() {
 }
 
 load \
-    /etc/zsh_command_not_found \
-    ~/.gvm/scripts/gvm         \
-    ~/g/sw/etc/zsh/*(N)        \
-    /usr/local/Cellar/fzf/*/shell/key-bindings.zsh  \
-    ~/.zshrc.local             \
+    /etc/zsh_command_not_found                \
+    ~/.gvm/scripts/gvm                        \
+    ~/g/sw/etc/zsh/*(N)                       \
+    /usr/local/opt/fzf/shell/key-bindings.zsh \
+    ~/.zshrc.local                            \
     ~/.zshrc.${HOST%%.*}
 
 zshrc_load_status "perl"
