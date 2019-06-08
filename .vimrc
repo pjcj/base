@@ -13,6 +13,7 @@ call plug#begin()
 Plug 'w0rp/ale'                                                " syntax checking
 Plug 'rhysd/clever-f.vim'                                           " f F t T f;
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
+Plug 'rhysd/git-messenger.vim'                              " show git blame ,gm
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'davinche/godown-vim'                            " show markdown in browser
 Plug 'haya14busa/incsearch-fuzzy.vim'                                       " z/
@@ -432,6 +433,7 @@ augroup end
 let g:gutentags_ctags_exclude    = ['blib', 'tmp']
 " can be extended with '*/sub/path' if required
 
+let g:git_messenger_always_into_popup = 1
 let g:NERDTreeShowHidden         = 1
 
 function! NERDTreeRefresh()
