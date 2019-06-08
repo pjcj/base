@@ -387,7 +387,7 @@ gp()      { git push "$@" }
 gpf()     { git push --force-with-lease "$@" }
 gpo()     { git push origin "$@" }
 gpof()    { git push origin --force-with-lease "$@" }
-gr()      { git rebase --preserve-merges "$@" }
+gr()      { git rebase --rebase-merges "$@" }
 gra()     { git rebase --abort "$@" }
 grc()     { git rebase --continue "$@" }
 gri()     { git rebase -i "$@" }
