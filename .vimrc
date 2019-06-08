@@ -153,6 +153,8 @@ else
     let g:ncm2#complete_length = [[1,2],[7,2]]
 end
 
+Plug 'ryanoasis/vim-devicons'                    " add icons after other plugins
+
 " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
 " found' messages
 set shortmess+=c
