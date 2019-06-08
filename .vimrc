@@ -154,6 +154,20 @@ elseif 0
     let g:ncm2#complete_length = [[1,2],[7,2]]
 else
     Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+    let g:coc_global_extensions = [
+        \ 'coc-json',
+        \ 'coc-tsserver',
+        \ 'coc-html',
+        \ 'coc-css',
+        \ 'coc-yaml',
+        \ 'coc-snippets',
+        \ 'coc-highlight',
+        \ 'coc-lists',
+        \ 'coc-git',
+        \ 'coc-yank',
+        \ 'coc-vimlsp',
+        \ 'coc-tailwindcss'
+        \ ]
     augroup coc
         " Highlight symbol under cursor on CursorHold
         autocmd CursorHold * silent call CocActionAsync('highlight')

@@ -116,10 +116,7 @@ if [[ "$EDITOR" == "nvim" ]]; then
 
     $EDITOR -c UnicodeDownload -c qa
 
-    $EDITOR -c "CocInstall coc-dictionary" -c qa
-    $EDITOR -c "CocInstall coc-tag"        -c qa
-    $EDITOR -c "CocInstall coc-emoji"      -c qa
-    $EDITOR -c "CocInstall coc-snippets"   -c qa
+    $EDITOR -c "CocInstall coc-dictionary coc-tag coc-emoji" -c qa
 fi
 
 if [[ $(uname) == Linux ]]; then
