@@ -154,6 +154,10 @@ elseif 0
     let g:ncm2#complete_length = [[1,2],[7,2]]
 else
     Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+    augroup coc
+        " Highlight symbol under cursor on CursorHold
+        autocmd CursorHold * silent call CocActionAsync('highlight')
+    augroup end
 end
 
 Plug 'ryanoasis/vim-devicons'                    " add icons after other plugins
