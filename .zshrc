@@ -546,6 +546,7 @@ load \
     ~/.gvm/scripts/gvm                        \
     ~/g/sw/etc/zsh/*(N)                       \
     /usr/local/opt/fzf/shell/key-bindings.zsh \
+    /usr/local/opt/fzf/shell/completion.zsh   \
     ~/.zshrc.local                            \
     ~/.zshrc.${HOST%%.*}
 
