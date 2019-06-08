@@ -102,7 +102,7 @@ else
 fi
 
 if [[ "$EDITOR" == "nvim" ]]; then
-    $pip3 install --upgrade --user neovim
+    $pip3 install --upgrade --user neovim pynvim
     $pip3 install --upgrade --user vim-vint proselint
     $pip3 install --upgrade --user git+git://github.com/powerline/powerline
 
