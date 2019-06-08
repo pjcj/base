@@ -17,8 +17,8 @@ Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'davinche/godown-vim'                            " show markdown in browser
 Plug 'haya14busa/incsearch-fuzzy.vim'                                       " z/
 Plug 'haya14busa/incsearch.vim'                  " show all matches on incsearch
-Plug 'Xuyuanp/nerdtree-git-plugin'                          " show changed files
 Plug 'scrooloose/nerdtree'                                              " <S-F1>
+Plug 'Xuyuanp/nerdtree-git-plugin'                          " show changed files
 Plug 'chr4/nginx.vim'
 Plug 'stefandtw/quickfix-reflector.vim'      " edit then save in quickfix window
 Plug 'saltstack/salt-vim'                                    " salt highlighting
@@ -37,14 +37,15 @@ Plug 'FooSoft/vim-argwrap'                              " wrap multiline args ,a
 Plug 'gioele/vim-autoswap'                        " deal with swapfiles sensibly
 Plug 'alvan/vim-closetag'                                      " close tags > >>
 Plug 'tpope/vim-commentary'                                                 " gc
+Plug 'christoomey/vim-conflicted'       " :Conflicted :GitNextConflict, dgu, dgl
 Plug 'ap/vim-css-color'                             " add colour to descriptions
 Plug 'chrisbra/vim-diff-enhanced'                        " change diff algorithm
 Plug 'tpope/vim-dispatch'                          " asynchronous build and test
 Plug 'junegunn/vim-easy-align'                                     " = ^X<regex>
 Plug 'tpope/vim-eunuch'                                          " Unix commands
 Plug 'kopischke/vim-fetch'                      " use line numbers in file paths
-Plug 'tommcdo/vim-fugitive-blame-ext'                           " extend :Gblame
 Plug 'tpope/vim-fugitive'                  " :Gdiff :Gstatus ,gg, :Gblame, P, gq
+Plug 'tommcdo/vim-fugitive-blame-ext'                           " extend :Gblame
 Plug 'airblade/vim-gitgutter'                  " <F3>,hn <F2>,hp ,hv <F1>,hs ,hr
 Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
 Plug 'nathanaelkane/vim-indent-guides'    " configured for indent of two or four
@@ -56,16 +57,16 @@ Plug 'Spaceghost/vim-matchit'                                                " %
 Plug 'sheerun/vim-polyglot'                                 " extra syntax files
 Plug 'tpope/vim-repeat'
 Plug 'zirrostig/vim-schlepp'                               " highlight then hjkl
-Plug 'google/vim-searchindex'                            " show m/n for searches
 Plug 'inside/vim-search-pulse'                                           " * n N
+Plug 'google/vim-searchindex'                            " show m/n for searches
 Plug 'kshenoy/vim-signature'                          " mx dmx m, m. m<Space> m/
 Plug 'honza/vim-snippets'
+Plug 'mhinz/vim-startify'                                       " startup screen
 Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
 Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'mattboehm/vim-unstack'                             " :UnstackFromSelection
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
-Plug 'christoomey/vim-conflicted'       " :Conflicted :GitNextConflict, dgu, dgl
 
 " Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
