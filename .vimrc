@@ -124,7 +124,7 @@ elseif 0
     " enable ncm2 for all buffers
     augroup ncm2
         autocmd BufEnter * call ncm2#enable_for_buffer()
-    augroup END
+    augroup end
 
     " see :help Ncm2PopupOpen for more information
     set completeopt=noinsert,menuone,noselect
@@ -371,7 +371,7 @@ function! Setup_indent_guides()
 endfunction
 augroup colourscheme
     autocmd BufEnter,Colorscheme * call Setup_indent_guides()
-augroup END
+augroup end
 
 let g:airline_theme                  = 'solarized'
 let g:airline_powerline_fonts        = 1
@@ -408,7 +408,7 @@ augroup file_types
     autocmd FileType qf if mapcheck('<Esc>', 'n') ==# ''
         \ | nnoremap <buffer><silent> <Esc> :cclose<Bar>lclose<Bar>:pclose<CR>
         \ | endif
-augroup END
+augroup end
 
 " let g:html_indent_script1 = 'inc'
 " let g:html_indent_style1  = 'inc'
@@ -428,7 +428,7 @@ endfunction
 augroup nerdtree
     autocmd!
     autocmd BufEnter * call NERDTreeRefresh()
-augroup END
+augroup end
 
 " taglist plugin
 let g:Tlist_Use_SingleClick      = 1
@@ -458,7 +458,7 @@ augroup git
     autocmd!
     autocmd BufReadPost fugitive://* set bufhidden=delete
     autocmd QuickFixCmdPost *grep* cwindow
-augroup END
+augroup end
 Shortcut show git diff
     \ nnoremap <leader>gd :Gdiff<CR>
 Shortcut make git commit
@@ -469,7 +469,7 @@ Shortcut show git status
 augroup gitgutter
     autocmd!
     autocmd BufEnter * call GitGutter()
-augroup END
+augroup end
 highlight link GitGutterAdd              DiffAdd
 highlight link GitGutterChange           DiffChange
 highlight link GitGutterDelete           DiffDelete
@@ -538,7 +538,7 @@ augroup Pulse
     " Pulses the first match after hitting the enter key
     autocmd! User IncSearchExecute
     autocmd User IncSearchExecute :call search_pulse#Pulse()
-augroup END
+augroup end
 
 map <leader>interestingwords <Plug>InterestingWords
 let g:vim_search_pulse_disable_auto_mappings = 1
@@ -566,7 +566,7 @@ augroup SearchIndex
         nmap <silent> N :call WordNavigation(0)<CR>
             \ :call Pulse()<CR><Plug>SearchIndex
     endfunction
-augroup END
+augroup end
 Shortcut (nv) toggle highlighting of interesting words
     \ nnoremap <silent> <leader>k :call InterestingWords('n')<CR>
     \|vnoremap <silent> <leader>k :call InterestingWords('v')<CR>
@@ -630,7 +630,7 @@ Shortcut! <C-X><C-Z> complete as unicode
 augroup autowrite
     autocmd!
     autocmd FocusLost * silent! wa
-augroup END
+augroup end
 
 set guioptions=ag
 
@@ -1101,7 +1101,7 @@ augroup Commentary
     autocmd!
     autocmd FileType apache  setlocal commentstring=#\ %s
     autocmd FileType crontab setlocal commentstring=#\ %s
-augroup END
+augroup end
 
 " clever-f
 let g:clever_f_fix_key_direction     = 1    " f is always forwards, F backwards
