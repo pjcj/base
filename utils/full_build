@@ -50,67 +50,12 @@ fi
 if [[ "$(uname)" == Darwin ]]; then
     if [ ! which brew >&/dev/null ]; then
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    else
+        brew update
+        brew upgrade
+        brew bundle dump
     fi
 
-    brew install         \
-        bat              \
-        cheatsheet       \
-        coreutils        \
-        ctags            \
-        diff-so-fancy    \
-        disk-inventory-x \
-        fd               \
-        fzf              \
-        git              \
-        haskell-stack    \
-        highlight        \
-        htop             \
-        hub              \
-        imagemagick@6    \
-        libmagic         \
-        mosh             \
-        mutt             \
-        neovim           \
-        perl-build       \
-        pigz             \
-        pkg-config       \
-        plenv            \
-        ranger           \
-        ripgrep          \
-        sshfs            \
-        thefuck          \
-        tig              \
-        tmux             \
-        w3m              \
-        wget             \
-        xz               \
-        zsh              \
-        zsh-completions  \
-        zsh-git-prompt
-
-    brew cask install                  \
-        barrier                        \
-        clementine                     \
-        cyberduck                      \
-        dropbox                        \
-        font-inconsolata-for-powerline \
-        google-chrome                  \
-        iterm2                         \
-        karabiner-elements             \
-        sensiblesidebuttons            \
-        sequel-pro                     \
-        skype                          \
-        slack                          \
-        spotify                        \
-        the-unarchiver                 \
-        transmission                   \
-        tunnelblick                    \
-        vagrant                        \
-        virtualbox                     \
-        virtualbox-extension-pack
-
-    brew update
-    brew upgrade
     pip3=pip
 elif [[ "$(uname)" == FreeBSD ]]; then
     sudo pkg install          \
