@@ -117,7 +117,7 @@ if 0
     " call deoplete#custom#source('file',       'rank', 300)
     " call deoplete#custom#source('tag',        'rank', 200)
     " call deoplete#custom#source('dictionary', 'rank', 100)
-else
+elseif 0
     Plug 'ncm2/ncm2'
     Plug 'roxma/nvim-yarp'
 
@@ -152,6 +152,8 @@ else
         \ }
 
     let g:ncm2#complete_length = [[1,2],[7,2]]
+else
+    Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 end
 
 Plug 'ryanoasis/vim-devicons'                    " add icons after other plugins
