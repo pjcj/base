@@ -66,7 +66,6 @@ Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'mattboehm/vim-unstack'                             " :UnstackFromSelection
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
 Plug 'christoomey/vim-conflicted'       " :Conflicted :GitNextConflict, dgu, dgl
-Plug 'Shougo/neco-syntax'                                    " needed for denite
 
 " Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
@@ -88,6 +87,7 @@ Plug 'zeero/vim-ctrlp-help'
 
 " Denite and unite, plugins for denite
 let g:neomru#file_mru_limit = 8
+Plug 'Shougo/neco-syntax'                                    " needed for denite
 Plug 'Shougo/denite.nvim'
 Plug 'chemzqm/denite-extra'
 Plug 'Shougo/unite.vim'
