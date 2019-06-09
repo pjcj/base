@@ -41,11 +41,20 @@ if [[ "$(uname)" == Darwin ]]; then
 fi
 rm -f ~/.zcompdump; autoload -Uz compinit && compinit -i
 
-if [ -d ~/.tmux/plugins/tpm ]; then
-    ~/.tmux/plugins/tpm/bindings/clean_plugins
-    ~/.tmux/plugins/tpm/bindings/install_plugins
-    ~/.tmux/plugins/tpm/scripts/update_plugin_prompt_handler.sh all
+LOCALCHECKOUT=~/.tmux/plugins/tpm
+if [ ! -d $LOCALCHECKOUT ]; then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+else
+    pushd $LOCALCHECKOUT
+    git pull origin master
+    popd
 fi
+
+~/.tmux/plugins/tpm/bin/install_plugins
+~/.tmux/plugins/tpm/bin/update_plugins all
+~/.tmux/plugins/tpm/bin/clean_plugins
+
+exit
 
 if [[ "$(uname)" == Darwin ]]; then
     if [ ! which brew >&/dev/null ]; then
