@@ -81,6 +81,7 @@ Plug 'c9s/perlomni.vim'                                         " for completion
 Plug 'sunaku/vim-shortcut'                                                " , ,,
 Plug '/home/pjcj/g/ghq/github.com/junegunn/fzf'
 Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 
 " CtrlP
 Plug 'ctrlpvim/ctrlp.vim'                                                " <F11>
@@ -435,7 +436,7 @@ let g:gutentags_ctags_exclude    = ['blib', 'tmp']
 " can be extended with '*/sub/path' if required
 
 let g:git_messenger_always_into_popup = 1
-let g:NERDTreeShowHidden         = 1
+let g:NERDTreeShowHidden              = 1
 
 function! NERDTreeRefresh()
     if &filetype ==# 'nerdtree'
