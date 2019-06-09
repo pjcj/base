@@ -156,6 +156,7 @@ case "$build" in
         fi
         ((force)) || { [ "NVIM $v" = "$iv" ] && exit; }
         git_co_build "$v"
+        # git_co_master  # build master branch
         git clean -dxf
         make -j "$j" CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
              CMAKE_BUILD_TYPE=Release install
