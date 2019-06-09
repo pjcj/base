@@ -1079,19 +1079,6 @@ call denite#custom#option('_', {
     \ 'winheight': 30
     \ })
 
-" call denite#custom#map(
-    " \ 'insert',
-    " \ '<Down>',
-    " \ '<denite:move_to_next_line>',
-    " \ 'noremap'
-    " \)
-" call denite#custom#map(
-    " \ 'insert',
-    " \ '<Up>',
-    " \ '<denite:move_to_previous_line>',
-    " \ 'noremap'
-    " \)
-
 call denite#custom#var('grep', 'command', ['rg'])
 call denite#custom#var('grep', 'default_opts',
     \ ['--vimgrep', '--no-heading', '--hidden', '--glob', '!.git'])
@@ -1105,6 +1092,7 @@ function! s:denite_settings() abort
     nnoremap <silent><buffer><expr> p       denite#do_map('do_action','preview')
     nnoremap <silent><buffer><expr> <C-c>   denite#do_map('quit')
     nnoremap <silent><buffer><expr> i       denite#do_map('open_filter_buffer')
+    nnoremap <silent><buffer><expr> q       denite#do_map('quit')
     nnoremap <silent><buffer><expr> <Space> denite#do_map('toggle_select').'j'
 endfunction
 
