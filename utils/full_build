@@ -54,8 +54,6 @@ fi
 ~/.tmux/plugins/tpm/bin/update_plugins all
 ~/.tmux/plugins/tpm/bin/clean_plugins
 
-exit
-
 if [[ "$(uname)" == Darwin ]]; then
     if [ ! which brew >&/dev/null ]; then
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
