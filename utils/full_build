@@ -81,6 +81,7 @@ elif [[ "$(uname)" == FreeBSD ]]; then
         highlight             \
         multitail             \
         neovim                \
+        node                  \
         pigz                  \
         pixz                  \
         py36-pip              \
