@@ -36,6 +36,9 @@
     renames             = copies
     mnemonicprefix      = true
     algorithm           = patience
+[mergetool "vim_mergetool"]
+    cmd                 = nvim -f -c "MergetoolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
+    trustExitCode       = true
 [mergetool "vimdiff3"]
     cmd                 = nvim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 [mergetool "vimdiff"]
@@ -43,7 +46,7 @@
 [merge]
     ff                  = only
     stat                = true
-    tool                = vimdiff3
+    tool                = vim_mergetool
     conflictstyle       = diff3
 [merge "keep_ours"]
     name                = always keep our version during merge
