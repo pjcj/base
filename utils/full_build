@@ -116,6 +116,7 @@ if [[ "$EDITOR" == "nvim" ]]; then
 
     $EDITOR -c UnicodeDownload -c qa
 
+    yarn global add neovim
     $EDITOR -c "CocInstall coc-dictionary coc-tag coc-emoji" -c qa
 fi
 
