@@ -55,6 +55,7 @@ Plug 'lfv89/vim-interestingwords'                                    " ,k ,K n N
 Plug 'farmergreg/vim-lastplace'                           " save cursor position
 Plug 'tommcdo/vim-lion'                                 " alignment, gl gL glip=
 Plug 'Spaceghost/vim-matchit'                                                " %
+Plug 'samoshkin/vim-mergetool'                                     " git merging
 Plug 'sheerun/vim-polyglot'                                 " extra syntax files
 Plug 'tpope/vim-repeat'
 Plug 'zirrostig/vim-schlepp'                               " highlight then hjkl
@@ -68,7 +69,6 @@ Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'mattboehm/vim-unstack'                             " :UnstackFromSelection
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
-Plug 'samoshkin/vim-mergetool'                                     " git merging
 
 " Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
