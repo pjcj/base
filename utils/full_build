@@ -118,10 +118,12 @@ if [[ "$EDITOR" == "nvim" ]]; then
     # denite
     $pip3 install --upgrade --user typing
 
-    $EDITOR -c PlugUpgrade -c qa
-    # $EDITOR -c PlugClean   -c qa
-    $EDITOR -c PlugInstall -c qa
-    $EDITOR -c PlugUpdate  -c qa
+    rm -f vimplug.lock
+    $EDITOR -c PlugUpgrade                 -c qa
+    # $EDITOR -c PlugClean                 -c qa
+    $EDITOR -c PlugInstall                 -c qa
+    $EDITOR -c PlugUpdate                  -c qa
+    $EDITOR -c PlugSnapshot\ vimplug.lock  -c qa
 
     $EDITOR -c UnicodeDownload -c qa
 
