@@ -575,11 +575,18 @@ zshrc_load_status "fzf"
 
 # Commands:
 # Ctrl-F - file
+# Ctrl-N - cd
 # Ctrl-R - history
 # Ctrl-G - git commit
 # Ctrl-B - git branch
 # Ctrl-T - git tag
-# Alt-C  - cd
+
+if lsd --tree >& /dev/null; then
+    tree="lsd --tree --color=always --icon=always"
+else
+    tree="tree -C"
+fi
+head="2>/dev/null | head -250"
 
 export FZF_TMUX=1
 export FZF_TMUX_HEIGHT=40%
@@ -591,7 +598,7 @@ export FZF_DEFAULT_OPTS="
 export FZF_DEFAULT_COMMAND="fd --hidden --no-ignore-vcs --exclude .git"
 export FZF_CTRL_T_OPTS="--preview '(bat --color=always {} 2>/dev/null || cat {} || $tree {}) $head'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+export FZF_ALT_C_OPTS="--preview '$tree {} $head'"
 export FZF_ALT_C_COMMAND="fd --hidden --no-ignore-vcs --exclude .git --type d"
 
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
@@ -678,6 +685,7 @@ fzf-git-branch-widget() {
 zle -N fzf-git-branch-widget
 
 bindkey '^F' fzf-file-widget
+bindkey '^N' fzf-cd-widget
 bindkey '^G' fzf-git-commit-widget
 bindkey '^B' fzf-git-branch-widget
 bindkey '^T' fzf-git-tag-widget
