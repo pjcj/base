@@ -589,7 +589,7 @@ export FZF_DEFAULT_OPTS="
     --color info:$s_cyan,prompt:$s_violet,pointer:$s_green,marker:$s_base3,spinner:$s_yellow
 "
 export FZF_DEFAULT_COMMAND="fd --hidden --no-ignore-vcs --exclude .git"
-export FZF_CTRL_T_OPTS="--preview '(lesspipe.sh {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+export FZF_CTRL_T_OPTS="--preview '(bat --color=always {} 2>/dev/null || cat {} || $tree {}) $head'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 export FZF_ALT_C_COMMAND="fd --hidden --no-ignore-vcs --exclude .git --type d"
