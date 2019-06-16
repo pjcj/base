@@ -60,6 +60,7 @@ if [[ "$(uname)" == Darwin ]]; then
     else
         brew update
         brew upgrade
+        brew cask upgrade
         rm Brewfile
         brew bundle dump
     fi
