@@ -54,7 +54,7 @@ Plug 'michaeljsmith/vim-indent-object'      " objects based on indentation ii AI
 Plug 'lfv89/vim-interestingwords'                                    " ,k ,K n N
 Plug 'farmergreg/vim-lastplace'                           " save cursor position
 Plug 'tommcdo/vim-lion'                                 " alignment, gl gL glip=
-Plug 'Spaceghost/vim-matchit'                                                " %
+Plug 'andymass/vim-matchup'                                      " % [% ]% g% z%
 Plug 'samoshkin/vim-mergetool'                                     " git merging
 Plug 'sheerun/vim-polyglot'                                 " extra syntax files
 Plug 'tpope/vim-repeat'
