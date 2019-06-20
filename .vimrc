@@ -370,9 +370,6 @@ endfunc
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
-let g:completor_min_chars                 = 1
-" let g:completor_perl_omni_trigger       = '->'
-
 let g:UltiSnipsJumpForwardTrigger         = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger        = '<s-tab>'
 
