@@ -102,81 +102,27 @@ Plug 'soh335/unite-perl-module'
 
 Plug 'pjcj/neovim-colors-solarized-truecolor-only'
 
-if 0
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'wellle/tmux-complete.vim'
-    let g:deoplete#enable_at_startup = 1
-    " call deoplete#custom#option('auto_complete_delay', 10)
-    " call deoplete#custom#option('min_pattern_length', 1)
-    " call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
-    " dictionary is already sorted
-    " call deoplete#custom#source('dictionary', 'sorters', [])
-    " call deoplete#custom#source('dictionary', 'min_pattern_length', 4)
-    " call deoplete#custom#source('dictionary', 'matchers', ['matcher_head'])
-    " call deoplete#custom#var('buffer', 'require_same_filetype', v:false)
-    " Order completions.
-    " call deoplete#custom#source('member',     'rank', 450)
-    " call deoplete#custom#source('buffer',     'rank', 400)
-    " call deoplete#custom#source('file',       'rank', 300)
-    " call deoplete#custom#source('tag',        'rank', 200)
-    " call deoplete#custom#source('dictionary', 'rank', 100)
-elseif 0
-    Plug 'ncm2/ncm2'
-    Plug 'roxma/nvim-yarp'
-
-    " enable ncm2 for all buffers
-    augroup ncm2
-        autocmd BufEnter * call ncm2#enable_for_buffer()
-    augroup end
-
-    " see :help Ncm2PopupOpen for more information
-    set completeopt=noinsert,menuone,noselect
-
-    " NOTE: you need to install completion sources to get completions. Check
-    " our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
-    Plug 'ncm2/ncm2-bufword'
-    Plug 'ncm2/ncm2-tmux'
-    Plug 'ncm2/ncm2-path'
-    Plug 'ncm2/ncm2-github'
-    Plug 'ncm2/ncm2-tagprefix'
-    " Plug 'filipekiss/ncm2-look.vim'
-    Plug 'ncm2/ncm2-gtags'
-    Plug 'ncm2/ncm2-syntax'
-    " Plug 'ncm2/ncm2-neoinclude'
-    Plug 'wellle/tmux-complete.vim'
-    " Plug 'yuki-ycino/ncm2-dictionary'
-
-    Plug 'ncm2/ncm2-ultisnips'
-    Plug 'ncm2/ncm2-html-subscope'
-    Plug 'ncm2/ncm2-markdown-subscope'
-
-    let g:ncm2_tagprefix#source = {
-        \ 'priority': 2,
-        \ }
-
-    let g:ncm2#complete_length = [[1,2],[7,2]]
-else
-    Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-    Plug 'wellle/tmux-complete.vim'
-    let g:coc_global_extensions = [
-        \ 'coc-json',
-        \ 'coc-tsserver',
-        \ 'coc-html',
-        \ 'coc-css',
-        \ 'coc-yaml',
-        \ 'coc-snippets',
-        \ 'coc-highlight',
-        \ 'coc-lists',
-        \ 'coc-git',
-        \ 'coc-yank',
-        \ 'coc-vimlsp',
-        \ 'coc-tailwindcss'
-        \ ]
-    augroup coc
-        " Highlight symbol under cursor on CursorHold
-        autocmd CursorHold * silent call CocActionAsync('highlight')
-    augroup end
-end
+" CoC
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'wellle/tmux-complete.vim'
+let g:coc_global_extensions = [
+    \ 'coc-json',
+    \ 'coc-tsserver',
+    \ 'coc-html',
+    \ 'coc-css',
+    \ 'coc-yaml',
+    \ 'coc-snippets',
+    \ 'coc-highlight',
+    \ 'coc-lists',
+    \ 'coc-git',
+    \ 'coc-yank',
+    \ 'coc-vimlsp',
+    \ 'coc-tailwindcss'
+    \ ]
+augroup coc
+    " Highlight symbol under cursor on CursorHold
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+augroup end
 
 Plug 'ryanoasis/vim-devicons'                    " add icons after other plugins
 
