@@ -279,6 +279,12 @@ if has('nvim')
     set inccommand=split
 endif
 
+
+" Perl options
+let perl_fold            = 1
+let perl_nofold_packages = 1
+let perl_nofold_subs     = 1
+
 " Java options
 set cinoptions+=j1  " anonymous classes
 let g:java_comment_strings         = 1
