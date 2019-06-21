@@ -360,6 +360,16 @@ augroup file_types
         \ | endif
 augroup end
 
+let g:startify_change_to_vcs_root  = 1
+let g:startify_fortune_use_unicode = 1
+let g:startify_lists = [
+        \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+        \ { 'type': 'files',     'header': ['   MRU']            },
+        \ { 'type': 'sessions',  'header': ['   Sessions']       },
+        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+        \ { 'type': 'commands',  'header': ['   Commands']       },
+        \ ]
+
 " Perl options
 let perl_fold            = 1
 let perl_nofold_packages = 1
