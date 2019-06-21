@@ -226,22 +226,6 @@ if has('nvim')
     set inccommand=split
 endif
 
-
-" Perl options
-let perl_fold            = 1
-let perl_nofold_packages = 1
-let perl_nofold_subs     = 1
-
-" Java options
-set cinoptions+=j1  " anonymous classes
-let g:java_comment_strings         = 1
-let g:java_highlight_java_lang_ids = 1
-let g:java_highlight_all           = 1
-let g:java_highlight_debug         = 1
-let g:java_ignore_javadoc          = 1
-let g:java_highlight_java_lang_ids = 1
-let g:java_highlight_functions     = 'style'
-
 syntax enable
 set background=dark
 set termguicolors
@@ -316,9 +300,6 @@ endfunc
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
-let g:UltiSnipsJumpForwardTrigger         = '<tab>'
-let g:UltiSnipsJumpBackwardTrigger        = '<s-tab>'
-
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_indent_levels         = 40
 function! Setup_indent_guides()
@@ -379,11 +360,29 @@ augroup file_types
         \ | endif
 augroup end
 
+" Perl options
+let perl_fold            = 1
+let perl_nofold_packages = 1
+let perl_nofold_subs     = 1
+
+" Java options
+set cinoptions+=j1  " anonymous classes
+let g:java_comment_strings         = 1
+let g:java_highlight_java_lang_ids = 1
+let g:java_highlight_all           = 1
+let g:java_highlight_debug         = 1
+let g:java_ignore_javadoc          = 1
+let g:java_highlight_java_lang_ids = 1
+let g:java_highlight_functions     = 'style'
+
 " let g:html_indent_script1 = 'inc'
 " let g:html_indent_style1  = 'inc'
 " let g:html_indent_inctags = 'html,body,head,tbody,p,li,dd,dt,h1,h2,h3,h4,h5,h6,blockquote,section'
 
-let g:gutentags_ctags_exclude    = ['blib', 'tmp']
+let g:UltiSnipsJumpForwardTrigger     = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger    = '<s-tab>'
+
+let g:gutentags_ctags_exclude         = ['blib', 'tmp']
 " can be extended with '*/sub/path' if required
 
 let g:git_messenger_always_into_popup = 1
