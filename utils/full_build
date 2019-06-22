@@ -21,6 +21,10 @@ if [ ! -e .tmux.conf ]; then
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
+[[ -e ~/.ssh/rc      ]] || ln -s ~/g/base/.ssh/rc ~/.ssh
+[[ -e ~/.ssh/config  ]] || cp ~/g/base/.ssh/config ~/.ssh
+[[ -d ~/.ssh/sockets ]] || mkdir -p ~/.ssh/sockets
+
 source ~/.zplug/init.zsh
 zplug clear
 zplug update
