@@ -509,6 +509,10 @@ fi
 
 eval "$(thefuck --alias ff)"
 
+function preexec {
+    [[ -z $SSH_CLIENT ]] || export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+}
+
 zshrc_load_status "colours"
 
 export s_base03="#001920"
