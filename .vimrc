@@ -177,6 +177,7 @@ set laststatus=2
 set lazyredraw
 set list
 set listchars=tab:»\ ,trail:·
+set matchpairs+=<:>
 set modelines=1
 set mouse=a
 set mousefocus
