@@ -296,7 +296,8 @@ zshrc_load_status "path"
 
 PATH=~/.local/bin:~/g/go/bin:~/bin:~/g/sw/bin:~/g/sw/usr/bin:$PATH
 PATH=$NPM_PACKAGES/bin:$PATH
-PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+PATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH
+PATH=$HOME/.cargo/bin:$PATH
 PATH=~/g/local_base/utils:~/g/base/utils:$PATH
 PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
 MANPATH=/usr/share/man:${MANPATH:-manpath}

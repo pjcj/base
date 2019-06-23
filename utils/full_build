@@ -75,6 +75,8 @@ if [[ "$(uname)" == Darwin ]]; then
             $fzfcomp
     fi
 
+    cargo install devicon-lookup
+
     pip3=pip
 elif [[ "$(uname)" == FreeBSD ]]; then
     sudo pkg install          \
