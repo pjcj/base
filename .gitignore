@@ -20,6 +20,7 @@ tmp/
 .vim/.miniyank.mpack
 .vim/.netrwhist
 .vim/plugged/
+.vim/sessions/default.vim
 .vim/shada/
 .vim/spell/
 zsh/functions/_docker
