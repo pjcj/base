@@ -302,7 +302,7 @@ function! <SID>SynStack()
         return
     endif
     echo map(synstack(line('.'), col('.')), "synIDattr(v:val, 'name')")
-endfunc
+endfunction
 
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
@@ -501,22 +501,22 @@ nmap <silent> abc6 <Plug>JumpDiffCharNextEnd
 function! Pulse_col(colour)
     call Set_colour('CursorLine',   'guibg', a:colour)
     call Set_colour('CursorColumn', 'guibg', a:colour)
-endfunc
+endfunction
 function! Pulse_on()
     let s:ccl = &cursorline
     set cursorline
     set cursorcolumn
     call Pulse_col(s:yellow)
-endfunc
+endfunction
 function! Pulse_off()
     let &cursorline   = s:ccl
     let &cursorcolumn = s:ccl
     call Pulse_col(s:base02)
-endfunc
+endfunction
 function! Pulse()
     exe 'normal zz'
     call search_pulse#Pulse()
-endfunc
+endfunction
 augroup Pulse
     autocmd!
     autocmd User PrePulse  call Pulse_on()
