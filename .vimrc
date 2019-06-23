@@ -881,6 +881,7 @@ let g:fzf_colors = {
     \ 'spinner': [ 'fg', 'Label'                                ],
     \ 'header':  [ 'fg', 'Comment'                              ]
     \ }
+let g:fzf_cmd = 'rg --files --hidden --ignore-file=.gitignore --glob=!.git --sortr=modified'
 
 Shortcut! <leader>. fzf
 nnoremap <silent> <leader>. :call Fzf()<CR>
@@ -889,8 +890,7 @@ function! Fzf()
     let l:fzf_files_options = '--preview "bat --style=numbers,changes --color always {2..-1} | head -'.&lines.'"'
 
     function! s:files()
-        let l:cmd = 'rg --files --hidden --ignore-file=.gitignore --glob=!.git --sortr=modified | devicon-lookup'
-        let l:files = split(system(l:cmd), '\n')
+        let l:files = split(system(g:fzf_cmd . ' | devicon-lookup'), '\n')
         return l:files
     endfunction
 
