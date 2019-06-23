@@ -6,6 +6,12 @@ function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
 
+function! PlugIfExists(dir)
+    if isdirectory(a:dir)
+        Plug a:dir
+    endif
+endfunction
+
 call plug#begin()
 
 " !sort -t/ -k2
@@ -79,8 +85,8 @@ Plug 'vim-perl/vim-perl6'
 
 " FZF
 Plug 'sunaku/vim-shortcut'                                                " , ,,
-Plug '/home/pjcj/g/ghq/github.com/junegunn/fzf'
-Plug '/usr/local/opt/fzf'
+call PlugIfExists('/home/pjcj/g/ghq/github.com/junegunn/fzf')
+call PlugIfExists('/usr/local/opt/fzf')
 Plug 'junegunn/fzf.vim'
 
 " CtrlP
