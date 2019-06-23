@@ -882,6 +882,32 @@ let g:fzf_colors = {
     \ 'header':  [ 'fg', 'Comment'                              ]
     \ }
 
+Shortcut! <leader>. fzf
+nnoremap <silent> <leader>. :call Fzf()<CR>
+
+function! Fzf()
+    let l:fzf_files_options = '--preview "bat --style=numbers,changes --color always {2..-1} | head -'.&lines.'"'
+
+    function! s:files()
+        let l:cmd = 'rg --files --hidden --ignore-file=.gitignore --glob=!.git --sortr=modified | devicon-lookup'
+        let l:files = split(system(l:cmd), '\n')
+        return l:files
+    endfunction
+
+    function! s:edit_file(item)
+        let l:pos = stridx(a:item, ' ')
+        let l:file_path = a:item[pos+1:-1]
+        execute 'silent e' l:file_path
+    endfunction
+
+    call fzf#run({
+        \ 'source':  <sid>files(),
+        \ 'sink':    function('s:edit_file'),
+        \ 'options': '-m ' . l:fzf_files_options,
+        \ 'down':    '40%' })
+endfunction
+
+
 " ctrlp
 Shortcut! <F11> CtrlP
 nnoremap <F11> :silent! write <Bar> CtrlPMixed<CR>
