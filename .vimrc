@@ -683,14 +683,6 @@ Shortcut open location list window
     \ nnoremap <C-F9>     :lopen<CR>
 Shortcut switch windows
     \ nnoremap <silent>   <S-F10> w
-Shortcut open gitv in browser mode
-    \ nnoremap §          :Gitv --all<CR>
-Shortcut open gitv in browser mode
-    \ vnoremap §          :Gitv --all<CR>
-Shortcut open gitv in file mode
-    \ nnoremap °          :Gitv! --all<CR>
-Shortcut open gitv in file mode
-    \ vnoremap °          :Gitv! --all<CR>
 nnoremap <Home>     1G
 nnoremap <End>      Gz-
 nnoremap <PageUp>   0
