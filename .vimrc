@@ -1130,6 +1130,33 @@ Shortcut! t  to character forwards
 Shortcut! T  to character backwards
 Shortcut! f; find all signs
 
+let g:sneak#label  = 1
+let g:sneak#s_next = 1
+
+Shortcut sneak forward
+    \ nmap § <Plug>Sneak_s
+Shortcut visual sneak forward
+    \ xmap $ <Plug>Sneak_s
+
+Shortcut sneak backward
+    \ nmap ° <Plug>Sneak_S
+Shortcut visual sneak backward
+    \ xmap $ <Plug>Sneak_S
+
+Shortcut sneak f
+    \ map f <Plug>Sneak_f
+Shortcut sneak F
+    \ map F <Plug>Sneak_F
+Shortcut sneak t
+    \ map t <Plug>Sneak_t
+Shortcut sneak T
+    \ map T <Plug>Sneak_T
+
+call Set_colour('Sneak',      'guibg', s:base3)
+call Set_colour('Sneak',      'guifg', s:base03)
+call Set_colour('SneakScope', 'guibg', s:yellow)
+call Set_colour('SneakScope', 'guifg', s:base3)
+
 let g:lion_squeeze_spaces = 1
 Shortcut! gl align with spaces to right
 Shortcut! gL align with spaces to left
