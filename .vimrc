@@ -20,7 +20,6 @@ Plug 'w0rp/ale'                                                " syntax checking
 Plug 'rhysd/clever-f.vim'                                           " f F t T f;
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
 Plug 'rhysd/git-messenger.vim'                              " show git blame ,gm
-Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'davinche/godown-vim'                            " show markdown in browser
 Plug 'haya14busa/incsearch-fuzzy.vim'                                       " z/
 Plug 'haya14busa/incsearch.vim'                  " show all matches on incsearch
