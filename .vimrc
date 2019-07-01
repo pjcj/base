@@ -117,16 +117,16 @@ let g:coc_global_extensions = [
     \ 'coc-css',
     \ 'coc-yaml',
     \ 'coc-snippets',
-    \ 'coc-highlight',
     \ 'coc-lists',
     \ 'coc-git',
     \ 'coc-yank',
     \ 'coc-vimlsp',
     \ 'coc-tailwindcss'
     \ ]
+    " \ 'coc-highlight',
 augroup coc
     " Highlight symbol under cursor on CursorHold
-    autocmd CursorHold * silent call CocActionAsync('highlight')
+    " autocmd CursorHold * silent call CocActionAsync('highlight')
 augroup end
 
 Plug 'ryanoasis/vim-devicons'                    " add icons after other plugins
