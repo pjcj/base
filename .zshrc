@@ -783,7 +783,7 @@ elif [ 1 = 1 ]; then
     PROMPT='$(gitprompt)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
 
     perlv () { perl -e '$t = -e "Makefile"; $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`; s|.*/(.*)/bin/perl.*|$1 |; s/^usr $//; s/perl-// if $t; print' }
-    RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %T%{$reset_color%}'
+    RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %{$fg_bold[magenta]%}%T%{$reset_color%}'
 else
     AGKOZAK_PROMPT_DIRTRIM=0
     AGKOZAK_MULTILINE=0
