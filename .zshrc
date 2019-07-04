@@ -775,6 +775,8 @@ elif [ 1 = 1 ]; then
     ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[blue]%}⚑"
     ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✔"
 
+    ZSH_GIT_PROMPT_SHOW_STASH=1
+
     . ~/.zplug/repos/woefe/git-prompt.zsh/git-prompt.zsh
 
     if [ "$(whoami)" = "root" ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
