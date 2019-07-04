@@ -19,6 +19,7 @@ zplug "zdharma/fast-syntax-highlighting"
 zplug "Tarrasch/zsh-autoenv"
 # zplug "agkozak/agkozak-zsh-prompt"
 zplug "woefe/git-prompt.zsh"
+zplug "woefe/vi-mode.zsh"
 
 if ! zplug check; then zplug install; fi
 zplug load
