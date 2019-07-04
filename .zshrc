@@ -17,7 +17,8 @@ source ~/.zplug/init.zsh
 zplug "zsh-users/zsh-completions"
 zplug "zdharma/fast-syntax-highlighting"
 zplug "Tarrasch/zsh-autoenv"
-zplug "agkozak/agkozak-zsh-prompt"
+# zplug "agkozak/agkozak-zsh-prompt"
+zplug "woefe/git-prompt.zsh"
 
 if ! zplug check; then zplug install; fi
 zplug load
@@ -749,6 +750,36 @@ if [ 1 = 0 ]; then
         ZSH_THEME_GIT_PROMPT_CLEAN=""
     fi
 
+    RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %T%{$reset_color%}'
+elif [ 1 = 1 ]; then
+    ZSH_GIT_PROMPT_FORCE_BLANK=1
+    ZSH_THEME_GIT_PROMPT_PREFIX=""
+    ZSH_THEME_GIT_PROMPT_SUFFIX=" "
+    ZSH_THEME_GIT_PROMPT_SEPARATOR=""
+    ZSH_THEME_GIT_PROMPT_DETACHED="%{$fg_no_bold[cyan]%}:"
+    ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_no_bold[grey]%}"
+        ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
+    ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg_no_bold[cyan]%}↓"
+        ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg[yellow]%}%{↓%G%}"
+    ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg_no_bold[cyan]%}↑"
+        ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[yellow]%}%{↑%G%}"
+    ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}✖"
+        ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}%{⋆%G%}"
+    ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[green]%}●"
+        ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}%{⦁%G%}"
+    ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$fg[red]%}✚"
+        ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$fg[blue]%}%{+%G%}"
+    ZSH_THEME_GIT_PROMPT_UNTRACKED="…"
+        ZSH_THEME_GIT_PROMPT_UNTRACKED="%{…%G%}"
+    ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[blue]%}⚑"
+    ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✔"
+
+    . ~/.zplug/repos/woefe/git-prompt.zsh/git-prompt.zsh
+
+    if [ "$(whoami)" = "root" ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
+    PROMPT='$(gitprompt)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
+
+    perlv () { perl -e '$t = -e "Makefile"; $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`; s|.*/(.*)/bin/perl.*|$1 |; s/^usr $//; s/perl-// if $t; print' }
     RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %T%{$reset_color%}'
 else
     AGKOZAK_PROMPT_DIRTRIM=0
