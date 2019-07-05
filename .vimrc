@@ -262,7 +262,7 @@ let s:rgreen  = '#25ad2e'  " a nice green for diffs (opposite of s:red)
 
 function! Set_colour(group, part, colour)
     execute 'highlight ' . a:group . ' ' . a:part . '=' . a:colour
-endfunc
+endfunction
 
 " highlight Comment cterm = italic
 call Set_colour('Normal',       'guifg', s:normal)
