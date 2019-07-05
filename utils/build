@@ -371,6 +371,9 @@ case "$build" in
             "$sw/etc/zsh/completion.zsh"
         git_co_master
         ;;
+    devicon-lookup)
+        cargo install devicon-lookup
+        ;;
     plenv)
         v=$(git tag | grep -v '^v' | sort -V | tail -1)
         if command -v plenv >&/dev/null; then

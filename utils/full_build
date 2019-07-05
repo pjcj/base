@@ -103,6 +103,8 @@ elif [[ "$(uname)" == FreeBSD ]]; then
     sudo pkg upgrade
     pip3=pip-3.6
 else
+    cargo install devicon-lookup
+
     pip3=pip3
     sudo aptitude -y install golang python-pip
 
