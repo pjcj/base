@@ -6,8 +6,8 @@ set mouse         = yes
 
 set main-view = line-number:no,interval=5 id:yes date:default author:full commit-title:yes,graph,refs,overflow=no
 
-# tig uses ncurses which doesn't support true colour
-set git-colors = no
+set git-colors = yes
+# tig doesn't support true colour
 # set git-colors = \
     # diff.new=diff-add \
     # diff.old=diff-del
