@@ -1,7 +1,7 @@
 # from ~/g/sw/etc/tigrc
 
 set commit-order  = topo
-set line-graphics = default
+set line-graphics = utf-8
 set mouse         = yes
 
 set main-view = line-number:no,interval=5 id:yes date:default author:full commit-title:yes,graph,refs,overflow=no
