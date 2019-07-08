@@ -228,6 +228,7 @@ compdef _git   gpof=git-push
 compdef _git   gr=git-rebase
 compdef _git   gra=git-rebase
 compdef _git   grc=git-rebase
+compdef _git   grh=git-reset
 compdef _git   gri=git-rebase
 compdef _git   gs=git-status
 compdef _git   gsh=git-show
@@ -394,6 +395,7 @@ gpof()    { git push origin --force-with-lease "$@" }
 gr()      { git rebase --rebase-merges "$@" }
 gra()     { git rebase --abort "$@" }
 grc()     { git rebase --continue "$@" }
+grh()     { git reset HEAD "$@" }
 gri()     { git rebase -i "$@" }
 gs()      { git st "$@" }
 gsh()     { git show "$@" }
