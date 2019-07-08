@@ -1132,12 +1132,12 @@ let g:sneak#s_next = 1
 Shortcut sneak forward
     \ nmap § <Plug>Sneak_s
 Shortcut visual sneak forward
-    \ xmap $ <Plug>Sneak_s
+    \ xmap § <Plug>Sneak_s
 
 Shortcut sneak backward
     \ nmap ° <Plug>Sneak_S
 Shortcut visual sneak backward
-    \ xmap $ <Plug>Sneak_S
+    \ xmap ° <Plug>Sneak_S
 
 Shortcut sneak f
     \ map f <Plug>Sneak_f
