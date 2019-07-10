@@ -51,6 +51,7 @@ Plug 'tpope/vim-eunuch'                                          " Unix commands
 Plug 'kopischke/vim-fetch'                      " use line numbers in file paths
 Plug 'tpope/vim-fugitive'                  " :Gdiff :Gstatus ,gg, :Gblame, P, gq
 Plug 'tommcdo/vim-fugitive-blame-ext'                           " extend :Gblame
+Plug 'ruanyl/vim-gh-line'                                              " ,gh ,gb
 Plug 'airblade/vim-gitgutter'                  " <F3>,hn <F2>,hp ,hv <F1>,hs ,hr
 Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
 Plug 'nathanaelkane/vim-indent-guides'    " configured for indent of two or four
@@ -854,6 +855,9 @@ let g:closetag_filenames = '*.html,*.xhtml,*.tt'
 " unstack
 let g:unstack_populate_quickfix = 1
 let g:unstack_open_tab          = 0
+
+" vim-gh-line
+let g:gh_use_canonical = 0
 
 vmap <Enter> <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
