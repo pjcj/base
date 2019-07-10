@@ -590,7 +590,7 @@ zshrc_load_status "fzf"
 # Ctrl-B - git branch
 # Ctrl-T - git tag
 
-if lsd --tree >& /dev/null; then
+if which lsd >&/dev/null; then
     tree="lsd --tree --color=always --icon=always"
 else
     tree="tree -C"
