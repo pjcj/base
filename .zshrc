@@ -458,8 +458,6 @@ __tmux-sessions() {
 }
 compdef __tmux-sessions tm
 
-fh() { print -z $(fc -li 1 | fzf-tmux +s --tac | sed -r 's/ *[0-9]+.{18}//') }
-
 zshrc_load_status "hashed directories"
 
 hash -d g=~/g
@@ -589,6 +587,8 @@ zshrc_load_status "fzf"
 # Ctrl-G - git commit
 # Ctrl-B - git branch
 # Ctrl-T - git tag
+
+fh() { print -z $(fc -li 1 | fzf-tmux +s --tac | sed -r 's/ *[0-9]+.{18}//') }
 
 if which lsd >&/dev/null; then
     tree="lsd --tree --color=always --icon=always"
