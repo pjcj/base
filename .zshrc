@@ -469,7 +469,7 @@ hash -d local_base=~/g/local_base
 
 zshrc_load_status "environment"
 
-export BAT_THEME="TwoDark"
+export BAT_THEME="Solarized"
 export GOPATH=~/g/go
 export LANG=en_GB.UTF-8
 export LANGUAGE=en_GB.UTF-8
