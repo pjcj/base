@@ -17,7 +17,6 @@ call plug#begin()
 " !sort -t/ -k2
 
 Plug 'w0rp/ale'                                                " syntax checking
-Plug 'justinmk/vim-sneak'
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
 Plug 'rhysd/git-messenger.vim'                              " show git blame ,gm
 Plug 'davinche/godown-vim'                            " show markdown in browser
@@ -68,6 +67,7 @@ Plug 'inside/vim-search-pulse'                                           " * n N
 Plug 'google/vim-searchindex'                            " show m/n for searches
 Plug 'kshenoy/vim-signature'                          " mx dmx m, m. m<Space> m/
 Plug 'tpope/vim-sleuth'                                  " indentation detection
+Plug 'justinmk/vim-sneak'
 Plug 'honza/vim-snippets'
 Plug 'mhinz/vim-startify'                                       " startup screen
 Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
