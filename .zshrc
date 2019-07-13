@@ -369,7 +369,6 @@ cd()      { c "$@" && d }
 ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
 dh()      { f "$@" | head }
 dm()      { fc -e - d=m -1 }
-ds()      { f -d "$@" }
 g()       { git "$@" }
 ga()      { git add "$@" }
 gb()      { git branch "$@" }
@@ -494,10 +493,12 @@ export ISVM=
 if [[ $(uname) == Darwin ]]; then
     cp() { command gcp -bv --backup=numbered "$@" }
     f()  { lsd -Ahl "$@" }
+    ds() { lsd -hld "$@" }
     mv() { command gmv -bv --backup=numbered "$@" }
 elif [[ $(uname) == FreeBSD ]]; then
     cp() { command cp -v "$@" }
     f()  { ls -ABGhl "$@" }
+    ds() { f -d "$@" }
     mv() { command mv -v "$@" }
 else
     if which dmidecode >&/dev/null; then
@@ -505,6 +506,7 @@ else
     fi
     cp() { command cp -bv --backup=numbered "$@" }
     f()  { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
+    ds() { f -d "$@" }
     mv() { command mv -bv --backup=numbered "$@" }
 fi
 
