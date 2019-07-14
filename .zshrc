@@ -459,7 +459,6 @@ export GOPATH=~/g/go
 export LANG=en_GB.UTF-8
 export LANGUAGE=en_GB.UTF-8
 export LC_ALL=en_GB.UTF-8
-export LESSOPEN="|lesspipe.sh %s"
 export LESS='--no-init --LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS'
 export NOPASTE_SERVICES="Gist Pastie Snitch Shadowcat"
 export PAGER='bat -n'
