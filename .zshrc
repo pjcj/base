@@ -351,20 +351,6 @@ v() {
     fi
 }
 
-man() {
-    env \
-        LESS_TERMCAP_mb=$'\e[1;31m'      \
-        LESS_TERMCAP_md=$'\e[1;31m'      \
-        LESS_TERMCAP_me=$'\e[0m'         \
-        LESS_TERMCAP_se=$'\e[0m'         \
-        LESS_TERMCAP_so=$'\e[0;37;102m'  \
-        LESS_TERMCAP_ue=$'\e[0m'         \
-        LESS_TERMCAP_us=$'\e[4;32m'      \
-        _NROFF_U=1                       \
-        PATH=${HOME}/bin:${PATH}         \
-    man "$@"
-}
-
 cd()      { c "$@" && d }
 ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
 dh()      { f "$@" | head }
@@ -482,6 +468,15 @@ export TMOUT=0
 export TOP="-I all"
 export TEMPLATE_DIR=~base/templates
 export VISUAL=$EDITOR
+
+export LESS_TERMCAP_mb=$'\e[1;31m'
+export LESS_TERMCAP_md=$'\e[1;31m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[0;37;102m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[4;32m'
+export _NROFF_U=1
 
 if which python3 >&/dev/null; then
     export PYTHON3=python3
