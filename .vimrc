@@ -68,7 +68,7 @@ Plug 'inside/vim-search-pulse'                                           " * n N
 Plug 'google/vim-searchindex'                            " show m/n for searches
 Plug 'kshenoy/vim-signature'                          " mx dmx m, m. m<Space> m/
 Plug 'tpope/vim-sleuth'                                  " indentation detection
-Plug 'justinmk/vim-sneak'
+Plug 'justinmk/vim-sneak'                                                  " sxy
 Plug 'honza/vim-snippets'
 Plug 'mhinz/vim-startify'                                       " startup screen
 Plug 'tpope/vim-surround'                                     " cs'" cs'<q> cst'
