@@ -657,8 +657,13 @@ Shortcut jump to next tag
     \ nnoremap <S-F4>     :tnext<Bar>:call Pulse()<CR>
 Shortcut jump to previous tag
     \ nnoremap <M-F4>     :tprev<Bar>:call Pulse()<CR>
-Shortcut run make
-    \ nnoremap <F5>       :execute "silent make" <Bar> botright copen<CR><C-L>
+if filereadable('Makefile')
+    Shortcut run make
+        \ nnoremap <F5> :execute "silent make" <Bar> botright copen<CR><C-L>
+else
+    Shortcut run make
+        \ nnoremap <F5> :w<CR>
+endif
 Shortcut display current error from quickfix list
     \ nnoremap <S-F5>     :cc<CR>
 Shortcut display current error from location list
