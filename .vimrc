@@ -292,8 +292,10 @@ call Set_colour('Search',       'gui',   'NONE'  )
 call Set_colour('TabLineSel',   'guibg', s:base03)
 call Set_colour('TabLineSel',   'guifg', s:violet)
 call Set_colour('Folded',       'gui',   'NONE'  )
-call Set_colour('MatchParen',   'guibg', s:blue)
-call Set_colour('MatchParen',   'guifg', s:base03)
+call Set_colour('MatchParen',   'guibg', s:base2)
+call Set_colour('MatchParen',   'guifg', 'NONE')
+call Set_colour('MatchParenCur','guibg', s:base02)
+call Set_colour('MatchParenCur','guifg', 'NONE')
 
 Shortcut! <C-S-P> show syntax class of item under cursor
 nmap <C-S-P> :call <SID>SynStack()<CR>
