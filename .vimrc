@@ -35,7 +35,6 @@ Plug 'wellle/targets.vim'                                " add * | and _ targets
 Plug 'SirVer/ultisnips'
 Plug 'mbbill/undotree'                                                     " ,gu
 Plug 'chrisbra/unicode.vim'        " unicode table, search, complete, ^X^Z, ^X^G
-Plug 'tpope/vim-abolish'               " :%Subvert/facilit{y,ies}/building{,s}/g
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'FooSoft/vim-argwrap'                              " wrap multiline args ,a
