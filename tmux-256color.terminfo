@@ -1,0 +1,5 @@
+# A screen-256color based TERMINFO that adds the escape sequences for italic.
+# Because, for some reason, tmux helpfully diables italics if the TERM has
+# "screen" in its name.
+tmux-256color|screen with 256 colors and italic,
+  use=screen-256color,
