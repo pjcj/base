@@ -263,7 +263,6 @@ function! Set_colour(group, part, colour)
     execute 'highlight ' . a:group . ' ' . a:part . '=' . a:colour
 endfunction
 
-" highlight Comment cterm = italic
 call Set_colour('Normal',       'guifg', s:normal)
 call Set_colour('SpecialKey',   'guibg', s:base03)
 call Set_colour('SpellBad',     'guibg', s:violet)
