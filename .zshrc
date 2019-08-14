@@ -345,7 +345,7 @@ u() { popd }
 
 v() {
     if [ "$EDITOR" = "nvim" ]; then
-        command $EDITOR "$@"
+        TERM=screen-256color command $EDITOR "$@"
     else
         command $EDITOR -u NONE "$@"
     fi
