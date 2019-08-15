@@ -866,6 +866,9 @@ let g:unstack_open_tab          = 0
 " vim-gh-line
 let g:gh_use_canonical = 0
 
+" vim-matchup
+let g:matchup_matchparen_deferred = 1
+
 vmap <Enter> <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 " Format HTML tables (good for selenium IDE)
