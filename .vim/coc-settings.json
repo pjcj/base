@@ -1,3 +1,5 @@
 {
-    "suggest.snippetIndicator": "►"
+    "suggest.snippetIndicator": "►",
+    "list.maxHeight"          : 30,
+    "list.autoResize"         : false
 }
