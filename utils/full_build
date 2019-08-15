@@ -145,3 +145,6 @@ if [[ $(uname) == Linux ]]; then
     command go get -u github.com/motemen/ghq
     build_all
 fi
+
+bat cache --clear
+bat cache --build
