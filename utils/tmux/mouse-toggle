@@ -1,15 +1,12 @@
 #!/bin/sh
 
-if tmux show-options -g | grep -q '[m]ouse-select-pane off'
+if tmux show-options -g | grep -q '[m]ouse off'
 then to=on
 else to=off
 fi
 
 echo turning mouse $to
 
-tmux set-window-option -g mode-mouse          $to > /dev/null
-tmux set-window-option -g mouse-select-window $to > /dev/null
-tmux set-window-option -g mouse-select-pane   $to > /dev/null
-tmux set-window-option -g mouse-resize-pane   $to > /dev/null
+tmux set -g mouse $to > /dev/null
 
 exit 0
