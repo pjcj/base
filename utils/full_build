@@ -108,7 +108,7 @@ else
     pip3=pip3
     sudo aptitude -y install golang python-pip
 
-    $pip3 install --upgrade pip
+    $pip3 install --upgrade --user pip
 
     # sudo gem install colorls
     # sudo gem update colorls
