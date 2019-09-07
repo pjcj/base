@@ -218,7 +218,9 @@ set updatetime=250
 set viminfo='50
 set whichwrap=19
 set wildmenu
-set wildmode=list:longest,full
+" set wildmode=list:longest,full
+set wildmode=longest,full,full
+set wildoptions=pum,tagfile
 set writebackup
 
 if executable('rg')
