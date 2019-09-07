@@ -163,7 +163,7 @@ set cmdheight=3
 set colorcolumn=80,120
 set complete=.,w,b,u,U,k/usr/share/dict/words,i,t
 set dictionary=/usr/share/dict/words
-set diffopt=filler,vertical
+set diffopt=internal,filler,vertical
 set directory=>~/g/tmp/vim/
 set errorformat=%f:%l:%m
 set expandtab
