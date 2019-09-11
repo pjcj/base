@@ -394,6 +394,7 @@ hh()      { fc -li 1 }
 ht()      { sudo =htop }
 kitty()   { ~/.local/kitty.app/bin/kitty "$@" }
 ll()      { f "$@" | less -r -X }
+lll()     { eval $(perl -Mlocal::lib=$(pwd)/local_lib) }
 lu()      { fc -e - lsq=usq -1 }
 m()       { bat "$@" }
 mn()      { nroff -man "$@" | m }
