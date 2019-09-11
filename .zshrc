@@ -374,7 +374,7 @@ gld()     { git lg --all --date=iso "$@" }
 gls()     { git lg --simplify-by-decoration "$@" }
 glsa()    { git lg --all --simplify-by-decoration "$@" }
 go()      { git co "$@" }
-goo()     { git omvo "$@" }
+goo()     { git omvo "${1-$(git branch-current)}" }
 gp()      { git push "$@" }
 gpf()     { git push --force-with-lease "$@" }
 gpo()     { git push origin "$@" }
