@@ -28,7 +28,7 @@ brew "lua@5.1"
 brew "luarocks"
 brew "mosh"
 brew "mutt"
-brew "neovim", args: ["HEAD"]
+brew "neovim"
 brew "perl-build"
 brew "pigz"
 brew "pkg-config"
