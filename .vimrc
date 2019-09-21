@@ -403,14 +403,18 @@ let g:java_highlight_functions     = 'style'
 " let g:html_indent_style1  = 'inc'
 " let g:html_indent_inctags = 'html,body,head,tbody,p,li,dd,dt,h1,h2,h3,h4,h5,h6,blockquote,section'
 
-let g:UltiSnipsJumpForwardTrigger     = '<tab>'
-let g:UltiSnipsJumpBackwardTrigger    = '<s-tab>'
+let g:UltiSnipsJumpForwardTrigger        = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger       = '<s-tab>'
 
-let g:gutentags_ctags_exclude         = ['blib', 'tmp']
+let g:gutentags_ctags_exclude            = ['blib', 'tmp']
 " can be extended with '*/sub/path' if required
+let g:gutentags_generate_on_new          = 1
+let g:gutentags_generate_on_missing      = 1
+let g:gutentags_generate_on_write        = 1
+let g:gutentags_generate_on_empty_buffer = 0
 
-let g:git_messenger_always_into_popup = 1
-let g:NERDTreeShowHidden              = 1
+let g:git_messenger_always_into_popup    = 1
+let g:NERDTreeShowHidden                 = 1
 
 function! NERDTreeRefresh()
     if &filetype ==# 'nerdtree'
