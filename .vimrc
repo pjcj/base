@@ -115,6 +115,7 @@ let g:coc_global_extensions = [
     \ 'coc-tsserver',
     \ 'coc-html',
     \ 'coc-css',
+    \ 'coc-rls',
     \ 'coc-yaml',
     \ 'coc-snippets',
     \ 'coc-lists',
