@@ -113,9 +113,6 @@ else
     # sudo gem install colorls
     # sudo gem update colorls
 
-    # urlwatch
-    $pip3 install --upgrade --user pyyaml minidb requests keyring chump urlwatch
-
     $pip3 install --upgrade --user thefuck
 fi
 
