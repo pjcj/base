@@ -24,7 +24,7 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-if [ $(uname) = "Linux" ]; then
+if [ "$(uname)" = "Linux" ]; then
     xrdb -merge ~/.Xdefaults
 fi
 
