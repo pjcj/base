@@ -852,11 +852,22 @@ let g:ale_set_quickfix         = 0
 let g:ale_sign_error           = '✗'
 let g:ale_sign_warning         = '⚠'
 
+let g:ale_linters = {
+    \     'perl': [ 'perl' ],
+    \     'rust': [ 'rls'  ],
+    \ }
 " let g:ale_linters              = {'perl' : ['perl', 'syntax-check']}
 " let g:ale_linters              = {'perl' : ['syntax-check']}
-let g:ale_linters              = {'perl' : ['perl']}
 let g:ale_perl_perl_executable = glob('~/g/base/utils/ale_perl')
 let g:ale_perl_perl_options    = ''
+
+" let g:ale_rust_cargo_use_clippy        = 1
+" let g:ale_rust_cargo_check_all_targets = 1
+let g:ale_rust_rls_config = {
+    \     'rust': {
+    \         'clippy_preference': 'on'
+    \     }
+    \ }
 
 Shortcut jump to next error
     \ nmap <silent> <C-J> <Plug>(ale_next_wrap)
