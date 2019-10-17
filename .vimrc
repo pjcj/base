@@ -886,6 +886,7 @@ let g:gh_use_canonical = 0
 
 " vim-matchup
 let g:matchup_matchparen_deferred = 1
+let g:matchup_delim_stopline      = 50000
 
 vmap <Enter> <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
