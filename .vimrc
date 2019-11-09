@@ -861,13 +861,19 @@ let g:ale_linters = {
 let g:ale_perl_perl_executable = glob('~/g/base/utils/ale_perl')
 let g:ale_perl_perl_options    = ''
 
-" let g:ale_rust_cargo_use_clippy        = 1
-" let g:ale_rust_cargo_check_all_targets = 1
+let g:ale_rust_cargo_use_clippy        = 1
+let g:ale_rust_cargo_check_all_targets = 1
+let g:ale_rust_cargo_check_tests       = 1
+let g:ale_rust_cargo_use_check         = 1
 let g:ale_rust_rls_config = {
     \     'rust': {
     \         'clippy_preference': 'on'
     \     }
     \ }
+
+let g:ale_fixers = {
+    \     'rust': [ 'rustfmt' ],
+    \}
 
 Shortcut jump to next error
     \ nmap <silent> <C-J> <Plug>(ale_next_wrap)
