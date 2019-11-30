@@ -219,9 +219,7 @@ set updatetime=250
 set viminfo='50
 set whichwrap=19
 set wildmenu
-" set wildmode=list:longest,full
-set wildmode=longest,full,full
-set wildoptions=pum,tagfile
+set wildmode=list:longest,full
 set writebackup
 
 if executable('rg')
@@ -233,6 +231,10 @@ endif
 
 if has('nvim')
     set inccommand=split
+endif
+if has('nvim-0.4')
+    set wildmode=longest,full,full
+    set wildoptions=pum,tagfile
 endif
 
 syntax enable
