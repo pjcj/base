@@ -491,7 +491,7 @@ if [[ $(uname) == Darwin ]]; then
     f()  { lsd -Ahl "$@" }
     ds() { lsd -hld "$@" }
     mv() { command gmv -bv --backup=numbered "$@" }
-    fd() { command fd --exclude '^/Volumes/' "$@" }
+    fd() { command fd --exclude '/Volumes/' "$@" }
 elif [[ $(uname) == FreeBSD ]]; then
     cp() { command cp -v "$@" }
     f()  { ls -ABGhl "$@" }
