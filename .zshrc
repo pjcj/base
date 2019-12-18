@@ -289,7 +289,7 @@ zshrc_load_status "miscellaneous"
 # url-quote-magic breaks fast-syntax-highlighting
 # autoload -U url-quote-magic && zle -N self-insert url-quote-magic
 
-REPORTTIME=10
+REPORTTIME=30  # 3 seconds
 TIMEFMT="  %J  %E %P  %U user + %S system  %W swaps  %Mk mem"
 
 LS_OPTIONS=
