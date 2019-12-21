@@ -591,9 +591,12 @@ fh() { print -z $(fc -li 1 | fzf-tmux +s --tac | sed -r 's/ *[0-9]+.{18}//') }
 
 if which lsd >&/dev/null; then
     tree="lsd --tree --color=always --icon=always"
+
 else
     tree="tree -C"
 fi
+tree() { eval $tree "$@" }
+
 head="2>/dev/null | head -250"
 
 export FZF_TMUX=1
