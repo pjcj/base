@@ -52,6 +52,7 @@ Plug 'tpope/vim-fugitive'                  " :Gdiff :Gstatus ,gg, :Gblame, P, gq
 Plug 'tommcdo/vim-fugitive-blame-ext'                           " extend :Gblame
 Plug 'ruanyl/vim-gh-line'                                              " ,gh ,gb
 Plug 'airblade/vim-gitgutter'                  " <F3>,hn <F2>,hp ,hv <F1>,hs ,hr
+Plug 'fatih/vim-go'                                                         " go
 Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
 Plug 'nathanaelkane/vim-indent-guides'    " configured for indent of two or four
 Plug 'michaeljsmith/vim-indent-object'      " objects based on indentation ii AI
