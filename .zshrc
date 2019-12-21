@@ -407,7 +407,6 @@ restart() { exec $SHELL "$@" }
 rssh()    { ssh -p 9999 "$@" localhost }
 rtunnel() { ssh -N -f -R 9999:localhost:22 "$@" }
 rr()      { ranger "$@" }
-s()       { gnome-open "$@" }
 tg()      { tcgrep -brun "$@" }
 tmux()    { command tmux -u2 "$@" }
 tojpg()   { for f ("$@") { echo "$f"; j=`echo $f(:r)`; convert "$f" "$j.jpg" } }
@@ -491,12 +490,14 @@ if [[ $(uname) == Darwin ]]; then
     f()  { lsd -Ahl "$@" }
     ds() { lsd -hld "$@" }
     mv() { command gmv -bv --backup=numbered "$@" }
+    s()  { open "$@" }
     fd() { command fd --exclude '/Volumes/' "$@" }
 elif [[ $(uname) == FreeBSD ]]; then
     cp() { command cp -v "$@" }
     f()  { ls -ABGhl "$@" }
     ds() { f -d "$@" }
     mv() { command mv -v "$@" }
+    s()  { f "$@" }
 else
     if which dmidecode >&/dev/null; then
         (sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
@@ -505,6 +506,7 @@ else
     f()  { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
     ds() { f -d "$@" }
     mv() { command mv -bv --backup=numbered "$@" }
+    s()  { gnome-open "$@" }
 fi
 
 [[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim
