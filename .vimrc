@@ -76,6 +76,7 @@ Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'mattboehm/vim-unstack'                             " :UnstackFromSelection
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
+Plug 'psliwka/vim-smoothie'
 
 " Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
@@ -720,8 +721,8 @@ Shortcut switch windows
     \ nnoremap <silent>   <S-F10> w
 nnoremap <Home>     1G
 nnoremap <End>      Gz-
-nnoremap <PageUp>   0
-nnoremap <PageDown> 0
+nmap <PageUp>   0
+nmap <PageDown> 0
 nnoremap <Insert>   [[(z<CR>]]
 nnoremap <Del>      j]](z<CR>]]
 Shortcut! <F12> switch to previous buffer
