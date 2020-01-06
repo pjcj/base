@@ -6,7 +6,7 @@ tap "homebrew/core"
 tap "srkomodo/tap"
 brew "bat"
 brew "xz"
-brew "python", link: false
+brew "python"
 brew "cmake"
 brew "coreutils"
 brew "ctags"
