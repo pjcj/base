@@ -111,25 +111,6 @@ Plug 'pjcj/neovim-colors-solarized-truecolor-only'
 " CoC
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'wellle/tmux-complete.vim'
-let g:coc_global_extensions = [
-    \ 'coc-json',
-    \ 'coc-tsserver',
-    \ 'coc-html',
-    \ 'coc-css',
-    \ 'coc-rls',
-    \ 'coc-yaml',
-    \ 'coc-snippets',
-    \ 'coc-lists',
-    \ 'coc-git',
-    \ 'coc-yank',
-    \ 'coc-vimlsp',
-    \ 'coc-tailwindcss'
-    \ ]
-    " \ 'coc-highlight',
-augroup coc
-    " Highlight symbol under cursor on CursorHold
-    " autocmd CursorHold * silent call CocActionAsync('highlight')
-augroup end
 
 Plug 'ryanoasis/vim-devicons'                    " add icons after other plugins
 
@@ -384,6 +365,39 @@ let g:startify_lists = [
         \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
         \ { 'type': 'commands',  'header': ['   Commands']       },
         \ ]
+
+" Coc
+let g:coc_global_extensions = [
+    \ 'coc-json',
+    \ 'coc-tsserver',
+    \ 'coc-html',
+    \ 'coc-css',
+    \ 'coc-rls',
+    \ 'coc-yaml',
+    \ 'coc-snippets',
+    \ 'coc-lists',
+    \ 'coc-git',
+    \ 'coc-yank',
+    \ 'coc-vimlsp',
+    \ 'coc-tailwindcss'
+    \ ]
+    " \ 'coc-highlight',
+augroup coc
+    Shortcut goto definition
+        \ nmap <silent> gd <Plug>(coc-definition)
+    Shortcut goto type definition
+        \ nmap <silent> gy <Plug>(coc-type-definition)
+    Shortcut goto implementation
+        \ nmap <silent> gi <Plug>(coc-implementation)
+    Shortcut goto references
+        \ nmap <silent> gr <Plug>(coc-references)
+
+    " Highlight symbol under cursor on CursorHold
+    " autocmd CursorHold * silent call CocActionAsync('highlight')
+
+    Shortcut rename current word
+        \ nmap <leader>rn <Plug>(coc-rename)
+augroup end
 
 " Perl options
 let perl_fold            = 1

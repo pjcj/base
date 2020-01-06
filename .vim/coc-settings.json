@@ -3,9 +3,16 @@
     "list.maxHeight"          : 30,
     "list.autoResize"         : false,
     "rust.crate_blacklist"    : {
-        "default": true,
+        "default"    : true,
         "description": "Don't index crates on the crate blacklist.",
-        "scope": "resource",
-        "type": "boolean"
+        "scope"      : "resource",
+        "type"       : "boolean"
+    },
+    "languageserver": {
+        "golang": {
+            "command"     : "gopls",
+            "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+            "filetypes"   : ["go"]
+        }
     }
 }
