@@ -377,11 +377,11 @@ let g:coc_global_extensions = [
     \ 'coc-yaml',
     \ 'coc-snippets',
     \ 'coc-lists',
-    \ 'coc-git',
     \ 'coc-yank',
     \ 'coc-vimlsp',
     \ 'coc-tailwindcss'
     \ ]
+    " \ 'coc-git',  # this gets very slow
     " \ 'coc-highlight',
 augroup coc
     Shortcut goto definition
