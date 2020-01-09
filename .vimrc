@@ -68,6 +68,7 @@ Plug 'inside/vim-search-pulse'                                           " * n N
 Plug 'google/vim-searchindex'                            " show m/n for searches
 Plug 'kshenoy/vim-signature'                          " mx dmx m, m. m<Space> m/
 Plug 'tpope/vim-sleuth'                                  " indentation detection
+Plug 'psliwka/vim-smoothie'
 Plug 'justinmk/vim-sneak'                                          " § ° f F t T
 Plug 'honza/vim-snippets'
 Plug 'mhinz/vim-startify'                                       " startup screen
@@ -76,7 +77,6 @@ Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'mattboehm/vim-unstack'                             " :UnstackFromSelection
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
-Plug 'psliwka/vim-smoothie'
 
 " Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
