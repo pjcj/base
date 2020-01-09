@@ -19,9 +19,9 @@ call plug#begin()
 Plug 'w0rp/ale'                                                " syntax checking
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
 Plug 'rhysd/git-messenger.vim'                              " show git blame ,gm
-Plug 'davinche/godown-vim'                            " show markdown in browser
 Plug 'haya14busa/incsearch-fuzzy.vim'                                       " z/
 Plug 'haya14busa/incsearch.vim'                  " show all matches on incsearch
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
 Plug 'scrooloose/nerdtree'                                              " <S-F1>
 Plug 'Xuyuanp/nerdtree-git-plugin'                          " show changed files
 Plug 'chr4/nginx.vim'
@@ -516,7 +516,10 @@ let g:vitality_tumx_can_focus    = 1
 
 let g:csv_autocmd_arrange        = 1
 
-let g:godown_autorun             = 1
+let g:mkdp_auto_start = 0
+let g:mkdp_auto_close = 1
+Shortcut toggle markdown preview
+    \ nmap <silent> <C-p> <Plug>MarkdownPreviewToggle
 
 " diffchar sets defaults if these aren't set
 nmap <silent> abc1 <Plug>ToggleDiffCharAllLines
