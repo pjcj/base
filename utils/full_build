@@ -119,6 +119,7 @@ else
     # sudo gem update colorls
 
     $pip3 install --upgrade --user thefuck
+    $pip3 install --upgrade --user docker-compose
 fi
 
 if [[ "$EDITOR" == "nvim" ]]; then
