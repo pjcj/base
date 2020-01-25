@@ -147,6 +147,7 @@ set backupext=.bak
 set clipboard=  " don't send yanks, deletes and changes to any clipboard
 set cmdheight=3
 set colorcolumn=80,120
+set commentstring=#\ %s
 set complete=.,w,b,u,U,k/usr/share/dict/words,i,t
 set dictionary=/usr/share/dict/words
 set diffopt=internal,filler,vertical
