@@ -62,6 +62,7 @@ Plug 'farmergreg/vim-lastplace'                           " save cursor position
 Plug 'tommcdo/vim-lion'                                 " alignment, gl gL glip=
 Plug 'andymass/vim-matchup'                                      " % [% ]% g% z%
 Plug 'samoshkin/vim-mergetool'                                     " git merging
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'sheerun/vim-polyglot'                                 " extra syntax files
 Plug 'tpope/vim-repeat'
 Plug 'zirrostig/vim-schlepp'                               " highlight then hjkl
@@ -443,6 +444,7 @@ let g:blamer_template                    = '<author>, <author-time> • <summary
 let g:blamer_date_format                 = '%y-%m-%d %H:%M'
 call Set_colour('Blamer','guifg', s:base05)
 let g:NERDTreeShowHidden                 = 1
+let g:NERDTreeHighlightCursorline        = 0
 
 function! NERDTreeRefresh()
     if &filetype ==# 'nerdtree'
