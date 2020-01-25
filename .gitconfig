@@ -85,6 +85,7 @@
     omv                 = origin-branch-move
     omvo                = "!f() { git checkout master && git origin-branch-move $1 && git checkout $1; }; f"
     bmvp                = "!f() { git bmv $1 $2 && git push origin --force-with-lease $1; }; f"
+    # git nd [[[[year] month] day] hour]
     nd                  = "!f() { git commit --amend --no-edit --date=$(git --no-pager show --format='%ai' | head -1 |  perl -e '@n = reverse qq(@ARGV) =~ /(\\d+)/g; @d = <STDIN> =~ /(\\d+)/g; printf q(%04d-%02d-%02dT%02d:%02d:%02d), $n[3] // $d[0], $n[2] // $d[1], $n[1] // $d[2], $n[0] // $d[3], rand 60, rand 60' $@); }; f"
     churn               = !git log --all -M -C --name-only --format='format:' "$@" | sort | grep -v '^$' | uniq -c | sort | awk 'BEGIN {print "count,file"} {print $1 ", " $2}' | sort -rn | less
     # git change-commits GIT_COMMITTER_NAME "old name" "new name"
@@ -106,4 +107,4 @@
 [include]
     path                = .gitconfig.local
 [hub]
-    protocol = ssh
+    protocol            = ssh
