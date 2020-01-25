@@ -17,6 +17,7 @@ call plug#begin()
 " !sort -t/ -k2
 
 Plug 'w0rp/ale'                                                " syntax checking
+Plug 'APZelos/blamer.nvim'                                 " show per-line blame
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
 Plug 'rhysd/git-messenger.vim'                              " show git blame ,gm
 Plug 'haya14busa/incsearch-fuzzy.vim'                                       " z/
@@ -247,6 +248,7 @@ let s:normal  = '#9599dc'
 
 let s:rgreen  = '#25ad2e'  " a nice green for diffs (opposite of s:red)
 let s:base04  = '#00090C'  " darker than base03
+let s:base05  = '#0E3C49'  " lighter than base02
 
 function! Set_colour(group, part, colour)
     execute 'highlight ' . a:group . ' ' . a:part . '=' . a:colour
@@ -435,6 +437,11 @@ let g:gutentags_generate_on_write        = 1
 let g:gutentags_generate_on_empty_buffer = 0
 
 let g:git_messenger_always_into_popup    = 1
+let g:blamer_enabled                     = 1
+let g:blamer_prefix                      = ' '
+let g:blamer_template                    = '<author>, <author-time> • <summary>'
+let g:blamer_date_format                 = '%y-%m-%d %H:%M'
+call Set_colour('Blamer','guifg', s:base05)
 let g:NERDTreeShowHidden                 = 1
 
 function! NERDTreeRefresh()
