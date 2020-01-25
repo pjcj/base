@@ -246,6 +246,7 @@ let s:green   = '#859900'
 let s:normal  = '#9599dc'
 
 let s:rgreen  = '#25ad2e'  " a nice green for diffs (opposite of s:red)
+let s:base04  = '#00090C'  " darker than base03
 
 function! Set_colour(group, part, colour)
     execute 'highlight ' . a:group . ' ' . a:part . '=' . a:colour
@@ -281,9 +282,10 @@ call Set_colour('TabLineSel',   'guibg', s:base03)
 call Set_colour('TabLineSel',   'guifg', s:violet)
 call Set_colour('Folded',       'gui',   'NONE'  )
 call Set_colour('MatchParen',   'guibg', s:base00)
-call Set_colour('MatchParen',   'guifg', 'NONE')
+call Set_colour('MatchParen',   'guifg', 'NONE'  )
 call Set_colour('MatchParenCur','guibg', s:base02)
-call Set_colour('MatchParenCur','guifg', 'NONE')
+call Set_colour('MatchParenCur','guifg', 'NONE'  )
+call Set_colour('NormalFloat',  'guibg', s:base04)
 
 Shortcut! <C-S-P> show syntax class of item under cursor
 nmap <C-S-P> :call <SID>SynStack()<CR>
