@@ -442,7 +442,7 @@ let g:git_messenger_always_into_popup    = 1
 let g:blamer_enabled                     = 1
 let g:blamer_prefix                      = ' '
 let g:blamer_template                    = '<author>, <author-time> • <summary>'
-let g:blamer_date_format                 = '%y-%m-%d %H:%M'
+let g:blamer_date_format                 = '%Y-%m-%d %H:%M'
 call Set_colour('Blamer','guifg', s:base05)
 let g:NERDTreeShowHidden                 = 1
 let g:NERDTreeHighlightCursorline        = 0
