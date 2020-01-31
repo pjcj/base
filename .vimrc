@@ -490,7 +490,7 @@ augroup end
 Shortcut show git diff
     \ nnoremap <leader>gd :Gdiff<CR>
 Shortcut make git commit
-    \ nnoremap <leader>gg :Gcommit -v<CR>O
+    \ nnoremap <leader>gg :Gcommit -v<CR>
 Shortcut show git status
     \ nnoremap <leader>gs :Gstatus<CR>
 
