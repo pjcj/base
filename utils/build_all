@@ -67,7 +67,7 @@ do_build() {
 main () {
     gobase
 
-    ghq import -u < ghq.repos
+    ghq get -u < ghq.repos
 
     while read -r repo; do
         sw=$(basename "$repo")

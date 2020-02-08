@@ -148,6 +148,7 @@ case "$build" in
         make install
         ;;
     neovim)
+        install_pkg cmake libtool-bin m4 libtermkey-dev libmsgpackc2 libvterm0 automake gettext
         v=$(git tag | tail -1)
         if command -v nvim >&/dev/null; then
             iv="$(nvim -v | head -1)"
@@ -159,7 +160,8 @@ case "$build" in
         # git_co_master  # build master branch
         git clean -dxf
         make -j "$j" CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$sw" \
-             CMAKE_BUILD_TYPE=Release install
+             install
+             # CMAKE_BUILD_TYPE=Release install
              # CMAKE_BUILD_TYPE=Release test install
         git_co_master
         ;;
