@@ -1,0 +1,174 @@
+#!/usr/bin/perl
+
+use 5.18.2;
+use warnings;
+use utf8::all;
+
+use Data::Printer deparse => 1;
+use Encode;
+use Getopt::Long;
+use Path::Tiny;
+use Unicode::Normalize qw( NFC NFD NFKC NFKD );
+
+sub pd { say join " ", map ref() ? p $_ : $_ // "*undef*", @_ }
+
+my $Defaults = {
+    debug   => 0,
+    verbose => 0,
+    dkim    => 0,
+};
+
+our $O = {};
+sub get_options {
+    my $o = { argv => [@ARGV] };
+    die "Bad option" unless GetOptions($o, qw(
+        conf=s
+        debug!
+        verbose!
+        dkim!
+        home_ip=s
+    ));
+    $o->{args} = [@ARGV];
+
+    our $CONF = {};
+    if (my $file = $o->{conf}) {
+        unless (my $ret = do $file) {
+            warn "couldn't parse $file: $@" if $@;
+            warn "couldn't do $file: $!"    unless defined $ret;
+            warn "couldn't run $file"       unless $ret;
+        }
+    }
+    %$O = (%$Defaults, %$CONF, %$o);
+    $O->{begin}->() if $O->{begin};
+    die "No home_ip" unless $O->{home_ip};  # curl ipecho.net/plain
+    ($O->{home_domain}) = `nslookup $O->{home_ip}` =~ /name = (.*)\.$/m;
+    pd "Options: ", $O if $O->{verbose};
+}
+
+sub write_files {
+    my $domains = [qw(
+        ameasure.com
+        gedcom.co.uk
+        jenintheden.com
+        jennijohnson.com
+        johnsons.ch
+        pjcj.amg1.cpancover.uk0.bigv.io
+        pjcj.co.uk
+        pjcj.com
+        pjcj.net
+        wes-johnson.com
+    )];
+    my $main = "pjcj.net";
+
+    chdir "/srv/$main/config" or die "Can't cd /srv/$main/config: $!";
+    my $q = $O->{verbose} ? "" : " >/dev/null 2>&1";
+    if ($O->{dkim}) {
+        system "openssl genrsa -out dkim.key 2048 -outform PEM$q";
+        system "touch /srv/$main/config/dkim";
+    }
+
+    my $files = {
+        antispam        => "tag\n",
+        default_forward => "paul\@pjcj.net\n",
+        dkim            => $O->{dkim} ? "" : undef,
+        dmarc           => $O->{dkim} ? "v=DMARC1; p=none; " .
+                           "rua=mailto:paul\@pjcj.net; sp=reject" : undef,
+        spf             => "v=spf1 +a +mx a:$O->{home_domain} ~all",
+        ttl             => "60\n",
+        "blacklists/zen.spamhaus.org" => "",
+    };
+
+    for my $d (@$domains) {
+        chdir "/srv/$d/config" or die "Can't cd /srv/$d/config: $!";
+        system "cp /srv/$main/config/dkim.key ." if $O->{dkim} && $d ne $main;
+        for my $f (sort keys %$files) {
+            my $p = path($f);
+            $p->remove;
+            $p->parent->mkpath;
+            $p->spew($files->{$f} =~ s/%%/$d/gr) if defined $files->{$f};
+        }
+        my $p = path("dns/$d.txt");
+        path("dns/$d.txt")->append(<<EOT);
+
+# h
++h.$d:$O->{home_ip}:60
+
+# skill
++skill.$d:$O->{home_ip}:60
+
+# CAA
+# letsencrypt
+:$d:257:\\000\\005\\151\\163\\163\\165\\145\\154\\145\\164\\163\\145\\156\\143\\162\\171\\160\\164\\056\\157\\162\\147
+# swisssign
+:$d:257:\\000\\005\\151\\163\\163\\165\\145\\163\\167\\151\\163\\163\\163\\151\\147\\156\\056\\143\\157\\155
+# :$d:257:\\128\\005issueletsencrypt.org:86400
+
+# domain owner check
+'$d:swisssign-check=I7PstNARKI4SesG1RvHLSEkXkZ0rniPVj0MhYePjoH:86400
+EOT
+    }
+    chdir "/srv" or die "Can't cd /srv: $!";
+}
+
+sub main {
+    get_options;
+
+    my $vb = $O->{verbose} ? "--verbose " : "";
+    chdir "/srv" or die "Can't cd /srv: $!";
+    write_files;
+    system "symbiosis-dns-generate --force";
+    write_files;
+    system "symbiosis-dns-generate $vb --upload";
+    system "chown -R admin:admin .";
+
+    system "cat /root/BytemarkDNS/data/pjcj.net.txt";
+
+    0
+}
+
+main
+
+__END__
+
+=head1 NAME
+
+utils/configure_dns - configure and upload Bytemark DNS
+
+=head1 SYNOPSIS
+
+ utils/configure_dns
+
+=head1 DESCRIPTION
+
+Configure and upload Bytemark DNS.
+
+=head1 OPTIONS
+
+The following command line options are supported:
+
+ -h -help              - show help
+ -i -info              - show documentation
+ -v -version           - show version
+
+ -dkim                 - configure dkim
+ -home_ip              - specify the home ipaddress
+
+=head1 DETAILS
+
+=head1 EXIT STATUS
+
+The following exit values are returned:
+
+0   All operations were completed successfully.
+
+>0  An error occurred.
+
+=head1 SEE ALSO
+
+=head1 BUGS
+
+=head1 LICENCE
+
+Copyright 2018, Paul Johnson (paul@pjcj.net)
+
+=cut
