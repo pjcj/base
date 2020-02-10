@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 use 5.18.2;
 use warnings;
@@ -15,7 +15,7 @@ sub pd { say join " ", map ref() ? p $_ : $_ // "*undef*", @_ }
 my $Defaults = {
     debug   => 0,
     verbose => 0,
-    dkim    => 0,
+    ttl     => 60,
 };
 
 our $O = {};
@@ -25,8 +25,8 @@ sub get_options {
         conf=s
         debug!
         verbose!
-        dkim!
         home_ip=s
+        ttl=s
     ));
     $o->{args} = [@ARGV];
 
@@ -46,55 +46,77 @@ sub get_options {
 }
 
 sub write_files {
-    my $domains = [qw(
-        ameasure.com
-        gedcom.co.uk
-        jenintheden.com
-        jennijohnson.com
-        johnsons.ch
-        pjcj.amg1.cpancover.uk0.bigv.io
-        pjcj.co.uk
-        pjcj.com
-        pjcj.net
-        wes-johnson.com
-    )];
-    my $main = "pjcj.net";
+    my $am1  = "213.138.100.164";
+    my $pjcj = "46.43.15.202";
+    my $ttl = $O->{ttl};
 
-    chdir "/srv/$main/config" or die "Can't cd /srv/$main/config: $!";
-    my $q = $O->{verbose} ? "" : " >/dev/null 2>&1";
-    if ($O->{dkim}) {
-        system "openssl genrsa -out dkim.key 2048 -outform PEM$q";
-        system "touch /srv/$main/config/dkim";
-    }
-
-    my $files = {
-        antispam        => "tag\n",
-        default_forward => "paul\@pjcj.net\n",
-        dkim            => $O->{dkim} ? "" : undef,
-        dmarc           => $O->{dkim} ? "v=DMARC1; p=none; " .
-                           "rua=mailto:paul\@pjcj.net; sp=reject" : undef,
-        spf             => "v=spf1 +a +mx a:$O->{home_domain} ~all",
-        ttl             => "60\n",
-        "blacklists/zen.spamhaus.org" => "",
+    my $domains = {
+        "am1.amg1.cpancover.uk0.bigv.io" => $pjcj,
+        "ameasure.com"                    => $am1,
+        "gedcom.co.uk"                    => $am1,
+        "jenintheden.com"                 => $pjcj,
+        "jennijohnson.com"                => $pjcj,
+        # "johnsons.ch"                     => $pjcj,
+        "pjcj.amg1.cpancover.uk0.bigv.io" => $pjcj,
+        "pjcj.com"                        => $pjcj,
+        "pjcj.co.uk"                      => $pjcj,
+        "pjcj.net"                        => $pjcj,
+        "wes-johnson.com"                 => $pjcj,
     };
 
-    for my $d (@$domains) {
-        chdir "/srv/$d/config" or die "Can't cd /srv/$d/config: $!";
-        system "cp /srv/$main/config/dkim.key ." if $O->{dkim} && $d ne $main;
-        for my $f (sort keys %$files) {
-            my $p = path($f);
-            $p->remove;
-            $p->parent->mkpath;
-            $p->spew($files->{$f} =~ s/%%/$d/gr) if defined $files->{$f};
-        }
-        my $p = path("dns/$d.txt");
-        path("dns/$d.txt")->append(<<EOT);
+    my $data = "/tmp/data.tmp";
+    my $p = path($data);
+    $p->remove_tree;
+    $p->mkpath;
 
+    for my $d (sort keys %$domains) {
+        my $ip = $domains->{$d};
+        my $mx = "";
+        $mx = <<EOMX unless $d =~/bigv/;
+# mxguarddog
+\@${d}::97a68220.21.ik2.com:5:$ttl
+\@${d}::97a68220.22.ik2.io:7:$ttl
+\@${d}::97a68220.23.ik2.eu:9:$ttl
+
+EOMX
+        path("$data/$d.txt")->append(<<EOT);
+# Nameserver records
+.${d}::a.ns.bytemark.co.uk:$ttl
+.${d}::b.ns.bytemark.co.uk:$ttl
+.${d}::c.ns.bytemark.co.uk:$ttl
+
+# The domain name itself
+=$d:$ip:$ttl
+
+# Useful aliases
++www.$d:$ip:$ttl
++mail.$d:$ip:$ttl
+
+# A record for MX
++mx.$d:$ip:$ttl
+
+#  The domain name itself -- AAAA record and reverse.
+# 6$d:200141c9000104240000000000000202:$ttl
+
+#  Useful aliases -- AAAA records only
+# 3www.$d:200141c9000104240000000000000202:$ttl
+# 3mail.$d:200141c9000104240000000000000202:$ttl
+
+# AAAA record for MX
+# 3mx.$d:200141c9000104240000000000000202:$ttl
+
+# MX record -- no IP defined, as this is done separately above.
+# \@${d}::mx.$d:15:$ttl
+
+# SPF records
+'$d:v=spf1 +a +mx a\\072$O->{home_domain} \\176all:$ttl
+
+$mx
 # h
-+h.$d:$O->{home_ip}:60
++h.$d:$O->{home_ip}:$ttl
 
 # skill
-+skill.$d:$O->{home_ip}:60
++skill.$d:$O->{home_ip}:$ttl
 
 # CAA
 # letsencrypt
@@ -105,24 +127,17 @@ sub write_files {
 
 # domain owner check
 '$d:swisssign-check=I7PstNARKI4SesG1RvHLSEkXkZ0rniPVj0MhYePjoH:86400
+'$d:swisssign-check=tDdwGDBVqvzkh9DvtjoRDX0ykz2crpXNWk6dB5SaWc:10
 EOT
     }
-    chdir "/srv" or die "Can't cd /srv: $!";
+
+    system "cat $data/pjcj.net.txt";
+    system "sudo $ENV{HOME}/g/base/utils/upload_dns"
 }
 
 sub main {
     get_options;
-
-    my $vb = $O->{verbose} ? "--verbose " : "";
-    chdir "/srv" or die "Can't cd /srv: $!";
     write_files;
-    system "symbiosis-dns-generate --force";
-    write_files;
-    system "symbiosis-dns-generate $vb --upload";
-    system "chown -R admin:admin .";
-
-    system "cat /root/BytemarkDNS/data/pjcj.net.txt";
-
     0
 }
 
@@ -150,7 +165,6 @@ The following command line options are supported:
  -i -info              - show documentation
  -v -version           - show version
 
- -dkim                 - configure dkim
  -home_ip              - specify the home ipaddress
 
 =head1 DETAILS
@@ -165,10 +179,8 @@ The following exit values are returned:
 
 =head1 SEE ALSO
 
-=head1 BUGS
-
 =head1 LICENCE
 
-Copyright 2018, Paul Johnson (paul@pjcj.net)
+Copyright 2020, Paul Johnson (paul@pjcj.net)
 
 =cut
