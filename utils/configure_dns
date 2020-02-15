@@ -72,7 +72,7 @@ sub write_files {
     for my $d (sort keys %$domains) {
         my $ip = $domains->{$d};
         my $mx = "";
-        $mx = <<EOMX unless $d =~/bigv/;
+        $mx = <<EOMX unless $d =~/bigv|ameasure/;
 # mxguarddog
 \@${d}::97a68220.21.ik2.com:5:$ttl
 \@${d}::97a68220.22.ik2.io:7:$ttl
