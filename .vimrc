@@ -65,6 +65,7 @@ Plug 'samoshkin/vim-mergetool'                                     " git merging
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'sheerun/vim-polyglot'                                 " extra syntax files
 Plug 'tpope/vim-repeat'
+Plug 'arzg/vim-rust-syntax-ext'                 " extra rust syntax highlighting
 Plug 'zirrostig/vim-schlepp'                               " highlight then hjkl
 Plug 'inside/vim-search-pulse'                                           " * n N
 Plug 'google/vim-searchindex'                            " show m/n for searches
