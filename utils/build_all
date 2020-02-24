@@ -74,11 +74,8 @@ main () {
         do_build "$sw"
     done < ghq.repos
 
-    do_build rg
-    do_build fd
     do_build font
     # do_build kitty
-    do_build bat
 }
 
 if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
