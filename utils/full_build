@@ -65,8 +65,7 @@ if [[ "$(uname)" == Darwin ]]; then
         brew update
         brew upgrade
         brew cask upgrade
-        rm Brewfile
-        brew bundle dump
+        brew bundle dump --force
     fi
 
     fzfcomp=/usr/local/opt/fzf/shell/completion.zsh
