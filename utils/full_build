@@ -108,6 +108,15 @@ elif [[ "$(uname)" == FreeBSD ]]; then
     sudo pkg upgrade
     pip3=pip-3.6
 else
+    if [ ! which brew >&/dev/null ]; then
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+    else
+        brew update
+        brew upgrade
+        brew cask upgrade
+        brew bundle dump --file=Brewfile.linux --force
+    fi
+
     pip3=pip3
     sudo aptitude -y install golang python-pip python3-dev python3-pip cargo libncurses-dev libncursesw5-dev
 
