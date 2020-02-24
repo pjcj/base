@@ -37,3 +37,5 @@ export FONTSIZE=12
 
 # shellcheck disable=1090
 [ -r "$HOME/.profile.local" ] && . "$HOME/.profile.local"
+
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)

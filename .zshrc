@@ -563,6 +563,8 @@ load \
     ~/.zshrc.local                                           \
     ~/.zshrc.${HOST%%.*}
 
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+
 zshrc_load_status "perl"
 
 [[ -z $PERLBREW_ROOT ]] && export PERLBREW_ROOT="$HOME/perl5/perlbrew"
