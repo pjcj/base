@@ -154,7 +154,7 @@ fi
 
 if [[ $(uname) == Linux ]]; then
     gobase
-    command go get -u github.com/motemen/ghq
+    brew install ghq
     build_all
 fi
 
