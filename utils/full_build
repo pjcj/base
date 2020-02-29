@@ -59,13 +59,14 @@ fi
 ~/.tmux/plugins/tpm/bin/clean_plugins
 
 if [[ "$(uname)" == Darwin ]]; then
-    if [ ! which brew >&/dev/null ]; then
-        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    else
+    if which brew >&/dev/null; then
         brew update
         brew upgrade
         brew cask upgrade
-        brew bundle dump --force
+        brew bundle dump --file=Brewfile --force
+    else
+        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        brew bundle install --file=Brewfile
     fi
 
     fzfcomp=/usr/local/opt/fzf/shell/completion.zsh
@@ -107,13 +108,14 @@ elif [[ "$(uname)" == FreeBSD ]]; then
     sudo pkg upgrade
     pip3=pip-3.6
 else
-    if [ ! which brew >&/dev/null ]; then
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-    else
+    if which brew >&/dev/null; then
         brew update
         brew upgrade
         brew cask upgrade
         brew bundle dump --file=Brewfile.linux --force
+    else
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+        brew bundle install --file=Brewfile.linux
     fi
 
     pip3=pip3
