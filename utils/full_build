@@ -13,6 +13,7 @@ if [ ! -e .tmux.conf ]; then
     ln -s ~/g/base/.config/* ~/.config
     ( cd ~ && ln -s g/base/.zshrc* . )
 
+    sudo aptitude install gawk
     curl -sL --proto-redir -all,https \
         https://raw.githubusercontent.com/zplug/installer/master/installer.zsh \
         | zsh
