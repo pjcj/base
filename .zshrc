@@ -552,18 +552,20 @@ load() {
     done
 }
 
+[ -e /home/linuxbrew/.linuxbrew/bin/brew ] && \
+    eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+[ -e /usr/local/bin/brew ] && \
+    eval $(/usr/local/bin/brew shellenv)
+
 load \
     /etc/zsh_command_not_found                               \
-    ~/.gvm/scripts/gvm                                       \
     ~/g/sw/etc/zsh/*(N)                                      \
-    /usr/local/opt/fzf/shell/key-bindings.zsh                \
-    /usr/local/opt/fzf/shell/completion.zsh                  \
+    $HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh          \
+    $HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh            \
     ~/.iterm2_shell_integration.zsh                          \
     ~/Library/Preferences/org.dystroy.broot/launcher/bash/br \
     ~/.zshrc.local                                           \
     ~/.zshrc.${HOST%%.*}
-
-eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
 zshrc_load_status "perl"
 
