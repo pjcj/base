@@ -130,6 +130,11 @@ setopt                        \
 
 zshrc_load_status "setting environment"
 
+[ -e /home/linuxbrew/.linuxbrew/bin/brew ] && \
+    eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+[ -e /usr/local/bin/brew ] && \
+    eval $(/usr/local/bin/brew shellenv)
+
 fpath=(
     ~/{lib/zsh,.zsh,g/base/zsh}/{functions,scripts}(N)
     ~/g/go/src/github.com/motemen/ghq/zsh(N)
@@ -551,11 +556,6 @@ load() {
         fi
     done
 }
-
-[ -e /home/linuxbrew/.linuxbrew/bin/brew ] && \
-    eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-[ -e /usr/local/bin/brew ] && \
-    eval $(/usr/local/bin/brew shellenv)
 
 load \
     /etc/zsh_command_not_found                               \
