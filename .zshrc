@@ -130,10 +130,12 @@ setopt                        \
 
 zshrc_load_status "setting environment"
 
-[ -e /home/linuxbrew/.linuxbrew/bin/brew ] && \
-    eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-[ -e /usr/local/bin/brew ] && \
-    eval $(/usr/local/bin/brew shellenv)
+if [ $EUID -ne 0 ]; then
+    [ -e /home/linuxbrew/.linuxbrew/bin/brew ] && \
+        eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+    [ -e /usr/local/bin/brew ] && \
+        eval $(/usr/local/bin/brew shellenv)
+fi
 
 fpath=(
     ~/{lib/zsh,.zsh,g/base/zsh}/{functions,scripts}(N)
