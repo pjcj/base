@@ -727,7 +727,7 @@ setopt prompt_subst
 autoload -U colors && colors # Enable colors in prompt
 
 if [ 1 = 0 ]; then
-    if [ "$(whoami)" = "root" ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
+    if [ $EUID -eq 0 ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
 
     perlv () { perl -e '$t = -e "Makefile"; $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`; s|.*/(.*)/bin/perl.*|$1 |; s/^usr $//; s/perl-// if $t; print' }
 
@@ -794,7 +794,7 @@ elif [ 1 = 1 ]; then
 
     . ~/.zplug/repos/woefe/git-prompt.zsh/git-prompt.zsh
 
-    if [ "$(whoami)" = "root" ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
+    if [ $EUID -eq 0 ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
     PROMPT='$(gitprompt)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
 
     perlv () { perl -e '$t = -e "Makefile"; $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`; s|.*/(.*)/bin/perl.*|$1 |; s/^usr $//; s/perl-// if $t; print' }
