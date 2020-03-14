@@ -14,6 +14,7 @@ AUTOENV_LOOK_UPWARDS=1
 source ~/.zplug/init.zsh
 
 # https://github.com/tj/git-extras/blob/master/Commands.md
+zplug 'zsh-users/zsh-autosuggestions'
 zplug "zsh-users/zsh-completions"
 zplug "zdharma/fast-syntax-highlighting"
 zplug "Tarrasch/zsh-autoenv"
@@ -477,6 +478,7 @@ export TMOUT=0
 export TOP="-I all"
 export TEMPLATE_DIR=~base/templates
 export VISUAL=$EDITOR
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#056e75"
 
 export LESS_TERMCAP_mb=$'\e[1;31m'
 export LESS_TERMCAP_md=$'\e[1;31m'
