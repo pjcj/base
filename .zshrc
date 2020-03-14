@@ -479,6 +479,7 @@ export TOP="-I all"
 export TEMPLATE_DIR=~base/templates
 export VISUAL=$EDITOR
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#056e75"
+export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
 
 export LESS_TERMCAP_mb=$'\e[1;31m'
 export LESS_TERMCAP_md=$'\e[1;31m'
