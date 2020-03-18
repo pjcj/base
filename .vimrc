@@ -835,7 +835,7 @@ Shortcut (v) paste current copy buffer onto currently selected text
     \ vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
 
 Shortcut delete trailing whitespace
-    \ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=""<CR>
+    \ nnoremap <leader>W :%s/\s\+$//<CR>:let @/=""<CR>
 
 Shortcut select lines to end of previous yanked or changed text
     \ nnoremap <leader>v V`]
