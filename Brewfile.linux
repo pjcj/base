@@ -2,7 +2,7 @@ tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/core"
 brew "bat"
-brew "openssl@1.1"
+brew "openssl@1.1", link: false
 brew "diff-so-fancy"
 brew "fd"
 brew "fzf"
