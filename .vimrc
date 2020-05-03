@@ -501,14 +501,15 @@ augroup gitgutter
     autocmd!
     autocmd BufEnter * call GitGutter()
 augroup end
-highlight link GitGutterAdd              DiffAdd
-highlight link GitGutterChange           DiffChange
-highlight link GitGutterDelete           DiffDelete
-highlight link GitGutterChangeDelete     DiffDelete
-highlight link GitGutterAddLine          DiffAdd
-highlight link GitGutterChangeLine       DiffChange
-highlight link GitGutterDeleteLine       DiffDelete
-highlight link GitGutterChangeDeleteLine DiffDelete
+highlight! link SignColumn                LineNr
+highlight  link GitGutterAdd              DiffAdd
+highlight  link GitGutterChange           DiffChange
+highlight  link GitGutterDelete           DiffDelete
+highlight  link GitGutterChangeDelete     DiffDelete
+highlight  link GitGutterAddLine          DiffAdd
+highlight  link GitGutterChangeLine       DiffChange
+highlight  link GitGutterDeleteLine       DiffDelete
+highlight  link GitGutterChangeDeleteLine DiffDelete
 let g:gitgutter_signs           = 1
 let g:gitgutter_highlight_lines = 0
 let g:gitgutter_realtime        = 1
