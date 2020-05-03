@@ -441,6 +441,7 @@ let g:gutentags_generate_on_write        = 1
 let g:gutentags_generate_on_empty_buffer = 0
 
 let g:git_messenger_always_into_popup    = 1
+let g:git_messenger_include_diff         = 'current'
 let g:blamer_enabled                     = 1
 let g:blamer_prefix                      = ' '
 let g:blamer_template                    = '<author>, <author-time> • <summary>'
