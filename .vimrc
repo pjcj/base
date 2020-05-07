@@ -158,7 +158,7 @@ set directory=>~/g/tmp/vim/
 set errorformat=%f:%l:%m
 set expandtab
 set exrc
-set fillchars=fold:\ 
+set fillchars=fold:\   " leave trainling space
 set formatoptions=tcrqnlj
 set guifont=inconsolata\ \for\ powerline\ 12
 set hidden  " needed for completor
