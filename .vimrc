@@ -68,6 +68,7 @@ Plug 'sheerun/vim-polyglot'                                 " extra syntax files
 Plug 'tpope/vim-repeat'
 Plug 'arzg/vim-rust-syntax-ext'                 " extra rust syntax highlighting
 Plug 'zirrostig/vim-schlepp'                               " highlight then hjkl
+Plug 'ojroques/vim-scrollstatus'                                 " add scrollbar
 Plug 'inside/vim-search-pulse'                                           " * n N
 Plug 'google/vim-searchindex'                            " show m/n for searches
 Plug 'kshenoy/vim-signature'                          " mx dmx m, m. m<Space> m/
@@ -331,8 +332,11 @@ augroup end
 let g:airline_theme                  = 'solarized'
 let g:airline_powerline_fonts        = 1
 let g:airline_solarized_normal_green = 1
-let g:airline_section_z              =
-    \ airline#section#create(['%3p%% ', 'linenr', 'maxlinenr', ' :%c%V'])
+let g:airline_section_x              = '%{ScrollStatus()}'
+let g:airline_section_z              = airline#section#create([
+            \ '%#__accent_bold#%3l%#__restore__#/%L', ' ',
+            \ '%#__accent_bold#%3v%#__restore__#/%3{virtcol("$") - 1}',
+            \ ])
 
 augroup file_types
     autocmd!
