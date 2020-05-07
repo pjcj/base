@@ -1,6 +1,7 @@
 #!/bin/sh
 
-for branch in "$@"; do
+for b in "$@"; do
+    branch=$(echo "$b" | sed 's/origin\///')
     git branch -D "$branch"
     git push origin --delete "$branch"
     git remote prune origin
