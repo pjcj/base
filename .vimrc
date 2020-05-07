@@ -331,6 +331,7 @@ augroup end
 
 let g:airline_theme                  = 'solarized'
 let g:airline_powerline_fonts        = 1
+let g:scrollstatus_size              = 24
 let g:airline_solarized_normal_green = 1
 let g:airline_section_x              = '%{ScrollStatus()}'
 let g:airline_section_z              = airline#section#create([
