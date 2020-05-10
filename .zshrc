@@ -355,7 +355,8 @@ u() { popd }
 
 v() {
     if [ "$EDITOR" = "nvim" ]; then
-        TERM=screen-256color command $EDITOR "$@"
+        mkdir -p $VIMTMP
+        TMPDIR=$VIMTMP TERM=screen-256color command $EDITOR "$@"
     else
         command $EDITOR -u NONE "$@"
     fi
@@ -477,6 +478,7 @@ export TERMINFO=~/.terminfo
 export TMOUT=0
 export TOP="-I all"
 export TEMPLATE_DIR=~base/templates
+export VIMTMP=/tmp/vim
 export VISUAL=$EDITOR
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#056e75"
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
