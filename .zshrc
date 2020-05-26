@@ -481,7 +481,8 @@ export TEMPLATE_DIR=~base/templates
 export VIMTMP=/tmp/vim
 export VISUAL=$EDITOR
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#056e75"
-export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
+export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 export LESS_TERMCAP_mb=$'\e[1;31m'
 export LESS_TERMCAP_md=$'\e[1;31m'
