@@ -28,6 +28,7 @@
 [core]
     pager               = diff-so-fancy-wrapper | LESS= less --tabs=8 --tilde --no-init --LONG-PROMPT --ignore-case --RAW-CONTROL-CHARS -S
     whitespace          = trailing-space,space-before-tab,tab-in-indent
+    autocrlf            = input
     excludesfile        = /home/pjohnson/.gitignore
 [pack]
     threads             = 0
