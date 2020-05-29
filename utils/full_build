@@ -107,7 +107,7 @@ elif [[ "$(uname)" == FreeBSD ]]; then
         zsh
 
     sudo pkg upgrade
-    pip3=pip-3.6
+    pip3=pip
 else
     if which brew >&/dev/null; then
         brew update
