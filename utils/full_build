@@ -83,7 +83,7 @@ if [[ "$(uname)" == Darwin ]]; then
     fi
     cargo install devicon-lookup
 
-    pip3=pip
+    pip3=pip3
 elif [[ "$(uname)" == FreeBSD ]]; then
     sudo pkg install          \
         bat                   \
