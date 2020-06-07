@@ -1,7 +1,13 @@
 #!/bin/sh
 
-if [ $(uname) = "FreeBSD" ] || $(which diff-so-fancy); then
-    PERL5LIB= diff-so-fancy
+if command -v delta > /dev/null 2>&1; then
+    delta \
+        --width="$(tput cols)" \
+        --file-style=underline \
+        --file-color=yellow    \
+        --commit-style=box
+elif [ "$(uname)" = "FreeBSD" ] || command -v diff-so-fancy > /dev/null 2>&1; then
+    diff-so-fancy
 else
     cat
 fi

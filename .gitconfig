@@ -27,15 +27,18 @@
     stripLeadingSymbols = true
 [core]
     pager               = diff-so-fancy-wrapper | LESS= less --tabs=8 --tilde --no-init --LONG-PROMPT --ignore-case --RAW-CONTROL-CHARS -S
+    ; pager               = delta --theme=Solarized
     whitespace          = trailing-space,space-before-tab,tab-in-indent
     autocrlf            = input
     excludesfile        = /home/pjohnson/.gitignore
+[interactive]
+    diffFilter          = delta --color-only
 [pack]
     threads             = 0
 [diff]
     renamelimit         = 0
     renames             = copies
-    mnemonicprefix      = true
+    ; mnemonicprefix      = true  ; confuses delta
     algorithm           = patience
 [mergetool "vim_mergetool"]
     cmd                 = nvim -f -c "MergetoolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
