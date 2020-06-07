@@ -114,7 +114,7 @@ Plug 'soh335/unite-perl-module'
 Plug 'pjcj/neovim-colors-solarized-truecolor-only'
 
 " CoC
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'wellle/tmux-complete.vim'
 
 Plug 'ryanoasis/vim-devicons'                    " add icons after other plugins
