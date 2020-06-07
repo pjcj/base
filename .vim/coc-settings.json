@@ -2,12 +2,6 @@
     "suggest.snippetIndicator": "►",
     "list.maxHeight"          : 30,
     "list.autoResize"         : false,
-    "rust.crate_blacklist"    : {
-        "default"    : true,
-        "description": "Don't index crates on the crate blacklist.",
-        "scope"      : "resource",
-        "type"       : "boolean"
-    },
     "languageserver": {
         "golang": {
             "command"     : "gopls",
