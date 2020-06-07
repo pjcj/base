@@ -410,6 +410,7 @@ m()       { bat "$@" }
 mn()      { nroff -man "$@" | m }
 mutt()    { mkdir -p /tmp/ml && command mutt "$@" }
 n()       { make "$@" }
+man()     { nvim "+Man $* | only" }
 p()       { pp | head }
 pl()      { ps -o user,pid,ppid,pcpu,pmem,vsz,rss,tty,s,stime,time,args "$@" }
 pm()      { pod2man "$@" | mn }
