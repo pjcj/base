@@ -1,6 +1,8 @@
 #!/bin/sh
 
-if command -v delta > /dev/null 2>&1; then
+if [ "$(uname)" = "FreeBSD" ] || command -v diff-so-fancy > /dev/null 2>&1; then
+    diff-so-fancy
+elif command -v delta > /dev/null 2>&1; then
     delta \
         --width="$(tput cols)"  \
         --plus-color="#022010"  \
@@ -8,8 +10,6 @@ if command -v delta > /dev/null 2>&1; then
         --file-style=underline  \
         --file-color=yellow     \
         --commit-style=box
-elif [ "$(uname)" = "FreeBSD" ] || command -v diff-so-fancy > /dev/null 2>&1; then
-    diff-so-fancy
 else
     cat
 fi
