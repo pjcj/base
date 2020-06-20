@@ -804,7 +804,7 @@ elif [ 1 = 1 ]; then
 
     if [ $EUID -eq 0 ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
     line() { printf '%.s―' {1..$(tput cols)} }
-    PROMPT=$'%K{#022731}$(line)$(gitprompt)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
+    PROMPT=$'$(line)$(gitprompt)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
 
     perlv () { perl -e '$t = -e "Makefile"; $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`; s|.*/(.*)/bin/perl.*|$1 |; s/^usr $//; s/perl-// if $t; print' }
     RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %{$fg_bold[magenta]%}%T%{$reset_color%}'
