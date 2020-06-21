@@ -280,12 +280,6 @@ bindkey "^[[B" history-beginning-search-forward
 bindkey "^[OA" history-beginning-search-backward
 bindkey "^[OB" history-beginning-search-forward
 
-# zmodload zsh/terminfo
-# bindkey "$terminfo[kcuu1]" history-substring-search-up
-# bindkey "$terminfo[kcud1]" history-substring-search-down
-# bindkey "^[[A" history-substring-search-up
-# bindkey "^[[B" history-substring-search-down
-
 autoload -U history-beginning-search-menu-space-end \
        history-beginning-search-menu
 zle -N history-beginning-search-menu-space-end \
