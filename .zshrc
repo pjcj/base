@@ -292,7 +292,7 @@ bindkey "^O" push-line-or-edit
 bindkey "^P" accept-and-infer-next-history
 
 bindkey "^E" undefined-key
-bindkey "^Y" undefined-key
+bindkey "^Y" vi-forward-word
 
 zshrc_load_status "miscellaneous"
 
