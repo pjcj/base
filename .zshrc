@@ -22,6 +22,8 @@ zplug "Tarrasch/zsh-autoenv"
 zplug "woefe/git-prompt.zsh"
 zplug "woefe/vi-mode.zsh"
 
+zplug "zplug/zplug", hook-build:"zplug --self-manage"
+
 if ! zplug check; then zplug install; fi
 zplug load
 
