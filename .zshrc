@@ -292,6 +292,10 @@ bindkey "^O" push-line-or-edit
 bindkey "^P" accept-and-infer-next-history
 
 bindkey "^E" undefined-key
+
+ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(vi-end-of-line)
+bindkey "^[[5~" vi-beginning-of-line
+bindkey "^[[6~" vi-end-of-line
 bindkey "^Y" vi-forward-word
 
 zshrc_load_status "miscellaneous"
