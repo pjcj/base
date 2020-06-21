@@ -18,6 +18,7 @@ zplug 'zsh-users/zsh-autosuggestions'
 zplug "zsh-users/zsh-completions"
 zplug "zdharma/fast-syntax-highlighting"
 # zplug "marlonrichert/zsh-autocomplete"
+zplug "Aloxaf/fzf-tab"
 zplug "Tarrasch/zsh-autoenv"
 # zplug "agkozak/agkozak-zsh-prompt"
 zplug "woefe/git-prompt.zsh"
