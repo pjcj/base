@@ -293,9 +293,8 @@ bindkey "^P" accept-and-infer-next-history
 
 bindkey "^E" undefined-key
 
-ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(vi-end-of-line)
 bindkey "^[[5~" vi-beginning-of-line
-bindkey "^[[6~" vi-end-of-line
+bindkey "^[[6~" vi-add-eol
 bindkey "^Y" vi-forward-word
 
 zshrc_load_status "miscellaneous"
@@ -487,9 +486,27 @@ export TOP="-I all"
 export TEMPLATE_DIR=~base/templates
 export VIMTMP=/tmp/vim
 export VISUAL=$EDITOR
+
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#056e75"
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
+ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(
+    forward-char
+    end-of-line
+    vi-end-of-line
+)
+ZSH_AUTOSUGGEST_EXECUTE_WIDGETS=(vi-add-eol)
+ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(
+    forward-word
+    emacs-forward-word
+    vi-forward-word
+    vi-forward-word-end
+    vi-forward-blank-word
+    vi-forward-blank-word-end
+    vi-find-next-char
+    vi-find-next-char-skip
+    vi-forward-char
+)
 
 export LESS_TERMCAP_mb=$'\e[1;31m'
 export LESS_TERMCAP_md=$'\e[1;31m'
