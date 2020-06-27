@@ -419,6 +419,7 @@ augroup end
 let perl_fold            = 1
 let perl_nofold_packages = 1
 let perl_nofold_subs     = 1
+let perl_sub_signatures  = 1
 
 Shortcut toggle all folds
     \ nnoremap <expr> zz &foldlevel ? 'zM' :'zR'
