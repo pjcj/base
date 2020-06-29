@@ -128,6 +128,13 @@ if has('nvim')
     Plug 'zsugabubus/crazy8.nvim'                        " indentation detection
 else
     Plug 'tpope/vim-sleuth'                              " indentation detection
+    if system('perl -e "print eval q(use Code::ART::API::Vim; 1)"') =~? '1'
+        let s:perlart = expand($HOME . '/.vim/local/perlart.vim')
+        if filereadable(s:perlart)
+            exec 'source ' . s:perlart
+            echo 'perlart: ' s:perlart
+        endif
+    endif
 endif
 
 call plug#end()
