@@ -72,6 +72,7 @@ Plug 'ojroques/vim-scrollstatus'                                 " add scrollbar
 Plug 'inside/vim-search-pulse'                                           " * n N
 Plug 'google/vim-searchindex'                            " show m/n for searches
 Plug 'kshenoy/vim-signature'                          " mx dmx m, m. m<Space> m/
+Plug 'tpope/vim-sleuth'                                  " indentation detection
 Plug 'psliwka/vim-smoothie'
 Plug 'justinmk/vim-sneak'                                          " § ° f F t T
 Plug 'honza/vim-snippets'
@@ -125,9 +126,7 @@ set shortmess+=c
 
 if has('nvim')
     Plug 'bfredl/nvim-miniyank'                              " yankring <C-Y> g-
-    Plug 'zsugabubus/crazy8.nvim'                        " indentation detection
 else
-    Plug 'tpope/vim-sleuth'                              " indentation detection
     if system('perl -e "print eval q(use Code::ART::API::Vim; 1)"') =~? '1'
         let s:perlart = expand($HOME . '/.vim/local/perlart.vim')
         if filereadable(s:perlart)
