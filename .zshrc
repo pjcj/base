@@ -293,8 +293,8 @@ bindkey "^P" accept-and-infer-next-history
 
 bindkey "^E" undefined-key
 
-bindkey "^[[5~" vi-beginning-of-line
-bindkey "^[[6~" vi-add-eol
+bindkey "^[[5~" vi-end-of-line
+bindkey "^[[6~" vi-forward-blank-word-end
 bindkey "^Y" vi-forward-word
 
 zshrc_load_status "miscellaneous"
@@ -494,15 +494,15 @@ ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(
     forward-char
     end-of-line
     vi-end-of-line
+    vi-add-eol
 )
-ZSH_AUTOSUGGEST_EXECUTE_WIDGETS=(vi-add-eol)
+ZSH_AUTOSUGGEST_EXECUTE_WIDGETS=(vi-forward-blank-word-end)
 ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(
     forward-word
     emacs-forward-word
     vi-forward-word
     vi-forward-word-end
     vi-forward-blank-word
-    vi-forward-blank-word-end
     vi-find-next-char
     vi-find-next-char-skip
     vi-forward-char
