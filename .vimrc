@@ -761,9 +761,15 @@ nnoremap <Del>      j]](z<CR>]]
 Shortcut! <F12> switch to previous buffer
 nnoremap <F12>      
 
-imap <F2> sub ($self) {<CR>}<ESC>kea<Space>
-imap <F3> $self->{}<ESC>i
-imap <F4> $self->
+imap <F2>  sub ($self) {<CR>}<ESC>kea<Space>
+imap <F3>  $self->{}<ESC>i
+imap <F4>  $self->
+imap <F5>  [
+imap <F6>  ]
+imap <F7>  {
+imap <F8>  }
+imap <F9>  \|
+imap <F10> ~
 
 map <F13>    <S-F1>
 map <F14>    <S-F2>
