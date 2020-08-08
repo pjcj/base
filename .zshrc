@@ -284,12 +284,10 @@ autoload -U history-beginning-search-menu-space-end \
        history-beginning-search-menu
 zle -N history-beginning-search-menu-space-end \
        history-beginning-search-menu
-bindkey "^X" history-beginning-search-menu-space-end
+bindkey "^E" history-beginning-search-menu-space-end
 
 bindkey "^O" push-line-or-edit
 bindkey "^P" accept-and-infer-next-history
-
-bindkey "^E" undefined-key
 
 bindkey "^[[5~" vi-end-of-line
 bindkey "^[[6~" vi-forward-blank-word-end
