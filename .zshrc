@@ -302,9 +302,10 @@ bindkey -s "^[[20~" "|"
 bindkey -s "^[[21~" "~"
 bindkey -s "^[[24~" "\`"
 
-bindkey -s "^[OP" "0Diglk"
-bindkey -s "^[OQ" "0Digll"
-bindkey -s "^[OR" "0Digl"
+bindkey -s "^[OP" "^[0Diglk^M"
+bindkey -s "^[OQ" "^[0Digll^M"
+bindkey -s "^[OR" "^[0Digs^M"
+bindkey -s "^[OS" "^[0Digd^M"
 
 zshrc_load_status "miscellaneous"
 
