@@ -292,6 +292,7 @@ bindkey "^P" accept-and-infer-next-history
 bindkey "^[[5~" vi-end-of-line
 bindkey "^[[6~" vi-forward-blank-word-end
 bindkey "^Y" vi-forward-word
+bindkey -s "§" "lC"
 
 zshrc_load_status "miscellaneous"
 
