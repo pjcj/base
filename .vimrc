@@ -17,7 +17,7 @@ call plug#begin()
 " !sort -t/ -k2
 
 Plug 'w0rp/ale'                                                " syntax checking
-Plug 'jiangmiao/auto-pairs'                          " close pairs automatically
+" Plug 'jiangmiao/auto-pairs'                          " close pairs automatically
 Plug 'APZelos/blamer.nvim'                                 " show per-line blame
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
 Plug 'rhysd/git-messenger.vim'                              " show git blame ,gm
