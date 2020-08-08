@@ -302,6 +302,10 @@ bindkey -s "^[[20~" "|"
 bindkey -s "^[[21~" "~"
 bindkey -s "^[[24~" "\`"
 
+bindkey -s "^[OP" "0Diglk"
+bindkey -s "^[OQ" "0Digll"
+bindkey -s "^[OR" "0Digl"
+
 zshrc_load_status "miscellaneous"
 
 # url-quote-magic breaks fast-syntax-highlighting
