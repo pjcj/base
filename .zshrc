@@ -395,6 +395,7 @@ gg()      { git grep -n "$@" }
 ggv()     { git grep -O$EDITOR "$@" }
 gl()      { git lg --all "$@" }
 gll()     { git lg "$@" }
+glk()     { gl "$@" }
 gld()     { git lg --all --date=iso "$@" }
 gls()     { git lg --simplify-by-decoration "$@" }
 glsa()    { git lg --all --simplify-by-decoration "$@" }
