@@ -18,6 +18,7 @@ call plug#begin()
 
 Plug 'w0rp/ale'                                                " syntax checking
 Plug 'APZelos/blamer.nvim'                                 " show per-line blame
+Plug 'rhysd/conflict-marker.vim'                " highlight git conflict markers
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
 Plug 'rhysd/git-messenger.vim'                              " show git blame ,gm
 Plug 'haya14busa/incsearch-fuzzy.vim'                                       " z/
@@ -81,7 +82,6 @@ Plug 'baskerville/vim-sxhkdrc'                                     "sxhkd syntax
 Plug 'tmux-plugins/vim-tmux'                 " tmux syntax highlighting and more
 Plug 'mattboehm/vim-unstack'                             " :UnstackFromSelection
 Plug 'akracun/vitality.vim'                           " deal with focus for tmux
-Plug 'rhysd/conflict-marker.vim'                " highlight git conflict markers
 
 " Perl
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do':
