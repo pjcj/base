@@ -1,10 +1,10 @@
 #!/bin/sh
 
 branch=$1
-test -z $branch && echo "branch required" 1>&2 && exit 1
+test -z "$branch" && echo "branch required" 1>&2 && exit 1
 
-if [ $branch = "master" ]; then
+if [ "$branch" = "master" ]; then
     git rebase origin/master
 else
-    git branch -f $branch origin/$branch
+    git branch -f "$branch" "origin/$branch"
 fi
