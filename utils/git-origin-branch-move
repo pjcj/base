@@ -3,8 +3,7 @@
 branch=$1
 test -z "$branch" && echo "branch required" 1>&2 && exit 1
 
-if [ "$branch" = "master" ]; then
-    git rebase origin/master
-else
-    git branch -f "$branch" "origin/$branch"
-fi
+current_branch="$(git branch --show-current)"
+git checkout -q "$(git rev-parse HEAD)"
+git branch -f "$branch" "origin/$branch"
+git checkout -q "$current_branch"
