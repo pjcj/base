@@ -540,6 +540,11 @@ Shortcut stage current hunk
 Shortcut undo current hunk
     \ nnoremap <leader>hr :GitGutterUndoHunk<CR>
 
+let g:conflict_marker_begin = '^<<<<<<< .*$'
+let g:conflict_marker_end   = '^>>>>>>> .*$'
+" let g:conflict_marker_separator = '^\(=======|\|\|\|\|\|\|\| .*\)$'
+" let g:conflict_marker_separator = '^\(=======|XXXXXX\)$'
+
 let g:SignatureMarkTextHLDynamic = 1
 
 let g:vitality_tumx_can_focus    = 1
