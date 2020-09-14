@@ -16,7 +16,7 @@ call plug#begin()
 
 " !sort -t/ -k2
 
-Plug 'w0rp/ale', { 'tag': '*' }                                " syntax checking
+Plug 'w0rp/ale', { 'tag': 'v2.7.0' }                           " syntax checking
 Plug 'APZelos/blamer.nvim'                                 " show per-line blame
 Plug 'rhysd/conflict-marker.vim'                " highlight git conflict markers
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
