@@ -63,7 +63,7 @@ if [[ "$(uname)" == Darwin ]]; then
     if which brew >&/dev/null; then
         brew update
         brew upgrade
-        brew cask upgrade
+        brew upgrade --cask
         brew bundle dump --file=Brewfile --force
     else
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -113,7 +113,7 @@ else
     if which brew >&/dev/null; then
         brew update
         brew upgrade
-        brew cask upgrade
+        brew upgrade --cask
         brew bundle dump --file=Brewfile.linux --force
     else
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
