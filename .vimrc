@@ -192,7 +192,7 @@ set number
 set path=,,.,/usr/include
 set report=1
 set ruler
-set scrolloff=3
+set scrolloff=5
 set shell=zsh
 set shiftround
 set shiftwidth=4
