@@ -381,6 +381,7 @@ cd()      { c "$@" && d }
 ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
 dh()      { f "$@" | head }
 dm()      { fc -e - d=m -1 }
+fd()      { command fd -H "$@" }
 g()       { git "$@" }
 ga()      { git add "$@" }
 gb()      { git branch "$@" }
@@ -541,7 +542,7 @@ if [[ $(uname) == Darwin ]]; then
     ds() { lsd -hld "$@" }
     mv() { command gmv -bv --backup=numbered "$@" }
     s()  { open "$@" }
-    fd() { command fd --exclude '/Volumes/' "$@" }
+    fd() { command fd -H --exclude '/Volumes/' "$@" }
 elif [[ $(uname) == FreeBSD ]]; then
     cp() { command cp -v "$@" }
     f()  { ls -ABGhl "$@" }
