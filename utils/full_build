@@ -143,13 +143,13 @@ if [[ "$EDITOR" == "nvim" ]]; then
     $pip3 install --upgrade --user typing
 
     rm -f vimplug.lock
-    $EDITOR -c PlugUpgrade                 -c qa
-    # $EDITOR -c PlugClean                 -c qa
-    $EDITOR -c PlugInstall                 -c qa
-    $EDITOR -c PlugUpdate                  -c qa
-    $EDITOR -c PlugSnapshot\ vimplug.lock  -c qa
+    $EDITOR -c PlugUpgrade                    -c qa
+    $EDITOR -c PlugClean                      -c qa
+    $EDITOR -c PlugInstall                    -c qa
+    $EDITOR -c PlugUpdate                     -c qa
+    $EDITOR -c PlugSnapshot\ vimplug.lock     -c qa
 
-    $EDITOR -c UnicodeDownload -c qa
+    $EDITOR -c UnicodeDownload                -c qa
 
     yarn global add neovim
     $EDITOR -c "CocInstall coc-dictionary coc-tag coc-emoji" -c qa
