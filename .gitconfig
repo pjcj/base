@@ -123,6 +123,12 @@
     # git change-commits GIT_COMMITTER_NAME "old name" "new name"
     change-commits      = "!f() { VAR1=$1; VAR='$'$1; OLD=$2; NEW=$3; echo -n \"Are you sure for replace $VAR $OLD => $NEW ? (Y/N) \";read OK;if [ \"$OK\" = 'Y' ] ; then shift 3; git filter-branch --env-filter \"if [ \\\"${VAR}\\\" = '$OLD' ]; then export $VAR1='$NEW';echo 'to $NEW'; fi\" $@; fi;}; f"
     rm-untracked        = "!f() { git status --porcelain | grep '??' | awk '{print $2}' | xargs rm; }; f"
+    lp = "!git lg --color=always \"$@\" \
+        | fzf --ansi -m --no-sort --reverse --tiebreak=index --preview-window=down --height=100%  \
+        --preview \"(grep -o '[a-f0-9]\\{7\\}' | head -1 | xargs -I % sh -c 'git -c core.pager=cat show --color=never % | delta --width=$(tput cols)') <<< {}\" #"
+    lpr = "!git lg --color=always \"$@\" \
+        | fzf --ansi -m --no-sort --reverse --tiebreak=index --preview-window=right:60% --height=100%  \
+        --preview \"(grep -o '[a-f0-9]\\{7\\}' | head -1 | xargs -I % sh -c 'git -c core.pager=cat show --color=never % | delta --width=$(expr $(tput cols) \\* 6 / 10)') <<< {}\" #"
 [push]
     default             = current
     followTags          = true
