@@ -394,12 +394,12 @@ gdw()     { git diffwords "$@" }
 gf()      { git fetch --prune --all "$@" }
 gg()      { git grep -n "$@" }
 ggv()     { git grep -O$EDITOR "$@" }
-gl()      { git lg --all "$@" }
-gll()     { git lg "$@" }
+gl()      { git lp --all "$@" }
+gll()     { git lp "$@" }
 glk()     { gl "$@" }
-gld()     { git lg --all --date=iso "$@" }
-gls()     { git lg --simplify-by-decoration "$@" }
-glsa()    { git lg --all --simplify-by-decoration "$@" }
+gld()     { git lp --all --date=iso "$@" }
+gls()     { git lp --simplify-by-decoration "$@" }
+glsa()    { git lp --all --simplify-by-decoration "$@" }
 go()      { git co "$@" }
 goo()     { git omvo "${1-$(git branch-current)}" }
 gp()      { git push "$@" }
