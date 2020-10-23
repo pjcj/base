@@ -34,7 +34,7 @@
 [interactive]
     diffFilter          = delta --color-only
 [delta]
-    features                      = decorations line-numbers side-by-side
+    features                      = side-by-side
     commit-style                  = green
     file-decoration-style         = yellow 'ul ol'
     file-style                    = yellow
