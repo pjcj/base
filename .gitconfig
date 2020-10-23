@@ -26,20 +26,48 @@
     markEmptyLines      = true
     stripLeadingSymbols = true
 [core]
-    pager               = diff-so-fancy-wrapper | LESS= less --tabs=8 --tilde --no-init --LONG-PROMPT --ignore-case --RAW-CONTROL-CHARS -S
-    ; pager               = delta --theme=Solarized
+    ; pager               = diff-so-fancy-wrapper | LESS= less --tabs=8 --tilde --no-init --LONG-PROMPT --ignore-case --RAW-CONTROL-CHARS -S
+    pager               = delta
     whitespace          = trailing-space,space-before-tab,tab-in-indent
     autocrlf            = input
     excludesfile        = /home/pjohnson/.gitignore
 [interactive]
     diffFilter          = delta --color-only
+[delta]
+    features                      = decorations line-numbers side-by-side
+    commit-style                  = green
+    file-style                    = yellow
+    hunk-header-style             = blue
+    minus-style                   = 167
+    minus-non-emph-style          = 167
+    minus-emph-style              = 209 52
+    minus-empty-line-marker-style = normal 52
+    zero-style                    = normal
+    plus-style                    = 35
+    plus-non-emph-style           = 35
+    plus-emph-style               = 72 235
+    plus-empty-line-marker-style  = normal 22
+    whitespace-error-style        = reverse blue
+    line-numbers                  = true
+    line-numbers-minus-style      = 88
+    line-numbers-zero-style       = 238
+    line-numbers-plus-style       = 28
+    line-numbers-left-style       = blue
+    line-numbers-right-style      = blue
+    line-numbers-left-format      = {nm:^4}
+    line-numbers-right-format     = │{np:^4}
+    syntax-theme                  = Solarized (dark)
+    tabs                          = 0
+    file-decoration-style         = yellow 'ul ol'
+    hunk-header-decoration-style  = blue box
 [pack]
     threads             = 0
 [diff]
     renamelimit         = 0
     renames             = copies
-    ; mnemonicprefix      = true  ; confuses delta
+    mnemonicprefix      = true  ; confuses delta
     algorithm           = patience
+    colorMoved          = default
 [mergetool "vim_mergetool"]
     cmd                 = nvim -f -c "MergetoolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
     trustExitCode       = true
