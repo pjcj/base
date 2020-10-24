@@ -36,7 +36,7 @@
 [delta]
     features                      = side-by-side
     commit-style                  = green
-    file-decoration-style         = yellow 'ul ol'
+    file-decoration-style         = yellow box
     file-style                    = yellow
     hunk-header-decoration-style  = blue box
     hunk-header-style             = blue
