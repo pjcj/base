@@ -654,8 +654,10 @@ head="2>/dev/null | head -250"
 
 export FZF_TMUX=1
 export FZF_TMUX_HEIGHT=40%
+export FZF_WIDTH=70
 export FZF_DEFAULT_OPTS="
     --height 40% --reverse --inline-info
+    --preview-window=right:${FZF_WIDTH}%
     --color fg:-1,bg:-1,hl:$s_blue,fg+:$s_normal,bg+:$s_base02,hl+:$s_blue
     --color info:$s_cyan,prompt:$s_violet,pointer:$s_green,marker:$s_base3,spinner:$s_yellow
 "
@@ -679,27 +681,25 @@ _fzf_compgen_dir() {
 }
 
 _fzfgv() {
-    local pc=${1:-100}
+    local pc=${1:-$FZF_WIDTH}
     local gsh="git -c core.pager=cat show --color=never %"
     local disp="$gsh | delta --width=$(expr $(tput cols) \* $pc / 100)"
     echo "xargs -I % sh -c '$disp'"
 }
 
 fzfgv() {
-    local pc=${1:-100}
-    echo "$(_fzfgv $pc)"
+    echo "$(_fzfgv $1)"
 }
 
 fzfgvsha() {
-    local pc=${1:-100}
     local get_sha="grep -o '[a-f0-9]\+' | head -1"
-    echo "$get_sha | $(_fzfgv $pc)"
+    echo "$get_sha | $(_fzfgv $1)"
 }
 
 git-commit-sel() {
     setopt localoptions pipefail 2> /dev/null
     local get_sha="grep -o '[a-f0-9]\+' | head -1"
-    local cmd="echo {} | $(fzfgvsha 50)"
+    local cmd="echo {} | $(fzfgvsha)"
     g lg --color=always "$@" | \
         $(__fzfcmd) --ansi --tiebreak=index --preview="$cmd" "$@" | \
         while read item; do
@@ -721,7 +721,7 @@ zle -N fzf-git-commit-widget
 
 git-tag-sel() {
     setopt localoptions pipefail 2> /dev/null
-    local cmd="echo {} | $(fzfgv 50)"
+    local cmd="echo {} | $(fzfgv)"
     g tag | $(__fzfcmd) --tiebreak=index --preview="$cmd" "$@" | \
         while read item; do
         echo -n "${item}"
@@ -744,7 +744,7 @@ git-branch-sel() {
     setopt localoptions pipefail 2> /dev/null
     local get_full_branch="perl -pe 's/..([^ ]+) .*/\$1/'"
     local get_branch="perl -pe 's/.*?([-.\w]+) .*/\$1/'"
-    local cmd="echo {} | $get_full_branch | $(fzfgv 50)"
+    local cmd="echo {} | $get_full_branch | $(fzfgv)"
     local opts="-vv --sort=-committerdate --color=always"
     (eval "gb $opts; gb -r $opts") | \
         $(__fzfcmd) --ansi --tiebreak=index --preview="$cmd" "$@" | \
