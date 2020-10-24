@@ -705,9 +705,7 @@ git-commit-sel() {
         while read item; do
         echo -n "${item}" | eval "$get_sha"
     done
-    local ret=$?
-    echo
-    return $ret
+    return $?
 }
 
 fzf-git-commit-widget() {
@@ -726,9 +724,7 @@ git-tag-sel() {
         while read item; do
         echo -n "${item}"
     done
-    local ret=$?
-    echo
-    return $ret
+    return $?
 }
 
 fzf-git-tag-widget() {
@@ -751,9 +747,7 @@ git-branch-sel() {
         while read item; do
         echo -n "${item}" | eval "$get_branch"
     done
-    local ret=$?
-    echo
-    return $ret
+    return $?
 }
 
 fzf-git-branch-widget() {
