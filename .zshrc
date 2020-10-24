@@ -701,7 +701,7 @@ git-commit-sel() {
     local get_sha="grep -o '[a-f0-9]\+' | head -1"
     local cmd="echo {} | $(fzfgvsha)"
     g lg --color=always "$@" | \
-        $(__fzfcmd) --ansi --tiebreak=index --preview="$cmd" "$@" | \
+        $(__fzfcmd) --ansi --tiebreak=index --preview="$cmd" | \
         while read item; do
         echo -n "${item}" | eval "$get_sha"
     done
