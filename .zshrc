@@ -678,13 +678,30 @@ _fzf_compgen_dir() {
     fd --type d --hidden --follow --exclude ".git" . "$1"
 }
 
-_fzfgv="xargs -I % sh -c 'git show --color=always % | diff-so-fancy-wrapper'"
+_fzfgv() {
+    local pc=${1:-100}
+    local gsh="git -c core.pager=cat show --color=never %"
+    local disp="$gsh | delta --width=$(expr $(tput cols) \* $pc / 100)"
+    echo "xargs -I % sh -c '$disp'"
+}
+
+fzfgv() {
+    local pc=${1:-100}
+    echo "$(_fzfgv $pc)"
+}
+
+fzfgvsha() {
+    local pc=${1:-100}
+    local get_sha="grep -o '[a-f0-9]\+' | head -1"
+    echo "$get_sha | $(_fzfgv $pc)"
+}
 
 git-commit-sel() {
     setopt localoptions pipefail 2> /dev/null
     local get_sha="grep -o '[a-f0-9]\+' | head -1"
-    local cmd="echo {} | $get_sha | $_fzfgv"
-    gl --color | $(__fzfcmd) --ansi --tiebreak=index --preview="$cmd" "$@" | \
+    local cmd="echo {} | $(fzfgvsha 50)"
+    g lg --color=always "$@" | \
+        $(__fzfcmd) --ansi --tiebreak=index --preview="$cmd" "$@" | \
         while read item; do
         echo -n "${item}" | eval "$get_sha"
     done
@@ -704,7 +721,7 @@ zle -N fzf-git-commit-widget
 
 git-tag-sel() {
     setopt localoptions pipefail 2> /dev/null
-    local cmd="echo {} | $_fzfgv"
+    local cmd="echo {} | $(fzfgv 50)"
     g tag | $(__fzfcmd) --tiebreak=index --preview="$cmd" "$@" | \
         while read item; do
         echo -n "${item}"
@@ -727,7 +744,7 @@ git-branch-sel() {
     setopt localoptions pipefail 2> /dev/null
     local get_full_branch="perl -pe 's/..([^ ]+) .*/\$1/'"
     local get_branch="perl -pe 's/.*?([-.\w]+) .*/\$1/'"
-    local cmd="echo {} | $get_full_branch | $_fzfgv"
+    local cmd="echo {} | $get_full_branch | $(fzfgv 50)"
     local opts="-vv --sort=-committerdate --color=always"
     (eval "gb $opts; gb -r $opts") | \
         $(__fzfcmd) --ansi --tiebreak=index --preview="$cmd" "$@" | \
