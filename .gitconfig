@@ -40,11 +40,11 @@
     file-style                    = yellow
     hunk-header-decoration-style  = blue box
     hunk-header-style             = blue
-    line-numbers-left-format      = {nm:^4}
+    line-numbers-left-format      = {nm:^5}
     line-numbers-left-style       = blue
     line-numbers-minus-style      = "#dc322f" dim
     line-numbers-plus-style       = "#25ad2e" dim
-    line-numbers-right-format     = │{np:^4}
+    line-numbers-right-format     = │{np:^5}
     line-numbers-right-style      = blue
     line-numbers                  = true
     line-numbers-zero-style       = "#0E3C49"
