@@ -65,7 +65,7 @@
 [diff]
     renamelimit         = 0
     renames             = copies
-    mnemonicprefix      = true  ; confuses delta
+    mnemonicprefix      = true
     algorithm           = patience
     colorMoved          = default
 [mergetool "vim_mergetool"]
