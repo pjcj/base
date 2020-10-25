@@ -717,14 +717,11 @@ fzf-git-commit-widget() {
 }
 zle -N fzf-git-commit-widget
 
-fzf-git-commit-widget-k() {
-    FZF_TMUX_HEIGHT=100 git-commit-sel ${FZF_GIT_K:---all} | echo ""
-}
+_fzf_git() { FZF_TMUX_HEIGHT=100 git-commit-sel "$@" | echo -n "" }
+fzf-git-commit-widget-k() { _fzf_git ${FZF_GIT_K:---all} }
 zle -N fzf-git-commit-widget-k
 
-fzf-git-commit-widget-l() {
-    FZF_TMUX_HEIGHT=100 git-commit-sel | echo ""
-}
+fzf-git-commit-widget-l() { _fzf_git }
 zle -N fzf-git-commit-widget-l
 
 git-tag-sel() {
