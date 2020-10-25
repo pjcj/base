@@ -302,8 +302,8 @@ bindkey -s "^[[20~" "|"
 bindkey -s "^[[21~" "~"
 bindkey -s "^[[24~" "\`"
 
-bindkey -s "^[OP" "^[0Diglk^M"
-bindkey -s "^[OQ" "^[0Digll^M"
+bindkey "^[OP" fzf-git-commit-widget-k
+bindkey "^[OQ" fzf-git-commit-widget-l
 bindkey -s "^[OR" "^[0Digs^M"
 bindkey -s "^[OS" "^[0Digd^M"
 
@@ -716,6 +716,16 @@ fzf-git-commit-widget() {
     return $ret
 }
 zle -N fzf-git-commit-widget
+
+fzf-git-commit-widget-k() {
+    FZF_TMUX_HEIGHT=100 git-commit-sel ${FZF_GIT_K:---all} | echo ""
+}
+zle -N fzf-git-commit-widget-k
+
+fzf-git-commit-widget-l() {
+    FZF_TMUX_HEIGHT=100 git-commit-sel | echo ""
+}
+zle -N fzf-git-commit-widget-l
 
 git-tag-sel() {
     setopt localoptions pipefail 2> /dev/null
