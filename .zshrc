@@ -396,7 +396,6 @@ gg()      { git grep -n "$@" }
 ggv()     { git grep -O$EDITOR "$@" }
 gl()      { gll --all }
 gll()     { $(FZF_TMUX_HEIGHT=100 git-commit-sel "$@"); true }
-glk()     { gl "$@" }
 gld()     { gll --all --date=iso "$@" }
 gls()     { gll --simplify-by-decoration "$@" }
 glsa()    { gll --all --simplify-by-decoration "$@" }
@@ -447,6 +446,14 @@ z()       { dzil "$@" }
 zb()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil build "$@" }
 zt()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil test "$@" }
 = ()      { echo "$@" | bc -l }
+
+glk() {
+    if [[ -n $FZF_GIT_K ]]; then
+        gl $FZF_GIT_K "$@"
+    else
+        gl "$@"
+    fi
+}
 
 setup_plenv() {
     build plenv
@@ -718,7 +725,11 @@ fzf-git-commit-widget() {
 zle -N fzf-git-commit-widget
 
 _fzf_git() { FZF_TMUX_HEIGHT=100 git-commit-sel "$@" | echo -n "" }
-fzf-git-commit-widget-k() { _fzf_git ${FZF_GIT_K:---all} }
+fzf-git-commit-widget-k() {
+    IFS=" " read -A b <<< ${FZF_GIT_K:---all}
+    _fzf_git "${b[@]}"
+}
+
 zle -N fzf-git-commit-widget-k
 
 fzf-git-commit-widget-l() { _fzf_git }
