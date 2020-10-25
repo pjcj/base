@@ -653,7 +653,7 @@ tree() { eval $tree "$@" }
 head="2>/dev/null | head -250"
 
 export FZF_TMUX=1
-export FZF_TMUX_HEIGHT=40%
+export FZF_TMUX_HEIGHT=70%
 export FZF_WIDTH=70
 export FZF_DEFAULT_OPTS="
     --height 40% --reverse --inline-info
