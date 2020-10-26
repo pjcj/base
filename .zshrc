@@ -596,6 +596,7 @@ export s_green="#859900"
 export s_normal="#9599dc"
 
 export s_rgreen="#25ad2e"  # a nice green for diffs (opposite of s:red)
+export s_darkred="#2b0200"  # a dark red
 
 zshrc_load_status "external files"
 
@@ -665,7 +666,7 @@ export FZF_WIDTH=70
 export FZF_DEFAULT_OPTS="
     --height 40% --reverse --inline-info
     --preview-window=right:${FZF_WIDTH}%
-    --color fg:-1,bg:-1,hl:$s_blue,fg+:$s_normal,bg+:$s_base02,hl+:$s_blue
+    --color fg:-1,bg:-1,hl:$s_blue,fg+:$s_normal,bg+:$s_darkred,hl+:$s_blue
     --color info:$s_cyan,prompt:$s_violet,pointer:$s_green,marker:$s_base3,spinner:$s_yellow
 "
 export FZF_DEFAULT_COMMAND="fd --hidden --no-ignore-vcs --exclude .git"
