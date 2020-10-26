@@ -1,6 +1,6 @@
 [user]
-    name = Paul Johnson
-    email = paul@pjcj.net
+    name                = Paul Johnson
+    email               = paul@pjcj.net
 [color]
     ui                  = auto
 [color.grep]
