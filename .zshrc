@@ -668,6 +668,8 @@ export FZF_DEFAULT_OPTS="
     --preview-window=right:${FZF_WIDTH}%
     --color fg:-1,bg:-1,hl:$s_blue,fg+:$s_normal,bg+:$s_darkred,hl+:$s_blue
     --color info:$s_cyan,prompt:$s_violet,pointer:$s_green,marker:$s_base3,spinner:$s_yellow
+    --bind 'f1:abort'
+    --bind 'f2:toggle-preview'
 "
 export FZF_DEFAULT_COMMAND="fd --hidden --no-ignore-vcs --exclude .git"
 export FZF_CTRL_T_OPTS="--preview '(bat --color=always {} 2>/dev/null || cat {} || $tree {}) $head'"
