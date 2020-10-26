@@ -30,7 +30,7 @@
     pager               = delta
     whitespace          = trailing-space,space-before-tab,tab-in-indent
     autocrlf            = input
-    excludesfile        = /home/pjohnson/.gitignore
+    excludesfile        = ~/.gitignore_global
 [interactive]
     diffFilter          = delta --color-only
 [delta]
