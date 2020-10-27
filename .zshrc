@@ -395,7 +395,7 @@ gf()      { git fetch --prune --all "$@" }
 gg()      { git grep -n "$@" }
 ggv()     { git grep -O$EDITOR "$@" }
 gl()      { gll --all }
-gll()     { $(FZF_TMUX_HEIGHT=100 git-commit-sel "$@"); true }
+gll()     { $(git-commit-sel "$@"); true }
 gld()     { gll --all --date=iso "$@" }
 gls()     { gll --simplify-by-decoration "$@" }
 glsa()    { gll --all --simplify-by-decoration "$@" }
@@ -595,7 +595,7 @@ export s_cyan="#2aa198"
 export s_green="#859900"
 export s_normal="#9599dc"
 
-export s_rgreen="#25ad2e"  # a nice green for diffs (opposite of s:red)
+export s_rgreen="#25ad2e"   # a nice green for diffs (opposite of s:red)
 export s_darkred="#2b0200"  # a dark red
 
 zshrc_load_status "external files"
@@ -661,7 +661,7 @@ tree() { eval $tree "$@" }
 head="2>/dev/null | head -250"
 
 export FZF_TMUX=1
-export FZF_TMUX_HEIGHT=70%
+export FZF_TMUX_HEIGHT=90%
 export FZF_WIDTH=70
 export FZF_DEFAULT_OPTS="
     --height 40% --reverse --inline-info
@@ -727,7 +727,7 @@ fzf-git-commit-widget() {
 }
 zle -N fzf-git-commit-widget
 
-_fzf_git() { FZF_TMUX_HEIGHT=100 git-commit-sel "$@" | echo -n "" }
+_fzf_git() { git-commit-sel "$@" | echo -n "" }
 fzf-git-commit-widget-k() {
     IFS=" " read -A b <<< ${FZF_GIT_K:---all}
     _fzf_git "${b[@]}"
