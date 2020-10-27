@@ -1023,54 +1023,6 @@
             "simple_modifications": [
                 {
                     "from": {
-                        "key_code": "f5"
-                    },
-                    "to": {
-                        "key_code": "["
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "f6"
-                    },
-                    "to": {
-                        "key_code": "]"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "f7"
-                    },
-                    "to": {
-                        "key_code": "{"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "f8"
-                    },
-                    "to": {
-                        "key_code": "}"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "f9"
-                    },
-                    "to": {
-                        "key_code": "|"
-                    }
-                },
-                {
-                    "from": {
-                        "key_code": "f10"
-                    },
-                    "to": {
-                        "key_code": "~"
-                    }
-                },
-                {
-                    "from": {
                         "key_code": "pause"
                     },
                     "to": {
