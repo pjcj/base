@@ -560,7 +560,7 @@
                                 "to": {
                                     "key_code": "7",
                                     "modifiers": [
-                                        "option",
+                                        "right_option",
                                         "shift"
                                     ]
                                 },
