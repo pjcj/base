@@ -293,14 +293,14 @@ bindkey "^[[5~" vi-end-of-line
 bindkey "^[[6~" vi-forward-blank-word-end
 bindkey "^Y" vi-forward-word
 
-bindkey -s "§" "lC"
-bindkey -s "^[[15~" "["
-bindkey -s "^[[17~" "]"
-bindkey -s "^[[18~" "{"
-bindkey -s "^[[19~" "}"
-bindkey -s "^[[20~" "|"
-bindkey -s "^[[21~" "~"
-bindkey -s "^[[24~" "\`"
+# bindkey -s "§" "lC"
+# bindkey -s "^[[15~" "["
+# bindkey -s "^[[17~" "]"
+# bindkey -s "^[[18~" "{"
+# bindkey -s "^[[19~" "}"
+# bindkey -s "^[[20~" "|"
+# bindkey -s "^[[21~" "~"
+# bindkey -s "^[[24~" "\`"
 
 bindkey "^[OP" fzf-git-commit-widget-k
 bindkey "^[OQ" fzf-git-commit-widget-l
