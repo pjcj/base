@@ -17,6 +17,7 @@
     old                 = "#dc322f"
     new                 = "#25ad2e"
     whitespace          = blue reverse
+    newMoved            = "#f0c53f"
 [color "diff-highlight"]
     oldNormal           = "#dc322f"
     newNormal           = "#25ad2e"
