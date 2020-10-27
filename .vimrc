@@ -1008,7 +1008,7 @@ function! Fzf()
         \ 'source':  <sid>files(),
         \ 'sink':    function('s:edit_file'),
         \ 'options': '-m ' . l:fzf_files_options,
-        \ 'down':    '70%' })
+        \ 'down':    '90%' })
 endfunction
 
 
