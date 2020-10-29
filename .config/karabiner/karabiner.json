@@ -42,17 +42,36 @@
                         ]
                     },
                     {
-                        "description": "f11 -> copy",
+                        "description": "print_screen -> copy",
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "f11"
+                                    "key_code": "print_screen"
                                 },
                                 "to": [
                                     {
                                         "key_code": "c",
                                         "modifiers": [
-                                            "option"
+                                            "left_command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "scroll_lock -> paste",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "scroll_lock"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "v",
+                                        "modifiers": [
+                                            "left_command"
                                         ]
                                     }
                                 ],
