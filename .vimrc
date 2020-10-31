@@ -73,7 +73,8 @@ Plug 'ojroques/vim-scrollstatus'                                 " add scrollbar
 Plug 'inside/vim-search-pulse'                                           " * n N
 Plug 'google/vim-searchindex'                            " show m/n for searches
 Plug 'kshenoy/vim-signature'                          " mx dmx m, m. m<Space> m/
-Plug 'tpope/vim-sleuth'                                  " indentation detection
+" Plug 'tpope/vim-sleuth'                                  " indentation detection
+Plug 'zsugabubus/crazy8.nvim'                        " indentation detection
 Plug 'psliwka/vim-smoothie'
 Plug 'justinmk/vim-sneak'                                          " § ° f F t T
 Plug 'honza/vim-snippets'
