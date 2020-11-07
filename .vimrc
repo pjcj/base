@@ -356,6 +356,7 @@ augroup file_types
     autocmd BufNewFile,BufReadPost *.tt       set ft=tt2html
     autocmd BufNewFile,BufReadPost *.t        set ft=perl
     autocmd BufNewFile,BufReadPost *.pd       set ft=perl
+    autocmd BufNewFile,BufReadPost *.pm       set ft=perl  " not raku
     autocmd BufNewFile,BufReadPost *.mc       set ft=mason
 
     autocmd BufRead *tmp/ml/mutt-*
