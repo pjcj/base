@@ -303,8 +303,9 @@ bindkey -s "^[[20~" "|"
 bindkey -s "^[[21~" "~"
 # bindkey -s "^[[24~" "\`"
 
-bindkey "^[OP" fzf-git-commit-widget-k
-bindkey "^[OQ" fzf-git-commit-widget-l
+bindkey "^[OP" fzf_git_commit_widget_k
+bindkey "^[[25~" fzf_git_commit_widget_lall
+bindkey "^[OQ" fzf_git_commit_widget_l
 bindkey -s "^[OR" "^[0Digs^M"
 bindkey -s "^[OS" "^[0Digd^M"
 
@@ -723,25 +724,27 @@ git-commit-sel() {
     return $?
 }
 
-fzf-git-commit-widget() {
+fzf_git_commit_widget() {
     LBUFFER="${LBUFFER}$(git-commit-sel)"
     local ret=$?
     zle redisplay
     typeset -f zle-line-init >/dev/null && zle zle-line-init
     return $ret
 }
-zle -N fzf-git-commit-widget
+zle -N fzf_git_commit_widget
 
 _fzf_git() { git-commit-sel "$@" | echo -n "" }
-fzf-git-commit-widget-k() {
+fzf_git_commit_widget_k() {
     IFS=" " read -A b <<< ${FZF_GIT_K:---all}
     _fzf_git "${b[@]}"
 }
+zle -N fzf_git_commit_widget_k
 
-zle -N fzf-git-commit-widget-k
+fzf_git_commit_widget_lall() { _fzf_git --all }
+zle -N fzf_git_commit_widget_lall
 
-fzf-git-commit-widget-l() { _fzf_git }
-zle -N fzf-git-commit-widget-l
+fzf_git_commit_widget_l() { _fzf_git }
+zle -N fzf_git_commit_widget_l
 
 git-tag-sel() {
     setopt localoptions pipefail 2> /dev/null
@@ -753,14 +756,14 @@ git-tag-sel() {
     return $?
 }
 
-fzf-git-tag-widget() {
+fzf_git_tag_widget() {
     LBUFFER="${LBUFFER}$(git-tag-sel)"
     local ret=$?
     zle redisplay
     typeset -f zle-line-init >/dev/null && zle zle-line-init
     return $ret
 }
-zle -N fzf-git-tag-widget
+zle -N fzf_git_tag_widget
 
 git-branch-sel() {
     setopt localoptions pipefail 2> /dev/null
@@ -776,20 +779,20 @@ git-branch-sel() {
     return $?
 }
 
-fzf-git-branch-widget() {
+fzf_git_branch_widget() {
     LBUFFER="${LBUFFER}$(git-branch-sel)"
     local ret=$?
     zle redisplay
     typeset -f zle-line-init >/dev/null && zle zle-line-init
     return $ret
 }
-zle -N fzf-git-branch-widget
+zle -N fzf_git_branch_widget
 
-bindkey '^F' fzf-file-widget
-bindkey '^N' fzf-cd-widget
-bindkey '^G' fzf-git-commit-widget
-bindkey '^B' fzf-git-branch-widget
-bindkey '^T' fzf-git-tag-widget
+bindkey '^F' fzf_file_widget
+bindkey '^N' fzf_cd_widget
+bindkey '^G' fzf_git_commit_widget
+bindkey '^B' fzf_git_branch_widget
+bindkey '^T' fzf_git_tag_widget
 
 zshrc_load_status "paths"
 
