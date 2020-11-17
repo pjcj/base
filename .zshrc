@@ -789,7 +789,7 @@ fzf_git_branch_widget() {
 zle -N fzf_git_branch_widget
 
 bindkey '^F' fzf_file_widget
-bindkey '^N' fzf_cd_widget
+bindkey '^N' fzf-cd-widget
 bindkey '^G' fzf_git_commit_widget
 bindkey '^B' fzf_git_branch_widget
 bindkey '^T' fzf_git_tag_widget
