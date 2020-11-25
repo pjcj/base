@@ -993,7 +993,8 @@ Shortcut! <leader>. fzf
 nnoremap <silent> <leader>. :call Fzf()<CR>
 
 function! Fzf()
-    let l:fzf_files_options = '--preview "bat --style=numbers,changes --color always {2..-1} | head -'.&lines.'"'
+    " let l:fzf_files_options = '--preview "bat --style=numbers,changes --color always {2..-1} | head -'.&lines.'"'
+    let l:fzf_files_options = '--preview "bat --style=numbers,changes --color always {2..-1}"'
 
     function! s:files()
         let l:files = split(system(g:fzf_cmd . ' | devicon-lookup'), '\n')
