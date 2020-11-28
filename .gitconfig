@@ -32,6 +32,7 @@
     whitespace          = trailing-space,space-before-tab,tab-in-indent
     autocrlf            = input
     excludesfile        = ~/.gitignore_global
+    commitGraph         = true
 [interactive]
     diffFilter          = delta --color-only
 [delta]
