@@ -36,7 +36,6 @@
 [interactive]
     diffFilter          = delta --color-only
 [delta]
-    features                      = side-by-side
     commit-style                  = green
     file-decoration-style         = yellow box
     file-style                    = yellow
@@ -58,6 +57,7 @@
     plus-empty-line-marker-style  = normal
     plus-non-emph-style           = "#25ad2e"
     plus-style                    = "#25ad2e"
+    side-by-side                  = true
     syntax-theme                  = Solarized (dark)
     tabs                          = 2
     whitespace-error-style        = reverse blue
