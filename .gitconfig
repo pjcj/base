@@ -59,7 +59,7 @@
     plus-non-emph-style           = "#25ad2e"
     plus-style                    = "#25ad2e"
     syntax-theme                  = Solarized (dark)
-    tabs                          = 0
+    tabs                          = 2
     whitespace-error-style        = reverse blue
     zero-style                    = normal
 [pack]
