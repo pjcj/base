@@ -134,6 +134,8 @@
 [push]
     default             = current
     followTags          = true
+[pull]
+    ff                  = only
 [status]
     showUntrackedFiles  = all
 [rerere]
