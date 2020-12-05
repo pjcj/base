@@ -36,7 +36,7 @@ brew "imagemagick@6"
 brew "lf"
 brew "libmagic"
 brew "lsd"
-brew "lua@5.1"
+brew "lua@5.1", link: false
 brew "luarocks"
 brew "mosh"
 brew "msgpack"
