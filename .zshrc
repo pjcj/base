@@ -397,6 +397,7 @@ gf()      { git fetch --prune --all "$@" }
 gg()      { git grep -n "$@" }
 ggv()     { git grep -O$EDITOR "$@" }
 gl()      { gll --all }
+glab()    { PAGER=bat command glab "$@" }
 gll()     { $(git-commit-sel "$@"); true }
 gld()     { gll --all --date=iso "$@" }
 gls()     { gll --simplify-by-decoration "$@" }
