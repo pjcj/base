@@ -28,7 +28,7 @@
     stripLeadingSymbols = true
 [core]
     ; pager               = diff-so-fancy-wrapper | LESS= less --tabs=8 --tilde --no-init --LONG-PROMPT --ignore-case --RAW-CONTROL-CHARS -S
-    pager               = delta
+    pager               = delta --features side-by-side
     whitespace          = trailing-space,space-before-tab,tab-in-indent
     autocrlf            = input
     excludesfile        = ~/.gitignore_global
@@ -57,11 +57,12 @@
     plus-empty-line-marker-style  = normal
     plus-non-emph-style           = "#25ad2e"
     plus-style                    = "#25ad2e"
-    side-by-side                  = true
     syntax-theme                  = Solarized (dark)
     tabs                          = 2
     whitespace-error-style        = reverse blue
     zero-style                    = normal
+[delta "side-by-side"]
+    side-by-side                  = true
 [pack]
     threads             = 0
 [diff]
