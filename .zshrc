@@ -3,7 +3,7 @@ zshrc_load_status () {
     echo -n "\r.zshrc load: $* ... \e[0K"
 }
 
-zshrc_load_status "plugins"
+zshrc_load_status "autoenv"
 
 # zsh-autoenv
 AUTOENV_FILE_ENTER=.autoenv.zsh
@@ -11,25 +11,33 @@ AUTOENV_FILE_LEAVE=.autoenv.zsh
 AUTOENV_HANDLE_LEAVE=1
 AUTOENV_LOOK_UPWARDS=1
 
-source ~/.zplug/init.zsh
+zshrc_load_status "plugins"
 
-# https://github.com/tj/git-extras/blob/master/Commands.md
-zplug 'zsh-users/zsh-autosuggestions'
-zplug "zsh-users/zsh-completions"
-zplug "zdharma/fast-syntax-highlighting"
-# zplug "marlonrichert/zsh-autocomplete"
-# zplug "Aloxaf/fzf-tab"
-zplug "Tarrasch/zsh-autoenv"
-# zplug "agkozak/agkozak-zsh-prompt"
-zplug "woefe/git-prompt.zsh"
-zplug "woefe/vi-mode.zsh"
+ZINIT_HOME="${ZINIT_HOME:-${ZPLG_HOME:-${ZDOTDIR:-$HOME}/.zinit}}"
+ZINIT_BIN_DIR_NAME="${${ZINIT_BIN_DIR_NAME:-$ZPLG_BIN_DIR_NAME}:-bin}"
+### Added by Zinit's installer
+if [[ ! -f $ZINIT_HOME/$ZINIT_BIN_DIR_NAME/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing DHARMA Initiative Plugin Manager (zdharma/zinit)…%f"
+    command mkdir -p "$ZINIT_HOME" && command chmod g-rwX "$ZINIT_HOME"
+    command git clone https://github.com/zdharma/zinit "$ZINIT_HOME/$ZINIT_BIN_DIR_NAME" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f"
+fi
+source "$ZINIT_HOME/$ZINIT_BIN_DIR_NAME/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+### End of Zinit installer's chunk
 
-zplug "zplug/zplug", hook-build:"zplug --self-manage"
+zshrc_load_status "load plugins"
 
-if ! zplug check; then zplug install; fi
-zplug load
+zinit load 'zsh-users/zsh-autosuggestions'
+zinit load "zsh-users/zsh-completions"
+zinit load "zdharma/fast-syntax-highlighting"
+zinit load "Tarrasch/zsh-autoenv"
+zinit load "woefe/git-prompt.zsh"
+zinit load "woefe/vi-mode.zsh"
 
-zshrc_load_status "setting options"
+zshrc_load_status "options"
 
 setopt                        \
        all_export             \
@@ -133,7 +141,7 @@ setopt                        \
     NO_xtrace                 \
        zle
 
-zshrc_load_status "setting environment"
+zshrc_load_status "environment"
 
 if [ $EUID -ne 0 ]; then
     [ -e /home/linuxbrew/.linuxbrew/bin/brew ] && \
