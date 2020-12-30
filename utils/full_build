@@ -11,7 +11,7 @@ if [ ! -e .tmux.conf ]; then
     ln -s g/base/{.vimrc,.Xdefaults,.vim,.nvim,.tmux.conf,.tigrc} ~
     [[ -d ~/.config ]] || mkdir ~/.config
     ln -s ~/g/base/.config/* ~/.config
-    ( cd ~ && ln -s g/base/.zshrc* . )
+    ( cd ~ && ln -s g/base/.zshrc* g/base/.zshenv . )
 
     sudo aptitude install gawk
 
