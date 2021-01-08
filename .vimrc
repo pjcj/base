@@ -55,7 +55,7 @@ Plug 'tpope/vim-fugitive'                  " :Gdiff :Gstatus ,gg, :Gblame, P, gq
 Plug 'tommcdo/vim-fugitive-blame-ext'                           " extend :Gblame
 Plug 'ruanyl/vim-gh-line'                                              " ,gh ,gb
 Plug 'airblade/vim-gitgutter'                  " <F3>,hn <F2>,hp ,hv <F1>,hs ,hr
-Plug 'fatih/vim-go'                                                         " go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }                          " go
 Plug 'ludovicchabant/vim-gutentags'                   " generate tags on the fly
 Plug 'nathanaelkane/vim-indent-guides'    " configured for indent of two or four
 Plug 'michaeljsmith/vim-indent-object'      " objects based on indentation ii AI
@@ -436,6 +436,22 @@ let perl_sub_signatures  = 1
 
 Shortcut toggle all folds
     \ nnoremap <expr> zz &foldlevel ? 'zM' :'zR'
+
+" Go options
+let g:go_highlight_array_whitespace_error = 1
+let g:go_highlight_chan_whitespace_error  = 1
+let g:go_highlight_extra_types            = 1
+let g:go_highlight_space_tab_error        = 1
+let g:go_highlight_operators              = 1
+let g:go_highlight_functions              = 1
+let g:go_highlight_function_parameters    = 1
+let g:go_highlight_function_calls         = 1
+let g:go_highlight_types                  = 1
+let g:go_highlight_fields                 = 1
+let g:go_highlight_build_constraints      = 1
+let g:go_highlight_generate_tags          = 1
+let g:go_highlight_variable_declarations  = 1
+let g:go_highlight_variable_assignments   = 1
 
 " Java options
 set cinoptions+=j1  " anonymous classes
