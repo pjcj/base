@@ -115,6 +115,8 @@ Plug 'soh335/unite-perl-module'
 
 Plug 'pjcj/neovim-colors-solarized-truecolor-only'
 
+" Plug 'neovim/nvim-lspconfig'
+
 " CoC
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'wellle/tmux-complete.vim'
@@ -138,6 +140,10 @@ else
 endif
 
 call plug#end()
+
+" lua << EOF
+" require'lspconfig'.gopls.setup{}
+" EOF
 
 let g:mapleader = ','
 
