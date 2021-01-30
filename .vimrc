@@ -16,8 +16,7 @@ call plug#begin()
 
 " !sort -t/ -k2
 
-Plug 'w0rp/ale', { 'tag': '*' }                           " syntax checking
-" Plug 'w0rp/ale', { 'tag': 'v2.7.0' }                           " syntax checking
+Plug 'w0rp/ale', { 'tag': '*' }                                " syntax checking
 Plug 'APZelos/blamer.nvim'                                 " show per-line blame
 Plug 'rhysd/conflict-marker.vim'                " highlight git conflict markers
 Plug 'vim-scripts/diffchar.vim'                       " show diffs on char basis
@@ -961,6 +960,9 @@ let g:ale_rust_rls_config = {
 let g:ale_fixers = {
     \     'rust': [ 'rustfmt' ],
     \}
+
+" Disable ale for go files
+let g:ale_pattern_options = {'\.go$': {'ale_enabled': 0}}
 
 Shortcut jump to next error
     \ nmap <silent> <C-J> <Plug>(ale_next_wrap)
