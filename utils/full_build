@@ -146,7 +146,7 @@ if [[ "$EDITOR" == "nvim" ]]; then
 
     yarn global add neovim
     $EDITOR -c "CocInstall coc-tag coc-emoji" -c qa
-    $EDITOR -c "CocUpdate"                    -c qa
+    $EDITOR -c "CocUpdateSync"                -c qa
 fi
 
 # if [[ $(uname) == Linux ]]; then
