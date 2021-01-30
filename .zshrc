@@ -311,11 +311,11 @@ bindkey -s "^[[20~" "|"
 bindkey -s "^[[21~" "~"
 # bindkey -s "^[[24~" "\`"
 
-bindkey "^[OP" fzf_git_commit_widget_k
-bindkey "^[[25~" fzf_git_commit_widget_lall
-bindkey "^[OQ" fzf_git_commit_widget_l
-bindkey -s "^[OR" "^[0Digs^M"
-bindkey -s "^[OS" "^[0Digd^M"
+bindkey "^[OP" fzf_git_commit_widget_k                  # f1
+bindkey "^[[25~" fzf_git_commit_widget_lall             # shift-f1
+bindkey "^[OQ" fzf_git_commit_widget_l                  # f2
+bindkey -s "^[OR" "^[0Digs^M"                           # f3
+bindkey -s "^[OS" "^[0Digd^M"                           # f4
 
 zshrc_load_status "miscellaneous"
 
