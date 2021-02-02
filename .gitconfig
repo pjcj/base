@@ -150,3 +150,5 @@
     path                = .gitconfig.local
 [hub]
     protocol            = ssh
+[init]
+    defaultBranch       = main
