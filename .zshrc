@@ -663,7 +663,7 @@ zshrc_load_status "fzf"
 fh() { print -z $(fc -li 1 | fzf-tmux +s --tac | sed -r 's/ *[0-9]+.{18}//') }
 
 if which lsd >&/dev/null; then
-    tree="lsd --tree --color=always --icon=always"
+    tree="lsd -A --tree --color=always --icon=always"
 
 else
     tree="tree -C"
