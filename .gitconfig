@@ -130,11 +130,13 @@
     lpr = "!git lg --color=always \"$@\" \
         | fzf --ansi -m --no-sort --reverse --tiebreak=index --preview-window=right:60% --height=100%  \
         --preview \"(grep -o '[a-f0-9]\\{7\\}' | head -1 | xargs -I % sh -c 'git -c core.pager=cat show --color=never % | delta --width=$(expr $(tput cols) \\* 6 / 10)') <<< {}\" #"
+[merge]
+    ff                  = false
+[pull]
+    ff                  = only
 [push]
     default             = current
     followTags          = true
-[pull]
-    ff                  = only
 [status]
     showUntrackedFiles  = all
 [rerere]
