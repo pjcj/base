@@ -739,8 +739,10 @@ Shortcut jump to previous hunk
     \ nnoremap <F2>       :GitGutterPrevHunk<CR>
 Shortcut jump to next hunk
     \ nnoremap <F3>       :GitGutterNextHunk<CR>
+Shortcut undo hunk
+    \ nnoremap <C-F1>     :GitGutterUndoHunk<CR>
 Shortcut preview hunk
-    \ nnoremap <C-F1>     :GitGutterPreviewHunk<CR>
+    \ nnoremap <C-F2>     :GitGutterPreviewHunk<CR>
 Shortcut toggle NERDTree filesystem viewer
     \ nnoremap <S-F1>     :NERDTreeToggle<CR>
 Shortcut toggle tagbar subroutine funtion method viewer
