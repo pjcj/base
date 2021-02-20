@@ -36,7 +36,7 @@ Plug 'majutsushi/tagbar'                                                " <S-F2>
 Plug 'wellle/targets.vim'                                " add * | and _ targets
 Plug 'SirVer/ultisnips'
 Plug 'mbbill/undotree'                                                     " ,gu
-Plug 'chrisbra/unicode.vim'        " unicode table, search, complete, ^X^Z, ^X^G
+Plug 'chrisbra/unicode.vim'                                               " ^G^F
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'FooSoft/vim-argwrap'                              " wrap multiline args ,a
@@ -710,6 +710,7 @@ Shortcut! :Digraphs!<CR> show extended digraph table
 Shortcut! :Digraphs! show digraph table matching argument
 Shortcut! <C-X><C-G> complete as digraph
 Shortcut! <C-X><C-Z> complete as unicode
+Shortcut! <C-G><C-F> unicode fuzzy finder with fzf
 
 augroup autowrite
     autocmd!
