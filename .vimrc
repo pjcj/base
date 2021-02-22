@@ -1001,7 +1001,7 @@ vmap <leader>at :EasyAlign*/<tr>/r0l0<CR><Bar>gv<Bar>
                \:EasyAlign*/<td>/r0l0<CR><Bar>gv<Bar>
                \:EasyAlign*/<\/tr>/r0l0<CR>
 
-cmap w!! w !sudo tee % >/dev/null
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 Shortcut! :w!! write file as superuser
 
 " Customize fzf colors to match your color scheme
