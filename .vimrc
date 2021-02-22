@@ -849,6 +849,8 @@ map <F46>    <M-F10>
 map <F47>    <M-F11>
 map <F48>    <M-F12>
 
+map <Leader>f1 <C-F1>
+map <Leader>f2 <C-F2>
 map <Leader>f8 <C-F8>
 
 Shortcut swap with the word on the left
