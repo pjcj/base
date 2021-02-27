@@ -240,8 +240,8 @@ compdef _git   gld=git-log
 compdef _git   gll=git-log
 compdef _git   gls=git-log
 compdef _git   glsa=git-log
-compdef _git   go=git-checkout
-compdef _git   goo=git-origin-branch-move
+compdef _git   gh=git-checkout
+compdef _git   gho=git-origin-branch-move
 compdef _git   gp=git-push
 compdef _git   gpf=git-push
 compdef _git   gpo=git-push
@@ -410,8 +410,8 @@ gll()     { $(git-commit-sel "$@"); true }
 gld()     { gll --all --date=iso "$@" }
 gls()     { gll --simplify-by-decoration "$@" }
 glsa()    { gll --all --simplify-by-decoration "$@" }
-go()      { git co "$@" }
-goo()     { git omvo "${1-$(git branch-current)}" }
+gh()      { git co "$@" }
+gho()     { git omvo "${1-$(git branch-current)}" }
 gp()      { git push "$@" }
 gpf()     { git push --force-with-lease "$@" }
 gpo()     { git push origin "$@" }
