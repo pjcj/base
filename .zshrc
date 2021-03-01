@@ -434,7 +434,7 @@ kitty()   { ~/.local/kitty.app/bin/kitty "$@" }
 ll()      { f "$@" | less -r -X }
 lll()     { eval $(perl -Mlocal::lib=$(pwd)/local_lib) }
 lu()      { fc -e - lsq=usq -1 }
-m()       { bat "$@" }
+m()       { bat --tabs=2 "$@" }
 mn()      { nroff -man "$@" | m }
 mutt()    { mkdir -p /tmp/ml && command mutt "$@" }
 n()       { make "$@" }
@@ -684,7 +684,7 @@ export FZF_DEFAULT_OPTS="
     --bind 'f2:toggle-preview'
 "
 export FZF_DEFAULT_COMMAND="fd --hidden --no-ignore-vcs --exclude .git"
-export FZF_CTRL_T_OPTS="--preview '(bat --color=always {} 2>/dev/null || cat {} || $tree {}) $head'"
+export FZF_CTRL_T_OPTS="--preview '(bat --tabs=2 --color=always {} 2>/dev/null || cat {} || $tree {}) $head'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_OPTS="--preview '$tree {} $head'"
 export FZF_ALT_C_COMMAND="fd --hidden --no-ignore-vcs --exclude .git --type d"
