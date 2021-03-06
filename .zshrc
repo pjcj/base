@@ -481,7 +481,7 @@ wh() {
 }
 
 tm() {
-    [[ -z "$1" ]] && { echo "usage: tm <session>" >&2; return 1; }
+    [[ -z "$1" ]] && tmux && return 0
     tmux has -t $1 && tmux attach -d -t $1 || tmux new -s $1
 }
 __tmux-sessions() {
