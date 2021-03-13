@@ -481,8 +481,11 @@ wh() {
 }
 
 tm() {
-    [[ -z "$1" ]] && tmux && return 0
-    tmux has -t $1 && tmux attach -d -t $1 || tmux new -s $1
+    if [[ -z "$1" ]]; then
+        tmux
+    else
+        tmux has -t $1 && tmux attach -d -t $1 || tmux new -s $1
+    fi
 }
 __tmux-sessions() {
     local expl
