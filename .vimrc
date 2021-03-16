@@ -1312,6 +1312,13 @@ function! BufEnterFunc()
     call Setup_indent_guides()
     if &filetype ==# 'nerdtree'
         silent exe substitute(mapcheck('R'), '<CR>', '', '')
+    elseif &filetype ==# 'go'
+        Shortcut open alternaive file
+            \ nnoremap <buffer> <leader>oa :GoAlternate<CR>
+        Shortcut jump to definition
+            \ nnoremap <buffer> <leader>od :GoDef<CR>
+        Shortcut set imports
+            \ nnoremap <buffer> <leader>oi :GoImports<CR>
     endif
 endfunction
 
