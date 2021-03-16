@@ -326,12 +326,12 @@ let g:indent_guides_indent_levels         = 40
 function! Setup_indent_guides()
     let g:indent_guides_auto_colors = 0
     call Set_colour('IndentGuidesEven', 'guibg', s:base02)
-    set listchars=tab:»\ ,trail:·
-    set tabstop=8
+    setlocal listchars=tab:»\ ,trail:·
+    setlocal tabstop=8
 
     if &filetype ==# 'go' || &filetype ==# 'make'
-        set listchars=tab:\ \ ,trail:·
-        set tabstop=2
+        setlocal listchars=tab:\ \ ,trail:·
+        setlocal tabstop=2
         call Set_colour('IndentGuidesOdd', 'guibg', s:base03)
     elseif &shiftwidth < 3
         let g:indent_guides_guide_size  = 0
