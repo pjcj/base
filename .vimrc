@@ -329,7 +329,7 @@ function! Setup_indent_guides()
     set listchars=tab:»\ ,trail:·
     set tabstop=8
 
-    if &filetype ==# 'go'
+    if &filetype ==# 'go' || &filetype ==# 'make'
         set listchars=tab:\ \ ,trail:·
         set tabstop=2
         call Set_colour('IndentGuidesOdd', 'guibg', s:base03)
