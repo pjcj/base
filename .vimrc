@@ -344,9 +344,6 @@ function! Setup_indent_guides()
         " echo 'big: ' &shiftwidth
     endif
 endfunction
-augroup colourscheme
-    autocmd BufEnter,Colorscheme * call Setup_indent_guides()
-augroup end
 
 let g:airline_theme                  = 'solarized'
 let g:airline_powerline_fonts        = 1
@@ -493,17 +490,6 @@ let g:blamer_date_format                 = '%Y-%m-%d %H:%M'
 call Set_colour('Blamer','guifg', s:base05)
 let g:NERDTreeShowHidden                 = 1
 let g:NERDTreeHighlightCursorline        = 0
-
-function! NERDTreeRefresh()
-    if &filetype ==# 'nerdtree'
-        silent exe substitute(mapcheck('R'), '<CR>', '', '')
-    endif
-endfunction
-
-augroup nerdtree
-    autocmd!
-    autocmd BufEnter * call NERDTreeRefresh()
-augroup end
 
 " taglist plugin
 let g:Tlist_Use_SingleClick      = 1
@@ -1321,6 +1307,18 @@ omap aa <Plug>SidewaysArgumentTextobjA
 xmap aa <Plug>SidewaysArgumentTextobjA
 omap ia <Plug>SidewaysArgumentTextobjI
 xmap ia <Plug>SidewaysArgumentTextobjI
+
+function! BufEnterFunc()
+    call Setup_indent_guides()
+    if &filetype ==# 'nerdtree'
+        silent exe substitute(mapcheck('R'), '<CR>', '', '')
+    endif
+endfunction
+
+augroup bufenter
+    autocmd!
+    autocmd BufEnter,ColorScheme * call BufEnterFunc()
+augroup end
 
 " abbr
 iabbr ,, =>
