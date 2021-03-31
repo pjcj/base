@@ -1423,6 +1423,11 @@ if filereadable(s:homerc)
     exec 'source ' . s:homerc
 endif
 
+let s:localrcup = expand('../.vimrc.local')
+if filereadable(s:localrcup)
+    exec 'source ' . s:localrcup
+endif
+
 let s:localrc = expand('./.vimrc.local')
 if filereadable(s:localrc)
     exec 'source ' . s:localrc
