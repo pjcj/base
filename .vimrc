@@ -469,6 +469,7 @@ let g:go_metalinter_autosave              = 1
 let g:go_metalinter_autosave_enabled      = ['all']
 let g:go_metalinter_enabled               = ['all']
 let g:go_gopls_gofumpt                    = 1
+let g:go_imports_mode                     = 'gopls'
 let g:go_fmt_options                      = {
     \ 'gofmt': '-s',
     \ }
