@@ -540,11 +540,11 @@ augroup git
     autocmd QuickFixCmdPost *grep* cwindow
 augroup end
 Shortcut show git diff
-    \ nnoremap <leader>gd :Gdiff<CR>
+    \ nnoremap <leader>gd :Git diff<CR>
 Shortcut make git commit
-    \ nnoremap <leader>gg :Gcommit -v<CR>
+    \ nnoremap <leader>gg :Git commit -v<CR>
 Shortcut show git status
-    \ nnoremap <leader>gs :Gstatus<CR>
+    \ nnoremap <leader>gs :Git status<CR>
 
 augroup gitgutter
     autocmd!
