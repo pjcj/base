@@ -254,7 +254,7 @@ compdef _git   grs=git-restore
 compdef _git   gri=git-rebase
 compdef _git   gs=git-status
 compdef _git   gsh=git-show
-compdef _git   gw=git-wtf
+compdef _git   gw=git-worktree
 compdef _dzil  z=dzil
 
 _git-branch-full-delete() { __git_branch_names }
@@ -424,7 +424,9 @@ grs()     { git restore --staged "$@" }
 gri()     { git rebase -i "$@" }
 gs()      { git st "$@" }
 gsh()     { git show "$@" }
-gw()      { git wtf -A "$@" }
+gw()      { git worktree "$@" }
+gwa()     { git worktree add "$(git rev-parse --git-common-dir)/../../$@" }
+gwm()     { cd "$@" }
 golang()  { command go "$@" }
 h()       { fc -li "$@" }
 hg()      { fc -li 1 | grep "$@" }
@@ -494,6 +496,30 @@ __tmux-sessions() {
     _describe -t sessions "sessions" sessions "$@"
 }
 compdef __tmux-sessions tm
+
+__gwm() {
+      local -a records=( ${(ps.\n\n.)"$(_call_program directories git worktree list --porcelain)"} )
+  local -a directories descriptions
+  local i hash branch
+  for i in $records; do
+    directories+=( ${${i%%$'\n'*}#worktree } )
+    hash=${${${"${(f)i}"[2]}#HEAD }[1,9]}
+    branch=${${"${(f)i}"[3]}#branch refs/heads/}
+
+    # Simulate the non-porcelain output
+    if [[ $branch == detached ]]; then
+      # TODO: show a ref that points at $hash here, like vcs_info does?
+      branch="(detached HEAD)"
+    else
+      branch="[$branch]"
+    fi
+
+    descriptions+=( "${directories[-1]}"$'\t'"$hash $branch" )
+  done
+  _wanted directories expl 'working tree' compadd -ld descriptions -S ' ' -f -M 'r:|/=* r:|=*' -a directories
+
+}
+compdef __gwm gwm
 
 zshrc_load_status "hashed directories"
 
