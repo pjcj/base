@@ -236,6 +236,7 @@ compdef _git   gvd=git-diff
 compdef _git   gf=git-fetch
 compdef _git   gg=git-grep
 compdef _git   gl=git-log
+compdef _git   gm=git-merge
 compdef _git   gld=git-log
 compdef _git   gll=git-log
 compdef _git   gls=git-log
@@ -412,6 +413,7 @@ gll()     { $(git-commit-sel "$@"); true }
 gld()     { gll --all --date=iso "$@" }
 gls()     { gll --simplify-by-decoration "$@" }
 glsa()    { gll --all --simplify-by-decoration "$@" }
+gm()      { git merge --no-commit "$@" && gc }
 gp()      { git push "$@" }
 gpf()     { git push --force-with-lease "$@" }
 gpo()     { git push origin "$@" }
