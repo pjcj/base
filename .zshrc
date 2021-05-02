@@ -404,14 +404,14 @@ gdw()     { git diffwords "$@" }
 gf()      { git fetch --prune --all "$@" }
 gg()      { git grep -n "$@" }
 ggv()     { git grep -O$EDITOR "$@" }
+gh()      { git co "$@" }
+gho()     { git omvo "${1-$(git branch-current)}" }
 gl()      { gll --all }
 glab()    { PAGER=bat command glab "$@" }
 gll()     { $(git-commit-sel "$@"); true }
 gld()     { gll --all --date=iso "$@" }
 gls()     { gll --simplify-by-decoration "$@" }
 glsa()    { gll --all --simplify-by-decoration "$@" }
-gh()      { git co "$@" }
-gho()     { git omvo "${1-$(git branch-current)}" }
 gp()      { git push "$@" }
 gpf()     { git push --force-with-lease "$@" }
 gpo()     { git push origin "$@" }
