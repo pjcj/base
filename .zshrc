@@ -395,8 +395,8 @@ fd()      { command fd -H "$@" }
 g()       { git "$@" }
 ga()      { git add "$@" }
 gb()      { git branch "$@" }
-gc()      { git commit -v "$@" }
-gca()     { git commit --amend -v "$@" }
+gc()      { git commit "$@" }
+gca()     { git commit --amend "$@" }
 gcae()    { git commit --amend --no-edit "$@" }
 gd()      { git diff "$@" }
 gds()     { git diff --stat "$@" }
