@@ -28,6 +28,7 @@
     stripLeadingSymbols = true
 [core]
     pager               = delta
+    whitespace          = trailing-space,space-before-tab
     autocrlf            = input
     excludesfile        = ~/.gitignore_global
     commitGraph         = true
