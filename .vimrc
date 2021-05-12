@@ -319,7 +319,7 @@ function! <SID>SynStack()
 endfunction
 
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
-" let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+set guicursor+=a:blinkwait700-blinkon400-blinkoff250
 
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_indent_levels         = 40
