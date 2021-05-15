@@ -123,8 +123,6 @@
     insteadOf           = github:
 [ghq]
     root                = ~/g/ghq
-[include]
-    path                = .gitconfig.local
 [hub]
     protocol            = ssh
 [init]
@@ -156,3 +154,5 @@
     whitespace-error-style        = reverse blue
     zero-style                    = normal
     side-by-side                  = true
+[include]
+    path = .gitconfig.local
