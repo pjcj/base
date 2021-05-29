@@ -416,6 +416,7 @@ gls()     { gll --simplify-by-decoration "$@" }
 glsa()    { gll --all --simplify-by-decoration "$@" }
 gm()      { git merge --no-commit "$@" && gc }
 gp()      { git push "$@" }
+gpu()     { git push --set-upstream origin $(git branch --show-current) }
 gpf()     { git push --force-with-lease "$@" }
 gpo()     { git push origin "$@" }
 gpof()    { git push origin --force-with-lease "$@" }
