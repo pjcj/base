@@ -688,6 +688,12 @@ if [[ -e ~/.plenv ]] then
     eval "$(plenv init - zsh)"
 fi
 
+if [[ $(uname -s) = Darwin ]]; then
+  PATH="/usr/local/opt/node@14/bin:$PATH"
+  LDFLAGS="-L/usr/local/opt/node@14/lib"
+  CPPFLAGS="-I/usr/local/opt/node@14/include"
+fi
+
 zshrc_load_status "fzf"
 
 # Commands:
