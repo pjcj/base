@@ -1,0 +1,7 @@
+#!/bin/sh
+
+for tag in "$@"; do
+    git tag -d "$tag"
+    git push origin --delete "$tag"
+done
+git remote prune origin
