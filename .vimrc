@@ -1339,7 +1339,10 @@ function! BufEnterFunc()
         Shortcut set imports
             \ nnoremap <buffer> <leader>oi :GoImports<CR>
         Shortcut run linters
-            \ nnoremap <buffer> <leader>l :GoMetaLinter<CR>
+            \ nnoremap <buffer> <leader>l  :GoMetaLinter<CR>
+        Shortcut jump to definition
+            \ nnoremap <buffer> <F4>       :GoDef <Bar> :call Pulse()<CR>
+
     endif
 endfunction
 
