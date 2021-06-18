@@ -403,7 +403,7 @@ gcae()    { git commit --amend --no-edit "$@" }
 gd()      { git diff "$@" }
 gds()     { git diff --stat "$@" }
 gdw()     { git diffwords "$@" }
-gf()      { git fetch --prune --all "$@" }
+gf()      { git fetch --all "$@" }
 gg()      { git grep -n "$@" }
 ggv()     { git grep -O$EDITOR "$@" }
 gh()      { git co "$@" }

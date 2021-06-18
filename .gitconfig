@@ -105,6 +105,10 @@
         --preview \"(grep -o '[a-f0-9]\\{7\\}' | head -1 | xargs -I % sh -c 'git -c core.pager=cat show --color=never % | delta --width=$(expr $(tput cols) \\* 6 / 10)') <<< {}\" #"
 [commit]
     verbose             = true
+[fetch]
+    prune               = true
+    pruneTags           = true
+    writeCommitGraph    = true
 [merge]
     ff                  = false
 [pull]
