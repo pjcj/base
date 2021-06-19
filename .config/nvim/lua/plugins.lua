@@ -62,10 +62,13 @@ require "compe".setup {
     path      = true;
     buffer    = true;
     calc      = true;
+    spell     = true;
+    emoji     = true;
     nvim_lsp  = true;
     nvim_lua  = true;
     vsnip     = true;
     ultisnips = true;
+    nvim_treesitter = true;
     tmux      = {
       all_panes = true
     }
