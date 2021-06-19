@@ -21,6 +21,16 @@ require("packer").startup(function()
 
   use "neovim/nvim-lspconfig"
   use "kabouzeid/nvim-lspinstall"
+
+  use { "fatih/vim-go", run = ":GoUpdateBinaries" }
+
+  use {
+    "nvim-telescope/telescope.nvim",
+    requires = {{ "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" }}
+  }
+
+  use "hrsh7th/nvim-compe"
+  use "andersevenrud/compe-tmux"
 end)
 
 require "nvim-treesitter.configs".setup {
@@ -31,4 +41,33 @@ require "nvim-treesitter.configs".setup {
   indent = {
     enable = true,
   },
+}
+
+require "compe".setup {
+  enabled          = true;
+  autocomplete     = true;
+  debug            = false;
+  min_length       = 1;
+  preselect        = "enable";
+  throttle_time    = 80;
+  source_timeout   = 200;
+  resolve_timeout  = 800;
+  incomplete_delay = 400;
+  max_abbr_width   = 100;
+  max_kind_width   = 100;
+  max_menu_width   = 100;
+  documentation    = true;
+
+  source = {
+    path      = true;
+    buffer    = true;
+    calc      = true;
+    nvim_lsp  = true;
+    nvim_lua  = true;
+    vsnip     = true;
+    ultisnips = true;
+    tmux      = {
+      all_panes = true
+    }
+  }
 }

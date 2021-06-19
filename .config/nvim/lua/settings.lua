@@ -15,6 +15,7 @@ opt.clipboard     = { }
 opt.cmdheight     = 3
 opt.colorcolumn   = { 80, 120 }
 opt.complete      = ".,w,b,u,U,k/usr/share/dict/*,i,t"
+opt.completeopt   = "menuone,noselect"
 opt.diffopt       = { "internal", "filler", "vertical" }
 opt.directory     = fn.expand(fn.stdpath("data") .. "/swap//")
 opt.expandtab     = true

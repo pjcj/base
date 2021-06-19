@@ -72,9 +72,17 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["compe-tmux"] = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/compe-tmux"
+  },
   ["neovim-colors-solarized-truecolor-only"] = {
     loaded = true,
     path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/neovim-colors-solarized-truecolor-only"
+  },
+  ["nvim-compe"] = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/nvim-compe"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
@@ -91,6 +99,22 @@ _G.packer_plugins = {
   ["packer.nvim"] = {
     loaded = true,
     path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/packer.nvim"
+  },
+  ["plenary.nvim"] = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/plenary.nvim"
+  },
+  ["popup.nvim"] = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/popup.nvim"
+  },
+  ["telescope.nvim"] = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/telescope.nvim"
+  },
+  ["vim-go"] = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/vim-go"
   }
 }
 
