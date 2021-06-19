@@ -71,4 +71,11 @@ function _G.set_buffer_colours()
   set_colour("MatchParenCur", "guibg", base02)
   set_colour("MatchParenCur", "guifg", "NONE")
   set_colour("NormalFloat",   "guibg", base04)
+
+  set_colour("GitSignsAdd",       "guibg", base03)
+  set_colour("GitSignsAdd",       "guifg", rgreen)
+  set_colour("GitSignsChange",    "guibg", base03)
+  set_colour("GitSignsChange",    "guifg", yellow)
+  set_colour("GitSignsDelete",    "guibg", base03)
+  set_colour("GitSignsDelete",    "guifg", red   )
 end
