@@ -88,6 +88,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim"
   },
+  ["lualine.nvim"] = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/lualine.nvim"
+  },
   ["neovim-colors-solarized-truecolor-only"] = {
     loaded = true,
     path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/neovim-colors-solarized-truecolor-only"
@@ -115,6 +119,10 @@ _G.packer_plugins = {
   ["nvim-treesitter"] = {
     loaded = true,
     path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
+  },
+  ["nvim-web-devicons"] = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
   },
   ["packer.nvim"] = {
     loaded = true,

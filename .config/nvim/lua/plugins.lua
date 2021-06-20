@@ -46,6 +46,11 @@ require("packer").startup(function()
 
   use "zsugabubus/crazy8.nvim"
   use { "lukas-reineke/indent-blankline.nvim", branch = "lua" }
+
+  use {
+    "hoob3rt/lualine.nvim",
+    requires = { "kyazdani42/nvim-web-devicons", opt = true }
+  }
 end)
 
 require "nvim-treesitter.configs".setup {
@@ -179,3 +184,8 @@ g.indent_blankline_char                           = " "
 g.indent_blankline_space_char                     = " "
 g.indent_blankline_show_trailing_blankline_indent = false
 g.indent_blankline_show_first_indent_level        = false
+
+require "lualine".setup{
+  options = { theme  = "solarized_dark" },
+  extensions = { "quickfix", "fugitive" },
+}
