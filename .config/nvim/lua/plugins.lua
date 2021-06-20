@@ -43,6 +43,9 @@ require("packer").startup(function()
 
   use "norcalli/nvim-colorizer.lua"
   use "terrortylor/nvim-comment"
+
+  use "zsugabubus/crazy8.nvim"
+  use { "lukas-reineke/indent-blankline.nvim", branch = "lua" }
 end)
 
 require "nvim-treesitter.configs".setup {
@@ -52,6 +55,26 @@ require "nvim-treesitter.configs".setup {
   },
   indent = {
     enable = true,
+  },
+}
+
+require "telescope".setup {
+  defaults = {
+    vimgrep_arguments = {
+      "rg",
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
+      "--hidden",
+      "--glob",
+      "!.git",
+    },
+    file_ignore_patterns = {
+      ".git/.*"
+    },
   },
 }
 
@@ -83,24 +106,24 @@ require "compe".setup {
     nvim_treesitter = true;
     tmux      = {
       all_panes = true
-    }
-  }
+    },
+  },
 }
 
 require "gitsigns".setup {
   signs = {
-    add          = {hl = 'GitSignsAdd'   , text = '+', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-    change       = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-    delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+    add          = { show_count = true, text = "+" },
+    change       = { show_count = true, text = "~" },
+    delete       = { show_count = true, text = "_" },
+    topdelete    = { show_count = true, text = "‾" },
+    changedelete = { show_count = true, text = "~" },
   },
-  numhl = false,
-  linehl = false,
+  numhl   = false,
+  linehl  = false,
   keymaps = {
     -- Default keymap options
     noremap = true,
-    buffer = true,
+    buffer  = true,
 
     ['n <F2>'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'"},
     ['n <F3>'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'"},
@@ -121,23 +144,38 @@ require "gitsigns".setup {
     ['o ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
     ['x ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>'
   },
-  watch_index = {
-    interval = 1000
+  watch_index                 = { interval = 1000 },
+  current_line_blame          = true,
+  current_line_blame_delay    = 1000,
+  current_line_blame_position = "eol",
+  sign_priority               = 6,
+  update_debounce             = 100,
+  status_formatter            = nil, -- Use default
+  use_decoration_api          = true,
+  use_internal_diff           = true, -- If luajit is present
+  count_chars = {
+    [1]   = "₁",
+    [2]   = "₂",
+    [3]   = "₃",
+    [4]   = "₄",
+    [5]   = "₅",
+    [6]   = "₆",
+    [7]   = "₇",
+    [8]   = "₈",
+    [9]   = "₉",
+    ["+"] = "₊",
   },
-  current_line_blame = false,
-  current_line_blame_delay = 1000,
-  current_line_blame_position = 'eol',
-  sign_priority = 6,
-  update_debounce = 100,
-  status_formatter = nil, -- Use default
-  use_decoration_api = true,
-  use_internal_diff = true,  -- If luajit is present
 }
 
 opt.termguicolors = true
 require "colorizer".setup(
-  {"*"},
+  { "*" },
   { names = true, RGB = true, RRGGBB = true, RRGGBBAA = true, css = true }
 )
 
-require "nvim_comment".setup({line_mapping = "-"})
+require "nvim_comment".setup({ line_mapping = "-" })
+
+g.indent_blankline_char                           = " "
+g.indent_blankline_space_char                     = " "
+g.indent_blankline_show_trailing_blankline_indent = false
+g.indent_blankline_show_first_indent_level        = false

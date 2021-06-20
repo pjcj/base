@@ -76,9 +76,17 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/compe-tmux"
   },
+  ["crazy8.nvim"] = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/crazy8.nvim"
+  },
   ["gitsigns.nvim"] = {
     loaded = true,
     path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/gitsigns.nvim"
+  },
+  ["indent-blankline.nvim"] = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim"
   },
   ["neovim-colors-solarized-truecolor-only"] = {
     loaded = true,

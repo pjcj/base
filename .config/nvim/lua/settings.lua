@@ -50,14 +50,26 @@ else
   opt.grepprg    = "git grep -n"
 end
 
+local alternate_indent = function()
+  g.indent_blankline_char_highlight_list       = { "IndentOdd", "IndentEven" }
+  g.indent_blankline_space_char_highlight_list = { "IndentOdd", "IndentEven" }
+end
+
 function _G.set_buffer_settings()
-    local bo=vim.bo
   local ft = vim.bo.filetype
+
   if ft == "go" or ft == "make" then
     vim.opt_local.listchars = { tab = "  ", trail = "·" }
     vim.opt_local.tabstop   = 2
+    alternate_indent()
   else
     vim.opt_local.listchars = { tab = "» ", trail = "·" }
     vim.opt_local.tabstop   = 8
+    if vim.bo.shiftwidth < 3 then
+      alternate_indent()
+    else
+      g.indent_blankline_char_highlight_list       = { "IndentEven"  }
+      g.indent_blankline_space_char_highlight_list = { "IndentSpace" }
+    end
   end
 end
