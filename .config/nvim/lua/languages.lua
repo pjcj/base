@@ -14,12 +14,16 @@ cmd([[
 
 cmd([[
   function! BufEnterFunc()
-    call v:lua.set_buffer_settings()
     call v:lua.set_buffer_colours()
+  endfunction
+
+  function! BufWinEnterFunc()
+    call v:lua.set_buffer_settings()
   endfunction
 
   augroup buf_enter
     autocmd!
     autocmd BufEnter,ColorScheme * call BufEnterFunc()
+    autocmd BufWinEnter          * call BufWinEnterFunc()
   augroup end
 ]])
