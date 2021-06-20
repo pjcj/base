@@ -2,6 +2,7 @@ local cmd  = vim.cmd        -- run Vim commands
 local fn   = vim.fn         -- call Vim functions
 local g    = vim.g          -- a table to access global variables
 local opt  = vim.opt        -- set options
+local lopt = vim.opt_local  -- set local options
 local api  = vim.api        -- vim api
 local exec = api.nvim_exec  -- execute nvim
 
@@ -59,17 +60,24 @@ function _G.set_buffer_settings()
   local ft = vim.bo.filetype
 
   if ft == "go" or ft == "make" then
-    vim.opt_local.listchars = { tab = "  ", trail = "·" }
-    vim.opt_local.tabstop   = 2
+    lopt.listchars = { tab = "  ", trail = "·" }
+    lopt.tabstop   = 2
+    alternate_indent()
+    return
+  end
+  lopt.listchars = { tab = "» ", trail = "·" }
+  lopt.tabstop   = 8
+  if vim.bo.shiftwidth < 3 then
     alternate_indent()
   else
-    vim.opt_local.listchars = { tab = "» ", trail = "·" }
-    vim.opt_local.tabstop   = 8
-    if vim.bo.shiftwidth < 3 then
-      alternate_indent()
-    else
-      g.indent_blankline_char_highlight_list       = { "IndentEven"  }
-      g.indent_blankline_space_char_highlight_list = { "IndentSpace" }
-    end
+    g.indent_blankline_char_highlight_list       = { "IndentEven"  }
+    g.indent_blankline_space_char_highlight_list = { "IndentSpace" }
+  end
+
+  if ft == "gitcommit" then
+    lopt.colorcolumn = { 50, 72 }
+    lopt.textwidth   = 72
+    lopt.spell       = true
+    lopt.spelllang   = "en_gb"
   end
 end
