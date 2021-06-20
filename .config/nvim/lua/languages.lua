@@ -26,4 +26,9 @@ cmd([[
     autocmd BufEnter,ColorScheme * call BufEnterFunc()
     autocmd BufWinEnter          * call BufWinEnterFunc()
   augroup end
+
+  augroup autowrite
+    autocmd!
+    autocmd FocusLost * silent! wa
+  augroup end
 ]])

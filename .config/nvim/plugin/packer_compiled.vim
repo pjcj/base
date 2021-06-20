@@ -140,6 +140,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/telescope.nvim"
   },
+  ["vim-autoswap"] = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/vim-autoswap"
+  },
   ["vim-go"] = {
     loaded = true,
     path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/vim-go"

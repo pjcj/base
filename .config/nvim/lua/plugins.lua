@@ -51,6 +51,8 @@ require("packer").startup(function()
     "hoob3rt/lualine.nvim",
     requires = { "kyazdani42/nvim-web-devicons", opt = true }
   }
+
+  use "gioele/vim-autoswap"
 end)
 
 require "nvim-treesitter.configs".setup {
