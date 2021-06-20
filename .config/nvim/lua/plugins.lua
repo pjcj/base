@@ -40,6 +40,9 @@ require("packer").startup(function()
       "nvim-lua/plenary.nvim"
     }
   }
+
+  use "norcalli/nvim-colorizer.lua"
+  use "terrortylor/nvim-comment"
 end)
 
 require "nvim-treesitter.configs".setup {
@@ -99,8 +102,8 @@ require "gitsigns".setup {
     noremap = true,
     buffer = true,
 
-    ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'"},
-    ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'"},
+    ['n <F2>'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'"},
+    ['n <F3>'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'"},
 
     ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
     ['v <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
@@ -110,6 +113,9 @@ require "gitsigns".setup {
     ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
     ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
     ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line(true)<CR>',
+
+    ['n <F1>'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
+    ['v <F1>'] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
 
     -- Text objects
     ['o ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
@@ -127,3 +133,11 @@ require "gitsigns".setup {
   use_decoration_api = true,
   use_internal_diff = true,  -- If luajit is present
 }
+
+opt.termguicolors = true
+require "colorizer".setup(
+  {"*"},
+  { names = true, RGB = true, RRGGBB = true, RRGGBBAA = true, css = true }
+)
+
+require "nvim_comment".setup({line_mapping = "-"})
