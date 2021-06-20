@@ -18,6 +18,7 @@ cmd([[
   nmap     <PageUp>   0
   nmap     <PageDown> 0
 
+  nnoremap <silent> <leader>l :let @/ = ""<bar> :call UncolorAllWords()<cr>
 ]])
 
 local map = vim.api.nvim_set_keymap
