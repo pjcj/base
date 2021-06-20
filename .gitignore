@@ -10,6 +10,7 @@ tags*
 tmp/
 .config/gtk-3.0/bookmarks
 .config/i3/config
+.config/nvim/plugged/
 .config/ranger/bookmarks
 .config/ranger/history
 .config/ranger/tagged
@@ -29,3 +30,6 @@ zsh/functions/_docker-machine
 zsh/functions/_git
 
 .glab-cli
+
+.config.nvim-4.4/
+.vimrc.4.4
