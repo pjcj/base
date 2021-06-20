@@ -8,6 +8,7 @@ local exec = api.nvim_exec  -- execute nvim
 g.mapleader = ","
 
 cmd([[
+  imap     <F5>       [
   imap     <F6>       ]
   imap     <F7>       {
   imap     <F8>       }

@@ -148,9 +148,17 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/vim-go"
   },
+  ["vim-lastplace"] = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/vim-lastplace"
+  },
   ["vim-smoothie"] = {
     loaded = true,
     path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/vim-smoothie"
+  },
+  ["vim-startify"] = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/vim-startify"
   }
 }
 

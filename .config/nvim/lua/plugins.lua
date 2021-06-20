@@ -53,6 +53,8 @@ require("packer").startup(function()
   }
 
   use "gioele/vim-autoswap"
+  use "farmergreg/vim-lastplace"
+  use "mhinz/vim-startify"
 end)
 
 require "nvim-treesitter.configs".setup {
@@ -190,4 +192,29 @@ g.indent_blankline_show_first_indent_level        = false
 require "lualine".setup{
   options = { theme  = "solarized_dark" },
   extensions = { "quickfix", "fugitive" },
+}
+
+g.startify_change_to_vcs_root  = 1
+g.startify_fortune_use_unicode = 1
+g.startify_lists = {
+    {
+        type = "dir",
+        header = {"   MRU " .. vim.fn.getcwd()}
+    },
+    {
+        type = "sessions",
+        header = {"   Sessions"}
+    },
+    {
+        type = "files",
+        header = {"   Files"}
+    },
+    {
+        type = "bookmarks",
+        header = {"   Bookmarks"}
+    },
+    {
+        type = "commands",
+        header = {"   Commands"}
+    }
 }
