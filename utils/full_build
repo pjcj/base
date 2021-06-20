@@ -15,8 +15,8 @@ if [ ! -e .tmux.conf ]; then
 
     sudo aptitude install gawk
 
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    # curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        # https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
 [[ -e ~/.ssh/rc      ]] || ln -s ~/g/base/.ssh/rc ~/.ssh
@@ -51,6 +51,9 @@ fi
 ~/.tmux/plugins/tpm/bin/install_plugins
 ~/.tmux/plugins/tpm/bin/update_plugins all
 ~/.tmux/plugins/tpm/bin/clean_plugins
+
+bat cache --clear
+bat cache --build
 
 if [[ "$(uname)" == Darwin ]]; then
     if which brew >&/dev/null; then
@@ -127,7 +130,7 @@ else
     $pip3 install --upgrade --user docker-compose
 fi
 
-if [[ "$EDITOR" == "nvim" ]]; then
+if [[ "$EDITOR" == "nvimx" ]]; then
     $pip3 install --upgrade --user neovim pynvim
     $pip3 install --upgrade --user vim-vint proselint
     $pip3 install --upgrade --user git+git://github.com/powerline/powerline
@@ -150,11 +153,12 @@ if [[ "$EDITOR" == "nvim" ]]; then
         ~/.local/share/nvim/site/unicode/UnicodeData.txt
 fi
 
+if [[ "$EDITOR" == "nvim" ]]; then
+    $EDITOR -c PackerSync
+fi
+
 # if [[ $(uname) == Linux ]]; then
     # gobase
     # brew install ghq
     # build_all
 # fi
-
-bat cache --clear
-bat cache --build
