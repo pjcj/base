@@ -7,10 +7,6 @@ local exec = api.nvim_exec  -- execute nvim
 
 g.mapleader = ","
 
-cmd([[
-  nnoremap <silent> <leader>l :let @/ = ""<bar> :call UncolorAllWords()<cr>
-]])
-
 local map = vim.api.nvim_set_keymap
 
 local def = { noremap = true, silent = true}
@@ -30,8 +26,6 @@ map("n", "<F12>", "", def)
 map("n", "<PageUp>", "0", def)
 map("n", "<PageDown>", "0", def)
 
--- map("n", "<leader>l" [[<cmd>let @/ = ""<bar> :call UncolorAllWords()<cr>]], def)
-
 map("n", "<leader>.",  [[<cmd>lua require"telescope.builtin".find_files({ hidden = true })<cr>]], def)
 map("n", "<leader> ",  [[<cmd>lua require"telescope.builtin".oldfiles()<cr>]], def)
 map("n", "<leader>m",  [[<cmd>lua require"telescope.builtin".buffers()<cr>]], def)
@@ -39,4 +33,10 @@ map("n", "<leader>ff", [[<cmd>lua require"telescope.builtin".builtin()<cr>]], de
 map("n", "<leader>fg", [[<cmd>lua require"telescope.builtin".live_grep()<cr>]], def)
 map("n", "<leader>fh", [[<cmd>lua require"telescope.builtin".help_tags()<cr>]], def)
 
-map("n", "<leader>gg", [[<cmd>Git commit<cr>]], def)
+map("n", "<leader>gg", [[<cmd>tab Git commit<cr>]], def)
+
+-- map("n", "<leader>l" [[<cmd>let @/ = ""<bar> :call UncolorAllWords()<cr>]], def)
+
+cmd([[
+  nnoremap <silent> <leader>l :let @/ = ""<bar> :call UncolorAllWords()<cr>
+]])
