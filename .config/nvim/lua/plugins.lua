@@ -117,13 +117,13 @@ require "compe".setup {
     path      = true;
     buffer    = true;
     calc      = true;
-    spell     = true;
+    spell     = false;
     emoji     = true;
     nvim_lsp  = true;
     nvim_lua  = true;
-    vsnip     = true;
-    ultisnips = true;
-    nvim_treesitter = true;
+    vsnip     = false;
+    ultisnips = false;
+    nvim_treesitter = false;
     tmux      = {
       all_panes = true
     },
