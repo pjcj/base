@@ -72,6 +72,10 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ale = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/ale"
+  },
   ["compe-tmux"] = {
     loaded = true,
     path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/compe-tmux"

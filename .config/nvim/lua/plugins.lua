@@ -22,6 +22,8 @@ require("packer").startup(function()
   use "neovim/nvim-lspconfig"
   use "kabouzeid/nvim-lspinstall"
 
+  use "w0rp/ale"
+
   use { "fatih/vim-go", run = ":GoUpdateBinaries" }
 
   use {
@@ -66,6 +68,14 @@ require "nvim-treesitter.configs".setup {
   indent = {
     enable = true,
   },
+}
+
+g.ale_linters_explicit = 1
+g.ale_disable_lsp      = 1
+g.ale_sign_error       = '✗'
+g.ale_sign_warning     = '⚠'
+g.ale_linters = {
+  yaml = { "circleci", "spectral", "swaglint", "yamllint" }
 }
 
 require "telescope".setup {
