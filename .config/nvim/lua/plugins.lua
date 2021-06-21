@@ -42,6 +42,9 @@ require("packer").startup(function()
       "nvim-lua/plenary.nvim"
     }
   }
+  use "rhysd/git-messenger.vim"
+  use "ruanyl/vim-gh-line"
+  use "tpope/vim-fugitive"
 
   use "norcalli/nvim-colorizer.lua"
   use "terrortylor/nvim-comment"
@@ -186,6 +189,10 @@ require "gitsigns".setup {
     ["+"] = "₊",
   },
 }
+
+g.git_messenger_always_into_popup = 1
+g.git_messenger_include_diff      = "current"
+g.gh_use_canonical                = 0
 
 opt.termguicolors = true
 require "colorizer".setup(

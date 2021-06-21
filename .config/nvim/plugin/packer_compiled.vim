@@ -84,6 +84,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/crazy8.nvim"
   },
+  ["git-messenger.vim"] = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/git-messenger.vim"
+  },
   ["gitsigns.nvim"] = {
     loaded = true,
     path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/gitsigns.nvim"
@@ -147,6 +151,14 @@ _G.packer_plugins = {
   ["vim-autoswap"] = {
     loaded = true,
     path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/vim-autoswap"
+  },
+  ["vim-fugitive"] = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/vim-fugitive"
+  },
+  ["vim-gh-line"] = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/vim-gh-line"
   },
   ["vim-go"] = {
     loaded = true,
