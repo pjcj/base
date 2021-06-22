@@ -152,6 +152,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/vim-autoswap"
   },
+  ["vim-easy-align"] = {
+    loaded = true,
+    path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/vim-easy-align"
+  },
   ["vim-fugitive"] = {
     loaded = true,
     path = "/Users/pjcj/.local/share/nvim/site/pack/packer/start/vim-fugitive"
