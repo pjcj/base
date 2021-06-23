@@ -76,10 +76,27 @@ require "nvim-treesitter.configs".setup {
 
 g.ale_linters_explicit = 1
 g.ale_disable_lsp      = 1
-g.ale_sign_error       = '✗'
-g.ale_sign_warning     = '⚠'
+g.ale_sign_error       = "✗"
+g.ale_sign_warning     = "⚠"
 g.ale_linters = {
-  yaml = { "circleci", "spectral", "swaglint", "yamllint" }
+  yaml = { "circleci", "spectral", "swaglint", "yamllint" },
+  sh   = { "bashate", "language_server", "shell", "shellcheck" },
+}
+
+g.go_auto_sameids                     = 1
+g.go_auto_type_info                   = 1
+g.go_diagnostics_level                = 2
+g.go_doc_popup_window                 = 1
+g.go_fmt_autosave                     = 1
+g.go_fmt_experimental                 = 1
+g.go_list_type                        = "quickfix"
+g.go_metalinter_autosave              = 1
+g.go_metalinter_autosave_enabled      = { "all" }
+g.go_metalinter_enabled               = { "all" }
+g.go_gopls_gofumpt                    = 1
+g.go_imports_mode                     = "gopls"
+g.go_fmt_options                      = {
+  gofmt = "-s"
 }
 
 require "telescope".setup {
@@ -121,7 +138,7 @@ require "compe".setup {
     path      = true;
     buffer    = true;
     calc      = true;
-    spell     = false;
+    spell     = { priority = 2 };
     emoji     = true;
     nvim_lsp  = true;
     nvim_lua  = true;
@@ -129,7 +146,8 @@ require "compe".setup {
     ultisnips = false;
     nvim_treesitter = false;
     tmux      = {
-      all_panes = true
+      priority = 3,
+      all_panes = true,
     },
   },
 }

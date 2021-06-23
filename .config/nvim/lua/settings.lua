@@ -5,6 +5,9 @@ local opt  = vim.opt        -- set options
 local lopt = vim.opt_local  -- set local options
 local api  = vim.api        -- vim api
 local exec = api.nvim_exec  -- execute nvim
+local map  = vim.api.nvim_set_keymap
+local bmap = vim.api.nvim_buf_set_keymap
+local def  = { noremap = true, silent = true }
 
 opt.autowriteall  = true
 opt.backspace     = { "indent", "eol", "start" }
@@ -63,6 +66,12 @@ function _G.set_buffer_settings()
     lopt.listchars = { tab = "  ", trail = "·" }
     lopt.tabstop   = 2
     alternate_indent()
+
+    if ft == "go" then
+      bmap(0, "n", "<leader>oa", "<cmd>GoAlternate<cr>", def)
+      bmap(0, "n", "<leader>oi", "<cmd>GoImports<cr>", def)
+      bmap(0, "n", "<leader>os", "<cmd>GoSameIdsToggle<cr>", def)
+    end
     return
   end
   lopt.listchars = { tab = "» ", trail = "·" }
