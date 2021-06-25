@@ -3,13 +3,15 @@
 # run this script to configure the basics of the system
 # . ./SETUP
 
+sudo aptitude install build-essential
+
 ln -bs g/base/{utils,.abcde.conf,.gitconfig,.profile,.urlview} ~
 ln -bs g/base/{.vimrc,.Xdefaults,.vim,.nvim,.tmux.conf,.tigrc,.doitrc} ~
 [[ -d ~/.config ]] || mkdir ~/.config
 ln -bs ~/g/base/.config/* ~/.config
 ( cd ~ && ln -bs g/base/.zshrc* g/base/.zshenv . )
 
- [[ -d ~/.zplug ]] || curl -sL --proto-redir -all,https \
+[[ -d ~/.zplug ]] || curl -sL --proto-redir -all,https \
     https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
