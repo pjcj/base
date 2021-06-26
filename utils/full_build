@@ -128,6 +128,7 @@ else
 
     $pip3 install --upgrade --user thefuck
     $pip3 install --upgrade --user docker-compose
+    $pip3 install --upgrade --user git+git://github.com/powerline/powerline
 fi
 
 if [[ "$EDITOR" == "nvimx" ]]; then
@@ -155,6 +156,16 @@ fi
 
 if [[ "$EDITOR" == "nvim" ]]; then
     $EDITOR -c PackerSync
+    $EDITOR -c LspInstall\ bash
+    $EDITOR -c LspInstall\ css
+    $EDITOR -c LspInstall\ go
+    $EDITOR -c LspInstall\ html
+    $EDITOR -c LspInstall\ json
+    $EDITOR -c LspInstall\ lua
+    $EDITOR -c LspInstall\ vim
+    $EDITOR -c LspInstall\ vue
+    $EDITOR -c LspInstall\ yaml
+    go install github.com/nametake/golangci-lint-langserver@latest
 fi
 
 # if [[ $(uname) == Linux ]]; then
