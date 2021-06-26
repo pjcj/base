@@ -262,8 +262,26 @@ G.indent_blankline_show_trailing_blankline_indent = false
 G.indent_blankline_show_first_indent_level        = false
 
 require "lualine".setup{
-  options = { theme  = "solarized_dark" },
+  options    = { theme  = "solarized_dark" },
   extensions = { "quickfix", "fugitive" },
+  sections   = {
+    lualine_c = {
+      {
+        "filename",
+        file_status = true, -- (readonly, modified)
+        path        = 1,    -- 0 = filename, 1 = relative, 2 = absolute
+      },
+      {
+        "diff",
+        colored = true,
+        symbols = { added = "+", modified = "~", removed = "-" },
+      },
+      {
+        "diagnostics",
+        sources = { "nvim_lsp" },
+      },
+    },
+  },
 }
 
 G.startify_change_to_vcs_root  = 1
