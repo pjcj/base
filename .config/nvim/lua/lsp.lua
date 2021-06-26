@@ -109,3 +109,27 @@ require "lspinstall".post_install_hook = function ()
   setup_servers() -- reload installed servers
   Cmd("bufdo e")  -- this triggers the FileType autocmd that starts the server
 end
+
+-- golangci-lint-langserver support (doesn't seem to work right now)
+local lspconfig = require "lspconfig"
+local configs = require "lspconfig/configs"
+
+if not lspconfig.golangcilsp then
+  configs.golangcilsp = {
+    default_config = {
+      cmd = {"golangci-lint-langserver"},
+      root_dir = lspconfig.util.root_pattern(".git", "go.mod"),
+      init_options = {
+        command = {
+          "golangci-lint", "run",
+          "--enable-all",
+          -- "--disable", "lll",
+          "--out-format", "json",
+        },
+      },
+    },
+  }
+end
+lspconfig.golangcilsp.setup {
+  filetypes = {"go"}
+}
