@@ -29,8 +29,6 @@ require("packer").startup(function(use)
   use "hrsh7th/nvim-compe"
   use "andersevenrud/compe-tmux"
 
-  use "psliwka/vim-smoothie"
-
   use {
     "lewis6991/gitsigns.nvim",
     requires = {
