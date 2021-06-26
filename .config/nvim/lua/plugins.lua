@@ -77,21 +77,18 @@ G.ale_linters = {
   sh   = { "bashate", "language_server", "shell", "shellcheck" },
 }
 
-G.go_auto_sameids                     = 1
-G.go_auto_type_info                   = 1
-G.go_diagnostics_level                = 2
-G.go_doc_popup_window                 = 1
-G.go_fmt_autosave                     = 1
-G.go_fmt_experimental                 = 1
-G.go_list_type                        = "quickfix"
-G.go_metalinter_autosave              = 1
-G.go_metalinter_autosave_enabled      = { "all" }
-G.go_metalinter_enabled               = { "all" }
-G.go_gopls_gofumpt                    = 1
-G.go_imports_mode                     = "gopls"
-G.go_fmt_options                      = {
-  gofmt = "-s"
-}
+G.go_auto_type_info              = 1
+G.go_test_show_name              = 1
+G.go_doc_max_height              = 40
+G.go_doc_popup_window            = 1
+G.go_diagnostics_enabled         = 1
+G.go_diagnostics_level           = 2
+G.go_template_autocreate         = 0
+G.go_metalinter_command          = "golangci-lint"
+G.go_metalinter_autosave         = 1
+G.go_metalinter_autosave_enabled = { }
+G.go_metalinter_enabled          = { }
+G.go_fmt_options                 = { gofmt = "-s" }
 
 require "telescope".setup {
   defaults = {
@@ -114,33 +111,33 @@ require "telescope".setup {
 }
 
 require "compe".setup {
-  enabled          = true;
-  autocomplete     = true;
-  debug            = false;
-  min_length       = 1;
-  preselect        = "enable";
-  throttle_time    = 80;
-  source_timeout   = 200;
-  resolve_timeout  = 800;
-  incomplete_delay = 400;
-  max_abbr_width   = 100;
-  max_kind_width   = 100;
-  max_menu_width   = 100;
-  documentation    = true;
+  enabled          = true,
+  autocomplete     = true,
+  debug            = false,
+  min_length       = 1,
+  preselect        = "enable",
+  throttle_time    = 80,
+  source_timeout   = 200,
+  resolve_timeout  = 800,
+  incomplete_delay = 400,
+  max_abbr_width   = 100,
+  max_kind_width   = 100,
+  max_menu_width   = 100,
+  documentation    = true,
 
   source = {
-    path      = true;
-    buffer    = true;
-    calc      = true;
-    spell     = { priority = 2 };
-    emoji     = true;
-    nvim_lsp  = true;
-    nvim_lua  = true;
-    vsnip     = false;
-    ultisnips = false;
-    nvim_treesitter = false;
+    path      = true,
+    buffer    = true,
+    calc      = true,
+    spell     = { priority = 2 },
+    emoji     = true,
+    nvim_lsp  = true,
+    nvim_lua  = true,
+    vsnip     = false,
+    ultisnips = false,
+    nvim_treesitter = false,
     tmux      = {
-      priority = 3,
+      priority  = 3,
       all_panes = true,
     },
   },
@@ -302,5 +299,5 @@ G.interestingWordsGUIColors = {
   '#edfccf', '#67064c', '#f5bca7', '#95c474',
   '#dece83', '#de9783', '#f2e700', '#e9e9e9',
   '#69636d', '#626b98', '#f5f5a7', '#dcca6b',
-  '#b72a83', '#6f2b9d', '#69636d', '#5f569c'
+  '#b72a83', '#6f2b9d', '#69636d', '#5f569c',
 }
