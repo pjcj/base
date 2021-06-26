@@ -137,7 +137,7 @@
     file-decoration-style         = yellow box
     file-style                    = yellow
     hunk-header-decoration-style  = blue box
-    hunk-header-style             = blue
+    hunk-header-style             = file line-number blue
     line-numbers-left-format      = {nm:^5}
     line-numbers-left-style       = blue
     line-numbers-minus-style      = "#dc322f" dim
@@ -159,5 +159,6 @@
     whitespace-error-style        = reverse blue
     zero-style                    = normal
     side-by-side                  = true
+    relative-paths                = true
 [include]
     path = .gitconfig.local
