@@ -57,6 +57,7 @@ require("packer").startup(function(use)
   use "mhinz/vim-startify"
   use "lfv89/vim-interestingwords"
   use "junegunn/vim-easy-align"
+  use "tpope/vim-surround"
 end)
 
 require "nvim-treesitter.configs".setup {

@@ -32,6 +32,9 @@ Map("n", "ga",      "<Plug>(EasyAlign)", {})
 Map("x", "ga",      "<Plug>(EasyAlign)", {})
 Map("v", "<Enter>", "<Plug>(EasyAlign)", {})
 
+Map("n", "<leader>qq", [[cs'"]], {})
+Map("n", "<leader>qQ", [[cs"']], {})
+
 -- map("n", "<leader>l" [[<cmd>let @/ = ""<bar> :call UncolorAllWords()<cr>]], Defmap)
 
 Cmd([[
