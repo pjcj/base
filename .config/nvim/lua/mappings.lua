@@ -1,48 +1,39 @@
-local cmd  = vim.cmd        -- run Vim commands
-local fn   = vim.fn         -- call Vim functions
-local g    = vim.g          -- a table to access global variables
-local opt  = vim.opt        -- set options
-local api  = vim.api        -- vim api
-local exec = api.nvim_exec  -- execute nvim
-local map  = vim.api.nvim_set_keymap
-local def  = { noremap = true, silent = true }
+G.mapleader = ","
 
-g.mapleader = ","
+Map("i", "<F5>",       "[",   Defmap)
+Map("n", "r<F5>",      "r[",  Defmap)
+Map("i", "<F6>",       "]",   Defmap)
+Map("n", "r<F6>",      "r]",  Defmap)
+Map("i", "<F7>",       "{",   Defmap)
+Map("n", "r<F7>",      "r{",  Defmap)
+Map("i", "<F8>",       "}",   Defmap)
+Map("n", "r<F8>",      "r}",  Defmap)
+Map("i", "<F9>",       "|",   Defmap)
+Map("n", "r<F9>",      "r|",  Defmap)
+Map("i", "<F10>",      "~",   Defmap)
+Map("n", "r<F10>",     "r~",  Defmap)
+Map("n", "<F12>",      "",  Defmap)
+Map("n", "<PageUp>",   "0", Defmap)
+Map("n", "<PageDown>", "0", Defmap)
 
-map("i", "<F5>",       "[",   def)
-map("n", "r<F5>",      "r[",  def)
-map("i", "<F6>",       "]",   def)
-map("n", "r<F6>",      "r]",  def)
-map("i", "<F7>",       "{",   def)
-map("n", "r<F7>",      "r{",  def)
-map("i", "<F8>",       "}",   def)
-map("n", "r<F8>",      "r}",  def)
-map("i", "<F9>",       "|",   def)
-map("n", "r<F9>",      "r|",  def)
-map("i", "<F10>",      "~",   def)
-map("n", "r<F10>",     "r~",  def)
-map("n", "<F12>",      "",  def)
-map("n", "<PageUp>",   "0", def)
-map("n", "<PageDown>", "0", def)
+Map("n", "<leader>.",  [[<cmd>lua require"telescope.builtin".find_files({ hidden = true })<cr>]], Defmap)
+Map("n", "<leader> ",  [[<cmd>lua require"telescope.builtin".oldfiles()<cr>]],                    Defmap)
+Map("n", "<leader>m",  [[<cmd>lua require"telescope.builtin".git_status()<cr>]],                  Defmap)
+Map("n", "<leader>fb", [[<cmd>lua require"telescope.builtin".buffers()<cr>]],                     Defmap)
+Map("n", "<leader>ff", [[<cmd>lua require"telescope.builtin".builtin()<cr>]],                     Defmap)
+Map("n", "<leader>fg", [[<cmd>lua require"telescope.builtin".live_grep()<cr>]],                   Defmap)
+Map("n", "<leader>fh", [[<cmd>lua require"telescope.builtin".help_tags()<cr>]],                   Defmap)
+Map("n", "<leader>fs", [[<cmd>lua require"telescope.builtin".grep_string()<cr>]],                 Defmap)
+Map("n", "<leader>fl", [[<cmd>lua require"telescope.builtin".current_buffer_fuzzy_find()<cr>]],   Defmap)
 
-map("n", "<leader>.",  [[<cmd>lua require"telescope.builtin".find_files({ hidden = true })<cr>]], def)
-map("n", "<leader> ",  [[<cmd>lua require"telescope.builtin".oldfiles()<cr>]],                    def)
-map("n", "<leader>m",  [[<cmd>lua require"telescope.builtin".git_status()<cr>]],                  def)
-map("n", "<leader>fb", [[<cmd>lua require"telescope.builtin".buffers()<cr>]],                     def)
-map("n", "<leader>ff", [[<cmd>lua require"telescope.builtin".builtin()<cr>]],                     def)
-map("n", "<leader>fg", [[<cmd>lua require"telescope.builtin".live_grep()<cr>]],                   def)
-map("n", "<leader>fh", [[<cmd>lua require"telescope.builtin".help_tags()<cr>]],                   def)
-map("n", "<leader>fs", [[<cmd>lua require"telescope.builtin".grep_string()<cr>]],                 def)
-map("n", "<leader>fl", [[<cmd>lua require"telescope.builtin".current_buffer_fuzzy_find()<cr>]],   def)
+Map("n", "<leader>gg", [[<cmd>tab Git commit<cr>]], Defmap)
 
-map("n", "<leader>gg", [[<cmd>tab Git commit<cr>]], def)
+Map("n", "ga",      "<Plug>(EasyAlign)", {})
+Map("x", "ga",      "<Plug>(EasyAlign)", {})
+Map("v", "<Enter>", "<Plug>(EasyAlign)", {})
 
-map("n", "ga",      "<Plug>(EasyAlign)", {})
-map("x", "ga",      "<Plug>(EasyAlign)", {})
-map("v", "<Enter>", "<Plug>(EasyAlign)", {})
+-- map("n", "<leader>l" [[<cmd>let @/ = ""<bar> :call UncolorAllWords()<cr>]], Defmap)
 
--- map("n", "<leader>l" [[<cmd>let @/ = ""<bar> :call UncolorAllWords()<cr>]], def)
-
-cmd([[
+Cmd([[
   nnoremap <silent> <leader>l :let @/ = ""<bar> :call UncolorAllWords()<cr>
 ]])

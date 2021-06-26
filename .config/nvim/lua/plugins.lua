@@ -1,17 +1,12 @@
-local cmd  = vim.cmd        -- run Vim commands
-local fn   = vim.fn         -- call Vim functions
-local g    = vim.g          -- a table to access global variables
-local opt  = vim.opt        -- set options
-local api  = vim.api        -- vim api
-local exec = api.nvim_exec  -- execute nvim
-
-local path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system({"git", "clone", "https://github.com/wbthomason/packer.nvim", path})
-  cmd "packadd packer.nvim"
+local install_path = Fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+if Fn.empty(Fn.glob(install_path)) > 0 then
+  Fn.system({
+    "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path
+  })
+  Cmd "packadd packer.nvim"
 end
 
-require("packer").startup(function()
+require("packer").startup(function(use)
   -- Packer can manage itself
   use "wbthomason/packer.nvim"
 
@@ -74,28 +69,28 @@ require "nvim-treesitter.configs".setup {
   },
 }
 
-g.ale_linters_explicit = 1
-g.ale_disable_lsp      = 1
-g.ale_sign_error       = "✗"
-g.ale_sign_warning     = "⚠"
-g.ale_linters = {
+G.ale_linters_explicit = 1
+G.ale_disable_lsp      = 1
+G.ale_sign_error       = "✗"
+G.ale_sign_warning     = "⚠"
+G.ale_linters = {
   yaml = { "circleci", "spectral", "swaglint", "yamllint" },
   sh   = { "bashate", "language_server", "shell", "shellcheck" },
 }
 
-g.go_auto_sameids                     = 1
-g.go_auto_type_info                   = 1
-g.go_diagnostics_level                = 2
-g.go_doc_popup_window                 = 1
-g.go_fmt_autosave                     = 1
-g.go_fmt_experimental                 = 1
-g.go_list_type                        = "quickfix"
-g.go_metalinter_autosave              = 1
-g.go_metalinter_autosave_enabled      = { "all" }
-g.go_metalinter_enabled               = { "all" }
-g.go_gopls_gofumpt                    = 1
-g.go_imports_mode                     = "gopls"
-g.go_fmt_options                      = {
+G.go_auto_sameids                     = 1
+G.go_auto_type_info                   = 1
+G.go_diagnostics_level                = 2
+G.go_doc_popup_window                 = 1
+G.go_fmt_autosave                     = 1
+G.go_fmt_experimental                 = 1
+G.go_list_type                        = "quickfix"
+G.go_metalinter_autosave              = 1
+G.go_metalinter_autosave_enabled      = { "all" }
+G.go_metalinter_enabled               = { "all" }
+G.go_gopls_gofumpt                    = 1
+G.go_imports_mode                     = "gopls"
+G.go_fmt_options                      = {
   gofmt = "-s"
 }
 
@@ -209,11 +204,11 @@ require "gitsigns".setup {
   },
 }
 
-g.git_messenger_always_into_popup = 1
-g.git_messenger_include_diff      = "current"
-g.gh_use_canonical                = 0
+G.git_messenger_always_into_popup = 1
+G.git_messenger_include_diff      = "current"
+G.gh_use_canonical                = 0
 
-opt.termguicolors = true
+Opt.termguicolors = true
 require "colorizer".setup(
   { "*" },
   { names = true, RGB = true, RRGGBB = true, RRGGBBAA = true, css = true }
@@ -221,22 +216,22 @@ require "colorizer".setup(
 
 require "nvim_comment".setup({ line_mapping = "-" })
 
-g.indent_blankline_char                           = " "
-g.indent_blankline_space_char                     = " "
-g.indent_blankline_show_trailing_blankline_indent = false
-g.indent_blankline_show_first_indent_level        = false
+G.indent_blankline_char                           = " "
+G.indent_blankline_space_char                     = " "
+G.indent_blankline_show_trailing_blankline_indent = false
+G.indent_blankline_show_first_indent_level        = false
 
 require "lualine".setup{
   options = { theme  = "solarized_dark" },
   extensions = { "quickfix", "fugitive" },
 }
 
-g.startify_change_to_vcs_root  = 1
-g.startify_fortune_use_unicode = 1
-g.startify_lists = {
+G.startify_change_to_vcs_root  = 1
+G.startify_fortune_use_unicode = 1
+G.startify_lists = {
     {
         type = "dir",
-        header = {"   MRU " .. vim.fn.getcwd()}
+        header = {"   MRU " .. Fn.getcwd()}
     },
     {
         type = "sessions",
@@ -256,7 +251,7 @@ g.startify_lists = {
     }
 }
 
-g.interestingWordsGUIColors = {
+G.interestingWordsGUIColors = {
   '#72b5e4', '#f0c53f', '#ff8784', '#c5c7f1',
   '#c2d735', '#78d3cc', '#ea8336', '#e43542',
   '#ebab35', '#ebe735', '#aadd32', '#dcca6b',
