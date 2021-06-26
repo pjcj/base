@@ -23,8 +23,9 @@ local normal  = "#9599dc"
 local rgreen  = "#25ad2e"  -- a nice green for diffs (opposite of red)
 local base04  = "#00090C"  -- darker than base03
 local base05  = "#0E3C49"  -- lighter than base02
-local dred    = "#400200"  -- dark red
+local dyellow = "#433200"  -- dark yellow
 local dorange = "#7d2500"  -- dark orange
+local dred    = "#400200"  -- dark red
 local dcyan   = "#04746c"  -- dark cyan
 local dblue   = "#06568f"  -- dark ble
 
@@ -69,6 +70,10 @@ function _G.set_buffer_colours()
   set_colour("MatchParenCur",                        "guibg", base02 )
   set_colour("MatchParenCur",                        "guifg", none   )
   set_colour("NormalFloat",                          "guibg", base04 )
+  set_colour("Pmenu",                                "guifg", dred   )
+  set_colour("Pmenu",                                "guibg", base2  )
+  set_colour("PmenuSel",                             "guifg", dorange)
+  set_colour("PmenuSel",                             "guibg", base2  )
 
   set_colour("GitSignsAdd",                          "guibg", base03 )
   set_colour("GitSignsAdd",                          "guifg", rgreen )
@@ -87,12 +92,12 @@ function _G.set_buffer_colours()
   set_colour("goDiagnosticError",                    "guifg", red    )
 
   set_colour("LspDiagnosticsDefaultError",           "guifg", red    )
-  set_colour("LspDiagnosticsVirtualTextError",       "guifg", dred   )
-  set_colour("LspDiagnosticsVirtualTextWarning",     "guifg", dorange)
+  set_colour("LspDiagnosticsVirtualTextError",       "guifg", dorange)
+  set_colour("LspDiagnosticsVirtualTextWarning",     "guifg", dyellow)
   set_colour("LspDiagnosticsVirtualTextInformation", "guifg", dcyan  )
   set_colour("LspDiagnosticsVirtualTextHint",        "guifg", dblue  )
-  set_colour("LspDiagnosticsSignError",              "guifg", dred   )
-  set_colour("LspDiagnosticsSignWarning",            "guifg", dorange)
-  set_colour("LspDiagnosticsSignInformation",        "guifg", dcyan  )
-  set_colour("LspDiagnosticsSignHint",               "guifg", dblue  )
+  set_colour("LspDiagnosticsSignError",              "guifg", orange )
+  set_colour("LspDiagnosticsSignWarning",            "guifg", yellow )
+  set_colour("LspDiagnosticsSignInformation",        "guifg", cyan   )
+  set_colour("LspDiagnosticsSignHint",               "guifg", blue   )
 end
