@@ -39,6 +39,11 @@ local on_attach = function(client, bufnr)
     augroup end
     ]], false)
   end
+
+  Fn.sign_define("LspDiagnosticsSignError",       { text = "" })
+  Fn.sign_define("LspDiagnosticsSignWarning",     { text = "" })
+  Fn.sign_define("LspDiagnosticsSignInformation", { text = "" })
+  Fn.sign_define("LspDiagnosticsSignHint",        { text = "" })
 end
 
 -- configure lua language server for neovim development
