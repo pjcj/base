@@ -126,17 +126,17 @@ require "compe".setup {
   documentation    = true,
 
   source = {
-    path      = true,
-    buffer    = true,
-    calc      = true,
-    spell     = { priority = 2 },
-    emoji     = true,
-    nvim_lsp  = true,
-    nvim_lua  = true,
-    vsnip     = false,
-    ultisnips = false,
+    path            = true,
+    buffer          = true,
+    calc            = true,
+    spell           = { priority = 2 },
+    emoji           = true,
+    nvim_lsp        = true,
+    nvim_lua        = true,
+    vsnip           = false,
+    ultisnips       = false,
     nvim_treesitter = false,
-    tmux      = {
+    tmux            = {
       priority  = 3,
       all_panes = true,
     },
@@ -259,7 +259,6 @@ require "nvim_comment".setup({ line_mapping = "-" })
 G.indent_blankline_char                           = " "
 G.indent_blankline_space_char                     = " "
 G.indent_blankline_show_trailing_blankline_indent = false
-G.indent_blankline_show_first_indent_level        = false
 
 require "lualine".setup{
   options    = { theme  = "solarized_dark" },

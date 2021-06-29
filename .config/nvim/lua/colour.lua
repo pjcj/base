@@ -86,7 +86,6 @@ function _G.set_buffer_colours()
 
   set_colour("IndentOdd",                            "guibg", none   )
   set_colour("IndentEven",                           "guibg", base02 )
-  set_colour("IndentSpace",                          "guibg", none   )
 
   set_colour("goDiagnosticError",                    "guibg", none   )
   set_colour("goDiagnosticError",                    "guifg", red    )
