@@ -107,8 +107,6 @@
 [commit]
     verbose             = true
 [fetch]
-    prune               = true
-    pruneTags           = true
     writeCommitGraph    = true
 [merge]
     ff                  = false
