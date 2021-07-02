@@ -129,7 +129,7 @@ require "compe".setup {
     path            = true,
     buffer          = true,
     calc            = true,
-    spell           = { priority = 2 },
+    spell           = { priority = 3 },
     emoji           = true,
     nvim_lsp        = true,
     nvim_lua        = true,
@@ -137,7 +137,7 @@ require "compe".setup {
     ultisnips       = false,
     nvim_treesitter = false,
     tmux            = {
-      priority  = 3,
+      priority  = 5,
       all_panes = true,
     },
   },
