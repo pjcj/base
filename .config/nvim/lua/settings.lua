@@ -52,8 +52,9 @@ function _G.set_buffer_settings()
   local ft = vim.bo.filetype
 
   if ft == "go" or ft == "make" then
-    Lopt.listchars = { tab = "  ", trail = "·" }
-    Lopt.tabstop   = 2
+    Lopt.listchars  = { tab = "  ", trail = "·" }
+    Lopt.tabstop    = 2
+    Lopt.shiftwidth = 2
     alternate_indent()
 
     if ft == "go" then
