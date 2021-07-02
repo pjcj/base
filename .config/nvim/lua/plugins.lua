@@ -70,7 +70,7 @@ require "nvim-treesitter.configs".setup {
 
 G.ale_linters_explicit = 1
 G.ale_disable_lsp      = 1
-G.ale_sign_error       = "✗"
+G.ale_sign_error       = ""
 G.ale_sign_warning     = "⚠"
 G.ale_linters = {
   yaml = { "circleci", "spectral", "swaglint", "yamllint" },
