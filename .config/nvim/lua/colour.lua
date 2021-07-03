@@ -99,4 +99,6 @@ function _G.set_buffer_colours()
   set_colour("LspDiagnosticsSignWarning",            "guifg", yellow )
   set_colour("LspDiagnosticsSignInformation",        "guifg", cyan   )
   set_colour("LspDiagnosticsSignHint",               "guifg", blue   )
+
+  set_colour("ScrollView",                           "guibg", blue   )
 end

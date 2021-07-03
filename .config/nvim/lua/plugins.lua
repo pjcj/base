@@ -324,3 +324,6 @@ G.interestingWordsGUIColors = {
   '#69636d', '#626b98', '#f5f5a7', '#dcca6b',
   '#b72a83', '#6f2b9d', '#69636d', '#5f569c',
 }
+
+G.scrollview_winblend = 75
+G.scrollview_column   = 1
