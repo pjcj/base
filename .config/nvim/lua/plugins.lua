@@ -264,6 +264,7 @@ require "nvim_comment".setup({ line_mapping = "-" })
 G.indent_blankline_char                           = " "
 G.indent_blankline_space_char                     = " "
 G.indent_blankline_show_trailing_blankline_indent = false
+G.indent_blankline_show_first_indent_level        = false
 
 require "lualine".setup{
   options    = { theme  = "solarized_dark" },
