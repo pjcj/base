@@ -43,7 +43,7 @@ require("packer").startup(function(use)
   use "terrortylor/nvim-comment"
 
   use "zsugabubus/crazy8.nvim"
-  use { "lukas-reineke/indent-blankline.nvim", branch = "lua" }
+  use "lukas-reineke/indent-blankline.nvim"
 
   use {
     "hoob3rt/lualine.nvim",
