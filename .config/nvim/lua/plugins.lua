@@ -19,6 +19,7 @@ require("packer").startup(function(use)
 
   use "neovim/nvim-lspconfig"
   use "kabouzeid/nvim-lspinstall"
+  use "kosayoda/nvim-lightbulb"
 
   use "w0rp/ale"
 
@@ -67,6 +68,8 @@ require "nvim-treesitter.configs".setup {
     enable = false,
   },
 }
+
+Cmd [[autocmd CursorHold,CursorHoldI * lua require "nvim-lightbulb".update_lightbulb()]]
 
 G.ale_linters_explicit = 1
 G.ale_disable_lsp      = 1

@@ -69,6 +69,7 @@ Map("n", "<leader>fg", [[<cmd>lua require"telescope.builtin".live_grep()<cr>]], 
 Map("n", "<leader>fh", [[<cmd>lua require"telescope.builtin".help_tags()<cr>]],                   Defmap)
 Map("n", "<leader>fs", [[<cmd>lua require"telescope.builtin".grep_string()<cr>]],                 Defmap)
 Map("n", "<leader>fl", [[<cmd>lua require"telescope.builtin".current_buffer_fuzzy_find()<cr>]],   Defmap)
+Map("n", "<leader>fa", [[<cmd>lua require"telescope.builtin".lsp_code_actions()<cr>]],            Defmap)
 
 Map("n", "<leader>gg", [[<cmd>tab Git commit<cr>]], Defmap)
 
