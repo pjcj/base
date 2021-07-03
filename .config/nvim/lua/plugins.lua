@@ -77,7 +77,10 @@ G.ale_sign_warning     = "⚠"
 G.ale_linters = {
   yaml = { "circleci", "spectral", "swaglint", "yamllint" },
   sh   = { "bashate", "language_server", "shell", "shellcheck" },
+  perl = { "perl" },
 }
+G.ale_perl_perl_executable = Fn.expand("~/g/base/utils/ale_perl")
+G.ale_perl_perl_options    = ""
 
 G.go_auto_type_info              = 1
 G.go_test_show_name              = 1
