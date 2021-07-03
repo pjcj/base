@@ -55,6 +55,8 @@ fi
 bat cache --clear
 bat cache --build
 
+mkdir -p ~/.local/share/nvim/backup
+
 if [[ "$(uname)" == Darwin ]]; then
     if which brew >&/dev/null; then
         brew update
