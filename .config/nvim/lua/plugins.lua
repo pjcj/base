@@ -56,6 +56,7 @@ require("packer").startup(function(use)
   use "lfv89/vim-interestingwords"
   use "junegunn/vim-easy-align"
   use "tpope/vim-surround"
+  use "tpope/vim-repeat"
   use "dstein64/nvim-scrollview"
 end)
 
