@@ -10,6 +10,9 @@ require("packer").startup(function(use)
   -- Packer can manage itself
   use "wbthomason/packer.nvim"
 
+  use "hoob3rt/lualine.nvim"
+  use "kyazdani42/nvim-web-devicons"
+
   use "pjcj/neovim-colors-solarized-truecolor-only"
 
   use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
@@ -44,11 +47,6 @@ require("packer").startup(function(use)
 
   use "zsugabubus/crazy8.nvim"
   use "lukas-reineke/indent-blankline.nvim"
-
-  use {
-    "hoob3rt/lualine.nvim",
-    requires = { "kyazdani42/nvim-web-devicons", opt = true }
-  }
 
   use "gioele/vim-autoswap"
   use "farmergreg/vim-lastplace"
