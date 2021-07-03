@@ -21,8 +21,9 @@ local green   = "#859900"
 local normal  = "#9599dc"
 
 local rgreen  = "#25ad2e"  -- a nice green for diffs (opposite of red)
-local base04  = "#00090C"  -- darker than base03
-local base05  = "#0E3C49"  -- lighter than base02
+local base04  = "#00090c"  -- darker than base03
+local base05  = "#0e3c49"  -- lighter than base02
+local base06  = "#012028"  -- lighter than base03
 local dyellow = "#433200"  -- dark yellow
 local dorange = "#7d2500"  -- dark orange
 local dred    = "#400200"  -- dark red
@@ -51,6 +52,7 @@ function _G.set_buffer_colours()
   set_colour("SpellLocal",                           "guifg", base03 )
   set_colour("SpellLocal",                           "gui",   none   )
   set_colour("LineNr",                               "guibg", base03 )
+  set_colour("ColorColumn",                          "guibg", base06 )
   set_colour("CursorLine",                           "guibg", base02 )
   set_colour("CursorColumn",                         "guibg", base02 )
   set_colour("CursorLineNr",                         "guibg", base03 )
@@ -58,7 +60,7 @@ function _G.set_buffer_colours()
   set_colour("DiffAdd",                              "guifg", rgreen )
   set_colour("DiffChange",                           "guibg", base03 )
   set_colour("DiffDelete",                           "guibg", base03 )
-  set_colour("diffAdded",                            "guifg", rgreen )
+  set_colour("DiffAdded",                            "guifg", rgreen )
   set_colour("Search",                               "guibg", violet )
   set_colour("Search",                               "guifg", base03 )
   set_colour("Search",                               "gui",   none   )
@@ -87,8 +89,8 @@ function _G.set_buffer_colours()
   set_colour("IndentOdd",                            "guibg", none   )
   set_colour("IndentEven",                           "guibg", base02 )
 
-  set_colour("goDiagnosticError",                    "guibg", none   )
-  set_colour("goDiagnosticError",                    "guifg", red    )
+  set_colour("GoDiagnosticError",                    "guibg", none   )
+  set_colour("GoDiagnosticError",                    "guifg", red    )
 
   set_colour("LspDiagnosticsDefaultError",           "guifg", red    )
   set_colour("LspDiagnosticsVirtualTextError",       "guifg", dorange)
