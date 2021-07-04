@@ -91,9 +91,9 @@ G.go_diagnostics_enabled         = 1
 G.go_diagnostics_level           = 2
 G.go_template_autocreate         = 0
 G.go_metalinter_command          = "golangci-lint"
-G.go_metalinter_autosave         = 1
-G.go_metalinter_autosave_enabled = { }
-G.go_metalinter_enabled          = { }
+G.go_metalinter_autosave         = 0
+G.go_metalinter_autosave_enabled = { "all" }
+G.go_metalinter_enabled          = { "all" }
 G.go_fmt_options                 = { gofmt = "-s" }
 
 require "telescope".setup {
