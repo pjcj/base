@@ -20,6 +20,7 @@ require("packer").startup(function(use)
   use "neovim/nvim-lspconfig"
   use "kabouzeid/nvim-lspinstall"
   use "kosayoda/nvim-lightbulb"
+  use "ray-x/lsp_signature.nvim"
 
   use "w0rp/ale"
 
