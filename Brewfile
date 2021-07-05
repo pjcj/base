@@ -52,7 +52,7 @@ brew "mtr"
 brew "multitail"
 brew "mutt"
 brew "mysql@5.7"
-brew "neovim", args: ["HEAD"]
+brew "neovim"
 brew "nnn"
 brew "node@14"
 brew "openapi-generator"
