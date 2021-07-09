@@ -58,6 +58,7 @@ require("packer").startup(function(use)
   use "tpope/vim-surround"
   use "tpope/vim-repeat"
   use "dstein64/nvim-scrollview"
+  use "edluffy/specs.nvim"
 end)
 
 require "nvim-treesitter.configs".setup {
@@ -329,3 +330,21 @@ G.interestingWordsGUIColors = {
 
 G.scrollview_winblend = 75
 G.scrollview_column   = 1
+
+require("specs").setup{
+  show_jumps  = true,
+  min_jump = 10,
+  popup = {
+    delay_ms = 0, -- delay before popup displays
+    inc_ms = 5, -- time increments used for fade/resize effects
+    blend = 10, -- starting blend, between 0-100 (fully transparent), see :h winblend
+    width = 40,
+    winhl = "ScrollView",
+    fader = require("specs").linear_fader,
+    resizer = require("specs").shrink_resizer,
+  },
+  ignore_filetypes = {},
+  ignore_buftypes = {
+    nofile = true,
+  },
+}
