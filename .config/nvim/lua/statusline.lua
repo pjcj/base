@@ -252,11 +252,6 @@ local separators = {
   circle             = "●",
 }
 
-require "feline".setup{
-  colors     = colours,
-  separators = separators,
-}
-
 local vi_mode_colors = {
   NORMAL        = "green",
   OP            = "green",
