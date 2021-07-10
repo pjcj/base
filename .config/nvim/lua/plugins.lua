@@ -23,6 +23,7 @@ require("packer").startup(function(use)
   use "ray-x/lsp_signature.nvim"
 
   use "w0rp/ale"
+  use "ludovicchabant/vim-gutentags"
 
   use { "fatih/vim-go", run = ":GoUpdateBinaries" }
 
@@ -84,6 +85,13 @@ G.ale_linters = {
 }
 G.ale_perl_perl_executable = Fn.expand("~/g/base/utils/ale_perl")
 G.ale_perl_perl_options    = ""
+
+G.gutentags_ctags_exclude            = { "blib", "tmp" }
+-- can be extended with '*/sub/path' if required
+G.gutentags_generate_on_new          = 1
+G.gutentags_generate_on_missing      = 1
+G.gutentags_generate_on_write        = 1
+G.gutentags_generate_on_empty_buffer = 0
 
 G.go_auto_type_info              = 1
 G.go_test_show_name              = 1
