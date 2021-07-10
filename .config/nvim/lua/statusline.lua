@@ -180,10 +180,26 @@ table.insert(components.right.active, {
 
 table.insert(components.right.active, {
   provider = "position",
-  hl       = { bg = Col_base02 },
+  hl = function()
+    return {
+      name = vi_mode_utils.get_mode_highlight_name(),
+      bg   = vi_mode_utils.get_mode_color(),
+    }
+  end,
   left_sep = {
-    { str = "left_filled", hl = { bg = Col_base05, fg = Col_base02 } },
-    { str = " ",           hl = { bg = Col_base02                  } },
+    "",
+    function()
+      return {
+        str = "left_filled",
+        hl  = { bg = Col_base05, fg = vi_mode_utils.get_mode_color() },
+      }
+    end,
+    function()
+      return {
+        str = " ",
+        hl  = { bg = vi_mode_utils.get_mode_color() },
+      }
+    end,
   },
 })
 
