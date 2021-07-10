@@ -1,106 +1,29 @@
-Opt.termguicolors = true
-Opt.background    = "dark"
-Cmd "colorscheme solarized"
+Col_base03  = "#001920"
+Col_base02  = "#022731"
+Col_base01  = "#586e75"
+Col_base00  = "#657b83"
+Col_base0   = "#839496"
+Col_base1   = "#93a1a1"
+Col_base2   = "#eee8d5"
+Col_base3   = "#fdf6e3"
+Col_yellow  = "#b58900"
+Col_orange  = "#cb4b16"
+Col_red     = "#dc322f"
+Col_magenta = "#d33682"
+Col_violet  = "#6c71c4"
+Col_blue    = "#268bd2"
+Col_cyan    = "#2aa198"
+Col_green   = "#859900"
+Col_normal  = "#9599dc"
 
-local base03  = "#001920"
-local base02  = "#022731"
-local base01  = "#586e75"
-local base00  = "#657b83"
-local base0   = "#839496"
-local base1   = "#93a1a1"
-local base2   = "#eee8d5"
-local base3   = "#fdf6e3"
-local yellow  = "#b58900"
-local orange  = "#cb4b16"
-local red     = "#dc322f"
-local magenta = "#d33682"
-local violet  = "#6c71c4"
-local blue    = "#268bd2"
-local cyan    = "#2aa198"
-local green   = "#859900"
-local normal  = "#9599dc"
+Col_rgreen  = "#25ad2e"  -- a nice green for diffs (opposite of red)
+Col_base04  = "#00090c"  -- darker than base03
+Col_base05  = "#0e3c49"  -- lighter than base02
+Col_base06  = "#012028"  -- lighter than base03
+Col_dyellow = "#433200"  -- dark yellow
+Col_dorange = "#7d2500"  -- dark orange
+Col_dred    = "#400200"  -- dark red
+Col_dcyan   = "#04746c"  -- dark cyan
+Col_dblue   = "#06568f"  -- dark ble
 
-local rgreen  = "#25ad2e"  -- a nice green for diffs (opposite of red)
-local base04  = "#00090c"  -- darker than base03
-local base05  = "#0e3c49"  -- lighter than base02
-local base06  = "#012028"  -- lighter than base03
-local dyellow = "#433200"  -- dark yellow
-local dorange = "#7d2500"  -- dark orange
-local dred    = "#400200"  -- dark red
-local dcyan   = "#04746c"  -- dark cyan
-local dblue   = "#06568f"  -- dark ble
-
-local none    = "none"
-
-local function set_colour(group, part, colour)
-  Cmd(string.format("highlight %s %s=%s", group, part, colour))
-end
-
-function _G.set_buffer_colours()
-  set_colour("Normal",                               "guifg", normal )
-  set_colour("SpecialKey",                           "guibg", base03 )
-  set_colour("SpellBad",                             "guibg", violet )
-  set_colour("SpellBad",                             "guifg", base03 )
-  set_colour("SpellBad",                             "gui",   none   )
-  set_colour("SpellCap",                             "guibg", blue   )
-  set_colour("SpellCap",                             "guifg", base03 )
-  set_colour("SpellCap",                             "gui",   none   )
-  set_colour("SpellRare",                            "guibg", yellow )
-  set_colour("SpellRare",                            "guifg", base03 )
-  set_colour("SpellRare",                            "gui",   none   )
-  set_colour("SpellLocal",                           "guibg", green  )
-  set_colour("SpellLocal",                           "guifg", base03 )
-  set_colour("SpellLocal",                           "gui",   none   )
-  set_colour("LineNr",                               "guibg", base03 )
-  set_colour("ColorColumn",                          "guibg", base06 )
-  set_colour("CursorLine",                           "guibg", base02 )
-  set_colour("CursorColumn",                         "guibg", base02 )
-  set_colour("CursorLineNr",                         "guibg", base03 )
-  set_colour("DiffAdd",                              "guibg", base03 )
-  set_colour("DiffAdd",                              "guifg", rgreen )
-  set_colour("DiffChange",                           "guibg", base03 )
-  set_colour("DiffDelete",                           "guibg", base03 )
-  set_colour("DiffAdded",                            "guifg", rgreen )
-  set_colour("Search",                               "guibg", violet )
-  set_colour("Search",                               "guifg", base03 )
-  set_colour("Search",                               "gui",   none   )
-  set_colour("TabLineSel",                           "guibg", base03 )
-  set_colour("TabLineSel",                           "guifg", violet )
-  set_colour("Folded",                               "gui",   none   )
-  set_colour("MatchParen",                           "guibg", base00 )
-  set_colour("MatchParen",                           "guifg", none   )
-  set_colour("MatchParenCur",                        "guibg", base02 )
-  set_colour("MatchParenCur",                        "guifg", none   )
-  set_colour("NormalFloat",                          "guibg", base04 )
-  set_colour("Pmenu",                                "guifg", dred   )
-  set_colour("Pmenu",                                "guibg", base2  )
-  set_colour("PmenuSel",                             "guifg", dorange)
-  set_colour("PmenuSel",                             "guibg", base2  )
-
-  set_colour("GitSignsAdd",                          "guibg", base03 )
-  set_colour("GitSignsAdd",                          "guifg", rgreen )
-  set_colour("GitSignsChange",                       "guibg", base03 )
-  set_colour("GitSignsChange",                       "guifg", yellow )
-  set_colour("GitSignsDelete",                       "guibg", base03 )
-  set_colour("GitSignsDelete",                       "guifg", red    )
-
-  set_colour("GitSignsCurrentLineBlame",             "guifg", base05 )
-
-  set_colour("IndentOdd",                            "guibg", none   )
-  set_colour("IndentEven",                           "guibg", base02 )
-
-  set_colour("GoDiagnosticError",                    "guibg", none   )
-  set_colour("GoDiagnosticError",                    "guifg", red    )
-
-  set_colour("LspDiagnosticsDefaultError",           "guifg", red    )
-  set_colour("LspDiagnosticsVirtualTextError",       "guifg", dorange)
-  set_colour("LspDiagnosticsVirtualTextWarning",     "guifg", dyellow)
-  set_colour("LspDiagnosticsVirtualTextInformation", "guifg", dcyan  )
-  set_colour("LspDiagnosticsVirtualTextHint",        "guifg", dblue  )
-  set_colour("LspDiagnosticsSignError",              "guifg", orange )
-  set_colour("LspDiagnosticsSignWarning",            "guifg", yellow )
-  set_colour("LspDiagnosticsSignInformation",        "guifg", cyan   )
-  set_colour("LspDiagnosticsSignHint",               "guifg", blue   )
-
-  set_colour("ScrollView",                           "guibg", blue   )
-end
+Col_none    = "none"

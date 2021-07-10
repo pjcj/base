@@ -9,9 +9,10 @@ Map    = vim.api.nvim_set_keymap           -- global mappings
 Bmap   = vim.api.nvim_buf_set_keymap       -- local mappings
 Defmap = { noremap = true, silent = true } -- default map options
 
+require "colour"
 require "plugins"
 require "settings"
-require "colour"
+require "highlight"
 require "languages"
 require "lsp"
 require "mappings"

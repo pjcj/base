@@ -10,7 +10,7 @@ require("packer").startup(function(use)
   -- Packer can manage itself
   use "wbthomason/packer.nvim"
 
-  use "hoob3rt/lualine.nvim"
+  use 'famiu/feline.nvim'
   use "kyazdani42/nvim-web-devicons"
 
   use "pjcj/neovim-colors-solarized-truecolor-only"
@@ -269,52 +269,16 @@ G.indent_blankline_space_char                     = " "
 G.indent_blankline_show_trailing_blankline_indent = false
 G.indent_blankline_show_first_indent_level        = false
 
-require "lualine".setup{
-  options    = { theme  = "solarized_dark" },
-  extensions = { "quickfix", "fugitive" },
-  sections   = {
-    lualine_c = {
-      {
-        "filename",
-        file_status = true, -- (readonly, modified)
-        path        = 1,    -- 0 = filename, 1 = relative, 2 = absolute
-      },
-      {
-        "diff",
-        colored = true,
-        symbols = { added = "+", modified = "~", removed = "-" },
-      },
-      {
-        "diagnostics",
-        sources = { "nvim_lsp" },
-      },
-    },
-  },
-}
+require "statusline"
 
 G.startify_change_to_vcs_root  = 1
 G.startify_fortune_use_unicode = 1
 G.startify_lists = {
-    {
-        type = "dir",
-        header = {"   MRU " .. Fn.getcwd()}
-    },
-    {
-        type = "sessions",
-        header = {"   Sessions"}
-    },
-    {
-        type = "files",
-        header = {"   Files"}
-    },
-    {
-        type = "bookmarks",
-        header = {"   Bookmarks"}
-    },
-    {
-        type = "commands",
-        header = {"   Commands"}
-    }
+  { type = "dir",       header = {"   MRU " .. Fn.getcwd()} },
+  { type = "sessions",  header = {"   Sessions"           } },
+  { type = "files",     header = {"   Files"              } },
+  { type = "bookmarks", header = {"   Bookmarks"          } },
+  { type = "commands",  header = {"   Commands"           } },
 }
 
 G.interestingWordsGUIColors = {
