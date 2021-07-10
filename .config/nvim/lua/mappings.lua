@@ -88,3 +88,7 @@ Map("n", "<leader>qQ", [[cs"']], {})
 Cmd([[
   nnoremap <silent> <leader>l :let @/ = ""<bar> :call UncolorAllWords()<cr>
 ]])
+
+Cmd([[
+  cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+]])
