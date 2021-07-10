@@ -90,20 +90,14 @@ table.insert(components.left.active, {
   hl = { fg = Col_red },
   right_sep = {
     " ",
-    {
-      str = "right_filled",
-      hl = { bg = Col_base02, fg = Col_base05 },
-    },
+    { str = "right_filled", hl = { bg = Col_base02, fg = Col_base05 } },
   },
 })
 
 table.insert(components.left.active, {
   provider = "lsp_client_names",
   hl = { bg = Col_base02, fg = Col_base01 },
-  left_sep = {
-    str = " ",
-    hl = { bg = Col_base02 },
-  },
+  left_sep = { str = " ", hl = { bg = Col_base02 } },
 })
 
 table.insert(components.left.active, {
@@ -133,48 +127,51 @@ table.insert(components.left.active, {
 table.insert(components.left.active, {
   provider = " ",
   hl = { bg = Col_base02 },
-  right_sep = {
-    str = "right_filled",
+  right_sep = { str = "right_filled",
     hl = { bg = Col_base05, fg = Col_base02 },
+  },
+})
+
+local function file_osinfo()
+  local os = vim.bo.fileformat:upper()
+  local icon
+  if os == "UNIX" then
+    icon = " "
+  elseif os == "MAC" then
+    icon = " "
+  else
+    icon = " "
+  end
+  return icon .. os
+end
+
+table.insert(components.right.active, {
+  provider = file_osinfo,
+  hl = { bg = Col_base02, fg = Col_base01 },
+  left_sep = {
+    { str = "left_filled", hl = { bg = Col_base05, fg = Col_base02 } },
+    { str = " ",           hl = { bg = Col_base02                  } },
   },
 })
 
 table.insert(components.right.active, {
   provider = "file_type",
   hl = { bg = Col_base02, fg = Col_base01 },
-  left_sep = {
-    {
-      str = "left_filled",
-      hl = { bg = Col_base05, fg = Col_base02 },
-    },
-    {
-      str = " ",
-      hl = { bg = Col_base02 },
-    },
-  },
+  left_sep = { { str = " ", hl = { bg = Col_base02 } } },
 })
 
 table.insert(components.right.active, {
   provider = "file_encoding",
   hl = { bg = Col_base02, fg = Col_base01 },
-  left_sep = {
-    str = " ",
-    hl = { bg = Col_base02, fg = Col_base05 },
-  },
-  right_sep = {
-    str = " ",
-    hl = { bg = Col_base02 },
-  },
+  left_sep  = { str = " ", hl = { bg = Col_base02, fg = Col_base05 } },
+  right_sep = { str = " ", hl = { bg = Col_base02                  } },
 })
 
 table.insert(components.right.active, {
   provider = "file_size",
   enabled = function() return vim.fn.getfsize(vim.fn.expand("%:p")) > 0 end,
   left_sep = {
-    {
-      str = "left_filled",
-      hl = { bg = Col_base02, fg = Col_base05 },
-    },
+    { str = "left_filled", hl = { bg = Col_base02, fg = Col_base05 } },
     " ",
   },
   right_sep = " ",
@@ -184,39 +181,17 @@ table.insert(components.right.active, {
   provider = "position",
   hl = { bg = Col_base02 },
   left_sep = {
-    {
-      str = "left_filled",
-      hl = { bg = Col_base05, fg = Col_base02 },
-    },
-    {
-      str = " ",
-      hl = { bg = Col_base02 },
-    },
+    { str = "left_filled", hl = { bg = Col_base05, fg = Col_base02 } },
+    { str = " ",           hl = { bg = Col_base02                  } },
   },
 })
 
 table.insert(components.left.inactive, {
   provider = "file_type",
-  hl = {
-    fg = "white",
-    bg = "oceanblue",
-    style = "bold"
-  },
-  left_sep = {
-    str = " ",
-    hl = {
-      fg = "NONE",
-      bg = "oceanblue"
-    }
-  },
+  hl = { fg = "white", bg = "oceanblue", style = "bold" },
+  left_sep = { str = " ", hl = { fg = "NONE", bg = "oceanblue" } },
   right_sep = {
-    {
-      str = " ",
-      hl = {
-        fg = "NONE",
-        bg = "oceanblue"
-      }
-    },
+    { str = " ", hl = { fg = "NONE", bg = "oceanblue" } },
     "right_filled"
   },
 })
