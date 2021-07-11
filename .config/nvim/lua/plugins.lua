@@ -11,9 +11,7 @@ require("packer").startup(function(use)
   use "wbthomason/packer.nvim"
 
   use { "famiu/feline.nvim", config = function() require "statusline" end }
-
   use "kyazdani42/nvim-web-devicons"
-
   use "pjcj/neovim-colors-solarized-truecolor-only"
 
   use {
@@ -30,14 +28,13 @@ require("packer").startup(function(use)
 
   use "neovim/nvim-lspconfig"
   use "kabouzeid/nvim-lspinstall"
+  use "ray-x/lsp_signature.nvim"
   use {
     "kosayoda/nvim-lightbulb",
     config = function()
       Cmd [[autocmd CursorHold,CursorHoldI * lua require "nvim-lightbulb".update_lightbulb()]]
     end,
   }
-
-  use "ray-x/lsp_signature.nvim"
 
   use {
     "w0rp/ale",
@@ -361,23 +358,24 @@ require("packer").startup(function(use)
     end,
   }
 
-  use "edluffy/specs.nvim"
+  use {
+    "edluffy/specs.nvim",
+    config = function()
+      require("specs").setup{
+        show_jumps = true,
+        min_jump   = 3,
+        popup      = {
+          delay_ms = 0,  -- delay before popup displays
+          inc_ms   = 5,  -- time increments used for fade/resize effects
+          blend    = 10, -- starting blend, between 0-100, see :h winblend
+          width    = 40,
+          winhl    = "ScrollView",
+          fader    = require("specs").linear_fader,
+          resizer  = require("specs").shrink_resizer,
+        },
+        ignore_filetypes = {},
+        ignore_buftypes  = { nofile = true },
+      }
+    end,
+  }
 end)
-
-require("specs").setup{
-  show_jumps  = true,
-  min_jump = 10,
-  popup = {
-    delay_ms = 0, -- delay before popup displays
-    inc_ms = 5, -- time increments used for fade/resize effects
-    blend = 10, -- starting blend, between 0-100 (fully transparent), see :h winblend
-    width = 40,
-    winhl = "ScrollView",
-    fader = require("specs").linear_fader,
-    resizer = require("specs").shrink_resizer,
-  },
-  ignore_filetypes = {},
-  ignore_buftypes = {
-    nofile = true,
-  },
-}
