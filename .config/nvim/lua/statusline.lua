@@ -104,24 +104,28 @@ table.insert(components.left.active, {
   provider = "diagnostic_errors",
   enabled  = function() return lsp.diagnostics_exist("Error") end,
   hl       = { bg = Col_base02, fg = "red" },
+  icon     = "  ",
 })
 
 table.insert(components.left.active, {
   provider = "diagnostic_warnings",
   enabled  = function() return lsp.diagnostics_exist("Warning") end,
   hl       = { bg = Col_base02, fg = "yellow" },
+  icon     = "  ",
 })
 
 table.insert(components.left.active, {
   provider = "diagnostic_hints",
   enabled  = function() return lsp.diagnostics_exist("Hint") end,
   hl       = { bg = Col_base02, fg = "cyan" },
+  icon     = "  ",
 })
 
 table.insert(components.left.active, {
   provider = "diagnostic_info",
   enabled  = function() return lsp.diagnostics_exist("Information") end,
   hl       = { bg = Col_base02, fg = "skyblue" },
+  icon     = "  ",
 })
 
 table.insert(components.left.active, {
