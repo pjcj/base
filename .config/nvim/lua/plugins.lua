@@ -39,7 +39,23 @@ require("packer").startup(function(use)
 
   use "ray-x/lsp_signature.nvim"
 
-  use "w0rp/ale"
+  use {
+    "w0rp/ale",
+    config = function()
+      G.ale_linters_explicit = 1
+      G.ale_disable_lsp      = 1
+      G.ale_sign_error       = ""
+      G.ale_sign_warning     = "⚠"
+      G.ale_linters = {
+        yaml = { "circleci", "spectral", "swaglint", "yamllint" },
+        sh   = { "bashate", "language_server", "shell", "shellcheck" },
+        perl = { "perl" },
+      }
+      G.ale_perl_perl_executable = Fn.expand("~/g/base/utils/ale_perl")
+      G.ale_perl_perl_options    = ""
+    end,
+  }
+
   use "ludovicchabant/vim-gutentags"
 
   use { "fatih/vim-go", run = ":GoUpdateBinaries" }
@@ -135,18 +151,6 @@ require("packer").startup(function(use)
   use "dstein64/nvim-scrollview"
   use "edluffy/specs.nvim"
 end)
-
-G.ale_linters_explicit = 1
-G.ale_disable_lsp      = 1
-G.ale_sign_error       = ""
-G.ale_sign_warning     = "⚠"
-G.ale_linters = {
-  yaml = { "circleci", "spectral", "swaglint", "yamllint" },
-  sh   = { "bashate", "language_server", "shell", "shellcheck" },
-  perl = { "perl" },
-}
-G.ale_perl_perl_executable = Fn.expand("~/g/base/utils/ale_perl")
-G.ale_perl_perl_options    = ""
 
 G.gutentags_ctags_exclude            = { "blib", "tmp" }
 -- can be extended with '*/sub/path' if required
