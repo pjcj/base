@@ -113,9 +113,97 @@ require("packer").startup(function(use)
     end,
   }
 
-  use "hrsh7th/nvim-compe"
+  use {
+    "hrsh7th/nvim-compe",
+    config = function()
+      require "compe".setup {
+        enabled          = true,
+        autocomplete     = true,
+        debug            = false,
+        min_length       = 1,
+        preselect        = "disable",
+        throttle_time    = 80,
+        source_timeout   = 200,
+        resolve_timeout  = 800,
+        incomplete_delay = 400,
+        max_abbr_width   = 100,
+        max_kind_width   = 100,
+        max_menu_width   = 100,
+        documentation    = true,
+
+        source = {
+          path            = true,
+          buffer          = true,
+          calc            = true,
+          spell           = { priority = 3 },
+          emoji           = true,
+          nvim_lsp        = true,
+          nvim_lua        = true,
+          vsnip           = false,
+          ultisnips       = false,
+          nvim_treesitter = false,
+          tmux            = {
+            priority  = 5,
+            all_panes = true,
+          },
+        },
+      }
+
+      local t = function(str)
+        return Api.nvim_replace_termcodes(str, true, true, true)
+      end
+
+      local check_back_space = function()
+        local col = Fn.col(".") - 1
+        if col == 0 or Fn.getline("."):sub(col, col):match("%s") then
+          return true
+        else
+          return false
+        end
+      end
+
+      -- Use (s-)tab to:
+      --- move to prev/next item in completion menuone
+      --- jump to prev/next snippet's placeholder
+      _G.tab_complete = function()
+        if Fn.pumvisible() == 1 then
+          return t "<C-n>"
+        elseif Fn.call("vsnip#available", {1}) == 1 then
+          return t "<Plug>(vsnip-expand-or-jump)"
+        elseif check_back_space() then
+          return t "<Tab>"
+        else
+          return Fn["compe#complete"]()
+        end
+      end
+
+      _G.s_tab_complete = function()
+        if Fn.pumvisible() == 1 then
+          return t "<C-p>"
+        elseif Fn.call("vsnip#jumpable", {-1}) == 1 then
+          return t "<Plug>(vsnip-jump-prev)"
+        else
+          -- If <S-Tab> is not working in your terminal, change it to <C-h>
+          return t "<S-Tab>"
+        end
+      end
+
+      Map("i", "<Tab>",   "v:lua.tab_complete()",   {expr = true})
+      Map("s", "<Tab>",   "v:lua.tab_complete()",   {expr = true})
+      Map("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+      Map("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+    end,
+  }
   use "andersevenrud/compe-tmux"
-  use "windwp/nvim-autopairs"
+  use {
+    "windwp/nvim-autopairs",
+    config = function()
+      require "nvim-autopairs".setup({
+        map_cr       = true, --  map <CR> on insert mode
+        map_complete = true, -- auto insert `(` after selecting function
+      })
+    end,
+  }
 
   use {
     "lewis6991/gitsigns.nvim",
@@ -199,88 +287,6 @@ require("packer").startup(function(use)
   use "dstein64/nvim-scrollview"
   use "edluffy/specs.nvim"
 end)
-
-require "compe".setup {
-  enabled          = true,
-  autocomplete     = true,
-  debug            = false,
-  min_length       = 1,
-  preselect        = "disable",
-  throttle_time    = 80,
-  source_timeout   = 200,
-  resolve_timeout  = 800,
-  incomplete_delay = 400,
-  max_abbr_width   = 100,
-  max_kind_width   = 100,
-  max_menu_width   = 100,
-  documentation    = true,
-
-  source = {
-    path            = true,
-    buffer          = true,
-    calc            = true,
-    spell           = { priority = 3 },
-    emoji           = true,
-    nvim_lsp        = true,
-    nvim_lua        = true,
-    vsnip           = false,
-    ultisnips       = false,
-    nvim_treesitter = false,
-    tmux            = {
-      priority  = 5,
-      all_panes = true,
-    },
-  },
-}
-
-local t = function(str)
-  return Api.nvim_replace_termcodes(str, true, true, true)
-end
-
-local check_back_space = function()
-  local col = Fn.col(".") - 1
-  if col == 0 or Fn.getline("."):sub(col, col):match("%s") then
-    return true
-  else
-    return false
-  end
-end
-
--- Use (s-)tab to:
---- move to prev/next item in completion menuone
---- jump to prev/next snippet's placeholder
-_G.tab_complete = function()
-  if Fn.pumvisible() == 1 then
-    return t "<C-n>"
-  elseif Fn.call("vsnip#available", {1}) == 1 then
-    return t "<Plug>(vsnip-expand-or-jump)"
-  elseif check_back_space() then
-    return t "<Tab>"
-  else
-    return Fn["compe#complete"]()
-  end
-end
-
-_G.s_tab_complete = function()
-  if Fn.pumvisible() == 1 then
-    return t "<C-p>"
-  elseif Fn.call("vsnip#jumpable", {-1}) == 1 then
-    return t "<Plug>(vsnip-jump-prev)"
-  else
-    -- If <S-Tab> is not working in your terminal, change it to <C-h>
-    return t "<S-Tab>"
-  end
-end
-
-Map("i", "<Tab>",   "v:lua.tab_complete()",   {expr = true})
-Map("s", "<Tab>",   "v:lua.tab_complete()",   {expr = true})
-Map("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-Map("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-
-require "nvim-autopairs".setup({
-  map_cr = true,       --  map <CR> on insert mode
-  map_complete = true, -- auto insert `(` after selecting function
-})
 
 G.git_messenger_always_into_popup = 1
 G.git_messenger_include_diff      = "current"
