@@ -187,7 +187,6 @@ table.insert(components.right.active, {
     }
   end,
   left_sep = {
-    "",
     function()
       return {
         str = "left_filled",
