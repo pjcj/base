@@ -267,7 +267,15 @@ require("packer").startup(function(use)
       }
     end,
   }
-  use "rhysd/git-messenger.vim"
+
+  use {
+    "rhysd/git-messenger.vim",
+    config = function()
+      G.git_messenger_always_into_popup = 1
+      G.git_messenger_include_diff      = "current"
+    end,
+  }
+
   use "ruanyl/vim-gh-line"
   use "tpope/vim-fugitive"
 
@@ -288,8 +296,6 @@ require("packer").startup(function(use)
   use "edluffy/specs.nvim"
 end)
 
-G.git_messenger_always_into_popup = 1
-G.git_messenger_include_diff      = "current"
 G.gh_use_canonical                = 0
 
 Opt.termguicolors = true
