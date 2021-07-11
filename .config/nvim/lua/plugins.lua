@@ -285,7 +285,17 @@ require("packer").startup(function(use)
 
   use "tpope/vim-fugitive"
 
-  use "norcalli/nvim-colorizer.lua"
+  use {
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+      Opt.termguicolors = true
+      require "colorizer".setup(
+        { "*" },
+        { names = true, RGB = true, RRGGBB = true, RRGGBBAA = true, css = true }
+      )
+    end,
+  }
+
   use "terrortylor/nvim-comment"
 
   use "zsugabubus/crazy8.nvim"
@@ -301,12 +311,6 @@ require("packer").startup(function(use)
   use "dstein64/nvim-scrollview"
   use "edluffy/specs.nvim"
 end)
-
-Opt.termguicolors = true
-require "colorizer".setup(
-  { "*" },
-  { names = true, RGB = true, RRGGBB = true, RRGGBBAA = true, css = true }
-)
 
 require "nvim_comment".setup({ line_mapping = "-" })
 
