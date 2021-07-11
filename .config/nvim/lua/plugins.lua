@@ -39,9 +39,65 @@ require("packer").startup(function(use)
 
   use {
     "lewis6991/gitsigns.nvim",
-    requires = {
-      "nvim-lua/plenary.nvim"
-    }
+    requires = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require "gitsigns".setup {
+        signs = {
+          add          = { show_count = true, text = "+" },
+          change       = { show_count = true, text = "~" },
+          delete       = { show_count = true, text = "_" },
+          topdelete    = { show_count = true, text = "‾" },
+          changedelete = { show_count = true, text = "~" },
+        },
+        numhl   = false,
+        linehl  = false,
+        keymaps = {
+          -- Default keymap options
+          noremap = true,
+          buffer  = true,
+
+          ["n <F2>"] = { expr = true, [[&diff ? '[c' : '<cmd>lua require "gitsigns.actions".prev_hunk()<CR>']]},
+          ["n <F3>"] = { expr = true, [[&diff ? ']c' : '<cmd>lua require "gitsigns.actions".next_hunk()<CR>']]},
+
+          ["n <leader>hs"] = '<cmd>lua require "gitsigns".stage_hunk()<CR>',
+          ["v <leader>hs"] = '<cmd>lua require "gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
+          ["n <leader>hu"] = '<cmd>lua require "gitsigns".undo_stage_hunk()<CR>',
+          ["n <leader>hr"] = '<cmd>lua require "gitsigns".reset_hunk()<CR>',
+          ["v <leader>hr"] = '<cmd>lua require "gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
+          ["n <leader>hR"] = '<cmd>lua require "gitsigns".reset_buffer()<CR>',
+          ["n <leader>hp"] = '<cmd>lua require "gitsigns".preview_hunk()<CR>',
+          ["n <leader>hb"] = '<cmd>lua require "gitsigns".blame_line(true)<CR>',
+
+          ["n <F1>"] = '<cmd>lua require "gitsigns".stage_hunk()<CR>',
+          ["v <F1>"] = '<cmd>lua require "gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
+
+          -- Text objects
+          ["o ih"] = ':<C-U>lua require "gitsigns.actions".select_hunk()<CR>',
+          ["x ih"] = ':<C-U>lua require "gitsigns.actions".select_hunk()<CR>'
+        },
+        watch_index                 = { interval = 1000 },
+        current_line_blame          = true,
+        current_line_blame_delay    = 1000,
+        current_line_blame_position = "eol",
+        sign_priority               = 6,
+        update_debounce             = 100,
+        status_formatter            = nil, -- Use default
+        use_decoration_api          = true,
+        use_internal_diff           = true, -- If luajit is present
+        count_chars = {
+          [1]   = "₁",
+          [2]   = "₂",
+          [3]   = "₃",
+          [4]   = "₄",
+          [5]   = "₅",
+          [6]   = "₆",
+          [7]   = "₇",
+          [8]   = "₈",
+          [9]   = "₉",
+          ["+"] = "₊",
+        },
+      }
+    end,
   }
   use "rhysd/git-messenger.vim"
   use "ruanyl/vim-gh-line"
@@ -209,63 +265,6 @@ require "nvim-autopairs".setup({
   map_cr = true,       --  map <CR> on insert mode
   map_complete = true, -- auto insert `(` after selecting function
 })
-
-require "gitsigns".setup {
-  signs = {
-    add          = { show_count = true, text = "+" },
-    change       = { show_count = true, text = "~" },
-    delete       = { show_count = true, text = "_" },
-    topdelete    = { show_count = true, text = "‾" },
-    changedelete = { show_count = true, text = "~" },
-  },
-  numhl   = false,
-  linehl  = false,
-  keymaps = {
-    -- Default keymap options
-    noremap = true,
-    buffer  = true,
-
-    ['n <F2>'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'"},
-    ['n <F3>'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'"},
-
-    ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-    ['v <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-    ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-    ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-    ['v <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-    ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
-    ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-    ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line(true)<CR>',
-
-    ['n <F1>'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-    ['v <F1>'] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-
-    -- Text objects
-    ['o ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
-    ['x ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>'
-  },
-  watch_index                 = { interval = 1000 },
-  current_line_blame          = true,
-  current_line_blame_delay    = 1000,
-  current_line_blame_position = "eol",
-  sign_priority               = 6,
-  update_debounce             = 100,
-  status_formatter            = nil, -- Use default
-  use_decoration_api          = true,
-  use_internal_diff           = true, -- If luajit is present
-  count_chars = {
-    [1]   = "₁",
-    [2]   = "₂",
-    [3]   = "₃",
-    [4]   = "₄",
-    [5]   = "₅",
-    [6]   = "₆",
-    [7]   = "₇",
-    [8]   = "₈",
-    [9]   = "₉",
-    ["+"] = "₊",
-  },
-}
 
 G.git_messenger_always_into_popup = 1
 G.git_messenger_include_diff      = "current"
