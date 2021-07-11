@@ -10,7 +10,8 @@ require("packer").startup(function(use)
   -- Packer can manage itself
   use "wbthomason/packer.nvim"
 
-  use 'famiu/feline.nvim'
+  use { "famiu/feline.nvim", config = function() require "statusline" end }
+
   use "kyazdani42/nvim-web-devicons"
 
   use "pjcj/neovim-colors-solarized-truecolor-only"
@@ -282,8 +283,6 @@ G.indent_blankline_char                           = " "
 G.indent_blankline_space_char                     = " "
 G.indent_blankline_show_trailing_blankline_indent = false
 G.indent_blankline_show_first_indent_level        = false
-
-require "statusline"
 
 G.startify_change_to_vcs_root  = 1
 G.startify_fortune_use_unicode = 1
