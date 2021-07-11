@@ -16,7 +16,17 @@ require("packer").startup(function(use)
 
   use "pjcj/neovim-colors-solarized-truecolor-only"
 
-  use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
+  use {
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate",
+    config = function()
+      require "nvim-treesitter.configs".setup {
+        ensure_installed = "maintained",
+        highlight        = { enable = true  },
+        indent           = { enable = false },
+      }
+    end,
+  }
 
   use "neovim/nvim-lspconfig"
   use "kabouzeid/nvim-lspinstall"
@@ -119,16 +129,6 @@ require("packer").startup(function(use)
   use "dstein64/nvim-scrollview"
   use "edluffy/specs.nvim"
 end)
-
-require "nvim-treesitter.configs".setup {
-  ensure_installed = "maintained",
-  highlight = {
-    enable = true,
-  },
-  indent = {
-    enable = false,
-  },
-}
 
 Cmd [[autocmd CursorHold,CursorHoldI * lua require "nvim-lightbulb".update_lightbulb()]]
 
