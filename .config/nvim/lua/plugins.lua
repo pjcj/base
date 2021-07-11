@@ -89,7 +89,28 @@ require("packer").startup(function(use)
 
   use {
     "nvim-telescope/telescope.nvim",
-    requires = {{ "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" }}
+    requires = {{ "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" }},
+    config = function()
+      require "telescope".setup {
+        defaults = {
+          vimgrep_arguments = {
+            "rg",
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+            "--smart-case",
+            "--hidden",
+            "--glob",
+            "!.git",
+          },
+          file_ignore_patterns = {
+            ".git/.*"
+          },
+        },
+      }
+    end,
   }
 
   use "hrsh7th/nvim-compe"
@@ -178,26 +199,6 @@ require("packer").startup(function(use)
   use "dstein64/nvim-scrollview"
   use "edluffy/specs.nvim"
 end)
-
-require "telescope".setup {
-  defaults = {
-    vimgrep_arguments = {
-      "rg",
-      "--color=never",
-      "--no-heading",
-      "--with-filename",
-      "--line-number",
-      "--column",
-      "--smart-case",
-      "--hidden",
-      "--glob",
-      "!.git",
-    },
-    file_ignore_patterns = {
-      ".git/.*"
-    },
-  },
-}
 
 require "compe".setup {
   enabled          = true,
