@@ -68,7 +68,24 @@ require("packer").startup(function(use)
     end,
   }
 
-  use { "fatih/vim-go", run = ":GoUpdateBinaries" }
+  use {
+    "fatih/vim-go",
+    run = ":GoUpdateBinaries",
+    config = function()
+      G.go_auto_type_info              = 1
+      G.go_test_show_name              = 1
+      G.go_doc_max_height              = 40
+      G.go_doc_popup_window            = 1
+      G.go_diagnostics_enabled         = 1
+      G.go_diagnostics_level           = 2
+      G.go_template_autocreate         = 0
+      G.go_metalinter_command          = "golangci-lint"
+      G.go_metalinter_autosave         = 0
+      G.go_metalinter_autosave_enabled = { }
+      G.go_metalinter_enabled          = { }
+      G.go_fmt_options                 = { gofmt = "-s" }
+    end,
+  }
 
   use {
     "nvim-telescope/telescope.nvim",
@@ -161,19 +178,6 @@ require("packer").startup(function(use)
   use "dstein64/nvim-scrollview"
   use "edluffy/specs.nvim"
 end)
-
-G.go_auto_type_info              = 1
-G.go_test_show_name              = 1
-G.go_doc_max_height              = 40
-G.go_doc_popup_window            = 1
-G.go_diagnostics_enabled         = 1
-G.go_diagnostics_level           = 2
-G.go_template_autocreate         = 0
-G.go_metalinter_command          = "golangci-lint"
-G.go_metalinter_autosave         = 0
-G.go_metalinter_autosave_enabled = { }
-G.go_metalinter_enabled          = { }
-G.go_fmt_options                 = { gofmt = "-s" }
 
 require "telescope".setup {
   defaults = {
