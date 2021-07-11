@@ -56,7 +56,17 @@ require("packer").startup(function(use)
     end,
   }
 
-  use "ludovicchabant/vim-gutentags"
+  use {
+    "ludovicchabant/vim-gutentags",
+    config = function()
+      G.gutentags_ctags_exclude            = { "blib", "tmp" }
+      -- can be extended with '*/sub/path' if required
+      G.gutentags_generate_on_new          = 1
+      G.gutentags_generate_on_missing      = 1
+      G.gutentags_generate_on_write        = 1
+      G.gutentags_generate_on_empty_buffer = 0
+    end,
+  }
 
   use { "fatih/vim-go", run = ":GoUpdateBinaries" }
 
@@ -151,13 +161,6 @@ require("packer").startup(function(use)
   use "dstein64/nvim-scrollview"
   use "edluffy/specs.nvim"
 end)
-
-G.gutentags_ctags_exclude            = { "blib", "tmp" }
--- can be extended with '*/sub/path' if required
-G.gutentags_generate_on_new          = 1
-G.gutentags_generate_on_missing      = 1
-G.gutentags_generate_on_write        = 1
-G.gutentags_generate_on_empty_buffer = 0
 
 G.go_auto_type_info              = 1
 G.go_test_show_name              = 1
