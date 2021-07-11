@@ -304,7 +304,16 @@ require("packer").startup(function(use)
   }
 
   use "zsugabubus/crazy8.nvim"
-  use "lukas-reineke/indent-blankline.nvim"
+
+  use {
+    "lukas-reineke/indent-blankline.nvim",
+    config = function()
+      G.indent_blankline_char                           = " "
+      G.indent_blankline_space_char                     = " "
+      G.indent_blankline_show_trailing_blankline_indent = false
+      G.indent_blankline_show_first_indent_level        = false
+    end,
+  }
 
   use "gioele/vim-autoswap"
   use "farmergreg/vim-lastplace"
@@ -316,11 +325,6 @@ require("packer").startup(function(use)
   use "dstein64/nvim-scrollview"
   use "edluffy/specs.nvim"
 end)
-
-G.indent_blankline_char                           = " "
-G.indent_blankline_space_char                     = " "
-G.indent_blankline_show_trailing_blankline_indent = false
-G.indent_blankline_show_first_indent_level        = false
 
 G.startify_change_to_vcs_root  = 1
 G.startify_fortune_use_unicode = 1
