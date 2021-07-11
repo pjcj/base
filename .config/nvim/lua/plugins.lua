@@ -276,7 +276,13 @@ require("packer").startup(function(use)
     end,
   }
 
-  use "ruanyl/vim-gh-line"
+  use {
+    "ruanyl/vim-gh-line",
+    config = function()
+      G.gh_use_canonical = 0
+    end,
+  }
+
   use "tpope/vim-fugitive"
 
   use "norcalli/nvim-colorizer.lua"
@@ -295,8 +301,6 @@ require("packer").startup(function(use)
   use "dstein64/nvim-scrollview"
   use "edluffy/specs.nvim"
 end)
-
-G.gh_use_canonical                = 0
 
 Opt.termguicolors = true
 require "colorizer".setup(
