@@ -34,6 +34,7 @@ require("packer").startup(function(use)
 
   use "hrsh7th/nvim-compe"
   use "andersevenrud/compe-tmux"
+  use "windwp/nvim-autopairs"
 
   use {
     "lewis6991/gitsigns.nvim",
@@ -202,6 +203,11 @@ Map("i", "<Tab>",   "v:lua.tab_complete()",   {expr = true})
 Map("s", "<Tab>",   "v:lua.tab_complete()",   {expr = true})
 Map("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 Map("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+
+require "nvim-autopairs".setup({
+  map_cr = true,       --  map <CR> on insert mode
+  map_complete = true, -- auto insert `(` after selecting function
+})
 
 require "gitsigns".setup {
   signs = {
