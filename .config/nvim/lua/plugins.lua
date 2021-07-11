@@ -296,7 +296,12 @@ require("packer").startup(function(use)
     end,
   }
 
-  use "terrortylor/nvim-comment"
+  use {
+    "terrortylor/nvim-comment",
+    config = function()
+      require "nvim_comment".setup({ line_mapping = "-" })
+    end,
+  }
 
   use "zsugabubus/crazy8.nvim"
   use "lukas-reineke/indent-blankline.nvim"
@@ -311,8 +316,6 @@ require("packer").startup(function(use)
   use "dstein64/nvim-scrollview"
   use "edluffy/specs.nvim"
 end)
-
-require "nvim_comment".setup({ line_mapping = "-" })
 
 G.indent_blankline_char                           = " "
 G.indent_blankline_space_char                     = " "
