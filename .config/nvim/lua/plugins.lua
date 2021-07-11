@@ -317,7 +317,22 @@ require("packer").startup(function(use)
 
   use "gioele/vim-autoswap"
   use "farmergreg/vim-lastplace"
-  use "mhinz/vim-startify"
+
+  use {
+    "mhinz/vim-startify",
+    config = function()
+      G.startify_change_to_vcs_root  = 1
+      G.startify_fortune_use_unicode = 1
+      G.startify_lists = {
+        { type = "dir",       header = {"   MRU " .. Fn.getcwd()} },
+        { type = "sessions",  header = {"   Sessions"           } },
+        { type = "files",     header = {"   Files"              } },
+        { type = "bookmarks", header = {"   Bookmarks"          } },
+        { type = "commands",  header = {"   Commands"           } },
+      }
+    end,
+  }
+
   use "lfv89/vim-interestingwords"
   use "junegunn/vim-easy-align"
   use "tpope/vim-surround"
@@ -325,16 +340,6 @@ require("packer").startup(function(use)
   use "dstein64/nvim-scrollview"
   use "edluffy/specs.nvim"
 end)
-
-G.startify_change_to_vcs_root  = 1
-G.startify_fortune_use_unicode = 1
-G.startify_lists = {
-  { type = "dir",       header = {"   MRU " .. Fn.getcwd()} },
-  { type = "sessions",  header = {"   Sessions"           } },
-  { type = "files",     header = {"   Files"              } },
-  { type = "bookmarks", header = {"   Bookmarks"          } },
-  { type = "commands",  header = {"   Commands"           } },
-}
 
 G.interestingWordsGUIColors = {
   '#72b5e4', '#f0c53f', '#ff8784', '#c5c7f1',
