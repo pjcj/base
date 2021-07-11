@@ -30,7 +30,13 @@ require("packer").startup(function(use)
 
   use "neovim/nvim-lspconfig"
   use "kabouzeid/nvim-lspinstall"
-  use "kosayoda/nvim-lightbulb"
+  use {
+    "kosayoda/nvim-lightbulb",
+    config = function()
+      Cmd [[autocmd CursorHold,CursorHoldI * lua require "nvim-lightbulb".update_lightbulb()]]
+    end,
+  }
+
   use "ray-x/lsp_signature.nvim"
 
   use "w0rp/ale"
@@ -129,8 +135,6 @@ require("packer").startup(function(use)
   use "dstein64/nvim-scrollview"
   use "edluffy/specs.nvim"
 end)
-
-Cmd [[autocmd CursorHold,CursorHoldI * lua require "nvim-lightbulb".update_lightbulb()]]
 
 G.ale_linters_explicit = 1
 G.ale_disable_lsp      = 1
