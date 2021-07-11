@@ -352,12 +352,17 @@ require("packer").startup(function(use)
   use "junegunn/vim-easy-align"
   use "tpope/vim-surround"
   use "tpope/vim-repeat"
-  use "dstein64/nvim-scrollview"
+
+  use {
+    "dstein64/nvim-scrollview",
+    config = function()
+      G.scrollview_winblend = 75
+      G.scrollview_column   = 1
+    end,
+  }
+
   use "edluffy/specs.nvim"
 end)
-
-G.scrollview_winblend = 75
-G.scrollview_column   = 1
 
 require("specs").setup{
   show_jumps  = true,
