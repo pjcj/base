@@ -79,4 +79,12 @@ function _G.set_buffer_settings()
     Lopt.spell       = true
     Lopt.spelllang   = "en_gb"
   end
+
+  if ft == "perl" then
+    Map("n", "<F4>",       [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]], Defmap)
+    Map("i", "<F2>",       "sub ($self) {<CR>}<ESC>kea<Space>", Defmap)
+    Map("i", "<F3>",       "$self->{}<ESC>i",                   Defmap)
+    Map("i", "<F4>",       "$self->",                           Defmap)
+    Cmd([[iabbr ,, =>]])
+  end
 end
