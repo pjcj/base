@@ -361,9 +361,9 @@ require("packer").startup(function(use)
   use {
     "edluffy/specs.nvim",
     config = function()
-      require("specs").setup{
+      require "specs".setup{
         show_jumps = true,
-        min_jump   = 3,
+        min_jump   = 2,
         popup      = {
           delay_ms = 0,  -- delay before popup displays
           inc_ms   = 5,  -- time increments used for fade/resize effects
@@ -376,6 +376,7 @@ require("packer").startup(function(use)
         ignore_filetypes = {},
         ignore_buftypes  = { nofile = true },
       }
+      Map("n", "ä", [[<cmd>lua require "specs".show_specs()<cr>]], Defmap)
     end,
   }
 end)
