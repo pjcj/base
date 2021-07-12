@@ -65,6 +65,8 @@ Map("n", "<F48>", "<M-F12>", {})
 
 -- Map("n", "<cr>", "compe#confirm('<CR>')", {})
 
+Map("n", "ö", [[<cmd>:w<cr>]], Defmap)
+
 Map("n", "<leader>.",  [[<cmd>lua require "telescope.builtin".find_files({ hidden = true })<cr>]],      Defmap)
 Map("n", "<leader> ",  [[<cmd>lua require "telescope.builtin".oldfiles()<cr>]],                         Defmap)
 Map("n", "<leader>m",  [[<cmd>lua require "telescope.builtin".git_status()<cr>]],                       Defmap)
