@@ -131,8 +131,6 @@ if not lspconfig.golangcilsp then
       init_options = {
         command = {
           "golangci-lint", "run",
-          -- "--enable-all",
-          -- "--disable", "lll",
           "--out-format", "json",
         },
       },
