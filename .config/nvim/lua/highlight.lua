@@ -72,5 +72,9 @@ function _G.set_buffer_colours()
   set_colour("LspDiagnosticsSignInformation",        "guifg", Col_cyan   )
   set_colour("LspDiagnosticsSignHint",               "guifg", Col_blue   )
 
+  set_colour("ALEVirtualTextError",                  "guifg", Col_dorange)
+  set_colour("ALEVirtualTextWrning",                 "guifg", Col_dyellow)
+  set_colour("ALEVirtualTextInfo",                   "guifg", Col_dcyan  )
+
   set_colour("ScrollView",                           "guibg", Col_blue   )
 end

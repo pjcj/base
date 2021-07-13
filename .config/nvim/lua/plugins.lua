@@ -37,12 +37,13 @@ require("packer").startup(function(use)
   }
 
   use {
-    "w0rp/ale",
+    "dense-analysis/ale",
     config = function()
-      G.ale_linters_explicit = 1
-      G.ale_disable_lsp      = 1
-      G.ale_sign_error       = ""
-      G.ale_sign_warning     = "⚠"
+      G.ale_linters_explicit   = 1
+      G.ale_disable_lsp        = 1
+      G.ale_virtualtext_cursor = 1
+      G.ale_sign_error         = ""
+      G.ale_sign_warning       = "⚠"
       G.ale_linters = {
         yaml = { "circleci", "spectral", "swaglint", "yamllint" },
         sh   = { "bashate", "language_server", "shell", "shellcheck" },
