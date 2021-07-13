@@ -115,17 +115,48 @@ table.insert(components.left.active, {
 })
 
 table.insert(components.left.active, {
-  provider = "diagnostic_hints",
-  enabled  = function() return lsp.diagnostics_exist("Hint") end,
+  provider = "diagnostic_info",
+  enabled  = function() return lsp.diagnostics_exist("Information") end,
   hl       = { bg = Col_base02, fg = "cyan" },
   icon     = "  ",
 })
 
 table.insert(components.left.active, {
-  provider = "diagnostic_info",
-  enabled  = function() return lsp.diagnostics_exist("Information") end,
+  provider = "diagnostic_hints",
+  enabled  = function() return lsp.diagnostics_exist("Hint") end,
   hl       = { bg = Col_base02, fg = "skyblue" },
   icon     = "  ",
+})
+
+local function ale_diagnostics()
+  local ok, d = pcall(Fn["ale#statusline#Count"], Fn.bufnr())
+  if ok then
+    return d.error + d.style_error, d.warning + d.style_warning, d.info, d.total
+  else
+    return 0, 0, 0, 0
+  end
+end
+
+local function ale_errors()   local e, _, _, _ = ale_diagnostics() return e end
+local function ale_warnings() local _, w, _, _ = ale_diagnostics() return w end
+local function ale_infos()    local _, _, i, _ = ale_diagnostics() return i end
+
+table.insert(components.left.active, {
+  provider = function() return "  " .. tostring(ale_errors()) end,
+  enabled  = function() return ale_errors() > 0 end,
+  hl       = { bg = Col_base02, fg = "red" },
+})
+
+table.insert(components.left.active, {
+  provider = function() return "  " .. tostring(ale_warnings()) end,
+  enabled  = function() return ale_warnings() > 0 end,
+  hl       = { bg = Col_base02, fg = "yellow" },
+})
+
+table.insert(components.left.active, {
+  provider = function() return "  " .. tostring(ale_infos()) end,
+  enabled  = function() return ale_infos() > 0 end,
+  hl       = { bg = Col_base02, fg = "cyan" },
 })
 
 table.insert(components.left.active, {
