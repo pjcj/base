@@ -46,7 +46,7 @@ require("packer").startup(function(use)
       G.ale_sign_warning       = "⚠"
       G.ale_linters = {
         yaml = { "circleci", "spectral", "swaglint", "yamllint" },
-        sh   = { "bashate", "language_server", "shell", "shellcheck" },
+        sh   = { "shellcheck" },
         perl = { "perl" },
       }
       G.ale_perl_perl_executable = Fn.expand("~/g/base/utils/ale_perl")
