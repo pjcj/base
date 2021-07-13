@@ -58,7 +58,9 @@ require("packer").startup(function(use)
   use {
     "ludovicchabant/vim-gutentags",
     config = function()
-      G.gutentags_ctags_exclude            = { "blib", "tmp" }
+      G.gutentags_ctags_exclude            = {
+        "tmp", "blib", "node_modules", "dist",
+      }
       -- can be extended with '*/sub/path' if required
       G.gutentags_generate_on_new          = 1
       G.gutentags_generate_on_missing      = 1
