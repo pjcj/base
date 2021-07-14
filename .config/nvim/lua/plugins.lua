@@ -140,8 +140,8 @@ require("packer").startup(function(use)
           emoji           = true,
           nvim_lsp        = true,
           nvim_lua        = true,
-          vsnip           = false,
-          ultisnips       = false,
+          -- vsnip           = false,
+          -- ultisnips       = false,
           nvim_treesitter = false,
           tmux            = {
             priority  = 5,
@@ -169,8 +169,8 @@ require("packer").startup(function(use)
       _G.tab_complete = function()
         if Fn.pumvisible() == 1 then
           return t "<C-n>"
-        elseif Fn.call("vsnip#available", {1}) == 1 then
-          return t "<Plug>(vsnip-expand-or-jump)"
+        -- elseif Fn.call("vsnip#available", {1}) == 1 then
+          -- return t "<Plug>(vsnip-expand-or-jump)"
         elseif check_back_space() then
           return t "<Tab>"
         else
@@ -181,8 +181,8 @@ require("packer").startup(function(use)
       _G.s_tab_complete = function()
         if Fn.pumvisible() == 1 then
           return t "<C-p>"
-        elseif Fn.call("vsnip#jumpable", {-1}) == 1 then
-          return t "<Plug>(vsnip-jump-prev)"
+        -- elseif Fn.call("vsnip#jumpable", {-1}) == 1 then
+          -- return t "<Plug>(vsnip-jump-prev)"
         else
           -- If <S-Tab> is not working in your terminal, change it to <C-h>
           return t "<S-Tab>"
