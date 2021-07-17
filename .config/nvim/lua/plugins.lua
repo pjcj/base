@@ -300,7 +300,11 @@ require("packer").startup(function(use)
   use {
     "terrortylor/nvim-comment",
     config = function()
-      require "nvim_comment".setup({ line_mapping = "-" })
+      require "nvim_comment".setup{
+        line_mapping     = "-",
+        operator_mapping = "-",
+        comment_empty    = false,
+      }
     end,
   }
 
