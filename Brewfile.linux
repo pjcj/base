@@ -40,6 +40,7 @@ brew "haskell-stack"
 brew "highlight", link: false
 brew "htop"
 brew "irssi"
+brew "jq"
 brew "node"
 brew "markdownlint-cli"
 brew "maven"
