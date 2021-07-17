@@ -47,6 +47,8 @@ function _G.set_buffer_colours()
   set_colour("Pmenu",                                "guibg", Col_base2  )
   set_colour("PmenuSel",                             "guifg", Col_dorange)
   set_colour("PmenuSel",                             "guibg", Col_base2  )
+  set_colour("Visual",                               "guibg", Col_base1  )
+  set_colour("Visual",                               "guifg", Col_dred   )
 
   set_colour("GitSignsAdd",                          "guibg", Col_base03 )
   set_colour("GitSignsAdd",                          "guifg", Col_rgreen )
