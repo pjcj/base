@@ -26,7 +26,7 @@ Opt.shiftround    = true
 Opt.shiftwidth    = 2
 Opt.shortmess     = Opt.shortmess + { c = true }
 Opt.showmatch     = true
-Opt.signcolumn    = "number"
+Opt.signcolumn    = "auto:4"
 Opt.smartcase     = true
 Opt.title         = true
 Opt.undofile      = true
