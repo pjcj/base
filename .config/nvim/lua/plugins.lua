@@ -302,9 +302,9 @@ require("packer").startup(function(use)
     config = function()
       require "nvim_comment".setup{
         line_mapping     = "-",
-        operator_mapping = "-",
         comment_empty    = false,
       }
+      Map("v", "-", ":<c-u>call CommentOperator(visualmode())<cr>", Defmap)
     end,
   }
 
