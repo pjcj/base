@@ -28,6 +28,7 @@ Opt.shortmess     = Opt.shortmess + { c = true }
 Opt.showmatch     = true
 Opt.signcolumn    = "auto:4"
 Opt.smartcase     = true
+Opt.smarttab      = true
 Opt.title         = true
 Opt.undofile      = true
 Opt.undolevels    = 10000
