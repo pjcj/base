@@ -26,7 +26,7 @@ Opt.shiftround    = true
 Opt.shiftwidth    = 2
 Opt.shortmess     = Opt.shortmess + { c = true }
 Opt.showmatch     = true
-Opt.signcolumn    = "auto:4"
+Opt.signcolumn    = "auto:1"
 Opt.smartcase     = true
 Opt.smarttab      = true
 Opt.title         = true
