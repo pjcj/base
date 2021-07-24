@@ -121,6 +121,10 @@ require("packer").startup(function(use)
           },
         },
       }
+      Cmd [[
+        autocmd User TelescopePreviewerLoaded setlocal number
+        autocmd User TelescopePreviewerLoaded setlocal tabstop=2
+      ]]
     end,
   }
 
