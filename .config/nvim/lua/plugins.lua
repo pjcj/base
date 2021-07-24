@@ -26,6 +26,16 @@ require("packer").startup(function(use)
     end,
   }
 
+  -- use {  -- not working, https://github.com/lewis6991/spellsitter.nvim/issues/8
+    -- "lewis6991/spellsitter.nvim",
+    -- config = function()
+      -- require("spellsitter").setup {
+        -- hl = "SpellBad",
+        -- captures = {"comment"},  -- set to {} to spellcheck everythingx
+      -- }
+    -- end
+  -- }
+
   use "neovim/nvim-lspconfig"
   use "kabouzeid/nvim-lspinstall"
   use "ray-x/lsp_signature.nvim"
@@ -196,15 +206,16 @@ require("packer").startup(function(use)
     end,
   }
   use "andersevenrud/compe-tmux"
-  use {
-    "windwp/nvim-autopairs",
-    config = function()
-      require "nvim-autopairs".setup({
-        map_cr       = true, --  map <CR> on insert mode
-        map_complete = true, -- auto insert `(` after selecting function
-      })
-    end,
-  }
+
+  -- use {
+    -- "windwp/nvim-autopairs",
+    -- config = function()
+      -- require "nvim-autopairs".setup({
+        -- map_cr       = true, -- map <CR> on insert mode
+        -- map_complete = true, -- auto insert `(` after selecting function
+      -- })
+    -- end,
+  -- }
 
   use {
     "lewis6991/gitsigns.nvim",
