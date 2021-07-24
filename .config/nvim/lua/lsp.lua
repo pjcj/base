@@ -130,8 +130,7 @@ if not lspconfig.golangcilsp then
       root_dir = lspconfig.util.root_pattern(".git", "go.mod"),
       init_options = {
         command = {
-          "golangci-lint", "run",
-          "--out-format", "json",
+          "golangci-lint", "run", "--out-format", "json",
         },
       },
     },
