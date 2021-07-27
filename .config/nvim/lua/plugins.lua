@@ -152,11 +152,12 @@ require("packer").startup(function(use)
           calc            = true,
           spell           = { priority = 3 },
           emoji           = true,
+          omni            = true,
           nvim_lsp        = true,
           nvim_lua        = true,
           -- vsnip           = false,
           -- ultisnips       = false,
-          nvim_treesitter = false,
+          nvim_treesitter = true,
           tmux            = {
             priority  = 5,
             all_panes = true,
