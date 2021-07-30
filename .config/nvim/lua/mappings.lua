@@ -99,8 +99,8 @@ Map("n", "<leader>so", [[<cmd>set nospell<cr>]],                    Defmap)
 
 Cmd([[
   nnoremap <silent> <leader>l :let @/ = ""<bar> :call UncolorAllWords()<cr>
-]])
-
-Cmd([[
   cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+
+  inoremap <expr> <C-e> pumvisible() ? "\<C-y>\<C-e>" : "\<Esc>a\<C-e>"
+  inoremap <expr> <C-y> pumvisible() ? "\<C-y>\<C-y>" : "\<C-y>"
 ]])
