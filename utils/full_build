@@ -157,7 +157,7 @@ if [[ "$EDITOR" == "nvimx" ]]; then
 fi
 
 if [[ "$EDITOR" == "nvim" ]]; then
-    $EDITOR -c PackerSync
+    $EDITOR --headless -c "autocmd User PackerComplete quitall" -c "PackerSync"
     $EDITOR -c LspInstall\ bash
     $EDITOR -c LspInstall\ css
     $EDITOR -c LspInstall\ go
