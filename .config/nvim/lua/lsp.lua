@@ -114,6 +114,9 @@ setup_servers()
 -- Automatically reload after `:LspInstall <server>` so we don't have to
 -- restart neovim
 require "lspinstall".post_install_hook = function ()
+  if #(Api.nvim_list_uis()) == 0 then
+    Cmd("quitall")  -- this triggers the FileType autocmd that starts the server
+  end
   setup_servers() -- reload installed servers
   Cmd("bufdo e")  -- this triggers the FileType autocmd that starts the server
 end

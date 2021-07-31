@@ -158,15 +158,15 @@ fi
 
 if [[ "$EDITOR" == "nvim" ]]; then
     $EDITOR --headless -c "autocmd User PackerComplete quitall" -c "PackerSync"
-    $EDITOR -c LspInstall\ bash
-    $EDITOR -c LspInstall\ css
-    $EDITOR -c LspInstall\ go
-    $EDITOR -c LspInstall\ html
-    $EDITOR -c LspInstall\ json
-    $EDITOR -c LspInstall\ lua
-    $EDITOR -c LspInstall\ vim
-    $EDITOR -c LspInstall\ vue
-    $EDITOR -c LspInstall\ yaml
+    $EDITOR --headless -c LspInstall\ bash
+    $EDITOR --headless -c LspInstall\ css
+    $EDITOR --headless -c LspInstall\ go
+    $EDITOR --headless -c LspInstall\ html
+    $EDITOR --headless -c LspInstall\ json
+    $EDITOR --headless -c LspInstall\ lua
+    $EDITOR --headless -c LspInstall\ vim
+    $EDITOR --headless -c LspInstall\ vue
+    $EDITOR --headless -c LspInstall\ yaml
     go install github.com/nametake/golangci-lint-langserver@latest
 fi
 
