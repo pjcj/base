@@ -403,4 +403,12 @@ require("packer").startup(function(use)
       Map("n", "ä", [[<cmd>lua require "specs".show_specs()<cr>]], Defmap)
     end,
   }
+
+  use {
+    "iamcco/markdown-preview.nvim",
+    config = function()
+      vim.call("mkdp#util#install")
+      Map("n", "<leader>md", [[<cmd>MarkdownPreviewToggle<cr>]], Defmap)
+    end,
+  }
 end)
