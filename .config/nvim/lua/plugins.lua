@@ -121,6 +121,22 @@ require("packer").startup(function(use)
           },
         },
       }
+      Map("n", "<leader>.",  [[<cmd>lua require "telescope.builtin".find_files({ hidden = true })<cr>]],      Defmap)
+      Map("n", "<leader> ",  [[<cmd>lua require "telescope.builtin".oldfiles()<cr>]],                         Defmap)
+      Map("n", "<leader>m",  [[<cmd>lua require "telescope.builtin".git_status()<cr>]],                       Defmap)
+      Map("n", "<leader>fb", [[<cmd>lua require "telescope.builtin".buffers()<cr>]],                          Defmap)
+      Map("n", "<leader>ff", [[<cmd>lua require "telescope.builtin".builtin()<cr>]],                          Defmap)
+      Map("n", "<leader>fg", [[<cmd>lua require "telescope.builtin".live_grep()<cr>]],                        Defmap)
+      Map("n", "<leader>fh", [[<cmd>lua require "telescope.builtin".help_tags()<cr>]],                        Defmap)
+      Map("n", "<leader>fs", [[<cmd>lua require "telescope.builtin".grep_string()<cr>]],                      Defmap)
+      Map("n", "<leader>fS", [[<cmd>lua require "telescope.builtin".grep_string({ word_match = "-w" })<cr>]], Defmap)
+      Map("n", "<leader>fl", [[<cmd>lua require "telescope.builtin".current_buffer_fuzzy_find()<cr>]],        Defmap)
+      Map("n", "<leader>fa", [[<cmd>lua require "telescope.builtin".lsp_code_actions()<cr>]],                 Defmap)
+      Map("n", "<leader>fd", [[<cmd>lua require "telescope.builtin".lsp_definitions()<cr>]],                  Defmap)
+      Map("n", "<leader>fr", [[<cmd>lua require "telescope.builtin".lsp_references()<cr>]],                   Defmap)
+      Map("n", "<leader>ft", [[<cmd>lua require "telescope.builtin".tags()<cr>]],                             Defmap)
+      Map("n", "<leader>fT", [[<cmd>lua require "telescope.builtin".tags{ only_current_buffer = true }<cr>]], Defmap)
+
       Cmd [[
         autocmd User TelescopePreviewerLoaded setlocal number
         autocmd User TelescopePreviewerLoaded setlocal tabstop=2
