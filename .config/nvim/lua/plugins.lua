@@ -283,7 +283,6 @@ require("packer").startup(function(use)
         sign_priority               = 6,
         update_debounce             = 100,
         status_formatter            = nil, -- Use default
-        use_decoration_api          = true,
         use_internal_diff           = true, -- If luajit is present
         count_chars = {
           [1]   = "₁",
