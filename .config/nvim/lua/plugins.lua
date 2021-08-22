@@ -277,14 +277,18 @@ require("packer").startup(function(use)
           ["o ih"] = ':<C-U>lua require "gitsigns.actions".select_hunk()<CR>',
           ["x ih"] = ':<C-U>lua require "gitsigns.actions".select_hunk()<CR>'
         },
-        watch_index                 = { interval = 1000 },
-        current_line_blame          = true,
-        current_line_blame_delay    = 1000,
-        current_line_blame_position = "eol",
-        sign_priority               = 6,
-        update_debounce             = 100,
-        status_formatter            = nil, -- Use default
-        use_internal_diff           = true, -- If luajit is present
+        watch_index             = { interval = 1000 },
+        sign_priority           = 6,
+        update_debounce         = 100,
+        status_formatter        = nil, -- Use default
+        use_internal_diff       = true, -- If luajit is present
+        word_diff               = true,
+        current_line_blame      = true,
+        current_line_blame_opts = {
+          virt_text     = true,
+          virt_text_pos = 'eol',
+          delay         = 1000,
+        },
         count_chars = {
           [1]   = "₁",
           [2]   = "₂",
