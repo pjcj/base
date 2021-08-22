@@ -160,6 +160,7 @@ if [[ "$EDITOR" == "nvim" ]]; then
     $EDITOR --headless -c "autocmd User PackerComplete quitall" -c "PackerSync"
     $EDITOR --headless -c LspInstall\ bash
     $EDITOR --headless -c LspInstall\ css
+    $EDITOR --headless -c LspInstall\ dockerfile
     $EDITOR --headless -c LspInstall\ go
     $EDITOR --headless -c LspInstall\ html
     $EDITOR --headless -c LspInstall\ json
