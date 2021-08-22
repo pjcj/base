@@ -95,6 +95,7 @@ require("packer").startup(function(use)
       G.go_metalinter_autosave_enabled = { }
       G.go_metalinter_enabled          = { }
       G.go_fmt_options                 = { gofmt = "-s" }
+      G.go_gopls_gofumpt               = 1
     end,
   }
 
