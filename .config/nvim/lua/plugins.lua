@@ -152,99 +152,88 @@ require("packer").startup(function(use)
     end,
   }
 
-  use {
-    "hrsh7th/nvim-compe",
-    config = function()
-      require "compe".setup {
-        enabled          = true,
-        autocomplete     = true,
-        debug            = false,
-        min_length       = 1,
-        preselect        = "disable",
-        throttle_time    = 80,
-        source_timeout   = 200,
-        resolve_timeout  = 800,
-        incomplete_delay = 400,
-        max_abbr_width   = 100,
-        max_kind_width   = 100,
-        max_menu_width   = 100,
-        documentation    = true,
+  use { "andersevenrud/compe-tmux", branch = "cmp" }
 
-        source = {
-          path            = true,
-          buffer          = true,
-          calc            = true,
-          spell           = { priority = 3 },
-          emoji           = true,
-          omni            = false,
-          nvim_lsp        = true,
-          nvim_lua        = true,
-          -- vsnip           = false,
-          -- ultisnips       = false,
-          nvim_treesitter = true,
-          tmux            = {
-            priority  = 5,
-            all_panes = true,
+  use {
+    "hrsh7th/nvim-cmp",
+    requires = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lua",
+      "L3MON4D3/LuaSnip",
+      "saadparwaiz1/cmp_luasnip",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-calc",
+      "quangnguyen30192/cmp-nvim-tags",
+      { "andersevenrud/compe-tmux", branch = "cmp" },
+    },
+    config = function()
+      require "cmp_nvim_lsp".setup()
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = require "cmp_nvim_lsp".update_capabilities(capabilities)
+      local cmp = require "cmp"
+      -- local lspkind = require("lspkind")
+      cmp.setup {
+        formatting = {
+          format = function(entry, vim_item)
+            vim_item.menu = ({
+              nvim_lsp    = '[LS]',
+              nvim_lua    = '[LL]',
+              path        = '[DIR]',
+              vsnip       = '[SNP]',
+              buffer      = '[BUF]',
+              cmp_tabnine = '[TN]',
+              tmux        = '[TMUX]',
+            })[entry.source.name]
+
+            -- if entry.source.name == 'nvim_lsp' then
+              -- vim_item.dup = 0
+            -- end
+
+            return vim_item
+          end
+        },
+        min_length = 0, -- allow for `from package import _` in Python
+        mapping = {
+          ["<S-Tab>"]   = cmp.mapping.select_prev_item(),
+          ["<Tab>"]     = cmp.mapping.select_next_item(),
+          ["<C-p>"]     = cmp.mapping.select_prev_item(),
+          ["<C-n>"]     = cmp.mapping.select_next_item(),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-e>"]     = cmp.mapping.close(),
+          -- This is handled by nvim-autopairs.
+          -- ["<CR>"] = cmp.mapping.confirm {
+          --   behavior = cmp.ConfirmBehavior.Replace,
+          --   select = true
+          -- }
+        },
+        sources = {
+          { name = "nvim_lsp" },
+          { name = "nvim_lua" },
+          {
+            name = "buffer",
+            opts = {
+              get_bufnrs = function()
+                return vim.api.nvim_list_bufs()
+              end
+            }
           },
+          {
+            name = "tmux",
+            opts = { all_panes = true, label = "[tmux]" }
+          },
+          { name = "tags" },
+          { name = "path" },
+          { name = "calc" },
+        },
+        snippet = {
+          expand = function(args)
+            require "luasnip".lsp_expand(args.body)
+          end,
         },
       }
-
-      local t = function(str)
-        return Api.nvim_replace_termcodes(str, true, true, true)
-      end
-
-      local check_back_space = function()
-        local col = Fn.col(".") - 1
-        if col == 0 or Fn.getline("."):sub(col, col):match("%s") then
-          return true
-        else
-          return false
-        end
-      end
-
-      -- Use (s-)tab to:
-      --- move to prev/next item in completion menuone
-      --- jump to prev/next snippet's placeholder
-      _G.tab_complete = function()
-        if Fn.pumvisible() == 1 then
-          return t "<C-n>"
-        -- elseif Fn.call("vsnip#available", {1}) == 1 then
-          -- return t "<Plug>(vsnip-expand-or-jump)"
-        elseif check_back_space() then
-          return t "<Tab>"
-        else
-          return Fn["compe#complete"]()
-        end
-      end
-
-      _G.s_tab_complete = function()
-        if Fn.pumvisible() == 1 then
-          return t "<C-p>"
-        -- elseif Fn.call("vsnip#jumpable", {-1}) == 1 then
-          -- return t "<Plug>(vsnip-jump-prev)"
-        else
-          -- If <S-Tab> is not working in your terminal, change it to <C-h>
-          return t "<S-Tab>"
-        end
-      end
-
-      Map("i", "<Tab>",   "v:lua.tab_complete()",   {expr = true})
-      Map("s", "<Tab>",   "v:lua.tab_complete()",   {expr = true})
-      Map("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-      Map("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
     end,
   }
-  use "andersevenrud/compe-tmux"
-
-  -- use {
-    -- "windwp/nvim-autopairs",
-    -- config = function()
-      -- require "nvim-autopairs".setup({
-        -- map_cr       = true, -- map <CR> on insert mode
-        -- map_complete = true, -- auto insert `(` after selecting function
-      -- })
-    -- end,
-  -- }
 
   use {
     "lewis6991/gitsigns.nvim",
