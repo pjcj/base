@@ -33,15 +33,15 @@ require("packer").startup(function(use)
     end,
   }
 
-  -- use {  -- not working, https://github.com/lewis6991/spellsitter.nvim/issues/8
-    -- "lewis6991/spellsitter.nvim",
-    -- config = function()
-      -- require("spellsitter").setup {
-        -- hl = "SpellBad",
-        -- captures = {"comment"},  -- set to {} to spellcheck everythingx
-      -- }
-    -- end
-  -- }
+  use {
+    "lewis6991/spellsitter.nvim",
+    config = function()
+      require("spellsitter").setup {
+        hl = "SpellBad",
+        captures = { "comment" },  -- set to {} to spellcheck everything
+      }
+    end
+  }
 
   use "neovim/nvim-lspconfig"
   use "kabouzeid/nvim-lspinstall"
