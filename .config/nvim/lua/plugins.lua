@@ -169,7 +169,7 @@ require("packer").startup(function(use)
           calc            = true,
           spell           = { priority = 3 },
           emoji           = true,
-          omni            = true,
+          omni            = false,
           nvim_lsp        = true,
           nvim_lua        = true,
           -- vsnip           = false,
