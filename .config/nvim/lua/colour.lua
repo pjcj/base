@@ -24,6 +24,6 @@ Col_dyellow = "#433200"  -- dark yellow
 Col_dorange = "#7d2500"  -- dark orange
 Col_dred    = "#400200"  -- dark red
 Col_dcyan   = "#04746c"  -- dark cyan
-Col_dblue   = "#06568f"  -- dark ble
+Col_dblue   = "#06568f"  -- dark blue
 
 Col_none    = "none"
