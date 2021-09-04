@@ -428,7 +428,9 @@ require("packer").startup(function(use)
     "iamcco/markdown-preview.nvim",
     config = function()
       vim.call("mkdp#util#install")
-      Map("n", "<leader>md", [[<cmd>MarkdownPreviewToggle<cr>]], Defmap)
+      Map("n", "<leader>d", [[<cmd>MarkdownPreviewToggle<cr>]], Defmap)
     end,
+    cmd = "MarkdownPreviewToggle",
+    ft = { "markdown" },
   }
 end)
