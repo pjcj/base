@@ -164,6 +164,7 @@ require("packer").startup(function(use)
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-calc",
+      "hrsh7th/cmp-emoji",
       "quangnguyen30192/cmp-nvim-tags",
       { "andersevenrud/compe-tmux", branch = "cmp" },
     },
@@ -222,9 +223,10 @@ require("packer").startup(function(use)
             name = "tmux",
             opts = { all_panes = true, label = "[tmux]" }
           },
-          { name = "tags" },
-          { name = "path" },
-          { name = "calc" },
+          { name = "tags"  },
+          { name = "path"  },
+          { name = "calc"  },
+          { name = "emoji" },
         },
         snippet = {
           expand = function(args)
