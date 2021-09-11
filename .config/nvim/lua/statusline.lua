@@ -10,10 +10,13 @@ local properties = {
 }
 
 local components = {
-  left  = { active = {}, inactive = {} },
-  mid   = { active = {}, inactive = {} },
-  right = { active = {}, inactive = {} },
+  active   = {},
+  inactive = {},
 }
+
+table.insert(components.active,   {})
+table.insert(components.active,   {})
+table.insert(components.inactive, {})
 
 properties.force_inactive.filetypes = {
   "NvimTree",
@@ -28,7 +31,7 @@ properties.force_inactive.buftypes = {
   "terminal"
 }
 
-table.insert(components.left.active, {
+table.insert(components.active[1], {
   provider = "vi_mode",
   hl = function()
     return {
@@ -60,7 +63,7 @@ table.insert(components.left.active, {
   icon = "",
 })
 
-table.insert(components.left.active, {
+local file_info = {
   provider  = "file_info",
   type      = "relative",
   hl        = { bg = Col_base02 },
@@ -69,23 +72,25 @@ table.insert(components.left.active, {
     str = "right_filled",
     hl  = { bg = Col_base05, fg = Col_base02 },
   },
-})
+}
 
-table.insert(components.left.active, {
+table.insert(components.active[1], file_info)
+
+table.insert(components.active[1], {
   provider = "git_branch",
 })
 
-table.insert(components.left.active, {
+table.insert(components.active[1], {
   provider = "git_diff_added",
   hl       = { fg = Col_rgreen }
 })
 
-table.insert(components.left.active, {
+table.insert(components.active[1], {
   provider = "git_diff_changed",
   hl       = { fg = Col_yellow }
 })
 
-table.insert(components.left.active, {
+table.insert(components.active[1], {
   provider  = "git_diff_removed",
   hl        = { fg = Col_red },
   right_sep = {
@@ -94,34 +99,34 @@ table.insert(components.left.active, {
   },
 })
 
-table.insert(components.left.active, {
+table.insert(components.active[1], {
   provider = "lsp_client_names",
   hl       = { bg = Col_base02, fg = Col_base01 },
   left_sep = { str = " ", hl = { bg = Col_base02 } },
 })
 
-table.insert(components.left.active, {
+table.insert(components.active[1], {
   provider = "diagnostic_errors",
   enabled  = function() return lsp.diagnostics_exist("Error") end,
   hl       = { bg = Col_base02, fg = "red" },
   icon     = "  ",
 })
 
-table.insert(components.left.active, {
+table.insert(components.active[1], {
   provider = "diagnostic_warnings",
   enabled  = function() return lsp.diagnostics_exist("Warning") end,
   hl       = { bg = Col_base02, fg = "yellow" },
   icon     = "  ",
 })
 
-table.insert(components.left.active, {
+table.insert(components.active[1], {
   provider = "diagnostic_info",
   enabled  = function() return lsp.diagnostics_exist("Information") end,
   hl       = { bg = Col_base02, fg = "cyan" },
   icon     = "  ",
 })
 
-table.insert(components.left.active, {
+table.insert(components.active[1], {
   provider = "diagnostic_hints",
   enabled  = function() return lsp.diagnostics_exist("Hint") end,
   hl       = { bg = Col_base02, fg = "skyblue" },
@@ -141,25 +146,25 @@ local function ale_errors()   local e, _, _, _ = ale_diagnostics() return e end
 local function ale_warnings() local _, w, _, _ = ale_diagnostics() return w end
 local function ale_infos()    local _, _, i, _ = ale_diagnostics() return i end
 
-table.insert(components.left.active, {
+table.insert(components.active[1], {
   provider = function() return "  " .. tostring(ale_errors()) end,
   enabled  = function() return ale_errors() > 0 end,
   hl       = { bg = Col_base02, fg = "red" },
 })
 
-table.insert(components.left.active, {
+table.insert(components.active[1], {
   provider = function() return "  " .. tostring(ale_warnings()) end,
   enabled  = function() return ale_warnings() > 0 end,
   hl       = { bg = Col_base02, fg = "yellow" },
 })
 
-table.insert(components.left.active, {
+table.insert(components.active[1], {
   provider = function() return "  " .. tostring(ale_infos()) end,
   enabled  = function() return ale_infos() > 0 end,
   hl       = { bg = Col_base02, fg = "cyan" },
 })
 
-table.insert(components.left.active, {
+table.insert(components.active[1], {
   provider  = " ",
   hl        = { bg = Col_base02 },
   right_sep = {
@@ -181,7 +186,7 @@ local function file_osinfo()
   return icon .. os
 end
 
-table.insert(components.right.active, {
+table.insert(components.active[2], {
   provider = file_osinfo,
   hl       = { bg = Col_base02, fg = Col_base01 },
   left_sep = {
@@ -190,20 +195,20 @@ table.insert(components.right.active, {
   },
 })
 
-table.insert(components.right.active, {
+table.insert(components.active[2], {
   provider = "file_type",
   hl       = { bg = Col_base02, fg = Col_base01 },
   left_sep = { str = " ", hl = { bg = Col_base02 } },
 })
 
-table.insert(components.right.active, {
+table.insert(components.active[2], {
   provider  = "file_encoding",
   hl        = { bg = Col_base02, fg = Col_base01 },
   left_sep  = { str = " ", hl = { bg = Col_base02, fg = Col_base05 } },
   right_sep = { str = " ", hl = { bg = Col_base02                  } },
 })
 
-table.insert(components.right.active, {
+table.insert(components.active[2], {
   provider = "file_size",
   enabled  = function() return vim.fn.getfsize(vim.fn.expand("%:p")) > 0 end,
   left_sep = {
@@ -213,7 +218,7 @@ table.insert(components.right.active, {
   right_sep = " ",
 })
 
-table.insert(components.right.active, {
+table.insert(components.active[2], {
   provider = "position",
   hl = function()
     return {
@@ -237,7 +242,7 @@ table.insert(components.right.active, {
   },
 })
 
-table.insert(components.left.inactive, {
+table.insert(components.inactive[1], {
   provider  = "file_type",
   hl        = { fg = "white", bg = "oceanblue", style = "bold" },
   left_sep  = { str = " ", hl = { fg = "NONE", bg = "oceanblue" } },
