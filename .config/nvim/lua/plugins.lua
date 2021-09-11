@@ -353,6 +353,7 @@ require("packer").startup(function(use)
       G.indent_blankline_space_char                     = " "
       G.indent_blankline_show_trailing_blankline_indent = false
       G.indent_blankline_show_first_indent_level        = false
+      G.indent_blankline_max_indent_increase            = 1
     end,
   }
 
