@@ -252,6 +252,12 @@ table.insert(components.inactive[1], {
   },
 })
 
+table.insert(components.inactive[1], file_info)
+
+table.insert(components.inactive[1], {
+  provider = "git_branch",
+})
+
 local colours = {
   bg        = Col_base05,
   black     = Col_base05,
