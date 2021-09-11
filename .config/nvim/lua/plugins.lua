@@ -279,7 +279,9 @@ require("packer").startup(function(use)
         sign_priority           = 6,
         update_debounce         = 100,
         status_formatter        = nil, -- Use default
-        use_internal_diff       = true, -- If luajit is present
+        diff_opts               = {
+          internal = true, -- If luajit is present
+        },
         word_diff               = true,
         current_line_blame      = true,
         current_line_blame_opts = {
