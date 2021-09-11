@@ -214,10 +214,10 @@ require("packer").startup(function(use)
           {
             name = "buffer",
             opts = {
-              get_bufnrs = function()
-                return vim.api.nvim_list_bufs()
-              end
-            }
+              get_bufnrs = function() return vim.api.nvim_list_bufs() end,
+            },
+            -- keywords or just words
+            keyword_pattern = "\\%(\\k\\+\\|\\w\\+\\)",
           },
           {
             name = "tmux",
