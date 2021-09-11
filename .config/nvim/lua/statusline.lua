@@ -1,14 +1,6 @@
 local lsp           = require "feline.providers.lsp"
 local vi_mode_utils = require "feline.providers.vi_mode"
 
-local properties = {
-  force_inactive = {
-    filetypes = {},
-    buftypes  = {},
-    bufnames  = {},
-  },
-}
-
 local components = {
   active   = {},
   inactive = {},
@@ -17,19 +9,6 @@ local components = {
 table.insert(components.active,   {})
 table.insert(components.active,   {})
 table.insert(components.inactive, {})
-
-properties.force_inactive.filetypes = {
-  "NvimTree",
-  "dbui",
-  "packer",
-  "startify",
-  "fugitive",
-  "fugitiveblame",
-}
-
-properties.force_inactive.buftypes = {
-  "terminal"
-}
 
 table.insert(components.active[1], {
   provider = "vi_mode",
@@ -318,6 +297,5 @@ require "feline".setup{
   colors         = colours,
   separators     = separators,
   components     = components,
-  properties     = properties,
   vi_mode_colors = vi_mode_colors,
 }
