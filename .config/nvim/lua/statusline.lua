@@ -247,6 +247,7 @@ table.insert(components.inactive[1], file_info)
 
 table.insert(components.inactive[1], {
   provider = "git_branch",
+  left_sep = { str = " ", hl = { bg = Col_base05 } },
 })
 
 local colours = {
