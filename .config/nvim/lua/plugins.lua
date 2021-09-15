@@ -87,6 +87,26 @@ require("packer").startup(function(use)
   }
 
   use {
+    "SmiteshP/nvim-gps",
+    requires = "nvim-treesitter/nvim-treesitter",
+    config = function()
+      require("nvim-gps").setup({
+        icons = {
+          ["class-name"]    = " ",
+          ["function-name"] = " ",
+          ["method-name"]   = " ",
+        },
+        -- Any language not disabled here is enabled by default
+        languages = {
+          -- ["bash"] = false,
+          -- ["go"]   = false,
+        },
+        separator = ' > ',
+      })
+    end,
+  }
+
+  use {
     "fatih/vim-go",
     run = ":GoUpdateBinaries",
     config = function()

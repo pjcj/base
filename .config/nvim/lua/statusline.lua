@@ -57,6 +57,7 @@ table.insert(components.active[1], file_info)
 
 table.insert(components.active[1], {
   provider = "git_branch",
+  left_sep = { str = " ", hl = { bg = Col_base05 } },
 })
 
 table.insert(components.active[1], {
@@ -73,8 +74,12 @@ table.insert(components.active[1], {
   provider  = "git_diff_removed",
   hl        = { fg = Col_red },
   right_sep = {
-    " ",
-    { str = "right_filled", hl = { bg = Col_base02, fg = Col_base05 } },
+    { str = " ", always_visible = true },
+    {
+      str = "right_filled",
+      hl = { bg = Col_base02, fg = Col_base05 },
+      always_visible = true,
+    },
   },
 })
 
@@ -141,6 +146,13 @@ table.insert(components.active[1], {
   provider = function() return "  " .. tostring(ale_infos()) end,
   enabled  = function() return ale_infos() > 0 end,
   hl       = { bg = Col_base02, fg = "cyan" },
+})
+
+table.insert(components.active[1], {
+  provider = function() return require("nvim-gps").get_location() end,
+  enabled  = function() return require("nvim-gps").is_available() end,
+  hl       = { bg = Col_base02 },
+  left_sep = { str = " ", hl = { bg = Col_base02 } },
 })
 
 table.insert(components.active[1], {
