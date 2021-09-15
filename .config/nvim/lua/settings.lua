@@ -45,8 +45,10 @@ else
 end
 
 local alternate_indent = function()
-  G.indent_blankline_char_highlight_list       = { "IndentOdd", "IndentEven" }
-  G.indent_blankline_space_char_highlight_list = { "IndentOdd", "IndentEven" }
+  local l = { "IndentOdd", "IndentEven" }
+  G.indent_blankline_char_highlight_list                 = l
+  G.indent_blankline_space_char_highlight_list           = l
+  G.indent_blankline_space_char_blankline_highlight_list = l
 end
 
 function _G.set_buffer_settings()
