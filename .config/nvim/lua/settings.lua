@@ -67,6 +67,7 @@ function _G.set_buffer_settings()
     end
     return
   end
+
   Lopt.listchars = { tab = "» ", trail = "·" }
   Lopt.tabstop   = 8
   if vim.bo.shiftwidth < 3 then
@@ -84,10 +85,10 @@ function _G.set_buffer_settings()
   end
 
   if ft == "perl" then
-    Map("n", "<F4>",       [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]], Defmap)
-    Map("i", "<F2>",       "sub ($self) {<CR>}<ESC>kea<Space>", Defmap)
-    Map("i", "<F3>",       "$self->{}<ESC>i",                   Defmap)
-    Map("i", "<F4>",       "$self->",                           Defmap)
+    Map("n", "<F4>", [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]], Defmap)
+    Map("i", "<F2>", "sub ($self) {<CR>}<ESC>kea<Space>", Defmap)
+    Map("i", "<F3>", "$self->{}<ESC>i",                   Defmap)
+    Map("i", "<F4>", "$self->",                           Defmap)
     Cmd([[iabbr ,, =>]])
   end
 end
