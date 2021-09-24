@@ -295,7 +295,7 @@ require("packer").startup(function(use)
           ["o ih"] = ':<C-U>lua require "gitsigns.actions".select_hunk()<CR>',
           ["x ih"] = ':<C-U>lua require "gitsigns.actions".select_hunk()<CR>'
         },
-        watch_index             = { interval = 1000 },
+        watch_gitdir            = { interval = 1000 },
         sign_priority           = 6,
         update_debounce         = 100,
         status_formatter        = nil, -- Use default
