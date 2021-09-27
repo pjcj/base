@@ -59,20 +59,22 @@ table.insert(components.active[1], {
   provider = "git_branch",
   left_sep = { str = " ", hl = { bg = Col_base05 } },
 })
-
 table.insert(components.active[1], {
   provider = "git_diff_added",
-  hl       = { fg = Col_rgreen }
+  hl       = { fg = Col_rgreen },
+  icon     = " +",
 })
 
 table.insert(components.active[1], {
   provider = "git_diff_changed",
-  hl       = { fg = Col_yellow }
+  hl       = { fg = Col_yellow },
+  icon     = " ~",
 })
 
 table.insert(components.active[1], {
   provider  = "git_diff_removed",
   hl        = { fg = Col_red },
+  icon     = " -",
   right_sep = {
     { str = " ", always_visible = true },
     {
@@ -93,28 +95,28 @@ table.insert(components.active[1], {
   provider = "diagnostic_errors",
   enabled  = function() return lsp.diagnostics_exist("Error") end,
   hl       = { bg = Col_base02, fg = "red" },
-  icon     = "  ",
+  icon     = " E ",
 })
 
 table.insert(components.active[1], {
   provider = "diagnostic_warnings",
   enabled  = function() return lsp.diagnostics_exist("Warning") end,
   hl       = { bg = Col_base02, fg = "yellow" },
-  icon     = "  ",
+  icon     = " W ",
 })
 
 table.insert(components.active[1], {
   provider = "diagnostic_info",
   enabled  = function() return lsp.diagnostics_exist("Information") end,
   hl       = { bg = Col_base02, fg = "cyan" },
-  icon     = "  ",
+  icon     = " I ",
 })
 
 table.insert(components.active[1], {
   provider = "diagnostic_hints",
   enabled  = function() return lsp.diagnostics_exist("Hint") end,
   hl       = { bg = Col_base02, fg = "skyblue" },
-  icon     = "  ",
+  icon     = " H ",
 })
 
 local function ale_diagnostics()
@@ -131,19 +133,19 @@ local function ale_warnings() local _, w, _, _ = ale_diagnostics() return w end
 local function ale_infos()    local _, _, i, _ = ale_diagnostics() return i end
 
 table.insert(components.active[1], {
-  provider = function() return "  " .. tostring(ale_errors()) end,
+  provider = function() return " E " .. tostring(ale_errors()) end,
   enabled  = function() return ale_errors() > 0 end,
   hl       = { bg = Col_base02, fg = "red" },
 })
 
 table.insert(components.active[1], {
-  provider = function() return "  " .. tostring(ale_warnings()) end,
+  provider = function() return " W " .. tostring(ale_warnings()) end,
   enabled  = function() return ale_warnings() > 0 end,
   hl       = { bg = Col_base02, fg = "yellow" },
 })
 
 table.insert(components.active[1], {
-  provider = function() return "  " .. tostring(ale_infos()) end,
+  provider = function() return " I " .. tostring(ale_infos()) end,
   enabled  = function() return ale_infos() > 0 end,
   hl       = { bg = Col_base02, fg = "cyan" },
 })

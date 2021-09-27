@@ -59,9 +59,9 @@ require("packer").startup(function(use)
       G.ale_linters_explicit   = 1
       G.ale_disable_lsp        = 1
       G.ale_virtualtext_cursor = 1
-      G.ale_sign_error         = ""
-      G.ale_sign_warning       = "⚠"
-      G.ale_sign_info          = ""
+      G.ale_sign_error         = "E"
+      G.ale_sign_warning       = "W"
+      G.ale_sign_info          = "I"
       G.ale_linters = {
         yaml = { "circleci", "spectral", "swaglint", "yamllint" },
         sh   = { "shellcheck" },

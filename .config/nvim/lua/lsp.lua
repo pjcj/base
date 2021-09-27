@@ -41,10 +41,10 @@ local on_attach = function(client, bufnr)
     ]], false)
   end
 
-  Fn.sign_define("LspDiagnosticsSignError",       { text = "" })
-  Fn.sign_define("LspDiagnosticsSignWarning",     { text = "" })
-  Fn.sign_define("LspDiagnosticsSignInformation", { text = "" })
-  Fn.sign_define("LspDiagnosticsSignHint",        { text = "" })
+  Fn.sign_define("LspDiagnosticsSignError",       { text = "E" })
+  Fn.sign_define("LspDiagnosticsSignWarning",     { text = "W" })
+  Fn.sign_define("LspDiagnosticsSignInformation", { text = "I" })
+  Fn.sign_define("LspDiagnosticsSignHint",        { text = "H" })
 
   require "lsp_signature".on_attach()
 end
