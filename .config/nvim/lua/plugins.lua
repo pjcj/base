@@ -428,7 +428,7 @@ require("packer").startup(function(use)
     config = function()
       require "specs".setup{
         show_jumps = true,
-        min_jump   = 2,
+        min_jump   = 5,
         popup      = {
           delay_ms = 0,  -- delay before popup displays
           inc_ms   = 5,  -- time increments used for fade/resize effects
