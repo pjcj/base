@@ -1,6 +1,8 @@
 G.mapleader = ","
 
 Map("n", "<S-F1>",     ":q<cr>",                              Defmap)
+Map("n", "<S-F2>",     ":ALEPreviousWrap<cr>",                Defmap)
+Map("n", "<S-F3>",     ":ALENextWrap<cr>",                    Defmap)
 Map("n", "<F4>",       [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]], Defmap)
 Map("i", "<F5>",       "[",                                   Defmap)
 Map("n", "r<F5>",      "r[",                                  Defmap)
