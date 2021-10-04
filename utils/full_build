@@ -108,6 +108,9 @@ elif [[ "$(uname)" == FreeBSD ]]; then
     sudo pkg upgrade
     pip3=pip
 else
+    sudo locale-gen en_GB.UTF-8
+    sudo update-locale
+
     if which brew >&/dev/null; then
         brew update
         brew upgrade
