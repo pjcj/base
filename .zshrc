@@ -613,7 +613,13 @@ else
     f()  { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
     ds() { f -d "$@" }
     mv() { command mv -bv --backup=numbered "$@" }
-    s()  { gnome-open "$@" }
+    if which xdg-open >&/dev/null; then
+        s() { xdg-open "$@" }
+    elif which gnome-open >&/dev/null; then
+        s() { gnome-open "$@" }
+    else
+        s() { echo Cannot find open command; echo "$@" }
+    fi
 fi
 
 [[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim
