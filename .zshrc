@@ -613,7 +613,9 @@ else
     f()  { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
     ds() { f -d "$@" }
     mv() { command mv -bv --backup=numbered "$@" }
-    if which xdg-open >&/dev/null; then
+    if [[ -n $WSL_DISTRO_NAME ]]; then
+        s()  { wslview "$@" }
+    elif which xdg-open >&/dev/null; then
         s() { xdg-open "$@" }
     elif which gnome-open >&/dev/null; then
         s() { gnome-open "$@" }
