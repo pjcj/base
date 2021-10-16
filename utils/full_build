@@ -111,6 +111,12 @@ else
     sudo locale-gen en_GB.UTF-8
     sudo update-locale
 
+    if [[ -n $WSL_DISTRO_NAME ]]; then
+        brewfile=Brewfile.wsl
+    else
+        brewfile=Brewfile.linux
+    fi
+
     if which brew >&/dev/null; then
         brew update
         brew upgrade
