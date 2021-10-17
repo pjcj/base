@@ -121,10 +121,10 @@ else
         brew update
         brew upgrade
         brew upgrade --cask
-        brew bundle dump --file=Brewfile.linux --force
+        brew bundle dump --file=$brewfile --force
     else
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-        brew bundle install --file=Brewfile.linux
+        brew bundle install --file=$brewfile
     fi
 
     pip3=pip3
