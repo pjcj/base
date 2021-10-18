@@ -90,5 +90,6 @@ function _G.set_buffer_settings()
     Map("i", "<F3>", "$self->{}<ESC>i",                   Defmap)
     Map("i", "<F4>", "$self->",                           Defmap)
     Cmd([[iabbr ,, =>]])
+    Cmd([[TSBufDisable highlight]])
   end
 end
