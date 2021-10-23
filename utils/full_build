@@ -12,11 +12,6 @@ if [ ! -e .tmux.conf ]; then
     [[ -d ~/.config ]] || mkdir ~/.config
     ln -s ~/g/base/.config/* ~/.config
     ( cd ~ && ln -s g/base/.zshrc* g/base/.zshenv . )
-
-    sudo aptitude install gawk
-
-    # curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-        # https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
 [[ -e ~/.ssh/rc      ]] || ln -s ~/g/base/.ssh/rc ~/.ssh
