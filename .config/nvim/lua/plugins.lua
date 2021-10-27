@@ -172,7 +172,7 @@ require("packer").startup(function(use)
     end,
   }
 
-  use { "andersevenrud/compe-tmux", branch = "cmp" }
+  -- use { "andersevenrud/compe-tmux", branch = "cmp" }
 
   use {
     "hrsh7th/nvim-cmp",
@@ -223,10 +223,10 @@ require("packer").startup(function(use)
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"]     = cmp.mapping.close(),
           -- This is handled by nvim-autopairs.
-          -- ["<CR>"] = cmp.mapping.confirm {
-          --   behavior = cmp.ConfirmBehavior.Replace,
-          --   select = true
-          -- }
+          ["<CR>"] = cmp.mapping.confirm {
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true
+          }
         },
         sources = {
           { name = "nvim_lsp" },
