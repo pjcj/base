@@ -655,6 +655,13 @@ export s_normal="#9599dc"
 export s_rgreen="#25ad2e"   # a nice green for diffs (opposite of s:red)
 export s_darkred="#2b0200"  # a dark red
 
+for c in s_base03 s_base02 s_base01 s_base00 s_base0 s_base1 s_base2 s_base3 \
+    s_yellow s_orange s_red s_magenta s_violet s_blue s_cyan s_green s_normal \
+    s_rgreen s_darkred; do
+    export ef$c="$(print -rP "%F{${(P)c}}")"  # foreground terminal esc sequence
+    export eb$c="$(print -rP "%K{${(P)c}}")"  # background terminal esc sequence
+done
+
 zshrc_load_status "external files"
 
 load() {
