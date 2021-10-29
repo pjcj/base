@@ -942,7 +942,18 @@ elif [ 1 = 1 ]; then
     line() { printf '%.s―' {1..$(tput cols)} }
     PROMPT=$'$(line)$(gitprompt)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
 
-    perlv () { perl -e '$t = -e "Makefile"; $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`; s|.*/(.*)/bin/perl.*|$1 |; s/^usr $//; s/perl-// if $t; print' }
+    perlv () {
+        if [[ ${PROMPT_SHOW_PERL:-0} == 1 ]]; then
+            perl -e '
+                $t = -e "Makefile";
+                $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`;
+                s|.*/(.*)/bin/perl.*|$1 |;
+                s/^usr $//;
+                s/perl-// if $t;
+                print
+            '
+        fi
+    }
     RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %{$fg_bold[magenta]%}%T%{$reset_color%}'
 else
     AGKOZAK_PROMPT_DIRTRIM=0
