@@ -230,11 +230,11 @@ require("packer").startup(function(use)
           vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
       end
 
-      local feedkey = function(key, mode)
-        vim.api.nvim_feedkeys(
-          vim.api.nvim_replace_termcodes(key, true, true, true), mode, true
-        )
-      end
+      -- local feedkey = function(key, mode)
+        -- vim.api.nvim_feedkeys(
+          -- vim.api.nvim_replace_termcodes(key, true, true, true), mode, true
+        -- )
+      -- end
 
       cmp.setup {
         formatting = {
@@ -255,7 +255,7 @@ require("packer").startup(function(use)
             }
           },
         },
-        experimental = {native_menu = false, ghost_text = false},
+        experimental = {native_menu = false, ghost_text = true},
         min_length = 0, -- allow for `from package import _` in Python
         mapping = {
           ["<C-p>"]     = cmp.mapping.select_prev_item(),
