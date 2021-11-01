@@ -173,6 +173,8 @@ if [[ "$EDITOR" == "nvim" ]]; then
     $EDITOR --headless -c LspInstall\ vue
     $EDITOR --headless -c LspInstall\ yaml
     go install github.com/nametake/golangci-lint-langserver@latest
+
+    $pip3 install --upgrade --user git+git://github.com/powerline/powerline
 fi
 
 # if [[ $(uname) == Linux ]]; then
