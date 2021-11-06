@@ -256,7 +256,7 @@ require("packer").startup(function(use)
           },
         },
         experimental = {native_menu = false, ghost_text = true},
-        min_length = 0, -- allow for `from package import _` in Python
+        min_length = 1,
         mapping = {
           ["<C-p>"]     = cmp.mapping.select_prev_item(),
           ["<C-n>"]     = cmp.mapping.select_next_item(),
