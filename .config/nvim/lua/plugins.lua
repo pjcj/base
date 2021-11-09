@@ -321,9 +321,10 @@ require("packer").startup(function(use)
       cmp.setup.cmdline("/", {sources = {{name = "buffer"}}})
 
       -- Use cmdline & path source for ':'.
-      cmp.setup.cmdline(":", {
-        sources = cmp.config.sources({{name = "path"}}, {{name = "cmdline"}})
-      })
+      -- TODO - revisit this, but currently it prevents normal completion
+      -- cmp.setup.cmdline(":", {
+        -- sources = cmp.config.sources({{name = "path"}}, {{name = "cmdline"}})
+      -- })
     end,
   }
 
