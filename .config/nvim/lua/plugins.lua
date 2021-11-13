@@ -36,7 +36,7 @@ require("packer").startup(function(use)
   use {
     "lewis6991/spellsitter.nvim",
     config = function()
-      require("spellsitter").setup {
+      require "spellsitter".setup {
         hl = "SpellBad",
         captures = { "comment" },  -- set to {} to spellcheck everything
       }
@@ -95,7 +95,7 @@ require("packer").startup(function(use)
     "SmiteshP/nvim-gps",
     requires = "nvim-treesitter/nvim-treesitter",
     config = function()
-      require("nvim-gps").setup({
+      require "nvim-gps".setup({
         icons = {
           ["class-name"]    = " ",
           ["function-name"] = " ",
@@ -502,7 +502,8 @@ require("packer").startup(function(use)
   use {
     "edluffy/specs.nvim",
     config = function()
-      require "specs".setup{
+      local specs = require "specs"
+      specs.setup{
         show_jumps = true,
         min_jump   = 5,
         popup      = {
@@ -511,8 +512,8 @@ require("packer").startup(function(use)
           blend    = 10, -- starting blend, between 0-100, see :h winblend
           width    = 40,
           winhl    = "ScrollView",
-          fader    = require("specs").linear_fader,
-          resizer  = require("specs").shrink_resizer,
+          fader    = specs.linear_fader,
+          resizer  = specs.shrink_resizer,
         },
         ignore_filetypes = {},
         ignore_buftypes  = { nofile = true },
