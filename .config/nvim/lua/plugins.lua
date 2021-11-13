@@ -54,6 +54,11 @@ require("packer").startup(function(use)
   }
 
   use {
+    "jose-elias-alvarez/null-ls.nvim",
+    requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  }
+
+  use {
     "dense-analysis/ale",
     config = function()
       G.ale_linters_explicit   = 1

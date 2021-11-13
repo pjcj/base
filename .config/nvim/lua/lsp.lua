@@ -49,6 +49,34 @@ local on_attach = function(client, bufnr)
   require "lsp_signature".on_attach()
 end
 
+local function setup_null_ls ()
+  local null_ls = require "null-ls"
+  local b = null_ls.builtins
+  local f = b.formatting
+  local d = b.diagnostics
+  local a = b.code_actions
+
+  local sources = {
+    a.gitsigns,
+    a.proselint,
+    f.fixjson,
+    f.shellharden,
+    f.shfmt,
+    f.stylua,
+    d.markdownlint,
+    d.proselint,
+    -- d.selene,
+    d.shellcheck,
+    d.yamllint,
+  }
+
+  null_ls.config({
+    sources = sources,
+  })
+
+  require "lspconfig"["null-ls"].setup({})
+end
+
 -- configure lua language server for neovim development
 local lua_settings = {
   Lua = {
@@ -92,12 +120,14 @@ end
 
 -- lsp-install
 local function setup_servers()
+  setup_null_ls()
+
   require "lspinstall".setup()
 
-  -- get all installed servers
+  -- setup all servers installed with lspinstall
   local servers = require "lspinstall".installed_servers()
-
   for _, server in pairs(servers) do
+    -- print("configure server ", server)
     local config = make_config()
 
     -- language specific config
@@ -107,6 +137,9 @@ local function setup_servers()
 
     require "lspconfig"[server].setup(config)
   end
+
+  local config = make_config()
+  require "lspconfig"["null-ls"].setup(config)
 end
 
 setup_servers()
