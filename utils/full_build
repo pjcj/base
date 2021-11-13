@@ -160,6 +160,10 @@ if [[ "$EDITOR" == "nvimx" ]]; then
         ~/.local/share/nvim/site/unicode/UnicodeData.txt
 fi
 
+npm install -g fixjson
+
+npm update -g
+
 if [[ "$EDITOR" == "nvim" ]]; then
     $EDITOR --headless -c "autocmd User PackerComplete quitall" -c "PackerSync"
     $EDITOR --headless -c LspInstall\ bash
