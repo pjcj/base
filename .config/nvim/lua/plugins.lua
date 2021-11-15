@@ -441,6 +441,8 @@ require("packer").startup(function(use)
     end,
   }
 
+  use "ggandor/lightspeed.nvim"
+
   use "zsugabubus/crazy8.nvim"
 
   use {
