@@ -153,6 +153,7 @@ require("packer").startup(function(use)
           file_ignore_patterns = {
             ".git/.*"
           },
+          dynamic_preview_title = true,
         },
       }
       Map("n", "<leader>.",  [[<cmd>lua require "telescope.builtin".find_files({ hidden = true })<cr>]],      Defmap)
@@ -170,6 +171,7 @@ require("packer").startup(function(use)
       Map("n", "<leader>fr", [[<cmd>lua require "telescope.builtin".lsp_references()<cr>]],                   Defmap)
       Map("n", "<leader>ft", [[<cmd>lua require "telescope.builtin".tags()<cr>]],                             Defmap)
       Map("n", "<leader>fT", [[<cmd>lua require "telescope.builtin".tags{ only_current_buffer = true }<cr>]], Defmap)
+      Map("n", "<leader>fp", [[<cmd>lua require "telescope".extensions.neoclip.default()<cr>]],               Defmap)
 
       Cmd [[
         autocmd User TelescopePreviewerLoaded setlocal number
@@ -442,9 +444,19 @@ require("packer").startup(function(use)
   }
 
   use "ggandor/lightspeed.nvim"
+  use {
+    "AckslD/nvim-neoclip.lua",
+    requires = { "tami5/sqlite.lua", module = "sqlite" },
+    config = function()
+      require "neoclip".setup({
+        enable_persistant_history = true,
+        db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
+        default_register = '"',
+      })
+    end,
+  }
 
   use "zsugabubus/crazy8.nvim"
-
   use {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
