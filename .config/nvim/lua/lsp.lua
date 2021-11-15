@@ -74,13 +74,11 @@ end
 local function setup_null_ls ()
   local null_ls = require "null-ls"
 
-  local no_really = {
+  null_ls.register({
     method    = null_ls.methods.DIAGNOSTICS,
     filetypes = { "markdown", "text" },
     generator = { fn = no_really_fn },
-  }
-
-  null_ls.register(no_really)
+  })
 
   local b = null_ls.builtins
   local f = b.formatting
@@ -88,7 +86,6 @@ local function setup_null_ls ()
   local a = b.code_actions
 
   local sources = {
-    a.gitsigns,
     a.proselint,
     f.fixjson,
     f.shellharden,
