@@ -3,7 +3,7 @@ local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) Api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) Api.nvim_buf_set_option(bufnr, ...) end
 
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
   -- mappings
   buf_set_keymap("n", "gD",        "<Cmd>lua vim.lsp.buf.declaration()<CR>",                                Defmap)
@@ -18,12 +18,12 @@ local on_attach = function(client, bufnr)
   buf_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>",                                     Defmap)
   buf_set_keymap("n", "gr",        "<cmd>lua vim.lsp.buf.references()<CR>",                                 Defmap)
   buf_set_keymap("n", "<space>e",  "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>",               Defmap)
-  buf_set_keymap("n", "<C-UP>",    "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>",                           Defmap)
-  buf_set_keymap("n", "<C-DOWN>",  "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",                           Defmap)
+  buf_set_keymap("n", "<C-up>",    "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>",                           Defmap)
+  buf_set_keymap("n", "<C-down>",  "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",                           Defmap)
   buf_set_keymap("n", "<space>q",  "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>",                         Defmap)
   buf_set_keymap("n", "<space>a",  "<cmd>lua vim.lsp.buf.code_action()<CR>",                                Defmap)
 
-  -- set some keybinds conditional on server capabilities
+  -- set some keybindings conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
     buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", Defmap)
   elseif client.resolved_capabilities.document_range_formatting then
@@ -49,35 +49,35 @@ local on_attach = function(client, bufnr)
   require "lsp_signature".on_attach()
 end
 
+local function no_really_fn (params)
+  local diagnostics = {}
+  -- sources have access to a params object
+  -- containing info about the current file and editor state
+  for i, line in ipairs(params.content) do
+    local col, end_col = line:find("really")
+    if col and end_col then
+      -- null-ls fills in undefined positions
+      -- and converts source diagnostics into the required format
+      table.insert(diagnostics, {
+        row      = i,
+        col      = col,
+        end_col  = end_col,
+        source   = "no-really",
+        message  = "Don't use 'really!'",
+        severity = 4,
+      })
+    end
+  end
+  return diagnostics
+end
+
 local function setup_null_ls ()
   local null_ls = require "null-ls"
 
   local no_really = {
     method    = null_ls.methods.DIAGNOSTICS,
     filetypes = { "markdown", "text" },
-    generator = {
-      fn = function(params)
-        local diagnostics = {}
-        -- sources have access to a params object
-        -- containing info about the current file and editor state
-        for i, line in ipairs(params.content) do
-          local col, end_col = line:find("really")
-          if col and end_col then
-            -- null-ls fills in undefined positions
-            -- and converts source diagnostics into the required format
-            table.insert(diagnostics, {
-              row      = i,
-              col      = col,
-              end_col  = end_col,
-              source   = "no-really",
-              message  = "Don't use 'really!'",
-              severity = 4,
-            })
-          end
-        end
-        return diagnostics
-      end,
-    },
+    generator = { fn = no_really_fn },
   }
 
   null_ls.register(no_really)
