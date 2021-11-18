@@ -61,6 +61,8 @@ function _G.set_buffer_colours()
 
   set_colour("IndentOdd",                            "guibg", Col_none   )
   set_colour("IndentEven",                           "guibg", Col_base02 )
+  set_colour("IndentBlanklineContextStart",          "guibg", Col_dred   )
+  set_colour("_IndentBlanklineContextHighlight",     "guifg", Col_dcyan  )
 
   set_colour("GoDiagnosticError",                    "guibg", Col_none   )
   set_colour("GoDiagnosticError",                    "guifg", Col_red    )

@@ -456,11 +456,23 @@ require("packer").startup(function(use)
   use {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
-      G.indent_blankline_char                           = " "
-      G.indent_blankline_space_char                     = " "
-      G.indent_blankline_show_trailing_blankline_indent = false
-      G.indent_blankline_show_first_indent_level        = false
-      G.indent_blankline_max_indent_increase            = 1
+      require "indent_blankline".setup{
+        char                           = " ",
+        space_char                     = " ",
+        context_char                   = "┃",
+        show_trailing_blankline_indent = false,
+        show_first_indent_level        = false,
+        max_indent_increase            = 1,
+        viewport_buffer                = 100,
+        show_current_context           = true,
+        show_current_context_start     = true,
+        buftype_exclude  = { "terminal" },
+        filetype_exclude = { "diff", "help", "markdown", "packer", "qf" },
+        context_patterns = {
+          "class", "function", "method",
+          "^if", "^for", "^while",
+        },
+      }
     end,
   }
 
