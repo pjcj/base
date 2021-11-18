@@ -82,6 +82,9 @@ Map("n", "<leader>se", [[<cmd>setlocal spell spelllang=en_gb<cr>]], Defmap)
 Map("n", "<leader>sd", [[<cmd>setlocal spell spelllang=de_ch<cr>]], Defmap)
 Map("n", "<leader>so", [[<cmd>set nospell<cr>]],                    Defmap)
 
+Map("i", "<Tab>", "<Plug>(vsnip-expand-or-jump)", {})
+Map("s", "<Tab>", "<Plug>(vsnip-expand-or-jump)", {})
+
 -- map("n", "<leader>l" [[<cmd>let @/ = ""<bar> :call UncolorAllWords()<cr>]], Defmap)
 
 Cmd([[

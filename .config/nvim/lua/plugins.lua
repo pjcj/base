@@ -185,8 +185,8 @@ require("packer").startup(function(use)
     requires = {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lua",
-      "L3MON4D3/LuaSnip",
-      "saadparwaiz1/cmp_luasnip",
+      "hrsh7th/vim-vsnip",
+      "hrsh7th/vim-vsnip-integ",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-calc",
@@ -238,11 +238,11 @@ require("packer").startup(function(use)
           vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
       end
 
-      -- local feedkey = function(key, mode)
-        -- vim.api.nvim_feedkeys(
-          -- vim.api.nvim_replace_termcodes(key, true, true, true), mode, true
-        -- )
-      -- end
+      local feedkey = function(key, mode)
+        vim.api.nvim_feedkeys(
+          vim.api.nvim_replace_termcodes(key, true, true, true), mode, true
+        )
+      end
 
       cmp.setup {
         formatting = {
@@ -273,12 +273,12 @@ require("packer").startup(function(use)
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
           }),
-          -- ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
-            -- elseif vim.fn["vsnip#available"](1) == 1 then
-              -- feedkey("<Plug>(vsnip-expand-or-jump)", "")
+            elseif vim.fn["vsnip#available"](1) == 1 then
+              feedkey("<Plug>(vsnip-expand-or-jump)", "")
             elseif has_words_before() then
               cmp.complete()
             else
@@ -288,10 +288,10 @@ require("packer").startup(function(use)
           ["<S-Tab>"] = cmp.mapping(function()
             if cmp.visible() then
               cmp.select_prev_item()
-            -- elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-              -- feedkey("<Plug>(vsnip-jump-prev)", "")
+            elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+              feedkey("<Plug>(vsnip-jump-prev)", "")
             end
-          end, { "i", "s" })
+          end, { "i", "s" }),
         },
         sources = {
           { name = "nvim_lsp" },
@@ -315,14 +315,9 @@ require("packer").startup(function(use)
         },
         snippet = {
           expand = function(args)
-            require "luasnip".lsp_expand(args.body)
-          end,
+            vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+          end
         },
-        -- snippet = {
-          -- expand = function(args)
-            -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-          -- end
-        -- },
       }
 
       -- Use buffer source for `/`.
