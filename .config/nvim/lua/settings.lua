@@ -73,8 +73,9 @@ function _G.set_buffer_settings()
   if vim.bo.shiftwidth < 3 then
     alternate_indent()
   else
-    G.indent_blankline_char_highlight_list       = { "IndentEven"  }
-    G.indent_blankline_space_char_highlight_list = { "IndentSpace" }
+    G.indent_blankline_char_highlight_list                 = { "IndentEven"  }
+    G.indent_blankline_space_char_highlight_list           = { "IndentSpace" }
+    G.indent_blankline_space_char_blankline_highlight_list = {               }
   end
 
   if ft == "gitcommit" then
