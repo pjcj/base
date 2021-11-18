@@ -520,6 +520,7 @@ require("packer").startup(function(use)
   use "junegunn/vim-easy-align"
   use "tpope/vim-surround"
   use "tpope/vim-repeat"
+  use "AndrewRadev/splitjoin.vim"  -- gS, gJ
 
   use {
     "dstein64/nvim-scrollview",
