@@ -23,12 +23,16 @@ require("packer").startup(function(use)
 
   use {
     "nvim-treesitter/nvim-treesitter",
+    requires = { "nvim-treesitter/nvim-treesitter-refactor" },
     run = ":TSUpdate",
     config = function()
       require "nvim-treesitter.configs".setup {
         ensure_installed = "maintained",
         highlight        = { enable = true  },
         indent           = { enable = false },
+        refactor = {
+          highlight_definitions = { enable = true },
+        },
       }
     end,
   }
