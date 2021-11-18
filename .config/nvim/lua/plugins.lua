@@ -194,6 +194,7 @@ require("packer").startup(function(use)
       "quangnguyen30192/cmp-nvim-tags",
       { "andersevenrud/compe-tmux", branch = "cmp" },
       "onsails/lspkind-nvim",
+      "rafamadriz/friendly-snippets",
     },
     config = function()
       require "cmp_nvim_lsp".setup()
