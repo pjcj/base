@@ -476,8 +476,10 @@ require("packer").startup(function(use)
         buftype_exclude  = { "terminal" },
         filetype_exclude = { "diff", "help", "markdown", "packer", "qf" },
         context_patterns = {
-          "class", "function", "method",
+          "^class", "^function", "^method",
           "^if", "^for", "^while",
+          "^object", "^table", "^block", "^arguments", "^func_literal",
+          "^import_declaration", "^const_declaration",
         },
       }
     end,
