@@ -29,6 +29,7 @@ Opt.showmatch     = true
 Opt.signcolumn    = "auto:1"
 Opt.smartcase     = true
 Opt.smarttab      = true
+Opt.termguicolors = true
 Opt.title         = true
 Opt.undofile      = true
 Opt.undolevels    = 10000
@@ -36,6 +37,9 @@ Opt.updatecount   = 40
 Opt.updatetime    = 250
 Opt.wildmode      = "longest:full,full"
 Opt.wildoptions   = "pum,tagfile"
+Opt.guicursor     = "n-v-c:block-Cursor,i-ci-ve:ver25,r-cr:hor20,o:hor50," ..
+                    "a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor," ..
+                    "sm:block-blinkwait175-blinkoff150-blinkon175"
 
 if Fn.executable("rg") then
   Opt.grepprg    = "rg --no-heading --hidden --glob '!.git' --vimgrep"

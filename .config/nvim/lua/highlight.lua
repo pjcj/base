@@ -50,6 +50,8 @@ function _G.set_buffer_colours()
   set_colour("Visual",                               "guibg", Col_base1  )
   set_colour("Visual",                               "guifg", Col_dred   )
 
+  set_colour("Cursor",                               "guibg", Col_llyellow   )
+
   set_colour("GitSignsAdd",                          "guibg", Col_base03 )
   set_colour("GitSignsAdd",                          "guifg", Col_rgreen )
   set_colour("GitSignsChange",                       "guibg", Col_base03 )
