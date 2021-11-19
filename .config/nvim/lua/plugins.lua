@@ -465,7 +465,7 @@ require("packer").startup(function(use)
         space_char                     = " ",
         context_char                   = "┃",
         show_trailing_blankline_indent = false,
-        show_first_indent_level        = false,
+        show_first_indent_level        = true,
         max_indent_increase            = 1,
         viewport_buffer                = 100,
         show_current_context           = true,
