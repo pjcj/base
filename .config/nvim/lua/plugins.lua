@@ -481,8 +481,11 @@ require("packer").startup(function(use)
         context_patterns = {
           "^class", "^function", "^method",
           "^if", "^for", "^while",
-          "^object", "^table", "^block", "^arguments", "^func_literal",
-          "^import_declaration", "^const_declaration",
+          "^object", "^table", "^block", "^arguments",
+          -- go
+          "^func_literal", "^import_declaration", "^const_declaration",
+          "^var_declaration", "^short_var_declaration", "^type_declaration",
+          "^expression_switch_statement", "^expression_case",
         },
       }
     end,
