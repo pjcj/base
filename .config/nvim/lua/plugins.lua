@@ -486,6 +486,8 @@ require("packer").startup(function(use)
           "^func_literal", "^import_declaration", "^const_declaration",
           "^var_declaration", "^short_var_declaration", "^type_declaration",
           "^expression_switch_statement", "^expression_case",
+          -- bash
+          "^case_statement", "^case_item",
         },
       }
     end,
