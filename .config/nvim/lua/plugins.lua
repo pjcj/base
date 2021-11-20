@@ -132,9 +132,10 @@ require("packer").startup(function(use)
       G.go_metalinter_autosave_enabled = { }
       G.go_metalinter_enabled          = { }
       G.go_gopls_gofumpt               = 1
+      G.go_fmt_command                 = "golines"
       G.go_fmt_options                 = {
         gofmt   = "-s",
-        -- golines = "-m 128",
+        golines = "-m 80 -t 2",
       }
     end,
   }
