@@ -87,6 +87,11 @@ Map("s", "<Tab>",   "<Plug>(vsnip-expand-or-jump)", {})
 Map("i", "<S-Tab>", "<Plug>(vsnip-jump-prev)",      {})
 Map("s", "<S-Tab>", "<Plug>(vsnip-jump-prev)",      {})
 
+Map("n", "s", "s", Defmap)
+Map("n", "S", "S", Defmap)
+Map("n", ",,", "<Plug>Lightspeed_s", {})
+Map("n", ";;", "<Plug>Lightspeed_S", {})
+
 -- map("n", "<leader>l" [[<cmd>let @/ = ""<bar> :call UncolorAllWords()<cr>]], Defmap)
 
 Cmd([[
