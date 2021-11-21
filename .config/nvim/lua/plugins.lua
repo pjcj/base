@@ -440,14 +440,22 @@ require("packer").startup(function(use)
     "terrortylor/nvim-comment",
     config = function()
       require "nvim_comment".setup{
-        line_mapping     = "-",
-        comment_empty    = false,
+        line_mapping  = "-",
+        comment_empty = false,
       }
       Map("v", "-", ":<c-u>call CommentOperator(visualmode())<cr>", Defmap)
     end,
   }
 
-  use "ggandor/lightspeed.nvim"
+  use {
+    "ggandor/lightspeed.nvim",
+    config = function()
+      require "lightspeed".setup({
+        jump_on_partial_input_safety_timeout = 2000
+      })
+    end,
+  }
+
   use {
     "AckslD/nvim-neoclip.lua",
     requires = { "tami5/sqlite.lua", module = "sqlite" },
