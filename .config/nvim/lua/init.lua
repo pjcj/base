@@ -1,6 +1,7 @@
 Cmd    = vim.cmd                           -- run Vim commands
 Fn     = vim.fn                            -- call Vim functions
 G      = vim.g                             -- a table to access global variables
+B      = vim.b                             -- a table to access buffer variables
 Opt    = vim.opt                           -- set options
 Lopt   = vim.opt_local                     -- set local options
 Api    = vim.api                           -- vim api

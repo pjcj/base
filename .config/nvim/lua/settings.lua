@@ -50,9 +50,9 @@ end
 
 local alternate_indent = function()
   local l = { "IndentOdd", "IndentEven" }
-  G.indent_blankline_char_highlight_list                 = l
-  G.indent_blankline_space_char_highlight_list           = l
-  G.indent_blankline_space_char_blankline_highlight_list = l
+  B.indent_blankline_char_highlight_list                 = l
+  B.indent_blankline_space_char_highlight_list           = l
+  B.indent_blankline_space_char_blankline_highlight_list = l
 end
 
 function _G.set_buffer_settings()
@@ -77,9 +77,9 @@ function _G.set_buffer_settings()
   if vim.bo.shiftwidth < 3 then
     alternate_indent()
   else
-    G.indent_blankline_char_highlight_list                 = { "IndentEven"  }
-    G.indent_blankline_space_char_highlight_list           = { "IndentSpace" }
-    G.indent_blankline_space_char_blankline_highlight_list = {               }
+    B.indent_blankline_char_highlight_list                 = { "IndentEven"  }
+    B.indent_blankline_space_char_highlight_list           = { "IndentSpace" }
+    B.indent_blankline_space_char_blankline_highlight_list = {               }
   end
 
   if ft == "gitcommit" then
