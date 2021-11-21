@@ -82,11 +82,6 @@ Map("n", "<leader>se", [[<cmd>setlocal spell spelllang=en_gb<cr>]], Defmap)
 Map("n", "<leader>sd", [[<cmd>setlocal spell spelllang=de_ch<cr>]], Defmap)
 Map("n", "<leader>so", [[<cmd>set nospell<cr>]],                    Defmap)
 
-Map("i", "<Tab>",   "<Plug>(vsnip-expand-or-jump)", {})
-Map("s", "<Tab>",   "<Plug>(vsnip-expand-or-jump)", {})
-Map("i", "<S-Tab>", "<Plug>(vsnip-jump-prev)",      {})
-Map("s", "<S-Tab>", "<Plug>(vsnip-jump-prev)",      {})
-
 Map("n", "s", "s", Defmap)
 Map("n", "S", "S", Defmap)
 Map("n", ",,", "<Plug>Lightspeed_s", {})
