@@ -16,7 +16,6 @@ Col_cyan     = "#2aa198"
 Col_green    = "#859900"
 Col_normal   = "#9599dc"
 
-Col_rgreen   = "#25ad2e"  -- a nice green for diffs (opposite of red)
 Col_base04   = "#00090c"  -- darker than base03
 Col_base05   = "#0e3c49"  -- lighter than base02
 Col_base06   = "#012028"  -- lighter than base03
@@ -25,9 +24,13 @@ Col_lyellow  = "#de860e"  -- light yellow
 Col_dyellow  = "#433200"  -- dark yellow
 Col_dorange  = "#7d2500"  -- dark orange
 Col_dred     = "#400200"  -- dark red
-Col_ddred    = "#150100"  -- dark dark red
+Col_ddred    = "#2b0200"  -- dark dark red
+Col_dddred   = "#150100"  -- dark dark dark red
 Col_lviolet  = "#c0c3ef"
 Col_dcyan    = "#04746c"  -- dark cyan
 Col_dblue    = "#06568f"  -- dark blue
+Col_rgreen   = "#25ad2e"  -- a nice green for diffs (opposite of red)
+Col_dgreen   = "#017008"  -- dark green
+Col_ddgreen  = "#003203"  -- dark dark green
 
 Col_none     = "none"
