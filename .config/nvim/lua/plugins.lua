@@ -53,6 +53,7 @@ require("packer").startup(function(use)
   use "neovim/nvim-lspconfig"
   use "kabouzeid/nvim-lspinstall"
   use "ray-x/lsp_signature.nvim"
+  use "folke/lsp-colors.nvim"
   use {
     "kosayoda/nvim-lightbulb",
     config = function()
