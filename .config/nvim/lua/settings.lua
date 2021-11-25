@@ -53,6 +53,7 @@ local alternate_indent = function()
   B.indent_blankline_char_highlight_list                 = l
   B.indent_blankline_space_char_highlight_list           = l
   B.indent_blankline_space_char_blankline_highlight_list = l
+  B.indent_blankline_context_highlight_list              = l
 end
 
 function _G.set_buffer_settings()
@@ -80,6 +81,7 @@ function _G.set_buffer_settings()
     B.indent_blankline_char_highlight_list                 = { "IndentEven"  }
     B.indent_blankline_space_char_highlight_list           = { "IndentSpace" }
     B.indent_blankline_space_char_blankline_highlight_list = {               }
+    B.indent_blankline_context_highlight_list              = { "IndentEven"  }
   end
 
   if ft == "gitcommit" then

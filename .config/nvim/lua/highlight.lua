@@ -60,10 +60,11 @@ function _G.set_buffer_colours()
   set_colour("GitSignsDelete",                       "guifg", Col_red     )
   set_colour("GitSignsCurrentLineBlame",             "guifg", Col_base05  )
 
+  set_colour("IndentOdd",                            "guifg", Col_yellow  )
   set_colour("IndentOdd",                            "guibg", Col_none    )
+  set_colour("IndentEven",                           "guifg", Col_yellow  )
   set_colour("IndentEven",                           "guibg", Col_base02  )
   set_colour("IndentBlanklineContextStart",          "guibg", Col_ddgreen )
-  set_colour("_IndentBlanklineContextHighlight",     "guifg", Col_yellow  )
 
   set_colour("GoDiagnosticError",                    "guibg", Col_none    )
   set_colour("GoDiagnosticError",                    "guifg", Col_red     )

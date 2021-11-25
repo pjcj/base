@@ -490,9 +490,6 @@ require("packer").startup(function(use)
         viewport_buffer                = 100,
         show_current_context           = true,
         show_current_context_start     = true,
-        context_highlight_list = {
-          "_IndentBlanklineContextHighlight"
-        },
         buftype_exclude  = { "terminal" },
         filetype_exclude = { "diff", "help", "markdown", "packer", "qf" },
         context_patterns = {
