@@ -117,7 +117,7 @@ local lua_settings = {
     },
     diagnostics = {
       -- Get the language server to recognize the `vim` global
-      globals = {"vim"},
+      globals = { "vim" },
     },
     workspace = {
       -- Make the server aware of Neovim runtime files
@@ -152,55 +152,26 @@ end
 local function setup_servers()
   setup_null_ls()
 
-  require "lspinstall".setup()
+  local lsp_installer = require "nvim-lsp-installer"
+  lsp_installer.on_server_ready(function(server)
+    print("configure server", server.name)
+    local opts = {}
 
-  -- setup all servers installed with lspinstall
-  local servers = require "lspinstall".installed_servers()
-  for _, server in pairs(servers) do
-    -- print("configure server ", server)
-    local config = make_config()
-
-    -- language specific config
-    if server == "lua" then
-      config.settings = lua_settings
+    if server.name == "sumneko_lua" then
+      opts.settings = lua_settings
     end
 
-    require "lspconfig"[server].setup(config)
-  end
+    -- This setup() function is exactly the same as lspconfig's setup function
+    -- (:help lspconfig-quickstart)
+    server:setup(opts)
+    vim.cmd [[ do User LspAttachBuffers ]]
+  end)
 
   local config = make_config()
   require "lspconfig"["null-ls"].setup(config)
 end
 
--- setup_servers()
-
-local lsp_installer = require "nvim-lsp-installer"
-
-lsp_installer.on_server_ready(function(server)
-    local opts = {}
-
-    -- (optional) Customize the options passed to the server
-    -- if server.name == "tsserver" then
-    --     opts.root_dir = function() ... end
-    -- end
-    if server.name == "lua" then
-      opts.settings = lua_settings
-    end
-
-    -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
-    server:setup(opts)
-    vim.cmd [[ do User LspAttachBuffers ]]
-end)
-
--- Automatically reload after `:LspInstall <server>` so we don't have to
--- restart neovim
--- require "lspinstall".post_install_hook = function ()
---   if #(Api.nvim_list_uis()) == 0 then
---     Cmd("quitall")  -- this triggers the FileType autocmd that starts the server
---   end
---   setup_servers() -- reload installed servers
---   Cmd("bufdo e")  -- this triggers the FileType autocmd that starts the server
--- end
+setup_servers()
 
 -- golangci-lint-langserver support (doesn't seem to work right now)
 -- see https://github.com/nametake/golangci-lint-langserver/issues/8
