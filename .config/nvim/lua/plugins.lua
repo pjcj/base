@@ -316,7 +316,7 @@ require("packer").startup(function(use)
           { name = "nvim_lua" },
           {
             name = "buffer",
-            opts = {
+            options = {
               get_bufnrs = function() return vim.api.nvim_list_bufs() end,
             },
             -- keywords or just words
@@ -324,7 +324,7 @@ require("packer").startup(function(use)
           },
           {
             name = "tmux",
-            opts = { all_panes = true, label = "[tmux]" }
+            options = { all_panes = true, label = "[tmux]" }
           },
           { name = "tags"  },
           { name = "path"  },
