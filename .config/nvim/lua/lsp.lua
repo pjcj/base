@@ -155,42 +155,40 @@ local function setup_servers()
   local lsp_installer = require "nvim-lsp-installer"
   lsp_installer.on_server_ready(function(server)
     print("configure server", server.name)
-    local opts = {}
+    local config = make_config()
 
     if server.name == "sumneko_lua" then
-      opts.settings = lua_settings
+      config.settings = lua_settings
+    end
+    if server.name == "golangci_lint_ls" then
+      config.init_options = {
+        command = {
+          -- "golangci-lint", "run", "--out-format", "json",
+          "make", "--quiet", "-C", "api", "lint_api_json",
+        },
+      }
     end
 
     -- This setup() function is exactly the same as lspconfig's setup function
     -- (:help lspconfig-quickstart)
-    server:setup(opts)
+    server:setup(config)
     vim.cmd [[ do User LspAttachBuffers ]]
   end)
 
-  local config = make_config()
-  require "lspconfig"["null-ls"].setup(config)
+  -- local lspconfig = require "lspconfig"
+  -- local configs = require "lspconfig/configs"
+  -- local gconfig = make_config()
+  -- gconfig["cmd"] = { "golangci-lint-langserver" }
+  -- gconfig["root_dir"] = lspconfig.util.root_pattern(".git", "go.mod")
+  -- gconfig["init_options"] = {
+  --   command = {
+  --     -- "golangci-lint", "run", "--out-format", "json",
+  --     "make", "--quiet", "-C", "api", "lint_api_json",
+  --   },
+  -- }
+  -- gconfig["filetypes"] = { "go" }
+  -- -- configs.golangcilsp.setup(gconfig)
+  -- -- configs["golangcilsp"].setup(gconfig)
 end
 
 setup_servers()
-
--- golangci-lint-langserver support (doesn't seem to work right now)
--- see https://github.com/nametake/golangci-lint-langserver/issues/8
-local lspconfig = require "lspconfig"
-local configs = require "lspconfig/configs"
-
-if not lspconfig.golangcilsp then
-  configs.golangcilsp = {
-    default_config = {
-      cmd = { "golangci-lint-langserver" },
-      root_dir = lspconfig.util.root_pattern(".git", "go.mod"),
-      init_options = {
-        command = {
-          "golangci-lint", "run", "--out-format", "json",
-        },
-      },
-    },
-  }
-end
-lspconfig.golangcilsp.setup {
-  filetypes = { "go" }
-}
