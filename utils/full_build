@@ -166,16 +166,18 @@ npm update -g
 
 if [[ "$EDITOR" == "nvim" ]]; then
     $EDITOR --headless -c "autocmd User PackerComplete quitall" -c "PackerSync"
-    $EDITOR --headless -c LspInstall\ bash
-    $EDITOR --headless -c LspInstall\ css
-    $EDITOR --headless -c LspInstall\ dockerfile
-    $EDITOR --headless -c LspInstall\ go
-    $EDITOR --headless -c LspInstall\ html
-    $EDITOR --headless -c LspInstall\ json
-    $EDITOR --headless -c LspInstall\ lua
-    $EDITOR --headless -c LspInstall\ vim
-    $EDITOR --headless -c LspInstall\ vue
-    $EDITOR --headless -c LspInstall\ yaml
+    # $EDITOR --headless -c LspInstall\ --sync\ bashls
+    # $EDITOR --headless -c LspInstall\ --sync\ cssls
+    # $EDITOR --headless -c LspInstall\ --sync\ dockerls
+    # $EDITOR --headless -c LspInstall\ --sync\ gopls
+    # $EDITOR --headless -c LspInstall\ --sync\ html
+    # $EDITOR --headless -c LspInstall\ --sync\ javascript
+    # $EDITOR --headless -c LspInstall\ --sync\ jsonls
+    # $EDITOR --headless -c LspInstall\ --sync\ sqlls
+    # $EDITOR --headless -c LspInstall\ --sync\ sumneko_lua
+    # $EDITOR --headless -c LspInstall\ --sync\ vimls
+    # $EDITOR --headless -c LspInstall\ --sync\ vuels
+    # $EDITOR --headless -c LspInstall\ --sync\ yamlls
     go install github.com/nametake/golangci-lint-langserver@latest
 
     $pip3 install --upgrade --user git+git://github.com/powerline/powerline
