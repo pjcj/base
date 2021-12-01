@@ -209,7 +209,7 @@ require("packer").startup(function(use)
       "hrsh7th/cmp-calc",
       "hrsh7th/cmp-emoji",
       "quangnguyen30192/cmp-nvim-tags",
-      { "andersevenrud/compe-tmux", branch = "cmp" },
+      "andersevenrud/cmp-tmux",
       "onsails/lspkind-nvim",
       "rafamadriz/friendly-snippets",
     },
