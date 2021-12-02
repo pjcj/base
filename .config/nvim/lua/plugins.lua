@@ -504,6 +504,8 @@ require("packer").startup(function(use)
           "^expression_switch_statement", "^expression_case",
           -- bash
           "^case_statement", "^case_item",
+          -- perl  # the TS implementation here isn't all that good
+          "^block", "^package_statement", "^use_constant_statement",
         },
       }
     end,
