@@ -36,6 +36,15 @@ require("packer").startup(function(use)
         refactor = {
           highlight_definitions = { enable = true },
         },
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection    = "<tab>",
+            scope_incremental = "<cr>",
+            node_incremental  = "<tab>",
+            node_decremental  = "<s-tab>",
+          },
+        },
       }
     end,
   }
