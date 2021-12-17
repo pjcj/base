@@ -100,11 +100,9 @@ local function setup_null_ls ()
     d.yamllint,
   }
 
-  null_ls.config({
+  null_ls.setup({
     sources = sources,
   })
-
-  require "lspconfig"["null-ls"].setup({})
 end
 
 -- configure lua language server for neovim development
