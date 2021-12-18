@@ -17,14 +17,13 @@ local on_attach = function(client, bufnr)
   buf_set_keymap("n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", Defmap)
   buf_set_keymap("n", "<space>D",  "<cmd>lua vim.lsp.buf.type_definition()<CR>",                            Defmap)
   buf_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>",                                     Defmap)
-  buf_set_keymap("n", "<space>e",  "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>",               Defmap)
+  buf_set_keymap("n", "<space>f",  "<cmd>lua vim.diagnostic.open_float()<CR>",                              Defmap)
   buf_set_keymap("n", "<C-up>",    "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>",                           Defmap)
   buf_set_keymap("n", "<C-down>",  "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",                           Defmap)
   buf_set_keymap("n", "<space>q",  "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>",                         Defmap)
   buf_set_keymap("n", "<space>a",  "<cmd>lua vim.lsp.buf.code_action()<CR>",                                Defmap)
   buf_set_keymap("n", "<space>ci", "<cmd>lua vim.lsp.buf.incoming_calls()<CR>",                             Defmap)
   buf_set_keymap("n", "<space>co", "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>",                             Defmap)
-  buf_set_keymap("n", "<space>f",  "<cmd>lua vim.diagnostic.open_float()<CR>",                             Defmap)
 
   -- set some keybindings conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
