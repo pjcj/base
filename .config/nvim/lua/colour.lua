@@ -34,3 +34,4 @@ Col_dgreen   = "#017008"  -- dark green
 Col_ddgreen  = "#003203"  -- dark dark green
 
 Col_none     = "none"
+Col_reverse  = "reverse"
