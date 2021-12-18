@@ -24,6 +24,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap("n", "<space>a",  "<cmd>lua vim.lsp.buf.code_action()<CR>",                                Defmap)
   buf_set_keymap("n", "<space>ci", "<cmd>lua vim.lsp.buf.incoming_calls()<CR>",                             Defmap)
   buf_set_keymap("n", "<space>co", "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>",                             Defmap)
+  buf_set_keymap("n", "<space>f",  "<cmd>lua vim.diagnostic.open_float()<CR>",                             Defmap)
 
   -- set some keybindings conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
