@@ -43,13 +43,17 @@ table.insert(components.active[1], {
 })
 
 local file_info = {
-  provider  = "file_info",
-  type      = "relative",
-  hl        = { bg = Col_base02 },
-  left_sep  = { str = " ", hl = { bg = Col_base02 } },
-  right_sep = {
-    str = "right_filled",
-    hl  = { bg = Col_base05, fg = Col_base02 },
+  provider  = {
+    name  = "file_info",
+    opts = {
+      type      = "relative",
+    },
+    hl        = { bg = Col_base02 },
+    left_sep  = { str = " ", hl = { bg = Col_base02 } },
+    right_sep = {
+      str = "right_filled",
+      hl  = { bg = Col_base05, fg = Col_base02 },
+    },
   },
 }
 
