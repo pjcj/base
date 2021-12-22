@@ -73,14 +73,14 @@ require("packer").startup(function(use)
     "jose-elias-alvarez/null-ls.nvim",
     requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
   }
-  use {
-    -- :lua vim.lsp.buf.incoming_calls()
-    -- :lua vim.lsp.buf.outgoing_calls()
-    "ldelossa/calltree.nvim",
-    config = function()
-      require "calltree".setup({})
-    end,
-  }
+  -- use {
+  --   -- :lua vim.lsp.buf.incoming_calls()
+  --   -- :lua vim.lsp.buf.outgoing_calls()
+  --   "ldelossa/calltree.nvim",
+  --   config = function()
+  --     require "calltree".setup({})
+  --   end,
+  -- }
 
   use {
     "dense-analysis/ale",
