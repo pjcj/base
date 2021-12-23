@@ -95,30 +95,32 @@ table.insert(components.active[1], {
   left_sep = { str = " ", hl = { bg = Col_base02 } },
 })
 
+local severity = vim.diagnostic.severity
+
 table.insert(components.active[1], {
   provider = "diagnostic_errors",
-  enabled  = function() return lsp.diagnostics_exist("Error") end,
+  enabled  = function() return lsp.diagnostics_exist(severity.ERROR) end,
   hl       = { bg = Col_base02, fg = "red" },
   icon     = " E ",
 })
 
 table.insert(components.active[1], {
   provider = "diagnostic_warnings",
-  enabled  = function() return lsp.diagnostics_exist("Warning") end,
+  enabled  = function() return lsp.diagnostics_exist(severity.WARN) end,
   hl       = { bg = Col_base02, fg = "yellow" },
   icon     = " W ",
 })
 
 table.insert(components.active[1], {
   provider = "diagnostic_info",
-  enabled  = function() return lsp.diagnostics_exist("Information") end,
+  enabled  = function() return lsp.diagnostics_exist(severity.INFO) end,
   hl       = { bg = Col_base02, fg = "cyan" },
   icon     = " I ",
 })
 
 table.insert(components.active[1], {
   provider = "diagnostic_hints",
-  enabled  = function() return lsp.diagnostics_exist("Hint") end,
+  enabled  = function() return lsp.diagnostics_exist(severity.HINT) end,
   hl       = { bg = Col_base02, fg = "skyblue" },
   icon     = " H ",
 })
