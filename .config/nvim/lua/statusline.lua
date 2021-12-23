@@ -315,7 +315,7 @@ local vi_mode_colors = {
 }
 
 require "feline".setup{
-  colors         = colours,
+  theme          = colours,
   separators     = separators,
   components     = components,
   vi_mode_colors = vi_mode_colors,
