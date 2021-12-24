@@ -35,7 +35,7 @@ table.insert(components.active[1], {
     function()
       return {
         str = "right_filled",
-        hl  = { bg = Col_base02, fg = vi_mode_utils.get_mode_color() },
+        hl  = { bg = Col_base05, fg = vi_mode_utils.get_mode_color() },
       }
     end,
   },
