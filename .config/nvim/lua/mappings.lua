@@ -91,6 +91,7 @@ Map("n", ";;", "<Plug>Lightspeed_S", {})
 
 Cmd([[
   nnoremap <silent> <leader>l :let @/ = ""<bar> :call UncolorAllWords()<cr>
+  nnoremap <leader>W :%s/\s\+$//<cr>:let @/ = ""<cr>
   cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
   inoremap <expr> <C-e> pumvisible() ? "\<C-y>\<C-e>" : "\<Esc>a\<C-e>"
