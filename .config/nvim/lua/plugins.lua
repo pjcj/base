@@ -159,6 +159,11 @@ require("packer").startup(function(use)
   }
 
   use {
+    "vim-perl/vim-perl",
+    run = "make clean carp dancer heredoc-sql highlight-all-pragmas js-css-in-mason method-signatures moose test-more try-tiny",
+  }
+
+  use {
     "nvim-telescope/telescope.nvim",
     requires = {{ "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" }},
     config = function()
