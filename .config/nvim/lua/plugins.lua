@@ -561,6 +561,7 @@ require("packer").startup(function(use)
   use "tpope/vim-repeat"
   use "AndrewRadev/splitjoin.vim"  -- gS, gJ
   use "Konfekt/vim-unicode-homoglyphs"
+  use "ntpeters/vim-better-whitespace"
 
   use {
     "dstein64/nvim-scrollview",
