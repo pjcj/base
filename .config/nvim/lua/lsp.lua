@@ -76,11 +76,11 @@ end
 local function setup_null_ls ()
   local null_ls = require "null-ls"
 
-  null_ls.register({
-    method    = null_ls.methods.DIAGNOSTICS,
-    filetypes = { "markdown", "text" },
-    generator = { fn = no_really_fn },
-  })
+  -- null_ls.register({
+    -- method    = null_ls.methods.DIAGNOSTICS,
+    -- filetypes = { "markdown", "text" },
+    -- generator = { fn = no_really_fn },
+  -- })
 
   local b = null_ls.builtins
   local f = b.formatting
