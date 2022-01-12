@@ -163,6 +163,24 @@ require("packer").startup(function(use)
     run = "make clean carp dancer heredoc-sql highlight-all-pragmas js-css-in-mason method-signatures moose test-more try-tiny",
   }
 
+  use "mfussenegger/nvim-dap"
+  use {
+    "Pocco81/DAPInstall.nvim",
+    config = function()
+      local dap_install = require("dap-install")
+
+      dap_install.setup({
+        installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+      })
+
+      local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
+
+      for _, debugger in ipairs(dbg_list) do
+        dap_install.config(debugger)
+      end
+    end,
+  }
+
   use {
     "nvim-telescope/telescope.nvim",
     requires = {{ "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" }},
