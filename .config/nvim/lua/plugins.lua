@@ -492,7 +492,7 @@ require("packer").startup(function(use)
     "ggandor/lightspeed.nvim",
     config = function()
       require "lightspeed".setup({
-        jump_on_partial_input_safety_timeout = 2000
+        jump_to_unique_chars = 2000
       })
     end,
   }
