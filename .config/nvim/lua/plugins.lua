@@ -525,11 +525,17 @@ require("packer").startup(function(use)
         show_current_context_start                 = true,
         show_current_context_start_on_current_line = false,
         buftype_exclude  = { "terminal" },
-        filetype_exclude = { "diff", "help", "markdown", "packer", "qf" },
+        filetype_exclude = {
+          "diff", "help", "markdown", "packer", "qf", "lspinfo", "checkhealth",
+          "",
+        },
         context_patterns = {
-          "^class", "^function", "^method",
-          "^if", "^for", "^while",
-          "^object", "^table", "^block", "^arguments",
+          -- defaults
+          "class", "^func", "method", "^if", "while", "for", "with",
+          "try", "except", "arguments", "argument_list", "object",
+          "dictionary", "element", "table", "tuple",
+          -- general
+          "^arguments",
           -- go
           "^func_literal", "^import_declaration", "^const_declaration",
           "^var_declaration", "^short_var_declaration", "^type_declaration",
