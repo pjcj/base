@@ -56,6 +56,8 @@ local alternate_indent = function()
   B.indent_blankline_context_highlight_list              = l
 end
 
+Cmd([[autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | execute 'OSCYankReg +' | endif]])
+
 function _G.set_buffer_settings()
   local ft = vim.bo.filetype
 
