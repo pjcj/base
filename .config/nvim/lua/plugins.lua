@@ -589,7 +589,7 @@ require("packer").startup(function(use)
   use "tpope/vim-surround"
   use "tpope/vim-repeat"
   use "AndrewRadev/splitjoin.vim"  -- gS, gJ
-  use "Konfekt/vim-unicode-homoglyphs"
+  use "Konfekt/vim-unicode-homoglyphs"  -- gy
   use "ntpeters/vim-better-whitespace"
   use "ojroques/vim-oscyank"
 
