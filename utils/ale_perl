@@ -7,7 +7,8 @@ echo "$@" >> $log
 blib=
 [[ -d blib ]] && blib=-Mblib
 
-perl -X -c -Mwarnings -Ilib $blib -Iscripts/lib/perl "$@" 2>&1 |
+perl -X -c -Mwarnings -Ilib $blib -Iscripts/lib/perl -Iperl    \
+        -Ilocal/lib/perl5 -It/lib -I../dummy_modules "$@" 2>&1 |
     grep -v set_first_init_and_end                             |
     grep -v "CHECK() called"                                   |
     grep -v "eval {...} called"                                |
