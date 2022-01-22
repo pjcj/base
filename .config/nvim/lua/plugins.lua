@@ -1,9 +1,9 @@
-local install_path = Fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-if Fn.empty(Fn.glob(install_path)) > 0 then
-  Fn.system({
+local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  vim.fn.system({
     "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path
   })
-  Cmd "packadd packer.nvim"
+  vim.cmd "packadd packer.nvim"
 end
 
 vim.cmd([[
@@ -17,7 +17,10 @@ require("packer").startup(function(use)
   -- Packer can manage itself
   use "wbthomason/packer.nvim"
 
-  use { "famiu/feline.nvim", config = function() require "statusline" end }
+  use {
+    "famiu/feline.nvim",
+    config = function() require "statusline" end
+  }
   use "kyazdani42/nvim-web-devicons"
   use "pjcj/neovim-colors-solarized-truecolor-only"
 
@@ -66,7 +69,7 @@ require("packer").startup(function(use)
   use {
     "kosayoda/nvim-lightbulb",
     config = function()
-      Cmd [[autocmd CursorHold,CursorHoldI * lua require "nvim-lightbulb".update_lightbulb()]]
+      vim.cmd [[autocmd CursorHold,CursorHoldI * lua require "nvim-lightbulb".update_lightbulb()]]
     end,
   }
   use {
@@ -85,32 +88,32 @@ require("packer").startup(function(use)
   use {
     "dense-analysis/ale",
     config = function()
-      G.ale_linters_explicit   = 1
-      G.ale_disable_lsp        = 1
-      G.ale_virtualtext_cursor = 1
-      G.ale_sign_error         = "E"
-      G.ale_sign_warning       = "W"
-      G.ale_sign_info          = "I"
-      G.ale_linters = {
+      vim.g.ale_linters_explicit   = 1
+      vim.g.ale_disable_lsp        = 1
+      vim.g.ale_virtualtext_cursor = 1
+      vim.g.ale_sign_error         = "E"
+      vim.g.ale_sign_warning       = "W"
+      vim.g.ale_sign_info          = "I"
+      vim.g.ale_linters = {
         yaml = { "circleci", "spectral", "swaglint", "yamllint" },
         perl = { "perl" },
       }
-      G.ale_perl_perl_executable = Fn.expand("~/g/base/utils/ale_perl")
-      G.ale_perl_perl_options    = ""
+      vim.g.ale_perl_perl_executable = vim.fn.expand("~/g/base/utils/ale_perl")
+      vim.g.ale_perl_perl_options    = ""
     end,
   }
 
   use {
     "ludovicchabant/vim-gutentags",
     config = function()
-      G.gutentags_ctags_exclude            = {
+      vim.g.gutentags_ctags_exclude            = {
         "tmp", "blib", "node_modules", "dist",
       }
       -- can be extended with '*/sub/path' if required
-      G.gutentags_generate_on_new          = 1
-      G.gutentags_generate_on_missing      = 1
-      G.gutentags_generate_on_write        = 1
-      G.gutentags_generate_on_empty_buffer = 0
+      vim.g.gutentags_generate_on_new          = 1
+      vim.g.gutentags_generate_on_missing      = 1
+      vim.g.gutentags_generate_on_write        = 1
+      vim.g.gutentags_generate_on_empty_buffer = 0
     end,
   }
 
@@ -138,20 +141,20 @@ require("packer").startup(function(use)
     "fatih/vim-go",
     run = ":GoUpdateBinaries",
     config = function()
-      G.go_auto_type_info              = 1
-      G.go_test_show_name              = 1
-      G.go_doc_max_height              = 40
-      G.go_doc_popup_window            = 1
-      G.go_diagnostics_enabled         = 1
-      G.go_diagnostics_level           = 2
-      G.go_template_autocreate         = 0
-      G.go_metalinter_command          = "golangci-lint"
-      G.go_metalinter_autosave         = 0
-      G.go_metalinter_autosave_enabled = { }
-      G.go_metalinter_enabled          = { }
-      G.go_gopls_gofumpt               = 1
-      -- G.go_fmt_command                 = "golines"
-      G.go_fmt_options                 = {
+      vim.g.go_auto_type_info              = 1
+      vim.g.go_test_show_name              = 1
+      vim.g.go_doc_max_height              = 40
+      vim.g.go_doc_popup_window            = 1
+      vim.g.go_diagnostics_enabled         = 1
+      vim.g.go_diagnostics_level           = 2
+      vim.g.go_template_autocreate         = 0
+      vim.g.go_metalinter_command          = "golangci-lint"
+      vim.g.go_metalinter_autosave         = 0
+      vim.g.go_metalinter_autosave_enabled = { }
+      vim.g.go_metalinter_enabled          = { }
+      vim.g.go_gopls_gofumpt               = 1
+      -- vim.g.go_fmt_command                 = "golines"
+      vim.g.go_fmt_options                 = {
         gofmt   = "-s",
         golines = "-m 80 -t 2",
       }
@@ -205,24 +208,25 @@ require("packer").startup(function(use)
           dynamic_preview_title = true,
         },
       }
-      Map("n", "<leader>.",  [[<cmd>lua require "telescope.builtin".find_files({ hidden = true })<cr>]],      Defmap)
-      Map("n", "<leader> ",  [[<cmd>lua require "telescope.builtin".oldfiles()<cr>]],                         Defmap)
-      Map("n", "<leader>m",  [[<cmd>lua require "telescope.builtin".git_status()<cr>]],                       Defmap)
-      Map("n", "<leader>fb", [[<cmd>lua require "telescope.builtin".buffers()<cr>]],                          Defmap)
-      Map("n", "<leader>ff", [[<cmd>lua require "telescope.builtin".builtin()<cr>]],                          Defmap)
-      Map("n", "<leader>fg", [[<cmd>lua require "telescope.builtin".live_grep()<cr>]],                        Defmap)
-      Map("n", "<leader>fh", [[<cmd>lua require "telescope.builtin".help_tags()<cr>]],                        Defmap)
-      Map("n", "<leader>fs", [[<cmd>lua require "telescope.builtin".grep_string()<cr>]],                      Defmap)
-      Map("n", "<leader>fS", [[<cmd>lua require "telescope.builtin".grep_string({ word_match = "-w" })<cr>]], Defmap)
-      Map("n", "<leader>fl", [[<cmd>lua require "telescope.builtin".current_buffer_fuzzy_find()<cr>]],        Defmap)
-      Map("n", "<leader>fa", [[<cmd>lua require "telescope.builtin".lsp_code_actions()<cr>]],                 Defmap)
-      Map("n", "<leader>fd", [[<cmd>lua require "telescope.builtin".lsp_definitions()<cr>]],                  Defmap)
-      Map("n", "<leader>fr", [[<cmd>lua require "telescope.builtin".lsp_references()<cr>]],                   Defmap)
-      Map("n", "<leader>ft", [[<cmd>lua require "telescope.builtin".tags()<cr>]],                             Defmap)
-      Map("n", "<leader>fT", [[<cmd>lua require "telescope.builtin".tags{ only_current_buffer = true }<cr>]], Defmap)
-      Map("n", "<leader>fp", [[<cmd>lua require "telescope".extensions.neoclip.default()<cr>]],               Defmap)
+      local l = require "local_defs"
+      vim.api.nvim_set_keymap("n", "<leader>.",  [[<cmd>lua require "telescope.builtin".find_files({ hidden = true })<cr>]],      l.map.defmap)
+      vim.api.nvim_set_keymap("n", "<leader> ",  [[<cmd>lua require "telescope.builtin".oldfiles()<cr>]],                         l.map.defmap)
+      vim.api.nvim_set_keymap("n", "<leader>m",  [[<cmd>lua require "telescope.builtin".git_status()<cr>]],                       l.map.defmap)
+      vim.api.nvim_set_keymap("n", "<leader>fb", [[<cmd>lua require "telescope.builtin".buffers()<cr>]],                          l.map.defmap)
+      vim.api.nvim_set_keymap("n", "<leader>ff", [[<cmd>lua require "telescope.builtin".builtin()<cr>]],                          l.map.defmap)
+      vim.api.nvim_set_keymap("n", "<leader>fg", [[<cmd>lua require "telescope.builtin".live_grep()<cr>]],                        l.map.defmap)
+      vim.api.nvim_set_keymap("n", "<leader>fh", [[<cmd>lua require "telescope.builtin".help_tags()<cr>]],                        l.map.defmap)
+      vim.api.nvim_set_keymap("n", "<leader>fs", [[<cmd>lua require "telescope.builtin".grep_string()<cr>]],                      l.map.defmap)
+      vim.api.nvim_set_keymap("n", "<leader>fS", [[<cmd>lua require "telescope.builtin".grep_string({ word_match = "-w" })<cr>]], l.map.defmap)
+      vim.api.nvim_set_keymap("n", "<leader>fl", [[<cmd>lua require "telescope.builtin".current_buffer_fuzzy_find()<cr>]],        l.map.defmap)
+      vim.api.nvim_set_keymap("n", "<leader>fa", [[<cmd>lua require "telescope.builtin".lsp_code_actions()<cr>]],                 l.map.defmap)
+      vim.api.nvim_set_keymap("n", "<leader>fd", [[<cmd>lua require "telescope.builtin".lsp_definitions()<cr>]],                  l.map.defmap)
+      vim.api.nvim_set_keymap("n", "<leader>fr", [[<cmd>lua require "telescope.builtin".lsp_references()<cr>]],                   l.map.defmap)
+      vim.api.nvim_set_keymap("n", "<leader>ft", [[<cmd>lua require "telescope.builtin".tags()<cr>]],                             l.map.defmap)
+      vim.api.nvim_set_keymap("n", "<leader>fT", [[<cmd>lua require "telescope.builtin".tags{ only_current_buffer = true }<cr>]], l.map.defmap)
+      vim.api.nvim_set_keymap("n", "<leader>fp", [[<cmd>lua require "telescope".extensions.neoclip.default()<cr>]],               l.map.defmap)
 
-      Cmd [[
+      vim.cmd [[
         autocmd User TelescopePreviewerLoaded setlocal number
         autocmd User TelescopePreviewerLoaded setlocal tabstop=2
       ]]
@@ -452,15 +456,15 @@ require("packer").startup(function(use)
   use {
     "rhysd/git-messenger.vim",
     config = function()
-      G.git_messenger_always_into_popup = 1
-      G.git_messenger_include_diff      = "current"
+      vim.g.git_messenger_always_into_popup = 1
+      vim.g.git_messenger_include_diff      = "current"
     end,
   }
 
   use {
     "ruanyl/vim-gh-line",
     config = function()
-      G.gh_use_canonical = 0
+      vim.g.gh_use_canonical = 0
     end,
   }
 
@@ -469,7 +473,7 @@ require("packer").startup(function(use)
   use {
     "norcalli/nvim-colorizer.lua",
     config = function()
-      Opt.termguicolors = true
+      vim.opt.termguicolors = true
       require "colorizer".setup(
         { "*" },
         { names = true, RGB = true, RRGGBB = true, RRGGBBAA = true, css = true }
@@ -484,7 +488,8 @@ require("packer").startup(function(use)
         line_mapping  = "-",
         comment_empty = false,
       }
-      Map("v", "-", ":<c-u>call CommentOperator(visualmode())<cr>", Defmap)
+      local l = require "local_defs"
+      vim.api.nvim_set_keymap("v", "-", ":<c-u>call CommentOperator(visualmode())<cr>", l.map.defmap)
     end,
   }
 
@@ -557,10 +562,10 @@ require("packer").startup(function(use)
   use {
     "mhinz/vim-startify",
     config = function()
-      G.startify_change_to_vcs_root  = 1
-      G.startify_fortune_use_unicode = 1
-      G.startify_lists = {
-        { type = "dir",       header = {"   MRU " .. Fn.getcwd()} },
+      vim.g.startify_change_to_vcs_root  = 1
+      vim.g.startify_fortune_use_unicode = 1
+      vim.g.startify_lists = {
+        { type = "dir",       header = {"   MRU " .. vim.fn.getcwd()} },
         { type = "sessions",  header = {"   Sessions"           } },
         { type = "files",     header = {"   Files"              } },
         { type = "bookmarks", header = {"   Bookmarks"          } },
@@ -572,7 +577,7 @@ require("packer").startup(function(use)
   use {
     "lfv89/vim-interestingwords",
     config = function()
-      G.interestingWordsGUIColors = {
+      vim.g.interestingWordsGUIColors = {
         '#72b5e4', '#f0c53f', '#ff8784', '#c5c7f1',
         '#c2d735', '#78d3cc', '#ea8336', '#e43542',
         '#ebab35', '#ebe735', '#aadd32', '#dcca6b',
@@ -596,8 +601,39 @@ require("packer").startup(function(use)
   use {
     "dstein64/nvim-scrollview",
     config = function()
-      G.scrollview_winblend = 75
-      G.scrollview_column   = 1
+      vim.g.scrollview_winblend = 75
+      vim.g.scrollview_column   = 1
+    end,
+  }
+
+  use {
+    "sidebar-nvim/sidebar.nvim",
+    -- branch = "dev",
+    config = function()
+      local sidebar = require("sidebar-nvim")
+      local opts = {
+        open = false,
+        sections = { "git", "diagnostics", "todos", "buffers", "symbols" },
+        disable_closing_prompt = true,
+      }
+      sidebar.setup(opts)
+      local l = require "local_defs"
+      vim.api.nvim_set_keymap("n", "<leader>ss", [[<cmd>lua require "sidebar-nvim".toggle()<cr>]], l.map.defmap)
+    end,
+  }
+
+  use "elihunter173/dirbuf.nvim"
+  use {
+    "kyazdani42/nvim-tree.lua",
+    requires = {
+      "kyazdani42/nvim-web-devicons", -- optional, for file icon
+    },
+    config = function()
+      require("nvim-tree").setup {
+        update_to_buf_dir = { enable = false }
+      }
+      local l = require "local_defs"
+      vim.api.nvim_set_keymap("n", "<leader>st", [[<cmd>lua require "nvim-tree".toggle()<cr>]], l.map.defmap)
     end,
   }
 
@@ -620,7 +656,8 @@ require("packer").startup(function(use)
         ignore_filetypes = {},
         ignore_buftypes  = { nofile = true },
       }
-      Map("n", "ä", [[<cmd>lua require "specs".show_specs()<cr>]], Defmap)
+      local l = require "local_defs"
+      vim.api.nvim_set_keymap("n", "ä", [[<cmd>lua require "specs".show_specs()<cr>]], l.map.defmap)
     end,
   }
 
@@ -628,7 +665,8 @@ require("packer").startup(function(use)
     "iamcco/markdown-preview.nvim",
     config = function()
       vim.call("mkdp#util#install")
-      Map("n", "<leader>d", [[<cmd>MarkdownPreviewToggle<cr>]], Defmap)
+      local l = require "local_defs"
+      vim.api.nvim_set_keymap("n", "<leader>d", [[<cmd>MarkdownPreviewToggle<cr>]], l.map.defmap)
     end,
     cmd = "MarkdownPreviewToggle",
     ft = { "markdown" },

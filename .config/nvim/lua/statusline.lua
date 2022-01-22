@@ -1,5 +1,7 @@
 local lsp           = require "feline.providers.lsp"
 local vi_mode_utils = require "feline.providers.vi_mode"
+local l             = require "local_defs"
+local c             = l.colour
 
 local components = {
   active   = {},
@@ -35,7 +37,7 @@ table.insert(components.active[1], {
     function()
       return {
         str = "right_filled",
-        hl  = { bg = Col_base05, fg = vi_mode_utils.get_mode_color() },
+        hl  = { bg = c.base05, fg = vi_mode_utils.get_mode_color() },
       }
     end,
   },
@@ -48,11 +50,11 @@ local file_info = {
     opts = {
       type      = "relative",
     },
-    hl        = { bg = Col_base02 },
-    left_sep  = { str = " ", hl = { bg = Col_base02 } },
+    hl        = { bg = c.base02 },
+    left_sep  = { str = " ", hl = { bg = c.base02 } },
     right_sep = {
       str = "right_filled",
-      hl  = { bg = Col_base05, fg = Col_base02 },
+      hl  = { bg = c.base05, fg = c.base02 },
     },
   },
 }
@@ -61,29 +63,29 @@ table.insert(components.active[1], file_info)
 
 table.insert(components.active[1], {
   provider = "git_branch",
-  left_sep = { str = " ", hl = { bg = Col_base05 } },
+  left_sep = { str = " ", hl = { bg = c.base05 } },
 })
 table.insert(components.active[1], {
   provider = "git_diff_added",
-  hl       = { fg = Col_rgreen },
+  hl       = { fg = c.rgreen },
   icon     = " +",
 })
 
 table.insert(components.active[1], {
   provider = "git_diff_changed",
-  hl       = { fg = Col_yellow },
+  hl       = { fg = c.yellow },
   icon     = " ~",
 })
 
 table.insert(components.active[1], {
   provider  = "git_diff_removed",
-  hl        = { fg = Col_red },
+  hl        = { fg = c.red },
   icon     = " -",
   right_sep = {
     { str = " ", always_visible = true },
     {
       str = "right_filled",
-      hl = { bg = Col_base02, fg = Col_base05 },
+      hl = { bg = c.base02, fg = c.base05 },
       always_visible = true,
     },
   },
@@ -91,8 +93,8 @@ table.insert(components.active[1], {
 
 table.insert(components.active[1], {
   provider = "lsp_client_names",
-  hl       = { bg = Col_base02, fg = Col_base01 },
-  left_sep = { str = " ", hl = { bg = Col_base02 } },
+  hl       = { bg = c.base02, fg = c.base01 },
+  left_sep = { str = " ", hl = { bg = c.base02 } },
 })
 
 local severity = vim.diagnostic.severity
@@ -100,33 +102,33 @@ local severity = vim.diagnostic.severity
 table.insert(components.active[1], {
   provider = "diagnostic_errors",
   enabled  = function() return lsp.diagnostics_exist(severity.ERROR) end,
-  hl       = { bg = Col_base02, fg = "red" },
+  hl       = { bg = c.base02, fg = "red" },
   icon     = " E ",
 })
 
 table.insert(components.active[1], {
   provider = "diagnostic_warnings",
   enabled  = function() return lsp.diagnostics_exist(severity.WARN) end,
-  hl       = { bg = Col_base02, fg = "yellow" },
+  hl       = { bg = c.base02, fg = "yellow" },
   icon     = " W ",
 })
 
 table.insert(components.active[1], {
   provider = "diagnostic_info",
   enabled  = function() return lsp.diagnostics_exist(severity.INFO) end,
-  hl       = { bg = Col_base02, fg = "cyan" },
+  hl       = { bg = c.base02, fg = "cyan" },
   icon     = " I ",
 })
 
 table.insert(components.active[1], {
   provider = "diagnostic_hints",
   enabled  = function() return lsp.diagnostics_exist(severity.HINT) end,
-  hl       = { bg = Col_base02, fg = "skyblue" },
+  hl       = { bg = c.base02, fg = "skyblue" },
   icon     = " H ",
 })
 
 local function ale_diagnostics()
-  local ok, d = pcall(Fn["ale#statusline#Count"], Fn.bufnr())
+  local ok, d = pcall(vim.fn["ale#statusline#Count"], vim.fn.bufnr())
   if ok then
     return d.error + d.style_error, d.warning + d.style_warning, d.info, d.total
   else
@@ -134,41 +136,52 @@ local function ale_diagnostics()
   end
 end
 
-local function ale_errors()   local e, _, _, _ = ale_diagnostics() return e end
-local function ale_warnings() local _, w, _, _ = ale_diagnostics() return w end
-local function ale_infos()    local _, _, i, _ = ale_diagnostics() return i end
+local function ale_errors()
+  local e, _, _, _ = ale_diagnostics()
+  return e
+end
+
+local function ale_warnings()
+  local _, w, _, _ = ale_diagnostics()
+  return w
+end
+
+local function ale_infos()
+  local _, _, i, _ = ale_diagnostics()
+  return i
+end
 
 table.insert(components.active[1], {
   provider = function() return " E " .. tostring(ale_errors()) end,
   enabled  = function() return ale_errors() > 0 end,
-  hl       = { bg = Col_base02, fg = "red" },
+  hl       = { bg = c.base02, fg = "red" },
 })
 
 table.insert(components.active[1], {
   provider = function() return " W " .. tostring(ale_warnings()) end,
   enabled  = function() return ale_warnings() > 0 end,
-  hl       = { bg = Col_base02, fg = "yellow" },
+  hl       = { bg = c.base02, fg = "yellow" },
 })
 
 table.insert(components.active[1], {
   provider = function() return " I " .. tostring(ale_infos()) end,
   enabled  = function() return ale_infos() > 0 end,
-  hl       = { bg = Col_base02, fg = "cyan" },
+  hl       = { bg = c.base02, fg = "cyan" },
 })
 
 table.insert(components.active[1], {
   provider = function() return require("nvim-gps").get_location() end,
   enabled  = function() return require("nvim-gps").is_available() end,
-  hl       = { bg = Col_base02 },
-  left_sep = { str = " ", hl = { bg = Col_base02 } },
+  hl       = { bg = c.base02 },
+  left_sep = { str = " ", hl = { bg = c.base02 } },
 })
 
 table.insert(components.active[1], {
   provider  = " ",
-  hl        = { bg = Col_base02 },
+  hl        = { bg = c.base02 },
   right_sep = {
     str = "right_filled",
-    hl = { bg = Col_base05, fg = Col_base02 },
+    hl = { bg = c.base05, fg = c.base02 },
   },
 })
 
@@ -187,31 +200,31 @@ end
 
 table.insert(components.active[2], {
   provider = file_osinfo,
-  hl       = { bg = Col_base02, fg = Col_base01 },
+  hl       = { bg = c.base02, fg = c.base01 },
   left_sep = {
-    { str = "left_filled", hl = { bg = Col_base05, fg = Col_base02 } },
-    { str = " ",           hl = { bg = Col_base02                  } },
+    { str = "left_filled", hl = { bg = c.base05, fg = c.base02 } },
+    { str = " ",           hl = { bg = c.base02                  } },
   },
 })
 
 table.insert(components.active[2], {
   provider = "file_type",
-  hl       = { bg = Col_base02, fg = Col_base01 },
-  left_sep = { str = " ", hl = { bg = Col_base02 } },
+  hl       = { bg = c.base02, fg = c.base01 },
+  left_sep = { str = " ", hl = { bg = c.base02 } },
 })
 
 table.insert(components.active[2], {
   provider  = "file_encoding",
-  hl        = { bg = Col_base02, fg = Col_base01 },
-  left_sep  = { str = " ", hl = { bg = Col_base02, fg = Col_base05 } },
-  right_sep = { str = " ", hl = { bg = Col_base02                  } },
+  hl        = { bg = c.base02, fg = c.base01 },
+  left_sep  = { str = " ", hl = { bg = c.base02, fg = c.base05 } },
+  right_sep = { str = " ", hl = { bg = c.base02                  } },
 })
 
 table.insert(components.active[2], {
   provider = "file_size",
   enabled  = function() return vim.fn.getfsize(vim.fn.expand("%:p")) > 0 end,
   left_sep = {
-    { str = "left_filled", hl = { bg = Col_base02, fg = Col_base05 } },
+    { str = "left_filled", hl = { bg = c.base02, fg = c.base05 } },
     " ",
   },
   right_sep = " ",
@@ -229,7 +242,7 @@ table.insert(components.active[2], {
     function()
       return {
         str = "left_filled",
-        hl  = { bg = Col_base05, fg = vi_mode_utils.get_mode_color() },
+        hl  = { bg = c.base05, fg = vi_mode_utils.get_mode_color() },
       }
     end,
     function()
@@ -255,23 +268,23 @@ table.insert(components.inactive[1], file_info)
 
 table.insert(components.inactive[1], {
   provider = "git_branch",
-  left_sep = { str = " ", hl = { bg = Col_base05 } },
+  left_sep = { str = " ", hl = { bg = c.base05 } },
 })
 
 local colours = {
-  bg        = Col_base05,
-  black     = Col_base05,
-  yellow    = Col_yellow,
-  cyan      = Col_cyan,
-  oceanblue = Col_dblue,
-  green     = Col_green,
-  orange    = Col_orange,
-  violet    = Col_violet,
-  magenta   = Col_magenta,
-  white     = Col_base2,
-  fg        = Col_base2,
-  skyblue   = Col_blue,
-  red       = Col_red,
+  bg        = c.base05,
+  black     = c.base05,
+  yellow    = c.yellow,
+  cyan      = c.cyan,
+  oceanblue = c.dblue,
+  green     = c.green,
+  orange    = c.orange,
+  violet    = c.violet,
+  magenta   = c.magenta,
+  white     = c.base2,
+  fg        = c.base2,
+  skyblue   = c.blue,
+  red       = c.red,
 }
 
 local separators = {

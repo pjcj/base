@@ -1,40 +1,46 @@
+local l = require "local_defs"
+
 -- keymaps
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) Api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) Api.nvim_buf_set_option(bufnr, ...) end
+  local function buf_set_keymap(...)
+      vim.api.nvim_buf_set_keymap(bufnr, ...)
+    end
+  local function buf_set_option(...)
+    vim.api.nvim_buf_set_option(bufnr, ...)
+  end
 
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
   -- mappings
-  buf_set_keymap("n", "gD",        "<Cmd>lua vim.lsp.buf.declaration()<CR>",                                Defmap)
-  buf_set_keymap("n", "gd",        "<Cmd>lua vim.lsp.buf.definition()<CR>",                                 Defmap)
-  buf_set_keymap("n", "gi",        "<cmd>lua vim.lsp.buf.implementation()<CR>",                             Defmap)
-  buf_set_keymap("n", "gr",        "<cmd>lua vim.lsp.buf.references()<CR>",                                 Defmap)
-  buf_set_keymap("n", "K",         "<Cmd>lua vim.lsp.buf.hover()<CR>",                                      Defmap)
-  buf_set_keymap("n", "<C-k>",     "<cmd>lua vim.lsp.buf.signature_help()<CR>",                             Defmap)
-  buf_set_keymap("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",                       Defmap)
-  buf_set_keymap("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",                    Defmap)
-  buf_set_keymap("n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", Defmap)
-  buf_set_keymap("n", "<space>D",  "<cmd>lua vim.lsp.buf.type_definition()<CR>",                            Defmap)
-  buf_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>",                                     Defmap)
-  buf_set_keymap("n", "<space>f",  "<cmd>lua vim.diagnostic.open_float()<CR>",                              Defmap)
-  buf_set_keymap("n", "<S-F2>",    "<cmd>lua vim.diagnostic.goto_prev()<CR>",                               Defmap)
-  buf_set_keymap("n", "<S-F3>",    "<cmd>lua vim.diagnostic.goto_next()<CR>",                               Defmap)
-  buf_set_keymap("n", "<space>q",  "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>",                         Defmap)
-  buf_set_keymap("n", "<space>a",  "<cmd>lua vim.lsp.buf.code_action()<CR>",                                Defmap)
-  buf_set_keymap("n", "<space>ci", "<cmd>lua vim.lsp.buf.incoming_calls()<CR>",                             Defmap)
-  buf_set_keymap("n", "<space>co", "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>",                             Defmap)
+  buf_set_keymap("n", "gD",        "<cmd>lua vim.lsp.buf.declaration()<CR>",                                l.map.defmap)
+  buf_set_keymap("n", "gd",        "<cmd>lua vim.lsp.buf.definition()<CR>",                                 l.map.defmap)
+  buf_set_keymap("n", "gi",        "<cmd>lua vim.lsp.buf.implementation()<CR>",                             l.map.defmap)
+  buf_set_keymap("n", "gr",        "<cmd>lua vim.lsp.buf.references()<CR>",                                 l.map.defmap)
+  buf_set_keymap("n", "K",         "<cmd>lua vim.lsp.buf.hover()<CR>",                                      l.map.defmap)
+  buf_set_keymap("n", "<C-k>",     "<cmd>lua vim.lsp.buf.signature_help()<CR>",                             l.map.defmap)
+  buf_set_keymap("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",                       l.map.defmap)
+  buf_set_keymap("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",                    l.map.defmap)
+  buf_set_keymap("n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", l.map.defmap)
+  buf_set_keymap("n", "<space>D",  "<cmd>lua vim.lsp.buf.type_definition()<CR>",                            l.map.defmap)
+  buf_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>",                                     l.map.defmap)
+  buf_set_keymap("n", "<space>f",  "<cmd>lua vim.diagnostic.open_float()<CR>",                              l.map.defmap)
+  buf_set_keymap("n", "<S-F2>",    "<cmd>lua vim.diagnostic.goto_prev()<CR>",                               l.map.defmap)
+  buf_set_keymap("n", "<S-F3>",    "<cmd>lua vim.diagnostic.goto_next()<CR>",                               l.map.defmap)
+  buf_set_keymap("n", "<space>q",  "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>",                         l.map.defmap)
+  buf_set_keymap("n", "<space>a",  "<cmd>lua vim.lsp.buf.code_action()<CR>",                                l.map.defmap)
+  buf_set_keymap("n", "<space>ci", "<cmd>lua vim.lsp.buf.incoming_calls()<CR>",                             l.map.defmap)
+  buf_set_keymap("n", "<space>co", "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>",                             l.map.defmap)
 
   -- set some keybindings conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
-    buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", Defmap)
+    buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", l.map.defmap)
   elseif client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap("v", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", Defmap)
+    buf_set_keymap("v", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", l.map.defmap)
   end
 
   -- set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
-    Exec([[
+    vim.api.nvim_exec([[
       augroup lsp_document_highlight
         autocmd! * <buffer>
         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
@@ -43,37 +49,37 @@ local on_attach = function(client, bufnr)
     ]], false)
   end
 
-  Fn.sign_define("LspDiagnosticsSignError",       { text = "E" })
-  Fn.sign_define("LspDiagnosticsSignWarning",     { text = "W" })
-  Fn.sign_define("LspDiagnosticsSignInformation", { text = "I" })
-  Fn.sign_define("LspDiagnosticsSignHint",        { text = "H" })
+  vim.fn.sign_define("LspDiagnosticsSignError",       { text = "E" })
+  vim.fn.sign_define("LspDiagnosticsSignWarning",     { text = "W" })
+  vim.fn.sign_define("LspDiagnosticsSignInformation", { text = "I" })
+  vim.fn.sign_define("LspDiagnosticsSignHint",        { text = "H" })
 
   require "lsp_signature".on_attach()
 end
 
-local function no_really_fn (params)
-  local diagnostics = {}
-  -- sources have access to a params object
-  -- containing info about the current file and editor state
-  for i, line in ipairs(params.content) do
-    local col, end_col = line:find("really")
-    if col and end_col then
-      -- null-ls fills in undefined positions
-      -- and converts source diagnostics into the required format
-      table.insert(diagnostics, {
-        row      = i,
-        col      = col,
-        end_col  = end_col,
-        source   = "no-really",
-        message  = "Don't use 'really!'",
-        severity = 4,
-      })
-    end
-  end
-  return diagnostics
-end
+-- local function no_really_fn (params)
+--   local diagnostics = {}
+--   -- sources have access to a params object
+--   -- containing info about the current file and editor state
+--   for i, line in ipairs(params.content) do
+--     local col, end_col = line:find("really")
+--     if col and end_col then
+--       -- null-ls fills in undefined positions
+--       -- and converts source diagnostics into the required format
+--       table.insert(diagnostics, {
+--         row      = i,
+--         col      = col,
+--         end_col  = end_col,
+--         source   = "no-really",
+--         message  = "Don't use 'really!'",
+--         severity = 4,
+--       })
+--     end
+--   end
+--   return diagnostics
+-- end
 
-local function setup_null_ls ()
+local function setup_null_ls()
   local null_ls = require "null-ls"
 
   -- null_ls.register({
@@ -95,7 +101,7 @@ local function setup_null_ls ()
     f.stylua,
     d.markdownlint,
     d.proselint,
-    -- d.selene,
+    d.selene,
     d.shellcheck,
     d.yamllint,
   }
