@@ -257,33 +257,33 @@ require("packer").startup(function(use)
       local lspkind = require "lspkind"
 
       lspkind.init({
-        -- symbol_map = {
-        --     Text = "",
-        --     Method = "",
-        --     Function = "",
-        --     Constructor = "",
-        --     Field = "ﰠ",
-        --     Variable = "",
-        --     Class = "ﴯ",
-        --     Interface = "",
-        --     Module = "",
-        --     Property = "ﰠ",
-        --     Unit = "塞",
-        --     Value = "",
-        --     Enum = "",
-        --     Keyword = "",
-        --     Snippet = "",
-        --     Color = "",
-        --     File = "",
-        --     Reference = "",
-        --     Folder = "",
-        --     EnumMember = "",
-        --     Constant = "",
-        --     Struct = "פּ",
-        --     Event = "",
-        --     Operator = "",
-        --     TypeParameter = ""
-        -- }
+        symbol_map = {
+          Text          = "",
+          Method        = "",
+          Function      = "",
+          Constructor   = "",
+          Field         = "",
+          Variable      = "",
+          Class         = "ﴯ",
+          Interface     = "",
+          Module        = "",
+          Property      = "ﰠ",
+          Unit          = "",
+          Value         = "",
+          Enum          = "",
+          Keyword       = "",
+          Snippet       = "",
+          Color         = "",
+          File          = "",
+          Reference     = "",
+          Folder        = "",
+          EnumMember    = "",
+          Constant      = "",
+          Struct        = "פּ",
+          Event         = "",
+          Operator      = "",
+          TypeParameter = ""
+        }
       })
 
       local has_words_before = function()
@@ -301,7 +301,7 @@ require("packer").startup(function(use)
       cmp.setup {
         formatting = {
           format = lspkind.cmp_format {
-            -- with_text = false,
+            with_text = true,
             -- maxwidth = 50,
             menu = {
               buffer   = "buf",
