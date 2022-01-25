@@ -360,7 +360,7 @@ require("packer").startup(function(use)
           },
           {
             name = "tmux",
-            options = { all_panes = true, label = "[tmux]" }
+            option = { all_panes = true, label = "[tmux]" }
           },
           { name = "tags"  },
           { name = "path"  },
