@@ -184,12 +184,21 @@ require("packer").startup(function(use)
     end,
   }
 
+  use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
   use {
     "nvim-telescope/telescope.nvim",
     requires = {{ "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" }},
     config = function()
-      require "telescope".setup {
+      local telescope = require "telescope"
+      telescope.setup {
         defaults = {
+          extensions = {
+            fzf = {
+              -- default options
+              fuzzy = true,
+              case_mode = "smart_case",  -- or "ignore_case" or "respect_case"
+            },
+          },
           vimgrep_arguments = {
             "rg",
             "--color=never",
@@ -208,6 +217,9 @@ require("packer").startup(function(use)
           dynamic_preview_title = true,
         },
       }
+
+      telescope.load_extension "fzf"
+
       local l = require "local_defs"
       vim.api.nvim_set_keymap("n", "<leader>.",  [[<cmd>lua require "telescope.builtin".find_files({ hidden = true })<cr>]],      l.map.defmap)
       vim.api.nvim_set_keymap("n", "<leader> ",  [[<cmd>lua require "telescope.builtin".oldfiles()<cr>]],                         l.map.defmap)
