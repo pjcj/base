@@ -69,8 +69,6 @@ vmap("n", "<F46>", "<M-F10>", {})
 vmap("n", "<F47>", "<M-F11>", {})
 vmap("n", "<F48>", "<M-F12>", {})
 
--- vmap("n", "<cr>", "compe#confirm('<CR>')", {})
-
 vmap("n", "ö", [[<cmd>:w<cr>]], l.map.defmap)
 
 vmap("n", "<leader>gg", [[<cmd>tab Git commit<cr>]], l.map.defmap)
