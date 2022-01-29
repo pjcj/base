@@ -261,6 +261,7 @@ require("packer").startup(function(use)
       "andersevenrud/cmp-tmux",
       "onsails/lspkind-nvim",
       "rafamadriz/friendly-snippets",
+      "uga-rosa/cmp-dictionary",
     },
     config = function()
       require "cmp_nvim_lsp".setup()
@@ -379,6 +380,10 @@ require("packer").startup(function(use)
           { name = "path"  },
           { name = "calc"  },
           { name = "emoji" },
+          {
+            name = "dictionary",
+            keyword_length = 2,
+          },
         },
         snippet = {
           expand = function(args)
@@ -386,6 +391,27 @@ require("packer").startup(function(use)
           end
         },
       }
+
+      require("cmp_dictionary").setup({
+        dic = {
+            ["*"] = { "/usr/share/dict/words" },
+            -- ["lua"] = "path/to/lua.dic",
+            -- ["javascript,typescript"] = { "path/to/js.dic", "path/to/js2.dic" },
+            -- filename = {
+                -- ["xmake.lua"] = { "path/to/xmake.dic", "path/to/lua.dic" },
+            -- },
+            -- filepath = {
+                -- ["%.tmux.*%.conf"] = "path/to/tmux.dic"
+            -- },
+        },
+        -- The following are default values, so you don't need to write them if
+        -- you don't want to change them
+        -- exact = 2,
+        -- first_case_insensitive = false,
+        -- async = false,
+        -- capacity = 5,
+        -- debug = false,
+      })
 
       -- Use buffer source for `/`.
       cmp.setup.cmdline("/", {sources = {{name = "buffer"}}})
