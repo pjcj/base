@@ -90,21 +90,39 @@ local function setup_null_ls()
   -- })
 
   local b = null_ls.builtins
-  local f = b.formatting
-  local d = b.diagnostics
   local a = b.code_actions
+  local c = b.completion
+  local d = b.diagnostics
+  local f = b.formatting
+  local h = b.hover
+
+  local shellcheck = { "--builtin", "clear,rare,informal,usage,code,names" }
 
   local sources = {
+    -- a.gitsigns,
     a.proselint,
-    f.fixjson,
-    f.shellharden,
-    f.shfmt,
-    f.stylua,
+    -- a.refactoring,
+    a.shellcheck,
+    c.spell,
+    c.vnmip,
+    d.codespell.with({ extra_args = shellcheck }),
+    d.golangci_lint,
+    d.hadolint,
+    d.jsonlint,
     d.markdownlint,
+    d.misspell,
     d.proselint,
     d.selene,
     d.shellcheck,
     d.yamllint,
+    f.codespell.with({ extra_args = shellcheck }),
+    f.fixjson,
+    f.golines,
+    f.prettier,
+    f.shellharden,
+    f.shfmt.with({ extra_args = { "-i", "2", "-s" } }),
+    f.stylua,
+    h.dictionary,
   }
 
   null_ls.setup({
