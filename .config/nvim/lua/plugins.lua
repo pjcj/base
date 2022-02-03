@@ -166,6 +166,21 @@ require("packer").startup(function(use)
     run = "make clean carp dancer heredoc-sql highlight-all-pragmas js-css-in-mason method-signatures moose test-more try-tiny",
   }
 
+  use {
+    "ThePrimeagen/refactoring.nvim",
+    requires = {
+      {"nvim-lua/plenary.nvim"},
+      {"nvim-treesitter/nvim-treesitter"}
+    },
+    config = function()
+      local refactoring = require("refactoring")
+
+      refactoring.setup({
+        installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+      })
+    end,
+  }
+
   use "mfussenegger/nvim-dap"
   use {
     "Pocco81/DAPInstall.nvim",
