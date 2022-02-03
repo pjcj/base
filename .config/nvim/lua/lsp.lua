@@ -3,8 +3,8 @@ local l = require "local_defs"
 -- keymaps
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...)
-      vim.api.nvim_buf_set_keymap(bufnr, ...)
-    end
+    vim.api.nvim_buf_set_keymap(bufnr, ...)
+  end
   local function buf_set_option(...)
     vim.api.nvim_buf_set_option(bufnr, ...)
   end
@@ -12,6 +12,7 @@ local on_attach = function(client, bufnr)
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
   -- mappings
+  -- stylua: ignore start
   buf_set_keymap("n", "gD",        "<cmd>lua vim.lsp.buf.declaration()<CR>",                                l.map.defmap)
   buf_set_keymap("n", "gd",        "<cmd>lua vim.lsp.buf.definition()<CR>",                                 l.map.defmap)
   buf_set_keymap("n", "gi",        "<cmd>lua vim.lsp.buf.implementation()<CR>",                             l.map.defmap)
@@ -34,28 +35,34 @@ local on_attach = function(client, bufnr)
 
   -- set some keybindings conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
-    buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", l.map.defmap)
+    buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>",       l.map.defmap)
   elseif client.resolved_capabilities.document_range_formatting then
     buf_set_keymap("v", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", l.map.defmap)
   end
+  -- stylua: ignore end
 
   -- set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
-    vim.api.nvim_exec([[
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup end
-    ]], false)
+    vim.api.nvim_exec(
+      [[
+        augroup lsp_document_highlight
+          autocmd! * <buffer>
+          autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+          autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+        augroup end
+      ]],
+      false
+    )
   end
 
+  -- stylua: ignore start
   vim.fn.sign_define("LspDiagnosticsSignError",       { text = "E" })
   vim.fn.sign_define("LspDiagnosticsSignWarning",     { text = "W" })
   vim.fn.sign_define("LspDiagnosticsSignInformation", { text = "I" })
   vim.fn.sign_define("LspDiagnosticsSignHint",        { text = "H" })
+  -- stylua: ignore end
 
-  require "lsp_signature".on_attach()
+  require("lsp_signature").on_attach()
 end
 
 -- local function no_really_fn (params)
@@ -84,9 +91,9 @@ local function setup_null_ls()
   local null_ls = require "null-ls"
 
   -- null_ls.register({
-    -- method    = null_ls.methods.DIAGNOSTICS,
-    -- filetypes = { "markdown", "text" },
-    -- generator = { fn = no_really_fn },
+  --   method    = null_ls.methods.DIAGNOSTICS,
+  --   filetypes = { "markdown", "text" },
+  --   generator = { fn = no_really_fn },
   -- })
 
   local b = null_ls.builtins
@@ -105,7 +112,7 @@ local function setup_null_ls()
     a.shellcheck,
     c.spell,
     c.vsnip,
-    d.codespell.with({ extra_args = shellcheck }),
+    d.codespell.with { extra_args = shellcheck },
     d.golangci_lint,
     d.hadolint,
     d.jsonlint,
@@ -115,19 +122,19 @@ local function setup_null_ls()
     d.selene,
     d.shellcheck,
     d.yamllint,
-    f.codespell.with({ extra_args = shellcheck }),
+    f.codespell.with { extra_args = shellcheck },
     f.fixjson,
     f.golines,
     f.prettier,
     f.shellharden,
-    f.shfmt.with({ extra_args = { "-i", "2", "-s" } }),
+    f.shfmt.with { extra_args = { "-i", "2", "-s" } },
     f.stylua,
     h.dictionary,
   }
 
-  null_ls.setup({
+  null_ls.setup {
     sources = sources,
-  })
+  }
 end
 
 -- configure lua language server for neovim development
@@ -145,11 +152,11 @@ local lua_settings = {
     workspace = {
       -- Make the server aware of Neovim runtime files
       library = {
-        [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-        [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+        [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+        [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
       },
     },
-  }
+  },
 }
 
 -- config that activates keymaps and enables snippet support
@@ -163,11 +170,12 @@ local function make_config()
     on_attach = on_attach,
     handlers = {
       ["textDocument/publishDiagnostics"] = vim.lsp.with(
-        vim.lsp.diagnostic.on_publish_diagnostics, {
-          virtual_text = true -- enable virtual_text
+        vim.lsp.diagnostic.on_publish_diagnostics,
+        {
+          virtual_text = true, -- enable virtual_text
         }
       ),
-    }
+    },
   }
 end
 
@@ -187,7 +195,11 @@ local function setup_servers()
       config.init_options = {
         command = {
           -- "golangci-lint", "run", "--out-format", "json",
-          "make", "--quiet", "-C", "api", "lint_api_json",
+          "make",
+          "--quiet",
+          "-C",
+          "api",
+          "lint_api_json",
         },
       }
     end
