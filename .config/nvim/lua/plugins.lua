@@ -244,6 +244,15 @@ require("packer").startup(function(use)
       }
 
       telescope.load_extension "fzf"
+      telescope.load_extension("refactoring")
+
+-- remap to open the Telescope refactoring menu in visual mode
+vim.api.nvim_set_keymap(
+	"v",
+	"<leader>rr",
+	"<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
+	{ noremap = true }
+)
 
       local l = require "local_defs"
       -- stylua: ignore start
@@ -264,6 +273,7 @@ require("packer").startup(function(use)
       vim.api.nvim_set_keymap("n", "<leader>ft", [[<cmd>lua require "telescope.builtin".tags()<cr>]],                             l.map.defmap)
       vim.api.nvim_set_keymap("n", "<leader>fT", [[<cmd>lua require "telescope.builtin".tags{ only_current_buffer = true }<cr>]], l.map.defmap)
       vim.api.nvim_set_keymap("n", "<leader>fp", [[<cmd>lua require "telescope".extensions.neoclip.default()<cr>]],               l.map.defmap)
+      vim.api.nvim_set_keymap("v", "<leader>fR", [[<esc><cmd>lua require('telescope').extensions.refactoring.refactors()<cr>]],   l.map.defmap)
       -- stylua: ignore end
 
       vim.cmd [[
