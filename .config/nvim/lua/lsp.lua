@@ -104,7 +104,7 @@ local function setup_null_ls()
     -- a.refactoring,
     a.shellcheck,
     c.spell,
-    c.vnmip,
+    c.vsnip,
     d.codespell.with({ extra_args = shellcheck }),
     d.golangci_lint,
     d.hadolint,
