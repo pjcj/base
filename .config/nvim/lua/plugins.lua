@@ -346,7 +346,11 @@ require("packer").startup(function(use)
             }
           },
         },
-        experimental = {native_menu = false, ghost_text = true},
+        experimental = {
+          native_menu       = false,
+          ghost_text        = true,
+          horizontal_search = true,
+        },
         min_length = 1,
         mapping = {
           ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
