@@ -5,11 +5,12 @@ local vmap = vim.api.nvim_set_keymap               -- global mappings
 vim.g.mapleader = ","
 
 local m = l.map.defmap
+local f4 = [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]]
 
 vmap("n", "<S-F1>",     ":q<cr>",                              m)
 vmap("n", "<S-F2>",     ":ALEPreviousWrap<cr>",                m)
 vmap("n", "<S-F3>",     ":ALENextWrap<cr>",                    m)
-vmap("n", "<F4>",       [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]], m)
+vmap("n", "<F4>",       f4,                                    m)
 vmap("i", "<F5>",       "[",                                   m)
 vmap("n", "r<F5>",      "r[",                                  m)
 vmap("n", "<F6>",       ":cprevious<cr>",                      m)
