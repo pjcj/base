@@ -4,30 +4,32 @@ local vmap = vim.api.nvim_set_keymap               -- global mappings
 
 vim.g.mapleader = ","
 
-vmap("n", "<S-F1>",     ":q<cr>",                              l.map.defmap)
-vmap("n", "<S-F2>",     ":ALEPreviousWrap<cr>",                l.map.defmap)
-vmap("n", "<S-F3>",     ":ALENextWrap<cr>",                    l.map.defmap)
-vmap("n", "<F4>",       [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]], l.map.defmap)
-vmap("i", "<F5>",       "[",                                   l.map.defmap)
-vmap("n", "r<F5>",      "r[",                                  l.map.defmap)
-vmap("n", "<F6>",       ":cprevious<cr>",                      l.map.defmap)
-vmap("n", "<S-F6>",     ":lprevious<cr>",                      l.map.defmap)
-vmap("i", "<F6>",       "]",                                   l.map.defmap)
-vmap("n", "r<F6>",      "r]",                                  l.map.defmap)
-vmap("n", "<F7>",       ":cnext<cr>",                          l.map.defmap)
-vmap("n", "<S-F7>",     ":lnext<cr>",                          l.map.defmap)
-vmap("i", "<F7>",       "{",                                   l.map.defmap)
-vmap("n", "r<F7>",      "r{",                                  l.map.defmap)
-vmap("i", "<F8>",       "}",                                   l.map.defmap)
-vmap("n", "r<F8>",      "r}",                                  l.map.defmap)
-vmap("n", "<F9>",       "<cmd>cclose<bar>lclose<bar>only<cr>", l.map.defmap)
-vmap("i", "<F9>",       "|",                                   l.map.defmap)
-vmap("n", "r<F9>",      "r|",                                  l.map.defmap)
-vmap("i", "<F10>",      "~",                                   l.map.defmap)
-vmap("n", "r<F10>",     "r~",                                  l.map.defmap)
-vmap("n", "<F12>",      "",                                  l.map.defmap)
-vmap("n", "<PageUp>",   "0",                                 l.map.defmap)
-vmap("n", "<PageDown>", "0",                                 l.map.defmap)
+local m = l.map.defmap
+
+vmap("n", "<S-F1>",     ":q<cr>",                              m)
+vmap("n", "<S-F2>",     ":ALEPreviousWrap<cr>",                m)
+vmap("n", "<S-F3>",     ":ALENextWrap<cr>",                    m)
+vmap("n", "<F4>",       [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]], m)
+vmap("i", "<F5>",       "[",                                   m)
+vmap("n", "r<F5>",      "r[",                                  m)
+vmap("n", "<F6>",       ":cprevious<cr>",                      m)
+vmap("n", "<S-F6>",     ":lprevious<cr>",                      m)
+vmap("i", "<F6>",       "]",                                   m)
+vmap("n", "r<F6>",      "r]",                                  m)
+vmap("n", "<F7>",       ":cnext<cr>",                          m)
+vmap("n", "<S-F7>",     ":lnext<cr>",                          m)
+vmap("i", "<F7>",       "{",                                   m)
+vmap("n", "r<F7>",      "r{",                                  m)
+vmap("i", "<F8>",       "}",                                   m)
+vmap("n", "r<F8>",      "r}",                                  m)
+vmap("n", "<F9>",       "<cmd>cclose<bar>lclose<bar>only<cr>", m)
+vmap("i", "<F9>",       "|",                                   m)
+vmap("n", "r<F9>",      "r|",                                  m)
+vmap("i", "<F10>",      "~",                                   m)
+vmap("n", "r<F10>",     "r~",                                  m)
+vmap("n", "<F12>",      "",                                  m)
+vmap("n", "<PageUp>",   "0",                                 m)
+vmap("n", "<PageDown>", "0",                                 m)
 
 vmap("n", "<F13>", "<S-F1>",  {})
 vmap("n", "<F14>", "<S-F2>",  {})
@@ -69,9 +71,9 @@ vmap("n", "<F46>", "<M-F10>", {})
 vmap("n", "<F47>", "<M-F11>", {})
 vmap("n", "<F48>", "<M-F12>", {})
 
-vmap("n", "ö", [[<cmd>:w<cr>]], l.map.defmap)
+vmap("n", "ö", [[<cmd>:w<cr>]], m)
 
-vmap("n", "<leader>gg", [[<cmd>tab Git commit<cr>]], l.map.defmap)
+vmap("n", "<leader>gg", [[<cmd>tab Git commit<cr>]], m)
 
 vmap("n", "ga",      "<Plug>(EasyAlign)", {})
 vmap("x", "ga",      "<Plug>(EasyAlign)", {})
@@ -80,16 +82,16 @@ vmap("v", "<Enter>", "<Plug>(EasyAlign)", {})
 vmap("n", "<leader>qq", [[cs'"]], {})
 vmap("n", "<leader>qQ", [[cs"']], {})
 
-vmap("n", "<leader>se", [[<cmd>setlocal spell spelllang=en_gb<cr>]], l.map.defmap)
-vmap("n", "<leader>sd", [[<cmd>setlocal spell spelllang=de_ch<cr>]], l.map.defmap)
-vmap("n", "<leader>so", [[<cmd>set nospell<cr>]],                    l.map.defmap)
+vmap("n", "<leader>se", [[<cmd>setlocal spell spelllang=en_gb<cr>]], m)
+vmap("n", "<leader>sd", [[<cmd>setlocal spell spelllang=de_ch<cr>]], m)
+vmap("n", "<leader>so", [[<cmd>set nospell<cr>]],                    m)
 
-vmap("n", "s", "s", l.map.defmap)
-vmap("n", "S", "S", l.map.defmap)
+vmap("n", "s", "s", m)
+vmap("n", "S", "S", m)
 vmap("n", ",,", "<Plug>Lightspeed_s", {})
 vmap("n", ";;", "<Plug>Lightspeed_S", {})
 
--- map("n", "<leader>l" [[<cmd>let @/ = ""<bar> :call UncolorAllWords()<cr>]], l.map.defmap)
+-- map("n", "<leader>l" [[<cmd>let @/ = ""<bar> :call UncolorAllWords()<cr>]], m)
 
 vim.cmd([[
   nnoremap <silent> <leader>l :let @/ = ""<bar> :call UncolorAllWords()<cr>
