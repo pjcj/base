@@ -1,17 +1,21 @@
-local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+local install_path = vim.fn.stdpath "data"
+  .. "/site/pack/packer/start/packer.nvim"
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  vim.fn.system({
-    "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path
-  })
+  vim.fn.system {
+    "git",
+    "clone",
+    "https://github.com/wbthomason/packer.nvim",
+    install_path,
+  }
   vim.cmd "packadd packer.nvim"
 end
 
-vim.cmd([[
+vim.cmd [[
   augroup packer_user_config
     autocmd!
     autocmd BufWritePost plugins.lua source <afile> | PackerCompile
   augroup end
-]])
+]]
 
 require("packer").startup(function(use)
   -- Packer can manage itself
@@ -19,7 +23,9 @@ require("packer").startup(function(use)
 
   use {
     "famiu/feline.nvim",
-    config = function() require "statusline" end
+    config = function()
+      require "statusline"
+    end,
   }
   use "kyazdani42/nvim-web-devicons"
   use "pjcj/neovim-colors-solarized-truecolor-only"
@@ -32,20 +38,20 @@ require("packer").startup(function(use)
     },
     run = ":TSUpdate",
     config = function()
-      require "nvim-treesitter.configs".setup {
+      require("nvim-treesitter.configs").setup {
         ensure_installed = "maintained",
-        highlight        = { enable = true  },
-        indent           = { enable = false },
+        highlight = { enable = true },
+        indent = { enable = false },
         refactor = {
           highlight_definitions = { enable = true },
         },
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection    = "<tab>",
+            init_selection = "<tab>",
             scope_incremental = "<cr>",
-            node_incremental  = "<tab>",
-            node_decremental  = "<s-tab>",
+            node_incremental = "<tab>",
+            node_decremental = "<s-tab>",
           },
         },
       }
@@ -55,11 +61,11 @@ require("packer").startup(function(use)
   use {
     "lewis6991/spellsitter.nvim",
     config = function()
-      require "spellsitter".setup {
+      require("spellsitter").setup {
         hl = "SpellBad",
-        captures = { "comment" },  -- set to {} to spellcheck everything
+        captures = { "comment" }, -- set to {} to spellcheck everything
       }
-    end
+    end,
   }
 
   use "neovim/nvim-lspconfig"
@@ -88,31 +94,34 @@ require("packer").startup(function(use)
   use {
     "dense-analysis/ale",
     config = function()
-      vim.g.ale_linters_explicit   = 1
-      vim.g.ale_disable_lsp        = 1
+      vim.g.ale_linters_explicit = 1
+      vim.g.ale_disable_lsp = 1
       vim.g.ale_virtualtext_cursor = 1
-      vim.g.ale_sign_error         = "E"
-      vim.g.ale_sign_warning       = "W"
-      vim.g.ale_sign_info          = "I"
+      vim.g.ale_sign_error = "E"
+      vim.g.ale_sign_warning = "W"
+      vim.g.ale_sign_info = "I"
       vim.g.ale_linters = {
         yaml = { "circleci", "spectral", "swaglint", "yamllint" },
         perl = { "perl" },
       }
-      vim.g.ale_perl_perl_executable = vim.fn.expand("~/g/base/utils/ale_perl")
-      vim.g.ale_perl_perl_options    = ""
+      vim.g.ale_perl_perl_executable = vim.fn.expand "~/g/base/utils/ale_perl"
+      vim.g.ale_perl_perl_options = ""
     end,
   }
 
   use {
     "ludovicchabant/vim-gutentags",
     config = function()
-      vim.g.gutentags_ctags_exclude            = {
-        "tmp", "blib", "node_modules", "dist",
+      vim.g.gutentags_ctags_exclude = {
+        "tmp",
+        "blib",
+        "node_modules",
+        "dist",
       }
       -- can be extended with '*/sub/path' if required
-      vim.g.gutentags_generate_on_new          = 1
-      vim.g.gutentags_generate_on_missing      = 1
-      vim.g.gutentags_generate_on_write        = 1
+      vim.g.gutentags_generate_on_new = 1
+      vim.g.gutentags_generate_on_missing = 1
+      vim.g.gutentags_generate_on_write = 1
       vim.g.gutentags_generate_on_empty_buffer = 0
     end,
   }
@@ -121,19 +130,19 @@ require("packer").startup(function(use)
     "SmiteshP/nvim-gps",
     requires = "nvim-treesitter/nvim-treesitter",
     config = function()
-      require "nvim-gps".setup({
+      require("nvim-gps").setup {
         icons = {
-          ["class-name"]    = " ",
+          ["class-name"] = " ",
           ["function-name"] = " ",
-          ["method-name"]   = " ",
+          ["method-name"] = " ",
         },
         -- Any language not disabled here is enabled by default
         languages = {
           -- ["bash"] = false,
           -- ["go"]   = false,
         },
-        separator = ' > ',
-      })
+        separator = " > ",
+      }
     end,
   }
 
@@ -141,21 +150,21 @@ require("packer").startup(function(use)
     "fatih/vim-go",
     run = ":GoUpdateBinaries",
     config = function()
-      vim.g.go_auto_type_info              = 1
-      vim.g.go_test_show_name              = 1
-      vim.g.go_doc_max_height              = 40
-      vim.g.go_doc_popup_window            = 1
-      vim.g.go_diagnostics_enabled         = 1
-      vim.g.go_diagnostics_level           = 2
-      vim.g.go_template_autocreate         = 0
-      vim.g.go_metalinter_command          = "golangci-lint"
-      vim.g.go_metalinter_autosave         = 0
-      vim.g.go_metalinter_autosave_enabled = { }
-      vim.g.go_metalinter_enabled          = { }
-      vim.g.go_gopls_gofumpt               = 1
+      vim.g.go_auto_type_info = 1
+      vim.g.go_test_show_name = 1
+      vim.g.go_doc_max_height = 40
+      vim.g.go_doc_popup_window = 1
+      vim.g.go_diagnostics_enabled = 1
+      vim.g.go_diagnostics_level = 2
+      vim.g.go_template_autocreate = 0
+      vim.g.go_metalinter_command = "golangci-lint"
+      vim.g.go_metalinter_autosave = 0
+      vim.g.go_metalinter_autosave_enabled = {}
+      vim.g.go_metalinter_enabled = {}
+      vim.g.go_gopls_gofumpt = 1
       -- vim.g.go_fmt_command                 = "golines"
-      vim.g.go_fmt_options                 = {
-        gofmt   = "-s",
+      vim.g.go_fmt_options = {
+        gofmt = "-s",
         golines = "-m 80 -t 2",
       }
     end,
@@ -169,15 +178,15 @@ require("packer").startup(function(use)
   use {
     "ThePrimeagen/refactoring.nvim",
     requires = {
-      {"nvim-lua/plenary.nvim"},
-      {"nvim-treesitter/nvim-treesitter"}
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-treesitter/nvim-treesitter" },
     },
     config = function()
-      local refactoring = require("refactoring")
+      local refactoring = require "refactoring"
 
-      refactoring.setup({
-        installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-      })
+      refactoring.setup {
+        installation_path = vim.fn.stdpath "data" .. "/dapinstall/",
+      }
     end,
   }
 
@@ -185,13 +194,14 @@ require("packer").startup(function(use)
   use {
     "Pocco81/DAPInstall.nvim",
     config = function()
-      local dap_install = require("dap-install")
+      local dap_install = require "dap-install"
 
-      dap_install.setup({
-        installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-      })
+      dap_install.setup {
+        installation_path = vim.fn.stdpath "data" .. "/dapinstall/",
+      }
 
-      local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
+      local dbg_list =
+        require("dap-install.api.debuggers").get_installed_debuggers()
 
       for _, debugger in ipairs(dbg_list) do
         dap_install.config(debugger)
@@ -202,7 +212,7 @@ require("packer").startup(function(use)
   use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
   use {
     "nvim-telescope/telescope.nvim",
-    requires = {{ "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" }},
+    requires = { { "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" } },
     config = function()
       local telescope = require "telescope"
       telescope.setup {
@@ -211,7 +221,7 @@ require("packer").startup(function(use)
             fzf = {
               -- default options
               fuzzy = true,
-              case_mode = "smart_case",  -- or "ignore_case" or "respect_case"
+              case_mode = "smart_case", -- or "ignore_case" or "respect_case"
             },
           },
           vimgrep_arguments = {
@@ -227,7 +237,7 @@ require("packer").startup(function(use)
             "!.git",
           },
           file_ignore_patterns = {
-            ".git/.*"
+            ".git/.*",
           },
           dynamic_preview_title = true,
         },
@@ -236,6 +246,7 @@ require("packer").startup(function(use)
       telescope.load_extension "fzf"
 
       local l = require "local_defs"
+      -- stylua: ignore start
       vim.api.nvim_set_keymap("n", "<leader>.",  [[<cmd>lua require "telescope.builtin".find_files({ hidden = true })<cr>]],      l.map.defmap)
       vim.api.nvim_set_keymap("n", "<leader> ",  [[<cmd>lua require "telescope.builtin".oldfiles()<cr>]],                         l.map.defmap)
       vim.api.nvim_set_keymap("n", "<leader>m",  [[<cmd>lua require "telescope.builtin".git_status()<cr>]],                       l.map.defmap)
@@ -253,6 +264,7 @@ require("packer").startup(function(use)
       vim.api.nvim_set_keymap("n", "<leader>ft", [[<cmd>lua require "telescope.builtin".tags()<cr>]],                             l.map.defmap)
       vim.api.nvim_set_keymap("n", "<leader>fT", [[<cmd>lua require "telescope.builtin".tags{ only_current_buffer = true }<cr>]], l.map.defmap)
       vim.api.nvim_set_keymap("n", "<leader>fp", [[<cmd>lua require "telescope".extensions.neoclip.default()<cr>]],               l.map.defmap)
+      -- stylua: ignore end
 
       vim.cmd [[
         autocmd User TelescopePreviewerLoaded setlocal number
@@ -279,12 +291,13 @@ require("packer").startup(function(use)
       "uga-rosa/cmp-dictionary",
     },
     config = function()
-      require "cmp_nvim_lsp".setup()
+      require("cmp_nvim_lsp").setup()
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require "cmp_nvim_lsp".update_capabilities(capabilities)
+      capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
       local cmp = require "cmp"
       local lspkind = require "lspkind"
 
+      -- stylua: ignore start
       lspkind.init({
         symbol_map = {
           Text          = "",
@@ -314,16 +327,22 @@ require("packer").startup(function(use)
           TypeParameter = ""
         }
       })
+      -- stylua: ignore end
 
       local has_words_before = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and
-          vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+        return col ~= 0
+          and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
+              :sub(col, col)
+              :match "%s"
+            == nil
       end
 
       local feedkey = function(key, mode)
         vim.api.nvim_feedkeys(
-          vim.api.nvim_replace_termcodes(key, true, true, true), mode, true
+          vim.api.nvim_replace_termcodes(key, true, true, true),
+          mode,
+          true
         )
       end
 
@@ -333,22 +352,22 @@ require("packer").startup(function(use)
             with_text = true,
             -- maxwidth = 50,
             menu = {
-              buffer   = "buf",
+              buffer = "buf",
               nvim_lsp = "lsp",
               nvim_lua = "lua",
-              path     = "path",
-              tmux     = "tmux",
-              tags     = "tags",
-              vsnip    = "snip",
-              calc     = "calc",
-              spell    = "spell",
-              emoji    = "emoji",
-            }
+              path = "path",
+              tmux = "tmux",
+              tags = "tags",
+              vsnip = "snip",
+              calc = "calc",
+              spell = "spell",
+              emoji = "emoji",
+            },
           },
         },
         experimental = {
-          native_menu       = false,
-          ghost_text        = true,
+          native_menu = false,
+          ghost_text = true,
           horizontal_search = true,
         },
         min_length = 1,
@@ -356,11 +375,11 @@ require("packer").startup(function(use)
           ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
           ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
           ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-          ["<C-e>"] = cmp.mapping({
+          ["<C-e>"] = cmp.mapping {
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
-          }),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          },
+          ["<CR>"] = cmp.mapping.confirm { select = true },
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
@@ -386,18 +405,20 @@ require("packer").startup(function(use)
           {
             name = "buffer",
             options = {
-              get_bufnrs = function() return vim.api.nvim_list_bufs() end,
+              get_bufnrs = function()
+                return vim.api.nvim_list_bufs()
+              end,
             },
             -- keywords or just words
             keyword_pattern = "\\%(\\k\\+\\|\\w\\+\\)",
           },
           {
             name = "tmux",
-            option = { all_panes = true, label = "[tmux]" }
+            option = { all_panes = true, label = "[tmux]" },
           },
-          { name = "tags"  },
-          { name = "path"  },
-          { name = "calc"  },
+          { name = "tags" },
+          { name = "path" },
+          { name = "calc" },
           { name = "emoji" },
           {
             name = "dictionary",
@@ -407,21 +428,21 @@ require("packer").startup(function(use)
         snippet = {
           expand = function(args)
             vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-          end
+          end,
         },
       }
 
-      require("cmp_dictionary").setup({
+      require("cmp_dictionary").setup {
         dic = {
-            ["*"] = { "/usr/share/dict/words" },
-            -- ["lua"] = "path/to/lua.dic",
-            -- ["javascript,typescript"] = { "path/to/js.dic", "path/to/js2.dic" },
-            -- filename = {
-                -- ["xmake.lua"] = { "path/to/xmake.dic", "path/to/lua.dic" },
-            -- },
-            -- filepath = {
-                -- ["%.tmux.*%.conf"] = "path/to/tmux.dic"
-            -- },
+          ["*"] = { "/usr/share/dict/words" },
+          -- ["lua"] = "path/to/lua.dic",
+          -- ["javascript,typescript"] = { "path/to/js.dic", "path/to/js2.dic" },
+          -- filename = {
+          --   ["xmake.lua"] = { "path/to/xmake.dic", "path/to/lua.dic" },
+          -- },
+          -- filepath = {
+          --   ["%.tmux.*%.conf"] = "path/to/tmux.dic"
+          -- },
         },
         -- The following are default values, so you don't need to write them if
         -- you don't want to change them
@@ -430,15 +451,15 @@ require("packer").startup(function(use)
         -- async = false,
         -- capacity = 5,
         -- debug = false,
-      })
+      }
 
       -- Use buffer source for `/`.
-      cmp.setup.cmdline("/", {sources = {{name = "buffer"}}})
+      cmp.setup.cmdline("/", { sources = { { name = "buffer" } } })
 
       -- Use cmdline & path source for ':'.
       -- TODO - revisit this, but currently it prevents normal completion
       -- cmp.setup.cmdline(":", {
-        -- sources = cmp.config.sources({{name = "path"}}, {{name = "cmdline"}})
+      --   sources = cmp.config.sources({{name = "path"}}, {{name = "cmdline"}})
       -- })
     end,
   }
@@ -447,70 +468,89 @@ require("packer").startup(function(use)
     "lewis6991/gitsigns.nvim",
     requires = { "nvim-lua/plenary.nvim" },
     config = function()
-      require "gitsigns".setup {
+      require("gitsigns").setup {
         signs = {
-          add          = { show_count = true, text = "+" },
-          change       = { show_count = true, text = "~" },
-          delete       = { show_count = true, text = "_" },
-          topdelete    = { show_count = true, text = "‾" },
+          add = { show_count = true, text = "+" },
+          change = { show_count = true, text = "~" },
+          delete = { show_count = true, text = "_" },
+          topdelete = { show_count = true, text = "‾" },
           changedelete = { show_count = true, text = "~" },
         },
-        numhl                   = false,
-        linehl                  = false,
-        watch_gitdir            = { interval = 1000 },
-        sign_priority           = 6,
-        update_debounce         = 100,
-        status_formatter        = nil, -- Use default
-        diff_opts               = { internal = true },  -- If luajit is present
-        word_diff               = true,
-        current_line_blame      = true,
+        numhl = false,
+        linehl = false,
+        watch_gitdir = { interval = 1000 },
+        sign_priority = 6,
+        update_debounce = 100,
+        status_formatter = nil, -- Use default
+        diff_opts = { internal = true }, -- If luajit is present
+        word_diff = true,
+        current_line_blame = true,
         current_line_blame_opts = {
-          virt_text     = true,
+          virt_text = true,
           virt_text_pos = "eol",
-          delay         = 1000,
+          delay = 1000,
         },
         count_chars = {
-          [1]   = "₁",
-          [2]   = "₂",
-          [3]   = "₃",
-          [4]   = "₄",
-          [5]   = "₅",
-          [6]   = "₆",
-          [7]   = "₇",
-          [8]   = "₈",
-          [9]   = "₉",
+          [1] = "₁",
+          [2] = "₂",
+          [3] = "₃",
+          [4] = "₄",
+          [5] = "₅",
+          [6] = "₆",
+          [7] = "₇",
+          [8] = "₈",
+          [9] = "₉",
           ["+"] = "₊",
         },
         on_attach = function(bufnr)
           local function map(mode, lhs, rhs, opts)
-              opts = vim.tbl_extend('force', {noremap = true, silent = true}, opts or {})
-              vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+            opts = vim.tbl_extend(
+              "force",
+              { noremap = true, silent = true },
+              opts or {}
+            )
+            vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
           end
 
+        -- stylua: ignore start
           -- Navigation
-          map('n', '<F3>', "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", {expr=true})
-          map('n', '<F2>', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", {expr=true})
+          map(
+            "n",
+            "<F3>",
+            "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'",
+            { expr = true }
+          )
+          map(
+            "n",
+            "<F2>",
+            "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'",
+            { expr = true }
+          )
 
           -- Actions
-          map('n', '<F1>', ':Gitsigns stage_hunk<CR>')
-          map('v', '<F1>', ':Gitsigns stage_hunk<CR>')
-          map('n', '<leader>hs', ':Gitsigns stage_hunk<CR>')
-          map('v', '<leader>hs', ':Gitsigns stage_hunk<CR>')
-          map('n', '<leader>hr', ':Gitsigns reset_hunk<CR>')
-          map('v', '<leader>hr', ':Gitsigns reset_hunk<CR>')
-          map('n', '<leader>hS', '<cmd>Gitsigns stage_buffer<CR>')
-          map('n', '<leader>hu', '<cmd>Gitsigns undo_stage_hunk<CR>')
-          map('n', '<leader>hR', '<cmd>Gitsigns reset_buffer<CR>')
-          map('n', '<leader>hp', '<cmd>Gitsigns preview_hunk<CR>')
-          map('n', '<leader>hb', '<cmd>lua require"gitsigns".blame_line{full=true}<CR>')
-          map('n', '<leader>tb', '<cmd>Gitsigns toggle_current_line_blame<CR>')
-          map('n', '<leader>hd', '<cmd>Gitsigns diffthis<CR>')
-          map('n', '<leader>hD', '<cmd>lua require"gitsigns".diffthis("~")<CR>')
-          map('n', '<leader>td', '<cmd>Gitsigns toggle_deleted<CR>')
+          map("n", "<F1>", ":Gitsigns stage_hunk<CR>")
+          map("v", "<F1>", ":Gitsigns stage_hunk<CR>")
+          map("n", "<leader>hs", ":Gitsigns stage_hunk<CR>")
+          map("v", "<leader>hs", ":Gitsigns stage_hunk<CR>")
+          map("n", "<leader>hr", ":Gitsigns reset_hunk<CR>")
+          map("v", "<leader>hr", ":Gitsigns reset_hunk<CR>")
+          map("n", "<leader>hS", "<cmd>Gitsigns stage_buffer<CR>")
+          map("n", "<leader>hu", "<cmd>Gitsigns undo_stage_hunk<CR>")
+          map("n", "<leader>hR", "<cmd>Gitsigns reset_buffer<CR>")
+          map("n", "<leader>hp", "<cmd>Gitsigns preview_hunk<CR>")
+          map(
+            "n",
+            "<leader>hb",
+            '<cmd>lua require"gitsigns".blame_line{full=true}<CR>'
+          )
+          map("n", "<leader>tb", "<cmd>Gitsigns toggle_current_line_blame<CR>")
+          map("n", "<leader>hd", "<cmd>Gitsigns diffthis<CR>")
+          map("n", "<leader>hD", '<cmd>lua require"gitsigns".diffthis("~")<CR>')
+          map("n", "<leader>td", "<cmd>Gitsigns toggle_deleted<CR>")
 
           -- Text object
-          map('o', 'ih', ':<C-U>Gitsigns select_hunk<CR>')
-          map('x', 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+          map("o", "ih", ":<C-U>Gitsigns select_hunk<CR>")
+          map("x", "ih", ":<C-U>Gitsigns select_hunk<CR>")
         end,
       }
     end,
@@ -520,7 +560,7 @@ require("packer").startup(function(use)
     "rhysd/git-messenger.vim",
     config = function()
       vim.g.git_messenger_always_into_popup = 1
-      vim.g.git_messenger_include_diff      = "current"
+      vim.g.git_messenger_include_diff = "current"
     end,
   }
 
@@ -537,7 +577,7 @@ require("packer").startup(function(use)
     "norcalli/nvim-colorizer.lua",
     config = function()
       vim.opt.termguicolors = true
-      require "colorizer".setup(
+      require("colorizer").setup(
         { "*" },
         { names = true, RGB = true, RRGGBB = true, RRGGBBAA = true, css = true }
       )
@@ -547,21 +587,26 @@ require("packer").startup(function(use)
   use {
     "terrortylor/nvim-comment",
     config = function()
-      require "nvim_comment".setup{
-        line_mapping  = "-",
+      require("nvim_comment").setup {
+        line_mapping = "-",
         comment_empty = false,
       }
       local l = require "local_defs"
-      vim.api.nvim_set_keymap("v", "-", ":<c-u>call CommentOperator(visualmode())<cr>", l.map.defmap)
+      vim.api.nvim_set_keymap(
+        "v",
+        "-",
+        ":<c-u>call CommentOperator(visualmode())<cr>",
+        l.map.defmap
+      )
     end,
   }
 
   use {
     "ggandor/lightspeed.nvim",
     config = function()
-      require "lightspeed".setup({
-        jump_to_unique_chars = 2000
-      })
+      require("lightspeed").setup {
+        jump_to_unique_chars = 2000,
+      }
     end,
   }
 
@@ -569,11 +614,11 @@ require("packer").startup(function(use)
     "AckslD/nvim-neoclip.lua",
     requires = { "tami5/sqlite.lua", module = "sqlite" },
     config = function()
-      require "neoclip".setup({
+      require("neoclip").setup {
         enable_persistant_history = true,
-        db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
+        db_path = vim.fn.stdpath "data" .. "/databases/neoclip.sqlite3",
         default_register = '"',
-      })
+      }
     end,
   }
 
@@ -581,6 +626,7 @@ require("packer").startup(function(use)
   use {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
+      -- stylua: ignore
       require "indent_blankline".setup{
         char                                       = " ",
         space_char                                 = " ",
@@ -625,14 +671,14 @@ require("packer").startup(function(use)
   use {
     "mhinz/vim-startify",
     config = function()
-      vim.g.startify_change_to_vcs_root  = 1
+      vim.g.startify_change_to_vcs_root = 1
       vim.g.startify_fortune_use_unicode = 1
       vim.g.startify_lists = {
-        { type = "dir",       header = {"   MRU " .. vim.fn.getcwd()} },
-        { type = "sessions",  header = {"   Sessions"           } },
-        { type = "files",     header = {"   Files"              } },
-        { type = "bookmarks", header = {"   Bookmarks"          } },
-        { type = "commands",  header = {"   Commands"           } },
+        { type = "dir", header = { "   MRU " .. vim.fn.getcwd() } },
+        { type = "sessions", header = { "   Sessions" } },
+        { type = "files", header = { "   Files" } },
+        { type = "bookmarks", header = { "   Bookmarks" } },
+        { type = "commands", header = { "   Commands" } },
       }
     end,
   }
@@ -640,6 +686,7 @@ require("packer").startup(function(use)
   use {
     "lfv89/vim-interestingwords",
     config = function()
+      -- stylua: ignore
       vim.g.interestingWordsGUIColors = {
         '#72b5e4', '#f0c53f', '#ff8784', '#c5c7f1',
         '#c2d735', '#78d3cc', '#ea8336', '#e43542',
@@ -656,8 +703,8 @@ require("packer").startup(function(use)
   use "junegunn/vim-easy-align"
   use "tpope/vim-surround"
   use "tpope/vim-repeat"
-  use "AndrewRadev/splitjoin.vim"  -- gS, gJ
-  use "Konfekt/vim-unicode-homoglyphs"  -- gy
+  use "AndrewRadev/splitjoin.vim" -- gS, gJ
+  use "Konfekt/vim-unicode-homoglyphs" -- gy
   use "ntpeters/vim-better-whitespace"
   use "ojroques/vim-oscyank"
 
@@ -665,7 +712,7 @@ require("packer").startup(function(use)
     "dstein64/nvim-scrollview",
     config = function()
       vim.g.scrollview_winblend = 75
-      vim.g.scrollview_column   = 1
+      vim.g.scrollview_column = 1
     end,
   }
 
@@ -673,7 +720,7 @@ require("packer").startup(function(use)
     "sidebar-nvim/sidebar.nvim",
     -- branch = "dev",
     config = function()
-      local sidebar = require("sidebar-nvim")
+      local sidebar = require "sidebar-nvim"
       local opts = {
         open = false,
         sections = { "git", "diagnostics", "todos", "buffers", "symbols" },
@@ -681,7 +728,12 @@ require("packer").startup(function(use)
       }
       sidebar.setup(opts)
       local l = require "local_defs"
-      vim.api.nvim_set_keymap("n", "<leader>ss", [[<cmd>lua require "sidebar-nvim".toggle()<cr>]], l.map.defmap)
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>ss",
+        [[<cmd>lua require "sidebar-nvim".toggle()<cr>]],
+        l.map.defmap
+      )
     end,
   }
 
@@ -693,10 +745,15 @@ require("packer").startup(function(use)
     },
     config = function()
       require("nvim-tree").setup {
-        update_to_buf_dir = { enable = false }
+        update_to_buf_dir = { enable = false },
       }
       local l = require "local_defs"
-      vim.api.nvim_set_keymap("n", "<leader>st", [[<cmd>lua require "nvim-tree".toggle()<cr>]], l.map.defmap)
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>st",
+        [[<cmd>lua require "nvim-tree".toggle()<cr>]],
+        l.map.defmap
+      )
     end,
   }
 
@@ -704,32 +761,42 @@ require("packer").startup(function(use)
     "edluffy/specs.nvim",
     config = function()
       local specs = require "specs"
-      specs.setup{
+      specs.setup {
         show_jumps = true,
-        min_jump   = 5,
-        popup      = {
-          delay_ms = 0,  -- delay before popup displays
-          inc_ms   = 5,  -- time increments used for fade/resize effects
-          blend    = 10, -- starting blend, between 0-100, see :h winblend
-          width    = 40,
-          winhl    = "ScrollView",
-          fader    = specs.linear_fader,
-          resizer  = specs.shrink_resizer,
+        min_jump = 5,
+        popup = {
+          delay_ms = 0, -- delay before popup displays
+          inc_ms = 5, -- time increments used for fade/resize effects
+          blend = 10, -- starting blend, between 0-100, see :h winblend
+          width = 40,
+          winhl = "ScrollView",
+          fader = specs.linear_fader,
+          resizer = specs.shrink_resizer,
         },
         ignore_filetypes = {},
-        ignore_buftypes  = { nofile = true },
+        ignore_buftypes = { nofile = true },
       }
       local l = require "local_defs"
-      vim.api.nvim_set_keymap("n", "ä", [[<cmd>lua require "specs".show_specs()<cr>]], l.map.defmap)
+      vim.api.nvim_set_keymap(
+        "n",
+        "ä",
+        [[<cmd>lua require "specs".show_specs()<cr>]],
+        l.map.defmap
+      )
     end,
   }
 
   use {
     "iamcco/markdown-preview.nvim",
     config = function()
-      vim.call("mkdp#util#install")
+      vim.call "mkdp#util#install"
       local l = require "local_defs"
-      vim.api.nvim_set_keymap("n", "<leader>d", [[<cmd>MarkdownPreviewToggle<cr>]], l.map.defmap)
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>d",
+        [[<cmd>MarkdownPreviewToggle<cr>]],
+        l.map.defmap
+      )
     end,
     cmd = "MarkdownPreviewToggle",
     ft = { "markdown" },
