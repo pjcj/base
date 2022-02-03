@@ -6,7 +6,7 @@
 " Last Change:   2010-07-21
 "
 " Instration:
-"   put tt2.vim and tt2html.vim in to your syntax diretory.
+"   put tt2.vim and tt2html.vim in to your syntax directory.
 "
 "   add below in your filetype.vim.
 "       au BufNewFile,BufRead *.tt2 setf tt2

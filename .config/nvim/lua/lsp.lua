@@ -146,7 +146,7 @@ local lua_settings = {
       path = vim.split(package.path, ";"),
     },
     diagnostics = {
-      -- Get the language server to recognize the `vim` global
+      -- Get the language server to recognise the `vim` global
       globals = { "vim" },
     },
     workspace = {

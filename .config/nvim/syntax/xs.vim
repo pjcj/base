@@ -13,7 +13,7 @@ endif
 " Read the C syntax to start with
 runtime! syntax/c.vim
 
-" XS extentions
+" XS extensions
 " TODO: Figure out how to look for trailing '='.
 syn keyword xsKeyword   MODULE PACKAGE PREFIX
 syn keyword xsKeyword   OUTPUT: CODE: INIT: PREINIT: INPUT:
