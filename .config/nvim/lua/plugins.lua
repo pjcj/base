@@ -769,6 +769,48 @@ require("packer").startup(function(use)
     end,
   }
 
+  use {
+    "simrat39/symbols-outline.nvim",
+    requires = {
+      "folke/which-key.nvim",
+    },
+    config = function()
+      local wk = require "which-key"
+      wk.register {
+        ["<leader>"] = {
+          t = {
+            name = "+toggle",
+            o = { "<cmd>SymbolsOutline<cr>", "Show Symbols" },
+          },
+        },
+      }
+      vim.g.symbols_outline = {
+        highlight_hovered_item = true,
+        show_guides = true,
+        auto_preview = false,
+        position = "right",
+        relative_width = true,
+        width = 80,
+        auto_close = true,
+        show_numbers = false,
+        show_relative_numbers = false,
+        show_symbol_details = true,
+        preview_bg_highlight = "Pmenu",
+        keymaps = { -- These keymaps can be a string or a table for multiple keys
+          close = { "<Esc>", "q" },
+          goto_location = "<Cr>",
+          focus_location = "o",
+          hover_symbol = "<C-space>",
+          toggle_preview = "K",
+          rename_symbol = "r",
+          code_actions = "a",
+        },
+        lsp_blacklist = {},
+        symbol_blacklist = {},
+      }
+    end,
+  }
+
   use "elihunter173/dirbuf.nvim"
   use {
     "kyazdani42/nvim-tree.lua",
