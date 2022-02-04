@@ -492,6 +492,13 @@ require("packer").startup(function(use)
   }
 
   use {
+    "folke/which-key.nvim",
+    config = function()
+      require("which-key").setup {}
+    end,
+  }
+
+  use {
     "lewis6991/gitsigns.nvim",
     requires = { "nvim-lua/plenary.nvim" },
     config = function()
