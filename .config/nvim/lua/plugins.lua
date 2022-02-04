@@ -494,7 +494,22 @@ require("packer").startup(function(use)
   use {
     "folke/which-key.nvim",
     config = function()
-      require("which-key").setup {}
+      require("which-key").setup {
+        window = {
+          border = "single",
+        },
+        layout = {
+          width = {
+            max = 80,
+          },
+        },
+        plugins = {
+          spelling = {
+            enabled = true,
+            suggestions = 20,
+          },
+        },
+      }
     end,
   }
 
