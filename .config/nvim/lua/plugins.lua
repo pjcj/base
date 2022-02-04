@@ -35,6 +35,7 @@ require("packer").startup(function(use)
     requires = {
       "nvim-treesitter/nvim-treesitter-refactor",
       "nvim-treesitter/playground",
+      "JoosepAlviste/nvim-ts-context-commentstring",
     },
     run = ":TSUpdate",
     config = function()
@@ -54,7 +55,31 @@ require("packer").startup(function(use)
             node_decremental = "<s-tab>",
           },
         },
+        context_commentstring = {
+          enable = true,
+          enable_autocmd = false,
+        },
       }
+    end,
+  }
+
+  use {
+    "terrortylor/nvim-comment",
+    config = function()
+      require("nvim_comment").setup {
+        line_mapping = "-",
+        comment_empty = false,
+        hook = function()
+          require("ts_context_commentstring.internal").update_commentstring()
+        end,
+      }
+      local l = require "local_defs"
+      vim.api.nvim_set_keymap(
+        "v",
+        "-",
+        ":<c-u>call CommentOperator(visualmode())<cr>",
+        l.map.defmap
+      )
     end,
   }
 
@@ -582,23 +607,6 @@ require("packer").startup(function(use)
       require("colorizer").setup(
         { "*" },
         { names = true, RGB = true, RRGGBB = true, RRGGBBAA = true, css = true }
-      )
-    end,
-  }
-
-  use {
-    "terrortylor/nvim-comment",
-    config = function()
-      require("nvim_comment").setup {
-        line_mapping = "-",
-        comment_empty = false,
-      }
-      local l = require "local_defs"
-      vim.api.nvim_set_keymap(
-        "v",
-        "-",
-        ":<c-u>call CommentOperator(visualmode())<cr>",
-        l.map.defmap
       )
     end,
   }
