@@ -104,10 +104,13 @@ local function setup_null_ls()
   local h = b.hover
 
   local codespell = {
-    "--builtin", "clear,rare,informal,usage,names",
-    "-L", "isnt,master",
-    -- isnt   => perl test method
-    -- master => yeah, I know butit's not me
+    "--builtin",
+    "clear,rare,informal,usage,names",
+    "-L",
+    "isnt,master,persistant",
+    -- isnt       => perl test method
+    -- master     => yeah, I know butit's not me
+    -- persistant => enable_persistant_history
   }
 
   local sources = {
@@ -124,7 +127,7 @@ local function setup_null_ls()
     d.hadolint,
     d.jsonlint,
     d.markdownlint,
-    d.misspell,
+    d.misspell.with { extra_args = { "-i", "persistant" } },
     d.proselint,
     d.selene,
     d.shellcheck,
