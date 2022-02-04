@@ -244,15 +244,7 @@ require("packer").startup(function(use)
       }
 
       telescope.load_extension "fzf"
-      telescope.load_extension("refactoring")
-
--- remap to open the Telescope refactoring menu in visual mode
-vim.api.nvim_set_keymap(
-	"v",
-	"<leader>rr",
-	"<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
-	{ noremap = true }
-)
+      telescope.load_extension "refactoring"
 
       local l = require "local_defs"
       -- stylua: ignore start
@@ -359,7 +351,7 @@ vim.api.nvim_set_keymap(
       cmp.setup {
         formatting = {
           format = lspkind.cmp_format {
-            with_text = true,
+            mode = "symbol_text",
             -- maxwidth = 50,
             menu = {
               buffer = "buf",
