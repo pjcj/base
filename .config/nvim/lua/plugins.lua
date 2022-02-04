@@ -655,6 +655,7 @@ require("packer").startup(function(use)
   }
 
   use "zsugabubus/crazy8.nvim"
+  use "gpanders/editorconfig.nvim"
   use {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
