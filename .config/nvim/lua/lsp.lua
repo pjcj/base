@@ -105,7 +105,9 @@ local function setup_null_ls()
 
   local codespell = {
     "--builtin", "clear,rare,informal,usage,names",
-    "-L", "isnt",  -- perl test method
+    "-L", "isnt,master",
+    -- isnt   => perl test method
+    -- master => yeah, I know butit's not me
   }
 
   local sources = {
