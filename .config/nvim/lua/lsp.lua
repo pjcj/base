@@ -103,16 +103,21 @@ local function setup_null_ls()
   local f = b.formatting
   local h = b.hover
 
-  local shellcheck = { "--builtin", "clear,rare,informal,usage,code,names" }
+  local codespell = {
+    "--builtin", "clear,rare,informal,usage,names",
+    "-L", "isnt",  -- perl test method
+  }
 
   local sources = {
+    a.eslint,
     -- a.gitsigns,
     a.proselint,
     -- a.refactoring,
     a.shellcheck,
     c.spell,
     c.vsnip,
-    d.codespell.with { extra_args = shellcheck },
+    d.codespell.with { extra_args = codespell },
+    d.eslint,
     d.golangci_lint,
     d.hadolint,
     d.jsonlint,
@@ -122,10 +127,11 @@ local function setup_null_ls()
     d.selene,
     d.shellcheck,
     d.yamllint,
-    f.codespell.with { extra_args = shellcheck },
+    f.codespell.with { extra_args = codespell },
+    f.eslint,
     f.fixjson,
     f.golines,
-    f.prettier,
+    -- f.prettier,
     f.shellharden,
     f.shfmt.with { extra_args = { "-i", "2", "-s" } },
     f.stylua,
