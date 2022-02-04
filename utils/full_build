@@ -179,6 +179,7 @@ if [[ "$EDITOR" == "nvim" ]]; then
     # $EDITOR --headless -c LspInstall\ --sync\ vuels
     # $EDITOR --headless -c LspInstall\ --sync\ yamlls
     go install github.com/nametake/golangci-lint-langserver@latest
+    go install github.com/client9/misspell/cmd/misspell@latest
 
     $pip3 install --upgrade --user git+git://github.com/powerline/powerline
 fi
