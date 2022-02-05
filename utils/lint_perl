@@ -2,37 +2,78 @@
 
 use 5.28.0;
 
-sub main (@a) {
+sub main {
+  my ($file, $root, $type, $text) = @_;
   my $log = "/tmp/lint_perl.log";
   open my $l, ">>", "$log" or die "Can't open $log: $!";
   say $l "\n\n-- " . localtime . ": $ENV{PWD}";
+  say $l "-- file [$file] [$root] [$type]";
 
-  my @o = qw( -X -c -Mwarnings -Ilib -It/lib );
+  my @common = qw( -Ilib -It/lib );
+  push @common, "-Mblib" if -d "blib";
+  push @common, split " ", $ENV{LINT_PERL_OPTIONS} // "";
+
+  my $perl = $ENV{LINT_PERL_COMMAND} // $^X;
+  my $getinc = qq($perl @common -e 'print "\$_\\n" for \@INC');
+  say $l "-- getinc $getinc";
+  my @inc = qx($getinc);
+  chomp @inc;
+  say $l "-- inc [$_]" for @inc;
+
+  my @o = qw( -X -c -Mwarnings );
+  push @o, @common,
   push @o, "-Mblib" if -d "blib";
   push @o, split " ", $ENV{LINT_PERL_OPTIONS} // "";
 
-  my $perl = $ENV{LINT_PERL_COMMAND} // $^X;
+  say $l "-- type [$type]";
+  my $pm;
+  if ($type eq "pm") {
+    $file =~ s/\Q$_\/// for $root, sort { length $b <=> length $a } @inc;
+    say $l "-- file $file";
+
+    $pm = $file;
+    $pm =~ s/\//::/g;
+    $pm =~ s/^:://;
+    $pm =~ s/\.pm$//;
+    say $l "-- pm $pm";
+
+    my $tmpdir = "/tmp/lint_perl";
+    $file = "$tmpdir/$file";
+    my $dir = $file =~ s|/[^/]*$||r;
+    system "mkdir -p $dir";
+    open my $fh, ">", $file or die "Can't open $file: $!";
+    print $fh $text;
+    close $fh or die "Can't close $file: $!";
+
+    unshift @o, "-I$tmpdir";
+    push @o, "-M$pm -e0";
+  }
+
   my $cmd = "$perl @o";
-  say $l "-- Running: $cmd";
+  say $l "-- running: $cmd";
   my $out = qx($cmd 2>&1);
   my $ret = $?;
-  say $l "-- Return value: $ret";
+  say $l "-- return value: $ret";
   say $l "$out";
 
   my $ignore = $ENV{LINT_PERL_IGNORE} // "";
-  say $l "-- Ignoring [$ignore]";
+  say $l "-- ignoring [$ignore]";
   my $err = qr/(.*) at (.*) line (\d+)(.*)/;
   # say $l "-- Error regex [$err]";
   my @errs;
   while ($out =~ /$err/g) {
     my ($file, $line, $msg) = ($2 // "", $3, ($1 // "") . ($4 // ""));
-    my $err = "$file:$line:$msg";
-    say $l "-- Found: $err";
+    $msg =~ s/\.$//;
+    $line-- if $pm;  # no idea why
+    my $err = "$line:$msg";
+    say $l "-- found: $err";
     next if $ignore && $err =~ /ignore/;
-    say $l "-- Adding";
+    say $l "-- adding";
     push @errs, $err;
-    say $l join "\n", "-- Errors", @errs;
+    say $l join "\n", "-- errors", @errs;
   }
+
+  unlink $pm if $pm;
 
   say $_ for @errs;
   @errs ? 2 : 0

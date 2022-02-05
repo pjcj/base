@@ -39,6 +39,7 @@ local perl_diagnostics = {
   filetypes = { "perl" },
   generator = null_ls.generator {
     command = perl_executable,
+    args = { "$FILENAME", "$ROOT", "$FILEEXT", "$TEXT" },
     to_stdin = true,
     from_stderr = true,
     format = "line", --raw, json, or line
@@ -51,7 +52,7 @@ local perl_diagnostics = {
     end,
     on_output = helpers.diagnostics.from_patterns {
       {
-        pattern = [[%-:(%d+):(.*)]],
+        pattern = [[(%d+):(.*)]],
         groups = { "row", "message" },
       },
     },
