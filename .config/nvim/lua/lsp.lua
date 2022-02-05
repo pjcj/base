@@ -65,36 +65,36 @@ local on_attach = function(client, bufnr)
   require("lsp_signature").on_attach()
 end
 
--- local function no_really_fn (params)
---   local diagnostics = {}
---   -- sources have access to a params object
---   -- containing info about the current file and editor state
---   for i, line in ipairs(params.content) do
---     local col, end_col = line:find("really")
---     if col and end_col then
---       -- null-ls fills in undefined positions
---       -- and converts source diagnostics into the required format
---       table.insert(diagnostics, {
---         row      = i,
---         col      = col,
---         end_col  = end_col,
---         source   = "no-really",
---         message  = "Don't use 'really!'",
---         severity = 4,
---       })
---     end
---   end
---   return diagnostics
--- end
+local null_ls = require "null-ls"
+local helpers = require "null-ls.helpers"
+
+local perl_executable = vim.fn.expand "~/g/base/utils/lint_perl"
+local perl_diagnostics = {
+  method = null_ls.methods.DIAGNOSTICS,
+  filetypes = { "perl" },
+  generator = null_ls.generator {
+    command = perl_executable,
+    to_stdin = true,
+    from_stderr = true,
+    format = "line", --raw, json, or line
+    check_exit_code = function(code, stderr)
+      local success = code <= 1
+      if not success then
+        print(stderr)
+      end
+      return success
+    end,
+    on_output = helpers.diagnostics.from_patterns {
+      {
+        pattern = [[%-:(%d+):(.*)]],
+        groups = { "row", "message" },
+      },
+    },
+  },
+}
 
 local function setup_null_ls()
-  local null_ls = require "null-ls"
-
-  -- null_ls.register({
-  --   method    = null_ls.methods.DIAGNOSTICS,
-  --   filetypes = { "markdown", "text" },
-  --   generator = { fn = no_really_fn },
-  -- })
+  null_ls.register(perl_diagnostics)
 
   local b = null_ls.builtins
   local a = b.code_actions
