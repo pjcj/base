@@ -1,0 +1,41 @@
+#!/usr/bin/env perl
+
+use 5.28.0;
+
+sub main (@a) {
+  my $log = "/tmp/lint_perl.log";
+  open my $l, ">>", "$log" or die "Can't open $log: $!";
+  say $l "\n\n-- " . localtime . ": $ENV{PWD}";
+
+  my @o = qw( -X -c -Mwarnings -Ilib -It/lib );
+  push @o, "-Mblib" if -d "blib";
+  push @o, split " ", $ENV{LINT_PERL_OPTIONS} // "";
+
+  my $perl = $ENV{LINT_PERL_COMMAND} // $^X;
+  my $cmd = "$perl @o";
+  say $l "-- Running: $cmd";
+  my $out = qx($cmd 2>&1);
+  my $ret = $?;
+  say $l "-- Return value: $ret";
+  say $l "$out";
+
+  my $ignore = $ENV{LINT_PERL_IGNORE} // "";
+  say $l "-- Ignoring [$ignore]";
+  my $err = qr/(.*) at (.*) line (\d+)(.*)/;
+  # say $l "-- Error regex [$err]";
+  my @errs;
+  while ($out =~ /$err/g) {
+    my ($file, $line, $msg) = ($2 // "", $3, ($1 // "") . ($4 // ""));
+    my $err = "$file:$line:$msg";
+    say $l "-- Found: $err";
+    next if $ignore && $err =~ /ignore/;
+    say $l "-- Adding";
+    push @errs, $err;
+    say $l join "\n", "-- Errors", @errs;
+  }
+
+  say $_ for @errs;
+  @errs ? 2 : 0
+}
+
+exit main @ARGV
