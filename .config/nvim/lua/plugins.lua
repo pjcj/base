@@ -502,6 +502,9 @@ require("packer").startup(function(use)
           width = {
             max = 80,
           },
+          height = {
+            max = 40,
+          },
         },
         plugins = {
           spelling = {
