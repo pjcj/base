@@ -127,10 +127,7 @@ require("packer").startup(function(use)
       vim.g.ale_sign_info = "I"
       vim.g.ale_linters = {
         yaml = { "circleci", "spectral", "swaglint", "yamllint" },
-        perl = { "perl" },
       }
-      vim.g.ale_perl_perl_executable = vim.fn.expand "~/g/base/utils/ale_perl"
-      vim.g.ale_perl_perl_options = ""
     end,
   }
 
