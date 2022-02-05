@@ -1,45 +1,10 @@
-local l = require "local_defs"
-
 -- keymaps
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...)
-    vim.api.nvim_buf_set_keymap(bufnr, ...)
-  end
   local function buf_set_option(...)
     vim.api.nvim_buf_set_option(bufnr, ...)
   end
 
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-
-  -- mappings
-  -- stylua: ignore start
-  buf_set_keymap("n", "gD",        "<cmd>lua vim.lsp.buf.declaration()<CR>",                                l.map.defmap)
-  buf_set_keymap("n", "gd",        "<cmd>lua vim.lsp.buf.definition()<CR>",                                 l.map.defmap)
-  buf_set_keymap("n", "gi",        "<cmd>lua vim.lsp.buf.implementation()<CR>",                             l.map.defmap)
-  buf_set_keymap("n", "gr",        "<cmd>lua vim.lsp.buf.references()<CR>",                                 l.map.defmap)
-  buf_set_keymap("n", "K",         "<cmd>lua vim.lsp.buf.hover()<CR>",                                      l.map.defmap)
-  buf_set_keymap("n", "<C-k>",     "<cmd>lua vim.lsp.buf.signature_help()<CR>",                             l.map.defmap)
-  buf_set_keymap("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>",                       l.map.defmap)
-  buf_set_keymap("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>",                    l.map.defmap)
-  buf_set_keymap("n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", l.map.defmap)
-  buf_set_keymap("n", "<space>D",  "<cmd>lua vim.lsp.buf.type_definition()<CR>",                            l.map.defmap)
-  buf_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>",                                     l.map.defmap)
-  buf_set_keymap("n", "<space>l",  "<cmd>lua vim.diagnostic.open_float()<CR>",                              l.map.defmap)
-  buf_set_keymap("n", "<space>f",  "<cmd>lua vim.lsp.buf.formatting()<CR>",                                 l.map.defmap)
-  buf_set_keymap("n", "<S-F2>",    "<cmd>lua vim.diagnostic.goto_prev()<CR>",                               l.map.defmap)
-  buf_set_keymap("n", "<S-F3>",    "<cmd>lua vim.diagnostic.goto_next()<CR>",                               l.map.defmap)
-  buf_set_keymap("n", "<space>q",  "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>",                         l.map.defmap)
-  buf_set_keymap("n", "<space>a",  "<cmd>lua vim.lsp.buf.code_action()<CR>",                                l.map.defmap)
-  buf_set_keymap("n", "<space>ci", "<cmd>lua vim.lsp.buf.incoming_calls()<CR>",                             l.map.defmap)
-  buf_set_keymap("n", "<space>co", "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>",                             l.map.defmap)
-
-  -- set some keybindings conditional on server capabilities
-  if client.resolved_capabilities.document_formatting then
-    buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>",       l.map.defmap)
-  elseif client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap("v", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", l.map.defmap)
-  end
-  -- stylua: ignore end
 
   -- set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then

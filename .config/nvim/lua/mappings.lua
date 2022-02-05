@@ -1,5 +1,60 @@
 local l = require "local_defs"
 
+local wk = require "which-key"
+-- {
+--   mode = "n", -- NORMAL mode
+--   prefix = "",
+--   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+--   silent = true, -- use `silent` when creating keymaps
+--   noremap = true, -- use `noremap` when creating keymaps
+--   nowait = false, -- use `nowait` when creating keymaps
+-- }
+
+local lb = vim.lsp.buf
+wk.register {
+  ["<S-F1>"] = {
+    ":q\n", "quit"
+  },
+  ["<S-F2>"] = {
+    function() vim.diagnostic.goto_prev() end, "previous diagnostic"
+  },
+  ["<S-F3>"] = {
+    function() vim.diagnostic.goto_next() end, "next diagnostic"
+  },
+  ["g"] = {
+    D = { function () lb.declaration() end, "declaration" },
+    d = { function () lb.definition() end, "definition" },
+    i = { function () lb.implementation() end, "implementation" },
+    r = { function () lb.references() end, "references" },
+    l = {
+      name = "+lsp",
+      K = { function () lb.hover() end, "hover" },
+      k = { function () lb.signature_help() end, "signature" },
+      D = { function () lb.type_definition() end, "type definition" },
+      l = { function () vim.diagnostic.open_float() end, "show" },
+      r = { function () lb.rename() end, "rename" },
+      a = { function () lb.code_action() end, "action" },
+      i = { function () lb.incoming_calls() end, "incoming calls" },
+      o = { function () lb.outgoing_calls() end, "outgoing calls" },
+      q = { function () vim.diagnostic.setqflist() end, "quickfix" },
+      f = { function () lb.formatting() end, "format",  },
+      w = {
+        name = "+workspace",
+        a = { function () lb.add_workspace_folder() end, "add" },
+        r = { function () lb.remove_workspace_folder() end, "remove" },
+        l = { function () print(vim.inspect(lb.list_workspace_folders())) end, "list" },
+      },
+    },
+    lf = { function () lb.range_formatting() end, "format", mode = "v" },
+    ["<leader>"] = {
+      t = {
+        name = "+toggle",
+        o = { "<cmd>SymbolsOutline<cr>", "Show Symbols" },
+      },
+    },
+  }
+}
+
 local vmap = vim.api.nvim_set_keymap               -- global mappings
 
 vim.g.mapleader = ","
@@ -7,9 +62,6 @@ vim.g.mapleader = ","
 local m = l.map.defmap
 local f4 = [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]]
 
-vmap("n", "<S-F1>",     ":q<cr>",                              m)
-vmap("n", "<S-F2>",     ":ALEPreviousWrap<cr>",                m)
-vmap("n", "<S-F3>",     ":ALENextWrap<cr>",                    m)
 vmap("n", "<F4>",       f4,                                    m)
 vmap("i", "<F5>",       "[",                                   m)
 vmap("n", "r<F5>",      "r[",                                  m)
