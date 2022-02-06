@@ -169,16 +169,19 @@ local_defs.fn.set_buffer_settings = function()
   local bmap = vim.api.nvim_buf_set_keymap       -- local mappings
   local l    = local_defs
 
-  if ft == "go" or ft == "make" then
+  if ft == "go" or ft == "gomod" or ft == "make" then
     lopt.listchars = { tab = "  ", trail = "·" }
 
     local e = b.editorconfig
+    -- print("editorconfig", e.indent_style, e.indent_size)
     if e.indent_style == nil then
       lopt.expandtab  = false
+      -- print("unset expandtab")
     end
     if e.indent_size == nil then
       lopt.tabstop    = 2
       lopt.shiftwidth = 2
+      -- print("set tabstop shiftwidth 2")
     end
 
     alternate_indent()
