@@ -170,9 +170,17 @@ local_defs.fn.set_buffer_settings = function()
   local l    = local_defs
 
   if ft == "go" or ft == "make" then
-    lopt.listchars  = { tab = "  ", trail = "·" }
-    lopt.tabstop    = 2
-    lopt.shiftwidth = 2
+    lopt.listchars = { tab = "  ", trail = "·" }
+
+    local e = b.editorconfig
+    if e.indent_style == nil then
+      lopt.expandtab  = false
+    end
+    if e.indent_size == nil then
+      lopt.tabstop    = 2
+      lopt.shiftwidth = 2
+    end
+
     alternate_indent()
 
     if ft == "go" then
