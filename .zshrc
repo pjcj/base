@@ -982,6 +982,10 @@ else
     AGKOZAK_CUSTOM_PROMPT+='${AGKOZAK_PROMPT_WHITESPACE}${AGKOZAK_COLORS_PROMPT_CHAR:+%F{${AGKOZAK_COLORS_PROMPT_CHAR}\}}%(4V.${AGKOZAK_PROMPT_CHAR[3]:-:}.%(!.${AGKOZAK_PROMPT_CHAR[2]:-%#}.${AGKOZAK_PROMPT_CHAR[1]:-%#}))${AGKOZAK_COLORS_PROMPT_CHAR:+%f} '
 fi
 
+# ensure autoenv.zsh is called
+
+c ~ && c -
+
 # Handle ssh
 
 zshrc_load_status "ssh"
