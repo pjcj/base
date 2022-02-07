@@ -424,7 +424,6 @@ require("packer").startup(function(use)
           end, { "i", "s" }),
         },
         sources = {
-          { name = "nvim_lsp" },
           { name = "nvim_lua" },
           {
             name = "buffer",
@@ -436,6 +435,7 @@ require("packer").startup(function(use)
             -- keywords or just words
             keyword_pattern = "\\%(\\k\\+\\|\\w\\+\\)",
           },
+          { name = "nvim_lsp" },
           {
             name = "tmux",
             option = { all_panes = true, label = "[tmux]" },
@@ -647,7 +647,7 @@ require("packer").startup(function(use)
     requires = { "tami5/sqlite.lua", module = "sqlite" },
     config = function()
       require("neoclip").setup {
-        enable_persistant_history = true,
+        enable_persistent_history = true,
         db_path = vim.fn.stdpath "data" .. "/databases/neoclip.sqlite3",
         default_register = '"',
       }

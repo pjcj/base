@@ -73,10 +73,9 @@ local function setup_null_ls()
     "--builtin",
     "clear,rare,informal,usage,names",
     "-L",
-    "isnt,master,persistant",
+    "isnt,master",
     -- isnt       => perl test method
-    -- master     => yeah, I know butit's not me
-    -- persistant => enable_persistant_history
+    -- master     => yeah, I know but it's not me
   }
 
   local sources = {
@@ -93,7 +92,7 @@ local function setup_null_ls()
     d.hadolint,
     d.jsonlint,
     d.markdownlint,
-    d.misspell.with { extra_args = { "-i", "persistant" } },
+    d.misspell.with { extra_args = { "-i", "XXXOXXX" } },
     d.proselint,
     d.selene,
     d.shellcheck,
