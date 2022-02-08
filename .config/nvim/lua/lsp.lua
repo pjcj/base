@@ -97,6 +97,7 @@ local function setup_null_ls()
     d.selene,
     d.shellcheck,
     d.yamllint,
+    d.zsh,
     f.codespell.with { extra_args = codespell },
     f.eslint,
     f.fixjson,
