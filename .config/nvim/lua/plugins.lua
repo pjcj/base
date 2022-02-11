@@ -744,6 +744,11 @@ require("packer").startup(function(use)
   use "Konfekt/vim-unicode-homoglyphs" -- gy
   use "ntpeters/vim-better-whitespace"
   use "ojroques/vim-oscyank"
+  use "kana/vim-textobj-user"
+  use {
+    "Julian/vim-textobj-variable-segment",
+    after = "vim-textobj-user",
+  }
 
   use {
     "dstein64/nvim-scrollview",
