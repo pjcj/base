@@ -187,6 +187,15 @@ local function setup_servers()
     vim.cmd [[ do User LspAttachBuffers ]]
   end)
 
+  vim.diagnostic.config {
+    virtual_text = {
+      prefix = "●",
+    },
+    float = {
+      source = "always", -- or "if_many"
+    },
+  }
+
   -- local lspconfig = require "lspconfig"
   -- local configs = require "lspconfig/configs"
   -- local gconfig = make_config()
