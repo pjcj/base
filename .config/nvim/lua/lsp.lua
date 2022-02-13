@@ -196,6 +196,22 @@ local function setup_servers()
     },
   }
 
+  local border = "rounded"
+  local lspconfig_window = require "lspconfig.ui.windows"
+  local old_defaults = lspconfig_window.default_opts
+  function lspconfig_window.default_opts(opts)
+    local win_opts = old_defaults(opts)
+    win_opts.border = border
+    return win_opts
+  end
+
+  local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+  function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+    opts = opts or {}
+    opts.border = opts.border or border
+    return orig_util_open_floating_preview(contents, syntax, opts, ...)
+  end
+
   -- local lspconfig = require "lspconfig"
   -- local configs = require "lspconfig/configs"
   -- local gconfig = make_config()
