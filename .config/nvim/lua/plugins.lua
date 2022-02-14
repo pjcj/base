@@ -126,7 +126,7 @@ require("packer").startup(function(use)
       vim.g.ale_sign_warning = "W"
       vim.g.ale_sign_info = "I"
       vim.g.ale_linters = {
-        yaml = { "circleci", "spectral", "swaglint", "yamllint" },
+        yaml = { "circleci", "spectral", "swaglint" },
       }
     end,
   }
