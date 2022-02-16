@@ -13,7 +13,11 @@ local wk = require "which-key"
 local lb = vim.lsp.buf
 local d = vim.diagnostic
 wk.register {
-  ["<S-F1>"] = { ":q\n", "quit" },
+  ["<F1>"] = { "<cmd>Gitsigns stage_hunk<cr>", "stage hunk" },
+  -- ["<F1>"] = { function () require "gitsigns".stage_hunk() end, "stage hunk" },
+  ["<F2>"] = { "<cmd>Gitsigns prev_hunk<cr>", "previous hunk" },
+  ["<F3>"] = { "<cmd>Gitsigns next_hunk<cr>", "next hunk" },
+  ["<S-F1>"] = { "<cmd>q<cr>", "quit" },
   ["<S-F2>"] = { function() d.goto_prev() end, "previous diagnostic" },
   ["<S-F3>"] = { function() d.goto_next() end, "next diagnostic" },
   ["g"] = {
@@ -23,16 +27,16 @@ wk.register {
     r = { function () lb.references() end, "references" },
     l = {
       name = "+lsp",
+      a = { function () lb.code_action() end, "action" },
+      D = { function () lb.type_definition() end, "type definition" },
+      f = { function () lb.formatting() end, "format" },
+      i = { function () lb.incoming_calls() end, "incoming calls" },
       K = { function () lb.hover() end, "hover" },
       k = { function () lb.signature_help() end, "signature" },
-      D = { function () lb.type_definition() end, "type definition" },
       l = { function () vim.diagnostic.open_float() end, "show" },
-      r = { function () lb.rename() end, "rename" },
-      a = { function () lb.code_action() end, "action" },
-      i = { function () lb.incoming_calls() end, "incoming calls" },
       o = { function () lb.outgoing_calls() end, "outgoing calls" },
       q = { function () vim.diagnostic.setqflist() end, "quickfix" },
-      f = { function () lb.formatting() end, "format",  },
+      r = { function () lb.rename() end, "rename" },
       v = {
         name = "+virtual text",
         h = { function () d.hide() end, "hide" },
@@ -41,19 +45,47 @@ wk.register {
       w = {
         name = "+workspace",
         a = { function () lb.add_workspace_folder() end, "add" },
-        r = { function () lb.remove_workspace_folder() end, "remove" },
         l = { function () print(vim.inspect(lb.list_workspace_folders())) end, "list" },
+        r = { function () lb.remove_workspace_folder() end, "remove" },
       },
     },
     lf = { function () lb.range_formatting() end, "format", mode = "v" },
-    ["<leader>"] = {
-      t = {
-        name = "+toggle",
-        o = { "<cmd>SymbolsOutline<cr>", "Show Symbols" },
-      },
+  },
+  ["<leader>"] = {
+    h = {
+      name = "+hunk",
+      b = { function () require "gitsigns".blame_line { full = true } end, "blame" },
+      d = { "<cmd>Gitsigns diffthis<cr>", "diff hunk" },
+      D = { function () require "gitsigns".diffthis("~") end, "diff" },
+      p = { "<cmd>Gitsigns preview_hunk<cr>", "preview hunk" },
+      R = { "<cmd>Gitsigns reset_buffer<cr>", "reset_buffer" },
+      r = { "<cmd>Gitsigns reset_hunk<cr>", "reset hunk" },
+      S = { "<cmd>Gitsigns stage_buffer<cr>", "stage buffer" },
+      s = { "<cmd>Gitsigns stage_hunk<cr>", "stage hunk" },
+      u = { "<cmd>Gitsigns undo_stage_hunk<cr>", "unstage hunk" },
     },
-  }
+    t = {
+      name = "+toggle",
+      b = { "<cmd>Gitsigns toggle_current_line_blame<CR>", "blame" },
+      d = { "<cmd>Gitsigns toggle_deleted<CR>", "deleted" },
+      o = { "<cmd>SymbolsOutline<cr>", "symbols" },
+      s = { function () require "sidebar-nvim".toggle() end, "sidebar" },
+      t = { function () require "nvim-tree".toggle() end, "tree" },
+    },
+  },
 }
+
+wk.register({
+  ["<F1>"] = { "<cmd>Gitsigns stage_hunk<cr>", "stage lines" },
+  ["<leader>"] = {
+    h = {
+      name = "+hunk",
+      r = { "<cmd>Gitsigns reset_hunk<cr>", "reset lines" },
+      s = { "<cmd>gitsigns stage_hunk<cr>", "stage lines" },
+      -- s = {'<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<cr>', "stage lines"},
+    },
+  },
+}, {mode = "v"})
 
 local vmap = vim.api.nvim_set_keymap               -- global mappings
 

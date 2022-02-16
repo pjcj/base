@@ -561,42 +561,6 @@ require("packer").startup(function(use)
             vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
           end
 
-        -- stylua: ignore start
-          -- Navigation
-          map(
-            "n",
-            "<F3>",
-            "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'",
-            { expr = true }
-          )
-          map(
-            "n",
-            "<F2>",
-            "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'",
-            { expr = true }
-          )
-
-          -- Actions
-          map("n", "<F1>", ":Gitsigns stage_hunk<CR>")
-          map("v", "<F1>", ":Gitsigns stage_hunk<CR>")
-          map("n", "<leader>hs", ":Gitsigns stage_hunk<CR>")
-          map("v", "<leader>hs", ":Gitsigns stage_hunk<CR>")
-          map("n", "<leader>hr", ":Gitsigns reset_hunk<CR>")
-          map("v", "<leader>hr", ":Gitsigns reset_hunk<CR>")
-          map("n", "<leader>hS", "<cmd>Gitsigns stage_buffer<CR>")
-          map("n", "<leader>hu", "<cmd>Gitsigns undo_stage_hunk<CR>")
-          map("n", "<leader>hR", "<cmd>Gitsigns reset_buffer<CR>")
-          map("n", "<leader>hp", "<cmd>Gitsigns preview_hunk<CR>")
-          map(
-            "n",
-            "<leader>hb",
-            '<cmd>lua require"gitsigns".blame_line{full=true}<CR>'
-          )
-          map("n", "<leader>tb", "<cmd>Gitsigns toggle_current_line_blame<CR>")
-          map("n", "<leader>hd", "<cmd>Gitsigns diffthis<CR>")
-          map("n", "<leader>hD", '<cmd>lua require"gitsigns".diffthis("~")<CR>')
-          map("n", "<leader>td", "<cmd>Gitsigns toggle_deleted<CR>")
-
           -- Text object
           map("o", "ih", ":<C-U>Gitsigns select_hunk<CR>")
           map("x", "ih", ":<C-U>Gitsigns select_hunk<CR>")
@@ -769,13 +733,6 @@ require("packer").startup(function(use)
         disable_closing_prompt = true,
       }
       sidebar.setup(opts)
-      local l = require "local_defs"
-      vim.api.nvim_set_keymap(
-        "n",
-        "<leader>ss",
-        [[<cmd>lua require "sidebar-nvim".toggle()<cr>]],
-        l.map.defmap
-      )
     end,
   }
 
@@ -785,15 +742,6 @@ require("packer").startup(function(use)
       "folke/which-key.nvim",
     },
     config = function()
-      local wk = require "which-key"
-      wk.register {
-        ["<leader>"] = {
-          t = {
-            name = "+toggle",
-            o = { "<cmd>SymbolsOutline<cr>", "Show Symbols" },
-          },
-        },
-      }
       vim.g.symbols_outline = {
         highlight_hovered_item = true,
         show_guides = true,
@@ -831,13 +779,6 @@ require("packer").startup(function(use)
       require("nvim-tree").setup {
         update_to_buf_dir = { enable = false },
       }
-      local l = require "local_defs"
-      vim.api.nvim_set_keymap(
-        "n",
-        "<leader>st",
-        [[<cmd>lua require "nvim-tree".toggle()<cr>]],
-        l.map.defmap
-      )
     end,
   }
 
