@@ -11,16 +11,11 @@ local wk = require "which-key"
 -- }
 
 local lb = vim.lsp.buf
+local d = vim.diagnostic
 wk.register {
-  ["<S-F1>"] = {
-    ":q\n", "quit"
-  },
-  ["<S-F2>"] = {
-    function() vim.diagnostic.goto_prev() end, "previous diagnostic"
-  },
-  ["<S-F3>"] = {
-    function() vim.diagnostic.goto_next() end, "next diagnostic"
-  },
+  ["<S-F1>"] = { ":q\n", "quit" },
+  ["<S-F2>"] = { function() d.goto_prev() end, "previous diagnostic" },
+  ["<S-F3>"] = { function() d.goto_next() end, "next diagnostic" },
   ["g"] = {
     D = { function () lb.declaration() end, "declaration" },
     d = { function () lb.definition() end, "definition" },
@@ -38,6 +33,11 @@ wk.register {
       o = { function () lb.outgoing_calls() end, "outgoing calls" },
       q = { function () vim.diagnostic.setqflist() end, "quickfix" },
       f = { function () lb.formatting() end, "format",  },
+      v = {
+        name = "+virtual text",
+        h = { function () d.hide() end, "hide" },
+        s = { function () d.show() end, "show" },
+      },
       w = {
         name = "+workspace",
         a = { function () lb.add_workspace_folder() end, "add" },
