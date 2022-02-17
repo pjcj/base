@@ -337,6 +337,7 @@ export NPM_PACKAGES=~/g/sw/.npm-packages
 
 zshrc_load_status "path"
 
+PATH=$(dirname $(readlink -f $(which perl))):$PATH
 PATH=~/.local/bin:~/bin:~/g/sw/bin:~/g/sw/usr/bin:$PATH
 PATH=~/.cargo/bin:$NPM_PACKAGES/bin:$PATH
 # PATH=~/.yarn/bin:~/.config/yarn/global/node_modules/.bin:$PATH
