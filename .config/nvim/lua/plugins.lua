@@ -115,6 +115,7 @@ require("packer").startup(function(use)
   --     require "calltree".setup({})
   --   end,
   -- }
+  require "lsp".setup_servers()
 
   use {
     "dense-analysis/ale",

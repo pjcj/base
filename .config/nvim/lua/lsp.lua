@@ -1,3 +1,5 @@
+local M = {}
+
 -- keymaps
 local on_attach = function(client, bufnr)
   local function buf_set_option(...)
@@ -220,4 +222,6 @@ local function setup_servers()
   -- -- configs["golangcilsp"].setup(gconfig)
 end
 
-setup_servers()
+M.setup_servers = setup_servers
+
+return M
