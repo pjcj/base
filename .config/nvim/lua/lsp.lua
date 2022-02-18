@@ -176,6 +176,12 @@ local function setup_servers()
         ts_utils.setup_client(client)
       end
     end
+    if server.name == "volar" then
+      config.on_attach = function(client)
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
+      end
+    end
 
     -- This setup() function is exactly the same as lspconfig's setup function
     -- (:help lspconfig-quickstart)
