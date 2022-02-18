@@ -20,13 +20,6 @@ local on_attach = function(client, bufnr)
     )
   end
 
-  -- stylua: ignore start
-  vim.fn.sign_define("LspDiagnosticsSignError",       { text = "E" })
-  vim.fn.sign_define("LspDiagnosticsSignWarning",     { text = "W" })
-  vim.fn.sign_define("LspDiagnosticsSignInformation", { text = "I" })
-  vim.fn.sign_define("LspDiagnosticsSignHint",        { text = "H" })
-  -- stylua: ignore end
-
   require("lsp_signature").on_attach()
 end
 
@@ -203,6 +196,13 @@ local function setup_servers()
     opts.border = opts.border or border
     return orig_util_open_floating_preview(contents, syntax, opts, ...)
   end
+
+  -- stylua: ignore start
+  vim.fn.sign_define("LspDiagnosticsSignError",       { text = "E" })
+  vim.fn.sign_define("LspDiagnosticsSignWarning",     { text = "W" })
+  vim.fn.sign_define("LspDiagnosticsSignInformation", { text = "I" })
+  vim.fn.sign_define("LspDiagnosticsSignHint",        { text = "H" })
+  -- stylua: ignore end
 
   -- local lspconfig = require "lspconfig"
   -- local configs = require "lspconfig/configs"
