@@ -37,6 +37,12 @@ wk.register {
       o = { function () lb.outgoing_calls() end, "outgoing calls" },
       q = { function () vim.diagnostic.setqflist() end, "quickfix" },
       r = { function () lb.rename() end, "rename" },
+      t = {
+        name = "+tsserver",
+        i = { ":TSLspImportAll<cr>", "import all" },
+        o = { ":TSLspOrganize<cr>", "organise" },
+        r = { ":TSLspRenameFile<cr>", "rename file" },
+      },
       v = {
         name = "+virtual text",
         h = { function () d.hide() end, "hide" },
