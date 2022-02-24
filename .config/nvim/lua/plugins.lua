@@ -190,7 +190,7 @@ require("packer").startup(function(use)
       vim.g.go_metalinter_autosave_enabled = {}
       vim.g.go_metalinter_enabled = {}
       vim.g.go_gopls_gofumpt = 1
-      -- vim.g.go_fmt_command                 = "golines"
+      -- vim.g.go_fmt_command = "golines"
       vim.g.go_fmt_options = {
         gofmt = "-s",
         golines = "-m 80 -t 2",
