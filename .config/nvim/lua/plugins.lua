@@ -105,6 +105,15 @@ require("packer").startup(function(use)
     "kosayoda/nvim-lightbulb",
     config = function()
       vim.cmd [[autocmd CursorHold,CursorHoldI * lua require "nvim-lightbulb".update_lightbulb()]]
+      require("nvim-lightbulb").setup {
+        sign = {
+          enabled = false,
+          priority = 1,
+        },
+        virtual_text = {
+          enabled = true,
+        },
+      }
     end,
   }
   use {
