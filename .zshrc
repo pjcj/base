@@ -185,6 +185,9 @@ WATCHFMT="[%B%t%b] %B%n%b has %a %B%l%b from %B%M%b"
 
 KEYTIMEOUT=1
 
+MANPAGER="nvim +Man!"
+MANWIDTH=999
+
 zshrc_load_status "completion system"
 
 autoload -U compinit
@@ -457,7 +460,6 @@ lu()      { fc -e - lsq=usq -1 }
 m()       { bat --tabs=2 "$@" }
 mn()      { nroff -man "$@" | m }
 mutt()    { mkdir -p /tmp/ml && command mutt "$@" }
-man()     { nvim "+Man $* | only" }
 p()       { pp | head }
 pl()      { ps -o user,pid,ppid,pcpu,pmem,vsz,rss,tty,s,stime,time,args "$@" }
 pm()      { pod2man "$@" | mn }
