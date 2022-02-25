@@ -605,10 +605,7 @@ require("packer").startup(function(use)
     "norcalli/nvim-colorizer.lua",
     config = function()
       vim.opt.termguicolors = true
-      require("colorizer").setup(
-        { "*" },
-        { names = true, RGB = true, RRGGBB = true, RRGGBBAA = true, css = true }
-      )
+      require("colorizer").setup()
     end,
   }
 
