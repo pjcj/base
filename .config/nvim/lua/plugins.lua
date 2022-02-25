@@ -36,6 +36,7 @@ require("packer").startup(function(use)
       "nvim-treesitter/nvim-treesitter-refactor",
       "nvim-treesitter/playground",
       "JoosepAlviste/nvim-ts-context-commentstring",
+      "windwp/nvim-ts-autotag",
     },
     run = ":TSUpdate",
     config = function()
@@ -59,6 +60,9 @@ require("packer").startup(function(use)
           enable = true,
           enable_autocmd = false,
         },
+        autotag = {
+          enable = true,
+        }
       }
     end,
   }
