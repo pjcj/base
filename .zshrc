@@ -365,6 +365,10 @@ else
 fi
 
 c() {
+    if [[ $1 == "--" ]]; then
+        shift
+    fi
+
     local DIR="$1:h"
     local STRIP="$1:r"
     local EXT="$1:e"
