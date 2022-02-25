@@ -305,6 +305,8 @@ bindkey "^E" history-beginning-search-menu-space-end
 bindkey "^O" push-line-or-edit
 bindkey "^P" accept-and-infer-next-history
 
+bindkey "^U" undo
+
 bindkey "^[[5~" vi-end-of-line
 bindkey "^[[6~" vi-forward-blank-word-end
 bindkey "^Y" vi-forward-word
