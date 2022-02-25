@@ -312,12 +312,12 @@ bindkey "^[[6~" vi-forward-blank-word-end
 bindkey "^Y" vi-forward-word
 
 # bindkey -s "§" "lC"
-bindkey -s "^[[15~" "["
-bindkey -s "^[[17~" "]"
-bindkey -s "^[[18~" "{"
-bindkey -s "^[[19~" "}"
-bindkey -s "^[[20~" "|"
-bindkey -s "^[[21~" "~"
+bindkey -s "^[[15~" "["  #f5
+bindkey -s "^[[17~" "]"  #f6
+bindkey -s "^[[18~" "{"  #f7
+bindkey -s "^[[19~" "}"  #f8
+bindkey -s "^[[20~" "|"  #f9
+bindkey -s "^[[21~" "~"  #f10
 # bindkey -s "^[[24~" "\`"
 
 bindkey "^[OP" fzf_git_commit_widget_k                  # f1
