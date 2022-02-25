@@ -790,18 +790,18 @@ git-commit-sel() {
     local cmd="echo {} | $(fzfgvsha)"
     g lg --color=always "$@" | \
         $(__fzfcmd) --ansi --tiebreak=index \
-            --header="f1 exit, f2 toggle, enter sha" \
-            --bind "enter:execute:echo {} | $get_sha | pbcopy" \
+            --header="f1 exit, f2 toggle, f3 diff, f4 sha" \
             --bind 'f3:preview:echo {} | grep -o "'"[a-f0-9]\\+"'" | head -1 | xargs -I % sh -c "'"git -c delta.side-by-side=false show --color=always %"'"' \
+            --bind "f4:execute:echo {} | $get_sha | pbcopy" \
             --preview="$cmd" | \
         while read item; do
-        echo -n "${item}" | eval "$get_sha"
-    done
+            echo -n "${item}" | eval "$get_sha"
+        done
     return $?
 }
 
 fzf_git_commit_widget() {
-    LBUFFER="${LBUFFER}$(git-commit-sel)"
+    LBUFFER="${LBUFFER}$(git-commit-sel --all)"
     local ret=$?
     zle redisplay
     typeset -f zle-line-init >/dev/null && zle zle-line-init
@@ -809,7 +809,8 @@ fzf_git_commit_widget() {
 }
 zle -N fzf_git_commit_widget
 
-_fzf_git() { git-commit-sel "$@" | echo -n "" }
+# _fzf_git() { git-commit-sel "$@" | echo -n "" }
+_fzf_git() { git-commit-sel "$@" }
 fzf_git_commit_widget_k() {
     IFS=" " read -A b <<< ${FZF_GIT_K:---all}
     _fzf_git "${b[@]}"
@@ -827,8 +828,8 @@ git-tag-sel() {
     local cmd="echo {} | $(fzfgv)"
     g tag | $(__fzfcmd) --tiebreak=index --preview="$cmd" "$@" | \
         while read item; do
-        echo -n "${item}"
-    done
+            echo -n "${item}"
+        done
     return $?
 }
 
@@ -850,8 +851,8 @@ git-branch-sel() {
     (eval "gb $opts; gb -r $opts") | \
         $(__fzfcmd) --ansi --tiebreak=index --preview="$cmd" "$@" | \
         while read item; do
-        echo -n "${item}" | eval "$get_branch"
-    done
+            echo -n "${item}" | eval "$get_branch"
+        done
     return $?
 }
 
