@@ -42,7 +42,10 @@ require("packer").startup(function(use)
     config = function()
       require("nvim-treesitter.configs").setup {
         ensure_installed = "maintained",
-        highlight = { enable = true },
+        highlight = {
+          enable = true,
+          disable = { "perl" },
+        },
         indent = { enable = false },
         refactor = {
           highlight_definitions = { enable = true },

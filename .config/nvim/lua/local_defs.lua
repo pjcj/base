@@ -220,7 +220,6 @@ local_defs.fn.set_buffer_settings = function()
     vmap("i", "<F3>", "$self->{}<ESC>i",                   l.map.defmap)
     vmap("i", "<F4>", "$self->",                           l.map.defmap)
     vim.cmd([[iabbr ,, =>]])
-    vim.cmd([[TSBufDisable highlight]])
   end
 end
 
