@@ -60,6 +60,10 @@ wk.register {
       },
     },
     lf = { function () lb.range_formatting() end, "format", mode = "v" },
+    t = {
+      name = "+toggle",
+      h = { ":TSBufToggle highlight<cr>", "treesitter highlight" },
+    },
   },
   ["<leader>"] = {
     h = {
