@@ -38,10 +38,8 @@ wk.register {
       q = { function () vim.diagnostic.setqflist() end, "quickfix" },
       r = { function () lb.rename() end, "rename" },
       t = {
-        name = "+tsserver",
-        i = { ":TSLspImportAll<cr>", "import all" },
-        o = { ":TSLspOrganize<cr>", "organise" },
-        r = { ":TSLspRenameFile<cr>", "rename file" },
+        name = "+toggle",
+        s = { function () require("null-ls").toggle("codespell") end, "codespell" },
       },
       v = {
         name = "+virtual text",
@@ -53,6 +51,12 @@ wk.register {
         a = { function () lb.add_workspace_folder() end, "add" },
         l = { function () print(vim.inspect(lb.list_workspace_folders())) end, "list" },
         r = { function () lb.remove_workspace_folder() end, "remove" },
+      },
+      y = {
+        name = "+tsserver",
+        i = { ":TSLspImportAll<cr>", "import all" },
+        o = { ":TSLspOrganize<cr>", "organise" },
+        r = { ":TSLspRenameFile<cr>", "rename file" },
       },
     },
     lf = { function () lb.range_formatting() end, "format", mode = "v" },
