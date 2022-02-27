@@ -558,17 +558,18 @@ hash -d local_base=~/g/local_base
 zshrc_load_status "environment"
 
 export BAT_THEME="Solarized (dark)"
+export GIT_PAGER=less
 export GOPATH=~/g/go
 export LANG=en_GB.UTF-8
 export LANGUAGE=en_GB.UTF-8
 export LC_ALL=en_GB.UTF-8
 export LESS='--LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS --mouse'
 export NOPASTE_SERVICES="Gist Pastie Snitch Shadowcat"
-export PAGER='less -N'
+export PAGER="less -N"
+export TEMPLATE_DIR=~base/templates
 export TERMINFO=~/.terminfo
 export TMOUT=0
 export TOP="-I all"
-export TEMPLATE_DIR=~base/templates
 export VIMTMP=/tmp/vim
 export VISUAL=$EDITOR
 
