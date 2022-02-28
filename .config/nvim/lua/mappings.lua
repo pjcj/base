@@ -95,7 +95,7 @@ wk.register({
     h = {
       name = "+hunk",
       r = { "<cmd>Gitsigns reset_hunk<cr>", "reset lines" },
-      s = { "<cmd>gitsigns stage_hunk<cr>", "stage lines" },
+      s = { "<cmd>Gitsigns stage_hunk<cr>", "stage lines" },
       -- s = {'<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<cr>', "stage lines"},
     },
   },
