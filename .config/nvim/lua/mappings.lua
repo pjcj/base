@@ -1,5 +1,7 @@
 local l = require "local_defs"
 
+vim.g.mapleader = ","
+
 local wk = require "which-key"
 -- {
 --   mode = "n", -- NORMAL mode
@@ -20,6 +22,7 @@ wk.register {
   ["<S-F1>"] = { "<cmd>q<cr>", "quit" },
   ["<S-F2>"] = { function() d.goto_prev() end, "previous diagnostic" },
   ["<S-F3>"] = { function() d.goto_next() end, "next diagnostic" },
+  ["ö"] = { "<cmd>:wa<cr>", "write all" },
   ["g"] = {
     D = { function () lb.declaration() end, "declaration" },
     d = { function () lb.definition() end, "definition" },
@@ -66,6 +69,10 @@ wk.register {
     },
   },
   ["<leader>"] = {
+    g = {
+      name = "+git",
+      g = { "<cmd>tab Git commit<cr>", "commit" },
+    },
     h = {
       name = "+hunk",
       b = { function () require "gitsigns".blame_line { full = true } end, "blame" },
@@ -78,6 +85,17 @@ wk.register {
       s = { "<cmd>Gitsigns stage_hunk<cr>", "stage hunk" },
       u = { "<cmd>Gitsigns undo_stage_hunk<cr>", "unstage hunk" },
     },
+    q = {
+      name = "+quote",
+      q = { [[cs'"]], "single -> double" },
+      Q = { [[cs"']], "double -> single" },
+    },
+    s = {
+      name = "+spell",
+      d = { "<cmd>setlocal spell spelllang=de_ch<cr>", "Deutsch" },
+      e = { "<cmd>setlocal spell spelllang=en_gb<cr>", "English" },
+      o = { "<cmd>set nospell<cr>", "off" },
+    },
     t = {
       name = "+toggle",
       b = { "<cmd>Gitsigns toggle_current_line_blame<CR>", "blame" },
@@ -86,6 +104,7 @@ wk.register {
       s = { function () require "sidebar-nvim".toggle() end, "sidebar" },
       t = { function () require "nvim-tree".toggle() end, "tree" },
     },
+
   },
 }
 
@@ -101,10 +120,7 @@ wk.register({
   },
 }, {mode = "v"})
 
-local vmap = vim.api.nvim_set_keymap               -- global mappings
-
-vim.g.mapleader = ","
-
+local vmap = vim.api.nvim_set_keymap -- global mappings
 local m = l.map.defmap
 local f4 = [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]]
 
@@ -170,20 +186,9 @@ vmap("n", "<F46>", "<M-F10>", {})
 vmap("n", "<F47>", "<M-F11>", {})
 vmap("n", "<F48>", "<M-F12>", {})
 
-vmap("n", "ö", [[<cmd>:w<cr>]], m)
-
-vmap("n", "<leader>gg", [[<cmd>tab Git commit<cr>]], m)
-
 vmap("n", "ga",      "<Plug>(EasyAlign)", {})
 vmap("x", "ga",      "<Plug>(EasyAlign)", {})
 vmap("v", "<Enter>", "<Plug>(EasyAlign)", {})
-
-vmap("n", "<leader>qq", [[cs'"]], {})
-vmap("n", "<leader>qQ", [[cs"']], {})
-
-vmap("n", "<leader>se", [[<cmd>setlocal spell spelllang=en_gb<cr>]], m)
-vmap("n", "<leader>sd", [[<cmd>setlocal spell spelllang=de_ch<cr>]], m)
-vmap("n", "<leader>so", [[<cmd>set nospell<cr>]],                    m)
 
 vmap("n", "s", "s", m)
 vmap("n", "S", "S", m)
