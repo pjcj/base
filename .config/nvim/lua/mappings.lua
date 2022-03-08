@@ -14,6 +14,10 @@ local wk = require "which-key"
 
 local lb = vim.lsp.buf
 local d = vim.diagnostic
+local t = require "telescope"
+local tb = require "telescope.builtin"
+local bd = require "betterdigraphs"
+
 wk.register {
   ["<F1>"] = { "<cmd>Gitsigns stage_hunk<cr>", "stage hunk" },
   -- ["<F1>"] = { function () require "gitsigns".stage_hunk() end, "stage hunk" },
@@ -23,7 +27,7 @@ wk.register {
   ["<S-F2>"] = { function() d.goto_prev() end, "previous diagnostic" },
   ["<S-F3>"] = { function() d.goto_next() end, "next diagnostic" },
   ["ö"] = { "<cmd>:wa<cr>", "write all" },
-  ["g"] = {
+  g = {
     D = { function () lb.declaration() end, "declaration" },
     d = { function () lb.definition() end, "definition" },
     i = { function () lb.implementation() end, "implementation" },
@@ -62,13 +66,39 @@ wk.register {
         r = { ":TSLspRenameFile<cr>", "rename file" },
       },
     },
-    lf = { function () lb.range_formatting() end, "format", mode = "v" },
     t = {
       name = "+toggle",
       h = { ":TSBufToggle highlight<cr>", "treesitter highlight" },
     },
   },
+  r = {
+    name = "+replace",
+    ["<C-k><C-k>"] = { function () bd.digraphs("r") end, "digraph" },
+  },
   ["<leader>"] = {
+    ["."] = { function () tb.find_files { hidden = true } end, "find files" },
+    [" "] = { function () tb.oldfiles() end, "old files" },
+    m = { function () tb.git_status() end, "git" },
+    f = {
+      name = "+telescope",
+      a = { function () tb.lsp_code_actions() end, "lsp code actions" },
+      b = { function () tb.buffers() end, "buffers" },
+      d = { function () tb.lsp_definitions() end, "lsp definitions" },
+      f = { function () tb.builtin() end, "builtin" },
+      g = { function () tb.live_grep() end, "grep" },
+      G = { function () tb.live_grep {
+          additional_args = function() return { "-w" } end
+        } end, "grep word" },
+      h = { function () tb.help_tags() end, "help" },
+      l = { function () tb.current_buffer_fuzzy_find() end, "fuzzy find" },
+      p = { function () t.extensions.neoclip.default() end, "paste" },
+      r = { function () tb.lsp_references() end, "lsp references" },
+      R = { function () t.extensions.refactoring.refactors() end, "refactor" },
+      s = { function () tb.grep_string() end, "grep string" },
+      S = { function () tb.grep_string { word_match = "-w" } end, "grep string word" },
+      t = { function () tb.tags() end, "tags" },
+      T = { function () tb.tags { only_current_buffer = true } end, "local tags" },
+    },
     g = {
       name = "+git",
       g = { "<cmd>tab Git commit<cr>", "commit" },
@@ -104,12 +134,13 @@ wk.register {
       s = { function () require "sidebar-nvim".toggle() end, "sidebar" },
       t = { function () require "nvim-tree".toggle() end, "tree" },
     },
-
   },
 }
 
 wk.register({
   ["<F1>"] = { "<cmd>Gitsigns stage_hunk<cr>", "stage lines" },
+  glf = { function () lb.range_formatting() end, "format" },
+  ["r<C-k><C-k>"] = { "<esc><cmd>lua bd.digraphs('gvr')<cr>", "digraph" },
   ["<leader>"] = {
     h = {
       name = "+hunk",
@@ -119,6 +150,10 @@ wk.register({
     },
   },
 }, {mode = "v"})
+
+wk.register({
+  ["<C-k><C-k>"] = { function () bd.digraphs("gvr") end, "digraph" },
+}, {mode = "i"})
 
 local vmap = vim.api.nvim_set_keymap -- global mappings
 local m = l.map.defmap

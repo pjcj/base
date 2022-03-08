@@ -252,7 +252,11 @@ require("packer").startup(function(use)
   use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
   use {
     "nvim-telescope/telescope.nvim",
-    requires = { { "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" } },
+    requires = {
+      "nvim-lua/popup.nvim",
+      "nvim-lua/plenary.nvim",
+      "protex/better-digraphs.nvim",
+    },
     config = function()
       local telescope = require "telescope"
       telescope.setup {
@@ -285,28 +289,6 @@ require("packer").startup(function(use)
 
       telescope.load_extension "fzf"
       telescope.load_extension "refactoring"
-
-      local l = require "local_defs"
-      -- stylua: ignore start
-      vim.api.nvim_set_keymap("n", "<leader>.",  [[<cmd>lua require "telescope.builtin".find_files({ hidden = true })<cr>]],      l.map.defmap)
-      vim.api.nvim_set_keymap("n", "<leader> ",  [[<cmd>lua require "telescope.builtin".oldfiles()<cr>]],                         l.map.defmap)
-      vim.api.nvim_set_keymap("n", "<leader>m",  [[<cmd>lua require "telescope.builtin".git_status()<cr>]],                       l.map.defmap)
-      vim.api.nvim_set_keymap("n", "<leader>fb", [[<cmd>lua require "telescope.builtin".buffers()<cr>]],                          l.map.defmap)
-      vim.api.nvim_set_keymap("n", "<leader>ff", [[<cmd>lua require "telescope.builtin".builtin()<cr>]],                          l.map.defmap)
-      vim.api.nvim_set_keymap("n", "<leader>fg", [[<cmd>lua require "telescope.builtin".live_grep()<cr>]],                        l.map.defmap)
-      vim.api.nvim_set_keymap("n", "<leader>fG", [[<cmd>lua require "telescope.builtin".live_grep({ additional_args = function() return { "-w" } end })<cr>]], l.map.defmap)
-      vim.api.nvim_set_keymap("n", "<leader>fh", [[<cmd>lua require "telescope.builtin".help_tags()<cr>]],                        l.map.defmap)
-      vim.api.nvim_set_keymap("n", "<leader>fs", [[<cmd>lua require "telescope.builtin".grep_string()<cr>]],                      l.map.defmap)
-      vim.api.nvim_set_keymap("n", "<leader>fS", [[<cmd>lua require "telescope.builtin".grep_string({ word_match = "-w" })<cr>]], l.map.defmap)
-      vim.api.nvim_set_keymap("n", "<leader>fl", [[<cmd>lua require "telescope.builtin".current_buffer_fuzzy_find()<cr>]],        l.map.defmap)
-      vim.api.nvim_set_keymap("n", "<leader>fa", [[<cmd>lua require "telescope.builtin".lsp_code_actions()<cr>]],                 l.map.defmap)
-      vim.api.nvim_set_keymap("n", "<leader>fd", [[<cmd>lua require "telescope.builtin".lsp_definitions()<cr>]],                  l.map.defmap)
-      vim.api.nvim_set_keymap("n", "<leader>fr", [[<cmd>lua require "telescope.builtin".lsp_references()<cr>]],                   l.map.defmap)
-      vim.api.nvim_set_keymap("n", "<leader>ft", [[<cmd>lua require "telescope.builtin".tags()<cr>]],                             l.map.defmap)
-      vim.api.nvim_set_keymap("n", "<leader>fT", [[<cmd>lua require "telescope.builtin".tags{ only_current_buffer = true }<cr>]], l.map.defmap)
-      vim.api.nvim_set_keymap("n", "<leader>fp", [[<cmd>lua require "telescope".extensions.neoclip.default()<cr>]],               l.map.defmap)
-      vim.api.nvim_set_keymap("v", "<leader>fR", [[<esc><cmd>lua require('telescope').extensions.refactoring.refactors()<cr>]],   l.map.defmap)
-      -- stylua: ignore end
 
       vim.cmd [[
         autocmd User TelescopePreviewerLoaded setlocal number
