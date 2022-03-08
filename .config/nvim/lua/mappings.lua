@@ -73,6 +73,12 @@ wk.register {
   },
   r = {
     name = "+replace",
+    ["<F5>"] = { "[", "[" },
+    ["<F6>"] = { "]", "]" },
+    ["<F7>"] = { "{", "{" },
+    ["<F8>"] = { "}", "}" },
+    ["<F9>"] = { "|", "|" },
+    ["<F10>"] = { "~", "~" },
     ["<C-k><C-k>"] = { function () bd.digraphs("r") end, "digraph" },
   },
   ["<leader>"] = {
@@ -152,6 +158,12 @@ wk.register({
 }, {mode = "v"})
 
 wk.register({
+  ["<F5>"] = { "[", "[" },
+  ["<F6>"] = { "]", "]" },
+  ["<F7>"] = { "{", "{" },
+  ["<F8>"] = { "}", "}" },
+  ["<F9>"] = { "|", "|" },
+  ["<F10>"] = { "~", "~" },
   ["<C-k><C-k>"] = { function () bd.digraphs("gvr") end, "digraph" },
 }, {mode = "i"})
 
@@ -160,23 +172,11 @@ local m = l.map.defmap
 local f4 = [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]]
 
 vmap("n", "<F4>",       f4,                                    m)
-vmap("i", "<F5>",       "[",                                   m)
-vmap("n", "r<F5>",      "r[",                                  m)
 vmap("n", "<F6>",       ":cprevious<cr>",                      m)
 vmap("n", "<S-F6>",     ":lprevious<cr>",                      m)
-vmap("i", "<F6>",       "]",                                   m)
-vmap("n", "r<F6>",      "r]",                                  m)
 vmap("n", "<F7>",       ":cnext<cr>",                          m)
 vmap("n", "<S-F7>",     ":lnext<cr>",                          m)
-vmap("i", "<F7>",       "{",                                   m)
-vmap("n", "r<F7>",      "r{",                                  m)
-vmap("i", "<F8>",       "}",                                   m)
-vmap("n", "r<F8>",      "r}",                                  m)
 vmap("n", "<F9>",       "<cmd>cclose<bar>lclose<bar>only<cr>", m)
-vmap("i", "<F9>",       "|",                                   m)
-vmap("n", "r<F9>",      "r|",                                  m)
-vmap("i", "<F10>",      "~",                                   m)
-vmap("n", "r<F10>",     "r~",                                  m)
 vmap("n", "<F12>",      "",                                  m)
 vmap("n", "<PageUp>",   "0",                                 m)
 vmap("n", "<PageDown>", "0",                                 m)
