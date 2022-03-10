@@ -74,7 +74,7 @@ local function setup_null_ls()
   }
 
   local sources = {
-    a.eslint_d,
+    a.eslint,
     -- a.gitsigns,
     a.proselint,
     -- a.refactoring,
@@ -82,7 +82,7 @@ local function setup_null_ls()
     c.spell,
     c.vsnip,
     d.codespell.with { extra_args = codespell },
-    d.eslint_d,
+    d.eslint,
     d.golangci_lint,
     d.hadolint,
     d.jsonlint,
@@ -94,7 +94,7 @@ local function setup_null_ls()
     d.yamllint,
     d.zsh,
     f.codespell.with { extra_args = codespell },
-    f.eslint_d,
+    f.eslint,
     f.fixjson,
     f.golines,
     f.prettier,
