@@ -123,8 +123,8 @@ wk.register {
     },
     q = {
       name = "+quote",
-      q = { [[cs'"]], "single -> double" },
-      Q = { [[cs"']], "double -> single" },
+      q = { [[cs'"]], "single -> double", noremap = false },
+      Q = { [[cs"']], "double -> single", noremap = false },
     },
     s = {
       name = "+spell",
