@@ -84,6 +84,7 @@ wk.register {
   ["<leader>"] = {
     ["."] = { function () tb.find_files { hidden = true } end, "find files" },
     [" "] = { function () tb.oldfiles() end, "old files" },
+    d = { "<cmd>MarkdownPreviewToggle<cr>", "markdown" },
     m = { function () tb.git_status() end, "git" },
     f = {
       name = "+telescope",

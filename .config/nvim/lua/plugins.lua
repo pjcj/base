@@ -810,17 +810,7 @@ require("packer").startup(function(use)
 
   use {
     "iamcco/markdown-preview.nvim",
-    config = function()
-      vim.call "mkdp#util#install"
-      local l = require "local_defs"
-      vim.api.nvim_set_keymap(
-        "n",
-        "<leader>d",
-        [[<cmd>MarkdownPreviewToggle<cr>]],
-        l.map.defmap
-      )
-    end,
-    cmd = "MarkdownPreviewToggle",
-    ft = { "markdown" },
+    run = "cd app && yarn install",
+    ft = "markdown",
   }
 end)
