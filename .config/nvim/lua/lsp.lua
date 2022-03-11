@@ -97,7 +97,7 @@ local function setup_null_ls()
     f.eslint,
     f.fixjson,
     f.golines,
-    f.prettier,
+    -- f.prettier,
     f.shellharden,
     f.shfmt.with { extra_args = { "-i", "2", "-s" } },
     f.stylua,
