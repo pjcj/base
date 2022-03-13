@@ -91,6 +91,7 @@ local function setup_null_ls()
     d.proselint,
     d.selene,
     d.shellcheck,
+    d.tidy,
     d.yamllint,
     d.zsh,
     f.codespell.with { extra_args = codespell },
@@ -101,6 +102,7 @@ local function setup_null_ls()
     f.shellharden,
     f.shfmt.with { extra_args = { "-i", "2", "-s" } },
     f.stylua,
+    f.tidy,
     h.dictionary,
   }
 
