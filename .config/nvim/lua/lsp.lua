@@ -68,9 +68,10 @@ local function setup_null_ls()
     "--builtin",
     "clear,rare,informal,usage,names",
     "-L",
-    "isnt,master",
+    "isnt,master,ba",
     -- isnt       => perl test method
     -- master     => yeah, I know but it's not me
+    -- ba         => seems to crop up
   }
 
   local sources = {
