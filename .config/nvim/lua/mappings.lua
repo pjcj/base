@@ -124,6 +124,8 @@ wk.register {
     },
     q = {
       name = "+quote",
+      d = { [[ds']], "delete single", noremap = false },
+      D = { [[ds"]], "delete double", noremap = false },
       q = { [[cs'"]], "single -> double", noremap = false },
       Q = { [[cs"']], "double -> single", noremap = false },
     },
