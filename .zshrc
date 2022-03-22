@@ -189,6 +189,19 @@ KEYTIMEOUT=1
 MANPAGER="nvim +Man!"
 MANWIDTH=999
 
+zshrc_load_status "path"
+
+PATH=$(dirname $(readlink -f $(which perl))):$PATH
+PATH=~/.local/bin:~/bin:~/g/sw/bin:~/g/sw/usr/bin:$PATH
+PATH=~/.cargo/bin:$NPM_PACKAGES/bin:$PATH
+# PATH=~/.yarn/bin:~/.config/yarn/global/node_modules/.bin:$PATH
+PATH=/snap/bin:$PATH
+PATH=~/g/local_base/utils:~/g/base/utils:$PATH
+PATH=~/g/base/utils/${(L)$(uname)}:$PATH
+PATH=$PATH:~/g/go/bin:/usr/local/sbin:/usr/sbin:/sbin
+MANPATH=/usr/share/man:${MANPATH:-manpath}
+MANPATH=~/g/sw/share/man:$NPM_PACKAGES/share/man:$MANPATH
+
 zshrc_load_status "completion system"
 
 autoload -U compinit
@@ -342,19 +355,6 @@ TIMEFMT="  %J  %E %P  %U user + %S system  %W swaps  %Mk mem"
 LS_OPTIONS=
 
 export NPM_PACKAGES=~/g/sw/.npm-packages
-
-zshrc_load_status "path"
-
-PATH=$(dirname $(readlink -f $(which perl))):$PATH
-PATH=~/.local/bin:~/bin:~/g/sw/bin:~/g/sw/usr/bin:$PATH
-PATH=~/.cargo/bin:$NPM_PACKAGES/bin:$PATH
-# PATH=~/.yarn/bin:~/.config/yarn/global/node_modules/.bin:$PATH
-PATH=/snap/bin:$PATH
-PATH=~/g/local_base/utils:~/g/base/utils:$PATH
-PATH=~/g/base/utils/${(L)$(uname)}:$PATH
-PATH=$PATH:~/g/go/bin:/usr/local/sbin:/usr/sbin:/sbin
-MANPATH=/usr/share/man:${MANPATH:-manpath}
-MANPATH=~/g/sw/share/man:$NPM_PACKAGES/share/man:$MANPATH
 
 zshrc_load_status "aliases"
 
