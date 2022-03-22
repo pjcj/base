@@ -80,7 +80,7 @@ local function setup_null_ls()
     a.proselint,
     -- a.refactoring,
     a.shellcheck,
-    c.spell,
+    -- c.spell,  -- puts funny stuff in completion
     c.vsnip,
     d.codespell.with { extra_args = codespell },
     d.eslint,
