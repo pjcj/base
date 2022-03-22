@@ -308,6 +308,7 @@ require("packer").startup(function(use)
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-calc",
       "hrsh7th/cmp-emoji",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
       "quangnguyen30192/cmp-nvim-tags",
       "andersevenrud/cmp-tmux",
       "onsails/lspkind-nvim",
@@ -438,6 +439,7 @@ require("packer").startup(function(use)
         },
         sources = {
           { name = "nvim_lua" },
+          { name = "nvim_lsp_signature_help" },
           {
             name = "buffer",
             option = {
