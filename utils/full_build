@@ -134,7 +134,8 @@ else
 
     $pip3 install --upgrade --user thefuck
     $pip3 install --upgrade --user docker-compose
-    $pip3 install --upgrade --user git+git://github.com/powerline/powerline
+    # $pip3 install --upgrade --user git+git://github.com/powerline/powerline
+    $pip3 install --upgrade --user powerline-status
 fi
 
 if [[ "$EDITOR" == "nvimx" ]]; then
@@ -181,7 +182,7 @@ if [[ "$EDITOR" == "nvim" ]]; then
     go install github.com/nametake/golangci-lint-langserver@latest
     go install github.com/client9/misspell/cmd/misspell@latest
 
-    $pip3 install --upgrade --user git+git://github.com/powerline/powerline
+    # $pip3 install --upgrade --user git+git://github.com/powerline/powerline
 fi
 
 # if [[ $(uname) == Linux ]]; then
