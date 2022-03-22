@@ -387,6 +387,7 @@ require("packer").startup(function(use)
               calc = "calc",
               spell = "spell",
               emoji = "emoji",
+              dictionary = "dict",
             },
           },
         },
