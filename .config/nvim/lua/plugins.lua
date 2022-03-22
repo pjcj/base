@@ -389,6 +389,17 @@ require("packer").startup(function(use)
               emoji = "emoji",
               dictionary = "dict",
             },
+            before = function (entry, vim_item)
+              vim_item.dup = ({
+                nvim_lsp = 0,
+                buffer = 0,
+                tags = 0,
+                path = 0,
+                tmux = 0,
+                dictionary = 0,
+              })[entry.source.name] or 0
+              return vim_item
+            end
           },
         },
         experimental = {
