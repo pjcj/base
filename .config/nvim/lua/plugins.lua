@@ -319,6 +319,7 @@ require("packer").startup(function(use)
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
       local cmp = require "cmp"
+      local cmp_buffer = require("cmp_buffer")
       local lspkind = require "lspkind"
 
       -- stylua: ignore start
@@ -453,6 +454,12 @@ require("packer").startup(function(use)
           expand = function(args)
             vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
           end,
+        },
+        sorting = {
+          comparators = {
+            function(...) return cmp_buffer:compare_locality(...) end,
+            -- The rest of your comparators...
+          }
         },
       }
 
