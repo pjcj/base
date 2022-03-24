@@ -68,10 +68,11 @@ local function setup_null_ls()
     "--builtin",
     "clear,rare,informal,usage,names",
     "-L",
-    "isnt,master,ba",
+    "isnt,master,ba,decorder",
     -- isnt       => perl test method
     -- master     => yeah, I know but it's not me
     -- ba         => seems to crop up
+    -- decorder   => go linter
   }
 
   local sources = {
@@ -88,7 +89,7 @@ local function setup_null_ls()
     d.hadolint,
     d.jsonlint,
     d.markdownlint,
-    d.misspell.with { extra_args = { "-i", "XXXOXXX" } },
+    d.misspell.with { extra_args = { "-i", "importas" } },
     d.proselint,
     d.selene,
     d.shellcheck,
