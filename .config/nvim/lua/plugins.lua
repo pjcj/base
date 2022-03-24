@@ -376,7 +376,7 @@ require("packer").startup(function(use)
         formatting = {
           format = lspkind.cmp_format {
             mode = "symbol_text",
-            -- maxwidth = 50,
+            maxwidth = 80,
             menu = {
               buffer = "buf",
               nvim_lsp = "lsp",
