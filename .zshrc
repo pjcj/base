@@ -191,6 +191,7 @@ MANWIDTH=999
 
 zshrc_load_status "path"
 
+[[ -n $HOMEBREW_PREFIX ]] && PATH=$HOMEBREW_PREFIX/bin:$PATH
 PATH=$(dirname $(readlink -f $(which perl))):$PATH
 PATH=~/.local/bin:~/bin:~/g/sw/bin:~/g/sw/usr/bin:$PATH
 PATH=~/.cargo/bin:$NPM_PACKAGES/bin:$PATH
