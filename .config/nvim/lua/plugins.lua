@@ -747,7 +747,7 @@ require("packer").startup(function(use)
       local sidebar = require "sidebar-nvim"
       local opts = {
         open = false,
-        sections = { "git", "diagnostics", "todos", "buffers", "symbols" },
+        sections = { "git", "diagnostics", "buffers", "symbols" },
         disable_closing_prompt = true,
       }
       sidebar.setup(opts)
