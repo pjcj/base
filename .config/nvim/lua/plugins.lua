@@ -787,6 +787,27 @@ require("packer").startup(function(use)
     end,
   }
 
+  use {
+    "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("todo-comments").setup {
+        highlight = {
+          before = "", -- "fg" or "bg" or empty
+          keyword = "fg", -- "fg", "bg", "wide" or empty
+          after = "fg", -- "fg" or "bg" or empty
+          pattern = [[.*<(KEYWORDS)\s*]], -- pattern or table of patterns
+          comments_only = true, -- uses treesitter to match keywords in comments
+          max_line_len = 400, -- ignore lines longer than this
+          exclude = {}, -- list of file types to exclude highlighting
+        },
+        search = {
+          pattern = [[\b(KEYWORDS)\b]],
+        },
+      }
+    end
+  }
+
   use "elihunter173/dirbuf.nvim"
   use {
     "kyazdani42/nvim-tree.lua",
