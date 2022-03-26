@@ -821,7 +821,7 @@ fzf_git_commit_widget() {
 zle -N fzf_git_commit_widget
 
 # _fzf_git() { git-commit-sel "$@" | echo -n "" }
-_fzf_git() { git-commit-sel "$@" }
+_fzf_git() { git-commit-sel "$@" | osc52 }
 fzf_git_commit_widget_k() {
     IFS=" " read -A b <<< ${FZF_GIT_K:---all}
     _fzf_git "${b[@]}"
