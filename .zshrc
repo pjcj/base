@@ -803,7 +803,7 @@ git-commit-sel() {
         $(__fzfcmd) --ansi --tiebreak=index \
             --header="f1 exit, f2 toggle, f3 diff, f4 sha" \
             --bind 'f3:preview:echo {} | grep -o "'"[a-f0-9]\\+"'" | head -1 | xargs -I % sh -c "'"git -c delta.side-by-side=false show --color=always %"'"' \
-            --bind "f4:execute:echo {} | $get_sha | pbcopy" \
+            --bind "f4:execute:echo {} | $get_sha | osc52" \
             --preview="$cmd" | \
         while read item; do
             echo -n "${item}" | eval "$get_sha"
