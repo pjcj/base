@@ -525,25 +525,25 @@ __tmux-sessions() {
 compdef __tmux-sessions tm
 
 __gwm() {
-      local -a records=( ${(ps.\n\n.)"$(_call_program directories git worktree list --porcelain)"} )
-  local -a directories descriptions
-  local i hash branch
-  for i in $records; do
-    directories+=( ${${i%%$'\n'*}#worktree } )
-    hash=${${${"${(f)i}"[2]}#HEAD }[1,9]}
-    branch=${${"${(f)i}"[3]}#branch refs/heads/}
+    local -a records=( ${(ps.\n\n.)"$(_call_program directories git worktree list --porcelain)"} )
+    local -a directories descriptions
+    local i hash branch
+    for i in $records; do
+        directories+=( ${${i%%$'\n'*}#worktree } )
+        hash=${${${"${(f)i}"[2]}#HEAD }[1,9]}
+        branch=${${"${(f)i}"[3]}#branch refs/heads/}
 
     # Simulate the non-porcelain output
     if [[ $branch == detached ]]; then
-      # TODO: show a ref that points at $hash here, like vcs_info does?
-      branch="(detached HEAD)"
+        # TODO: show a ref that points at $hash here, like vcs_info does?
+        branch="(detached HEAD)"
     else
-      branch="[$branch]"
+        branch="[$branch]"
     fi
 
     descriptions+=( "${directories[-1]}"$'\t'"$hash $branch" )
-  done
-  _wanted directories expl 'working tree' compadd -ld descriptions -S ' ' -f -M 'r:|/=* r:|=*' -a directories
+done
+_wanted directories expl 'working tree' compadd -ld descriptions -S ' ' -f -M 'r:|/=* r:|=*' -a directories
 
 }
 compdef __gwm gwm
@@ -722,9 +722,9 @@ if [[ -e ~/.plenv ]] then
 fi
 
 if [[ $(uname -s) = Darwin ]]; then
-  PATH="/usr/local/opt/node@14/bin:$PATH:~/Library/Python/3.9/bin"
-  LDFLAGS="-L/usr/local/opt/node@14/lib"
-  CPPFLAGS="-I/usr/local/opt/node@14/include"
+    PATH="/usr/local/opt/node@14/bin:$PATH:~/Library/Python/3.9/bin"
+    LDFLAGS="-L/usr/local/opt/node@14/lib"
+    CPPFLAGS="-I/usr/local/opt/node@14/include"
 fi
 
 zshrc_load_status "fzf"
