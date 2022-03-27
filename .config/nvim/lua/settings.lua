@@ -28,7 +28,7 @@ vopt.shiftround    = true
 vopt.shiftwidth    = 2
 vopt.shortmess     = vopt.shortmess + { c = true }
 vopt.showmatch     = true
-vopt.signcolumn    = "auto:1"
+vopt.signcolumn    = "auto:4"
 vopt.smartcase     = true
 vopt.smarttab      = true
 vopt.termguicolors = true
