@@ -796,7 +796,7 @@ require("packer").startup(function(use)
           before = "", -- "fg" or "bg" or empty
           keyword = "fg", -- "fg", "bg", "wide" or empty
           after = "fg", -- "fg" or "bg" or empty
-          pattern = [[<(KEYWORDS)>]], -- pattern or table of patterns
+          pattern = [[ (KEYWORDS)>]], -- pattern or table of patterns
           comments_only = true, -- uses treesitter to match keywords in comments
           max_line_len = 400, -- ignore lines longer than this
           exclude = {}, -- list of file types to exclude highlighting
