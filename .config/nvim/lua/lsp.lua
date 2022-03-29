@@ -34,10 +34,10 @@ local perl_diagnostics = {
   filetypes = { "perl" },
   generator = null_ls.generator {
     command = perl_executable,
-    args = { "$FILENAME", "$ROOT", "$FILEEXT", "$TEXT" },
+    args = { "$FILENAME", "$ROOT", "$FILEEXT" },
     to_stdin = true,
     from_stderr = true,
-    format = "line", --raw, json, or line
+    format = "json", --raw, json, or line
     check_exit_code = function(code, stderr)
       local success = code <= 1
       if not success then
@@ -45,12 +45,21 @@ local perl_diagnostics = {
       end
       return success
     end,
-    on_output = helpers.diagnostics.from_patterns {
-      {
-        pattern = [[(%d+):(.*)]],
-        groups = { "row", "message" },
+    on_output = helpers.diagnostics.from_json({
+      attributes = {
+        row = "row",
+        -- col = "start_column",
+        -- end_col = "end_column",
+        -- severity = "annotation_level",
+        message = "message",
       },
-    },
+      -- severities = {
+        -- helpers.diagnostics.severities["information"],
+        -- helpers.diagnostics.severities["warning"],
+        -- helpers.diagnostics.severities["error"],
+        -- helpers.diagnostics.severities["hint"],
+      -- },
+    }),
   },
 }
 
