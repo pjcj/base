@@ -102,6 +102,7 @@ local function setup_null_ls()
     d.proselint,
     d.selene,
     d.shellcheck,
+    -- d.sqlfluff,  -- as soon as it works better
     d.tidy,
     d.yamllint,
     d.zsh,
@@ -112,6 +113,7 @@ local function setup_null_ls()
     -- f.prettier,
     f.shellharden,
     f.shfmt.with { extra_args = { "-i", "2", "-s" } },
+    -- f.sqlfluff,
     f.stylua,
     f.tidy,
     h.dictionary,
