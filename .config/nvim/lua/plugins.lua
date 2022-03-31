@@ -598,6 +598,8 @@ require("packer").startup(function(use)
     end,
   }
 
+  use "rhysd/conflict-marker.vim"
+
   use {
     "ruanyl/vim-gh-line",
     config = function()
