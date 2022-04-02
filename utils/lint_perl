@@ -61,7 +61,7 @@ sub main {
 
   my $ignore = $ENV{LINT_PERL_IGNORE} // "";
   say $l "-- ignoring [$ignore]";
-  my $err = qr/(.*) at (?:(?:\Q$tmpfile\E)|-) line (\d+)([^\n]*)/s;
+  my $err = qr/(.*?) at (?:(?:\Q$tmpfile\E)|-) line (\d+)([^\n]*)/s;
   # my $err = qr/(.*) at - line (\d+)([^\n]*)/s;
   # say $l "-- Error regex [$err]";
   my @errs;
