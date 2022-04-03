@@ -115,6 +115,13 @@ $mx
 # h
 +h.$d:$O->{home_ip}:$ttl
 
+# tailscale
++twin.$d:100.74.4.47:$ttl
++tpyx.$d:100.117.153.89:$ttl
++tca.$d:100.112.5.73:$ttl
++tcp.$d:100.106.242.114:$ttl
++tpop6.$d:100.111.191.16:$ttl
+
 # skill
 +skill.$d:$O->{home_ip}:$ttl
 
