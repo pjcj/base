@@ -111,6 +111,9 @@ EOT
 }
 
 sub main {
+    say "You want to run configure_dns";
+    exit;
+
     get_options;
 
     my $vb = $O->{verbose} ? "--verbose " : "";
