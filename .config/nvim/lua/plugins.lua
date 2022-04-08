@@ -723,6 +723,7 @@ require("packer").startup(function(use)
   use "junegunn/vim-easy-align"
   use "tpope/vim-surround"
   use "tpope/vim-repeat"
+  use "cohama/lexima.vim"
   use "windwp/nvim-ts-autotag"
   use "AndrewRadev/splitjoin.vim" -- gS, gJ
   use "Konfekt/vim-unicode-homoglyphs" -- gy
