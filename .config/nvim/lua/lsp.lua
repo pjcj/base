@@ -211,6 +211,7 @@ local function setup_servers()
     float = {
       source = "always", -- or "if_many"
     },
+    severity_sort = true,
   }
 
   local border = "rounded"
