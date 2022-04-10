@@ -161,10 +161,10 @@ wk.register({
 }, {mode = "v"})
 
 wk.register({
-  ["<F5>"] = { "[", "[" },
-  ["<F6>"] = { "]", "]" },
-  ["<F7>"] = { "{", "{" },
-  ["<F8>"] = { "}", "}" },
+  ["<F5>"] = { "[", "[", noremap = false },
+  ["<F6>"] = { "]", "]", noremap = false },
+  ["<F7>"] = { "{", "{", noremap = false },
+  ["<F8>"] = { "}", "}", noremap = false },
   ["<F9>"] = { "|", "|" },
   ["<F10>"] = { "~", "~" },
   ["<C-k><C-k>"] = { function () bd.digraphs("gvr") end, "digraph" },
