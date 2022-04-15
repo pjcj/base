@@ -24,4 +24,8 @@ vim.cmd([[
     autocmd!
     autocmd FocusLost * silent! wa
   augroup end
+
+  augroup file_types
+    autocmd!
+    autocmd BufNewFile,BufReadPost *.mc set ft=mason
 ]])
