@@ -77,9 +77,10 @@ local function setup_null_ls()
     "--builtin",
     "clear,rare,informal,usage,names",
     "-L",
-    "isnt,master,ba,decorder,ser",
+    "isnt,master,slave,slaves,ba,decorder,ser",
     -- isnt       => perl test method
     -- master     => yeah, I know but it's not me
+    -- slave      => same
     -- ba         => seems to crop up
     -- decorder   => go linter
     -- ser        => serial
