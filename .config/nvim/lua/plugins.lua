@@ -321,8 +321,8 @@ require("packer").startup(function(use)
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
       local cmp = require "cmp"
-      local cmp_buffer = require("cmp_buffer")
       local lspkind = require "lspkind"
+      local compare = cmp.config.compare
 
       -- stylua: ignore start
       lspkind.init({
@@ -441,6 +441,7 @@ require("packer").startup(function(use)
         sources = {
           { name = "nvim_lua" },
           { name = "nvim_lsp_signature_help" },
+          { name = "nvim_lsp" },
           {
             name = "buffer",
             option = {
@@ -451,13 +452,12 @@ require("packer").startup(function(use)
               keyword_pattern = [[\%(\k\+\|\w\+\)]],
             },
           },
-          { name = "nvim_lsp" },
+          { name = "tags" },
+          { name = "path" },
           {
             name = "tmux",
             option = { all_panes = true, label = "[tmux]" },
           },
-          { name = "tags" },
-          { name = "path" },
           { name = "calc" },
           { name = "emoji" },
           {
@@ -471,10 +471,22 @@ require("packer").startup(function(use)
           end,
         },
         sorting = {
+          priority_weight = 1.0,
           comparators = {
-            function(...) return cmp_buffer:compare_locality(...) end,
-            -- The rest of your comparators...
-          }
+            compare.locality,
+            compare.recently_used,
+            compare.score,
+            -- score = score +
+            --  ((#sources - (source_index - 1)) * sorting.priority_weight)
+            compare.offset,
+            compare.order,
+            -- compare.score_offset,
+            -- compare.scopes,
+            -- compare.sort_text,
+            -- compare.exact,
+            -- compare.kind,
+            -- compare.length,
+          },
         },
       }
 
