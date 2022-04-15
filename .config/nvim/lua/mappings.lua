@@ -228,6 +228,11 @@ vmap("n", "ga",      "<Plug>(EasyAlign)", {})
 vmap("x", "ga",      "<Plug>(EasyAlign)", {})
 vmap("v", "<Enter>", "<Plug>(EasyAlign)", {})
 
+vmap("v", "<C-Up>", "<Plug>MoveBlockUp", {})
+vmap("v", "<C-Down>", "<Plug>MoveBlockDown", {})
+vmap("v", "<C-Left>", "<Plug>MoveBlockLeft", {})
+vmap("v", "<C-Right>", "<Plug>MoveBlockRight", {})
+
 vmap("n", "s", "s", m)
 vmap("n", "S", "S", m)
 vmap("n", ",,", "<Plug>Lightspeed_s", {})

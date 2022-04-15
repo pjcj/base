@@ -688,6 +688,13 @@ require("packer").startup(function(use)
     end,
   }
 
+  use {
+    "matze/vim-move",
+    config = function()
+      vim.g.move_map_keys = 0
+    end,
+}
+
   use "gioele/vim-autoswap"
   use "farmergreg/vim-lastplace"
 
