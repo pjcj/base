@@ -42,6 +42,7 @@ require("packer").startup(function(use)
     config = function()
       require("nvim-treesitter.configs").setup {
         ensure_installed = "all",
+        ignore_install = { "swift" },  -- requires glibc 2.28
         highlight = {
           enable = true,
           disable = { "perl" },
