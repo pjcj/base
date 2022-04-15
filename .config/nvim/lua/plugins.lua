@@ -661,6 +661,8 @@ require("packer").startup(function(use)
         buftype_exclude  = { "terminal" },
         filetype_exclude = {
           "diff", "help", "markdown", "packer", "qf", "lspinfo", "checkhealth",
+          -- "perl",
+          "man",
           "",
         },
         context_patterns = {
