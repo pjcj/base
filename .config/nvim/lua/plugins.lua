@@ -742,10 +742,21 @@ require("packer").startup(function(use)
     end,
   }
 
+  use {
+    "cohama/lexima.vim",
+    config = function()
+      vim.cmd([[
+        call lexima#add_rule({"char": '"', "at": '\%#\w'})
+        call lexima#add_rule({"char": '(', "at": '\%#\w'})
+        call lexima#add_rule({"char": '[', "at": '\%#\w'})
+        call lexima#add_rule({"char": '{', "at": '\%#\w'})
+      ]])
+    end,
+  }
+
   use "junegunn/vim-easy-align"
   use "tpope/vim-surround"
   use "tpope/vim-repeat"
-  use "cohama/lexima.vim"
   use "windwp/nvim-ts-autotag"
   use "AndrewRadev/splitjoin.vim" -- gS, gJ
   use "Konfekt/vim-unicode-homoglyphs" -- gy
