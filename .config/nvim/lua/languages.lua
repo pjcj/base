@@ -1,7 +1,8 @@
 vim.cmd([[
   augroup yank_highlight
     autocmd!
-    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+    autocmd TextYankPost * silent!
+      \ lua vim.highlight.on_yank{ higroup="Cursor", timeout=1000 }
   augroup end
 ]])
 
