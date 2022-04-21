@@ -768,6 +768,8 @@ require("packer").startup(function(use)
     after = "vim-textobj-user",
   }
 
+  use "axieax/urlview.nvim"
+
   use {
     "dstein64/nvim-scrollview",
     config = function()

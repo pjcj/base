@@ -105,6 +105,8 @@ wk.register {
       S = { function () tb.grep_string { word_match = "-w" } end, "grep string word" },
       t = { function () tb.tags() end, "tags" },
       T = { function () tb.tags { only_current_buffer = true } end, "local tags" },
+      u = { "<cmd>UrlView packer picker=telescope<cr>", "packer plugins" },
+      U = { "<cmd>UrlView buffer picker=telescope<cr>", "urls" },
     },
     g = {
       name = "+git",
