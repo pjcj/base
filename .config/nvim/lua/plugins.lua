@@ -475,13 +475,13 @@ require("packer").startup(function(use)
           comparators = {
             compare.locality,
             compare.recently_used,
+            compare.scopes,
             compare.score,
             -- score = score +
             --  ((#sources - (source_index - 1)) * sorting.priority_weight)
             compare.offset,
             compare.order,
             -- compare.score_offset,
-            -- compare.scopes,
             -- compare.sort_text,
             -- compare.exact,
             -- compare.kind,
