@@ -418,7 +418,7 @@ require("packer").startup(function(use)
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
           },
-          -- ["<CR>"] = cmp.mapping.confirm { select = true },
+          ["<C-y>"] = cmp.mapping.confirm { select = true },
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
