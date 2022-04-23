@@ -20,6 +20,11 @@ fi
 
 gobase
 
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+source "$ZINIT_HOME/zinit.zsh"
+zinit self-update
+zinit update --parallel
+
 curl -SL https://github.com/docker/cli/raw/master/contrib/completion/zsh/_docker \
     >| ~/g/base/zsh/functions/_docker
 curl -SL https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose \

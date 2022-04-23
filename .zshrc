@@ -22,7 +22,6 @@ if [[ ! -f $ZINIT_HOME/zinit.zsh ]]; then
         print -P "%F{33}▓▒░ %F{34}Installation successful.%f" || \
         print -P "%F{160}▓▒░ The clone has failed.%f"
 fi
-
 source "$ZINIT_HOME/zinit.zsh"
 
 zshrc_load_status "load plugins"
