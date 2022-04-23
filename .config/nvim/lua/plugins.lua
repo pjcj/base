@@ -260,8 +260,19 @@ require("packer").startup(function(use)
     },
     config = function()
       local telescope = require "telescope"
+      local actions = require "telescope.actions"
       telescope.setup {
         defaults = {
+          mappings = {
+            i = {
+              ["<c-s>"] = actions.select_vertical,
+              ["<c-k>"] = actions.which_key,
+            },
+            n = {
+              ["<c-s>"] = actions.select_vertical,
+              ["<c-k>"] = actions.which_key,
+            },
+          },
           extensions = {
             fzf = {
               -- default options
