@@ -952,7 +952,7 @@ elif [ 1 = 1 ]; then
     ZSH_GIT_PROMPT_SHOW_STASH=1
     ZSH_GIT_PROMPT_SHOW_UPSTREAM=
 
-    . ~/.zinit/plugins/woefe---git-prompt.zsh/git-prompt.zsh
+    . ~/.local/share/zinit/plugins/woefe---git-prompt.zsh/git-prompt.zsh
 
     if [ $EUID -eq 0 ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
     line() { printf '%.s―' {1..$(tput cols)} }
