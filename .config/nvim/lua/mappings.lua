@@ -17,11 +17,12 @@ local d = vim.diagnostic
 local t = require "telescope"
 local tb = require "telescope.builtin"
 local bd = require "better-digraphs"
+local gs = require "gitsigns"
 
 wk.register {
-  ["<F1>"] = { function () require "gitsigns".stage_hunk() end, "stage hunk" },
-  ["<F2>"] = { "<cmd>Gitsigns prev_hunk<cr>", "previous hunk" },
-  ["<F3>"] = { "<cmd>Gitsigns next_hunk<cr>", "next hunk" },
+  ["<F1>"] = { function () gs.stage_hunk() end, "stage hunk" },
+  ["<F2>"] = { function () gs.prev_hunk() end, "stage hunk" },
+  ["<F3>"] = { function () gs.next_hunk() end, "stage hunk" },
   ["<S-F1>"] = { "<cmd>q<cr>", "quit" },
   ["<S-F2>"] = { function() d.goto_prev() end, "previous diagnostic" },
   ["<S-F3>"] = { function() d.goto_next() end, "next diagnostic" },
