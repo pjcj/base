@@ -16,7 +16,7 @@ local lb = vim.lsp.buf
 local d = vim.diagnostic
 local t = require "telescope"
 local tb = require "telescope.builtin"
-local bd = require "betterdigraphs"
+local bd = require "better-digraphs"
 
 wk.register {
   ["<F1>"] = { function () require "gitsigns".stage_hunk() end, "stage hunk" },
