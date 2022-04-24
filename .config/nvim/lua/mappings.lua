@@ -19,8 +19,7 @@ local tb = require "telescope.builtin"
 local bd = require "betterdigraphs"
 
 wk.register {
-  ["<F1>"] = { "<cmd>Gitsigns stage_hunk<cr>", "stage hunk" },
-  -- ["<F1>"] = { function () require "gitsigns".stage_hunk() end, "stage hunk" },
+  ["<F1>"] = { function () require "gitsigns".stage_hunk() end, "stage hunk" },
   ["<F2>"] = { "<cmd>Gitsigns prev_hunk<cr>", "previous hunk" },
   ["<F3>"] = { "<cmd>Gitsigns next_hunk<cr>", "next hunk" },
   ["<S-F1>"] = { "<cmd>q<cr>", "quit" },
