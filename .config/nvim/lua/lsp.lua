@@ -77,7 +77,7 @@ local function setup_null_ls()
     "--builtin",
     "clear,rare,informal,usage,names",
     "-L",
-    "isnt,master,slave,slaves,ba,decorder,ser,gonna",
+    "isnt,master,slave,slaves,ba,decorder,ser,gonna,opne",
     -- isnt       => perl test method
     -- master     => yeah, I know but it's not me
     -- slave      => same
@@ -85,6 +85,7 @@ local function setup_null_ls()
     -- decorder   => go linter
     -- ser        => serial
     -- gonna      => lots of lyrics
+    -- OpNE       => ne operator
   }
 
   local sources = {
