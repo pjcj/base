@@ -32,6 +32,7 @@ zinit load "zdharma/fast-syntax-highlighting"
 zinit load "Tarrasch/zsh-autoenv"
 zinit load "woefe/git-prompt.zsh"
 zinit load "woefe/vi-mode.zsh"
+zinit load "joshskidmore/zsh-fzf-history-search"
 
 zshrc_load_status "options"
 
@@ -877,6 +878,8 @@ bindkey '^N' fzf-cd-widget
 bindkey '^G' fzf_git_commit_widget
 bindkey '^B' fzf_git_branch_widget
 bindkey '^T' fzf_git_tag_widget
+
+bindkey '^R' fzf_history_search
 
 zshrc_load_status "paths"
 
