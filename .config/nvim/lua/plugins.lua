@@ -791,6 +791,13 @@ require("packer").startup(function(use)
   use "axieax/urlview.nvim"
 
   use {
+    "rcarriga/nvim-notify",
+    config = function()
+      vim.notify = require("notify")
+    end,
+  }
+
+  use {
     "dstein64/nvim-scrollview",
     config = function()
       vim.g.scrollview_winblend = 75
