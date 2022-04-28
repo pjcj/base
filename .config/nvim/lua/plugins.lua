@@ -881,7 +881,7 @@ require("packer").startup(function(use)
     },
     config = function()
       require("nvim-tree").setup {
-        update_to_buf_dir = { enable = false },
+        hijack_directories = { enable = false },
       }
     end,
   }
