@@ -1,30 +1,5 @@
 local M = {}
 
--- keymaps
-local on_attach = function(client, bufnr)
-  local function buf_set_option(...)
-    vim.api.nvim_buf_set_option(bufnr, ...)
-  end
-
-  buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-
-  -- set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
-    vim.api.nvim_exec(
-      [[
-        augroup lsp_document_highlight
-          autocmd! * <buffer>
-          autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-          autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-        augroup end
-      ]],
-      false
-    )
-  end
-
-  require("lsp_signature").on_attach()
-end
-
 local null_ls = require "null-ls"
 local helpers = require "null-ls.helpers"
 
@@ -98,7 +73,7 @@ local function setup_null_ls()
     c.vsnip,
     d.codespell.with { extra_args = codespell },
     d.eslint,
-    d.golangci_lint,
+    -- d.golangci_lint,
     d.hadolint,
     d.jsonlint,
     d.markdownlint,
@@ -150,63 +125,121 @@ local lua_settings = {
   },
 }
 
--- config that activates keymaps and enables snippet support
-local function make_config()
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  return {
-    -- enable snippet support
-    capabilities = capabilities,
-    -- map buffer local keybindings when the language server attaches
-    on_attach = on_attach,
-  }
+-- keymaps etc
+local on_attach = function(client, bufnr)
+  print("attach", client.name)
+
+  local function buf_set_option(...)
+    vim.api.nvim_buf_set_option(bufnr, ...)
+  end
+  buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+
+  -- set autocommands conditional on server_capabilities
+  if client.resolved_capabilities.document_highlight then
+    vim.api.nvim_exec(
+      [[
+        augroup lsp_document_highlight
+          autocmd! * <buffer>
+          autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+          autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+        augroup end
+      ]],
+      false
+    )
+  end
+
+  require("lsp_signature").on_attach()
 end
+
+-- config that activates keymaps and enables snippet support
+-- local function make_config()
+--   local capabilities = vim.lsp.protocol.make_client_capabilities()
+--   capabilities.textDocument.completion.completionItem.snippetSupport = true
+--   return {
+--     -- enable snippet support
+--     capabilities = capabilities,
+--     -- map buffer local keybindings when the language server attaches
+--     on_attach = on_attach,
+--   }
+-- end
 
 -- lsp-install
 local function setup_servers()
   setup_null_ls()
 
   local lsp_installer = require "nvim-lsp-installer"
-  lsp_installer.on_server_ready(function(server)
-    print("configure server", server.name)
-    local config = make_config()
+  local lspconfig = require "lspconfig"
 
-    if server.name == "sumneko_lua" then
-      config.settings = lua_settings
-    end
-    if server.name == "golangci_lint_ls" then
-      config.init_options = {
-        command = {
-          -- "golangci-lint", "run", "--out-format", "json",
-          "make",
-          "--quiet",
-          "-C",
-          "api",
-          "lint_api_json",
-        },
+  lsp_installer.setup {
+    ensure_installed = {
+      "cssls",
+      "golangci_lint_ls",
+      "html",
+      "spectral",  -- installed externally
+      "sqls",
+      "sumneko_lua",
+      "taplo",
+      "tsserver",
+      "volar",
+      "yamlls",
+      "zk",
+    },
+    ui = {
+      icons = {
+        server_installed = "✓",
+        server_pending = "➜",
+        server_uninstalled = "✗"
       }
-    end
-    if server.name == "tsserver" then
-      config.on_attach = function(client)
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
-        local ts_utils = require("nvim-lsp-ts-utils")
-        ts_utils.setup({})
-        ts_utils.setup_client(client)
-      end
-    end
-    if server.name == "volar" then
-      config.on_attach = function(client)
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
-      end
-    end
+    },
+  }
 
-    -- This setup() function is exactly the same as lspconfig's setup function
-    -- (:help lspconfig-quickstart)
-    server:setup(config)
-    vim.cmd [[ do User LspAttachBuffers ]]
-  end)
+  lspconfig.cssls.setup { on_attach = on_attach }
+  lspconfig.html.setup { on_attach = on_attach }
+  lspconfig.spectral.setup { on_attach = on_attach }
+  lspconfig.sqls.setup { on_attach = on_attach }
+  lspconfig.taplo.setup { on_attach = on_attach }
+  lspconfig.yamlls.setup { on_attach = on_attach }
+  lspconfig.zk.setup { on_attach = on_attach }
+
+  lspconfig.golangci_lint_ls.setup {
+    -- init_options = {
+    --   command = {
+    --     -- "golangci-lint", "run", "--out-format", "json",
+    --     "make",
+    --     "--quiet",
+    --     "-C",
+    --     "api",
+    --     "lint_api_json",
+    --   },
+    -- },
+    on_attach = on_attach,
+  }
+
+  lspconfig.sumneko_lua.setup {
+    init_options = { hostInfo = "neovim" },
+    settings = lua_settings,
+    on_attach = on_attach,
+  }
+
+  lspconfig.tsserver.setup {
+    init_options = { hostInfo = "neovim" },
+    on_attach = function(client, bufnr)
+      client.resolved_capabilities.document_formatting = false
+      client.resolved_capabilities.document_range_formatting = false
+      local ts_utils = require "nvim-lsp-ts-utils"
+      ts_utils.setup {}
+      ts_utils.setup_client(client)
+      on_attach(client, bufnr)
+    end
+  }
+
+  lspconfig.volar.setup {
+    on_attach = function(client, bufnr)
+      client.resolved_capabilities.document_formatting = false
+      client.resolved_capabilities.document_range_formatting = false
+      on_attach(client, bufnr)
+    end
+  }
 
   vim.diagnostic.config {
     virtual_text = {
