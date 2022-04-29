@@ -3,12 +3,11 @@ local M = {}
 local null_ls = require "null-ls"
 local helpers = require "null-ls.helpers"
 
-local perl_executable = vim.fn.expand "~/g/base/utils/lint_perl"
 local perl_diagnostics = {
   method = null_ls.methods.DIAGNOSTICS,
   filetypes = { "perl" },
   generator = null_ls.generator {
-    command = perl_executable,
+    command = vim.fn.expand "~/g/base/utils/lint_perl",
     args = { "$FILENAME", "$ROOT", "$FILEEXT" },
     to_stdin = true,
     from_stderr = true,
@@ -73,7 +72,6 @@ local function setup_null_ls()
     c.vsnip,
     d.codespell.with { extra_args = codespell },
     d.eslint,
-    -- d.golangci_lint,
     d.hadolint,
     d.jsonlint,
     d.markdownlint,
@@ -194,26 +192,13 @@ local function setup_servers()
   }
 
   lspconfig.cssls.setup { on_attach = on_attach }
+  lspconfig.golangci_lint_ls.setup { on_attach = on_attach }
   lspconfig.html.setup { on_attach = on_attach }
   lspconfig.spectral.setup { on_attach = on_attach }
   lspconfig.sqls.setup { on_attach = on_attach }
   lspconfig.taplo.setup { on_attach = on_attach }
   lspconfig.yamlls.setup { on_attach = on_attach }
   lspconfig.zk.setup { on_attach = on_attach }
-
-  lspconfig.golangci_lint_ls.setup {
-    -- init_options = {
-    --   command = {
-    --     -- "golangci-lint", "run", "--out-format", "json",
-    --     "make",
-    --     "--quiet",
-    --     "-C",
-    --     "api",
-    --     "lint_api_json",
-    --   },
-    -- },
-    on_attach = on_attach,
-  }
 
   lspconfig.sumneko_lua.setup {
     init_options = { hostInfo = "neovim" },
@@ -242,9 +227,7 @@ local function setup_servers()
   }
 
   vim.diagnostic.config {
-    virtual_text = {
-      prefix = "●",
-    },
+    virtual_text = { prefix = "●" },
     float = {
       source = "always", -- or "if_many"
     },
