@@ -773,10 +773,10 @@ require("packer").startup(function(use)
     "cohama/lexima.vim",
     config = function()
       vim.cmd([[
-        call lexima#add_rule({"char": '"', "at": '\%#\w'})
-        call lexima#add_rule({"char": '(', "at": '\%#\w'})
-        call lexima#add_rule({"char": '[', "at": '\%#\w'})
-        call lexima#add_rule({"char": '{', "at": '\%#\w'})
+        call lexima#add_rule({"char": '"', "at": '\%#\(\w\|\$\)'})
+        call lexima#add_rule({"char": '(', "at": '\%#\(\w\|\$\)'})
+        call lexima#add_rule({"char": '[', "at": '\%#\(\w\|\$\)'})
+        call lexima#add_rule({"char": '{', "at": '\%#\(\w\|\$\)'})
       ]])
     end,
   }
