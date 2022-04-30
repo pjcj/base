@@ -42,10 +42,13 @@ require("packer").startup(function(use)
     config = function()
       require("nvim-treesitter.configs").setup {
         ensure_installed = "all",
-        ignore_install = { "swift" },  -- requires glibc 2.28
+        ignore_install = {
+          "swift", -- requires glibc 2.28
+          "perl",  -- sometimes crashes
+        },
         highlight = {
           enable = true,
-          disable = { "perl" },
+          -- disable = { "perl" },
         },
         indent = { enable = false },
         refactor = {
@@ -712,7 +715,7 @@ require("packer").startup(function(use)
           -- bash
           "^case_statement", "^case_item",
           -- perl  # the TS implementation here isn't all that good
-          "^block", "^package_statement", "^use_constant_statement",
+          -- "^block", "^package_statement", "^use_constant_statement",
           -- lua
           "^local_function",
         },
