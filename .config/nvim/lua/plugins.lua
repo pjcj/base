@@ -877,6 +877,7 @@ require("packer").startup(function(use)
         },
         keywords = {
           TODO = {
+            icon = "",
             alt = { "DEBUG" },
           },
           FIX = {
