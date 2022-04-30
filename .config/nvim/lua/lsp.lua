@@ -50,16 +50,7 @@ local function setup_null_ls()
   local codespell = {
     "--builtin",
     "clear,rare,informal,usage,names",
-    "-L",
-    "isnt,master,slave,slaves,ba,decorder,ser,gonna,opne",
-    -- isnt       => perl test method
-    -- master     => yeah, I know but it's not me
-    -- slave      => same
-    -- ba         => seems to crop up
-    -- decorder   => go linter
-    -- ser        => serial
-    -- gonna      => lots of lyrics
-    -- OpNE       => ne operator
+    "--ignore-words=", ".codespell"
   }
 
   local sources = {
