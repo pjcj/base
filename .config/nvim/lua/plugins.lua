@@ -875,6 +875,14 @@ require("packer").startup(function(use)
           max_line_len = 400, -- ignore lines longer than this
           exclude = {}, -- list of file types to exclude highlighting
         },
+        keywords = {
+          TODO = {
+            alt = { "DEBUG" },
+          },
+          FIX = {
+            alt = { "FIXME", "BUG", "FIXIT", "ISSUE", "ERROR", "FATAL" },
+          },
+        },
         search = {
           pattern = [[\b(KEYWORDS)\b]],
         },
