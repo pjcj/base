@@ -774,6 +774,8 @@ require("packer").startup(function(use)
     config = function()
       vim.cmd([[
         call lexima#add_rule({"char": '"', "at": '\%#\(\w\|\$\)'})
+        call lexima#add_rule({"char": "'", "at": '\%#\(\w\|\$\)'})
+        call lexima#add_rule({"char": '`', "at": '\%#\(\w\|\$\)'})
         call lexima#add_rule({"char": '(', "at": '\%#\(\w\|\$\)'})
         call lexima#add_rule({"char": '[', "at": '\%#\(\w\|\$\)'})
         call lexima#add_rule({"char": '{', "at": '\%#\(\w\|\$\)'})
