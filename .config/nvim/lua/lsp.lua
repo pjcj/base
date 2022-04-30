@@ -169,24 +169,16 @@ local function setup_servers()
   local lspconfig = require "lspconfig"
 
   lsp_installer.setup {
-    ensure_installed = {
-      "cssls",
-      "golangci_lint_ls",
-      "html",
-      "spectral",  -- installed externally
-      "sqls",
-      "sumneko_lua",
-      "taplo",
-      "tsserver",
-      "volar",
-      "yamlls",
-      "zk",
+    automatic_installation = {
+      exclude = {
+        "spectral",  -- installed externally
+      },
     },
     ui = {
       icons = {
         server_installed = "✓",
         server_pending = "➜",
-        server_uninstalled = "✗"
+        server_uninstalled = "✗",
       }
     },
   }
