@@ -172,8 +172,8 @@ table.insert(components.active[1], {
 table.insert(components.active[1], {
   provider = function() return require("nvim-gps").get_location() end,
   enabled  = function() return require("nvim-gps").is_available() end,
-  hl       = { bg = c.base02 },
-  left_sep = { str = " ", hl = { bg = c.base02 } },
+  hl       = { bg = c.base02, fg = "yellow" },
+  left_sep = { str = "  ", hl = { bg = c.base02, fg = "cyan" } },
 })
 
 table.insert(components.active[1], {

@@ -175,17 +175,20 @@ require("packer").startup(function(use)
     requires = "nvim-treesitter/nvim-treesitter",
     config = function()
       require("nvim-gps").setup {
-        icons = {
-          ["class-name"] = " ",
-          ["function-name"] = " ",
-          ["method-name"] = " ",
-        },
+        -- icons = {
+        --   ["class-name"] = "",
+        --   ["function-name"] = "",
+        --   ["method-name"] = "",
+        --   ["container-name"] = 'ﮅ',
+        --   ["tag-name"] = '炙',
+        -- },
         -- Any language not disabled here is enabled by default
-        languages = {
-          -- ["bash"] = false,
-          -- ["go"]   = false,
-        },
-        separator = " > ",
+        -- languages = {
+        --   -- ["bash"] = false,
+        --   -- ["go"]   = false,
+        -- },
+        -- separator = " > ",
+        depth = 5,
       }
     end,
   }
