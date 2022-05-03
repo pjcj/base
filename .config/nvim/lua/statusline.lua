@@ -40,6 +40,7 @@ table.insert(components.active[1], {
         hl  = { bg = c.base05, fg = vi_mode_utils.get_mode_color() },
       }
     end,
+    " "
   },
   icon = "",
 })
