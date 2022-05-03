@@ -48,7 +48,8 @@ local file_info = {
   provider  = {
     name  = "file_info",
     opts = {
-      type      = "relative",
+      type = "relative",
+      file_modified_icon = "",
     },
     hl        = { bg = c.base02 },
     left_sep  = { str = " ", hl = { bg = c.base02 } },
