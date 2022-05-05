@@ -98,7 +98,10 @@ wk.register {
         } end, "grep word" },
       h = { function() tb.help_tags() end, "help" },
       l = { function() tb.current_buffer_fuzzy_find() end, "fuzzy find" },
+      o = { function() tb.vim_options() end, "vim options" },
       p = { function() t.extensions.neoclip.default() end, "paste" },
+      q = { function() tb.quickfix() end, "quickfix" },
+      Q = { function() tb.quickfixhistory() end, "quickfix history" },
       r = { function() tb.lsp_references() end, "lsp references" },
       R = { function() t.extensions.refactoring.refactors() end, "refactor" },
       s = { function() tb.grep_string() end, "grep string" },
@@ -107,6 +110,11 @@ wk.register {
       T = { function() tb.tags { only_current_buffer = true } end, "local tags" },
       u = { "<cmd>UrlView packer picker=telescope<cr>", "packer plugins" },
       U = { "<cmd>UrlView buffer picker=telescope<cr>", "urls" },
+      y = {
+        name = "+grep type",
+        g = { function() tb.live_grep { type_filter = "go" } end, "go" },
+        p = { function() tb.live_grep { type_filter = "perl" } end, "perl" },
+      },
     },
     g = {
       name = "+git",
