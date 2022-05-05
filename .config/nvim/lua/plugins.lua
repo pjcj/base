@@ -156,12 +156,20 @@ require("packer").startup(function(use)
   use {
     "ludovicchabant/vim-gutentags",
     config = function()
-      vim.g.gutentags_ctags_exclude = {
+      vim.g.gutentags_ctags_exclude = vim.g.gutentags_ctags_exclude or {}
+      local ex = vim.g.gutentags_ctags_exclude
+      local exclude = {
         "tmp",
         "blib",
         "node_modules",
         "dist",
       }
+      for _, v in pairs(exclude) do
+        table.insert(ex, v)
+      end
+      vim.g.gutentags_ctags_exclude = ex
+      -- print(vim.inspect(vim.g.gutentags_ctags_exclude))
+
       -- can be extended with '*/sub/path' if required
       vim.g.gutentags_generate_on_new = 1
       vim.g.gutentags_generate_on_missing = 1
