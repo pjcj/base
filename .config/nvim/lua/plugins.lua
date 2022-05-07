@@ -22,7 +22,7 @@ require("packer").startup(function(use)
   use "wbthomason/packer.nvim"
 
   use {
-    "famiu/feline.nvim",
+    "feline-nvim/feline.nvim",
     config = function()
       require "statusline"
     end,
