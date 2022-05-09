@@ -706,6 +706,7 @@ require("packer").startup(function(use)
         show_current_context                       = true,
         show_current_context_start                 = true,
         show_current_context_start_on_current_line = false,
+        use_treesitter_scope                       = true,
         buftype_exclude  = { "terminal" },
         filetype_exclude = {
           "diff", "help", "markdown", "packer", "qf", "lspinfo", "checkhealth",
