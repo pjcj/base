@@ -48,8 +48,7 @@ local function setup_null_ls()
   local h = b.hover
 
   local codespell = {
-    "--builtin",
-    "clear,rare,informal,usage,names",
+    "--builtin", "clear,rare,informal,usage,names",
     "--ignore-words=", ".codespell"
   }
 
