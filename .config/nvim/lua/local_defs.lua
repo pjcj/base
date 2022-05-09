@@ -177,11 +177,11 @@ local_defs.fn.set_buffer_settings = function()
 
     local e = b.editorconfig
     -- print("editorconfig", e.indent_style, e.indent_size)
-    if e.indent_style == nil then
+    if e == nil or e.indent_style == nil then
       lopt.expandtab  = false
       -- print("unset expandtab")
     end
-    if e.indent_size == nil then
+    if e == nil or e.indent_size == nil then
       lopt.tabstop    = 2
       lopt.shiftwidth = 2
       -- print("set tabstop shiftwidth 2")
