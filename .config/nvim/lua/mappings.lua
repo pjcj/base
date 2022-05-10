@@ -110,6 +110,7 @@ wk.register {
       T = { function() tb.tags { only_current_buffer = true } end, "local tags" },
       u = { "<cmd>UrlView packer picker=telescope<cr>", "packer plugins" },
       U = { "<cmd>UrlView buffer picker=telescope<cr>", "urls" },
+      x = { "<cmd>TodoTelescope<cr>", "todos" },
       y = {
         name = "+grep type",
         g = { function() tb.live_grep { type_filter = "go" } end, "go" },
