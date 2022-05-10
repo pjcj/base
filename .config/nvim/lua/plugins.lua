@@ -879,8 +879,8 @@ require("packer").startup(function(use)
           before = "", -- "fg" or "bg" or empty
           keyword = "fg", -- "fg", "bg", "wide" or empty
           after = "fg", -- "fg" or "bg" or empty
-          pattern = { -- pattern or table of patterns
-            [[ (KEYWORDS)>(:| \d| -)]],
+          pattern = { -- pattern or table of patterns - vim regex
+            [[ (KEYWORDS)>(:| +\d| -)]],
           },
           comments_only = true, -- uses treesitter to match keywords in comments
           max_line_len = 400, -- ignore lines longer than this
@@ -897,11 +897,20 @@ require("packer").startup(function(use)
           },
         },
         search = {
-          pattern = [[\b(KEYWORDS)(:| \d| -)]],
+          pattern = [[\b(KEYWORDS)(:| +\d| -)]],-- ripgrep regex
         },
       }
     end
   }
+  -- ERROR: red
+  -- WARN 123
+  -- INFO  456
+  -- ISSUE    78
+  -- DEBUG - rrr
+  -- BUG no
+  -- FIXIT .red
+  --ERROR: 5
+  --ERROR 6
 
   use "elihunter173/dirbuf.nvim"
   use {
