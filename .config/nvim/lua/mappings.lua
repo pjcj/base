@@ -19,6 +19,16 @@ local tb = require "telescope.builtin"
 local bd = require "better-digraphs"
 local gs = require "gitsigns"
 
+local async = require("plenary.async")
+local packer_sync = function ()
+  async.run(function ()
+    vim.notify.async("Syncing packer.", "info", { title = "Packer" })
+  end)
+  local snap_shot_time = os.date("!%Y-%m-%dT%TZ")
+  vim.cmd("PackerSnapshot " .. snap_shot_time)
+  vim.cmd("PackerSync")
+end
+
 wk.register {
   ["<F1>"] = { function() gs.stage_hunk() end, "stage hunk" },
   ["<F2>"] = { function() gs.prev_hunk() end, "stage hunk" },
@@ -132,6 +142,10 @@ wk.register {
       S = { "<cmd>Gitsigns stage_buffer<cr>", "stage buffer" },
       s = { "<cmd>Gitsigns stage_hunk<cr>", "stage hunk" },
       u = { "<cmd>Gitsigns undo_stage_hunk<cr>", "unstage hunk" },
+    },
+    p = {
+      name = "+packer",
+      s = { function() packer_sync() end, "sync" },
     },
     q = {
       name = "+quote",
