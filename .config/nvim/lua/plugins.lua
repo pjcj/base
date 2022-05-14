@@ -1,5 +1,5 @@
 local install_path = vim.fn.stdpath "data"
-  .. "/site/pack/packer/start/packer.nvim"
+    .. "/site/pack/packer/start/packer.nvim"
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   vim.fn.system {
     "git",
@@ -44,7 +44,7 @@ require("packer").startup(function(use)
         ensure_installed = "all",
         ignore_install = {
           "swift", -- requires glibc 2.28
-          "perl",  -- sometimes crashes
+          "perl", -- sometimes crashes
         },
         highlight = {
           enable = true,
@@ -69,7 +69,7 @@ require("packer").startup(function(use)
         },
         autotag = {
           enable = true,
-        }
+        },
       }
     end,
   }
@@ -227,8 +227,8 @@ require("packer").startup(function(use)
 
   use {
     "vim-perl/vim-perl",
-    run = "make clean carp dancer heredoc-sql highlight-all-pragmas " ..
-      "js-css-in-mason method-signatures moose test-more try-tiny",
+    run = "make clean carp dancer heredoc-sql highlight-all-pragmas "
+        .. "js-css-in-mason method-signatures moose test-more try-tiny",
   }
 
   use {
@@ -385,9 +385,9 @@ require("packer").startup(function(use)
       local has_words_before = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0
-          and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
-              :sub(col, col)
-              :match "%s"
+            and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
+            :sub(col, col)
+            :match "%s"
             == nil
       end
 
@@ -417,7 +417,7 @@ require("packer").startup(function(use)
               emoji = "emoji",
               dictionary = "dict",
             },
-            before = function (entry, vim_item)
+            before = function(entry, vim_item)
               vim_item.dup = ({
                 nvim_lsp = 0,
                 buffer = 0,
@@ -427,7 +427,7 @@ require("packer").startup(function(use)
                 dictionary = 0,
               })[entry.source.name] or 0
               return vim_item
-            end
+            end,
           },
         },
         experimental = {
@@ -541,18 +541,18 @@ require("packer").startup(function(use)
       cmp.setup.cmdline("/", {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
-          { name = "buffer" }
-        }
+          { name = "buffer" },
+        },
       })
 
       -- Use cmdline & path source for ':'.
       cmp.setup.cmdline(":", {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
-          { name = "path" }
+          { name = "path" },
         }, {
-          { name = "cmdline" }
-        })
+          { name = "cmdline" },
+        }),
       })
     end,
   }
@@ -695,7 +695,7 @@ require("packer").startup(function(use)
     "lukas-reineke/indent-blankline.nvim",
     config = function()
       -- stylua: ignore
-      require "indent_blankline".setup{
+      require "indent_blankline".setup {
         char                                       = " ",
         space_char                                 = " ",
         context_char                               = "┃",
@@ -707,14 +707,14 @@ require("packer").startup(function(use)
         show_current_context_start                 = true,
         show_current_context_start_on_current_line = false,
         use_treesitter_scope                       = true,
-        buftype_exclude  = { "terminal" },
-        filetype_exclude = {
+        buftype_exclude                            = { "terminal" },
+        filetype_exclude                           = {
           "diff", "help", "markdown", "packer", "qf", "lspinfo", "checkhealth",
           -- "perl",
           "man",
           "",
         },
-        context_patterns = {
+        context_patterns                           = {
           -- defaults
           "class", "^func", "method", "^if", "while", "for", "with",
           "try", "except", "arguments", "argument_list", "object",
@@ -741,7 +741,7 @@ require("packer").startup(function(use)
     config = function()
       vim.g.move_map_keys = 0
     end,
-}
+  }
 
   use "gioele/vim-autoswap"
   use "farmergreg/vim-lastplace"
@@ -781,14 +781,14 @@ require("packer").startup(function(use)
   use {
     "cohama/lexima.vim",
     config = function()
-      vim.cmd([[
+      vim.cmd [[
         call lexima#add_rule({"char": '"', "at": '\%#\(\w\|\$\)'})
         call lexima#add_rule({"char": "'", "at": '\%#\(\w\|\$\)'})
         call lexima#add_rule({"char": '`', "at": '\%#\(\w\|\$\)'})
         call lexima#add_rule({"char": '(', "at": '\%#\(\w\|\$\)'})
         call lexima#add_rule({"char": '[', "at": '\%#\(\w\|\$\)'})
         call lexima#add_rule({"char": '{', "at": '\%#\(\w\|\$\)'})
-      ]])
+      ]]
     end,
   }
 
@@ -811,7 +811,7 @@ require("packer").startup(function(use)
   use {
     "rcarriga/nvim-notify",
     config = function()
-      vim.notify = require("notify")
+      vim.notify = require "notify"
     end,
   }
 
@@ -897,10 +897,10 @@ require("packer").startup(function(use)
           },
         },
         search = {
-          pattern = [[\b(KEYWORDS)(:| +\d| -)]],-- ripgrep regex
+          pattern = [[\b(KEYWORDS)(:| +\d| -)]], -- ripgrep regex
         },
       }
-    end
+    end,
   }
   -- ERROR: red
   -- WARN 123
