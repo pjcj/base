@@ -23,7 +23,7 @@ vim.cmd([[
 
   augroup autowrite
     autocmd!
-    autocmd FocusLost * silent! wa
+    autocmd FocusLost,BufLeave * silent! wa
   augroup end
 
   augroup file_types
