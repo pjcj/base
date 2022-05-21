@@ -171,6 +171,7 @@ wk.register {
       s = { function() require "sidebar-nvim".toggle() end, "sidebar" },
       t = { function() require "nvim-tree".toggle() end, "tree" },
     },
+    W = { [[:%s/\s\+$//<cr>:let @/ = ""<cr>]], "remove trailing ws" },
   },
 }
 
@@ -264,13 +265,10 @@ vmap("v", "<C-Right>", "<Plug>MoveBlockRight", {})
 
 vmap("n", "s", "s", m)
 vmap("n", "S", "S", m)
-vmap("n", ",,", "<Plug>Lightspeed_s", {})
-vmap("n", ";;", "<Plug>Lightspeed_S", {})
-
--- map("n", "<leader>l" [[<cmd>let @/ = ""<bar> :call UncolorAllWords()<cr>]], m)
+-- vmap("n", ",,", "<Plug>Lightspeed_s", {})
+-- vmap("n", ";;", "<Plug>Lightspeed_S", {})
 
 vim.cmd [[
-  nnoremap <leader>W :%s/\s\+$//<cr>:let @/ = ""<cr>
   cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
   inoremap <expr> <C-e> pumvisible() ? "\<C-y>\<C-e>" : "\<Esc>a\<C-e>"
