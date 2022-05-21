@@ -143,6 +143,9 @@ wk.register {
       s = { "<cmd>Gitsigns stage_hunk<cr>", "stage hunk" },
       u = { "<cmd>Gitsigns undo_stage_hunk<cr>", "unstage hunk" },
     },
+    k = { "highlight word" },
+    K = { "unhighlight words" },
+    l = { [[:let @/ = ""<bar> :call UncolorAllWords()<cr>]], "unhighlight all" },
     p = {
       name = "+packer",
       s = { function() packer_sync() end, "sync" },
@@ -182,6 +185,7 @@ wk.register({
       s = { "<cmd>Gitsigns stage_hunk<cr>", "stage lines" },
       -- s = {'<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<cr>', "stage lines"},
     },
+    k = { "highlight word" },
   },
 }, {mode = "v"})
 
@@ -266,7 +270,6 @@ vmap("n", ";;", "<Plug>Lightspeed_S", {})
 -- map("n", "<leader>l" [[<cmd>let @/ = ""<bar> :call UncolorAllWords()<cr>]], m)
 
 vim.cmd [[
-  nnoremap <silent> <leader>l :let @/ = ""<bar> :call UncolorAllWords()<cr>
   nnoremap <leader>W :%s/\s\+$//<cr>:let @/ = ""<cr>
   cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
