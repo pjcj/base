@@ -49,6 +49,7 @@ wk.register {
   ["ä"] = { "show cursor" },
   ["ö"] = { ":wa<cr>", "write all" },
   g = {
+    name = "+goto",
     D = { function() lb.declaration() end, "declaration" },
     d = { function() lb.definition() end, "definition" },
     i = { function() lb.implementation() end, "implementation" },
