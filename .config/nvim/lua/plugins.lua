@@ -665,15 +665,6 @@ require("packer").startup(function(use)
     end,
   }
 
-  -- use {
-  --   "ggandor/lightspeed.nvim",
-  --   config = function()
-  --     require("lightspeed").setup {
-  --       jump_to_unique_chars = 2000,
-  --     }
-  --   end,
-  -- }
-
   use {
     "AckslD/nvim-neoclip.lua",
     requires = { "tami5/sqlite.lua", module = "sqlite" },

@@ -1,5 +1,3 @@
-local l = require "local_defs"
-
 vim.g.mapleader = ","
 
 local wk = require "which-key"
@@ -215,7 +213,6 @@ wk.register({
 }, { mode = "i" })
 
 local vmap = vim.api.nvim_set_keymap -- global mappings
-local m = l.map.defmap
 
 vmap("n", "<F13>", "<S-F1>", {})
 vmap("n", "<F14>", "<S-F2>", {})
@@ -265,11 +262,6 @@ vmap("v", "<C-Up>", "<Plug>MoveBlockUp", {})
 vmap("v", "<C-Down>", "<Plug>MoveBlockDown", {})
 vmap("v", "<C-Left>", "<Plug>MoveBlockLeft", {})
 vmap("v", "<C-Right>", "<Plug>MoveBlockRight", {})
-
-vmap("n", "s", "s", m)
-vmap("n", "S", "S", m)
--- vmap("n", ",,", "<Plug>Lightspeed_s", {})
--- vmap("n", ";;", "<Plug>Lightspeed_S", {})
 
 vim.cmd [[
   cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
