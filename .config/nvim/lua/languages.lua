@@ -1,18 +1,18 @@
-vim.cmd([[
+vim.cmd [[
   augroup yank_highlight
     autocmd!
     autocmd TextYankPost * silent!
       \ lua vim.highlight.on_yank{ higroup="Cursor", timeout=1000 }
   augroup end
-]])
+]]
 
-vim.cmd([[
+vim.cmd [[
   function! BufEnterFunc()
-    call v:lua.require'local_defs'.fn.set_buffer_colours()
+    call v:lua.require"local_defs".fn.set_buffer_colours()
   endfunction
 
   function! BufWinEnterFunc()
-    call v:lua.require'local_defs'.fn.set_buffer_settings()
+    call v:lua.require"local_defs".fn.set_buffer_settings()
   endfunction
 
   augroup buf_enter
@@ -29,4 +29,4 @@ vim.cmd([[
   augroup file_types
     autocmd!
     autocmd BufNewFile,BufReadPost *.mc set ft=mason
-]])
+]]
