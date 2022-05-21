@@ -196,6 +196,7 @@ local_defs.fn.set_buffer_settings = function()
             a = { ":GoAlt<cr>", "alt" },
             c = { ":GoCmt<cr>", "comment" },
             e = { ":GoIfErr<cr>", "iferr" },
+            f = { ":GoFmt<cr>", "fmt" },
             l = { ":GoLint<cr>", "lint" },
             n = { ":GoRename<cr>", "rename" },
             g = {
@@ -210,6 +211,7 @@ local_defs.fn.set_buffer_settings = function()
     end
     return
   end
+
   lopt.listchars = { tab = "» ", trail = "·" }
   lopt.tabstop   = 8
   if vim.bo.shiftwidth < 3 then
