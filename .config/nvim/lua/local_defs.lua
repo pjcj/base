@@ -164,13 +164,12 @@ local alternate_indent = function()
   b.indent_blankline_context_highlight_list              = hl
 end
 
+local wk = require "which-key"
+
 local_defs.fn.set_buffer_settings = function()
   local ft   = vim.bo.filetype
-  local b    = vim.b                             -- a table to access buffer variables
-  local lopt = vim.opt_local                     -- set local options
-  local vmap = vim.api.nvim_set_keymap           -- global mappings
-  local bmap = vim.api.nvim_buf_set_keymap       -- local mappings
-  local l    = local_defs
+  local b    = vim.b             -- a table to access buffer variables
+  local lopt = vim.opt_local     -- set local options
 
   if ft == "go" or ft == "gomod" or ft == "make" then
     lopt.listchars = { tab = "  ", trail = "·" }
@@ -190,9 +189,16 @@ local_defs.fn.set_buffer_settings = function()
     alternate_indent()
 
     if ft == "go" then
-      bmap(0, "n", "<leader>oa", "<cmd>GoAlternate<cr>",     l.map.defmap)
-      bmap(0, "n", "<leader>oi", "<cmd>GoImports<cr>",       l.map.defmap)
-      bmap(0, "n", "<leader>os", "<cmd>GoSameIdsToggle<cr>", l.map.defmap)
+      wk.register({
+        ["<leader>"] = {
+          ["o"] = {
+            name = "+go",
+            ["a"] = { ":GoAlternate<cr>", "alternative file" },
+            ["i"] = { ":GoImports<cr>", "imports" },
+            ["s"] = { ":GoSameIdsToggle<cr>", "same ids toggle" },
+          },
+        },
+      }, { buffer = 0, mode = "n" })
     end
     return
   end
@@ -216,11 +222,11 @@ local_defs.fn.set_buffer_settings = function()
   end
 
   if ft == "perl" then
-    vmap("n", "<F4>", [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]], l.map.defmap)
-    vmap("i", "<F2>", "sub ($self) {<CR>}<ESC>kea<Space>", l.map.defmap)
-    vmap("i", "<F3>", "$self->{}<ESC>i",                   l.map.defmap)
-    vmap("i", "<F4>", "$self->",                           l.map.defmap)
-    vim.cmd([[iabbr ,, =>]])
+    wk.register({
+      ["<F2>"] = { "sub ($self) {<CR>}<ESC>kea<Space>", "new sub" },
+      ["<F4>"] = { "$self->", "$self->" },
+      ["<S-F4>"] = { "->", "->" },
+    }, { buffer = 0, mode = "i" })
   end
 end
 
