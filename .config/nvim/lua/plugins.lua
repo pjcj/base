@@ -148,6 +148,7 @@ require("packer").startup(function(use)
       vim.g.ale_sign_warning = "W"
       vim.g.ale_sign_info = "I"
       vim.g.ale_linters = {
+        go = { "golangci-lint" },
         yaml = { "circleci", "spectral", "swaglint" },
       }
     end,
@@ -201,28 +202,110 @@ require("packer").startup(function(use)
     end,
   }
 
+  -- use {
+  --   "fatih/vim-go",
+  --   run = ":GoUpdateBinaries",
+  --   config = function()
+  --     vim.g.go_auto_type_info = 1
+  --     vim.g.go_test_show_name = 1
+  --     vim.g.go_doc_max_height = 40
+  --     vim.g.go_doc_popup_window = 1
+  --     vim.g.go_diagnostics_enabled = 1
+  --     vim.g.go_diagnostics_level = 2
+  --     vim.g.go_template_autocreate = 0
+  --     vim.g.go_metalinter_command = "golangci-lint"
+  --     vim.g.go_metalinter_autosave = 0
+  --     vim.g.go_metalinter_autosave_enabled = {}
+  --     vim.g.go_metalinter_enabled = {}
+  --     vim.g.go_gopls_gofumpt = 1
+  --     -- vim.g.go_fmt_command = "golines"
+  --     vim.g.go_fmt_options = {
+  --       gofmt = "-s",
+  --       golines = "-m 80 -t 2",
+  --     }
+  --   end,
+  -- }
+
   use {
-    "fatih/vim-go",
-    run = ":GoUpdateBinaries",
+    "ray-x/go.nvim",
+    requires = {
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
+      "mfussenegger/nvim-dap",
+      "rcarriga/nvim-dap-ui",
+      "theHamsta/nvim-dap-virtual-text",
+      "ray-x/guihua.lua", -- float term, codeaction and codelens gui support
+    },
     config = function()
-      vim.g.go_auto_type_info = 1
-      vim.g.go_test_show_name = 1
-      vim.g.go_doc_max_height = 40
-      vim.g.go_doc_popup_window = 1
-      vim.g.go_diagnostics_enabled = 1
-      vim.g.go_diagnostics_level = 2
-      vim.g.go_template_autocreate = 0
-      vim.g.go_metalinter_command = "golangci-lint"
-      vim.g.go_metalinter_autosave = 0
-      vim.g.go_metalinter_autosave_enabled = {}
-      vim.g.go_metalinter_enabled = {}
-      vim.g.go_gopls_gofumpt = 1
-      -- vim.g.go_fmt_command = "golines"
-      vim.g.go_fmt_options = {
-        gofmt = "-s",
-        golines = "-m 80 -t 2",
+      -- require("go").setup {
+      --   goimport = "gopls", -- if set to 'gopls' will use golsp format
+      --   gofmt = "gopls", -- if set to gopls will use golsp format
+      --   max_line_len = 80,
+      --   tag_transform = false,
+      --   test_dir = "",
+      --   comment_placeholder = "   ",
+      --   lsp_cfg = true, -- false: use your own lspconfig
+      --   lsp_gofumpt = true, -- true: set default gofmt in gopls format to gofumpt
+      --   lsp_on_attach = true, -- use on_attach from go.nvim
+      --   dap_debug = true,
+      -- }
+      require("go").setup {
+        go = "go", -- go command, can be go[default] or go1.18beta1
+        goimport = "gopls", -- goimport command, can be gopls[default] or goimport
+        fillstruct = "gopls", -- can be nil (use fillstruct, slower) and gopls
+        gofmt = "gofumpt", --gofmt cmd,
+        max_line_len = 80, -- max line length in goline format
+        tag_transform = false, -- can be transform option("snakecase", "camelcase", etc) check gomodifytags for details and more options
+        test_template = "", -- g:go_nvim_tests_template  check gotests for details
+        test_template_dir = "", -- default to nil if not set; g:go_nvim_tests_template_dir  check gotests for details
+        comment_placeholder = "", -- comment_placeholder your cool placeholder e.g. ﳑ       
+        icons = { breakpoint = "🧘", currentpos = "🏃" }, -- setup to `false` to disable icons setup
+        verbose = false, -- output loginf in messages
+        lsp_cfg = false, -- true: use non-default gopls setup specified in go/lsp.lua
+        -- false: do nothing
+        -- if lsp_cfg is a table, merge table with with non-default gopls setup in go/lsp.lua, e.g.
+          -- lsp_cfg = {settings={gopls={matcher='CaseInsensitive', ['local'] = 'your_local_module_path', gofumpt = true }}},
+        lsp_gofumpt = true, -- true: set default gofmt in gopls format to gofumpt
+        lsp_on_attach = nil, -- nil: use on_attach function defined in go/lsp.lua,
+        --      when lsp_cfg is true
+        -- if lsp_on_attach is a function: use this function as on_attach function for gopls
+        lsp_keymaps = false, -- set to false to disable gopls/lsp keymap
+        lsp_codelens = false, -- set to false to disable codelens, true by default, you can use a function
+        -- function(bufnr)
+        --    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>F", "<cmd>lua vim.lsp.buf.formatting()<CR>", {noremap=true, silent=true})
+        -- end
+        -- to setup a table of codelens
+        lsp_diag_hdlr = true, -- hook lsp diag handler
+        -- virtual text setup
+        lsp_diag_virtual_text = { space = 0, prefix = "" },
+        lsp_diag_signs = true,
+        lsp_diag_update_in_insert = false,
+        lsp_document_formatting = true,
+        -- set to true: use gopls to format
+        -- false if you want to use other formatter tool(e.g. efm, nulls)
+        gopls_cmd = "gofumpt api", -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile","/var/log/gopls.log" }
+        gopls_remote_auto = true, -- add -remote=auto to gopls
+        dap_debug = true, -- set to false to disable dap
+        dap_debug_keymap = true, -- true: use keymap for debugger defined in go/dap.lua
+        -- false: do not use keymap in go/dap.lua.  you must define your own.
+        dap_debug_gui = true, -- set to true to enable dap gui, highly recommand
+        dap_debug_vt = true, -- set to true to enable dap virtual text
+        -- build_tags = "tag1,tag2", -- set default build tags
+        textobjects = true, -- enable default text jobects through treesittter-text-objects
+        test_runner = "go", -- richgo, go test, richgo, dlv, ginkgo
+        verbose_tests = true, -- set to add verbose flag to tests
+        run_in_floaterm = false, -- set to true to run in float window. :GoTermClose closes the floatterm
+        -- float term recommand if you use richgo/ginkgo with terminal color
       }
+
+      -- Run gofmt + goimport on save
+      vim.api.nvim_exec(
+        [[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]],
+        false
+      )
     end,
+
+    -- local protocol = require'vim.lsp.protocol'
   }
 
   use {

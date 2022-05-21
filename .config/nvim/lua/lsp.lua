@@ -76,7 +76,7 @@ local function setup_null_ls()
     f.codespell.with { extra_args = codespell },
     f.eslint,
     f.fixjson,
-    f.golines,
+    -- f.golines,
     -- f.prettier,
     f.shellharden,
     f.shfmt.with { extra_args = { "-i", "2", "-s" } },
@@ -115,7 +115,7 @@ local lua_settings = {
 
 -- keymaps etc
 local on_attach = function(client, bufnr)
-  print("attach", client.name)
+  -- print("attach", client.name)
 
   local function buf_set_option(...)
     vim.api.nvim_buf_set_option(bufnr, ...)
@@ -176,6 +176,7 @@ local function setup_servers()
 
   lspconfig.cssls.setup { on_attach = on_attach }
   lspconfig.golangci_lint_ls.setup { on_attach = on_attach }
+  lspconfig.gopls.setup { on_attach = on_attach }
   lspconfig.html.setup { on_attach = on_attach }
   lspconfig.spectral.setup { on_attach = on_attach }
   lspconfig.sqls.setup { on_attach = on_attach }
@@ -240,22 +241,31 @@ local function setup_servers()
   vim.fn.sign_define("LspDiagnosticsSignHint",        { text = "H" })
   -- stylua: ignore end
 
-  -- local lspconfig = require "lspconfig"
-  -- local configs = require "lspconfig/configs"
-  -- local gconfig = make_config()
-  -- gconfig["cmd"] = { "golangci-lint-langserver" }
-  -- gconfig["root_dir"] = lspconfig.util.root_pattern(".git", "go.mod")
-  -- gconfig["init_options"] = {
-  --   command = {
-  --     -- "golangci-lint", "run", "--out-format", "json",
-  --     "make", "--quiet", "-C", "api", "lint_api_json",
-  --   },
-  -- }
-  -- gconfig["filetypes"] = { "go" }
-  -- -- configs.golangcilsp.setup(gconfig)
-  -- -- configs["golangcilsp"].setup(gconfig)
+  -- vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
+  --   local client = vim.lsp.get_client_by_id(ctx.client_id)
+  --   local lvl = ({ 'ERROR', 'WARN', 'INFO', 'DEBUG' })[result.type]
+  --   vim.notify({ result.message }, lvl, {
+  --     title = 'LSP | ' .. client.name,
+  --     timeout = 10000,
+  --     keep = function()
+  --       return lvl == 'ERROR' or lvl == 'WARN'
+  --     end,
+  --   })
+  -- end
 end
 
 M.setup_servers = setup_servers
+
+  -- -- table from lsp severity to vim severity.
+  -- local severity = {
+  --   "error",
+  --   "warn",
+  --   "info",
+  --   "info", -- map both hint and info to info?
+  -- }
+  -- vim.lsp.handlers["window/showMessage"] = function(err, method, params, client_id)
+  --   print(method.message)
+  --   vim.notify(method.message, severity[params.type])
+  -- end
 
 return M

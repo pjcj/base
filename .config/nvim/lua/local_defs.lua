@@ -193,16 +193,23 @@ local_defs.fn.set_buffer_settings = function()
         ["<leader>"] = {
           ["o"] = {
             name = "+go",
-            ["a"] = { ":GoAlternate<cr>", "alternative file" },
-            ["i"] = { ":GoImports<cr>", "imports" },
-            ["s"] = { ":GoSameIdsToggle<cr>", "same ids toggle" },
+            a = { ":GoAlt<cr>", "alt" },
+            c = { ":GoCmt<cr>", "comment" },
+            e = { ":GoIfErr<cr>", "iferr" },
+            l = { ":GoLint<cr>", "lint" },
+            n = { ":GoRename<cr>", "rename" },
+            g = {
+              name = "+tag",
+              a = { ":GoAddTag<cr>", "add" },
+              c = { ":GoClearg<cr>", "clear" },
+              r = { ":GoRmTag<cr>", "remove" },
+            },
           },
         },
       }, { buffer = 0, mode = "n" })
     end
     return
   end
-
   lopt.listchars = { tab = "» ", trail = "·" }
   lopt.tabstop   = 8
   if vim.bo.shiftwidth < 3 then
