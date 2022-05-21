@@ -36,6 +36,19 @@ wk.register {
   ["<S-F1>"] = { "<cmd>q<cr>", "quit" },
   ["<S-F2>"] = { function() d.goto_prev() end, "previous diagnostic" },
   ["<S-F3>"] = { function() d.goto_next() end, "next diagnostic" },
+  ["<F4>"] = { [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]], "juml to tag" },
+  ["<F6>"] = { ":cprevious<cr>", "quickfix next" },
+  ["<S-F6>"] = { ":lprevious<cr>", "location next" },
+  ["<F7>"] = { ":cnext<cr>", "quickfix previous" },
+  ["<S-F7>"] = { ":lnext<cr>", "location next" },
+  ["<F9>"] = { "<cmd>cclose<bar>lclose<bar>only<cr>", "close other windows" },
+  ["<F12>"] = { "", "previous buffer" },
+  ["<Tab>"] = { "expand selection" },
+  ["<PageUp>"] = { "0", "page up" },
+  ["<PageDown>"] = { "0", "page down" },
+  ["<C-L>"] = { "refresh" },
+  ["-"] = { "comment" },
+  ["ä"] = { "show cursor" },
   ["ö"] = { "<cmd>:wa<cr>", "write all" },
   g = {
     D = { function() lb.declaration() end, "declaration" },
@@ -202,17 +215,6 @@ wk.register({
 
 local vmap = vim.api.nvim_set_keymap -- global mappings
 local m = l.map.defmap
-local f4 = [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]]
-
-vmap("n", "<F4>",       f4,                                    m)
-vmap("n", "<F6>",       ":cprevious<cr>",                      m)
-vmap("n", "<S-F6>",     ":lprevious<cr>",                      m)
-vmap("n", "<F7>",       ":cnext<cr>",                          m)
-vmap("n", "<S-F7>",     ":lnext<cr>",                          m)
-vmap("n", "<F9>",       "<cmd>cclose<bar>lclose<bar>only<cr>", m)
-vmap("n", "<F12>",      "",                                  m)
-vmap("n", "<PageUp>",   "0",                                 m)
-vmap("n", "<PageDown>", "0",                                 m)
 
 vmap("n", "<F13>", "<S-F1>",  {})
 vmap("n", "<F14>", "<S-F2>",  {})
