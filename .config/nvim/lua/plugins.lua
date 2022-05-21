@@ -272,6 +272,7 @@ require("packer").startup(function(use)
       "nvim-lua/popup.nvim",
       "nvim-lua/plenary.nvim",
       "protex/better-digraphs.nvim",
+      "nvim-telescope/telescope-dap.nvim",
     },
     config = function()
       local telescope = require "telescope"
