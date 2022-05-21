@@ -111,7 +111,12 @@ require("packer").startup(function(use)
   use {
     "kosayoda/nvim-lightbulb",
     config = function()
-      vim.cmd [[autocmd CursorHold,CursorHoldI * lua require "nvim-lightbulb".update_lightbulb()]]
+      vim.cmd [[
+        augroup lightbulb
+          autocmd!
+          autocmd CursorHold,CursorHoldI * lua require "nvim-lightbulb".update_lightbulb()
+        augroup end
+      ]]
       require("nvim-lightbulb").setup {
         sign = {
           enabled = false,
@@ -402,8 +407,11 @@ require("packer").startup(function(use)
       telescope.load_extension "refactoring"
 
       vim.cmd [[
-        autocmd User TelescopePreviewerLoaded setlocal number
-        autocmd User TelescopePreviewerLoaded setlocal tabstop=2
+        augroup telescope
+          autocmd!
+          autocmd User TelescopePreviewerLoaded setlocal number
+          autocmd User TelescopePreviewerLoaded setlocal tabstop=2
+        augroup end
       ]]
     end,
   }
