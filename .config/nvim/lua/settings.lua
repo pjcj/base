@@ -1,4 +1,4 @@
-local vopt = vim.opt                           -- set options
+local vopt = vim.opt  -- set options
 
 vopt.autowriteall  = true
 vopt.backspace     = { "indent", "eol", "start" }
@@ -54,4 +54,9 @@ else
   vopt.grepprg    = "git grep -n"
 end
 
-vim.cmd([[autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | execute 'OSCYankReg +' | endif]])
+vim.cmd [[
+  augroup osc
+    autocmd!
+    autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | execute 'OSCYankReg +' | endif
+  augroup end
+]]
