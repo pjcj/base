@@ -81,7 +81,7 @@ local function setup_null_ls()
     f.shellharden,
     f.shfmt.with { extra_args = { "-i", "2", "-s" } },
     -- f.sqlfluff,
-    f.stylua,
+    -- f.stylua,
     f.tidy,
     h.dictionary,
   }
