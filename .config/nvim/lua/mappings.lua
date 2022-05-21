@@ -47,7 +47,7 @@ wk.register {
   ["<C-L>"] = { "refresh" },
   ["-"] = { "comment" },
   ["ä"] = { "show cursor" },
-  ["ö"] = { "::wa<cr>", "write all" },
+  ["ö"] = { ":wa<cr>", "write all" },
   g = {
     D = { function() lb.declaration() end, "declaration" },
     d = { function() lb.definition() end, "definition" },
@@ -105,6 +105,25 @@ wk.register {
   ["<leader>"] = {
     ["."] = { function() tb.find_files { hidden = true } end, "find files" },
     [" "] = { function() tb.oldfiles() end, "old files" },
+    a = {
+      name = "+translate",
+      d = {
+        name = "+deutsch",
+        f = { ":Translate DE -output=floating<cr>", "floating" },
+        g = { ":Translate DE -output=register<cr>", "register" },
+        i = { ":Translate DE -output=insert<cr>", "insert" },
+        r = { ":Translate DE -output=replace<cr>", "replace" },
+        s = { ":Translate DE -output=split<cr>", "split" },
+      },
+      e = {
+        name = "+english",
+        f = { ":Translate EN -output=floating<cr>", "floating" },
+        g = { ":Translate EN -output=register<cr>", "register" },
+        i = { ":Translate EN -output=insert<cr>", "insert" },
+        r = { ":Translate EN -output=replace<cr>", "replace" },
+        s = { ":Translate EN -output=split<cr>", "split" },
+      },
+    },
     d = { ":MarkdownPreviewToggle<cr>", "markdown" },
     m = { function() tb.git_status() end, "git" },
     f = {
@@ -192,6 +211,25 @@ wk.register({
   glf = { function() lb.range_formatting() end, "format" },
   ["r<C-k><C-k>"] = { "<esc>:lua bd.digraphs('gvr')<cr>", "digraph" },
   ["<leader>"] = {
+    a = {
+      name = "+translate",
+      d = {
+        name = "+deutsch",
+        f = { ":Translate DE -source=EN -output=floating<cr>", "floating" },
+        g = { ":Translate DE -source=EN -output=register<cr>", "register" },
+        i = { ":Translate DE -source=EN -output=insert<cr>", "insert" },
+        r = { ":Translate DE -source=EN -output=replace<cr>", "replace" },
+        s = { ":Translate DE -source=EN -output=split<cr>", "split" },
+      },
+      e = {
+        name = "+english",
+        f = { ":Translate EN -output=floating<cr>", "floating" },
+        g = { ":Translate EN -output=register<cr>", "register" },
+        i = { ":Translate EN -output=insert<cr>", "insert" },
+        r = { ":Translate EN -output=replace<cr>", "replace" },
+        s = { ":Translate EN -output=split<cr>", "split" },
+      },
+    },
     h = {
       name = "+hunk",
       r = { ":Gitsigns reset_hunk<cr>", "reset lines" },

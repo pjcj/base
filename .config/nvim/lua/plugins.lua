@@ -791,6 +791,7 @@ require("packer").startup(function(use)
   use "Konfekt/vim-unicode-homoglyphs" -- gy
   use "ntpeters/vim-better-whitespace"
   use "ojroques/vim-oscyank"
+  use "uga-rosa/translate.nvim"
   use "kana/vim-textobj-user"
   use {
     "Julian/vim-textobj-variable-segment",
