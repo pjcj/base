@@ -715,7 +715,8 @@ require("packer").startup(function(use)
           "man",
           "",
         },
-        context_patterns                           = {
+        -- TODO - remove
+        context_patterns = {
           -- defaults
           "class", "^func", "method", "^if", "while", "for", "with",
           "try", "except", "arguments", "argument_list", "object",
