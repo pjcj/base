@@ -171,8 +171,10 @@ local_defs.fn.set_buffer_settings = function()
   local b    = vim.b             -- a table to access buffer variables
   local lopt = vim.opt_local     -- set local options
 
+  vim.g.indent_blankline_show_first_indent_level = true
+
   if ft == "go" or ft == "gomod" or ft == "make" then
-    lopt.listchars = { tab = "  ", trail = "·" }
+    lopt.listchars = { tab = "  ", trail = "·", nbsp = "+" }
 
     local e = b.editorconfig
     -- print("editorconfig", e.indent_style, e.indent_size)
@@ -212,8 +214,9 @@ local_defs.fn.set_buffer_settings = function()
     return
   end
 
-  lopt.listchars = { tab = "» ", trail = "·" }
+  lopt.listchars = { tab = "» ", trail = "·", nbsp = "+" }
   lopt.tabstop   = 8
+  lopt.expandtab = true
   if vim.bo.shiftwidth < 3 then
     alternate_indent()
   else
@@ -231,6 +234,7 @@ local_defs.fn.set_buffer_settings = function()
   end
 
   if ft == "perl" then
+    vim.g.indent_blankline_show_first_indent_level = false
     wk.register({
       ["<F2>"] = { "sub ($self) {<CR>}<ESC>kea<Space>", "new sub" },
       ["<F4>"] = { "$self->", "$self->" },
