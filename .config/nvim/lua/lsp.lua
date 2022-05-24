@@ -76,6 +76,7 @@ local function setup_null_ls()
     f.codespell.with { extra_args = codespell },
     f.eslint,
     f.fixjson,
+    f.mdformat.with { extra_args = { "--number" } },
     -- f.golines,
     -- f.prettier,
     f.shellharden,
