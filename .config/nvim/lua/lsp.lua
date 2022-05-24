@@ -162,7 +162,7 @@ local function setup_servers()
   lsp_installer.setup {
     automatic_installation = {
       exclude = {
-        "spectral",  -- installed externally
+        -- "spectral",  -- installed externally
       },
     },
     ui = {
@@ -178,7 +178,7 @@ local function setup_servers()
   lspconfig.golangci_lint_ls.setup { on_attach = on_attach }
   lspconfig.gopls.setup { on_attach = on_attach }
   lspconfig.html.setup { on_attach = on_attach }
-  lspconfig.spectral.setup { on_attach = on_attach }
+  -- lspconfig.spectral.setup { on_attach = on_attach }
   lspconfig.sqls.setup { on_attach = on_attach }
   lspconfig.taplo.setup { on_attach = on_attach }
   lspconfig.yamlls.setup { on_attach = on_attach }
