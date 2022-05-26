@@ -75,8 +75,9 @@
     lg                  = log --graph --topo-order --pretty=format:'%C("#833652")%h%Creset -%C("#f0c53f")%d%C("#9599dc") %s %C("#3f86dc")(%ad) %C("#687e85")%an%Creset' --date=relative
     lgemail             = log --graph --topo-order --pretty=format:'%C("#833652")%h%Creset -%C("#f0c53f")%d%C("#9599dc") %s %C("#3f86dc")(%ad) %C("#687e85")%ae%Creset' --date=relative
     lge                 = log --graph --topo-order --pretty=format:'%C("#833652")%h%Creset -%C("#f0c53f")%d%C("#9599dc") %s %C("#3f86dc")(%ad) %C("#687e85")%an <%ae>%Creset' --date=relative
+    lga                 = "!f() { git lg --all; }; f"
     lgm                 = "!f() { git lg $( git reflog | awk '{print $1}' ); }; f"
-    lga                 = "!f() { git lg $( git fsck --no-reflog | awk '/dangling commit/ {print $3}' ); }; f"
+    lgr                 = "!f() { git lg $( git fsck --no-reflog | awk '/dangling commit/ {print $3}' ); }; f"
     lgn                 = "!f() { git log --graph --topo-order --pretty=format:'%Cred%H%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --date=relative $@ | git name-rev --stdin --name-only; }; f | less"
     vgc                 = repack -f -a -d --depth=250 --window=250
     nvgc                = !ionice -n7 nice -n20 git vgc
