@@ -277,6 +277,7 @@ compdef _git   gri=git-rebase
 compdef _git   gs=git-status
 compdef _git   gsh=git-show
 compdef _git   gw=git-worktree
+compdef _gh    ghub
 compdef _dzil  z=dzil
 
 _git-branch-full-delete() { __git_branch_names }
@@ -424,6 +425,7 @@ gg()      { git grep -n "$@" }
 ggv()     { git grep -O$EDITOR "$@" }
 gh()      { git co "$@" }
 gho()     { git omvo "${1-$(git branch-current)}" }
+ghub()    { command gh "$@" }
 gl()      { gll --all }
 glab()    { PAGER=bat command glab "$@" }
 gll()     { $(git-commit-sel "$@"); true }
@@ -447,7 +449,6 @@ gsh()     { git show "$@" }
 gw()      { git worktree "$@" }
 gwa()     { git worktree add "$(git rev-parse --git-common-dir)/../../$@" }
 gwm()     { cd "$@" }
-golang()  { command go "$@" }
 h()       { fc -li "$@" }
 hg()      { fc -li 1 | grep "$@" }
 hh()      { fc -li 1 }
