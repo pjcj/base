@@ -129,7 +129,7 @@ wk.register {
     m = { function() tb.git_status() end, "git" },
     f = {
       name = "+telescope",
-      a = { function() tb.lsp_code_actions() end, "lsp code actions" },
+      a = { function() vim.lsp.buf.code_action() end, "lsp code actions" },
       b = { function() tb.buffers() end, "buffers" },
       d = { function() tb.lsp_definitions() end, "lsp definitions" },
       f = { function() tb.builtin() end, "builtin" },
