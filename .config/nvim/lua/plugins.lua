@@ -279,7 +279,6 @@ require("packer").startup(function(use)
       "nvim-lua/plenary.nvim",
       "protex/better-digraphs.nvim",
       "nvim-telescope/telescope-dap.nvim",
-      "nvim-telescope/telescope-ui-select.nvim",
     },
     config = function()
       local telescope = require "telescope"
@@ -302,11 +301,6 @@ require("packer").startup(function(use)
               fuzzy = true,
               case_mode = "smart_case", -- or "ignore_case" or "respect_case"
             },
-            ["ui-select"] = {
-              require("telescope.themes").get_dropdown {
-                -- even more opts
-              }
-            }
           },
           vimgrep_arguments = {
             "rg",
@@ -329,7 +323,6 @@ require("packer").startup(function(use)
 
       telescope.load_extension "fzf"
       telescope.load_extension "refactoring"
-      telescope.load_extension "ui-select"
 
       vim.cmd [[
         augroup telescope
@@ -340,6 +333,7 @@ require("packer").startup(function(use)
       ]]
     end,
   }
+  use "stevearc/dressing.nvim"
 
   use {
     "hrsh7th/nvim-cmp",
@@ -921,6 +915,7 @@ require("packer").startup(function(use)
   -- FIXIT .red
   --ERROR: 5
   --ERROR 6
+  --- TODO - hmmm
 
   use "elihunter173/dirbuf.nvim"
   use {
