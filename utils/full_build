@@ -141,12 +141,12 @@ else
 
     # sudo gem install colorls
     # sudo gem update colorls
-
-    $pip3 install --upgrade --user thefuck
-    $pip3 install --upgrade --user docker-compose
-    # $pip3 install --upgrade --user git+git://github.com/powerline/powerline
-    $pip3 install --upgrade --user powerline-status
 fi
+
+$pip3 install --upgrade --user thefuck
+$pip3 install --upgrade --user docker-compose
+$pip3 install --upgrade --user powerline-status
+$pip3 install --upgrade --user mdformat-gfm
 
 if [[ "$EDITOR" == "nvimx" ]]; then
     $pip3 install --upgrade --user neovim pynvim
