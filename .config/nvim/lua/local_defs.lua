@@ -99,6 +99,7 @@ local_defs.fn.set_buffer_colours = function()
   set_colour("Visual",                               "guibg", c.dred     )
   set_colour("Visual",                               "gui",   c.none     )
   set_colour("QuickFixLine",                         "guibg", c.dred     )
+  set_colour("WinSeparator",                         "guibg", c.none     )
 
   set_colour("Cursor",                               "guibg", c.llyellow )
 
