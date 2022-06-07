@@ -199,6 +199,7 @@ local_defs.fn.set_buffer_settings = function()
             c = { ":GoCmt<cr>", "comment" },
             e = { ":GoIfErr<cr>", "iferr" },
             f = { ":GoFmt<cr>", "fmt" },
+            F = { ":GoFmt -a<cr>", "fmt all" },
             l = { ":GoLint<cr>", "lint" },
             n = { ":GoRename<cr>", "rename" },
             g = {
