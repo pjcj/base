@@ -74,11 +74,6 @@ if [[ "$(uname)" == Darwin ]]; then
             $fzfcomp
     fi
 
-    if [ ! which rustup >&/dev/null ]; then
-        curl https://sh.rustup.rs -sSf | sh
-    else
-        rustup update
-    fi
     cargo install devicon-lookup
 
     pip3=pip3
