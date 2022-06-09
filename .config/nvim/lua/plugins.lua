@@ -110,6 +110,7 @@ require("packer").startup(function(use)
   -- use "folke/lsp-colors.nvim"
   use {
     "kosayoda/nvim-lightbulb",
+    requires = "antoinemadec/FixCursorHold.nvim",
     config = function()
       vim.cmd [[
         augroup lightbulb
