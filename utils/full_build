@@ -171,7 +171,8 @@ npm install -g fixjson
 npm update -g
 
 if [[ "$EDITOR" == "nvim" ]]; then
-    $EDITOR --headless -c "autocmd User PackerComplete quitall" -c "PackerSync"
+    # $EDITOR --headless -c "autocmd User PackerComplete quitall" -c "PackerSync"
+    $EDITOR -c "autocmd User PackerComplete quitall" -c "PackerSync"
     # $EDITOR --headless -c LspInstall\ --sync\ bashls
     # $EDITOR --headless -c LspInstall\ --sync\ cssls
     # $EDITOR --headless -c LspInstall\ --sync\ dockerls
