@@ -17,7 +17,19 @@ vim.cmd [[
   augroup end
 ]]
 
-require("packer").startup(function(use)
+local packer = require("packer")
+packer.init {
+  max_jobs = 15,
+  git = {
+    depth = 9999999,
+  },
+  profile = {
+    enable = true,
+    threshold = 1, -- integer in milliseconds
+  },
+}
+
+packer.startup(function(use)
   -- Packer can manage itself
   use "wbthomason/packer.nvim"
 
