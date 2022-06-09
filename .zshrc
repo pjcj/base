@@ -196,7 +196,7 @@ PATH=~/.cargo/bin:$NPM_PACKAGES/bin:$PATH
 PATH=/snap/bin:$PATH
 PATH=~/g/local_base/utils:~/g/base/utils:$PATH
 PATH=~/g/base/utils/${(L)$(uname)}:$PATH
-PATH=$PATH:~/g/go/bin:/usr/local/sbin:/usr/sbin:/sbin
+PATH=/usr/local/bin:$PATH:~/g/go/bin:/usr/local/sbin:/usr/sbin:/sbin
 MANPATH=/usr/share/man:${MANPATH:-manpath}
 MANPATH=~/g/sw/share/man:$NPM_PACKAGES/share/man:$MANPATH
 
