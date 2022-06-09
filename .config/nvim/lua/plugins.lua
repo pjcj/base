@@ -57,6 +57,7 @@ packer.startup(function(use)
         ignore_install = {
           "swift", -- requires glibc 2.28
           "perl", -- sometimes crashes
+          "phpdoc", -- fails on MacOS
         },
         highlight = {
           enable = true,
