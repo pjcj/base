@@ -249,6 +249,9 @@ packer.startup(function(use)
     "vim-perl/vim-perl",
     run = "make clean carp dancer heredoc-sql highlight-all-pragmas "
         .. "js-css-in-mason method-signatures moose test-more try-tiny",
+    config = function()
+      vim.g.perl_highlight_data = 1
+    end,
   }
 
   use {
