@@ -32,6 +32,7 @@ vopt.showmatch     = true
 vopt.signcolumn    = "auto:1"
 vopt.smartcase     = true
 vopt.smarttab      = true
+vopt.splitright    = true
 vopt.termguicolors = true
 vopt.title         = true
 vopt.undofile      = true
