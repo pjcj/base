@@ -185,6 +185,25 @@ local function setup_servers()
   lspconfig.yamlls.setup { on_attach = on_attach }
   lspconfig.zk.setup { on_attach = on_attach }
 
+  lspconfig.perlnavigator.setup {
+    settings = {
+      perlnavigator = {
+        includePaths = {
+          "lib/perl",
+          "web/cgi-bin",
+          "lib/perl/pki/lib",
+          "lib/perl/ere/lib",
+          "lib/perl/pkcs11",
+          "test/selenium/dev/lib",
+          "etc",
+        },
+        perlcriticEnabled = false,
+        enableWarnings = false,
+      },
+    },
+    on_attach = on_attach,
+  }
+
   lspconfig.sumneko_lua.setup {
     init_options = { hostInfo = "neovim" },
     settings = lua_settings,
@@ -235,12 +254,10 @@ local function setup_servers()
     return orig_util_open_floating_preview(contents, syntax, opts, ...)
   end
 
-  -- stylua: ignore start
-  vim.fn.sign_define("LspDiagnosticsSignError",       { text = "E" })
-  vim.fn.sign_define("LspDiagnosticsSignWarning",     { text = "W" })
+  vim.fn.sign_define("LspDiagnosticsSignError", { text = "E" })
+  vim.fn.sign_define("LspDiagnosticsSignWarning", { text = "W" })
   vim.fn.sign_define("LspDiagnosticsSignInformation", { text = "I" })
-  vim.fn.sign_define("LspDiagnosticsSignHint",        { text = "H" })
-  -- stylua: ignore end
+  vim.fn.sign_define("LspDiagnosticsSignHint", { text = "H" })
 
   -- vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
   --   local client = vim.lsp.get_client_by_id(ctx.client_id)
@@ -257,16 +274,53 @@ end
 
 M.setup_servers = setup_servers
 
-  -- -- table from lsp severity to vim severity.
-  -- local severity = {
-  --   "error",
-  --   "warn",
-  --   "info",
-  --   "info", -- map both hint and info to info?
-  -- }
-  -- vim.lsp.handlers["window/showMessage"] = function(err, method, params, client_id)
-  --   print(method.message)
-  --   vim.notify(method.message, severity[params.type])
-  -- end
+-- -- table from lsp severity to vim severity.
+-- local severity = {
+--   "error",
+--   "warn",
+--   "info",
+--   "info", -- map both hint and info to info?
+-- }
+-- vim.lsp.handlers["window/showMessage"] = function(err, method, params, client_id)
+--   print(method.message)
+--   vim.notify(method.message, severity[params.type])
+-- end
+
+local function filter(arr, func)
+  -- Filter in place
+  -- https://stackoverflow.com/questions/49709998/how-to-filter-a-lua-array-inplace
+  local new_index = 1
+  local size_orig = #arr
+  for old_index, v in ipairs(arr) do
+    if func(v, old_index) then
+      arr[new_index] = v
+      new_index = new_index + 1
+    end
+  end
+  for i = new_index, size_orig do
+    arr[i] = nil
+  end
+end
+
+local function filter_diagnostics(diagnostic)
+  if diagnostic.source ~= "perlnavigator" then
+    return true
+  end
+
+  -- Ignore quotes at the end of the file
+  if string.match(diagnostic.message, 'Useless use of a constant') then
+    return false
+  end
+
+  return true
+end
+
+local function custom_on_publish_diagnostics(a, params, client_id, c, config)
+  filter(params.diagnostics, filter_diagnostics)
+  vim.lsp.diagnostic.on_publish_diagnostics(a, params, client_id, c, config)
+end
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  custom_on_publish_diagnostics, {})
 
 return M
