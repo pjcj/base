@@ -181,7 +181,7 @@ local function setup_servers()
   lspconfig.html.setup { on_attach = on_attach }
   -- lspconfig.spectral.setup { on_attach = on_attach }
   lspconfig.sqls.setup { on_attach = on_attach }
-  -- lspconfig.taplo.setup { on_attach = on_attach }
+  lspconfig.taplo.setup { on_attach = on_attach }
   lspconfig.yamlls.setup { on_attach = on_attach }
   lspconfig.zk.setup { on_attach = on_attach }
 
