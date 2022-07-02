@@ -155,8 +155,36 @@ wk.register {
       x = { ":TodoTelescope<cr>", "todos" },
       y = {
         name = "+grep type",
-        g = { function() tb.live_grep { type_filter = "go" } end, "go" },
-        p = { function() tb.live_grep { type_filter = "perl" } end, "perl" },
+        g = {
+          name = "go",
+          g = { function() tb.live_grep { type_filter = "go" } end, "grep" },
+          G = { function() tb.live_grep {
+            type_filter = "go",
+            additional_args = function() return { "-w" } end,
+          } end, "grep word" },
+          s = { function() tb.grep_string {
+            additional_args = function() return { "--type=go" } end,
+          } end, "grep string" },
+          S = { function() tb.grep_string {
+            additional_args = function() return { "--type=go" } end,
+            word_match = "-w",
+          } end, "grep string word" },
+        },
+        p = {
+          name = "perl",
+          g = { function() tb.live_grep { type_filter = "perl" } end, "grep" },
+          G = { function() tb.live_grep {
+            type_filter = "perl",
+            additional_args = function() return { "-w" } end,
+          } end, "grep word" },
+          s = { function() tb.grep_string {
+            additional_args = function() return { "--type=perl" } end,
+          } end, "grep string" },
+          S = { function() tb.grep_string {
+            additional_args = function() return { "--type=perl" } end,
+            word_match = "-w",
+          } end, "grep string word" },
+        },
       },
     },
     g = {
