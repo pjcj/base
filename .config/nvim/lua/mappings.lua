@@ -130,6 +130,7 @@ wk.register {
     f = {
       name = "+telescope",
       a = { vim.lsp.buf.code_action, "lsp code actions" },
+      A = { function() tb.find_files { hidden = true, no_ignore = true } end, "find all files" },
       b = { tb.buffers, "buffers" },
       d = { tb.lsp_definitions, "lsp definitions" },
       f = { tb.builtin, "builtin" },
