@@ -73,6 +73,7 @@ local function setup_null_ls()
     d.tidy,
     d.yamllint,
     d.zsh,
+    -- f.beautysh,  -- not all that useful
     f.codespell.with { extra_args = codespell },
     f.eslint,
     f.fixjson,
