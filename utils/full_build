@@ -138,10 +138,11 @@ else
     # sudo gem update colorls
 fi
 
-$pip3 install --upgrade --user thefuck
-$pip3 install --upgrade --user docker-compose
-$pip3 install --upgrade --user powerline-status
-$pip3 install --upgrade --user mdformat-gfm
+$pip3 install --upgrade --user \
+    thefuck \
+    docker-compose \
+    powerline-status \
+    mdformat-gfm
 
 if [[ "$EDITOR" == "nvimx" ]]; then
     $pip3 install --upgrade --user neovim pynvim
