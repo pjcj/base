@@ -37,6 +37,16 @@ local perl_diagnostics = {
   },
 }
 
+local function file_exists(name)
+   local f = io.open(name,"r")
+   if f ~= nil then
+     io.close(f)
+     return true
+   else
+     return false
+   end
+end
+
 local function setup_null_ls()
   null_ls.register(perl_diagnostics)
 
@@ -47,10 +57,11 @@ local function setup_null_ls()
   local f = b.formatting
   local h = b.hover
 
-  local codespell = {
-    "--builtin", "clear,rare,informal,usage,names",
-    "--ignore-words=", ".codespell"
-  }
+  local codespell = { "--builtin", "clear,rare,informal,usage,names" }
+
+  if file_exists(".codespell") then
+    table.insert(codespell, "--ignore-words=.codespell")
+  end
 
   local sources = {
     a.eslint,
