@@ -47,7 +47,7 @@ wk.register {
   ["<C-L>"] = { "refresh" },
   ["-"] = { "comment" },
   ["ä"] = { "show cursor" },
-  ["ö"] = { ":wa<cr>", "write all" },
+  ["ö"] = { ":w<cr> | :wa<cr>", "write all" },
   g = {
     name = "+goto",
     D = { lb.declaration, "declaration" },
