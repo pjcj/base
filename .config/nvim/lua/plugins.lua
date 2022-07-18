@@ -233,6 +233,8 @@ packer.startup(function(use)
     },
     config = function()
       require("go").setup {
+        goimport = "goimports",
+        lsp_gofumpt = true,
         max_line_len = 80, -- max line length in goline format
       }
 
