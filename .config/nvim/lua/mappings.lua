@@ -34,6 +34,8 @@ wk.register {
   ["<S-F1>"] = { ":q<cr>", "quit" },
   ["<S-F2>"] = { d.goto_prev, "previous diagnostic" },
   ["<S-F3>"] = { d.goto_next, "next diagnostic" },
+  ["<C-F2>"] = { "<Plug>(ale_previous_wrap)", "previous diagnostic" },
+  ["<C-F3>"] = { "<Plug>(ale_next_wrap)", "next diagnostic" },
   ["<F4>"] = { [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]], "juml to tag" },
   ["<F6>"] = { ":cprevious<cr>", "quickfix next" },
   ["<S-F6>"] = { ":lprevious<cr>", "location next" },

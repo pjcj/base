@@ -160,14 +160,15 @@ packer.startup(function(use)
   use {
     "dense-analysis/ale",
     config = function()
-      vim.g.ale_linters_explicit = 1
+      vim.g.ale_linters_explicit = 0
       vim.g.ale_disable_lsp = 1
       vim.g.ale_virtualtext_cursor = 1
-      vim.g.ale_sign_error = "E"
-      vim.g.ale_sign_warning = "W"
-      vim.g.ale_sign_info = "I"
+      vim.g.ale_sign_error = "e"
+      vim.g.ale_sign_warning = "w"
+      vim.g.ale_sign_info = "i"
+      vim.g.ale_echo_msg_format = "[%severity%] [%linter%] %s"
       vim.g.ale_linters = {
-        go = { "golangci-lint" },
+        -- go = { "gofmt", "golint", "gopls", "govet", "golangci-lint" },
         yaml = { "circleci", "spectral", "swaglint" },
       }
     end,

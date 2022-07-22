@@ -154,19 +154,19 @@ local function ale_infos()
 end
 
 table.insert(components.active[1], {
-  provider = function() return " E " .. tostring(ale_errors()) end,
+  provider = function() return " e " .. tostring(ale_errors()) end,
   enabled  = function() return ale_errors() > 0 end,
   hl       = { bg = c.base02, fg = "red" },
 })
 
 table.insert(components.active[1], {
-  provider = function() return " W " .. tostring(ale_warnings()) end,
+  provider = function() return " w " .. tostring(ale_warnings()) end,
   enabled  = function() return ale_warnings() > 0 end,
   hl       = { bg = c.base02, fg = "yellow" },
 })
 
 table.insert(components.active[1], {
-  provider = function() return " I " .. tostring(ale_infos()) end,
+  provider = function() return " i " .. tostring(ale_infos()) end,
   enabled  = function() return ale_infos() > 0 end,
   hl       = { bg = c.base02, fg = "cyan" },
 })
