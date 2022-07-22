@@ -234,8 +234,12 @@ packer.startup(function(use)
     config = function()
       require("go").setup {
         goimport = "goimports",
+        lsp_cfg = false,
+        lsp_diag_hdlr = false,
+        lsp_fmt_async = true,
         lsp_gofumpt = true,
         max_line_len = 80, -- max line length in goline format
+        null_ls_document_formatting_disable = true,
       }
 
       vim.cmd [[
