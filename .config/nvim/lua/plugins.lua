@@ -559,6 +559,10 @@ packer.startup(function(use)
             -- compare.length,
           },
         },
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        },
       }
 
       require("cmp_dictionary").setup {

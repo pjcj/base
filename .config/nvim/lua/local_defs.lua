@@ -148,12 +148,12 @@ local_defs.fn.set_buffer_colours = function()
 
   set_colour("ScrollView",                           "guibg", c.blue     )
 
-  set_colour("CmpItemAbbr",                          "guibg", c.normal   )
-  set_colour("CmpItemAbbrDeprecated",                "guibg", c.red      )
-  set_colour("CmpItemAbbrMatch",                     "guibg", c.base2    )
-  set_colour("CmpItemAbbrMatchFuzzy",                "guibg", c.base1    )
-  set_colour("CmpItemKind",                          "guibg", c.yellow   )
-  set_colour("CmpItemMenu",                          "guibg", c.base0    )
+  set_colour("CmpItemAbbr",                          "guibg", c.none     )
+  set_colour("CmpItemAbbrDeprecated",                "guifg", c.red      )
+  set_colour("CmpItemAbbrMatch",                     "guifg", c.rgreen   )
+  set_colour("CmpItemAbbrMatchFuzzy",                "guifg", c.dgreen   )
+  set_colour("CmpItemKind",                          "guifg", c.yellow   )
+  set_colour("CmpItemMenu",                          "guifg", c.base0    )
 end
 
 local alternate_indent = function()
