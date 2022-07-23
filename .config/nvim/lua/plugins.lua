@@ -234,7 +234,17 @@ packer.startup(function(use)
     },
     config = function()
       require("go").setup {
-        goimport = "goimports",
+        goimport = "golines",
+        -- gofmt = "gofumpt",
+        gofmt_args = {
+          "--max-len=80",
+          "--tab-len=2",
+          "--base-formatter=gofumpt",
+        },
+        -- goimport_args = {
+        --   "--max-len=80",
+        --   "--base-formatter=golines",
+        -- },
         lsp_cfg = false,
         lsp_diag_hdlr = false,
         lsp_fmt_async = true,
@@ -246,7 +256,7 @@ packer.startup(function(use)
       vim.cmd [[
         augroup gofmt
           autocmd!
-          autocmd BufWritePre *.go :silent! lua require("go.format").goimport()
+          autocmd BufWritePre *.go :silent! lua require("go.format").gofmt()
         augroup end
       ]]
     end,
