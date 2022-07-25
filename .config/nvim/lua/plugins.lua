@@ -233,6 +233,7 @@ packer.startup(function(use)
       "rcarriga/nvim-dap-ui",
       "theHamsta/nvim-dap-virtual-text",
       "ray-x/guihua.lua", -- float term, codeaction and codelens gui support
+      "leoluz/nvim-dap-go",
     },
     config = function()
       require("go").setup {
