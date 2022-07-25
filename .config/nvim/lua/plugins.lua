@@ -238,29 +238,29 @@ packer.startup(function(use)
     },
     config = function()
       require("go").setup {
-        goimport = "golines",
-        -- gofmt = "gofumpt",
+        goimport = "goimports",
         gofmt_args = {
           "--max-len=80",
           "--tab-len=2",
           "--base-formatter=gofumpt",
         },
-        -- goimport_args = {
-        --   "--max-len=80",
-        --   "--base-formatter=golines",
-        -- },
+        -- log_path = vim.fn.expand("$HOME") .. "/g/tmp/gonvimx.log",
+        log_path = "/tmp/gonvim.log",
         lsp_cfg = false,
         lsp_diag_hdlr = false,
         lsp_fmt_async = true,
         lsp_gofumpt = true,
-        max_line_len = 80, -- max line length in goline format
+        -- max_line_len = 80, -- max line length in goline format
         null_ls_document_formatting_disable = true,
+        verbose = true,
       }
 
       vim.cmd [[
         augroup gofmt
           autocmd!
-          autocmd BufWritePre *.go :silent! lua require("go.format").gofmt()
+          autocmd BufWritePre *.go :execute
+            \ 'lua require("go.format").goimport("-local", os.getenv("VIM_GO_IMPORT_LOCAL") or "xxxxxx")'
+            \| lua require("go.format").gofmt()
         augroup end
       ]]
     end,
