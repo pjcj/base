@@ -171,6 +171,7 @@ packer.startup(function(use)
         -- go = { "gofmt", "golint", "gopls", "govet", "golangci-lint" },
         go = {},
         lua = {},
+        perl = {},
         yaml = { "circleci", "spectral", "swaglint" },
       }
     end,
