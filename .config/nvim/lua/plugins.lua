@@ -447,6 +447,8 @@ packer.startup(function(use)
       end
 
       cmp.setup {
+        min_length = 1,
+        preselect = cmp.PreselectMode.None,
         formatting = {
           format = lspkind.cmp_format {
             mode = "symbol_text",
@@ -482,7 +484,6 @@ packer.startup(function(use)
           ghost_text = true,
           horizontal_search = true,
         },
-        min_length = 1,
         mapping = {
           ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
           ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
@@ -517,6 +518,7 @@ packer.startup(function(use)
           { name = "nvim_lsp" },
           {
             name = "buffer",
+            max_item_count = 10,
             option = {
               get_bufnrs = function()
                 return vim.api.nvim_list_bufs()
@@ -525,11 +527,15 @@ packer.startup(function(use)
               keyword_pattern = [[\%(\k\+\|\w\+\)]],
             },
           },
-          { name = "tags" },
+          { name = "tags", max_item_count = 10 },
           { name = "path" },
           {
             name = "tmux",
-            option = { all_panes = true, label = "[tmux]" },
+            max_item_count = 10,
+            option = {
+              all_panes = true,
+              label = "[tmux]",
+            },
           },
           { name = "calc" },
           { name = "emoji" },
@@ -544,14 +550,14 @@ packer.startup(function(use)
           end,
         },
         sorting = {
-          priority_weight = 1.0,
+          priority_weight = 2.0,
           comparators = {
-            compare.locality,
-            compare.recently_used,
-            compare.scopes,
             compare.score,
             -- score = score +
             --  ((#sources - (source_index - 1)) * sorting.priority_weight)
+            compare.locality,
+            compare.recently_used,
+            compare.scopes,
             compare.offset,
             compare.order,
             -- compare.score_offset,
@@ -757,7 +763,7 @@ packer.startup(function(use)
           "",
         },
         -- TODO - remove
-        context_patterns = {
+        context_patterns                           = {
           -- defaults
           "class", "^func", "method", "^if", "while", "for", "with",
           "try", "except", "arguments", "argument_list", "object",
