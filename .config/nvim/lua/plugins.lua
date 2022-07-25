@@ -169,6 +169,8 @@ packer.startup(function(use)
       vim.g.ale_echo_msg_format = "[%severity%] [%linter%] %s"
       vim.g.ale_linters = {
         -- go = { "gofmt", "golint", "gopls", "govet", "golangci-lint" },
+        go = {},
+        lua = {},
         yaml = { "circleci", "spectral", "swaglint" },
       }
     end,
