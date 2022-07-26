@@ -106,8 +106,21 @@ wk.register {
     ["<C-k><C-k>"] = { function() bd.digraphs("r") end, "digraph" },
   },
   ["<leader>"] = {
-    ["."] = { function() tb.find_files { hidden = true } end, "find files" },
     [" "] = { tb.oldfiles, "old files" },
+    ["."] = { function() tb.find_files { hidden = true } end, "find files" },
+    [","] = {
+      name = "+language",
+      g = {
+        name = "+go",
+        a = { ":GoAlt<cr>", "alternative file" },
+        d = {
+          name = "+debug",
+          s = { ":GoDebug<cr>", "start" },
+          t = { ":GoDbgStop<cr>", "stop" },
+        },
+        n = { ":lua require('dap-go').debug_test()<cr>", "run nearest test" },
+      },
+    },
     a = {
       name = "+translate",
       d = {
@@ -128,7 +141,6 @@ wk.register {
       },
     },
     d = { ":MarkdownPreviewToggle<cr>", "markdown" },
-    m = { tb.git_status, "git" },
     f = {
       name = "+telescope",
       a = { vim.lsp.buf.code_action, "lsp code actions" },
@@ -138,9 +150,8 @@ wk.register {
       f = { tb.builtin, "builtin" },
       g = { tb.live_grep, "grep" },
       G = { function() tb.live_grep {
-          additional_args = function() return { "-w" } end
-        }
-      end, "grep word" },
+        additional_args = function() return { "-w" } end
+      } end, "grep word" },
       h = { tb.help_tags, "help" },
       l = { tb.current_buffer_fuzzy_find, "fuzzy find" },
       o = { tb.vim_options, "vim options" },
@@ -210,6 +221,7 @@ wk.register {
     k = { "highlight word" },
     K = { "unhighlight words" },
     l = { [[:let @/ = ""<bar> :call UncolorAllWords()<cr>]], "unhighlight all" },
+    m = { tb.git_status, "git" },
     p = {
       name = "+packer",
       s = { packer_sync, "sync" },
