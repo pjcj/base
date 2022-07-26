@@ -544,6 +544,7 @@ packer.startup(function(use)
           {
             name = "dictionary",
             keyword_length = 2,
+            max_item_count = 10,
           },
         },
         snippet = {
