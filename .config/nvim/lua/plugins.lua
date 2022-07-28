@@ -172,7 +172,8 @@ packer.startup(function(use)
         go = {},
         lua = {},
         perl = {},
-        yaml = { "circleci", "spectral", "swaglint" },
+        sh = {},
+        yaml = { "circleci", "spectral", "swaglint", "yamllint" },
       }
     end,
   }
