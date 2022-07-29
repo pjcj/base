@@ -17,7 +17,7 @@ vim.cmd [[
   augroup end
 ]]
 
-local packer = require("packer")
+local packer = require "packer"
 packer.init {
   max_jobs = 15,
   git = {
@@ -52,7 +52,7 @@ packer.startup(function(use)
     },
     run = ":TSUpdate",
     config = function()
-      require("nvim-treesitter.configs").setup {
+      require "nvim-treesitter.configs".setup {
         ensure_installed = "all",
         ignore_install = {
           "swift", -- requires glibc 2.28
@@ -90,11 +90,11 @@ packer.startup(function(use)
   use {
     "terrortylor/nvim-comment",
     config = function()
-      require("nvim_comment").setup {
+      require "nvim_comment".setup {
         line_mapping = "-",
         comment_empty = false,
         hook = function()
-          require("ts_context_commentstring.internal").update_commentstring()
+          require "ts_context_commentstring.internal".update_commentstring()
         end,
       }
       local l = require "local_defs"
@@ -110,7 +110,7 @@ packer.startup(function(use)
   use {
     "lewis6991/spellsitter.nvim",
     config = function()
-      require("spellsitter").setup {
+      require "spellsitter".setup {
         hl = "SpellBad",
         captures = { "comment" }, -- set to {} to spellcheck everything
       }
@@ -131,7 +131,7 @@ packer.startup(function(use)
           autocmd CursorHold,CursorHoldI * lua require "nvim-lightbulb".update_lightbulb()
         augroup end
       ]]
-      require("nvim-lightbulb").setup {
+      require "nvim-lightbulb".setup {
         sign = {
           enabled = false,
           priority = 1,
@@ -155,7 +155,7 @@ packer.startup(function(use)
   --     require "calltree".setup({})
   --   end,
   -- }
-  require("lsp").setup_servers()
+  require "lsp".setup_servers()
 
   use {
     "dense-analysis/ale",
@@ -207,7 +207,7 @@ packer.startup(function(use)
     "SmiteshP/nvim-gps",
     requires = "nvim-treesitter/nvim-treesitter",
     config = function()
-      require("nvim-gps").setup {
+      require "nvim-gps".setup {
         -- icons = {
         --   ["class-name"] = "",
         --   ["function-name"] = "",
@@ -238,7 +238,7 @@ packer.startup(function(use)
       "leoluz/nvim-dap-go",
     },
     config = function()
-      require("go").setup {
+      require "go".setup {
         goimport = "goimports",
         gofmt_args = {
           "--max-len=80",
@@ -260,8 +260,8 @@ packer.startup(function(use)
         augroup gofmt
           autocmd!
           autocmd BufWritePre *.go :execute
-            \ 'lua require("go.format").goimport("-local", os.getenv("VIM_GO_IMPORT_LOCAL") or "xxxxxx")'
-            \| lua require("go.format").gofmt()
+            \ 'lua require "go.format".goimport("-local", os.getenv("VIM_GO_IMPORT_LOCAL") or "xxxxxx")'
+            \| lua require "go.format".gofmt()
         augroup end
       ]]
     end,
@@ -302,7 +302,7 @@ packer.startup(function(use)
   --     }
 
   --     local dbg_list =
-  --       require("dap-install.api.debuggers").get_installed_debuggers()
+  --       require "dap-install.api.debuggers".get_installed_debuggers()
 
   --     for _, debugger in ipairs(dbg_list) do
   --       dap_install.config(debugger)
@@ -393,9 +393,9 @@ packer.startup(function(use)
       "uga-rosa/cmp-dictionary",
     },
     config = function()
-      require("cmp_nvim_lsp").setup()
+      require "cmp_nvim_lsp".setup()
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+      capabilities = require "cmp_nvim_lsp".update_capabilities(capabilities)
       local cmp = require "cmp"
       local lspkind = require "lspkind"
       local compare = cmp.config.compare
@@ -577,7 +577,7 @@ packer.startup(function(use)
         },
       }
 
-      require("cmp_dictionary").setup {
+      require "cmp_dictionary".setup {
         dic = {
           ["*"] = { "/usr/share/dict/words" },
           -- ["lua"] = "path/to/lua.dic",
@@ -621,7 +621,7 @@ packer.startup(function(use)
   use {
     "folke/which-key.nvim",
     config = function()
-      require("which-key").setup {
+      require "which-key".setup {
         window = {
           border = "single",
         },
@@ -647,7 +647,7 @@ packer.startup(function(use)
     "lewis6991/gitsigns.nvim",
     requires = { "nvim-lua/plenary.nvim" },
     config = function()
-      require("gitsigns").setup {
+      require "gitsigns".setup {
         signs = {
           add = { show_count = true, text = "+" },
           change = { show_count = true, text = "~" },
@@ -722,7 +722,7 @@ packer.startup(function(use)
     "norcalli/nvim-colorizer.lua",
     config = function()
       vim.opt.termguicolors = true
-      require("colorizer").setup()
+      require "colorizer".setup()
     end,
   }
 
@@ -730,7 +730,7 @@ packer.startup(function(use)
     "AckslD/nvim-neoclip.lua",
     requires = { "tami5/sqlite.lua", module = "sqlite" },
     config = function()
-      require("neoclip").setup {
+      require "neoclip".setup {
         enable_persistent_history = true,
         db_path = vim.fn.stdpath "data" .. "/databases/neoclip.sqlite3",
         default_register = '"',
@@ -872,7 +872,7 @@ packer.startup(function(use)
   use {
     "kevinhwang91/nvim-hlslens",
     config = function()
-      require("hlslens").setup {}
+      require "hlslens".setup {}
     end,
   }
 
@@ -881,7 +881,7 @@ packer.startup(function(use)
     config = function()
       local l = require "local_defs"
       local c = l.colour
-      require("scrollbar").setup {
+      require "scrollbar".setup {
         marks = {
           Search = { text = { "─", "═" }, color = c.rgreen },
           Error = { text = { "─", "═" }, color = c.orange },
@@ -891,7 +891,7 @@ packer.startup(function(use)
           Misc = { text = { "─", "═" }, color = c.violet },
         },
       }
-      require("scrollbar.handlers.search").setup {}
+      require "scrollbar.handlers.search".setup {}
     end,
   }
 
@@ -946,7 +946,7 @@ packer.startup(function(use)
     "folke/todo-comments.nvim",
     requires = "nvim-lua/plenary.nvim",
     config = function()
-      require("todo-comments").setup {
+      require "todo-comments".setup {
         highlight = {
           before = "", -- "fg" or "bg" or empty
           keyword = "fg", -- "fg", "bg", "wide" or empty
@@ -992,7 +992,7 @@ packer.startup(function(use)
       "kyazdani42/nvim-web-devicons", -- optional, for file icon
     },
     config = function()
-      require("nvim-tree").setup {
+      require "nvim-tree".setup {
         hijack_directories = { enable = false },
       }
     end,
