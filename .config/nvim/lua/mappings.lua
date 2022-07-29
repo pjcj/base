@@ -36,7 +36,7 @@ wk.register {
   ["<S-F3>"] = { d.goto_next, "next diagnostic" },
   ["<C-F2>"] = { "<Plug>(ale_previous_wrap)", "previous diagnostic" },
   ["<C-F3>"] = { "<Plug>(ale_next_wrap)", "next diagnostic" },
-  ["<F4>"] = { [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]], "juml to tag" },
+  ["<F4>"] = { [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]], "jump to tag" },
   ["<F6>"] = { ":cprevious<cr>", "quickfix next" },
   ["<S-F6>"] = { ":lprevious<cr>", "location next" },
   ["<F7>"] = { ":cnext<cr>", "quickfix previous" },
@@ -50,6 +50,14 @@ wk.register {
   ["-"] = { "comment" },
   ["ä"] = { "show cursor" },
   ["ö"] = { ":w<cr> | :wa<cr>", "write all" },
+
+  ["n"] = { [[<cmd>execute("normal! " . v:count1 . "n")<cr><cmd>lua require("hlslens").start()<cr>]], "next match" },
+  ["N"] = { [[<cmd>execute("normal! " . v:count1 . "N")<cr><cmd>lua require("hlslens").start()<cr>]], "next match" },
+  ["*"] = { [[*<cmd>lua require("hlslens").start()<cr>]], "next word" },
+  ["#"] = { [[#<cmd>lua require("hlslens").start()<cr>]], "prev word" },
+  ["g*"] = { [[g*<cmd>lua require("hlslens").start()<cr>]], "next word part" },
+  ["g#"] = { [[g#<cmd>lua require("hlslens").start()<cr>]], "prev word part" },
+
   g = {
     name = "+goto",
     D = { lb.declaration, "declaration" },

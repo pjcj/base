@@ -870,6 +870,13 @@ packer.startup(function(use)
   }
 
   use {
+    "kevinhwang91/nvim-hlslens",
+    config = function()
+      require('hlslens').setup{}
+    end,
+  }
+
+  use {
     "dstein64/nvim-scrollview",
     config = function()
       vim.g.scrollview_winblend = 75
