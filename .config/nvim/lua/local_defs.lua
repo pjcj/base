@@ -146,8 +146,6 @@ local_defs.fn.set_buffer_colours = function()
   set_colour("AleWarningSign",                       "guifg", c.yellow   )
   set_colour("AleInfoSign",                          "guifg", c.cyan     )
 
-  set_colour("ScrollView",                           "guibg", c.blue     )
-
   set_colour("CmpItemAbbr",                          "guibg", c.none     )
   set_colour("CmpItemAbbrDeprecated",                "guifg", c.red      )
   set_colour("CmpItemAbbrMatch",                     "guifg", c.rgreen   )

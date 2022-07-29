@@ -872,15 +872,26 @@ packer.startup(function(use)
   use {
     "kevinhwang91/nvim-hlslens",
     config = function()
-      require('hlslens').setup{}
+      require("hlslens").setup {}
     end,
   }
 
   use {
-    "dstein64/nvim-scrollview",
+    "petertriho/nvim-scrollbar",
     config = function()
-      vim.g.scrollview_winblend = 75
-      vim.g.scrollview_column = 1
+      local l = require "local_defs"
+      local c = l.colour
+      require("scrollbar").setup {
+        marks = {
+          Search = { text = { "─", "═" }, color = c.rgreen },
+          Error = { text = { "─", "═" }, color = c.orange },
+          Warn = { text = { "─", "═" }, color = c.yellow },
+          Info = { text = { "─", "═" }, color = c.cyan },
+          Hint = { text = { "─", "═" }, color = c.blue },
+          Misc = { text = { "─", "═" }, color = c.violet },
+        },
+      }
+      require("scrollbar.handlers.search").setup {}
     end,
   }
 
