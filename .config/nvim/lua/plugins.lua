@@ -892,6 +892,13 @@ packer.startup(function(use)
         },
       }
       require "scrollbar.handlers.search".setup {}
+
+      vim.cmd [[
+        hi default link HlSearchNear SpellCap
+        hi default link HlSearchLens SpellLocal
+        hi default link HlSearchLensNear SpellRare
+        hi default link HlSearchFloat Search
+      ]]
     end,
   }
 
