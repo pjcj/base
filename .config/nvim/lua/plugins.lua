@@ -195,7 +195,6 @@ packer.startup(function(use)
       local codespell = { "--builtin", "clear,rare,informal,usage,names" }
 
       if vim.fn.filereadable(".codespell") == 1 then
-        print "xx"
         table.insert(codespell, "--ignore-words=.codespell")
       end
 
