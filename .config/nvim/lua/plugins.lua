@@ -268,6 +268,28 @@ packer.startup(function(use)
   }
 
   use {
+    "nvim-neotest/neotest",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-neotest/neotest-go",
+    },
+    config = function()
+      require "neotest".setup {
+        adapters = {
+          require "neotest-go" {
+            -- experimental = {
+            --   test_table = true,
+            -- },
+            args = { "-count=1", "-timeout=60s" }
+          }
+        }
+      }
+    end
+  }
+
+  use {
     "vim-perl/vim-perl",
     run = "make clean carp dancer heredoc-sql highlight-all-pragmas "
         .. "js-css-in-mason method-signatures moose test-more try-tiny",

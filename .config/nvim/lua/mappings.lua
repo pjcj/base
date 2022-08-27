@@ -120,13 +120,38 @@ wk.register {
       name = "+language",
       g = {
         name = "+go",
-        a = { ":GoAlt<cr>", "alternative file" },
+        a = { ":GoAlt!<cr>", "alternative file" },
+        c = { ":GoCoverage<cr>", "coverage" },
         d = {
           name = "+debug",
           s = { ":GoDebug<cr>", "start" },
           t = { ":GoDbgStop<cr>", "stop" },
         },
+        i = { function()
+          local i = os.getenv("VIM_GO_IMPORT_LOCAL") or "xxxxxx"
+          require "go.format".goimport("-local", i)
+          require "go.format".gofmt()
+        end, "imports" },
         n = { ":lua require('dap-go').debug_test()<cr>", "run nearest test" },
+        t = {
+          name = "+test",
+          a = { function()
+            local file = "."
+            print(file)
+            require "neotest".run.run(file)
+          end, "all" },
+          f = { function()
+            local file = vim.fn.expand("%")
+            print(file)
+            require "neotest".run.run(file)
+          end, "file" },
+          o = { function()
+            require("neotest").output.open({ enter = true })
+          end, "open results" },
+          s = { function()
+            require "neotest".summary.toggle()
+          end, "toggle summary" },
+        },
       },
     },
     a = {
