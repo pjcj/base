@@ -208,6 +208,10 @@ local function setup_servers()
           "lib/perl/pkcs11",
           "test/selenium/dev/lib",
           "etc",
+
+          "perl",
+          "t/lilb",
+          "../dummy_modules",
         },
         perlcriticEnabled = false,
         enableWarnings = false,
