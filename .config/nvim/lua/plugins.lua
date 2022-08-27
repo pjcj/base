@@ -200,7 +200,7 @@ packer.startup(function(use)
 
       local sources = {
         a.eslint,
-        a.gitsigns,
+        -- a.gitsigns,
         a.proselint,
         -- a.refactoring,
         a.shellcheck,
