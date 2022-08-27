@@ -899,6 +899,13 @@ packer.startup(function(use)
   }
 
   use {
+    "stevearc/overseer.nvim",
+    config = function()
+      require "overseer".setup {}
+    end
+  }
+
+  use {
     "petertriho/nvim-scrollbar",
     config = function()
       local l = require "local_defs"
