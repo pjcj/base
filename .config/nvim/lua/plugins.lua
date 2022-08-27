@@ -254,16 +254,47 @@ packer.startup(function(use)
         -- max_line_len = 80, -- max line length in goline format
         null_ls_document_formatting_disable = true,
         verbose = true,
-      }
+        -- luasnip = true,
+        lsp_inlay_hints = {
+          enable = true,
 
-      vim.cmd [[
-        augroup gofmt
-          autocmd!
-          autocmd BufWritePre *.go :execute
-            \ 'lua require "go.format".goimport("-local", os.getenv("VIM_GO_IMPORT_LOCAL") or "xxxxxx")'
-            \| lua require "go.format".gofmt()
-        augroup end
-      ]]
+          -- Only show inlay hints for the current line
+          only_current_line = false,
+
+          -- Event which triggers a refersh of the inlay hints.
+          -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
+          -- not that this may cause higher CPU usage.
+          -- This option is only respected when only_current_line and
+          -- autoSetHints both are true.
+          only_current_line_autocmd = "CursorHold",
+
+          -- whether to show variable name before type hints with the inlay hints or not
+          -- default: false
+          show_variable_name = true,
+
+          -- prefix for parameter hints
+          parameter_hints_prefix = " ",
+          show_parameter_hints = true,
+
+          -- prefix for all the other hints (type, chaining)
+          other_hints_prefix = "=> ",
+
+          -- whether to align to the length of the longest line in the file
+          max_len_align = true,
+
+          -- padding from the left if max_len_align is true
+          max_len_align_padding = 1,
+
+          -- whether to align to the extreme right or not
+          right_align = false,
+
+          -- padding from the right if right_align is true
+          right_align_padding = 6,
+
+          -- The color of the hints
+          highlight = "Comment",
+        },
+      }
     end,
   }
 

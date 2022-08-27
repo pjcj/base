@@ -189,13 +189,29 @@ local function setup_servers()
 
   lspconfig.cssls.setup { on_attach = on_attach }
   lspconfig.golangci_lint_ls.setup { on_attach = on_attach }
-  lspconfig.gopls.setup { on_attach = on_attach }
   lspconfig.html.setup { on_attach = on_attach }
   -- lspconfig.spectral.setup { on_attach = on_attach }
   lspconfig.sqls.setup { on_attach = on_attach }
   lspconfig.taplo.setup { on_attach = on_attach }
   lspconfig.yamlls.setup { on_attach = on_attach }
   lspconfig.zk.setup { on_attach = on_attach }
+
+  lspconfig.gopls.setup {
+    settings = {
+      gopls = {
+        hints = {
+          assignVariableTypes = true,
+          compositeLiteralFields = true,
+          compositeLiteralTypes = true,
+          constantValues = true,
+          functionTypeParameters = true,
+          parameterNames = true,
+          rangeVariableTypes = true,
+        },
+      },
+    },
+    on_attach = on_attach,
+  }
 
   lspconfig.perlnavigator.setup {
     settings = {
