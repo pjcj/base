@@ -31,6 +31,3 @@ zsh/functions/_docker-machine
 zsh/functions/_git
 
 .glab-cli
-
-.config.nvim-4.4/
-.vimrc.4.4
