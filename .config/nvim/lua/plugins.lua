@@ -193,7 +193,6 @@ packer.startup(function(use)
       local h = b.hover
 
       local codespell = { "--builtin", "clear,rare,informal,usage,names" }
-
       if vim.fn.filereadable(".codespell") == 1 then
         table.insert(codespell, "--ignore-words=.codespell")
       end
@@ -235,7 +234,7 @@ packer.startup(function(use)
         h.dictionary,
       }
 
-      -- print("setup_null_ls --------------")
+      -- print("setup_null_ls")
       null_ls.setup {
         sources = sources,
         debug = true,
