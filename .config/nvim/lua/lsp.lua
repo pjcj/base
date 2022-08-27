@@ -324,7 +324,7 @@ local function filter_diagnostics(diagnostic)
   end
 
   -- Ignore quotes at the end of the file
-  if string.match(diagnostic.message, 'Useless use of a constant') then
+  if string.match(diagnostic.message, "Useless use of a constant") then
     return false
   end
 
@@ -337,6 +337,7 @@ local function custom_on_publish_diagnostics(a, params, client_id, c, config)
 end
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  custom_on_publish_diagnostics, {})
+  custom_on_publish_diagnostics, {}
+)
 
 return M
