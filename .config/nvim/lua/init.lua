@@ -1,5 +1,4 @@
 require "plugins"
 require "settings"
 require "languages"
-require "lsp"
 require "mappings"

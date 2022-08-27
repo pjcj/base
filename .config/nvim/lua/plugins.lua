@@ -13,7 +13,7 @@ end
 vim.cmd [[
   augroup packer_user_config
     autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+    autocmd BufWritePost plugins.lua source <afile> | PackerCompile | echo "pc"
   augroup end
 ]]
 
@@ -118,9 +118,10 @@ packer.startup(function(use)
   }
 
   use "neovim/nvim-lspconfig"
-  use "williamboman/nvim-lsp-installer"
+  use { "williamboman/mason.nvim" }
+  use { "williamboman/mason-lspconfig.nvim" }
   use "ray-x/lsp_signature.nvim"
-  -- use "folke/lsp-colors.nvim"
+  use "folke/lsp-colors.nvim"
   use {
     "kosayoda/nvim-lightbulb",
     requires = "antoinemadec/FixCursorHold.nvim",
@@ -144,7 +145,104 @@ packer.startup(function(use)
   }
   use {
     "jose-elias-alvarez/null-ls.nvim",
-    requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    config = function()
+      local null_ls = require "null-ls"
+      local helpers = require "null-ls.helpers"
+
+      local perl_diagnostics = {
+        method = null_ls.methods.DIAGNOSTICS,
+        filetypes = { "perl" },
+        generator = null_ls.generator {
+          command = vim.fn.expand "~/g/base/utils/lint_perl",
+          args = { "$FILENAME", "$ROOT", "$FILEEXT" },
+          to_stdin = true,
+          from_stderr = true,
+          format = "json", --raw, json, or line
+          check_exit_code = function(code, stderr)
+            local success = code <= 1
+            if not success then
+              print(stderr)
+            end
+            return success
+          end,
+          on_output = helpers.diagnostics.from_json({
+            attributes = {
+              row = "row",
+              -- col = "start_column",
+              -- end_col = "end_column",
+              -- severity = "annotation_level",
+              message = "message",
+            },
+            -- severities = {
+            --   helpers.diagnostics.severities["information"],
+            --   helpers.diagnostics.severities["warning"],
+            --   helpers.diagnostics.severities["error"],
+            --   helpers.diagnostics.severities["hint"],
+            -- },
+          }),
+        },
+      }
+
+      null_ls.register(perl_diagnostics)
+
+      local b = null_ls.builtins
+      local a = b.code_actions
+      local c = b.completion
+      local d = b.diagnostics
+      local f = b.formatting
+      local h = b.hover
+
+      local codespell = { "--builtin", "clear,rare,informal,usage,names" }
+
+      if vim.fn.filereadable(".codespell") == 1 then
+        print "xx"
+        table.insert(codespell, "--ignore-words=.codespell")
+      end
+
+      local sources = {
+        a.eslint,
+        a.gitsigns,
+        a.proselint,
+        -- a.refactoring,
+        a.shellcheck,
+        -- -- c.spell,  -- puts funny stuff in completion
+        c.vsnip,
+        d.codespell.with { extra_args = codespell },
+        d.eslint,
+        d.hadolint,
+        d.jsonlint,
+        d.markdownlint,
+        d.misspell.with { extra_args = { "-i", "importas" } },
+        d.proselint,
+        d.selene,
+        d.shellcheck,
+        -- d.sqlfluff,  -- as soon as it works better
+        d.tidy,
+        d.yamllint,
+        d.zsh,
+        -- f.beautysh,  -- not all that useful
+        f.codespell.with { extra_args = codespell },
+        f.eslint,
+        f.fixjson,
+        f.mdformat.with { extra_args = { "--number" } },
+        -- f.golines,
+        -- f.prettier,
+        f.shellharden,
+        f.shfmt.with { extra_args = { "-i", "2", "-s" } },
+        -- f.sqlfluff,
+        f.sql_formatter,
+        -- f.stylua,
+        f.tidy,
+        h.dictionary,
+      }
+
+      -- print("setup_null_ls --------------")
+      null_ls.setup {
+        sources = sources,
+        debug = true,
+      }
+    end,
+    requires = { "nvim-lua/plenary.nvim" },
   }
   use "jose-elias-alvarez/nvim-lsp-ts-utils"
   -- use {
