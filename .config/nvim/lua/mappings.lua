@@ -257,6 +257,7 @@ wk.register {
     m = { tb.git_status, "git" },
     p = {
       name = "+packer",
+      c = { ":PackerCompile<cr>", "compile" },
       s = { packer_sync, "sync" },
     },
     q = {
