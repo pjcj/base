@@ -23,8 +23,9 @@ packer.init {
   git = {
     depth = 9999999,
   },
+  log = { level = "debug" }, -- trace, debug, info, warn, error, fatal
   profile = {
-    enable = true,
+    enable = false,
     threshold = 1, -- integer in milliseconds
   },
 }
