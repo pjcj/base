@@ -144,7 +144,7 @@ local function setup_servers()
       "jsonls",
       "tsserver",
       "sumneko_lua",
-      "zk",
+      -- "zk",
       "perlnavigator",
       "sqls",
       "taplo",
@@ -162,7 +162,7 @@ local function setup_servers()
   lspconfig.sqls.setup { on_attach = on_attach }
   lspconfig.taplo.setup { on_attach = on_attach }
   lspconfig.yamlls.setup { on_attach = on_attach }
-  lspconfig.zk.setup { on_attach = on_attach }
+  -- lspconfig.zk.setup { on_attach = on_attach }
 
   lspconfig.gopls.setup {
     settings = {
