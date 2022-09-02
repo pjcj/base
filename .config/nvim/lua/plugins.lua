@@ -144,6 +144,9 @@ packer.startup(function(use)
       }
     end,
   }
+
+  require "lsp".setup_servers()
+
   use {
     "jose-elias-alvarez/null-ls.nvim",
     config = function()
@@ -252,7 +255,6 @@ packer.startup(function(use)
   --     require "calltree".setup({})
   --   end,
   -- }
-  require "lsp".setup_servers()
 
   use {
     "dense-analysis/ale",
