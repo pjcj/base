@@ -144,12 +144,12 @@ local function setup_servers()
       "jsonls",
       "tsserver",
       "sumneko_lua",
-      -- "zk",
       "perlnavigator",
       "sqls",
       "taplo",
       "volar",
       "yamlls",
+      -- "zk",
     },
   }
 

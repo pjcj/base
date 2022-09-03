@@ -218,7 +218,8 @@ packer.startup(function(use)
         d.proselint,
         d.selene,
         d.shellcheck,
-        -- d.sqlfluff,  -- as soon as it works better
+        -- d.spectral,
+        -- d.sqlfluff.with { extra_args = { "--dialect", "mysql" } },
         d.tidy,
         d.yamllint,
         d.zsh,
@@ -231,7 +232,7 @@ packer.startup(function(use)
         -- f.prettier,
         f.shellharden,
         f.shfmt.with { extra_args = { "-i", "2", "-s" } },
-        -- f.sqlfluff,
+        -- f.sqlfluff.with { extra_args = { "--dialect", "mysql" } },
         f.sql_formatter,
         -- f.stylua,
         f.tidy,
@@ -272,7 +273,7 @@ packer.startup(function(use)
         lua = {},
         perl = {},
         sh = {},
-        yaml = { "circleci", "spectral", "swaglint", "yamllint" },
+        yaml = { "circleci", "spectral", "swaglint" },
       }
     end,
   }
