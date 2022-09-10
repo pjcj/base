@@ -1004,6 +1004,7 @@ packer.startup(function(use)
   use "windwp/nvim-ts-autotag"
   use "AndrewRadev/splitjoin.vim" -- gS, gJ
   use "Konfekt/vim-unicode-homoglyphs" -- gy
+  use "superhawk610/ascii-blocks.nvim" -- :AsciiBlockify
   use "ntpeters/vim-better-whitespace"
   use "ojroques/vim-oscyank"
   use "uga-rosa/translate.nvim"
