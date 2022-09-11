@@ -959,7 +959,8 @@ elif [ 1 = 1 ]; then
     . ~/.local/share/zinit/plugins/woefe---git-prompt.zsh/git-prompt.zsh
 
     if [ $EUID -eq 0 ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
-    line() { printf '%.s―' {1..$(tput cols)} }
+    # line() { printf '%.s―' {1..$(tput cols)} }
+    line() { printf '%.s-' {1..$(tput cols)} }
     PROMPT=$'$(line)$(gitprompt)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
 
     perlv () {
