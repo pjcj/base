@@ -198,7 +198,14 @@ packer.startup(function(use)
 
       local codespell = { "--builtin", "clear,rare,informal,usage,names" }
       if vim.fn.filereadable(".codespell") == 1 then
-        table.insert(codespell, "--ignore-words=.codespell")
+        table.insert(codespell, "-I")
+        table.insert(codespell, vim.fn.getcwd() .. "/.codespell")
+      end
+
+      local yamllint = { }
+      if vim.fn.filereadable(".yamllint") == 1 then
+        table.insert(yamllint, "-c")
+        table.insert(yamllint, vim.fn.getcwd() .. "/.yamllint")
       end
 
       local sources = {
@@ -221,7 +228,7 @@ packer.startup(function(use)
         -- d.spectral,
         -- d.sqlfluff.with { extra_args = { "--dialect", "mysql" } },
         d.tidy,
-        d.yamllint,
+        d.yamllint.with { extra_args = yamllint },
         d.zsh,
         -- f.beautysh,  -- not all that useful
         f.codespell.with { extra_args = codespell },
