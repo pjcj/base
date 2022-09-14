@@ -239,7 +239,7 @@ packer.startup(function(use)
         h.dictionary,
       }
 
-      -- print("setup_null_ls")
+      require "notify"("setup_null_ls")
       null_ls.setup {
         sources = sources,
         debug = true,
@@ -1014,10 +1014,10 @@ packer.startup(function(use)
     after = "vim-textobj-user",
   }
 
-  use "axieax/urlview.nvim"
+  use "axieax/urlview.nvim" -- ,fu ,fU
 
   use {
-    "rcarriga/nvim-notify",
+    "rcarriga/nvim-notify", -- ,fn
     config = function()
       vim.notify = require "notify"
     end,
