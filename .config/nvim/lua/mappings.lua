@@ -187,6 +187,7 @@ wk.register {
       } end, "grep word" },
       h = { tb.help_tags, "help" },
       l = { tb.current_buffer_fuzzy_find, "fuzzy find" },
+      n = { function() require('telescope').extensions.notify.notify() end, "show notifications" },
       o = { tb.vim_options, "vim options" },
       p = { t.extensions.neoclip.default, "paste" },
       q = { tb.quickfix, "quickfix" },
