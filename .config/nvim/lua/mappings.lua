@@ -29,8 +29,8 @@ end
 
 wk.register {
   ["<F1>"] = { gs.stage_hunk, "stage hunk" },
-  ["<F2>"] = { gs.prev_hunk, "stage hunk" },
-  ["<F3>"] = { gs.next_hunk, "stage hunk" },
+  ["<F2>"] = { gs.prev_hunk, "previous hunk" },
+  ["<F3>"] = { gs.next_hunk, "next hunk" },
   ["<S-F1>"] = { ":q<cr>", "quit" },
   ["<S-F2>"] = { d.goto_prev, "previous diagnostic" },
   ["<S-F3>"] = { d.goto_next, "next diagnostic" },
@@ -52,11 +52,11 @@ wk.register {
   ["ö"] = { ":w<cr> | :wa<cr>", "write all" },
 
   ["n"] = { [[<cmd>execute("normal! " . v:count1 . "n")<cr><cmd>lua require("hlslens").start()<cr>]], "next match" },
-  ["N"] = { [[<cmd>execute("normal! " . v:count1 . "N")<cr><cmd>lua require("hlslens").start()<cr>]], "next match" },
+  ["N"] = { [[<cmd>execute("normal! " . v:count1 . "N")<cr><cmd>lua require("hlslens").start()<cr>]], "previous match" },
   ["*"] = { [[*<cmd>lua require("hlslens").start()<cr>]], "next word" },
-  ["#"] = { [[#<cmd>lua require("hlslens").start()<cr>]], "prev word" },
+  ["#"] = { [[#<cmd>lua require("hlslens").start()<cr>]], "previous word" },
   ["g*"] = { [[g*<cmd>lua require("hlslens").start()<cr>]], "next word part" },
-  ["g#"] = { [[g#<cmd>lua require("hlslens").start()<cr>]], "prev word part" },
+  ["g#"] = { [[g#<cmd>lua require("hlslens").start()<cr>]], "previous word part" },
 
   g = {
     name = "+goto",
