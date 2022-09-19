@@ -9,6 +9,7 @@ tap "profclems/tap"
 tap "srkomodo/tap"
 tap "universal-ctags/universal-ctags"
 tap "wfxr/code-minimap"
+brew "binutils", link: true
 brew "xz"
 brew "gcc"
 brew "pkg-config"
