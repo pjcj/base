@@ -326,6 +326,7 @@ wk.register({
   ["<F8>"] = { "}", "}", noremap = false },
   ["<F9>"] = { "|", "|" },
   ["<F10>"] = { "~", "~" },
+  ["jk"] = { "<esc>", "escape" },
   ["<C-k><C-k>"] = { function() bd.digraphs("gvr") end, "digraph" },
 }, { mode = "i" })
 
