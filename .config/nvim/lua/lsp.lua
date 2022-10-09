@@ -79,7 +79,7 @@ local on_attach = function(client, bufnr)
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
   -- set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
+  if client.server_capabilities.document_highlight then
     vim.api.nvim_exec(
       [[
         augroup lsp_document_highlight
@@ -213,8 +213,8 @@ local function setup_servers()
   lspconfig.tsserver.setup {
     init_options = { hostInfo = "neovim" },
     on_attach = function(client, bufnr)
-      client.resolved_capabilities.document_formatting = false
-      client.resolved_capabilities.document_range_formatting = false
+      client.server_capabilities.document_formatting = false
+      client.server_capabilities.document_range_formatting = false
       local ts_utils = require "nvim-lsp-ts-utils"
       ts_utils.setup {}
       ts_utils.setup_client(client)
@@ -224,8 +224,8 @@ local function setup_servers()
 
   lspconfig.volar.setup {
     on_attach = function(client, bufnr)
-      client.resolved_capabilities.document_formatting = false
-      client.resolved_capabilities.document_range_formatting = false
+      client.server_capabilities.document_formatting = false
+      client.server_capabilities.document_range_formatting = false
       on_attach(client, bufnr)
     end
   }
