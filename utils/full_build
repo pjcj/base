@@ -120,7 +120,6 @@ else
     if which brew >&/dev/null; then
         brew update
         brew upgrade
-        brew upgrade --cask
         brew bundle dump --file=$brewfile --force
     else
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
