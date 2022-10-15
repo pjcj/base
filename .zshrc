@@ -494,6 +494,14 @@ n() {
     $mk "$@"
 }
 
+bui() {
+    for p in "$@"; do
+        pkg=$(echo "$p" | sed 's/,$//')
+        echo "reinstalling $pkg"
+        brew uninstall --ignore-dependencies "$pkg" && brew install "$pkg"
+    done
+}
+
 setup_plenv() {
     build plenv
     build Perl-Build
