@@ -312,6 +312,12 @@ local function filter_diagnostics(diagnostic)
     return false
   end
 
+  -- Ignore false positives of subroutine redefined
+  if string.match(diagnostic.message, "Subroutine") and
+     string.match(diagnostic.message, "redefined at") then
+    return false
+  end
+
   return true
 end
 
