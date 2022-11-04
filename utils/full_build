@@ -87,12 +87,14 @@ elif [[ "$(uname)" == FreeBSD ]]; then
         multitail             \
         neovim                \
         node                  \
+        www/npm               \
         pigz                  \
         pixz                  \
-        py36-pip              \
-        py36-powerline-status \
-        py36-ranger           \
+        py39-pip              \
+        py39-powerline-status \
+        py39-ranger           \
         ripgrep               \
+        rust                  \
         thefuck               \
         tig                   \
         universal-ctags       \
