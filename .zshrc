@@ -567,9 +567,6 @@ zshrc_load_status "environment"
 
 export BAT_THEME="Solarized (dark)"
 export GOPATH=~/g/go
-export LANG=en_GB.UTF-8
-export LANGUAGE=en_GB.UTF-8
-export LC_ALL=en_GB.UTF-8
 export LESS='--LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS --mouse'
 export NOPASTE_SERVICES="Gist Pastie Snitch Shadowcat"
 export PAGER="less -N"
@@ -579,6 +576,12 @@ export TMOUT=0
 export TOP="-I all"
 export VIMTMP=/tmp/vim
 export VISUAL=$EDITOR
+
+: "${LANG:=en_GB.UTF-8}"
+LANGUAGE="$LANG"
+LC_ALL="$LANG"
+export LANGUAGE LANG LC_ALL
+
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#056e75"
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)

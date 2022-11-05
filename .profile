@@ -1,3 +1,4 @@
+# shellcheck shell=sh
 # ~/.profile: executed by the command interpreter for login shells.
 # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
 # exists.
@@ -12,7 +13,7 @@
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
-        # shellcheck disable=1090
+        # shellcheck disable=1091
         . "$HOME/.bashrc"
     fi
 fi
@@ -28,17 +29,17 @@ if [ "$(uname)" = "Linux" ]; then
     xrdb -merge ~/.Xdefaults
 fi
 
-export LANGUAGE="en_GB:en"
-export LC_MESSAGES="en_GB.UTF-8"
-export LC_CTYPE="en_GB.UTF-8"
-export LC_COLLATE="en_GB.UTF-8"
-
 export FONTSIZE=12
 
-# shellcheck disable=1090
+# shellcheck disable=1091
 [ -r "$HOME/.profile.local" ] && . "$HOME/.profile.local"
 
+: "${LANG:=en_GB.UTF-8}"
+LANGUAGE="$LANG"
+LC_ALL="$LANG"
+export LANGUAGE LANG LC_ALL
+
 [ -e /home/linuxbrew/.linuxbrew/bin/brew ] && \
-    eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 [ -e /usr/local/bin/brew ] && \
-    eval $(/usr/local/bin/brew shellenv)
+    eval "$(/usr/local/bin/brew shellenv)"
