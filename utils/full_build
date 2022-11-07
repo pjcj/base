@@ -79,10 +79,12 @@ if [[ "$(uname)" == Darwin ]]; then
     pip3=pip3
 elif [[ "$(uname)" == FreeBSD ]]; then
     sudo pkg install          \
+        base64                \
         bat                   \
         diff-so-fancy         \
         fd-find               \
         fzf                   \
+        git-delta             \
         highlight             \
         multitail             \
         neovim                \
