@@ -633,6 +633,7 @@ elif [[ $(uname) == FreeBSD ]]; then
     ds() { f -d "$@" }
     mv() { command mv -v "$@" }
     s()  { f "$@" }
+    LESS='--LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS'
 else
     if which dmidecode >&/dev/null; then
         (sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
