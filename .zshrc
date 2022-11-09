@@ -1025,7 +1025,9 @@ c ~ && c -
 
 zshrc_load_status "ssh"
 
-eval `keychain --eval id_ed25519 id_rsa`
+if [[ $(uname) != FreeBSD ]]; then
+    eval `keychain --eval id_ed25519 id_rsa`
+fi
 
 # Clear up after status display
 
