@@ -873,6 +873,7 @@ packer.startup(function(use)
     "ruanyl/vim-gh-line",
     config = function()
       vim.g.gh_use_canonical = 0
+      vim.g.gh_trace = 1
     end,
   }
 
