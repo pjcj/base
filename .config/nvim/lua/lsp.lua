@@ -202,7 +202,7 @@ local function setup_servers()
       },
     },
     on_attach = on_attach,
-    debounce_text_changes = 1500,
+    debounce_text_changes = 5000,  -- milliseconds
   }
 
   lspconfig.sumneko_lua.setup {
