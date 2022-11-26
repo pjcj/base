@@ -224,7 +224,7 @@ packer.startup(function(use)
         d.misspell.with { extra_args = { "-i", "importas" } },
         d.proselint,
         d.selene,
-        d.shellcheck,
+        -- d.shellcheck,
         -- d.spectral,
         -- d.sqlfluff.with { extra_args = { "--dialect", "mysql" } },
         d.tidy,
