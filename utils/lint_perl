@@ -7,7 +7,7 @@ sub main {
   my ($file, $root, $type) = @_;
   my $log = "/tmp/lint_perl.log";
   open my $l, ">>", "$log" or die "Can't open $log: $!";
-  say $l "\n\n-- " . localtime . ": $0 - $ENV{PWD}";
+  say $l "\n-- " . localtime . ": $0 - $ENV{PWD}";
   say $l "-- file [$file] root [$root] type [$type]";
 
   my @common = qw( -Ilib -It/lib );
