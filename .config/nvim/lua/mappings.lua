@@ -27,6 +27,73 @@ local packer_sync = function()
   vim.cmd("PackerSync")
 end
 
+vim.cmd [[
+  map <F13>    <S-F1>
+  map <F14>    <S-F2>
+  map <F15>    <S-F3>
+  map <F16>    <S-F4>
+  map <F17>    <S-F5>
+  map <F18>    <S-F6>
+  map <F19>    <S-F7>
+  map <F20>    <S-F8>
+  map <F21>    <S-F9>
+  map <F22>    <S-F10>
+  map <F23>    <S-F11>
+  map <F24>    <S-F12>
+
+  map <F25>    <C-F1>
+  map <F26>    <C-F2>
+  map <F27>    <C-F3>
+  map <F28>    <C-F4>
+  map <F29>    <C-F5>
+  map <F30>    <C-F6>
+  map <F31>    <C-F7>
+  map <F32>    <C-F8>
+  map <F33>    <C-F9>
+  map <F34>    <C-F10>
+  map <F35>    <C-F11>
+  map <F36>    <C-F12>
+
+  map <F37>    <M-F1>
+  map <F38>    <M-F2>
+  map <F39>    <M-F3>
+  map <F40>    <M-F4>
+  map <F41>    <M-F5>
+  map <F42>    <M-F6>
+  map <F43>    <M-F7>
+  map <F44>    <M-F8>
+  map <F45>    <M-F9>
+  map <F46>    <M-F10>
+  map <F47>    <M-F11>
+  map <F48>    <M-F12>
+
+  map <F49>    <M-C-F1>
+  map <F50>    <M-C-F2>
+  map <F51>    <M-C-F3>
+  map <F52>    <M-C-F4>
+  map <F53>    <M-C-F5>
+  map <F54>    <M-C-F6>
+  map <F55>    <M-C-F7>
+  map <F56>    <M-C-F8>
+  map <F57>    <M-C-F9>
+  map <F58>    <M-C-F10>
+  map <F59>    <M-C-F11>
+  map <F60>    <M-C-F12>
+
+  map <F61>    <M-S-F1>
+  map <F62>    <M-S-F2>
+  map <F63>    <M-S-F3>
+  map <F64>    <M-S-F4>
+  map <F65>    <M-S-F5>
+  map <F66>    <M-S-F6>
+  map <F67>    <M-S-F7>
+  map <F68>    <M-S-F8>
+  map <F69>    <M-S-F9>
+  map <F70>    <M-S-F10>
+  map <F71>    <M-S-F11>
+  map <F72>    <M-S-F12>
+]]
+
 wk.register {
   ["<F1>"] = { gs.stage_hunk, "stage hunk" },
   ["<F2>"] = { gs.prev_hunk, "previous hunk" },
