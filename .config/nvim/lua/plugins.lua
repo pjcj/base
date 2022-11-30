@@ -71,10 +71,10 @@ packer.startup(function(use)
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection = "<tab>",
-            scope_incremental = "<cr>",
-            node_incremental = "<tab>",
-            node_decremental = "<s-tab>",
+            init_selection = "<C-F5>",
+            scope_incremental = "<C-F7>",
+            node_incremental = "<C-F5>",
+            node_decremental = "<C-F6>",
           },
         },
         context_commentstring = {

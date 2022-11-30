@@ -110,8 +110,10 @@ wk.register {
   ["<F7>"] = { ":cnext<cr>", "quickfix previous" },
   ["<S-F7>"] = { ":lnext<cr>", "location next" },
   ["<F9>"] = { ":cclose<bar>lclose<bar>only<cr>", "close other windows" },
+  ["<C-F5>"] = { "expand selection" },
+  ["<C-F6>"] = { "reduce selection" },
+  ["<C-F7>"] = { "expand selection to name" },
   ["<F12>"] = { "", "previous buffer" },
-  ["<Tab>"] = { "expand selection" },
   ["<PageUp>"] = { "0", "page up" },
   ["<PageDown>"] = { "0", "page down" },
   ["<C-L>"] = { "refresh" },
