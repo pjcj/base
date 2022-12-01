@@ -257,6 +257,7 @@ wk.register {
         additional_args = function() return { "-w" } end
       } end, "grep word" },
       h = { tb.help_tags, "help" },
+      j = { tb.jumplist, "jump list" },
       l = { tb.current_buffer_fuzzy_find, "fuzzy find" },
       n = { function() require('telescope').extensions.notify.notify() end, "show notifications" },
       o = { tb.vim_options, "vim options" },
