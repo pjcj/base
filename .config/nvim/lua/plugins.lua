@@ -1022,7 +1022,14 @@ packer.startup(function(use)
     after = "vim-textobj-user",
   }
 
-  use "axieax/urlview.nvim" -- ,fu ,fU
+  use {
+    "axieax/urlview.nvim", -- ,fu ,fU
+    config = function()
+      require("urlview").setup({
+        default_picker = "telescope",
+      })
+    end,
+  }
 
   use {
     "rcarriga/nvim-notify", -- ,fn

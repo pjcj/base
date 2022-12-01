@@ -270,8 +270,8 @@ wk.register {
       t = { tb.tags, "tags" },
       v = { function() tb.tags { default_text = vim.fn.expand("<cword>") } end, "cword tags" },
       T = { function() tb.tags { only_current_buffer = true } end, "local tags" },
-      u = { ":UrlView packer picker=telescope<cr>", "packer plugins" },
-      U = { ":UrlView buffer picker=telescope<cr>", "urls" },
+      u = { ":UrlView packer<cr>", "packer plugins" },
+      U = { ":UrlView buffer<cr>", "urls" },
       x = { ":TodoTelescope<cr>", "todos" },
       y = {
         name = "+grep type",
