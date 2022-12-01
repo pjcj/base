@@ -249,7 +249,8 @@ packer.startup(function(use)
       require "notify"("setup_null_ls")
       null_ls.setup {
         sources = sources,
-        debug = true,
+        debounce = 2000,
+        debug = false,
       }
     end,
     requires = { "nvim-lua/plenary.nvim" },
@@ -612,6 +613,11 @@ packer.startup(function(use)
       cmp.setup {
         min_length = 1,
         preselect = cmp.PreselectMode.None,
+        performance = {
+          fetching_timeout = 500,
+          debounce = 60,
+          throttle = 30,
+        },
         formatting = {
           format = lspkind.cmp_format {
             mode = "symbol_text",
