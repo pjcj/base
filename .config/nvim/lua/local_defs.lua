@@ -241,6 +241,10 @@ local_defs.fn.set_buffer_settings = function()
       ["<S-F4>"] = { "->", "->" },
     }, { buffer = 0, mode = "i" })
   end
+
+  if ft == "helm" then
+    vim.diagnostic.disable()
+  end
 end
 
 return local_defs

@@ -437,6 +437,8 @@ packer.startup(function(use)
     end,
   }
 
+  use "towolf/vim-helm"
+
   use {
     "ThePrimeagen/refactoring.nvim",
     requires = {
