@@ -10,6 +10,9 @@ use Getopt::Long;
 use Path::Tiny;
 use Unicode::Normalize qw( NFC NFD NFKC NFKD );
 
+my $am1  = "213.138.100.164";
+my $pjcj = "46.43.15.202";   # curl ipecho.net/plain
+
 sub pd { say join " ", map ref() ? p $_ : $_ // "*undef*", @_ }
 
 my $Defaults = {
@@ -40,23 +43,21 @@ sub get_options {
     }
     %$O = (%$Defaults, %$CONF, %$o);
     $O->{begin}->() if $O->{begin};
-    die "No home_ip" unless $O->{home_ip};  # curl ipecho.net/plain
+    $O->{home_ip} //= $pjcj;
     ($O->{home_domain}) = `nslookup $O->{home_ip}` =~ /name = (.*)\.$/m;
     pd "Options: ", $O if $O->{verbose};
 }
 
 sub write_files {
-    my $am1  = "213.138.100.164";
-    my $pjcj = "46.43.15.202";
     my $ttl = $O->{ttl};
 
     my $domains = {
-        "am1.amg1.cpancover.uk0.bigv.io" => $pjcj,
+        "am1.amg1.cpancover.uk0.bigv.io"  => $pjcj,
         "ameasure.com"                    => $am1,
         "gedcom.co.uk"                    => $am1,
         "jenintheden.com"                 => $pjcj,
         "jennijohnson.com"                => $pjcj,
-        # "johnsons.ch"                     => $pjcj,
+        "johnsons.ch"                     => $pjcj,
         "pjcj.amg1.cpancover.uk0.bigv.io" => $pjcj,
         "pjcj.com"                        => $pjcj,
         "pjcj.co.uk"                      => $pjcj,
@@ -72,13 +73,38 @@ sub write_files {
     for my $d (sort keys %$domains) {
         my $ip = $domains->{$d};
         my $mx = "";
-        $mx = <<EOMX unless $d =~/bigv|ameasure/;
+        $mx = <<EOMX unless $d =~/bigv/;
 # mxguarddog
 \@${d}::97a68220.21.ik2.com:5:$ttl
 \@${d}::97a68220.22.ik2.io:7:$ttl
 \@${d}::97a68220.23.ik2.eu:9:$ttl
 
+# SPF records
+'$d:v=spf1 +a +mx a\\072$O->{home_domain} \\176all:$ttl
+
 EOMX
+        $mx = <<EOMX if $d =~/johnsons/;
+\@${d}::johnsons-ch.mail.protection.outlook.com:0:$ttl
+Cautodiscover.johnsons.ch:autodiscover.outlook.com:$ttl
+'$d:v=spf1\\040include\\072spf.protection.outlook.com\\040-all:$ttl
+
+EOMX
+
+        my $caa = "";
+        $caa = <<EOCAA if $d =~/pjcj/;
+# swisssign
+:$d:257:\\000\\005\\151\\163\\163\\165\\145\\163\\167\\151\\163\\163\\163\\151\\147\\156\\056\\143\\157\\155
+# :$d:257:\\128\\005issueletsencrypt.org:86400
+
+# domain owner check
+'$d:swisssign-check=I7PstNARKI4SesG1RvHLSEkXkZ0rniPVj0MhYePjoH:86400
+'$d:swisssign-check=tDdwGDBVqvzkh9DvtjoRDX0ykz2crpXNWk6dB5SaWc:10
+
+EOCAA
+
+        my $extra = "";
+        $extra .= "'$d:google-site-verification=o8e9MztTFiu8I2vz_M-Ln0QBxiPGQVKPaxvEHQB6OnE" if $d eq "pjcj.net";
+
         path("$data/$d.txt")->append(<<EOT);
 # Nameserver records
 .${d}::a.ns.bytemark.co.uk:$ttl
@@ -108,9 +134,6 @@ EOMX
 # MX record -- no IP defined, as this is done separately above.
 # \@${d}::mx.$d:15:$ttl
 
-# SPF records
-'$d:v=spf1 +a +mx a\\072$O->{home_domain} \\176all:$ttl
-
 $mx
 # h
 +h.$d:$O->{home_ip}:$ttl
@@ -121,17 +144,17 @@ $mx
 # CAA
 # letsencrypt
 :$d:257:\\000\\005\\151\\163\\163\\165\\145\\154\\145\\164\\163\\145\\156\\143\\162\\171\\160\\164\\056\\157\\162\\147
-# swisssign
-:$d:257:\\000\\005\\151\\163\\163\\165\\145\\163\\167\\151\\163\\163\\163\\151\\147\\156\\056\\143\\157\\155
-# :$d:257:\\128\\005issueletsencrypt.org:86400
+$caa
 
-# domain owner check
-'$d:swisssign-check=I7PstNARKI4SesG1RvHLSEkXkZ0rniPVj0MhYePjoH:86400
-'$d:swisssign-check=tDdwGDBVqvzkh9DvtjoRDX0ykz2crpXNWk6dB5SaWc:10
+# Extra
+$extra
 EOT
+
+        system "sudo cp $data/$d.txt /srv/$d/config/dns";
     }
 
-    system "cat $data/pjcj.net.txt";
+    # system "cat $data/pjcj.net.txt";
+    system "cat $data/johnsons.ch.txt";
     system "sudo $ENV{HOME}/g/base/utils/upload_dns"
 }
 

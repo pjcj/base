@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cd /root/BytemarkDNS && cp -a /tmp/data.tmp data && ./upload
+cd /root/BytemarkDNS && rm -rf data && cp -a /tmp/data.tmp data && ./upload && echo uploaded
