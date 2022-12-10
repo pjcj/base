@@ -182,7 +182,7 @@ wk.register {
     ["<F8>"] = { "r}", "}" },
     ["<F9>"] = { "r|", "|" },
     ["<F10>"] = { "r~", "~" },
-    ["<C-k><C-k>"] = { function() bd.digraphs("r") end, "digraph" },
+    ["<C-k><C-k>"] = { function() bd.digraphs("normal") end, "digraph" },
   },
   ["<leader>"] = {
     [" "] = { tb.oldfiles, "old files" },
@@ -362,7 +362,7 @@ wk.register {
 wk.register({
   ["<F1>"] = { ":Gitsigns stage_hunk<cr>", "stage lines" },
   glf = { lb.range_formatting, "format" },
-  ["r<C-k><C-k>"] = { "<esc>:lua bd.digraphs('gvr')<cr>", "digraph" },
+  ["r<C-k><C-k>"] = { "<esc>:lua bd.digraphs('visual')<cr>", "digraph" },
   ["<leader>"] = {
     a = {
       name = "+translate",
@@ -400,7 +400,7 @@ wk.register({
   ["<F9>"] = { "|", "|" },
   ["<F10>"] = { "~", "~" },
   ["jk"] = { "<esc>", "escape" },
-  ["<C-k><C-k>"] = { function() bd.digraphs("gvr") end, "digraph" },
+  ["<C-k><C-k>"] = { function() bd.digraphs("insert") end, "digraph" },
 }, { mode = "i" })
 
 local vmap = vim.api.nvim_set_keymap -- global mappings
