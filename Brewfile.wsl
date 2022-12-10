@@ -24,7 +24,7 @@ brew "fd"
 brew "flac"
 brew "wayland"
 brew "libva"
-brew "llvm"
+brew "llvm", link: false
 brew "mesa"
 brew "mesa-glu"
 brew "freeglut"
