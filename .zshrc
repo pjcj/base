@@ -1027,17 +1027,12 @@ else
 fi
 
 # ensure autoenv.zsh is called
+{ c ~ && c - } >/dev/null
 
-c ~ && c -
+# Clear up after status display
+echo -n "\rzsh loaded                                                        "
 
 # Handle ssh
-
-zshrc_load_status "ssh"
-
 if [[ $(uname) != FreeBSD ]]; then
     eval `keychain --eval id_ed25519 id_rsa`
 fi
-
-# Clear up after status display
-
-echo -n "\r"
