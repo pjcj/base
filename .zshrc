@@ -711,6 +711,7 @@ load \
     /usr/local/share/examples/fzf/shell/completion.zsh       \
     ~/.iterm2_shell_integration.zsh                          \
     ~/Library/Preferences/org.dystroy.broot/launcher/bash/br \
+    ~/.acme.sh/acme.sh.env                                   \
     ~/.zshrc.local                                           \
     ~/.zshrc.${HOST%%.*}
 
