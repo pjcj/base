@@ -147,10 +147,6 @@ wk.register {
       q = { vim.diagnostic.setqflist, "quickfix" },
       r = { lb.rename, "rename" },
       s = { lb.lsp_document_symbols, "symbols" },
-      t = {
-        name = "+toggle",
-        s = { function() require("null-ls").toggle("codespell") end, "codespell" },
-      },
       v = {
         name = "+virtual text",
         h = { d.hide, "hide" },
@@ -168,10 +164,6 @@ wk.register {
         o = { ":TSLspOrganize<cr>", "organise" },
         r = { ":TSLspRenameFile<cr>", "rename file" },
       },
-    },
-    t = {
-      name = "+toggle",
-      h = { ":TSBufToggle highlight<cr>", "treesitter highlight" },
     },
   },
   r = {
@@ -350,7 +342,9 @@ wk.register {
     t = {
       name = "+toggle",
       b = { ":Gitsigns toggle_current_line_blame<CR>", "blame" },
+      c = { function() require("null-ls").toggle("codespell") end, "codespell" },
       d = { ":Gitsigns toggle_deleted<CR>", "deleted" },
+      h = { ":TSBufToggle highlight<cr>", "treesitter highlight" },
       o = { ":SymbolsOutline<cr>", "symbols" },
       s = { function() require "sidebar-nvim".toggle() end, "sidebar" },
       t = { function() require "nvim-tree".toggle() end, "tree" },
