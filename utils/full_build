@@ -126,6 +126,7 @@ else
         brew upgrade
         brew bundle dump --file=$brewfile --force
     else
+        sudo apt-get install build-essential procps curl file git
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
         brew bundle install --file=$brewfile
     fi
