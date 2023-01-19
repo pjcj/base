@@ -437,6 +437,7 @@ packer.startup(function(use)
     end,
   }
 
+  use "hashivim/vim-terraform"
   use "towolf/vim-helm"
 
   use {
