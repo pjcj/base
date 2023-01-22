@@ -698,6 +698,8 @@ for c in s_base03 s_base02 s_base01 s_base00 s_base0 s_base1 s_base2 s_base3 \
     export eb$c="$(print -rP "%K{${(P)c}}")"  # background terminal esc sequence
 done
 
+eval "$(dircolors -b ~/g/base/dircolours)"
+
 zshrc_load_status "external files"
 
 load() {
