@@ -653,6 +653,13 @@ else
     fi
 fi
 
+if which exa >&/dev/null; then
+    f() {
+        exa -lagH --colour-scale --git --time-style=long-iso --icons \
+            --colour=always "$@"
+    }
+fi
+
 [[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim
 
 eval "$(thefuck --alias ff)"
