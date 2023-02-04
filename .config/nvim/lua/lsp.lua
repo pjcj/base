@@ -237,6 +237,7 @@ local function setup_servers()
       source = "always", -- or "if_many"
     },
     severity_sort = true,
+    underline = true,
   }
 
   local border = "rounded"
