@@ -27,6 +27,12 @@ local packer_sync = function()
   vim.cmd("PackerSync")
 end
 
+local vtext_on = true
+local vtext_toggle = function()
+  vtext_on = not vtext_on
+  vim.diagnostic.config({ virtual_text = vtext_on })
+end
+
 vim.cmd [[
   map <F13>    <S-F1>
   map <F14>    <S-F2>
@@ -348,6 +354,7 @@ wk.register {
       o = { ":SymbolsOutline<cr>", "symbols" },
       s = { function() require "sidebar-nvim".toggle() end, "sidebar" },
       t = { function() require "nvim-tree".toggle() end, "tree" },
+      v = { vtext_toggle, "virtual text" },
     },
     W = { [[:%s/\s\+$//<cr>:let @/ = ""<cr>]], "remove trailing ws" },
   },
