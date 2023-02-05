@@ -177,7 +177,7 @@ npm update -g
 
 if [[ "$EDITOR" == "nvim" ]]; then
     $EDITOR -c "autocmd User PackerComplete quitall" -c "PackerSync"
-    $EDITOR +TSUpdate +qall
+    $EDITOR +TSUpdateSync +qall
     # $EDITOR --headless -c LspInstall\ --sync\ bashls
     # $EDITOR --headless -c LspInstall\ --sync\ cssls
     # $EDITOR --headless -c LspInstall\ --sync\ dockerls
