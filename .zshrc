@@ -3,6 +3,17 @@ zshrc_load_status () {
     echo -n "\r.zshrc load: $* ... \e[0K"
 }
 
+load() {
+    for f in $@; do
+        if [[ -r $f ]]; then
+            zshrc_load_status "$f"
+            . $f
+        fi
+    done
+}
+
+load ~/.zshrc.init.local
+
 zshrc_load_status "autoenv"
 
 # zsh-autoenv
@@ -701,15 +712,6 @@ done
 eval "$(dircolors -b ~/g/base/dircolours)"
 
 zshrc_load_status "external files"
-
-load() {
-    for f in $@; do
-        if [[ -r $f ]]; then
-            zshrc_load_status "$f"
-            . $f
-        fi
-    done
-}
 
 load \
     /etc/zsh_command_not_found                               \
