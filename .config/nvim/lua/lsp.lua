@@ -143,7 +143,7 @@ local function setup_servers()
       "html",
       "jsonls",
       "tsserver",
-      "sumneko_lua",
+      "lua_ls",
       "perlnavigator",
       "sqls",
       "taplo",
@@ -205,7 +205,7 @@ local function setup_servers()
     debounce_text_changes = 5000,  -- milliseconds
   }
 
-  lspconfig.sumneko_lua.setup {
+  lspconfig.lua_ls.setup {
     init_options = { hostInfo = "neovim" },
     settings = lua_settings,
     on_attach = on_attach,
