@@ -482,6 +482,7 @@ packer.startup(function(use)
       "nvim-lua/plenary.nvim",
       "protex/better-digraphs.nvim",
       "nvim-telescope/telescope-dap.nvim",
+      "debugloop/telescope-undo.nvim",
     },
     config = function()
       local telescope = require "telescope"
@@ -526,6 +527,7 @@ packer.startup(function(use)
 
       telescope.load_extension "fzf"
       telescope.load_extension "refactoring"
+      telescope.load_extension "undo"
 
       vim.cmd [[
         augroup telescope

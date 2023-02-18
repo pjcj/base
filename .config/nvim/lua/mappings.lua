@@ -260,6 +260,7 @@ wk.register {
       n = { function() require('telescope').extensions.notify.notify() end, "show notifications" },
       o = { tb.vim_options, "vim options" },
       p = { t.extensions.neoclip.default, "paste" },
+      P = { ":UrlView packer<cr>", "packer plugins" },
       q = { tb.quickfix, "quickfix" },
       Q = { tb.quickfixhistory, "quickfix history" },
       r = { tb.lsp_references, "lsp references" },
@@ -269,7 +270,7 @@ wk.register {
       t = { tb.tags, "tags" },
       v = { function() tb.tags { default_text = vim.fn.expand("<cword>") } end, "cword tags" },
       T = { function() tb.tags { only_current_buffer = true } end, "local tags" },
-      u = { ":UrlView packer<cr>", "packer plugins" },
+      u = { t.extensions.undo.undo, "undo" },
       U = { ":UrlView buffer<cr>", "urls" },
       x = { ":TodoTelescope<cr>", "todos" },
       y = {
