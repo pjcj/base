@@ -1004,6 +1004,17 @@ packer.startup(function(use)
   }
 
   use {
+    "rareitems/hl_match_area.nvim",
+    config = function()
+      require"hl_match_area".setup{
+        n_lines_to_search = 500,
+        highlight_in_insert_mode = true,
+        delay = 500,
+      }
+    end,
+  }
+
+  use {
     "cohama/lexima.vim",
     config = function()
       vim.cmd [[

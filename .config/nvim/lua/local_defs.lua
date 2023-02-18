@@ -31,9 +31,12 @@ local local_defs = {
     dred      = "#400200", -- dark red
     ddred     = "#2b0200", -- dark dark red
     dddred    = "#150100", -- dark dark dark red
-    lviolet   = "#c0c3ef",
+    lviolet   = "#c0c3ef", -- light violet
+    dviolet   = "#323799", -- dark violet
+    ddviolet  = "#0F1363", -- dark dark violet
     dcyan     = "#04746c", -- dark cyan
     dblue     = "#06568f", -- dark blue
+    ddblue    = "#023458", -- dark dark blue
     rgreen    = "#25ad2e", -- a nice green for diffs (opposite of red)
     dgreen    = "#017008", -- dark green
     ddgreen   = "#003203", -- dark dark green
@@ -152,6 +155,8 @@ local_defs.fn.set_buffer_colours = function()
   set_colour("CmpItemAbbrMatchFuzzy",                "guifg", c.dgreen   )
   set_colour("CmpItemKind",                          "guifg", c.yellow   )
   set_colour("CmpItemMenu",                          "guifg", c.base0    )
+
+  set_colour("MatchArea",                            "guibg", c.ddviolet )
 end
 
 local alternate_indent = function()
