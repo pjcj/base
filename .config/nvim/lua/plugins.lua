@@ -1221,7 +1221,9 @@ packer.startup(function(use)
   use {
     "gen740/SmoothCursor.nvim",
     config = function()
-      require "smoothcursor".setup {}
+      require "smoothcursor".setup {
+        priority = 1,
+      }
     end
   }
 
