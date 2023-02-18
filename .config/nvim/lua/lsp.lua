@@ -305,6 +305,11 @@ local function filter(arr, func)
 end
 
 local function filter_diagnostics(diagnostic)
+  if diagnostic.source == "bash-language-server" and
+     string.match(diagnostic.message, "includeAllWorkspaceSymbols") then
+    return false
+  end
+
   if diagnostic.source ~= "perlnavigator" then
     return true
   end
