@@ -261,7 +261,7 @@ packer.startup(function(use)
   --   -- :lua vim.lsp.buf.outgoing_calls()
   --   "ldelossa/calltree.nvim",
   --   config = function()
-  --     require "calltree".setup({})
+  --     require "calltree".setup {}
   --   end,
   -- }
 
@@ -557,7 +557,7 @@ packer.startup(function(use)
       "uga-rosa/cmp-dictionary",
     },
     config = function()
-      require "cmp_nvim_lsp".setup()
+      require "cmp_nvim_lsp".setup {}
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require "cmp_nvim_lsp".default_capabilities(capabilities)
       local cmp = require "cmp"
@@ -892,7 +892,7 @@ packer.startup(function(use)
     "norcalli/nvim-colorizer.lua",
     config = function()
       vim.opt.termguicolors = true
-      require "colorizer".setup()
+      require "colorizer".setup {}
     end,
   }
 
@@ -1034,9 +1034,9 @@ packer.startup(function(use)
   use {
     "axieax/urlview.nvim", -- ,fu ,fU
     config = function()
-      require("urlview").setup({
+      require "urlview".setup {
         default_picker = "telescope",
-      })
+      }
     end,
   }
 
