@@ -397,6 +397,25 @@ wk.register({
       },
       k = { "highlight word" },
     },
+    f = {
+      name = "+telescope",
+      s = { tb.grep_string, "grep string" },
+      y = {
+        name = "+grep type",
+        g = {
+          name = "go",
+          s = { function() tb.grep_string {
+            additional_args = function() return { "--type=go" } end,
+          } end, "grep string" },
+        },
+        p = {
+          name = "perl",
+          s = { function() tb.grep_string {
+            additional_args = function() return { "--type=perl" } end,
+          } end, "grep string" },
+        },
+      },
+    },
   },
 }, { mode = "v" })
 
