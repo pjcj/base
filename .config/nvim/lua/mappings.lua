@@ -183,7 +183,33 @@ wk.register {
     ["<C-k><C-k>"] = { function() bd.digraphs("normal") end, "digraph" },
   },
   ["<leader>"] = {
-    [" "] = { tb.oldfiles, "old files" },
+    [" "] = {
+      name = "+plugin",
+      p = {
+        name = "+packer",
+        c = { ":PackerCompile<cr>", "compile" },
+        s = { packer_sync, "sync" },
+      },
+      t = {
+        name = "+translate",
+        d = {
+          name = "+deutsch",
+          f = { ":Translate DE -output=floating<cr>", "floating" },
+          g = { ":Translate DE -output=register<cr>", "register" },
+          i = { ":Translate DE -output=insert<cr>", "insert" },
+          r = { ":Translate DE -output=replace<cr>", "replace" },
+          s = { ":Translate DE -output=split<cr>", "split" },
+        },
+        e = {
+          name = "+english",
+          f = { ":Translate EN -output=floating<cr>", "floating" },
+          g = { ":Translate EN -output=register<cr>", "register" },
+          i = { ":Translate EN -output=insert<cr>", "insert" },
+          r = { ":Translate EN -output=replace<cr>", "replace" },
+          s = { ":Translate EN -output=split<cr>", "split" },
+        },
+      },
+    },
     ["."] = { function() tb.find_files { hidden = true } end, "find files" },
     [","] = {
       name = "+language",
@@ -215,31 +241,12 @@ wk.register {
             require "neotest".run.run(file)
           end, "file" },
           o = { function()
-            require("neotest").output.open({ enter = true })
+            require "neotest".output.open({ enter = true })
           end, "open results" },
           s = { function()
             require "neotest".summary.toggle()
           end, "toggle summary" },
         },
-      },
-    },
-    a = {
-      name = "+translate",
-      d = {
-        name = "+deutsch",
-        f = { ":Translate DE -output=floating<cr>", "floating" },
-        g = { ":Translate DE -output=register<cr>", "register" },
-        i = { ":Translate DE -output=insert<cr>", "insert" },
-        r = { ":Translate DE -output=replace<cr>", "replace" },
-        s = { ":Translate DE -output=split<cr>", "split" },
-      },
-      e = {
-        name = "+english",
-        f = { ":Translate EN -output=floating<cr>", "floating" },
-        g = { ":Translate EN -output=register<cr>", "register" },
-        i = { ":Translate EN -output=insert<cr>", "insert" },
-        r = { ":Translate EN -output=replace<cr>", "replace" },
-        s = { ":Translate EN -output=split<cr>", "split" },
       },
     },
     d = { ":MarkdownPreviewToggle<cr>", "markdown" },
@@ -257,8 +264,9 @@ wk.register {
       h = { tb.help_tags, "help" },
       j = { tb.jumplist, "jump list" },
       l = { tb.current_buffer_fuzzy_find, "fuzzy find" },
-      n = { function() require('telescope').extensions.notify.notify() end, "show notifications" },
+      n = { function() require "telescope".extensions.notify.notify() end, "show notifications" },
       o = { tb.vim_options, "vim options" },
+      O = { tb.oldfiles, "old files" },
       p = { t.extensions.neoclip.default, "paste" },
       P = { ":UrlView packer<cr>", "packer plugins" },
       q = { tb.quickfix, "quickfix" },
@@ -268,10 +276,10 @@ wk.register {
       s = { tb.grep_string, "grep string" },
       S = { function() tb.grep_string { word_match = "-w" } end, "grep string word" },
       t = { tb.tags, "tags" },
-      v = { function() tb.tags { default_text = vim.fn.expand("<cword>") } end, "cword tags" },
       T = { function() tb.tags { only_current_buffer = true } end, "local tags" },
       u = { t.extensions.undo.undo, "undo" },
       U = { ":UrlView buffer<cr>", "urls" },
+      v = { function() tb.tags { default_text = vim.fn.expand("<cword>") } end, "cword tags" },
       x = { ":TodoTelescope<cr>", "todos" },
       y = {
         name = "+grep type",
@@ -328,11 +336,6 @@ wk.register {
     K = { "unhighlight words" },
     l = { [[:let @/ = ""<bar> :call UncolorAllWords()<cr>]], "unhighlight all" },
     m = { tb.git_status, "git" },
-    p = {
-      name = "+packer",
-      c = { ":PackerCompile<cr>", "compile" },
-      s = { packer_sync, "sync" },
-    },
     q = {
       name = "+quote",
       d = { [[ds']], "delete single", noremap = false },
@@ -349,7 +352,7 @@ wk.register {
     t = {
       name = "+toggle",
       b = { ":Gitsigns toggle_current_line_blame<CR>", "blame" },
-      c = { function() require("null-ls").toggle("codespell") end, "codespell" },
+      c = { function() require "null-ls".toggle("codespell") end, "codespell" },
       d = { ":Gitsigns toggle_deleted<CR>", "deleted" },
       h = { ":TSBufToggle highlight<cr>", "treesitter highlight" },
       o = { ":SymbolsOutline<cr>", "symbols" },
@@ -366,31 +369,34 @@ wk.register({
   glf = { lb.range_formatting, "format" },
   ["r<C-k><C-k>"] = { "<esc>:lua bd.digraphs('visual')<cr>", "digraph" },
   ["<leader>"] = {
-    a = {
-      name = "+translate",
-      d = {
-        name = "+deutsch",
-        f = { ":Translate DE -source=EN -output=floating<cr>", "floating" },
-        g = { ":Translate DE -source=EN -output=register<cr>", "register" },
-        i = { ":Translate DE -source=EN -output=insert<cr>", "insert" },
-        r = { ":Translate DE -source=EN -output=replace<cr>", "replace" },
-        s = { ":Translate DE -source=EN -output=split<cr>", "split" },
+    [" "] = {
+      name = "+plugin",
+      t = {
+        name = "+translate",
+        d = {
+          name = "+deutsch",
+          f = { ":Translate DE -source=EN -output=floating<cr>", "floating" },
+          g = { ":Translate DE -source=EN -output=register<cr>", "register" },
+          i = { ":Translate DE -source=EN -output=insert<cr>", "insert" },
+          r = { ":Translate DE -source=EN -output=replace<cr>", "replace" },
+          s = { ":Translate DE -source=EN -output=split<cr>", "split" },
+        },
+        e = {
+          name = "+english",
+          f = { ":Translate EN -output=floating<cr>", "floating" },
+          g = { ":Translate EN -output=register<cr>", "register" },
+          i = { ":Translate EN -output=insert<cr>", "insert" },
+          r = { ":Translate EN -output=replace<cr>", "replace" },
+          s = { ":Translate EN -output=split<cr>", "split" },
+        },
       },
-      e = {
-        name = "+english",
-        f = { ":Translate EN -output=floating<cr>", "floating" },
-        g = { ":Translate EN -output=register<cr>", "register" },
-        i = { ":Translate EN -output=insert<cr>", "insert" },
-        r = { ":Translate EN -output=replace<cr>", "replace" },
-        s = { ":Translate EN -output=split<cr>", "split" },
+      h = {
+        name = "+hunk",
+        r = { ":Gitsigns reset_hunk<cr>", "reset lines" },
+        s = { ":Gitsigns stage_hunk<cr>", "stage lines" },
       },
+      k = { "highlight word" },
     },
-    h = {
-      name = "+hunk",
-      r = { ":Gitsigns reset_hunk<cr>", "reset lines" },
-      s = { ":Gitsigns stage_hunk<cr>", "stage lines" },
-    },
-    k = { "highlight word" },
   },
 }, { mode = "v" })
 
