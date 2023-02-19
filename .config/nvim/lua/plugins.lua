@@ -1245,4 +1245,11 @@ packer.startup(function(use)
     run = "cd app && yarn install",
     ft = "markdown",
   }
+
+  use {
+    "RaafatTurki/hex.nvim",
+    config = function()
+      require "hex".setup {}
+    end
+  }
 end)

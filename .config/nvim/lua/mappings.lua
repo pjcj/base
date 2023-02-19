@@ -359,6 +359,7 @@ wk.register {
       s = { function() require "sidebar-nvim".toggle() end, "sidebar" },
       t = { function() require "nvim-tree".toggle() end, "tree" },
       v = { vtext_toggle, "virtual text" },
+      x = { function() require "hex".toggle() end, "hex" },
     },
     W = { [[:%s/\s\+$//<cr>:let @/ = ""<cr>]], "remove trailing ws" },
   },
