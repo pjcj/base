@@ -37,19 +37,45 @@ table.insert(components.active[1], {
     function()
       return {
         str = "right_filled",
-        hl  = { bg = c.base05, fg = vi_mode_utils.get_mode_color() },
+        hl  = { bg = c.base02, fg = vi_mode_utils.get_mode_color() },
       }
     end,
-    " "
   },
   icon = "",
 })
 
+table.insert(components.active[1], {
+  provider  = function() return vim.fn.getcwd():match("([^/]+)$") .. " " end,
+  hl        = { bg = c.base02, fg = c.base01 },
+  left_sep  = { str = " ", hl = { bg = c.base02 } },
+  right_sep = {
+    {
+      str = "right_filled",
+      hl  = { bg = c.base05, fg = c.base02 },
+    },
+    " ",
+  },
+  truncate_hide = true,
+})
+
 local file_info = {
-  provider  = {
-    name  = "file_info",
-    opts = {
+  provider = {
+    name   = "file_info",
+    opts   = {
       type = "relative",
+      file_modified_icon = "",
+    },
+    hl        = { bg = c.base02 },
+    left_sep  = { str = " ", hl = { bg = c.base02 } },
+    right_sep = {
+      str = "right_filled",
+      hl  = { bg = c.base05, fg = c.base02 },
+    },
+  },
+  short_provider  = {
+    name  = "file_info",
+    opts  = {
+      type = "relative-short",
       file_modified_icon = "",
     },
     hl        = { bg = c.base02 },
@@ -82,7 +108,7 @@ table.insert(components.active[1], {
 table.insert(components.active[1], {
   provider  = "git_diff_removed",
   hl        = { fg = c.red },
-  icon     = " -",
+  icon      = " -",
   right_sep = {
     { str = " ", always_visible = true },
     {
@@ -94,9 +120,10 @@ table.insert(components.active[1], {
 })
 
 table.insert(components.active[1], {
-  provider = "lsp_client_names",
-  hl       = { bg = c.base02, fg = c.base01 },
-  left_sep = { str = " ", hl = { bg = c.base02 } },
+  provider      = "lsp_client_names",
+  hl            = { bg = c.base02, fg = c.base01 },
+  left_sep      = { str = " ", hl = { bg = c.base02 } },
+  truncate_hide = true,
 })
 
 local severity = vim.diagnostic.severity
@@ -172,10 +199,11 @@ table.insert(components.active[1], {
 })
 
 table.insert(components.active[1], {
-  provider = function() return require("nvim-gps").get_location() end,
-  enabled  = function() return require("nvim-gps").is_available() end,
-  hl       = { bg = c.base02, fg = "yellow" },
-  left_sep = { str = "  ", hl = { bg = c.base02, fg = "cyan" } },
+  provider      = function() return require("nvim-gps").get_location() end,
+  enabled       = function() return require("nvim-gps").is_available() end,
+  hl            = { bg = c.base02, fg = "yellow" },
+  left_sep      = { str = "  ", hl = { bg = c.base02, fg = "cyan" } },
+  truncate_hide = true,
 })
 
 table.insert(components.active[1], {
@@ -205,21 +233,24 @@ table.insert(components.active[2], {
   hl       = { bg = c.base02, fg = c.base01 },
   left_sep = {
     { str = "left_filled", hl = { bg = c.base05, fg = c.base02 } },
-    { str = " ",           hl = { bg = c.base02                  } },
+    { str = " ",           hl = { bg = c.base02                } },
   },
+  truncate_hide = true,
 })
 
 table.insert(components.active[2], {
   provider = "file_type",
   hl       = { bg = c.base02, fg = c.base01 },
   left_sep = { str = " ", hl = { bg = c.base02 } },
+  truncate_hide = true,
 })
 
 table.insert(components.active[2], {
   provider  = "file_encoding",
   hl        = { bg = c.base02, fg = c.base01 },
   left_sep  = { str = " ", hl = { bg = c.base02, fg = c.base05 } },
-  right_sep = { str = " ", hl = { bg = c.base02                  } },
+  right_sep = { str = " ", hl = { bg = c.base02                } },
+  truncate_hide = true,
 })
 
 table.insert(components.active[2], {
