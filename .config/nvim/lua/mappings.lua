@@ -335,7 +335,7 @@ wk.register {
     k = { "highlight word" },
     K = { "unhighlight words" },
     l = { [[:let @/ = ""<bar> :call UncolorAllWords()<cr>]], "unhighlight all" },
-    m = { tb.git_status, "git" },
+    m = { tb.git_status, "find git changes" },
     q = {
       name = "+quote",
       d = { [[ds']], "delete single", noremap = false },
