@@ -44,6 +44,31 @@ packer.startup(function(use)
   use "pjcj/neovim-colors-solarized-truecolor-only"
 
   use {
+    "folke/which-key.nvim",
+    config = function()
+      require "which-key".setup {
+        window = {
+          border = "single",
+        },
+        layout = {
+          width = {
+            max = 80,
+          },
+          height = {
+            max = 40,
+          },
+        },
+        plugins = {
+          spelling = {
+            enabled = true,
+            suggestions = 20,
+          },
+        },
+      }
+    end,
+  }
+
+  use {
     "nvim-treesitter/nvim-treesitter",
     requires = {
       "nvim-treesitter/nvim-treesitter-refactor",
@@ -786,31 +811,6 @@ packer.startup(function(use)
       --     { name = "cmdline" },  -- currently broken
       --   }),
       -- })
-    end,
-  }
-
-  use {
-    "folke/which-key.nvim",
-    config = function()
-      require "which-key".setup {
-        window = {
-          border = "single",
-        },
-        layout = {
-          width = {
-            max = 80,
-          },
-          height = {
-            max = 40,
-          },
-        },
-        plugins = {
-          spelling = {
-            enabled = true,
-            suggestions = 20,
-          },
-        },
-      }
     end,
   }
 
