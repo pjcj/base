@@ -181,6 +181,8 @@ local function setup_servers()
     on_attach = on_attach,
   }
 
+
+
   local function split_env_var(env_var, delimiter)
     local parts = {}
     for part in string.gmatch(env_var, "[^" .. delimiter .. "]+") do
@@ -192,7 +194,7 @@ local function setup_servers()
   lspconfig.perlnavigator.setup {
     settings = {
       perlnavigator = {
-        includePaths = split_env_var(os.getenv("LINT_PERL_PATHS"), ":"),
+        includePaths = split_env_var(os.getenv("LINT_PERL_PATHS") or "", ":"),
         perlcriticEnabled = false,
         enableWarnings = false,
       },
