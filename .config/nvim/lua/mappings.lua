@@ -185,6 +185,7 @@ wk.register {
   ["<leader>"] = {
     [" "] = {
       name = "+plugin",
+      m = { ":MarkdownPreviewToggle<cr>", "markdown" },
       p = {
         name = "+packer",
         c = { ":PackerCompile<cr>", "compile" },
@@ -249,7 +250,6 @@ wk.register {
         },
       },
     },
-    d = { ":MarkdownPreviewToggle<cr>", "markdown" },
     f = {
       name = "+telescope",
       a = { vim.lsp.buf.code_action, "lsp code actions" },
