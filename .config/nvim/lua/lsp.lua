@@ -181,22 +181,18 @@ local function setup_servers()
     on_attach = on_attach,
   }
 
+  local function split_env_var(env_var, delimiter)
+    local parts = {}
+    for part in string.gmatch(env_var, "[^" .. delimiter .. "]+") do
+      table.insert(parts, part)
+    end
+    return parts
+  end
+
   lspconfig.perlnavigator.setup {
     settings = {
       perlnavigator = {
-        includePaths = {
-          "lib/perl",
-          "web/cgi-bin",
-          "lib/perl/pki/lib",
-          "lib/perl/ere/lib",
-          "lib/perl/pkcs11",
-          "test/selenium/dev/lib",
-          "etc",
-
-          "perl",
-          "t/lilb",
-          "../dummy_modules",
-        },
+        includePaths = split_env_var(os.getenv("LINT_PERL_PATHS"), ":"),
         perlcriticEnabled = false,
         enableWarnings = false,
       },
