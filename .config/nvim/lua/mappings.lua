@@ -86,18 +86,19 @@ vim.cmd [[
   map <F59>    <M-C-F11>
   map <F60>    <M-C-F12>
 
-  map <F61>    <M-S-F1>
-  map <F62>    <M-S-F2>
-  map <F63>    <M-S-F3>
-  map <F64>    <M-S-F4>
-  map <F65>    <M-S-F5>
-  map <F66>    <M-S-F6>
-  map <F67>    <M-S-F7>
-  map <F68>    <M-S-F8>
-  map <F69>    <M-S-F9>
-  map <F70>    <M-S-F10>
-  map <F71>    <M-S-F11>
-  map <F72>    <M-S-F12>
+  " Creates map mappings for <<
+  " map <F61>    <M-S-F1>
+  " map <F62>    <M-S-F2>
+  " map <F63>    <M-S-F3>
+  " map <F64>    <M-S-F4>
+  " map <F65>    <M-S-F5>
+  " map <F66>    <M-S-F6>
+  " map <F67>    <M-S-F7>
+  " map <F68>    <M-S-F8>
+  " map <F69>    <M-S-F9>
+  " map <F70>    <M-S-F10>
+  " map <F71>    <M-S-F11>
+  " map <F72>    <M-S-F12>
 ]]
 
 wk.register {
