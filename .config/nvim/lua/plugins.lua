@@ -499,7 +499,7 @@ packer.startup(function(use)
   --   end,
   -- }
 
-  use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
+  use { "nvim-telescope/telescope-fzf-native.nvim", run = "gmake" }
   use {
     "nvim-telescope/telescope.nvim",
     requires = {
