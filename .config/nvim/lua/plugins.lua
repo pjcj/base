@@ -333,6 +333,11 @@ packer.startup(function(use)
       vim.g.gutentags_generate_on_missing = 1
       vim.g.gutentags_generate_on_write = 1
       vim.g.gutentags_generate_on_empty_buffer = 0
+
+      local is_freebsd = (io.popen("uname"):read() == "FreeBSD")
+      if is_freebsd then
+        vim.g.gutentags_ctags_executable = "/usr/local/bin/uctags"
+      end
     end,
   }
 
