@@ -138,9 +138,6 @@ else
     cargo install devicon-lookup
 
     # $pip3 install --upgrade --user pip
-
-    # sudo gem install colorls
-    # sudo gem update colorls
 fi
 
 $pip3 install --upgrade --user \
@@ -179,26 +176,6 @@ npm update -g
 if [[ "$EDITOR" == "nvim" ]]; then
     $EDITOR -c "autocmd User PackerComplete quitall" -c "PackerSync"
     $EDITOR +TSUpdateSync +qall
-    # $EDITOR --headless -c LspInstall\ --sync\ bashls
-    # $EDITOR --headless -c LspInstall\ --sync\ cssls
-    # $EDITOR --headless -c LspInstall\ --sync\ dockerls
-    # $EDITOR --headless -c LspInstall\ --sync\ gopls
-    # $EDITOR --headless -c LspInstall\ --sync\ html
-    # $EDITOR --headless -c LspInstall\ --sync\ javascript
-    # $EDITOR --headless -c LspInstall\ --sync\ jsonls
-    # $EDITOR --headless -c LspInstall\ --sync\ sqlls
-    # $EDITOR --headless -c LspInstall\ --sync\ sumneko_lua
-    # $EDITOR --headless -c LspInstall\ --sync\ vimls
-    # $EDITOR --headless -c LspInstall\ --sync\ vuels
-    # $EDITOR --headless -c LspInstall\ --sync\ yamlls
     go install github.com/nametake/golangci-lint-langserver@latest
     go install github.com/client9/misspell/cmd/misspell@latest
-
-    # $pip3 install --upgrade --user git+git://github.com/powerline/powerline
 fi
-
-# if [[ $(uname) == Linux ]]; then
-    # gobase
-    # brew install ghq
-    # build_all
-# fi
