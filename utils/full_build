@@ -145,38 +145,19 @@ else
     # $pip3 install --upgrade --user pip
 fi
 
-$pip3 install --upgrade --user \
-    thefuck \
-    docker-compose \
-    powerline-status \
-    mdformat-gfm
+if [[ "$(uname)" == FreeBSD ]]; then
+    sudo npm install -g fixjson
+    sudo npm update -g
+else
+    $pip3 install --upgrade --user \
+        thefuck \
+        docker-compose \
+        powerline-status \
+        mdformat-gfm
 
-if [[ "$EDITOR" == "nvimx" ]]; then
-    $pip3 install --upgrade --user neovim pynvim
-    $pip3 install --upgrade --user vim-vint proselint
-    $pip3 install --upgrade --user git+git://github.com/powerline/powerline
-
-    # denite
-    $pip3 install --upgrade --user typing
-
-    rm -f vimplug.lock
-    $EDITOR -c PlugUpgrade                    -c qa
-    $EDITOR -c PlugClean                      -c qa
-    $EDITOR -c PlugInstall                    -c qa
-    $EDITOR -c PlugUpdate                     -c qa
-    $EDITOR -c PlugSnapshot\ vimplug.lock     -c qa
-
-    yarn global add neovim
-    $EDITOR -c "CocInstall coc-tag coc-emoji" -c qa
-    $EDITOR -c "CocUpdateSync"                -c qa
-
-    curl https://www.unicode.org/Public/UNIDATA/UnicodeData.txt > \
-        ~/.local/share/nvim/site/unicode/UnicodeData.txt
+    npm install -g fixjson
+    npm update -g
 fi
-
-npm install -g fixjson
-
-npm update -g
 
 if [[ "$EDITOR" == "nvim" ]]; then
     $EDITOR -c "autocmd User PackerComplete quitall" -c "PackerSync"
