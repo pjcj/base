@@ -7,6 +7,7 @@ gobase() { cd ~/g/base || exit 1; }
 cd ~
 
 if [ ! -e .tmux.conf ]; then
+    [[ -e .profile ]] && ! [[ -e .profile.local ]] && mv .profile .profile.local
     ln -s g/base/{utils,.abcde.conf,.gitconfig,.gitignore_global,.profile} ~
     ln -s g/base/{.urlview,.vimrc,.Xdefaults,.vim,.nvim,.tmux.conf,.tigrc} ~
     [[ -d ~/.config ]] || mkdir ~/.config
