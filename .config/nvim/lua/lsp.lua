@@ -131,26 +131,32 @@ local function setup_servers()
     }
   }
 
+  lsps = {
+    "bashls",
+    "cssls",
+    "dockerls",
+    "eslint",
+    "golangci_lint_ls",
+    "gopls",
+    "html",
+    "jsonls",
+    "tsserver",
+    "perlnavigator",
+    "sqls",
+    "volar",
+    "yamlls",
+  }
+
+  local is_freebsd = (io.popen("uname"):read() == "FreeBSD")
+  if not is_freebsd then
+    -- table.insert(lsps, "clangd", "lua_ls", "taplo")
+    table.insert(lsps, "clangd")
+    table.insert(lsps, "lua_ls")
+    table.insert(lsps, "taplo")
+  end
+
   require("mason-lspconfig").setup {
-    ensure_installed = {
-      "bashls",
-      "clangd",
-      "cssls",
-      "dockerls",
-      "eslint",
-      "golangci_lint_ls",
-      "gopls",
-      "html",
-      "jsonls",
-      "tsserver",
-      "lua_ls",
-      "perlnavigator",
-      "sqls",
-      "taplo",
-      "volar",
-      "yamlls",
-      -- "zk",
-    },
+    ensure_installed = lsps,
   }
 
   lspconfig.bashls.setup { on_attach = on_attach }
@@ -158,11 +164,8 @@ local function setup_servers()
   lspconfig.cssls.setup { on_attach = on_attach }
   lspconfig.golangci_lint_ls.setup { on_attach = on_attach }
   lspconfig.html.setup { on_attach = on_attach }
-  -- lspconfig.spectral.setup { on_attach = on_attach }
   lspconfig.sqls.setup { on_attach = on_attach }
-  lspconfig.taplo.setup { on_attach = on_attach }
   lspconfig.yamlls.setup { on_attach = on_attach }
-  -- lspconfig.zk.setup { on_attach = on_attach }
 
   lspconfig.gopls.setup {
     settings = {
@@ -180,8 +183,6 @@ local function setup_servers()
     },
     on_attach = on_attach,
   }
-
-
 
   local function split_env_var(env_var, delimiter)
     local parts = {}
@@ -203,12 +204,6 @@ local function setup_servers()
     debounce_text_changes = 5000,  -- milliseconds
   }
 
-  lspconfig.lua_ls.setup {
-    init_options = { hostInfo = "neovim" },
-    settings = lua_settings,
-    on_attach = on_attach,
-  }
-
   lspconfig.tsserver.setup {
     init_options = { hostInfo = "neovim" },
     on_attach = function(client, bufnr)
@@ -228,6 +223,16 @@ local function setup_servers()
       on_attach(client, bufnr)
     end
   }
+
+  if not is_freebsd then
+    lspconfig.clangd.setup { on_attach = on_attach }
+    lspconfig.taplo.setup { on_attach = on_attach }
+    lspconfig.lua_ls.setup {
+      init_options = { hostInfo = "neovim" },
+      settings = lua_settings,
+      on_attach = on_attach,
+    }
+  end
 
   vim.diagnostic.config {
     virtual_text = { prefix = "●" },
