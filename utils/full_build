@@ -79,18 +79,23 @@ if [[ "$(uname)" == Darwin ]]; then
 
     pip3=pip3
 elif [[ "$(uname)" == FreeBSD ]]; then
+    sudo pkg update
+    sudo pkg upgrade
     sudo pkg install          \
         base64                \
+        bash                  \
         bat                   \
-        diff-so-fancy         \
+        exa                   \
         fd-find               \
         fzf                   \
+        git                   \
         git-delta             \
-        highlight             \
+        go                    \
         multitail             \
         neovim                \
         node                  \
-        www/npm               \
+        npm-node18            \
+        opendircolors         \
         pigz                  \
         pixz                  \
         py39-pip              \
@@ -100,12 +105,12 @@ elif [[ "$(uname)" == FreeBSD ]]; then
         rust                  \
         thefuck               \
         tig                   \
+        tmux                  \
         universal-ctags       \
+        vim                   \
         wget                  \
-        yarn                  \
         zsh
 
-    sudo pkg upgrade
     pip3=pip
 else
     sudo locale-gen en_GB.UTF-8 en_US.UTF-8
