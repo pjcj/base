@@ -85,12 +85,14 @@ elif [[ "$(uname)" == FreeBSD ]]; then
         base64                \
         bash                  \
         bat                   \
+        codespell             \
         exa                   \
         fd-find               \
         fzf                   \
         git                   \
         git-delta             \
         go                    \
+        hs-ShellCheck         \
         multitail             \
         neovim                \
         node                  \
@@ -100,9 +102,14 @@ elif [[ "$(uname)" == FreeBSD ]]; then
         pixz                  \
         py39-pip              \
         py39-powerline-status \
+        py39-proselint        \
         py39-ranger           \
+        py39-yamllint         \
         ripgrep               \
         rust                  \
+        selene                \
+        shellharden           \
+        shfmt                 \
         thefuck               \
         tig                   \
         tmux                  \
