@@ -737,7 +737,7 @@ if [[ -e $PERLBREW_ROOT/etc/bashrc ]] then
     __manpath=$MANPATH
     . $PERLBREW_ROOT/etc/bashrc 2>/dev/null
     . $PERLBREW_ROOT/etc/perlbrew-completion.bash
-    PATH=$PERLBREW_ROOT/bin:$__path
+    PATH=$PERLBREW_PATH:$__path
     MANPATH=${MANPATH:-manpath}:$__manpath
     pb() { TEST_JOBS=9 perlbrew -j9 "$@" }
     complete -F _perlbrew_compgen pb
