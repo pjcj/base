@@ -35,7 +35,7 @@ packer.startup(function(use)
   use "wbthomason/packer.nvim"
 
   use {
-    "feline-nvim/feline.nvim",
+    "freddiehaddad/feline.nvim",
     config = function()
       require "statusline"
     end,
