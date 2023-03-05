@@ -169,6 +169,7 @@ local alternate_indent = function()
 end
 
 local wk = require "which-key"
+-- local wk -- swap these to bootstrap
 
 local_defs.fn.set_buffer_settings = function()
   local ft   = vim.bo.filetype
