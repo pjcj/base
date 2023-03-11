@@ -1218,9 +1218,9 @@ packer.startup(function(use)
         popup = {
           delay_ms = 0, -- delay before popup displays
           inc_ms = 5, -- time increments used for fade/resize effects
-          blend = 10, -- starting blend, between 0-100, see :h winblend
-          width = 40,
-          winhl = "ScrollView",
+          blend = 30, -- starting blend, between 0-100, see :h winblend
+          width = 60,
+          winhl = "SpellRare",
           fader = specs.linear_fader,
           resizer = specs.shrink_resizer,
         },
