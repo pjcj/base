@@ -87,7 +87,7 @@ packer.startup(function(use)
         },
         highlight = {
           enable = true,
-          -- disable = { "perl" },
+          disable = { "perl", "sh", "gitcommit" },
         },
         indent = { enable = false },
         refactor = {
