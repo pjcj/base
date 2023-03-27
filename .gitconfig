@@ -81,6 +81,7 @@
     lgn                 = "!f() { git log --graph --topo-order --pretty=format:'%Cred%H%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --date=relative $@ | git name-rev --stdin --name-only; }; f | less"
     vgc                 = repack -f -a -d --depth=250 --window=250
     nvgc                = !ionice -n7 nice -n20 git vgc
+    fullgc              = "!f() { nice git gc && nice git repack -Ad --threads=0; }; f"
     amend               = commit -a --amend -C HEAD
     diffwords           = diff --word-diff
     praise              = blame -w
