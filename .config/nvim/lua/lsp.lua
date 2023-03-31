@@ -131,7 +131,7 @@ local function setup_servers()
     }
   }
 
-  lsps = {
+  local lsps = {
     "bashls",
     "cssls",
     "dockerls",
