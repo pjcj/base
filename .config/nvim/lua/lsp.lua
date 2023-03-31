@@ -165,7 +165,6 @@ local function setup_servers()
   lspconfig.golangci_lint_ls.setup { on_attach = on_attach }
   lspconfig.html.setup { on_attach = on_attach }
   lspconfig.sqls.setup { on_attach = on_attach }
-  lspconfig.yamlls.setup { on_attach = on_attach }
 
   lspconfig.gopls.setup {
     settings = {
@@ -222,6 +221,25 @@ local function setup_servers()
       client.server_capabilities.document_range_formatting = false
       on_attach(client, bufnr)
     end
+  }
+
+  lspconfig.yamlls.setup {
+    settings = {
+      yaml = {
+        format = {
+          enable = true,
+          bracketSpacing = true,
+          singleQuote = false,
+        },
+        keyOrdering = false,
+        schemaStore = {
+          enable = true,
+        },
+        validate = true,
+        completion = true,
+      },
+    },
+    on_attach = on_attach,
   }
 
   if not is_freebsd then
