@@ -341,6 +341,8 @@ wk.register {
       name = "+quote",
       d = { [[ds']], "delete single", noremap = false },
       D = { [[ds"]], "delete double", noremap = false },
+      i = { [[ysiw']], "insert single", noremap = false },
+      I = { [[ysiw"]], "insert double", noremap = false },
       q = { [[cs'"]], "single -> double", noremap = false },
       Q = { [[cs"']], "double -> single", noremap = false },
     },
