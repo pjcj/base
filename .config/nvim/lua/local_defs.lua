@@ -246,6 +246,7 @@ local_defs.fn.set_buffer_settings = function()
       ["<F4>"] = { "$self->", "$self->" },
       ["<S-F4>"] = { "->", "->" },
     }, { buffer = 0, mode = "i" })
+    lopt.formatoptions = "tcrqnljp"
   end
 
   if ft == "helm" then
