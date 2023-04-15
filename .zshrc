@@ -914,7 +914,7 @@ bindkey '^R' fzf_history_search
 zshrc_load_status "aws"
 
 if which assume >/dev/null; then
-    fpath=(~/.granted/zsh_autocomplete/*/ $fpath)
+    [[ -d ~/.granted ]] && fpath=(~/.granted/zsh_autocomplete/*/ $fpath)
     alias assume="source assume"
     export GRANTED_ENABLE_AUTO_REASSUME=true
 fi
