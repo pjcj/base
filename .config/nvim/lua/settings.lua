@@ -59,6 +59,6 @@ end
 vim.cmd [[
   augroup osc
     autocmd!
-    autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | execute 'OSCYankReg +' | endif
+    autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | execute 'OSCYankRegegister +' | endif
   augroup end
 ]]
