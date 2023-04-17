@@ -341,12 +341,14 @@ wk.register {
     m = { tb.git_status, "find git changes" },
     q = {
       name = "+quote",
-      d = { [[ds']], "delete single", noremap = false },
+      B = { [[ds`]], "delete backtick", noremap = false },
+      b = { [[ysiw`]], "insert backtick", noremap = false },
       D = { [[ds"]], "delete double", noremap = false },
-      i = { [[ysiw']], "insert single", noremap = false },
-      I = { [[ysiw"]], "insert double", noremap = false },
-      q = { [[cs'"]], "single -> double", noremap = false },
+      d = { [[ysiw"]], "insert double", noremap = false },
       Q = { [[cs"']], "double -> single", noremap = false },
+      q = { [[cs'"]], "single -> double", noremap = false },
+      S = { [[ds']], "delete single", noremap = false },
+      s = { [[ysiw']], "insert single", noremap = false },
     },
     s = {
       name = "+spell",
