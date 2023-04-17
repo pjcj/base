@@ -341,6 +341,10 @@ bindkey "^[[5~" vi-end-of-line
 bindkey "^[[6~" vi-forward-blank-word-end
 bindkey "^Y" vi-forward-word
 
+autoload edit-command-line;
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
 # bindkey -s "§" "lC"
 bindkey -s "^[[15~" "["  #f5
 bindkey -s "^[[17~" "]"  #f6
