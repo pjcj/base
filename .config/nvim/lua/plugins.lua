@@ -915,10 +915,6 @@ packer.startup(function(use)
 
   use "zsugabubus/crazy8.nvim"
   use {
-    "gpanders/editorconfig.nvim",
-    after = "crazy8.nvim",
-  }
-  use {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
       -- stylua: ignore
