@@ -1047,6 +1047,7 @@ packer.startup(function(use)
   use "ntpeters/vim-better-whitespace"
   use "ojroques/vim-oscyank"
   use "uga-rosa/translate.nvim"
+  use "chrisgrieser/nvim-spider"
   use "kana/vim-textobj-user"
   use {
     "Julian/vim-textobj-variable-segment",
