@@ -349,6 +349,10 @@ wk.register {
       q = { [[cs'"]], "single -> double", noremap = false },
       S = { [[ds']], "delete single", noremap = false },
       s = { [[ysiw']], "insert single", noremap = false },
+      ["("] = { [[ysiw(]], "insert parentheses with space", noremap = false },
+      [")"] = { [[ysiw)]], "insert parentheses without space", noremap = false },
+      ["{"] = { [[ysiw{]], "insert braces with space", noremap = false },
+      ["}"] = { [[ysiw}]], "insert braces without space", noremap = false },
     },
     s = {
       name = "+spell",
