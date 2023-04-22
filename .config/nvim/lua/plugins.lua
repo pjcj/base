@@ -1037,8 +1037,16 @@ packer.startup(function(use)
     end,
   }
 
+  use({
+    "kylechui/nvim-surround",
+    tag = "*",
+    config = function()
+      require "nvim-surround".setup {
+      }
+    end
+  })
+
   use "junegunn/vim-easy-align"
-  use "tpope/vim-surround"
   use "tpope/vim-repeat"
   use "windwp/nvim-ts-autotag"
   use "AndrewRadev/splitjoin.vim" -- gS, gJ
