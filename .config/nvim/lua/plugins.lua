@@ -72,7 +72,6 @@ packer.startup(function(use)
     "nvim-treesitter/nvim-treesitter",
     requires = {
       "nvim-treesitter/nvim-treesitter-refactor",
-      "nvim-treesitter/playground",
       "JoosepAlviste/nvim-ts-context-commentstring",
       "windwp/nvim-ts-autotag",
     },
