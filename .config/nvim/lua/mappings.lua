@@ -258,6 +258,7 @@ wk.register {
       b = { tb.buffers, "buffers" },
       c = { tb.commands, "commands" },
       d = { tb.lsp_definitions, "lsp definitions" },
+      e = { tb.resume, "resume" },
       f = { tb.builtin, "builtin" },
       g = { tb.live_grep, "grep" },
       G = { function() tb.live_grep {
