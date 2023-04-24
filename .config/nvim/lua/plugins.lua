@@ -959,15 +959,15 @@ packer.startup(function(use)
     end,
   }
 
-  use {
-    "Bekaboo/deadcolumn.nvim",
-    config = function()
-      require("deadcolumn").setup {
-        blending = { threshold = 0.5 },
-        warning = { alpha = 0.4 },
-      }
-    end,
-  }
+  -- use {
+  --   "Bekaboo/deadcolumn.nvim",
+  --   config = function()
+  --     require("deadcolumn").setup {
+  --       blending = { threshold = 0.5 },
+  --       warning = { alpha = 0.4 },
+  --     }
+  --   end,
+  -- }
 
   use {
     "matze/vim-move",
