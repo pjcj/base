@@ -214,10 +214,18 @@ PATH=/usr/local/bin:$PATH:~/g/go/bin:/usr/local/sbin:/usr/sbin:/sbin
 MANPATH=/usr/share/man:${MANPATH:-manpath}
 MANPATH=~/g/sw/share/man:$NPM_PACKAGES/share/man:$MANPATH
 
+zshrc_load_status "compinit"
+
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+    compinit -u
+else
+    compinit -C;
+fi;
+
 zshrc_load_status "completion system"
 
-autoload -U compinit
-compinit -u
+zinit cdreplay
 zmodload -i zsh/complist
 autoload -U zargs
 
