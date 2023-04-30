@@ -1062,10 +1062,16 @@ fi
 # ensure autoenv.zsh is called
 { c ~ && c - } >/dev/null
 
-# Clear up after status display
-echo -n "\rzsh loaded                                                        "
+zshrc_load_status "keychain"
 
 # Handle ssh
-if [[ $(uname) != FreeBSD ]]; then
+if [[ $(uname) == Darwin ]]; then
+    ssh-add --apple-load-keychain
+elif [[ $(uname) == FreeBSD ]]; then
+    :
+else
     eval `keychain --eval id_ed25519 id_rsa`
 fi
+
+# Clear up after status display
+echo -n "\rzsh loaded                                                        "
