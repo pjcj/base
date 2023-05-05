@@ -135,7 +135,7 @@ local function setup_servers()
     "jsonls",
     "tsserver",
     "perlnavigator",
-    "sqls",
+    "sqlls",
     "volar",
     "yamlls",
   }
@@ -157,7 +157,7 @@ local function setup_servers()
   lspconfig.cssls.setup { on_attach = on_attach }
   lspconfig.golangci_lint_ls.setup { on_attach = on_attach }
   lspconfig.html.setup { on_attach = on_attach }
-  lspconfig.sqls.setup { on_attach = on_attach }
+  lspconfig.sqlls.setup { on_attach = on_attach }
 
   lspconfig.gopls.setup {
     settings = {
