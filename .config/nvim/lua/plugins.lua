@@ -341,24 +341,15 @@ packer.startup(function(use)
   }
 
   use {
-    "SmiteshP/nvim-gps",
-    requires = "nvim-treesitter/nvim-treesitter",
+    "SmiteshP/nvim-navic",
+    requires = "neovim/nvim-lspconfig",
     config = function()
-      require "nvim-gps".setup {
-        -- icons = {
-        --   ["class-name"] = "",
-        --   ["function-name"] = "",
-        --   ["method-name"] = "",
-        --   ["container-name"] = 'ﮅ',
-        --   ["tag-name"] = '炙',
-        -- },
-        -- Any language not disabled here is enabled by default
-        -- languages = {
-        --   -- ["bash"] = false,
-        --   -- ["go"]   = false,
-        -- },
-        -- separator = " > ",
-        depth = 5,
+      require "nvim-navic".setup {
+        separator = " >",
+        depth_limit = 0,
+        depth_limit_indicator = "..",
+        safe_output = true,
+        click = true
       }
     end,
   }

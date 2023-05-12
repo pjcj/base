@@ -62,6 +62,7 @@ local lsp_sig_cfg = {
 --   }
 -- end
 
+local navic = require("nvim-navic")
 local on_attach = function(client, bufnr)
   print("attach", client.name)
 
@@ -83,6 +84,10 @@ local on_attach = function(client, bufnr)
       ]],
       false
     )
+  end
+
+  if client.server_capabilities.documentSymbolProvider then
+    navic.attach(client, bufnr)
   end
 
   require("lsp_signature").on_attach(lsp_sig_cfg, bufnr)
