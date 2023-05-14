@@ -1,49 +1,70 @@
-local install_path = vim.fn.stdpath "data"
-    .. "/site/pack/packer/start/packer.nvim"
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  vim.fn.system {
+vim.g.mapleader = ","
+vim.opt.termguicolors = true
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
     "git",
     "clone",
-    "https://github.com/wbthomason/packer.nvim",
-    install_path,
-  }
-  vim.cmd "packadd packer.nvim"
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
-vim.cmd [[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile | echo "pc"
-  augroup end
-]]
+-- local install_path = vim.fn.stdpath "data"
+    -- .. "/site/pack/packer/start/packer.nvim"
+-- if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  -- vim.fn.system {
+    -- "git",
+    -- "clone",
+    -- "https://github.com/wbthomason/packer.nvim",
+    -- install_path,
+  -- }
+  -- vim.cmd "packadd packer.nvim"
+-- end
 
-local packer = require "packer"
-packer.init {
-  max_jobs = 15,
-  git = {
-    depth = 9999999,
+-- vim.cmd [[
+  -- augroup packer_user_config
+    -- autocmd!
+    -- autocmd BufWritePost plugins.lua source <afile> | PackerCompile | echo "pc"
+  -- augroup end
+
+
+local plugins = {
+  { "kyazdani42/nvim-web-devicons" },
+  { "pjcj/neovim-colors-solarized-truecolor-only" },
+
+  {
+    "SmiteshP/nvim-navic",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
+    config = function()
+      require "nvim-navic".setup {
+        separator = " >",
+        depth_limit = 0,
+        depth_limit_indicator = "..",
+        safe_output = true,
+        click = true
+      }
+    end,
   },
-  log = { level = "debug" }, -- trace, debug, info, warn, error, fatal
-  profile = {
-    enable = false,
-    threshold = 1, -- integer in milliseconds
-  },
-}
 
-packer.startup(function(use)
-  -- Packer can manage itself
-  use "wbthomason/packer.nvim"
-
-  use {
+  {
     "freddiehaddad/feline.nvim",
+    lazy = false,
+    dependencies = {
+      "SmiteshP/nvim-navic",
+    },
     config = function()
       require "statusline"
     end,
-  }
-  use "kyazdani42/nvim-web-devicons"
-  use "pjcj/neovim-colors-solarized-truecolor-only"
+  },
 
-  use {
+  {
     "folke/which-key.nvim",
     config = function()
       require "which-key".setup {
@@ -66,19 +87,19 @@ packer.startup(function(use)
         },
       }
     end,
-  }
+  },
 
-  use {
+  {
     "nvim-treesitter/nvim-treesitter",
-    requires = {
+    dependencies = {
       "nvim-treesitter/nvim-treesitter-refactor",
       "JoosepAlviste/nvim-ts-context-commentstring",
       "windwp/nvim-ts-autotag",
     },
-    run = ":TSUpdate",
+    build = ":TSUpdate",
     config = function()
       require "nvim-treesitter.configs".setup {
-        ensure_installed = "all",
+        -- ensure_installed = "all",
         ignore_install = {
           "swift", -- requires glibc 2.28
           "perl", -- sometimes crashes
@@ -110,10 +131,13 @@ packer.startup(function(use)
         },
       }
     end,
-  }
+  },
 
-  use {
+  {
     "terrortylor/nvim-comment",
+    dependencies = {
+      "JoosepAlviste/nvim-ts-context-commentstring",
+    },
     config = function()
       require "nvim_comment".setup {
         line_mapping = "-",
@@ -130,24 +154,21 @@ packer.startup(function(use)
         l.map.defmap
       )
     end,
-  }
+  },
 
-  use {
-    "lewis6991/spellsitter.nvim",
+  {
+    "rcarriga/nvim-notify", -- ,fn
     config = function()
-      require "spellsitter".setup {
-        hl = "SpellBad",
-        captures = { "comment" }, -- set to {} to spellcheck everything
-      }
+      vim.notify = require "notify"
     end,
-  }
+  },
 
-  use "neovim/nvim-lspconfig"
-  use { "williamboman/mason.nvim" }
-  use { "williamboman/mason-lspconfig.nvim" }
-  use "ray-x/lsp_signature.nvim"
-  use "folke/lsp-colors.nvim"
-  use {
+  { "neovim/nvim-lspconfig" },
+  { "williamboman/mason.nvim" },
+  { "williamboman/mason-lspconfig.nvim" },
+  { "ray-x/lsp_signature.nvim" },
+  { "folke/lsp-colors.nvim" },
+  {
     "kosayoda/nvim-lightbulb",
     requires = "antoinemadec/FixCursorHold.nvim",
     config = function()
@@ -167,12 +188,10 @@ packer.startup(function(use)
         },
       }
     end,
-  }
-
-  require "lsp".setup_servers()
-
-  use {
+  },
+  {
     "jose-elias-alvarez/null-ls.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       local null_ls = require "null-ls"
       local helpers = require "null-ls.helpers"
@@ -274,22 +293,21 @@ packer.startup(function(use)
       null_ls.setup {
         sources = sources,
         debounce = 2000,
-        debug = false,
+        debug = true,
       }
     end,
-    requires = { "nvim-lua/plenary.nvim" },
-  }
-  use "jose-elias-alvarez/nvim-lsp-ts-utils"
-  -- use {
+  },
+  { "jose-elias-alvarez/nvim-lsp-ts-utils" },
+  -- {
   --   -- :lua vim.lsp.buf.incoming_calls()
   --   -- :lua vim.lsp.buf.outgoing_calls()
   --   "ldelossa/calltree.nvim",
   --   config = function()
   --     require "calltree".setup {}
   --   end,
-  -- }
+  -- },
 
-  use {
+  {
     "dense-analysis/ale",
     config = function()
       vim.g.ale_linters_explicit = 0
@@ -308,9 +326,9 @@ packer.startup(function(use)
         yaml = { "circleci", "spectral", "swaglint" },
       }
     end,
-  }
+  },
 
-  use {
+  {
     "ludovicchabant/vim-gutentags",
     config = function()
       vim.g.gutentags_ctags_exclude = vim.g.gutentags_ctags_exclude or {}
@@ -338,25 +356,11 @@ packer.startup(function(use)
         vim.g.gutentags_ctags_executable = "/usr/local/bin/uctags"
       end
     end,
-  }
+  },
 
-  use {
-    "SmiteshP/nvim-navic",
-    requires = "neovim/nvim-lspconfig",
-    config = function()
-      require "nvim-navic".setup {
-        separator = " >",
-        depth_limit = 0,
-        depth_limit_indicator = "..",
-        safe_output = true,
-        click = true
-      }
-    end,
-  }
-
-  use {
+  {
     "ray-x/go.nvim",
-    requires = {
+    dependencies = {
       "neovim/nvim-lspconfig",
       "nvim-treesitter/nvim-treesitter",
       "mfussenegger/nvim-dap",
@@ -396,7 +400,8 @@ packer.startup(function(use)
           -- autoSetHints both are true.
           only_current_line_autocmd = "CursorHold",
 
-          -- whether to show variable name before type hints with the inlay hints or not
+          -- whether to show variable name before type hints with the inlay
+          -- hints or not
           -- default: false
           show_variable_name = true,
 
@@ -424,11 +429,11 @@ packer.startup(function(use)
         },
       }
     end,
-  }
+  },
 
-  use {
+  {
     "nvim-neotest/neotest",
-    requires = {
+    dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       "antoinemadec/FixCursorHold.nvim",
@@ -446,63 +451,50 @@ packer.startup(function(use)
         }
       }
     end
-  }
+  },
 
-  use {
+  {
     "vim-perl/vim-perl",
-    run = "make clean carp dancer heredoc-sql highlight-all-pragmas "
+    build = "make clean carp dancer heredoc-sql highlight-all-pragmas "
         .. "js-css-in-mason method-signatures moose test-more try-tiny",
     config = function()
       vim.g.perl_highlight_data = 1
     end,
-  }
+  },
 
-  use "hashivim/vim-terraform"
-  use "towolf/vim-helm"
+  { "hashivim/vim-terraform" },
+  { "towolf/vim-helm" },
 
-  use {
+  {
     "ThePrimeagen/refactoring.nvim",
-    requires = {
+    dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
     config = function()
       local refactoring = require "refactoring"
-
       refactoring.setup {
         installation_path = vim.fn.stdpath "data" .. "/dapinstall/",
       }
     end,
-  }
+  },
 
-  use "mfussenegger/nvim-dap"
-  -- use {
-  --   "Pocco81/DAPInstall.nvim",
-  --   config = function()
-  --     local dap_install = require "dap-install"
-
-  --     dap_install.setup {
-  --       installation_path = vim.fn.stdpath "data" .. "/dapinstall/",
-  --     }
-
-  --     local dbg_list =
-  --       require "dap-install.api.debuggers".get_installed_debuggers()
-
-  --     for _, debugger in ipairs(dbg_list) do
-  --       dap_install.config(debugger)
-  --     end
-  --   end,
-  -- }
-
-  use { "nvim-telescope/telescope-fzf-native.nvim", run = "gmake" }
-  use {
+  {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    build = "make || gmake",
+  },
+  {
     "nvim-telescope/telescope.nvim",
-    requires = {
+    dependencies = {
       "nvim-lua/popup.nvim",
       "nvim-lua/plenary.nvim",
       "protex/better-digraphs.nvim",
       "nvim-telescope/telescope-dap.nvim",
       "debugloop/telescope-undo.nvim",
+      "nvim-telescope/telescope-fzf-native.nvim",
     },
     config = function()
       local telescope = require "telescope"
@@ -546,7 +538,7 @@ packer.startup(function(use)
       }
 
       telescope.load_extension "fzf"
-      telescope.load_extension "refactoring"
+      -- telescope.load_extension "refactoring"
       telescope.load_extension "undo"
 
       vim.cmd [[
@@ -557,12 +549,12 @@ packer.startup(function(use)
         augroup end
       ]]
     end,
-  }
-  use "stevearc/dressing.nvim"
+  },
+  { "stevearc/dressing.nvim" },
 
-  use {
+  {
     "hrsh7th/nvim-cmp",
-    requires = {
+    dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lua",
       "hrsh7th/vim-vsnip",
@@ -805,11 +797,11 @@ packer.startup(function(use)
       --   }),
       -- })
     end,
-  }
+  },
 
-  use {
+  {
     "lewis6991/gitsigns.nvim",
-    requires = { "nvim-lua/plenary.nvim" },
+    dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       require "gitsigns".setup {
         signs = {
@@ -823,7 +815,7 @@ packer.startup(function(use)
         linehl = false,
         watch_gitdir = { interval = 1000 },
         sign_priority = 6,
-        update_debounce = 100,
+        update_debounce = 1000,
         status_formatter = nil, -- Use default
         diff_opts = { internal = true }, -- If luajit is present
         word_diff = true,
@@ -861,39 +853,39 @@ packer.startup(function(use)
         end,
       }
     end,
-  }
+  },
 
-  use {
+  {
     "rhysd/git-messenger.vim",
     config = function()
       vim.g.git_messenger_always_into_popup = 1
       vim.g.git_messenger_include_diff = "current"
     end,
-  }
+  },
 
-  use "rhysd/conflict-marker.vim"
+  { "rhysd/conflict-marker.vim" },
 
-  use {
+  {
     "ruanyl/vim-gh-line",
     config = function()
       vim.g.gh_use_canonical = 0
       vim.g.gh_trace = 1
     end,
-  }
+  },
 
-  use "tpope/vim-fugitive"
+  { "tpope/vim-fugitive" },
 
-  use {
+  {
     "norcalli/nvim-colorizer.lua",
     config = function()
       vim.opt.termguicolors = true
       require "colorizer".setup()
     end,
-  }
+  },
 
-  use {
+  {
     "AckslD/nvim-neoclip.lua",
-    requires = { "tami5/sqlite.lua", module = "sqlite" },
+    dependencies = { "tami5/sqlite.lua", module = "sqlite" },
     config = function()
       require "neoclip".setup {
         enable_persistent_history = true,
@@ -901,10 +893,10 @@ packer.startup(function(use)
         default_register = '"',
       }
     end,
-  }
+  },
 
-  use "zsugabubus/crazy8.nvim"
-  use {
+  { "zsugabubus/crazy8.nvim" },
+  {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
       -- stylua: ignore
@@ -948,29 +940,19 @@ packer.startup(function(use)
         },
       }
     end,
-  }
+  },
 
-  -- use {
-  --   "Bekaboo/deadcolumn.nvim",
-  --   config = function()
-  --     require("deadcolumn").setup {
-  --       blending = { threshold = 0.5 },
-  --       warning = { alpha = 0.4 },
-  --     }
-  --   end,
-  -- }
-
-  use {
+  {
     "matze/vim-move",
     config = function()
       vim.g.move_map_keys = 0
     end,
-  }
+  },
 
-  use "gioele/vim-autoswap"
-  use "farmergreg/vim-lastplace"
+  { "gioele/vim-autoswap" },
+  { "farmergreg/vim-lastplace" },
 
-  use {
+  {
     "mhinz/vim-startify",
     config = function()
       vim.g.startify_change_to_vcs_root = 1
@@ -983,9 +965,9 @@ packer.startup(function(use)
         { type = "commands", header = { "   Commands" } },
       }
     end,
-  }
+  },
 
-  use {
+  {
     "lfv89/vim-interestingwords",
     config = function()
       -- stylua: ignore
@@ -1000,9 +982,9 @@ packer.startup(function(use)
         '#b72a83', '#6f2b9d', '#69636d', '#5f569c',
       }
     end,
-  }
+  },
 
-  use {
+  {
     "rareitems/hl_match_area.nvim",
     config = function()
       require "hl_match_area".setup {
@@ -1011,9 +993,9 @@ packer.startup(function(use)
         delay = 500,
       }
     end,
-  }
+  },
 
-  use {
+  {
     "cohama/lexima.vim",
     config = function()
       vim.cmd [[
@@ -1025,64 +1007,59 @@ packer.startup(function(use)
         call lexima#add_rule({"char": '{', "at": '\%#\(\w\|\$\)'})
       ]]
     end,
-  }
+  },
 
-  use({
+  {
     "kylechui/nvim-surround",
-    tag = "*",
+    -- tag = "*",
     config = function()
       require "nvim-surround".setup {
       }
     end
-  })
+  },
 
-  use "junegunn/vim-easy-align"
-  use "tpope/vim-repeat"
-  use "windwp/nvim-ts-autotag"
-  use "AndrewRadev/splitjoin.vim" -- gS, gJ
-  use "Konfekt/vim-unicode-homoglyphs" -- gy
-  use "superhawk610/ascii-blocks.nvim" -- :AsciiBlockify
-  use "ntpeters/vim-better-whitespace"
-  use "ojroques/vim-oscyank"
-  use "uga-rosa/translate.nvim"
-  use "chrisgrieser/nvim-spider"
-  use "kana/vim-textobj-user"
-  use {
+  { "junegunn/vim-easy-align" },
+  { "tpope/vim-repeat" },
+  { "windwp/nvim-ts-autotag" },
+  { "AndrewRadev/splitjoin.vim" }, -- gS, gJ
+  { "Konfekt/vim-unicode-homoglyphs" }, -- gy
+  { "superhawk610/ascii-blocks.nvim" }, -- :AsciiBlockify
+  { "ntpeters/vim-better-whitespace" },
+  { "ojroques/vim-oscyank" },
+  { "uga-rosa/translate.nvim" },
+  { "chrisgrieser/nvim-spider" },
+  { "kana/vim-textobj-user" },
+  {
     "Julian/vim-textobj-variable-segment",
-    after = "vim-textobj-user",
-  }
+    dependencies = {
+      "vim-textobj-user",
+    },
+  },
 
-  use {
+  {
     "axieax/urlview.nvim", -- ,fu ,fU
     config = function()
       require "urlview".setup {
         default_picker = "telescope",
       }
     end,
-  }
+  },
 
-  use {
-    "rcarriga/nvim-notify", -- ,fn
-    config = function()
-      vim.notify = require "notify"
-    end,
-  }
-
-  use {
+  {
     "kevinhwang91/nvim-hlslens",
     config = function()
       require "hlslens".setup {}
     end,
-  }
+  },
 
-  use {
+  {
     "stevearc/overseer.nvim",
     config = function()
       require "overseer".setup {}
     end
-  }
+  },
 
-  use {
+  {
     "petertriho/nvim-scrollbar",
     config = function()
       local l = require "local_defs"
@@ -1106,11 +1083,10 @@ packer.startup(function(use)
         hi default link HlSearchFloat Search
       ]]
     end,
-  }
+  },
 
-  use {
+  {
     "sidebar-nvim/sidebar.nvim",
-    -- branch = "dev",
     config = function()
       local sidebar = require "sidebar-nvim"
       local opts = {
@@ -1120,11 +1096,11 @@ packer.startup(function(use)
       }
       sidebar.setup(opts)
     end,
-  }
+  },
 
-  use {
+  {
     "simrat39/symbols-outline.nvim",
-    requires = {
+   dependencies = {
       "folke/which-key.nvim",
     },
     config = function()
@@ -1140,7 +1116,7 @@ packer.startup(function(use)
         show_relative_numbers = false,
         show_symbol_details = true,
         preview_bg_highlight = "Pmenu",
-        keymaps = { -- These keymaps can be a string or a table for multiple keys
+        keymaps = { -- can be a string or a table for multiple keys
           close = { "<Esc>", "q" },
           goto_location = "<Cr>",
           focus_location = "o",
@@ -1153,11 +1129,13 @@ packer.startup(function(use)
         symbol_blacklist = {},
       }
     end,
-  }
+  },
 
-  use {
+  {
     "folke/todo-comments.nvim",
-    requires = "nvim-lua/plenary.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
     config = function()
       require "todo-comments".setup {
         highlight = {
@@ -1186,7 +1164,7 @@ packer.startup(function(use)
         },
       }
     end,
-  }
+  },
   -- ERROR: red
   -- WARN 123
   -- INFO  456
@@ -1198,10 +1176,10 @@ packer.startup(function(use)
   --ERROR 6
   --- TODO - hmmm
 
-  use "elihunter173/dirbuf.nvim"
-  use {
+  { "elihunter173/dirbuf.nvim" },
+  {
     "kyazdani42/nvim-tree.lua",
-    requires = {
+    dependencies = {
       "kyazdani42/nvim-web-devicons", -- optional, for file icon
     },
     config = function()
@@ -1209,9 +1187,9 @@ packer.startup(function(use)
         hijack_directories = { enable = false },
       }
     end,
-  }
+  },
 
-  use {
+  {
     "edluffy/specs.nvim",
     config = function()
       local specs = require "specs"
@@ -1238,26 +1216,82 @@ packer.startup(function(use)
         l.map.defmap
       )
     end,
-  }
-  use {
+  },
+
+  {
     "gen740/SmoothCursor.nvim",
     config = function()
       require "smoothcursor".setup {
         priority = 1,
       }
     end
-  }
+  },
 
-  use {
+  {
     "iamcco/markdown-preview.nvim",
-    run = "cd app && yarn install",
+    build = "cd app && yarn install",
     ft = "markdown",
-  }
+  },
 
-  use {
+  {
     "RaafatTurki/hex.nvim",
     config = function()
       require "hex".setup {}
     end
+  },
+}
+
+local opts = {
+  defaults = {
+    lazy = false,
   }
-end)
+}
+
+require "lazy".setup(plugins, opts)
+require "lsp".setup_servers()
+
+
+-- local packer = require "packer"
+-- packer.init {
+  -- max_jobs = 15,
+  -- git = {
+    -- depth = 9999999,
+  -- },
+  -- log = { level = "debug" }, -- trace, debug, info, warn, error, fatal
+  -- profile = {
+    -- enable = false,
+    -- threshold = 1, -- integer in milliseconds
+  -- },
+-- }
+
+-- packer.startup(function(use)
+--   use "mfussenegger/nvim-dap"
+--   -- use {
+--   --   "Pocco81/DAPInstall.nvim",
+--   --   config = function()
+--   --     local dap_install = require "dap-install"
+--
+--   --     dap_install.setup {
+--   --       installation_path = vim.fn.stdpath "data" .. "/dapinstall/",
+--   --     }
+--
+--   --     local dbg_list =
+--   --       require "dap-install.api.debuggers".get_installed_debuggers()
+--
+--   --     for _, debugger in ipairs(dbg_list) do
+--   --       dap_install.config(debugger)
+--   --     end
+--   --   end,
+--   -- }
+--
+--
+--   -- use {
+--   --   "Bekaboo/deadcolumn.nvim",
+--   --   config = function()
+--   --     require("deadcolumn").setup {
+--   --       blending = { threshold = 0.5 },
+--   --       warning = { alpha = 0.4 },
+--   --     }
+--   --   end,
+--   -- }
+-- end)
