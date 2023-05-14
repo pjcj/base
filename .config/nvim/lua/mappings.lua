@@ -17,16 +17,6 @@ local tb = require "telescope.builtin"
 local bd = require "better-digraphs"
 local gs = require "gitsigns"
 
-local async = require("plenary.async")
-local packer_sync = function()
-  async.run(function()
-    vim.notify.async("Syncing packer.", "info", { title = "Packer" })
-  end)
-  local snap_shot_time = os.date("!%Y-%m-%dT%TZ")
-  vim.cmd("PackerSnapshot " .. snap_shot_time)
-  vim.cmd("PackerSync")
-end
-
 local vtext_on = true
 local vtext_toggle = function()
   vtext_on = not vtext_on
@@ -187,10 +177,10 @@ wk.register {
     [" "] = {
       name = "+plugin",
       m = { ":MarkdownPreviewToggle<cr>", "markdown" },
-      p = {
-        name = "+packer",
-        c = { ":PackerCompile<cr>", "compile" },
-        s = { packer_sync, "sync" },
+      l = {
+        name = "+lazy",
+        h = { ":Lazy<cr>", "home" },
+        s = { ":Lazy sync<cr>", "sync" },
       },
       t = {
         name = "+translate",
