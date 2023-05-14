@@ -167,8 +167,8 @@ else
 fi
 
 if [[ "$EDITOR" == "nvim" ]]; then
-    $EDITOR -c "autocmd User PackerComplete quitall" -c "PackerSync"
-    $EDITOR +TSUpdateSync +qall
+    # $EDITOR --headless "+Lazy! sync" +qall
+    # $EDITOR --headless "+TSUpdateSync" +qall
     go install github.com/nametake/golangci-lint-langserver@latest
     go install github.com/client9/misspell/cmd/misspell@latest
 fi
