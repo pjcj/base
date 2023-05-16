@@ -102,12 +102,16 @@ local plugins = {
         -- ensure_installed = "all",
         ignore_install = {
           "swift", -- requires glibc 2.28
-          "perl", -- sometimes crashes
+          -- "perl", -- sometimes crashes
           "phpdoc", -- fails on MacOS
         },
         highlight = {
           enable = true,
-          disable = { "perl", "sh", "gitcommit" },
+          disable = {
+            "perl",
+            "sh",
+            -- "gitcommit",
+          },
         },
         indent = { enable = false },
         refactor = {
@@ -914,9 +918,8 @@ local plugins = {
         use_treesitter_scope                       = true,
         buftype_exclude                            = { "terminal" },
         filetype_exclude                           = {
-          "diff", "help", "markdown", "packer", "qf", "lspinfo", "checkhealth",
+          "diff", "help", "markdown", "qf", "lspinfo", "checkhealth", "man",
           -- "perl",
-          "man",
           "",
         },
         -- TODO - remove
