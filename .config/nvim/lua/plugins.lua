@@ -162,7 +162,9 @@ local plugins = {
   {
     "rcarriga/nvim-notify", -- ,fn
     config = function()
-      vim.notify = require "notify"
+      local notify = require "notify"
+      vim.notify = notify
+      notify.setup{ background_colour = require "local_defs".colour.base03 }
     end,
   },
 
