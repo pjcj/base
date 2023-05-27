@@ -276,6 +276,7 @@ wk.register {
       U = { ":UrlView buffer<cr>", "urls" },
       v = { function() tb.tags { default_text = vim.fn.expand("<cword>") } end, "cword tags" },
       x = { ":TodoTelescope<cr>", "todos" },
+      Y = { ":Telescope symbols<cr>", "symbols" },
       y = {
         name = "+grep type",
         g = {

@@ -500,6 +500,7 @@ local plugins = {
       "nvim-telescope/telescope-dap.nvim",
       "debugloop/telescope-undo.nvim",
       "nvim-telescope/telescope-fzf-native.nvim",
+      "nvim-telescope/telescope-symbols.nvim",
     },
     config = function()
       local telescope = require "telescope"
