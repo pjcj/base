@@ -1224,6 +1224,16 @@ local plugins = {
   },
 
   {
+    "tzachar/highlight-undo.nvim",
+    config = function()
+      require "highlight-undo".setup {
+        hlgroup = "Cursor",
+        duration = 1500,
+      }
+    end
+  },
+
+  {
     "gen740/SmoothCursor.nvim",
     config = function()
       require "smoothcursor".setup {
