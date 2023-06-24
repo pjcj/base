@@ -123,6 +123,19 @@ table.insert(components.active[1], {
   provider      = "lsp_client_names",
   hl            = { bg = c.base02, fg = c.base01 },
   left_sep      = { str = " ", hl = { bg = c.base02 } },
+  right_sep     = { str = " ", hl = { bg = c.base02 } },
+  truncate_hide = true,
+})
+
+table.insert(components.active[1], {
+  provider      = function() return require "lsp-progress".progress() .. " " end,
+  hl            = { bg = c.base02, fg = c.base01 },
+  right_sep = {
+    {
+      str = "right_filled",
+      hl  = { bg = c.base05, fg = c.base02 },
+    },
+  },
   truncate_hide = true,
 })
 
@@ -131,28 +144,28 @@ local severity = vim.diagnostic.severity
 table.insert(components.active[1], {
   provider = "diagnostic_errors",
   enabled  = function() return lsp.diagnostics_exist(severity.ERROR) end,
-  hl       = { bg = c.base02, fg = "red" },
+  hl       = { bg = c.base05, fg = "red" },
   icon     = " E ",
 })
 
 table.insert(components.active[1], {
   provider = "diagnostic_warnings",
   enabled  = function() return lsp.diagnostics_exist(severity.WARN) end,
-  hl       = { bg = c.base02, fg = "yellow" },
+  hl       = { bg = c.base05, fg = "yellow" },
   icon     = " W ",
 })
 
 table.insert(components.active[1], {
   provider = "diagnostic_info",
   enabled  = function() return lsp.diagnostics_exist(severity.INFO) end,
-  hl       = { bg = c.base02, fg = "cyan" },
+  hl       = { bg = c.base05, fg = "cyan" },
   icon     = " I ",
 })
 
 table.insert(components.active[1], {
   provider = "diagnostic_hints",
   enabled  = function() return lsp.diagnostics_exist(severity.HINT) end,
-  hl       = { bg = c.base02, fg = "skyblue" },
+  hl       = { bg = c.base05, fg = "skyblue" },
   icon     = " H ",
 })
 
@@ -183,37 +196,44 @@ end
 table.insert(components.active[1], {
   provider = function() return " e " .. tostring(ale_errors()) end,
   enabled  = function() return ale_errors() > 0 end,
-  hl       = { bg = c.base02, fg = "red" },
+  hl       = { bg = c.base05, fg = "red" },
 })
 
 table.insert(components.active[1], {
   provider = function() return " w " .. tostring(ale_warnings()) end,
   enabled  = function() return ale_warnings() > 0 end,
-  hl       = { bg = c.base02, fg = "yellow" },
+  hl       = { bg = c.base05, fg = "yellow" },
 })
 
 table.insert(components.active[1], {
   provider = function() return " i " .. tostring(ale_infos()) end,
   enabled  = function() return ale_infos() > 0 end,
-  hl       = { bg = c.base02, fg = "cyan" },
-})
-
-local navic = require("nvim-navic")
-table.insert(components.active[1], {
-  provider      = function() return navic.get_location() end,
-  enabled       = function() return navic.is_available() end,
-  hl            = { bg = c.base02, fg = "yellow" },
-  left_sep      = { str = "  ", hl = { bg = c.base02, fg = "cyan" } },
-  truncate_hide = true,
+  hl       = { bg = c.base05, fg = "cyan" },
 })
 
 table.insert(components.active[1], {
   provider  = " ",
-  hl        = { bg = c.base02 },
+  hl        = { bg = c.base05 },
   right_sep = {
     str = "right_filled",
-    hl = { bg = c.base05, fg = c.base02 },
+    hl = { bg = c.base02, fg = c.base05 },
   },
+})
+
+local navic = require "nvim-navic"
+table.insert(components.active[1], {
+  provider      = function() return navic.get_location() .. " " end,
+  enabled       = function() return navic.is_available() end,
+  hl            = { bg = c.base02, fg = "yellow" },
+  left_sep  = { str = " ", hl = { bg = c.base02 } },
+  right_sep = {
+    {
+      str = "right_filled",
+      hl  = { bg = c.base05, fg = c.base02 },
+    },
+    " ",
+  },
+  truncate_hide = true,
 })
 
 local function file_osinfo()
@@ -361,7 +381,7 @@ local vi_mode_colors = {
   NONE          = "yellow",
 }
 
-require "feline".setup{
+require "feline".setup {
   theme          = colours,
   separators     = separators,
   components     = components,
