@@ -160,7 +160,7 @@ local_defs.fn.set_buffer_colours = function()
 end
 
 local alternate_indent = function()
-  local b  = vim.b                             -- a table to access buffer variables
+  local b  = vim.b  -- a table to access buffer variables
   local hl = { "IndentOdd", "IndentEven" }
   b.indent_blankline_char_highlight_list                 = hl
   b.indent_blankline_space_char_highlight_list           = hl
