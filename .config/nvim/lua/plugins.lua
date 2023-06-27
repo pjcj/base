@@ -14,25 +14,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- local install_path = vim.fn.stdpath "data"
-    -- .. "/site/pack/packer/start/packer.nvim"
--- if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  -- vim.fn.system {
-    -- "git",
-    -- "clone",
-    -- "https://github.com/wbthomason/packer.nvim",
-    -- install_path,
-  -- }
-  -- vim.cmd "packadd packer.nvim"
--- end
-
--- vim.cmd [[
-  -- augroup packer_user_config
-    -- autocmd!
-    -- autocmd BufWritePost plugins.lua source <afile> | PackerCompile | echo "pc"
-  -- augroup end
-
-
 local plugins = {
   { "kyazdani42/nvim-web-devicons" },
   { "pjcj/neovim-colors-solarized-truecolor-only" },
