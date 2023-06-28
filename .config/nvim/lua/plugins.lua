@@ -15,7 +15,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-  { "kyazdani42/nvim-web-devicons" },
+  { "nvim-tree/nvim-web-devicons" },
   { "pjcj/neovim-colors-solarized-truecolor-only" },
 
   {
@@ -1174,9 +1174,9 @@ local plugins = {
 
   { "elihunter173/dirbuf.nvim" },
   {
-    "kyazdani42/nvim-tree.lua",
+    "nvim-tree/nvim-tree.lua",
     dependencies = {
-      "kyazdani42/nvim-web-devicons", -- optional, for file icon
+      "nvim-tree/nvim-web-devicons", -- optional, for file icon
     },
     config = function()
       require "nvim-tree".setup {
