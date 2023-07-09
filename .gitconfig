@@ -40,7 +40,7 @@
     renamelimit         = 0
     renames             = copies
     mnemonicprefix      = true
-    algorithm           = patience
+    algorithm           = histogram
     colorMoved          = default
 [mergetool "vim_mergetool"]
     cmd                 = nvim -f -c "MergetoolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
