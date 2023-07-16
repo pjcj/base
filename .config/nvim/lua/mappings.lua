@@ -137,6 +137,7 @@ wk.register {
       a = { lb.code_action, "action" },
       D = { lb.type_definition, "type definition" },
       f = { lb.formatting, "format" },
+      F = { ":ALEFix<cr>", "ALE fix" },
       i = { lb.incoming_calls, "incoming calls" },
       K = { lb.hover, "hover" },
       k = { lb.signature_help, "signature" },
