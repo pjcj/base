@@ -169,48 +169,6 @@ table.insert(components.active[1], {
   icon     = " H ",
 })
 
-local function ale_diagnostics()
-  local ok, d = pcall(vim.fn["ale#statusline#Count"], vim.fn.bufnr())
-  if ok then
-    return d.error + d.style_error, d.warning + d.style_warning, d.info, d.total
-  else
-    return 0, 0, 0, 0
-  end
-end
-
-local function ale_errors()
-  local e, _, _, _ = ale_diagnostics()
-  return e
-end
-
-local function ale_warnings()
-  local _, w, _, _ = ale_diagnostics()
-  return w
-end
-
-local function ale_infos()
-  local _, _, i, _ = ale_diagnostics()
-  return i
-end
-
-table.insert(components.active[1], {
-  provider = function() return " e " .. tostring(ale_errors()) end,
-  enabled  = function() return ale_errors() > 0 end,
-  hl       = { bg = c.base05, fg = "red" },
-})
-
-table.insert(components.active[1], {
-  provider = function() return " w " .. tostring(ale_warnings()) end,
-  enabled  = function() return ale_warnings() > 0 end,
-  hl       = { bg = c.base05, fg = "yellow" },
-})
-
-table.insert(components.active[1], {
-  provider = function() return " i " .. tostring(ale_infos()) end,
-  enabled  = function() return ale_infos() > 0 end,
-  hl       = { bg = c.base05, fg = "cyan" },
-})
-
 table.insert(components.active[1], {
   provider  = " ",
   hl        = { bg = c.base05 },

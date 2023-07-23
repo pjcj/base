@@ -308,6 +308,7 @@ local plugins = {
     config = function()
       vim.g.ale_linters_explicit = 0
       vim.g.ale_disable_lsp = 1
+      vim.g.ale_use_neovim_diagnostics_api = 1
       vim.g.ale_virtualtext_cursor = 1
       vim.g.ale_sign_error = "e"
       vim.g.ale_sign_warning = "w"
@@ -319,7 +320,7 @@ local plugins = {
         lua = {},
         perl = {},
         sh = {},
-        yaml = { "circleci", "spectral", "swaglint" },
+        yaml = { "spectral" },
       }
     end,
   },
