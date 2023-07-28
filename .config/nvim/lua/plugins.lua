@@ -862,6 +862,7 @@ local plugins = {
   },
 
   { "rhysd/conflict-marker.vim" },
+  { "sindrets/diffview.nvim" },
 
   {
     "ruanyl/vim-gh-line",
