@@ -176,6 +176,13 @@ wk.register {
   ["<leader>"] = {
     [" "] = {
       name = "+plugin",
+      d = {
+        name = "+diffview",
+        c = { ":DiffviewClose<cr>", "close" },
+        f = { ":DiffviewFileHistory<cr>", "file history" },
+        F = { ":DiffviewFileHistory %<cr>", "file history %" },
+        o = { ":DiffviewOpen<cr>", "open" },
+      },
       m = { ":MarkdownPreviewToggle<cr>", "markdown" },
       l = {
         name = "+lazy",
