@@ -185,37 +185,6 @@ local plugins = {
       }
     end,
   },
-  {
-    "mfussenegger/nvim-lint",
-    config = function()
-      local lint = require "lint"
-      lint.linters_by_ft = {
-        lua = { "codespell" },
-        perl = { "codespell" },
-      }
-
-      local codespell_args = { "--builtin", "clear,rare,informal,usage,names" }
-      if vim.fn.filereadable(".codespell") == 1 then
-        table.insert(codespell_args, "-I")
-        table.insert(codespell_args, vim.fn.getcwd() .. "/.codespell")
-      end
-      lint.linters.codespell.args = codespell_args
-
-      local last_lint_time = 0
-      vim.api.nvim_create_autocmd({
-        "BufEnter", "BufReadPost", "BufWritePost", "TextChanged",
-      }, {
-        callback = function()
-          local current_time = os.time()
-          if current_time - last_lint_time >= 5 then
-            require "notify"("lint")
-            lint.try_lint()
-            last_lint_time = current_time
-          end
-        end,
-      })
-    end,
-  },
 
   -- {
   --   "jose-elias-alvarez/null-ls.nvim",
@@ -337,6 +306,39 @@ local plugins = {
   -- },
 
   {
+    "mfussenegger/nvim-lint",
+    config = function()
+      local lint = require "lint"
+      lint.linters_by_ft = {
+        lua = { "codespell" },
+        perl = { "codespell" },
+        rst = { "codespell", "rstlint" },
+        sh = { "codespell" },
+      }
+
+      local codespell_args = { "--builtin", "clear,rare,informal,usage,names" }
+      if vim.fn.filereadable(".codespell") == 1 then
+        table.insert(codespell_args, "-I")
+        table.insert(codespell_args, vim.fn.getcwd() .. "/.codespell")
+      end
+      lint.linters.codespell.args = codespell_args
+
+      local last_lint_time = 0
+      vim.api.nvim_create_autocmd({
+        "BufEnter", "BufReadPost", "BufWritePost", "TextChanged",
+      }, {
+        callback = function()
+          local current_time = os.time()
+          if current_time - last_lint_time >= 5 then
+            require "notify"("lint")
+            lint.try_lint()
+            last_lint_time = current_time
+          end
+        end,
+      })
+    end,
+  },
+  {
     "dense-analysis/ale",
     config = function()
       vim.g.ale_linters_explicit = 0
@@ -355,6 +357,8 @@ local plugins = {
         sh = {},
         yaml = { "spectral" },
       }
+      -- vim.g.ale_fixers = {
+      -- }
     end,
   },
 
