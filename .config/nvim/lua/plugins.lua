@@ -186,111 +186,34 @@ local plugins = {
     end,
   },
   {
-    "jose-elias-alvarez/null-ls.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    "mfussenegger/nvim-lint",
     config = function()
-      local null_ls = require "null-ls"
-      local helpers = require "null-ls.helpers"
-
-      local perl_diagnostics = {
-        method = null_ls.methods.DIAGNOSTICS,
-        filetypes = { "perl" },
-        generator = null_ls.generator {
-          command = vim.fn.expand "~/g/base/utils/lint_perl",
-          args = { "$FILENAME", "$ROOT", "$FILEEXT" },
-          to_stdin = true,
-          from_stderr = true,
-          format = "json", --raw, json, or line
-          check_exit_code = function(code, stderr)
-            local success = code <= 1
-            if not success then
-              print(stderr)
-            end
-            return success
-          end,
-          on_output = helpers.diagnostics.from_json({
-            attributes = {
-              row = "row",
-              -- col = "start_column",
-              -- end_col = "end_column",
-              -- severity = "annotation_level",
-              message = "message",
-            },
-            -- severities = {
-            --   helpers.diagnostics.severities["information"],
-            --   helpers.diagnostics.severities["warning"],
-            --   helpers.diagnostics.severities["error"],
-            --   helpers.diagnostics.severities["hint"],
-            -- },
-          }),
-        },
+      local lint = require "lint"
+      lint.linters_by_ft = {
+        lua = { "codespell" },
+        perl = { "codespell" },
       }
 
-      null_ls.register(perl_diagnostics)
-
-      local b = null_ls.builtins
-      local a = b.code_actions
-      local c = b.completion
-      local d = b.diagnostics
-      local f = b.formatting
-      local h = b.hover
-
-      local codespell = { "--builtin", "clear,rare,informal,usage,names" }
+      local codespell_args = { "--builtin", "clear,rare,informal,usage,names" }
       if vim.fn.filereadable(".codespell") == 1 then
-        table.insert(codespell, "-I")
-        table.insert(codespell, vim.fn.getcwd() .. "/.codespell")
+        table.insert(codespell_args, "-I")
+        table.insert(codespell_args, vim.fn.getcwd() .. "/.codespell")
       end
+      lint.linters.codespell.args = codespell_args
 
-      local yamllint = { }
-      if vim.fn.filereadable(".yamllint") == 1 then
-        table.insert(yamllint, "-c")
-        table.insert(yamllint, vim.fn.getcwd() .. "/.yamllint")
-      end
-
-      local sources = {
-        a.eslint,
-        -- a.gitsigns,
-        a.proselint,
-        -- a.refactoring,
-        a.shellcheck,
-        -- -- c.spell,  -- puts funny stuff in completion
-        c.vsnip,
-        d.codespell.with { extra_args = codespell },
-        d.eslint,
-        d.hadolint,
-        d.jsonlint,
-        d.markdownlint,
-        d.misspell.with { extra_args = { "-i", "importas" } },
-        d.proselint,
-        d.selene,
-        -- d.shellcheck,
-        -- d.spectral,
-        -- d.sqlfluff.with { extra_args = { "--dialect", "mysql" } },
-        d.tidy,
-        d.yamllint.with { extra_args = yamllint },
-        d.zsh,
-        -- f.beautysh,  -- not all that useful
-        f.codespell.with { extra_args = codespell },
-        f.eslint,
-        f.fixjson,
-        f.mdformat.with { extra_args = { "--number" } },
-        -- f.golines,
-        -- f.prettier,
-        f.shellharden,
-        f.shfmt.with { extra_args = { "-i", "2", "-s" } },
-        -- f.sqlfluff.with { extra_args = { "--dialect", "mysql" } },
-        f.sql_formatter,
-        -- f.stylua,
-        f.tidy,
-        h.dictionary,
-      }
-
-      require "notify"("setup_null_ls")
-      null_ls.setup {
-        sources = sources,
-        debounce = 2000,
-        debug = true,
-      }
+      local last_lint_time = 0
+      vim.api.nvim_create_autocmd({
+        "BufEnter", "BufReadPost", "BufWritePost", "TextChanged",
+      }, {
+        callback = function()
+          local current_time = os.time()
+          if current_time - last_lint_time >= 5 then
+            require "notify"("lint")
+            lint.try_lint()
+            last_lint_time = current_time
+          end
+        end,
+      })
     end,
   },
 
