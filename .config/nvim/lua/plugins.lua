@@ -329,7 +329,7 @@ local plugins = {
       }, {
         callback = function()
           local current_time = os.time()
-          if current_time - last_lint_time >= 5 then
+          if current_time - last_lint_time >= 15 then
             require "notify"("lint")
             lint.try_lint()
             last_lint_time = current_time
