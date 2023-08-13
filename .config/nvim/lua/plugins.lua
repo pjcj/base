@@ -327,12 +327,13 @@ local plugins = {
       vim.api.nvim_create_autocmd({
         "BufEnter", "BufReadPost", "BufWritePost", "TextChanged",
       }, {
-        callback = function()
+        callback = function(ev)
           local current_time = os.time()
-          if current_time - last_lint_time >= 15 then
-            require "notify"("lint")
-            lint.try_lint()
+          local t = ev.event == "TextChanged" and 15 or 1
+          if current_time - last_lint_time >= t then
             last_lint_time = current_time
+            require "notify"(string.format("lint: %s", ev.event))
+            lint.try_lint()
           end
         end,
       })
