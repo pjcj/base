@@ -329,13 +329,6 @@ local plugins = {
       end
       lint.linters.codespell.args = codespell_args
 
-      local yamllint_args = { }
-      if vim.fn.filereadable(".yamllint") == 1 then
-        table.insert(yamllint_args, "-c")
-        table.insert(yamllint_args, vim.fn.getcwd() .. "/.yamllint")
-      end
-      lint.linters.yamllint.args = yamllint_args
-
       local last_lint_time = 0
       vim.api.nvim_create_autocmd({
         "BufEnter", "BufReadPost", "BufWritePost", "TextChanged",
