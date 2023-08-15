@@ -344,7 +344,7 @@ local function filter_diagnostics(diagnostic)
     return false
   end
 
-  -- Ignore palse positive in CHECK in Devel::Cover
+  -- Ignore false positive in CHECK in Devel::Cover
   if string.match(diagnostic.message,
       "Undefined subroutine &Devel::Cover::set_first_init_and_end called") then
     return false
