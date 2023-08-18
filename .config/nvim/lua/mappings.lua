@@ -16,6 +16,7 @@ local t = require "telescope"
 local tb = require "telescope.builtin"
 local bd = require "better-digraphs"
 local gs = require "gitsigns"
+local gl = require "gitlab"
 
 local vtext_on = true
 local vtext_toggle = function()
@@ -321,6 +322,24 @@ wk.register {
     g = {
       name = "+git",
       g = { ":tab Git commit<cr>", "commit" },
+      l = {
+        name = "+gitlab",
+        a = { gl.approve, "approve" },
+        A = {
+          name = "+assignee",
+          a = { gl.add_assignee, "add assignee" },
+          d = { gl.delete_assignee, "delete assignee" },
+        },
+        c = { gl.create_comment, "create comment" },
+        d = { gl.list_discussions, "list discussions" },
+        r = { gl.revoke, "revoke" },
+        R = {
+          name = "+reviewer",
+          a = { gl.add_reviewer, "add reviewer" },
+          d = { gl.delete_reviewer, "delete reviewer" },
+        },
+        s = { gl.summary, "summary" },
+      },
     },
     h = {
       name = "+hunk",

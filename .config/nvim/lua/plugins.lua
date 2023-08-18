@@ -916,6 +916,18 @@ local plugins = {
   { "tpope/vim-fugitive" },
 
   {
+    "harrisoncramer/gitlab.nvim",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "stevearc/dressing.nvim", -- Recommended but not required. Better UI for pickers.
+      enabled = true,
+    },
+    build  = function() require "gitlab".build() end, -- Builds the Go binary
+    config = function() require "gitlab".setup() end,
+  },
+
+  {
     "norcalli/nvim-colorizer.lua",
     config = function()
       vim.opt.termguicolors = true
