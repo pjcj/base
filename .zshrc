@@ -104,7 +104,6 @@ setopt                        \
     NO_hup                    \
     NO_ignore_braces          \
     NO_ignore_eof             \
-       inc_append_history     \
        interactive_comments   \
     NO_ksh_glob               \
     NO_list_ambiguous         \
