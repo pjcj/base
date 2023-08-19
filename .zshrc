@@ -741,6 +741,7 @@ load \
     $HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh            \
     /usr/local/share/examples/fzf/shell/key-bindings.zsh     \
     /usr/local/share/examples/fzf/shell/completion.zsh       \
+    ~/g/base/zsh/.wezterm.completion.zsh                     \
     ~/.iterm2_shell_integration.zsh                          \
     ~/Library/Preferences/org.dystroy.broot/launcher/bash/br \
     ~/.acme.sh/acme.sh.env                                   \
