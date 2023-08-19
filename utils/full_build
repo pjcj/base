@@ -150,6 +150,11 @@ else
     cargo install devicon-lookup
 
     # $pip3 install --upgrade --user pip
+
+    tempfile=$(mktemp) \
+        && curl -o $tempfile https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo \
+        && tic -x -o ~/.terminfo $tempfile \
+        && rm $tempfile
 fi
 
 if [[ "$(uname)" == FreeBSD ]]; then
