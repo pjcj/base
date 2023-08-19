@@ -496,7 +496,6 @@ rssh()    { ssh -p 9999 "$@" localhost }
 rtunnel() { ssh -N -f -R 9999:localhost:22 "$@" }
 rr()      { ranger "$@" }
 tg()      { tcgrep -brun "$@" }
-tmux()    { command tmux -u2 "$@" }
 tojpg()   { for f ("$@") { echo "$f"; j=`echo $f(:r)`; convert "$f" "$j.jpg" } }
 t()       { TERM=xterm-color tig --all "$@" }
 tf()      { tail -f "$@" }
@@ -543,7 +542,7 @@ wh() {
 }
 
 tm() {
-    if [[ -z "$1" ]]; then
+    if [[ -z "$1" || -u "$TMUX" ]]; then
         tmux
     else
         tmux has -t $1 && tmux attach -d -t $1 || tmux new -s $1
