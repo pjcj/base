@@ -70,6 +70,7 @@ setopt                        \
     NO_chase_links            \
        cdable_vars            \
     NO_clobber                \
+       combining_chars        \
        complete_aliases       \
        complete_in_word       \
        correct                \
