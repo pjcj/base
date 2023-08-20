@@ -406,9 +406,11 @@ wezterm.on("gui-startup", function()
   elseif hostname == "ca" then
     tab:set_title("ca")
     pane2 = pane1:split { direction = "Left", size = 0.4 }
+    pane1:send_text 'tm base\n'
   elseif hostname == "pyx-22" then
     tab:set_title("pyx")
     pane2 = pane1:split { direction = "Left", size = 0.4 }
+    pane1:send_text 'tm base\n'
   end
 
   window:gui_window():perform_action(act.ActivateTab(0))  -- TODO - doesn't work
