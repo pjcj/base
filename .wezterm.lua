@@ -11,9 +11,20 @@ c.term = "wezterm"
 if hostname == "T52U" then
   c.font = wezterm.font("Inconsolata NF")
   c.font_size = 16
+  c.initial_cols = 322
+  c.initial_rows = 88
 else
   c.font_size = 12
+  c.initial_cols = 120
+  c.initial_rows = 40
 end
+
+c.inactive_pane_hsb = {
+  saturation = 0.9,
+  brightness = 0.5,
+}
+
+c.adjust_window_size_when_changing_font_size = false
 
 -- c.color_scheme = "Solarized Dark - Patched"
 c.colors = {
@@ -46,10 +57,6 @@ c.colors = {
     "#fdf6e3",
   },
 }
-
-c.initial_cols  = 322
-c.initial_rows  = 88
-c.adjust_window_size_when_changing_font_size = false
 
 c.disable_default_key_bindings = true
 
@@ -344,11 +351,6 @@ wezterm.on(
     }
   end
 )
-
-c.inactive_pane_hsb = {
- saturation = 0.8,
- brightness = 0.5,
-}
 
 c.pane_focus_follows_mouse = true
 
