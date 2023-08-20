@@ -13,7 +13,7 @@ c.webgpu_power_preference = "HighPerformance"
 
 if hostname == "T52U" then
   c.font = wezterm.font("Inconsolata NF")
-  c.font_size = 16
+  c.font_size = 15
   c.command_palette_font_size = 24
   c.initial_cols = 322
   c.initial_rows = 88
