@@ -8,6 +8,9 @@ local c = {}
 
 c.term = "wezterm"
 
+c.front_end = "WebGpu"
+c.webgpu_power_preference = "HighPerformance"
+
 if hostname == "T52U" then
   c.font = wezterm.font("Inconsolata NF")
   c.font_size = 16
