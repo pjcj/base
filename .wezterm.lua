@@ -17,6 +17,12 @@ if hostname == "T52U" then
   c.command_palette_font_size = 24
   c.initial_cols = 322
   c.initial_rows = 88
+elseif hostname == "mbp.localdomain" then
+  c.font = wezterm.font("Inconsolata")
+  c.font_size = 15
+  c.command_palette_font_size = 24
+  c.initial_cols = 222
+  c.initial_rows = 56
 else
   c.font_size = 12
   c.command_palette_font_size = 20
@@ -425,6 +431,10 @@ wezterm.on("gui-startup", function()
   elseif hostname == "ca-22" then
     tab:set_title("ca-22")
     pane2 = pane1:split { direction = "Left", size = 0.4 }
+    pane1:send_text 'tm base\n'
+  elseif hostname == "mbp.localdomain" then
+    tab:set_title("mbp")
+    pane2 = pane1:split { direction = "Left", size = 0.25 }
     pane1:send_text 'tm base\n'
   end
 
