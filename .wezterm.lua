@@ -71,11 +71,12 @@ c.colors = {
 
 c.disable_default_key_bindings = true
 
-c.leader = { key = 'q', mods = 'CTRL', timeout_milliseconds = 2000 }
+c.leader = { key = "q", mods = "CTRL", timeout_milliseconds = 2000 }
 
 c.keys = {
   { key = "+", mods = "CTRL", action = "IncreaseFontSize" },
   { key = "-", mods = "CTRL", action = "DecreaseFontSize" },
+  { key = '*', mods = 'CTRL', action = act.ResetFontSize },
   { key = "Enter", mods = "CTRL", action = wezterm.action.TogglePaneZoomState },
   { key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
   { key = "Tab", mods = "SHIFT|CTRL", action = act.ActivateTabRelative(-1) },
@@ -85,7 +86,7 @@ c.keys = {
   { key = "l", mods = "CTRL", action = act.ShowDebugOverlay },
   { key = "n", mods = "CTRL", action = act.SpawnWindow },
 
-  { key = '0', mods = 'CTRL', action = act.ActivateTab(0) },
+  -- { key = '0', mods = 'CTRL', action = act.ActivateTab(0) },
   -- { key = '!', mods = 'SHIFT|CTRL', action = act.ActivateTab(0) },
   -- { key = '"', mods = 'ALT|CTRL', action = act.SplitVertical{ domain =  'CurrentPaneDomain' } },
   -- { key = '"', mods = 'SHIFT|ALT|CTRL', action = act.SplitVertical{ domain =  'CurrentPaneDomain' } },
