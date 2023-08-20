@@ -384,19 +384,19 @@ wezterm.on("gui-startup", function()
     pane2 = pane1:split { direction = "Left", size = 0.4 }
     pane3 = pane2:split { direction = "Bottom", size = 0.5 }
     pane1:send_text 'tm sh\n'
-    pane2:send_text 'ssh pjcj\ntm main\n'
-    pane3:send_text 'ssh cp1\ntm cp1\n'
+    pane2:send_text([[ ssh -t pjcj 'zsh -i -c "tm main"' ]] .. "\n")
+    pane3:send_text([[ ssh -t cp1 'zsh -i -c "tm cp1"' ]] .. "\n")
 
     tab, pane1, window = window:spawn_tab {}
     tab:set_title("ca")
     pane2 = pane1:split { direction = "Left", size = 0.25 }
-    pane1:send_text 'ssh ca\n'
+    pane1:send_text([[ ssh -t ca 'zsh -i -c "tm base"' ]] .. "\n")
     pane2:send_text 'ssh ca\n'
 
     tab, pane1, window = window:spawn_tab {}
     tab:set_title("pyx")
     pane2 = pane1:split { direction = "Left", size = 0.25 }
-    pane1:send_text 'ssh ts-pyx-22\n'
+    pane1:send_text([[ ssh -t ts-pyx-22 'zsh -i -c "tm base"' ]] .. "\n")
     pane2:send_text 'ssh ts-pyx-22\n'
 
     tab, pane1, window = window:spawn_tab {}
