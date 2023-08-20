@@ -11,10 +11,12 @@ c.term = "wezterm"
 if hostname == "T52U" then
   c.font = wezterm.font("Inconsolata NF")
   c.font_size = 16
+  c.command_palette_font_size = 24
   c.initial_cols = 322
   c.initial_rows = 88
 else
   c.font_size = 12
+  c.command_palette_font_size = 20
   c.initial_cols = 120
   c.initial_rows = 40
 end
