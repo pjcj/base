@@ -423,7 +423,7 @@ wezterm.on("gui-startup", function()
     pane1:send_text 'tm base\n'
   end
 
-  window:gui_window():perform_action(act.ActivateTab(0))  -- TODO - doesn't work
+  window:gui_window():perform_action(act.ActivateTab(0), pane1)
 end)
 
 return c
