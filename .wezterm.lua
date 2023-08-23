@@ -84,7 +84,6 @@ c.keys = {
   { key = "c", mods = "ALT", action = act.CopyTo "Clipboard" },
   { key = "v", mods = "ALT", action = act.PasteFrom "Clipboard" },
   { key = "l", mods = "CTRL", action = act.ShowDebugOverlay },
-  { key = "n", mods = "CTRL", action = act.SpawnWindow },
 
   -- { key = '0', mods = 'CTRL', action = act.ActivateTab(0) },
   -- { key = '!', mods = 'SHIFT|CTRL', action = act.ActivateTab(0) },
