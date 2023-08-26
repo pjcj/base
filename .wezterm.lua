@@ -15,8 +15,8 @@ if hostname == "T52U" then
   c.font = wezterm.font("Inconsolata NF")
   c.font_size = 15
   c.command_palette_font_size = 24
-  c.initial_cols = 322
-  c.initial_rows = 88
+  c.initial_cols = 354
+  c.initial_rows = 96
 elseif hostname == "mbp.localdomain" then
   c.font = wezterm.font("Inconsolata")
   c.font_size = 15
