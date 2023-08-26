@@ -401,8 +401,8 @@ wezterm.on("gui-startup", function()
     tab, pane1, window = window:spawn_tab {}
     tab:set_title("pyx")
     pane2 = pane1:split { direction = "Left", size = 0.25 }
-    pane1:send_text([[ ssh -t ts-pyx-22 'zsh -i -c "tm base"' ]] .. "\n")
-    pane2:send_text 'ssh ts-pyx-22\n'
+    pane1:send_text([[ ssh -t pyx-22 'zsh -i -c "tm base"' ]] .. "\n")
+    pane2:send_text 'ssh pyx-22\n'
 
     tab, pane1, window = window:spawn_tab {}
     tab:set_title("ca")
@@ -413,8 +413,8 @@ wezterm.on("gui-startup", function()
     tab, pane1, window = window:spawn_tab {}
     tab:set_title("ca-22")
     pane2 = pane1:split { direction = "Left", size = 0.25 }
-    pane1:send_text([[ ssh -t ts-ca-22 'zsh -i -c "tm base"' ]] .. "\n")
-    pane2:send_text 'ssh ts-ca-22\n'
+    pane1:send_text([[ ssh -t ca-22 'zsh -i -c "tm base"' ]] .. "\n")
+    pane2:send_text 'ssh ca-22\n'
 
     tab, pane1, window = window:spawn_tab {}
     tab:set_title("tmp")
