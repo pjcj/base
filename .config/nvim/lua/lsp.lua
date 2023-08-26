@@ -259,6 +259,9 @@ local function setup_servers()
     underline = true,
   }
 
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
+
   local border = "rounded"
   local lspconfig_window = require "lspconfig.ui.windows"
   local old_defaults = lspconfig_window.default_opts
