@@ -1064,14 +1064,25 @@ fi
 
 zshrc_load_status "keychain"
 
-# Handle ssh
+# Clear up after status display
+echo -n "\rzsh loaded                                                        "
+
+# Handle startup
 if [[ $(uname) == Darwin ]]; then
     ssh-add --apple-load-keychain
 elif [[ $(uname) == FreeBSD ]]; then
     :
 else
     eval `keychain --eval id_ed25519 id_rsa`
+    if [[ -n $WSL_DISTRO_NAME ]]; then
+        if ps aux | grep tailscaled | grep -v grep >/dev/null; then
+            echo tailscaled running
+        else
+            sudo tailscaled > /dev/null 2>&1 &
+            disown
+            sleep 5
+            sudo tailscale up --ssh
+            echo tailscaled started
+        fi
+    fi
 fi
-
-# Clear up after status display
-echo -n "\rzsh loaded                                                        "
