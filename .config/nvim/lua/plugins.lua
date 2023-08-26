@@ -1218,6 +1218,7 @@ local plugins = {
   },
   -- ERROR: red
   -- WARN 123
+  -- XXX: bubble
   -- INFO  456
   -- ISSUE    78
   -- DEBUG - rrr
