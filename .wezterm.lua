@@ -298,6 +298,14 @@ c.keys = {
 --   },
 -- }
 
+c.mouse_bindings = {
+  {
+    event = { Down = { streak = 1, button = "Right" } },
+    mods = "NONE",
+    action = act.PasteFrom("PrimarySelection"),
+  },
+}
+
 c.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 
 -- c.window_frame = {
