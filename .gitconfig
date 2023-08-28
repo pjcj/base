@@ -85,7 +85,7 @@
     amend               = commit -a --amend -C HEAD
     diffwords           = diff --word-diff
     praise              = blame -w
-    archeology          = blame -w -M -C -n
+    archeology          = blame -wMC
     latest              = for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname:short)  %(authorname)'
     ignore              = !git update-index --assume-unchanged
     unignore            = !git update-index --no-assume-unchanged

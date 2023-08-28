@@ -862,6 +862,7 @@ local plugins = {
         current_line_blame_opts = {
           virt_text = true,
           virt_text_pos = "eol",
+          ignore_whitespace = true,
           delay = 1000,
         },
         count_chars = {
@@ -899,6 +900,7 @@ local plugins = {
     config = function()
       vim.g.git_messenger_always_into_popup = 1
       vim.g.git_messenger_include_diff = "current"
+      vim.g.git_messenger_extra_blame_args = "-wMC"
     end,
   },
 

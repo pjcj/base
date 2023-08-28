@@ -269,6 +269,7 @@ compdef _make  n
 compdef _git   g=git
 compdef _git   ga=git-add
 compdef _git   gb=git-branch
+compdef _git   gbl=git-blame
 compdef _git   gc=git-commit
 compdef _git   gca=git-commit
 compdef _git   gcae=git-commit
@@ -440,6 +441,7 @@ fd()      { command fd -H "$@" }
 g()       { git "$@" }
 ga()      { git add "$@" }
 gb()      { git branch "$@" }
+gbl()     { git blame -wMC "$@" }
 gc()      { git commit "$@" }
 gca()     { git commit --amend "$@" }
 gcae()    { git commit --amend --no-edit "$@" }
