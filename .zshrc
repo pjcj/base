@@ -847,7 +847,7 @@ git-commit-sel() {
     setopt localoptions pipefail 2> /dev/null
     local get_sha="grep -o '[a-f0-9]\+' | head -1 | tr -d '\n'"
     local cmd="echo {} | $(fzfgvsha)"
-    g lg --color=always "$@" | \
+    g ll --color=always "$@" | \
         $(__fzfcmd) --ansi --tiebreak=index \
             --header="f1 exit, f2 toggle, f3 diff, f4 sha" \
             --bind 'f3:preview:echo {} | grep -o "'"[a-f0-9]\\+"'" | head -1 | xargs -I % sh -c "'"git -c delta.side-by-side=false show --color=always %"'"' \

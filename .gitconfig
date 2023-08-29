@@ -72,12 +72,12 @@
     lc                  = log ORIG_HEAD.. --stat --no-merges
     whatis              = show -s --pretty='tformat:%h (%s, %ad)' --date=short
     graphviz            = "!f() { echo 'digraph git {'; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g'; echo '}'; }; f"
-    lg                  = log --graph --topo-order --pretty=format:'%C("#833652")%h%Creset -%C("#f0c53f")%d%C("#9599dc") %s %C("#3f86dc")(%ad) %C("#687e85")%an%Creset' --date=relative
+    ll                  = log --graph --topo-order --pretty=format:'%C("#833652")%h%Creset -%C("#f0c53f")%d%C("#9599dc") %s %C("#3f86dc")(%ad) %C("#687e85")%an%Creset' --date=relative
     lgemail             = log --graph --topo-order --pretty=format:'%C("#833652")%h%Creset -%C("#f0c53f")%d%C("#9599dc") %s %C("#3f86dc")(%ad) %C("#687e85")%ae%Creset' --date=relative
     lge                 = log --graph --topo-order --pretty=format:'%C("#833652")%h%Creset -%C("#f0c53f")%d%C("#9599dc") %s %C("#3f86dc")(%ad) %C("#687e85")%an <%ae>%Creset' --date=relative
-    lga                 = "!f() { git lg --all; }; f"
-    lgm                 = "!f() { git lg $( git reflog | awk '{print $1}' ); }; f"
-    lgr                 = "!f() { git lg $( git fsck --no-reflog | awk '/dangling commit/ {print $3}' ); }; f"
+    lla                 = "!f() { git ll --all; }; f"
+    lgm                 = "!f() { git ll $( git reflog | awk '{print $1}' ); }; f"
+    lgr                 = "!f() { git ll $( git fsck --no-reflog | awk '/dangling commit/ {print $3}' ); }; f"
     lgn                 = "!f() { git log --graph --topo-order --pretty=format:'%Cred%H%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --date=relative $@ | git name-rev --stdin --name-only; }; f | less"
     vgc                 = repack -f -a -d --depth=250 --window=250
     nvgc                = !ionice -n7 nice -n20 git vgc
@@ -100,10 +100,10 @@
     # git change-commits GIT_COMMITTER_NAME "old name" "new name"
     change-commits      = "!f() { VAR1=$1; VAR='$'$1; OLD=$2; NEW=$3; echo -n \"Are you sure for replace $VAR $OLD => $NEW ? (Y/N) \";read OK;if [ \"$OK\" = 'Y' ] ; then shift 3; git filter-branch --env-filter \"if [ \\\"${VAR}\\\" = '$OLD' ]; then export $VAR1='$NEW';echo 'to $NEW'; fi\" $@; fi;}; f"
     rm-untracked        = "!f() { git status --porcelain | grep '??' | awk '{print $2}' | xargs rm; }; f"
-    lp = "!git lg --color=always \"$@\" \
+    lp = "!git ll --color=always \"$@\" \
         | fzf --ansi -m --no-sort --reverse --tiebreak=index --preview-window=down --height=100%  \
         --preview \"(grep -o '[a-f0-9]\\{7\\}' | head -1 | xargs -I % sh -c 'git -c core.pager=cat show --color=never % | delta --width=$(tput cols)') <<< {}\" #"
-    lpr = "!git lg --color=always \"$@\" \
+    lpr = "!git ll --color=always \"$@\" \
         | fzf --ansi -m --no-sort --reverse --tiebreak=index --preview-window=right:60% --height=100%  \
         --preview \"(grep -o '[a-f0-9]\\{7\\}' | head -1 | xargs -I % sh -c 'git -c core.pager=cat show --color=never % | delta --width=$(expr $(tput cols) \\* 6 / 10)') <<< {}\" #"
 [commit]
