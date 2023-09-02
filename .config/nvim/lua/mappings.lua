@@ -272,7 +272,7 @@ wk.register {
       o = { tb.vim_options, "vim options" },
       O = { tb.oldfiles, "old files" },
       p = { t.extensions.neoclip.default, "paste" },
-      P = { ":UrlView packer<cr>", "packer plugins" },
+      P = { ":UrlView lazy<cr>", "plugins" },
       q = { tb.quickfix, "quickfix" },
       Q = { tb.quickfixhistory, "quickfix history" },
       r = { tb.lsp_references, "lsp references" },
