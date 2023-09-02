@@ -1072,7 +1072,7 @@ local plugins = {
     end
   },
 
-  { "junegunn/vim-easy-align" },
+  { "junegunn/vim-easy-align" }, -- ctrl-x for regexp
   { "tpope/vim-repeat" },
   { "windwp/nvim-ts-autotag" },
   { "AndrewRadev/splitjoin.vim" }, -- gS, gJ
