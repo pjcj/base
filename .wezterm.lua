@@ -77,13 +77,15 @@ c.keys = {
   { key = "+", mods = "CTRL", action = "IncreaseFontSize" },
   { key = "-", mods = "CTRL", action = "DecreaseFontSize" },
   { key = '*', mods = 'CTRL', action = act.ResetFontSize },
-  { key = "Enter", mods = "CTRL", action = wezterm.action.TogglePaneZoomState },
-  { key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
-  { key = "Tab", mods = "SHIFT|CTRL", action = act.ActivateTabRelative(-1) },
+  { key = "Enter", mods = "CTRL|SHIFT", action = wezterm.action.TogglePaneZoomState },
   { key = "Enter", mods = "ALT", action = act.ToggleFullScreen },
+  { key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
+  { key = "Tab", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(-1) },
   { key = "c", mods = "ALT", action = act.CopyTo "Clipboard" },
   { key = "v", mods = "ALT", action = act.PasteFrom "Clipboard" },
   { key = "l", mods = "CTRL", action = act.ShowDebugOverlay },
+  { key = "R", mods = "SHIFT|CTRL", action = act.ReloadConfiguration },
+
 
   -- { key = '0', mods = 'CTRL', action = act.ActivateTab(0) },
   -- { key = '!', mods = 'SHIFT|CTRL', action = act.ActivateTab(0) },
