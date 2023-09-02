@@ -615,7 +615,7 @@ local plugins = {
       "rafamadriz/friendly-snippets",
       "uga-rosa/cmp-dictionary",
       "hrsh7th/cmp-cmdline",
-      "tzachar/cmp-ai",
+      -- "tzachar/cmp-ai",
     },
     config = function()
       require "cmp_nvim_lsp".setup {}
@@ -748,7 +748,7 @@ local plugins = {
           { name = "nvim_lua" },
           { name = "nvim_lsp_signature_help" },
           { name = "codeium" },
-          { name = "cmp_ai" },
+          -- { name = "cmp_ai" },
           { name = "nvim_lsp" },
           {
             name = "buffer",
