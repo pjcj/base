@@ -18,6 +18,8 @@ local plugins = {
   { "nvim-tree/nvim-web-devicons" },
   { "pjcj/neovim-colors-solarized-truecolor-only" },
 
+  { "nvim-lua/plenary.nvim" },
+
   {
     "SmiteshP/nvim-navic",
     dependencies = {
@@ -600,9 +602,12 @@ local plugins = {
       "hrsh7th/vim-vsnip",
       "hrsh7th/vim-vsnip-integ",
       "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
+      "petertriho/cmp-git",
+      -- "hrsh7th/cmp-path",
+      "FelipeLema/cmp-async-path",
       "hrsh7th/cmp-calc",
       "hrsh7th/cmp-emoji",
+      "chrisgrieser/cmp-nerdfont",
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "quangnguyen30192/cmp-nvim-tags",
       "andersevenrud/cmp-tmux",
@@ -610,6 +615,7 @@ local plugins = {
       "rafamadriz/friendly-snippets",
       "uga-rosa/cmp-dictionary",
       "hrsh7th/cmp-cmdline",
+      "tzachar/cmp-ai",
     },
     config = function()
       require "cmp_nvim_lsp".setup {}
@@ -742,6 +748,7 @@ local plugins = {
           { name = "nvim_lua" },
           { name = "nvim_lsp_signature_help" },
           { name = "codeium" },
+          { name = "cmp_ai" },
           { name = "nvim_lsp" },
           {
             name = "buffer",
@@ -756,6 +763,7 @@ local plugins = {
           },
           { name = "tags", max_item_count = 10 },
           { name = "path" },
+          { name = "git" },
           {
             name = "tmux",
             max_item_count = 10,
@@ -800,6 +808,39 @@ local plugins = {
           documentation = cmp.config.window.bordered(),
         },
       }
+
+      -- local cmp_ai = require('cmp_ai.config')
+
+      -- cmp_ai:setup{
+      --   max_lines = 1000,
+      --   provider = "OpenAI",
+      --   model = 'gpt-4',
+      --   notify = true,
+      --   notify_callback = function(msg)
+      --     vim.notify(msg)
+      --   end,
+      --   run_on_every_keystroke = true,
+      --   ignored_file_types = {
+      --     -- default is not to ignore
+      --     -- uncomment to ignore in lua:
+      --     -- lua = true
+      --   },
+      -- }
+
+      -- cmp_ai:setup({
+      --   max_lines = 1000,
+      --   provider = 'Bard',
+      --   notify = true,
+      --   notify_callback = function(msg)
+      --     vim.notify(msg)
+      --   end,
+      --   run_on_every_keystroke = true,
+      --   ignored_file_types = {
+      --     -- default is not to ignore
+      --     -- uncomment to ignore in lua:
+      --     -- lua = true
+      --   },
+      -- })
 
       require "cmp_dictionary".setup {
         dic = {
