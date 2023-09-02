@@ -1353,7 +1353,6 @@ local plugins = {
   --ERROR 6
   --- TODO - hmmm
 
-  { "elihunter173/dirbuf.nvim" },
   {
     "nvim-tree/nvim-tree.lua",
     dependencies = {
