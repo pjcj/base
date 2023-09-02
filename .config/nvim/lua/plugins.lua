@@ -1095,6 +1095,7 @@ local plugins = {
     config = function()
       require "urlview".setup {
         default_picker = "telescope",
+        default_action = "clipboard",
       }
     end,
   },
