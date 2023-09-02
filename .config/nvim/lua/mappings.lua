@@ -191,6 +191,7 @@ wk.register {
         h = { ":Lazy<cr>", "home" },
         s = { ":Lazy sync<cr>", "sync" },
       },
+      o = { "<cmd>Oil --float<cr>", "edit directory" },
       t = {
         name = "+translate",
         d = {

@@ -1153,6 +1153,13 @@ local plugins = {
   },
 
   {
+    "stevearc/oil.nvim",
+    opts = {},
+    -- Optional dependencies
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
+
+  {
     "simrat39/symbols-outline.nvim",
    dependencies = {
       "folke/which-key.nvim",
