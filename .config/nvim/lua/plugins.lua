@@ -1316,19 +1316,6 @@ require "lazy".setup(plugins, opts)
 require "lsp".setup_servers()
 
 
--- local packer = require "packer"
--- packer.init {
-  -- max_jobs = 15,
-  -- git = {
-    -- depth = 9999999,
-  -- },
-  -- log = { level = "debug" }, -- trace, debug, info, warn, error, fatal
-  -- profile = {
-    -- enable = false,
-    -- threshold = 1, -- integer in milliseconds
-  -- },
--- }
-
 -- packer.startup(function(use)
 --   use "mfussenegger/nvim-dap"
 --   -- use {
@@ -1348,15 +1335,3 @@ require "lsp".setup_servers()
 --   --     end
 --   --   end,
 --   -- }
---
---
---   -- use {
---   --   "Bekaboo/deadcolumn.nvim",
---   --   config = function()
---   --     require("deadcolumn").setup {
---   --       blending = { threshold = 0.5 },
---   --       warning = { alpha = 0.4 },
---   --     }
---   --   end,
---   -- }
--- end)
