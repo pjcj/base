@@ -593,6 +593,7 @@ local plugins = {
 
   {
     "hrsh7th/nvim-cmp",
+    commit = "6c84bc75c64f778e9f1dcb798ed41c7fcb93b639",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lua",
@@ -608,6 +609,7 @@ local plugins = {
       "onsails/lspkind-nvim",
       "rafamadriz/friendly-snippets",
       "uga-rosa/cmp-dictionary",
+      "hrsh7th/cmp-cmdline",
     },
     config = function()
       require "cmp_nvim_lsp".setup {}
@@ -642,7 +644,8 @@ local plugins = {
           Struct        = "פּ",
           Event         = "",
           Operator      = "",
-          TypeParameter = ""
+          TypeParameter = "",
+          Codeium       = "",
         }
       })
       -- stylua: ignore end
@@ -738,6 +741,7 @@ local plugins = {
         sources = {
           { name = "nvim_lua" },
           { name = "nvim_lsp_signature_help" },
+          { name = "codeium" },
           { name = "nvim_lsp" },
           {
             name = "buffer",
@@ -836,6 +840,30 @@ local plugins = {
       --   }),
       -- })
     end,
+  },
+
+  {
+    "jcdickinson/codeium.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "hrsh7th/nvim-cmp",
+    },
+    config = function()
+      require "codeium".setup{}
+    end
+  },
+
+  {
+    "jackMort/ChatGPT.nvim",
+    event = "VeryLazy",
+    config = function()
+      require "chatgpt".setup()
+    end,
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    }
   },
 
   {
