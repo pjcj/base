@@ -746,7 +746,7 @@ local plugins = {
         sources = {
           { name = "nvim_lua" },
           { name = "nvim_lsp_signature_help" },
-          { name = "codeium" },
+          os.getenv("OPENAI_API_KEY") and { name = "codeium" } or {},
           -- { name = "cmp_ai" },
           { name = "nvim_lsp" },
           {
