@@ -229,7 +229,7 @@ wk.register {
         },
       },
     },
-    ["."] = { function() tb.find_files { hidden = true } end, "find files" },
+    ["."] = { function() tb.git_files { hidden = true } end, "git files" },
     [","] = {
       name = "+language",
       g = {
@@ -283,6 +283,7 @@ wk.register {
       } end, "grep word" },
       h = { tb.help_tags, "help" },
       H = { tb.highlights, "highlight colours" },
+      i = { function() tb.find_files { hidden = true } end, "find files" },
       j = { tb.jumplist, "jump list" },
       l = { tb.current_buffer_fuzzy_find, "fuzzy find" },
       m = { tb.keymaps, "mappings" },
