@@ -681,10 +681,10 @@ else
     fi
 fi
 
-if which exa >&/dev/null; then
+if which eza >&/dev/null; then
     f() {
-        exa -lagH --colour-scale --git --time-style=long-iso --icons \
-            --colour=always "$@"
+        eza -lagH --colour-scale --git --time-style=long-iso --icons \
+            --colour=always --git-repos "$@"
     }
 fi
 
