@@ -234,9 +234,9 @@ zstyle ":completion:*" show-ambiguity true
 zstyle ":completion:*" ambiguous true
 zstyle ":completion:*" list-colors ""
 zstyle ":completion:*" use-perl true
-# _ and - are interchangeable
-# zstyle ":completion:*" matcher-list "m:{a-zA-Z-_}={A-Za-z_-}" \
-                                    # "r:|[._-]=* r:|=*" "l:|=* r:|=*"
+# add sort of fuzzy matching: case, and _ and - are interchangeable
+zstyle ":completion:*" matcher-list "m:{a-zA-Z-_}={A-Za-z_-}" \
+                                    "r:|[._-]=* r:|=*" "l:|=* r:|=*"
 
 zstyle ":completion:*:*:kill:*:processes" list-colors \
            "=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01"
