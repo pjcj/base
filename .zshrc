@@ -37,13 +37,14 @@ source "$ZINIT_HOME/zinit.zsh"
 
 zshrc_load_status "load plugins"
 
-zinit load 'zsh-users/zsh-autosuggestions'
 zinit load "zsh-users/zsh-completions"
-zinit load "zdharma/fast-syntax-highlighting"
 zinit load "Tarrasch/zsh-autoenv"
 zinit load "woefe/git-prompt.zsh"
 zinit load "woefe/vi-mode.zsh"
 zinit load "joshskidmore/zsh-fzf-history-search"
+zinit load "Aloxaf/fzf-tab"
+zinit load 'zsh-users/zsh-autosuggestions'
+zinit load "zdharma/fast-syntax-highlighting"
 
 zshrc_load_status "options"
 
@@ -314,6 +315,18 @@ zstyle ":completion:*:*:git:*" user-commands \
 _git-fpush() { __git_branch_names }
 zstyle ":completion:*:*:git:*" user-commands \
     fpush:"force push even when the remote forbids it"
+
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colours
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+# preview directory's content with exa when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+# switch group using `,` and `.`
+zstyle ':fzf-tab:*' switch-group ',' '.'
+disable-fzf-tab
 
 zshrc_load_status "ftp"
 autoload -U zfinit
@@ -931,6 +944,8 @@ bindkey '^B' fzf_git_branch_widget
 bindkey '^T' fzf_git_tag_widget
 
 bindkey '^R' fzf_history_search
+
+bindkey '^Y' toggle-fzf-tab
 
 zshrc_load_status "aws"
 
