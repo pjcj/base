@@ -169,7 +169,9 @@ local plugins = {
   { "folke/lsp-colors.nvim" },
   {
     "kosayoda/nvim-lightbulb",
-    requires = "antoinemadec/FixCursorHold.nvim",
+    dependencies = {
+      "antoinemadec/FixCursorHold.nvim",
+    },
     config = function()
       vim.cmd [[
         augroup lightbulb
