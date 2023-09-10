@@ -71,9 +71,11 @@ c.colors = {
 
 c.disable_default_key_bindings = true
 
-c.leader = { key = "q", mods = "CTRL", timeout_milliseconds = 2000 }
+c.leader = { key = "s", mods = "CTRL", timeout_milliseconds = 2000 }
 
 c.keys = {
+  { key = "s", mods = "LEADER|CTRL", action = wezterm.action.SendKey { key = "s", mods = "CTRL" } },
+
   { key = "+", mods = "CTRL", action = "IncreaseFontSize" },
   { key = "-", mods = "CTRL", action = "DecreaseFontSize" },
   { key = '*', mods = 'CTRL', action = act.ResetFontSize },
@@ -83,8 +85,8 @@ c.keys = {
   { key = "Tab", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(-1) },
   { key = "c", mods = "ALT", action = act.CopyTo "Clipboard" },
   { key = "v", mods = "ALT", action = act.PasteFrom "Clipboard" },
-  { key = "l", mods = "CTRL", action = act.ShowDebugOverlay },
-  { key = "R", mods = "SHIFT|CTRL", action = act.ReloadConfiguration },
+  { key = "l", mods = "LEADER", action = act.ShowDebugOverlay },
+  { key = "r", mods = "LEADER", action = act.ReloadConfiguration },
 
 
   -- { key = '0', mods = 'CTRL', action = act.ActivateTab(0) },
