@@ -85,8 +85,10 @@ c.keys = {
   { key = "Tab", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(-1) },
   { key = "c", mods = "ALT", action = act.CopyTo "Clipboard" },
   { key = "v", mods = "ALT", action = act.PasteFrom "Clipboard" },
-  { key = "l", mods = "LEADER", action = act.ShowDebugOverlay },
+  { key = "d", mods = "LEADER", action = act.ShowDebugOverlay },
   { key = "r", mods = "LEADER", action = act.ReloadConfiguration },
+  { key = 'l', mods = 'LEADER', action = act.ShowLauncher },
+  { key = 'p', mods = 'LEADER', action = act.ActivateCommandPalette },
 
 
   -- { key = '0', mods = 'CTRL', action = act.ActivateTab(0) },
