@@ -885,7 +885,8 @@ local plugins = {
   },
 
   {
-    "jcdickinson/codeium.nvim",
+    -- "jcdickinson/codeium.nvim",
+    "0xRichardH/codeium.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "hrsh7th/nvim-cmp",
