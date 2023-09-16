@@ -379,8 +379,13 @@ local plugins = {
         formatters_by_ft = {
           javascript = { { "prettierd", "prettier" } }, -- run first
           lua = { "stylua" },
+          markdown = { "markdownlint" },
           python = { "isort", "black" },
-          sh = { "shfmt", "shellcheck" }, -- run sequentially
+          sh = { "shellharden", "shellcheck", "shfmt" }, -- run sequentially
+          sql = { "sql_formatter" },
+          toml = { "taplo" },
+          terraform = { "terraform_fmt" },
+          yaml = { "yamlfix", "yamlfmt" },
           ["*"] = { "codespell" },
         },
       }
