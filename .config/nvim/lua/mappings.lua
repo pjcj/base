@@ -21,7 +21,7 @@ local gl = require "gitlab"
 local vtext_on = true
 local vtext_toggle = function()
   vtext_on = not vtext_on
-  vim.diagnostic.config({ virtual_text = vtext_on })
+  vim.diagnostic.config { virtual_text = vtext_on }
 end
 
 vim.cmd [[
@@ -102,7 +102,12 @@ wk.register {
   ["<C-F2>"] = { "<Plug>(ale_previous_wrap)", "previous diagnostic" },
   ["<C-F3>"] = { "<Plug>(ale_next_wrap)", "next diagnostic" },
   -- ["<F4>"] = { [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]], "jump to tag" },
-  ["<F4>"] = { function() tb.tags { default_text = vim.fn.expand("<cword>") } end, "cword tags" },
+  ["<F4>"] = {
+    function()
+      tb.tags { default_text = vim.fn.expand "<cword>" }
+    end,
+    "cword tags",
+  },
   ["<F6>"] = { ":cprevious<cr>", "quickfix next" },
   ["<S-F6>"] = { ":lprevious<cr>", "location next" },
   ["<F7>"] = { ":cnext<cr>", "quickfix previous" },
@@ -119,12 +124,21 @@ wk.register {
   ["ä"] = { "show cursor" },
   ["ö"] = { ":w<cr> | :wa<cr>", "write all" },
 
-  ["n"] = { [[<cmd>execute("normal! " . v:count1 . "n")<cr><cmd>lua require("hlslens").start()<cr>]], "next match" },
-  ["N"] = { [[<cmd>execute("normal! " . v:count1 . "N")<cr><cmd>lua require("hlslens").start()<cr>]], "previous match" },
+  ["n"] = {
+    [[<cmd>execute("normal! " . v:count1 . "n")<cr><cmd>lua require("hlslens").start()<cr>]],
+    "next match",
+  },
+  ["N"] = {
+    [[<cmd>execute("normal! " . v:count1 . "N")<cr><cmd>lua require("hlslens").start()<cr>]],
+    "previous match",
+  },
   ["*"] = { [[*<cmd>lua require("hlslens").start()<cr>]], "next word" },
   ["#"] = { [[#<cmd>lua require("hlslens").start()<cr>]], "previous word" },
   ["g*"] = { [[g*<cmd>lua require("hlslens").start()<cr>]], "next word part" },
-  ["g#"] = { [[g#<cmd>lua require("hlslens").start()<cr>]], "previous word part" },
+  ["g#"] = {
+    [[g#<cmd>lua require("hlslens").start()<cr>]],
+    "previous word part",
+  },
 
   g = {
     name = "+goto",
@@ -136,7 +150,12 @@ wk.register {
       name = "+lsp",
       a = { lb.code_action, "action" },
       D = { lb.type_definition, "type definition" },
-      f = { function() require "conform".format({ async = true, lsp_fallback = true }) end, "format" },
+      f = {
+        function()
+          require("conform").format { async = true, lsp_fallback = true }
+        end,
+        "format",
+      },
       F = { ":ALEFix<cr>", "ALE fix" },
       i = { lb.incoming_calls, "incoming calls" },
       K = { lb.hover, "hover" },
@@ -154,7 +173,12 @@ wk.register {
       w = {
         name = "+workspace",
         a = { lb.add_workspace_folder, "add" },
-        l = { function() print(vim.inspect(lb.list_workspace_folders())) end, "list" },
+        l = {
+          function()
+            print(vim.inspect(lb.list_workspace_folders()))
+          end,
+          "list",
+        },
         r = { lb.remove_workspace_folder, "remove" },
       },
       y = {
@@ -174,7 +198,12 @@ wk.register {
     ["<F9>"] = { "r~", "~" },
     ["<F10>"] = { "r|", "|" },
     ["<F11>"] = { "r`", "`" },
-    ["<C-k><C-k>"] = { function() bd.digraphs("normal") end, "digraph" },
+    ["<C-k><C-k>"] = {
+      function()
+        bd.digraphs "normal"
+      end,
+      "digraph",
+    },
   },
   ["<leader>"] = {
     [" "] = {
@@ -182,18 +211,58 @@ wk.register {
       c = {
         name = "ChatGPT",
         c = { "<cmd>ChatGPT<cr>", "ChatGPT" },
-        e = { "<cmd>ChatGPTEditWithInstruction<cr>", "Edit with instruction", mode = { "n", "v" } },
-        g = { "<cmd>ChatGPTRun grammar_correction<cr>", "Grammar Correction", mode = { "n", "v" } },
-        t = { "<cmd>ChatGPTRun translate<cr>", "Translate", mode = { "n", "v" } },
+        e = {
+          "<cmd>ChatGPTEditWithInstruction<cr>",
+          "Edit with instruction",
+          mode = { "n", "v" },
+        },
+        g = {
+          "<cmd>ChatGPTRun grammar_correction<cr>",
+          "Grammar Correction",
+          mode = { "n", "v" },
+        },
+        t = {
+          "<cmd>ChatGPTRun translate<cr>",
+          "Translate",
+          mode = { "n", "v" },
+        },
         k = { "<cmd>ChatGPTRun keywords<cr>", "Keywords", mode = { "n", "v" } },
-        d = { "<cmd>ChatGPTRun docstring<cr>", "Docstring", mode = { "n", "v" } },
-        a = { "<cmd>ChatGPTRun add_tests<cr>", "Add Tests", mode = { "n", "v" } },
-        o = { "<cmd>ChatGPTRun optimize_code<cr>", "Optimise Code", mode = { "n", "v" } },
-        s = { "<cmd>ChatGPTRun summarize<cr>", "Summarize", mode = { "n", "v" } },
+        d = {
+          "<cmd>ChatGPTRun docstring<cr>",
+          "Docstring",
+          mode = { "n", "v" },
+        },
+        a = {
+          "<cmd>ChatGPTRun add_tests<cr>",
+          "Add Tests",
+          mode = { "n", "v" },
+        },
+        o = {
+          "<cmd>ChatGPTRun optimize_code<cr>",
+          "Optimise Code",
+          mode = { "n", "v" },
+        },
+        s = {
+          "<cmd>ChatGPTRun summarize<cr>",
+          "Summarize",
+          mode = { "n", "v" },
+        },
         f = { "<cmd>ChatGPTRun fix_bugs<cr>", "Fix Bugs", mode = { "n", "v" } },
-        x = { "<cmd>ChatGPTRun explain_code<cr>", "Explain Code", mode = { "n", "v" } },
-        r = { "<cmd>ChatGPTRun roxygen_edit<cr>", "Roxygen Edit", mode = { "n", "v" } },
-        l = { "<cmd>ChatGPTRun code_readability_analysis<cr>", "Code Readability Analysis", mode = { "n", "v" } },
+        x = {
+          "<cmd>ChatGPTRun explain_code<cr>",
+          "Explain Code",
+          mode = { "n", "v" },
+        },
+        r = {
+          "<cmd>ChatGPTRun roxygen_edit<cr>",
+          "Roxygen Edit",
+          mode = { "n", "v" },
+        },
+        l = {
+          "<cmd>ChatGPTRun code_readability_analysis<cr>",
+          "Code Readability Analysis",
+          mode = { "n", "v" },
+        },
       },
       d = {
         name = "+diffview",
@@ -229,7 +298,12 @@ wk.register {
         },
       },
     },
-    ["."] = { function() tb.git_files { hidden = true } end, "git files" },
+    ["."] = {
+      function()
+        tb.git_files { hidden = true }
+      end,
+      "git files",
+    },
     [","] = {
       name = "+language",
       g = {
@@ -241,53 +315,90 @@ wk.register {
           s = { ":GoDebug<cr>", "start" },
           t = { ":GoDbgStop<cr>", "stop" },
         },
-        i = { function()
-          local i = os.getenv("VIM_GO_IMPORT_LOCAL") or "xxxxxx"
-          require "go.format".goimport("-local", i)
-          require "go.format".gofmt()
-        end, "imports" },
+        i = {
+          function()
+            local i = os.getenv "VIM_GO_IMPORT_LOCAL" or "xxxxxx"
+            require("go.format").goimport("-local", i)
+            require("go.format").gofmt()
+          end,
+          "imports",
+        },
         n = { ":lua require('dap-go').debug_test()<cr>", "run nearest test" },
         t = {
           name = "+test",
-          a = { function()
-            local file = "."
-            print(file)
-            require "neotest".run.run(file)
-          end, "all" },
-          f = { function()
-            local file = vim.fn.expand("%")
-            print(file)
-            require "neotest".run.run(file)
-          end, "file" },
-          o = { function()
-            require "neotest".output.open({ enter = true })
-          end, "open results" },
-          s = { function()
-            require "neotest".summary.toggle()
-          end, "toggle summary" },
+          a = {
+            function()
+              local file = "."
+              print(file)
+              require("neotest").run.run(file)
+            end,
+            "all",
+          },
+          f = {
+            function()
+              local file = vim.fn.expand "%"
+              print(file)
+              require("neotest").run.run(file)
+            end,
+            "file",
+          },
+          o = {
+            function()
+              require("neotest").output.open { enter = true }
+            end,
+            "open results",
+          },
+          s = {
+            function()
+              require("neotest").summary.toggle()
+            end,
+            "toggle summary",
+          },
         },
       },
     },
     f = {
       name = "+telescope",
       a = { vim.lsp.buf.code_action, "lsp code actions" },
-      A = { function() tb.find_files { hidden = true, no_ignore = true } end, "find all files" },
+      A = {
+        function()
+          tb.find_files { hidden = true, no_ignore = true }
+        end,
+        "find all files",
+      },
       b = { tb.buffers, "buffers" },
       c = { tb.commands, "commands" },
       d = { tb.lsp_definitions, "lsp definitions" },
       e = { tb.resume, "resume" },
       f = { tb.builtin, "builtin" },
       g = { tb.live_grep, "grep" },
-      G = { function() tb.live_grep {
-        additional_args = function() return { "-w" } end
-      } end, "grep word" },
+      G = {
+        function()
+          tb.live_grep {
+            additional_args = function()
+              return { "-w" }
+            end,
+          }
+        end,
+        "grep word",
+      },
       h = { tb.help_tags, "help" },
       H = { tb.highlights, "highlight colours" },
-      i = { function() tb.find_files { hidden = true } end, "find files" },
+      i = {
+        function()
+          tb.find_files { hidden = true }
+        end,
+        "find files",
+      },
       j = { tb.jumplist, "jump list" },
       l = { tb.current_buffer_fuzzy_find, "fuzzy find" },
       m = { tb.keymaps, "mappings" },
-      n = { function() require "telescope".extensions.notify.notify() end, "show notifications" },
+      n = {
+        function()
+          require("telescope").extensions.notify.notify()
+        end,
+        "show notifications",
+      },
       o = { tb.vim_options, "vim options" },
       O = { tb.oldfiles, "old files" },
       p = { t.extensions.neoclip.default, "paste" },
@@ -297,45 +408,112 @@ wk.register {
       r = { tb.lsp_references, "lsp references" },
       R = { t.extensions.refactoring.refactors, "refactor" },
       s = { tb.grep_string, "grep string" },
-      S = { function() tb.grep_string { word_match = "-w" } end, "grep string word" },
+      S = {
+        function()
+          tb.grep_string { word_match = "-w" }
+        end,
+        "grep string word",
+      },
       t = { tb.tags, "tags" },
-      T = { function() tb.tags { only_current_buffer = true } end, "local tags" },
+      T = {
+        function()
+          tb.tags { only_current_buffer = true }
+        end,
+        "local tags",
+      },
       u = { t.extensions.undo.undo, "undo" },
       U = { ":UrlView buffer<cr>", "urls" },
-      v = { function() tb.tags { default_text = vim.fn.expand("<cword>") } end, "cword tags" },
+      v = {
+        function()
+          tb.tags { default_text = vim.fn.expand "<cword>" }
+        end,
+        "cword tags",
+      },
       x = { ":TodoTelescope<cr>", "todos" },
       Y = { ":Telescope symbols<cr>", "symbols" },
       y = {
         name = "+grep type",
         g = {
           name = "go",
-          g = { function() tb.live_grep { type_filter = "go" } end, "grep" },
-          G = { function() tb.live_grep {
-            type_filter = "go",
-            additional_args = function() return { "-w" } end,
-          } end, "grep word" },
-          s = { function() tb.grep_string {
-            additional_args = function() return { "--type=go" } end,
-          } end, "grep string" },
-          S = { function() tb.grep_string {
-            additional_args = function() return { "--type=go" } end,
-            word_match = "-w",
-          } end, "grep string word" },
+          g = {
+            function()
+              tb.live_grep { type_filter = "go" }
+            end,
+            "grep",
+          },
+          G = {
+            function()
+              tb.live_grep {
+                type_filter = "go",
+                additional_args = function()
+                  return { "-w" }
+                end,
+              }
+            end,
+            "grep word",
+          },
+          s = {
+            function()
+              tb.grep_string {
+                additional_args = function()
+                  return { "--type=go" }
+                end,
+              }
+            end,
+            "grep string",
+          },
+          S = {
+            function()
+              tb.grep_string {
+                additional_args = function()
+                  return { "--type=go" }
+                end,
+                word_match = "-w",
+              }
+            end,
+            "grep string word",
+          },
         },
         p = {
           name = "perl",
-          g = { function() tb.live_grep { type_filter = "perl" } end, "grep" },
-          G = { function() tb.live_grep {
-            type_filter = "perl",
-            additional_args = function() return { "-w" } end,
-          } end, "grep word" },
-          s = { function() tb.grep_string {
-            additional_args = function() return { "--type=perl" } end,
-          } end, "grep string" },
-          S = { function() tb.grep_string {
-            additional_args = function() return { "--type=perl" } end,
-            word_match = "-w",
-          } end, "grep string word" },
+          g = {
+            function()
+              tb.live_grep { type_filter = "perl" }
+            end,
+            "grep",
+          },
+          G = {
+            function()
+              tb.live_grep {
+                type_filter = "perl",
+                additional_args = function()
+                  return { "-w" }
+                end,
+              }
+            end,
+            "grep word",
+          },
+          s = {
+            function()
+              tb.grep_string {
+                additional_args = function()
+                  return { "--type=perl" }
+                end,
+              }
+            end,
+            "grep string",
+          },
+          S = {
+            function()
+              tb.grep_string {
+                additional_args = function()
+                  return { "--type=perl" }
+                end,
+                word_match = "-w",
+              }
+            end,
+            "grep string word",
+          },
         },
       },
     },
@@ -366,9 +544,19 @@ wk.register {
     },
     h = {
       name = "+hunk",
-      b = { function() require "gitsigns".blame_line { full = true } end, "blame" },
+      b = {
+        function()
+          require("gitsigns").blame_line { full = true }
+        end,
+        "blame",
+      },
       d = { ":Gitsigns diffthis<cr>", "diff hunk" },
-      D = { function() require "gitsigns".diffthis("~") end, "diff" },
+      D = {
+        function()
+          require("gitsigns").diffthis "~"
+        end,
+        "diff",
+      },
       i = { ":Gitsigns show<cr>", "show index" },
       p = { ":Gitsigns preview_hunk<cr>", "preview hunk" },
       r = { ":Gitsigns reset_hunk<cr>", "reset hunk" },
@@ -405,15 +593,35 @@ wk.register {
     t = {
       name = "+toggle",
       b = { ":Gitsigns toggle_current_line_blame<CR>", "blame" },
-      c = { function() require "null-ls".toggle("codespell") end, "codespell" },
+      c = {
+        function()
+          require("null-ls").toggle "codespell"
+        end,
+        "codespell",
+      },
       d = { ":Gitsigns toggle_deleted<CR>", "deleted" },
       h = { ":TSBufToggle highlight<cr>", "treesitter highlight" },
       o = { ":SymbolsOutline<cr>", "symbols" },
-      s = { function() require "sidebar-nvim".toggle() end, "sidebar" },
-      t = { function() require "nvim-tree".toggle() end, "tree" },
+      s = {
+        function()
+          require("sidebar-nvim").toggle()
+        end,
+        "sidebar",
+      },
+      t = {
+        function()
+          require("nvim-tree").toggle()
+        end,
+        "tree",
+      },
       v = { vtext_toggle, "virtual text" },
       w = { ":ToggleWhitespace<cr>", "whitespace" },
-      x = { function() require "hex".toggle() end, "hex" },
+      x = {
+        function()
+          require("hex").toggle()
+        end,
+        "hex",
+      },
     },
     W = { [[:%s/\s\+$//<cr>:let @/ = ""<cr>]], "remove trailing ws" },
   },
@@ -459,15 +667,29 @@ wk.register({
         name = "+grep type",
         g = {
           name = "go",
-          s = { function() tb.grep_string {
-            additional_args = function() return { "--type=go" } end,
-          } end, "grep string" },
+          s = {
+            function()
+              tb.grep_string {
+                additional_args = function()
+                  return { "--type=go" }
+                end,
+              }
+            end,
+            "grep string",
+          },
         },
         p = {
           name = "perl",
-          s = { function() tb.grep_string {
-            additional_args = function() return { "--type=perl" } end,
-          } end, "grep string" },
+          s = {
+            function()
+              tb.grep_string {
+                additional_args = function()
+                  return { "--type=perl" }
+                end,
+              }
+            end,
+            "grep string",
+          },
         },
       },
     },
@@ -483,7 +705,12 @@ wk.register({
   ["<F10>"] = { "|", "|" },
   ["<F11>"] = { "`", "`" },
   ["jk"] = { "<esc>", "escape" },
-  ["<C-k><C-k>"] = { function() bd.digraphs("insert") end, "digraph" },
+  ["<C-k><C-k>"] = {
+    function()
+      bd.digraphs "insert"
+    end,
+    "digraph",
+  },
 }, { mode = "i" })
 
 local vmap = vim.api.nvim_set_keymap -- global mappings
