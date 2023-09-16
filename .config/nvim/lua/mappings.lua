@@ -716,7 +716,9 @@ wk.register({
 }, { mode = "i" })
 
 vim.keymap.set("", "glf", function()
+  require "notify" "formatting"
   require("conform").format { async = true, lsp_fallback = true }
+  require "notify" "formatted"
 end)
 
 local vmap = vim.api.nvim_set_keymap -- global mappings
