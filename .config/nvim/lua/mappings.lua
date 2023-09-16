@@ -150,12 +150,7 @@ wk.register {
       name = "+lsp",
       a = { lb.code_action, "action" },
       D = { lb.type_definition, "type definition" },
-      f = {
-        function()
-          require("conform").format { async = true, lsp_fallback = true }
-        end,
-        "format",
-      },
+      f = { "format" },
       F = { ":ALEFix<cr>", "ALE fix" },
       i = { lb.incoming_calls, "incoming calls" },
       K = { lb.hover, "hover" },
@@ -693,6 +688,13 @@ wk.register({
         },
       },
     },
+    g = {
+      name = "+goto",
+      l = {
+        name = "+lsp",
+        f = { "format" },
+      },
+    },
   },
 }, { mode = "v" })
 
@@ -712,6 +714,10 @@ wk.register({
     "digraph",
   },
 }, { mode = "i" })
+
+vim.keymap.set("", "glf", function()
+  require("conform").format { async = true, lsp_fallback = true }
+end)
 
 local vmap = vim.api.nvim_set_keymap -- global mappings
 
