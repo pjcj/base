@@ -1,16 +1,16 @@
 vim.g.mapleader = ","
 vim.opt.termguicolors = true
 
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
+  vim.fn.system {
     "git",
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
     "--branch=stable", -- latest stable release
     lazypath,
-  })
+  }
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -26,12 +26,12 @@ local plugins = {
       "neovim/nvim-lspconfig",
     },
     config = function()
-      require "nvim-navic".setup {
+      require("nvim-navic").setup {
         separator = " >",
         depth_limit = 0,
         depth_limit_indicator = "..",
         safe_output = true,
-        click = true
+        click = true,
       }
     end,
   },
@@ -53,14 +53,14 @@ local plugins = {
     event = { "VimEnter" },
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
-      require "lsp-progress".setup {}
-    end
+      require("lsp-progress").setup {}
+    end,
   },
 
   {
     "folke/which-key.nvim",
     config = function()
-      require "which-key".setup {
+      require("which-key").setup {
         window = {
           border = "single",
         },
@@ -91,7 +91,7 @@ local plugins = {
     },
     build = ":TSUpdate",
     config = function()
-      require "nvim-treesitter.configs".setup {
+      require("nvim-treesitter.configs").setup {
         -- ensure_installed = "all",
         ignore_install = {
           "swift", -- requires glibc 2.28
@@ -136,11 +136,11 @@ local plugins = {
       "JoosepAlviste/nvim-ts-context-commentstring",
     },
     config = function()
-      require "nvim_comment".setup {
+      require("nvim_comment").setup {
         line_mapping = "-",
         comment_empty = false,
         hook = function()
-          require "ts_context_commentstring.internal".update_commentstring()
+          require("ts_context_commentstring.internal").update_commentstring()
         end,
       }
       local l = require "local_defs"
@@ -158,7 +158,7 @@ local plugins = {
     config = function()
       local notify = require "notify"
       vim.notify = notify
-      notify.setup{ background_colour = require "local_defs".colour.base03 }
+      notify.setup { background_colour = require("local_defs").colour.base03 }
     end,
   },
 
@@ -179,7 +179,7 @@ local plugins = {
           autocmd CursorHold,CursorHoldI * lua require "nvim-lightbulb".update_lightbulb()
         augroup end
       ]]
-      require "nvim-lightbulb".setup {
+      require("nvim-lightbulb").setup {
         sign = {
           enabled = false,
           priority = 1,
@@ -240,7 +240,6 @@ local plugins = {
   --     local d = b.diagnostics
   --     local f = b.formatting
   --     local h = b.hover
-
 
   --     local codespell = { "--builtin", "clear,rare,informal,usage,names" }
   --     if vim.fn.filereadable(".codespell") == 1 then
@@ -328,7 +327,7 @@ local plugins = {
       }
 
       local codespell_args = { "--builtin", "clear,rare,informal,usage,names" }
-      if vim.fn.filereadable(".codespell") == 1 then
+      if vim.fn.filereadable ".codespell" == 1 then
         table.insert(codespell_args, "-I")
         table.insert(codespell_args, vim.fn.getcwd() .. "/.codespell")
       end
@@ -336,7 +335,10 @@ local plugins = {
 
       local last_lint_time = 0
       vim.api.nvim_create_autocmd({
-        "BufEnter", "BufReadPost", "BufWritePost", "TextChanged",
+        "BufEnter",
+        "BufReadPost",
+        "BufWritePost",
+        "TextChanged",
       }, {
         callback = function(ev)
           local current_time = os.time()
@@ -373,17 +375,21 @@ local plugins = {
     "stevearc/conform.nvim",
     opts = {},
     config = function()
-      require "conform".setup {
+      require("conform").setup {
         formatters_by_ft = {
-          javascript = { { "prettierd", "prettier" } },  -- run first
+          javascript = { { "prettierd", "prettier" } }, -- run first
           lua = { "stylua" },
           python = { "isort", "black" },
-          sh = { "shfmt", "shellcheck" },  -- run sequentially
+          sh = { "shfmt", "shellcheck" }, -- run sequentially
           ["*"] = { "codespell" },
         },
       }
-      require "conform.formatters.shfmt".args = {
-        "-i", "2", "-s", "-filename", "$FILENAME"
+      require("conform.formatters.shfmt").args = {
+        "-i",
+        "2",
+        "-s",
+        "-filename",
+        "$FILENAME",
       }
     end,
   },
@@ -430,7 +436,7 @@ local plugins = {
       "leoluz/nvim-dap-go",
     },
     config = function()
-      require "go".setup {
+      require("go").setup {
         goimport = "goimports",
         gofmt_args = {
           "--max-len=80",
@@ -500,23 +506,23 @@ local plugins = {
       "nvim-neotest/neotest-go",
     },
     config = function()
-      require "neotest".setup {
+      require("neotest").setup {
         adapters = {
           require "neotest-go" {
             -- experimental = {
             --   test_table = true,
             -- },
-            args = { "-count=1", "-timeout=60s" }
-          }
-        }
+            args = { "-count=1", "-timeout=60s" },
+          },
+        },
       }
-    end
+    end,
   },
 
   {
     "vim-perl/vim-perl",
     build = "make clean carp dancer heredoc-sql highlight-all-pragmas "
-        .. "js-css-in-mason method-signatures moose test-more try-tiny",
+      .. "js-css-in-mason method-signatures moose test-more try-tiny",
     config = function()
       vim.g.perl_highlight_data = 1
     end,
@@ -639,7 +645,7 @@ local plugins = {
       -- "tzachar/cmp-ai",
     },
     config = function()
-      require "cmp_nvim_lsp".setup {}
+      require("cmp_nvim_lsp").setup {}
       local cmp = require "cmp"
       local lspkind = require "lspkind"
       local compare = cmp.config.compare
@@ -680,9 +686,10 @@ local plugins = {
       local has_words_before = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0
-            and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
-            :sub(col, col)
-            :match "%s"
+          and vim.api
+              .nvim_buf_get_lines(0, line - 1, line, true)[1]
+              :sub(col, col)
+              :match "%s"
             == nil
       end
 
@@ -768,7 +775,7 @@ local plugins = {
         sources = {
           { name = "nvim_lua" },
           { name = "nvim_lsp_signature_help" },
-          os.getenv("OPENAI_API_KEY") and { name = "codeium" } or {},
+          os.getenv "OPENAI_API_KEY" and { name = "codeium" } or {},
           -- { name = "cmp_ai" },
           { name = "nvim_lsp" },
           {
@@ -863,7 +870,7 @@ local plugins = {
       --   },
       -- })
 
-      require "cmp_dictionary".setup {
+      require("cmp_dictionary").setup {
         dic = {
           ["*"] = { "/usr/share/dict/words" },
           -- ["lua"] = "path/to/lua.dic",
@@ -912,73 +919,73 @@ local plugins = {
       "hrsh7th/nvim-cmp",
     },
     config = function()
-      require "codeium".setup{}
-    end
-},
+      require("codeium").setup {}
+    end,
+  },
 
-{
-  "jackMort/ChatGPT.nvim",
-  event = "VeryLazy",
-  config = function()
-    require "chatgpt".setup {
-      edit_with_instructions = {
-        diff = false,
-        keymaps = {
-          close = "<C-c>",
-          accept = "<C-y>",
-          toggle_diff = "<C-d>",
-          toggle_settings = "<C-o>",
-          cycle_windows = "<Tab>",
-          use_output_as_input = "<C-u>",
+  {
+    "jackMort/ChatGPT.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("chatgpt").setup {
+        edit_with_instructions = {
+          diff = false,
+          keymaps = {
+            close = "<C-c>",
+            accept = "<C-y>",
+            toggle_diff = "<C-d>",
+            toggle_settings = "<C-o>",
+            cycle_windows = "<Tab>",
+            use_output_as_input = "<C-u>",
+          },
         },
-      },
-      chat = {
-        keymaps = {
-          close = { "<C-c>" },
-          yank_last = "<C-y>",
-          yank_last_code = "<C-k>",
-          scroll_up = "<C-u>",
-          scroll_down = "<C-d>",
-          new_session = "<C-n>",
-          cycle_windows = "<Tab>",
-          cycle_modes = "<C-f>",
-          select_session = "<Space>",
-          rename_session = "r",
-          delete_session = "d",
-          draft_message = "<C-d>",
-          toggle_settings = "<C-o>",
-          toggle_message_role = "<C-r>",
-          toggle_system_role_open = "<C-s>",
-          stop_generating = "<C-x>",
+        chat = {
+          keymaps = {
+            close = { "<C-c>" },
+            yank_last = "<C-y>",
+            yank_last_code = "<C-k>",
+            scroll_up = "<C-u>",
+            scroll_down = "<C-d>",
+            new_session = "<C-n>",
+            cycle_windows = "<Tab>",
+            cycle_modes = "<C-f>",
+            select_session = "<Space>",
+            rename_session = "r",
+            delete_session = "d",
+            draft_message = "<C-d>",
+            toggle_settings = "<C-o>",
+            toggle_message_role = "<C-r>",
+            toggle_system_role_open = "<C-s>",
+            stop_generating = "<C-x>",
+          },
         },
-      },
-      popup_input = {
-        submit = "<C-y>",
-        submit_n = "<Enter>",
-      },
-      openai_params = {
-        model = "gpt-4",
-        frequency_penalty = 0,
-        presence_penalty = 0,
-        max_tokens = 3000,
-        temperature = 0,
-        top_p = 1,
-        n = 1,
-      },
-    }
-  end,
-  dependencies = {
-    "MunifTanjim/nui.nvim",
-    "nvim-lua/plenary.nvim",
-    "nvim-telescope/telescope.nvim",
-  }
-},
+        popup_input = {
+          submit = "<C-y>",
+          submit_n = "<Enter>",
+        },
+        openai_params = {
+          model = "gpt-4",
+          frequency_penalty = 0,
+          presence_penalty = 0,
+          max_tokens = 3000,
+          temperature = 0,
+          top_p = 1,
+          n = 1,
+        },
+      }
+    end,
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+  },
 
   {
     "lewis6991/gitsigns.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
-      require "gitsigns".setup {
+      require("gitsigns").setup {
         signs = {
           add = { show_count = true, text = "+" },
           change = { show_count = true, text = "~" },
@@ -1062,9 +1069,11 @@ local plugins = {
       "stevearc/dressing.nvim", -- Recommended but not required. Better UI for pickers.
       enabled = true,
     },
-    build = function () require "gitlab.server".build(true) end, -- Builds the Go binary
+    build = function()
+      require("gitlab.server").build(true)
+    end, -- Builds the Go binary
     config = function()
-      require("gitlab").setup{} -- Uses delta reviewer by default
+      require("gitlab").setup {} -- Uses delta reviewer by default
     end,
   },
 
@@ -1072,7 +1081,7 @@ local plugins = {
     "norcalli/nvim-colorizer.lua",
     config = function()
       vim.opt.termguicolors = true
-      require "colorizer".setup()
+      require("colorizer").setup()
     end,
   },
 
@@ -1080,7 +1089,7 @@ local plugins = {
     "AckslD/nvim-neoclip.lua",
     dependencies = { "tami5/sqlite.lua", module = "sqlite" },
     config = function()
-      require "neoclip".setup {
+      require("neoclip").setup {
         enable_persistent_history = true,
         db_path = vim.fn.stdpath "data" .. "/databases/neoclip.sqlite3",
         default_register = '"',
@@ -1179,7 +1188,7 @@ local plugins = {
   {
     "rareitems/hl_match_area.nvim",
     config = function()
-      require "hl_match_area".setup {
+      require("hl_match_area").setup {
         n_lines_to_search = 500,
         highlight_in_insert_mode = true,
         delay = 500,
@@ -1205,9 +1214,8 @@ local plugins = {
     "kylechui/nvim-surround",
     -- tag = "*",
     config = function()
-      require "nvim-surround".setup {
-      }
-    end
+      require("nvim-surround").setup {}
+    end,
   },
 
   { "junegunn/vim-easy-align" }, -- ctrl-x for regexp
@@ -1231,7 +1239,7 @@ local plugins = {
   {
     "axieax/urlview.nvim", -- ,fu ,fU
     config = function()
-      require "urlview".setup {
+      require("urlview").setup {
         default_picker = "telescope",
         default_action = "clipboard",
       }
@@ -1241,15 +1249,15 @@ local plugins = {
   {
     "kevinhwang91/nvim-hlslens",
     config = function()
-      require "hlslens".setup {}
+      require("hlslens").setup {}
     end,
   },
 
   {
     "stevearc/overseer.nvim",
     config = function()
-      require "overseer".setup {}
-    end
+      require("overseer").setup {}
+    end,
   },
 
   {
@@ -1257,7 +1265,7 @@ local plugins = {
     config = function()
       local l = require "local_defs"
       local c = l.colour
-      require "scrollbar".setup {
+      require("scrollbar").setup {
         marks = {
           Search = { text = { "─", "═" }, color = c.rgreen },
           Error = { text = { "─", "═" }, color = c.orange },
@@ -1267,7 +1275,7 @@ local plugins = {
           Misc = { text = { "─", "═" }, color = c.violet },
         },
       }
-      require "scrollbar.handlers.search".setup {}
+      require("scrollbar.handlers.search").setup {}
 
       vim.cmd [[
         hi default link HlSearchNear SpellCap
@@ -1300,7 +1308,7 @@ local plugins = {
 
   {
     "simrat39/symbols-outline.nvim",
-   dependencies = {
+    dependencies = {
       "folke/which-key.nvim",
     },
     config = function()
@@ -1337,7 +1345,7 @@ local plugins = {
       "nvim-lua/plenary.nvim",
     },
     config = function()
-      require "todo-comments".setup {
+      require("todo-comments").setup {
         highlight = {
           before = "", -- "fg" or "bg" or empty
           keyword = "fg", -- "fg", "bg", "wide" or empty
@@ -1383,7 +1391,7 @@ local plugins = {
       "nvim-tree/nvim-web-devicons", -- optional, for file icon
     },
     config = function()
-      require "nvim-tree".setup {
+      require("nvim-tree").setup {
         hijack_directories = { enable = false },
       }
     end,
@@ -1421,20 +1429,20 @@ local plugins = {
   {
     "tzachar/highlight-undo.nvim",
     config = function()
-      require "highlight-undo".setup {
+      require("highlight-undo").setup {
         hlgroup = "Cursor",
         duration = 1500,
       }
-    end
+    end,
   },
 
   {
     "gen740/SmoothCursor.nvim",
     config = function()
-      require "smoothcursor".setup {
+      require("smoothcursor").setup {
         priority = 1,
       }
-    end
+    end,
   },
 
   {
@@ -1446,20 +1454,20 @@ local plugins = {
   {
     "RaafatTurki/hex.nvim",
     config = function()
-      require "hex".setup {}
-    end
+      require("hex").setup {}
+    end,
   },
 }
 
 local opts = {
   defaults = {
     lazy = false,
-  }
+    -- version = "*",
+  },
 }
 
-require "lazy".setup(plugins, opts)
-require "lsp".setup_servers()
-
+require("lazy").setup(plugins, opts)
+require("lsp").setup_servers()
 
 -- packer.startup(function(use)
 --   use "mfussenegger/nvim-dap"
