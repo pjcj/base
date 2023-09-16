@@ -561,6 +561,8 @@ local plugins = {
               case_mode = "smart_case", -- or "ignore_case" or "respect_case"
             },
           },
+          -- telescope prefers rg
+          find_command = { "fd", "--type", "f", "--color", "never" },
           vimgrep_arguments = {
             "rg",
             "--color=never",
