@@ -369,6 +369,24 @@ local plugins = {
       -- }
     end,
   },
+  {
+    "stevearc/conform.nvim",
+    opts = {},
+    config = function()
+      require "conform".setup {
+        formatters_by_ft = {
+          javascript = { { "prettierd", "prettier" } },  -- run first
+          lua = { "stylua" },
+          python = { "isort", "black" },
+          sh = { "shfmt", "shellcheck" },  -- run sequentially
+          ["*"] = { "codespell" },
+        },
+      }
+      require "conform.formatters.shfmt".args = {
+        "-i", "2", "-s", "-filename", "$FILENAME"
+      }
+    end,
+  },
 
   {
     "ludovicchabant/vim-gutentags",

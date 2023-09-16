@@ -136,7 +136,7 @@ wk.register {
       name = "+lsp",
       a = { lb.code_action, "action" },
       D = { lb.type_definition, "type definition" },
-      f = { lb.formatting, "format" },
+      f = { function() require "conform".format({ async = true, lsp_fallback = true }) end, "format" },
       F = { ":ALEFix<cr>", "ALE fix" },
       i = { lb.incoming_calls, "incoming calls" },
       K = { lb.hover, "hover" },
