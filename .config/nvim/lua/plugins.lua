@@ -314,16 +314,16 @@ local plugins = {
     config = function()
       local lint = require "lint"
       lint.linters_by_ft = {
-        docker = { "codespell", "hadolint" },
-        html = { "codespell", "tidy" },
-        javascript = { "codespell", "eslint" },
-        json = { "codespell", "jsonlint" },
-        lua = { "codespell", "selene" },
-        markdown = { "codespell", "proselint", "markdownlint" },
-        perl = { "codespell" },
-        rst = { "codespell", "rstlint" },
-        sh = { "codespell" },
-        yaml = { "codespell", "yamllint" },
+        docker = { "codespell", "typos", "hadolint" },
+        html = { "codespell", "typos", "tidy" },
+        javascript = { "codespell", "typos", "eslint" },
+        json = { "codespell", "typos", "jsonlint" },
+        lua = { "codespell", "typos", "selene" },
+        markdown = { "codespell", "typos", "proselint", "markdownlint" },
+        perl = { "codespell", "typos" },
+        rst = { "codespell", "typos", "rstlint" },
+        sh = { "codespell", "typos" },
+        yaml = { "codespell", "typos", "yamllint" },
       }
 
       local codespell_args = { "--builtin", "clear,rare,informal,usage,names" }
