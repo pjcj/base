@@ -386,7 +386,7 @@ local plugins = {
           sql = { "sql_formatter" },
           toml = { "taplo" },
           terraform = { "terraform_fmt" },
-          yaml = { "yamlfix", "yamlfmt" },
+          yaml = { "yamlfmt" },  -- yamlfix is too buggy
           ["*"] = { "codespell" },
         },
       }
