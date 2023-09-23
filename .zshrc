@@ -746,6 +746,8 @@ elif command -v gdircolors >/dev/null; then
 else
     echo "Cannot find dircolors"
 fi
+export EXA_COLORS="xx=00;38;5;244"
+export EXA_ICON_SPACING=2
 
 zshrc_load_status "external files"
 
