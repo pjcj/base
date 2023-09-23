@@ -327,9 +327,10 @@ local plugins = {
       }
 
       local codespell_args = { "--builtin", "clear,rare,informal,usage,names" }
-      if vim.fn.filereadable ".codespell" == 1 then
-        table.insert(codespell_args, "-I")
-        table.insert(codespell_args, vim.fn.getcwd() .. "/.codespell")
+      local found =
+        vim.fs.find(".codespell", { upward = true, path = vim.fn.getcwd() })[1]
+      if found then
+        vim.list_extend(codespell_args, { "-I", found })
       end
       lint.linters.codespell.args = codespell_args
 
@@ -410,9 +411,10 @@ local plugins = {
         "--builtin",
         "clear,rare,informal,usage,names",
       }
-      if vim.fn.filereadable ".codespell" == 1 then
-        table.insert(codespell_args, "-I")
-        table.insert(codespell_args, vim.fn.getcwd() .. "/.codespell")
+      local found =
+        vim.fs.find(".codespell", { upward = true, path = vim.fn.getcwd() })[1]
+      if found then
+        vim.list_extend(codespell_args, { "-I", found })
       end
       require("conform.formatters.codespell").args = codespell_args
     end,
