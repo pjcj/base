@@ -165,7 +165,8 @@ else
         thefuck \
         docker-compose \
         powerline-status \
-        mdformat-gfm
+        mdformat-gfm \
+        yamlfix
 
     npm install -g fixjson
     npm update -g
