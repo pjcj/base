@@ -390,6 +390,11 @@ local plugins = {
         },
       }
 
+      require("conform.formatters.mdformat").args = {
+        "--number",
+        "-",
+      }
+
       require("conform.formatters.shfmt").args = {
         "-i",
         "2",
@@ -398,10 +403,18 @@ local plugins = {
         "$FILENAME",
       }
 
-      require("conform.formatters.mdformat").args = {
-        "--number",
-        "-",
+      local codespell_args = {
+        "$FILENAME",
+        "--write-changes",
+        "--check-hidden", -- conform's temp file is hidden
+        "--builtin",
+        "clear,rare,informal,usage,names",
       }
+      if vim.fn.filereadable ".codespell" == 1 then
+        table.insert(codespell_args, "-I")
+        table.insert(codespell_args, vim.fn.getcwd() .. "/.codespell")
+      end
+      require("conform.formatters.codespell").args = codespell_args
     end,
   },
 
