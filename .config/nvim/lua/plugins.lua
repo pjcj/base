@@ -379,7 +379,7 @@ local plugins = {
         formatters_by_ft = {
           javascript = { { "prettierd", "prettier" } }, -- run first
           lua = { "stylua" },
-          markdown = { "markdownlint" },
+          markdown = { "markdownlint", "mdformat" },
           python = { "isort", "black" },
           sh = { "shellharden", "shellcheck", "shfmt" }, -- run sequentially
           sql = { "sql_formatter" },
@@ -389,12 +389,18 @@ local plugins = {
           ["*"] = { "codespell" },
         },
       }
+
       require("conform.formatters.shfmt").args = {
         "-i",
         "2",
         "-s",
         "-filename",
         "$FILENAME",
+      }
+
+      require("conform.formatters.mdformat").args = {
+        "--number",
+        "-",
       }
     end,
   },
