@@ -138,16 +138,15 @@ local function setup_servers()
     "gopls",
     "html",
     "jsonls",
-    "tsserver",
     "perlnavigator",
     "sqlls",
+    "tsserver",
     "volar",
     "yamlls",
   }
 
   local is_freebsd = (io.popen("uname"):read() == "FreeBSD")
   if not is_freebsd then
-    -- table.insert(lsps, "clangd", "lua_ls", "taplo")
     table.insert(lsps, "clangd")
     table.insert(lsps, "lua_ls")
     table.insert(lsps, "taplo")
