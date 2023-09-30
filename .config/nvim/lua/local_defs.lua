@@ -157,15 +157,8 @@ local_defs.fn.set_buffer_colours = function()
   set_colour("CmpItemMenu",                          "guifg", c.base0    )
 
   set_colour("MatchArea",                            "guibg", c.ddviolet )
-end
-
-local alternate_indent = function()
-  local b  = vim.b  -- a table to access buffer variables
-  local hl = { "IndentOdd", "IndentEven" }
-  b.indent_blankline_char_highlight_list                 = hl
-  b.indent_blankline_space_char_highlight_list           = hl
-  b.indent_blankline_space_char_blankline_highlight_list = hl
-  b.indent_blankline_context_highlight_list              = hl
+  set_colour("IblIndent",                            "guifg", c.dred     )
+  set_colour("IblScope",                             "guifg", c.dorange  )
 end
 
 local wk = require "which-key"
@@ -176,24 +169,17 @@ local_defs.fn.set_buffer_settings = function()
   local b    = vim.b             -- a table to access buffer variables
   local lopt = vim.opt_local     -- set local options
 
-  vim.g.indent_blankline_show_first_indent_level = true
-
   if ft == "go" or ft == "gomod" or ft == "make" then
     lopt.listchars = { tab = "  ", trail = "·", nbsp = "+" }
 
     local e = b.editorconfig
-    -- print("editorconfig", e.indent_style, e.indent_size)
     if e == nil or e.indent_style == nil then
       lopt.expandtab  = false
-      -- print("unset expandtab")
     end
     if e == nil or e.indent_size == nil then
       lopt.tabstop    = 2
       lopt.shiftwidth = 2
-      -- print("set tabstop shiftwidth 2")
     end
-
-    alternate_indent()
 
     if ft == "go" then
       wk.register({
@@ -223,14 +209,6 @@ local_defs.fn.set_buffer_settings = function()
   lopt.listchars = { tab = "» ", trail = "·", nbsp = "+" }
   lopt.tabstop   = 8
   lopt.expandtab = true
-  if vim.bo.shiftwidth < 3 then
-    alternate_indent()
-  else
-    b.indent_blankline_char_highlight_list                 = { "IndentEven"  }
-    b.indent_blankline_space_char_highlight_list           = { "IndentSpace" }
-    b.indent_blankline_space_char_blankline_highlight_list = {               }
-    b.indent_blankline_context_highlight_list              = { "IndentEven"  }
-  end
 
   if ft == "gitcommit" then
     lopt.colorcolumn = { 50, 72 }
@@ -240,7 +218,6 @@ local_defs.fn.set_buffer_settings = function()
   end
 
   if ft == "perl" then
-    vim.g.indent_blankline_show_first_indent_level = false
     wk.register({
       ["<F2>"] = { "sub ($self) {<CR>}<ESC>kea<Space>", "new sub" },
       ["<F4>"] = { "$self->", "$self->" },

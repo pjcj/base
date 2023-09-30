@@ -386,7 +386,7 @@ local plugins = {
           sql = { "sql_formatter" },
           toml = { "taplo" },
           terraform = { "terraform_fmt" },
-          yaml = { "yamlfmt" },  -- yamlfix is too buggy
+          yaml = { "yamlfmt" }, -- yamlfix is too buggy
           ["*"] = { "codespell" },
         },
       }
@@ -1126,46 +1126,24 @@ local plugins = {
   { "zsugabubus/crazy8.nvim" },
   {
     "lukas-reineke/indent-blankline.nvim",
-    config = function()
-      -- stylua: ignore
-      require "indent_blankline".setup {
-        char                                       = " ",
-        space_char                                 = " ",
-        context_char                               = "┃",
-        show_trailing_blankline_indent             = false,
-        show_first_indent_level                    = true,
-        max_indent_increase                        = 1,
-        viewport_buffer                            = 100,
-        show_current_context                       = true,
-        show_current_context_start                 = true,
-        show_current_context_start_on_current_line = false,
-        use_treesitter_scope                       = true,
-        buftype_exclude                            = { "terminal" },
-        filetype_exclude                           = {
-          "diff", "help", "markdown", "qf", "lspinfo", "checkhealth", "man",
-          -- "perl",
-          "",
-        },
-        -- TODO - remove
-        context_patterns                           = {
-          -- defaults
-          "class", "^func", "method", "^if", "while", "for", "with",
-          "try", "except", "arguments", "argument_list", "object",
-          "dictionary", "element", "table", "tuple",
-          -- general
-          "^arguments",
-          -- go
-          "^func_literal", "^import_declaration", "^const_declaration",
-          "^var_declaration", "^short_var_declaration", "^type_declaration",
-          "^expression_switch_statement", "^expression_case",
-          -- bash
-          "^case_statement", "^case_item",
-          -- perl  # the TS implementation here isn't all that good
-          -- "^block", "^package_statement", "^use_constant_statement",
-          -- lua
-          "^local_function",
-        },
-      }
+    main = "ibl",
+    opts = {
+      indent = {
+        char = "║",
+        highlight = { "IblIndent" },
+      },
+      remove_blankline_trail = false,
+      exclude = {
+        filetypes = { "startify" },
+      },
+    },
+    init = function()
+      vim.api.nvim_create_autocmd({ "VimEnter" }, {
+        callback = function(ev)
+          vim.cmd ":IBLEnable"
+          require "notify"(string.format("ibl: %s", ev.event))
+        end,
+      })
     end,
   },
 
