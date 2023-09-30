@@ -20,7 +20,7 @@
   "cmp-tmux": { "branch": "main", "commit": "97ec06b8030b8bf6d1fd83d49bdd16c98e04c845" },
   "codeium.nvim": { "branch": "main", "commit": "b5866ac9c028b25013ea4950732df410366c57ea" },
   "conflict-marker.vim": { "branch": "master", "commit": "11a4d42244755505b66b15cd4496a150432eb5e3" },
-  "conform.nvim": { "branch": "master", "commit": "3f8927532bc8ce4fc4b5b75eab1bf8f1fc83f6b9" },
+  "conform.nvim": { "branch": "master", "commit": "8f86444d62fc4f012a56732b8fb2c595e1e21fde" },
   "crazy8.nvim": { "branch": "master", "commit": "e5303d7397e936cb49e0acfc190a7f9128bdf1c7" },
   "diffview.nvim": { "branch": "main", "commit": "a111d19ccceac6530448d329c63f998f77b5626e" },
   "dressing.nvim": { "branch": "master", "commit": "73a7d54b5289000108c7f52402a36cf380fced67" },
