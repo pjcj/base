@@ -1135,7 +1135,7 @@ local plugins = {
         char = "║",
         highlight = { "IblIndent" },
       },
-      remove_blankline_trail = false,
+      remove_blankline_trail = true,
       exclude = {
         filetypes = { "startify" },
       },
