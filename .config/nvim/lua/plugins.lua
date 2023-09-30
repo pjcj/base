@@ -38,6 +38,7 @@ local plugins = {
 
   {
     "freddiehaddad/feline.nvim",
+    version = "*",
     lazy = false,
     dependencies = {
       "SmiteshP/nvim-navic",
@@ -164,7 +165,7 @@ local plugins = {
 
   { "neovim/nvim-lspconfig" },
   { "williamboman/mason.nvim" },
-  { "williamboman/mason-lspconfig.nvim" },
+  { "williamboman/mason-lspconfig.nvim", version = "*" },
   { "ray-x/lsp_signature.nvim" },
   { "folke/lsp-colors.nvim" },
   {
@@ -374,6 +375,7 @@ local plugins = {
   },
   {
     "stevearc/conform.nvim",
+    version = "*",
     opts = {},
     config = function()
       require("conform").setup {
@@ -1126,6 +1128,7 @@ local plugins = {
   { "zsugabubus/crazy8.nvim" },
   {
     "lukas-reineke/indent-blankline.nvim",
+    version = "*",
     main = "ibl",
     opts = {
       indent = {
