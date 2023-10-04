@@ -28,6 +28,7 @@ local local_defs = {
     lyellow   = "#de860e", -- light yellow
     dyellow   = "#433200", -- dark yellow
     dorange   = "#7d2500", -- dark orange
+    mred      = "#64110F", -- medium red
     dred      = "#400200", -- dark red
     ddred     = "#2b0200", -- dark dark red
     dddred    = "#150100", -- dark dark dark red
@@ -159,6 +160,7 @@ local_defs.fn.set_buffer_colours = function()
   set_colour("MatchArea",                            "guibg", c.ddviolet )
   set_colour("IblIndent",                            "guifg", c.dred     )
   set_colour("IblScope",                             "guifg", c.dorange  )
+  set_colour("ExtraWhitespace",                      "guibg", c.mred     )
 end
 
 local wk = require "which-key"
