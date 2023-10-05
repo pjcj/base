@@ -697,7 +697,7 @@ fi
 if which eza >&/dev/null; then
     f() {
         eza -lagH --colour-scale --git --time-style=long-iso --icons \
-            --colour=always --git-repos "$@"
+            --colour=always "$@"
     }
 fi
 
