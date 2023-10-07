@@ -189,7 +189,7 @@ local plugins = {
           disable = {
             -- "perl",
             -- "sh",
-            "gitcommit",
+            -- "gitcommit",
           },
         },
         indent = { enable = false },
