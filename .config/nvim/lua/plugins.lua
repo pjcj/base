@@ -1152,7 +1152,7 @@ local plugins = {
     main = "ibl",
     opts = {
       indent = {
-        char = "║",
+        char = "│",
         highlight = { "IblIndent" },
       },
       exclude = {
