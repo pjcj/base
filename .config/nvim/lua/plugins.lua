@@ -16,7 +16,92 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
   { "nvim-tree/nvim-web-devicons" },
-  { "pjcj/neovim-colors-solarized-truecolor-only" },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    config = function()
+      local c = require("local_defs").colour
+      require("catppuccin").setup {
+        color_overrides = {
+          all = {
+            -- stylua: ignore start
+            rosewater = c.c_rosewater,
+            flamingo  = c.c_flamingo,
+            pink      = c.c_pink,
+            mauve     = c.c_mauve,
+            red       = c.c_red,
+            maroon    = c.c_maroon,
+            peach     = c.c_peach,
+            yellow    = c.c_yellow,
+            green     = c.c_green,
+            teal      = c.c_teal,
+            sky       = c.c_sky,
+            sapphire  = c.c_sapphire,
+            blue      = c.c_blue,
+            lavender  = c.c_lavender,
+            text      = c.c_text,
+            subtext1  = c.c_subtext1,
+            subtext0  = c.c_subtext0,
+            overlay2  = c.c_overlay2,
+            overlay1  = c.c_overlay1,
+            overlay0  = c.c_overlay0,
+            surface2  = c.c_surface2,
+            surface1  = c.c_surface1,
+            surface0  = c.c_surface0,
+            base      = c.c_base,
+            mantle    = c.c_mantle,
+            crust     = c.c_crust,
+            -- stylua: ignore end
+          },
+        },
+        integrations = {
+          cmp = true,
+          gitgutter = true,
+          gitsigns = true,
+          indent_blankline = true,
+          mason = true,
+          notify = true,
+          nvimtree = true,
+          overseer = true,
+          symbols_outline = true,
+          treesitter = true,
+          which_key = true,
+        },
+        custom_highlights = function(col)
+          return {
+            Cursor = { bg = c.llyellow },
+            CursorColumn = { bg = col.surface1 },
+            CursorLine = { bg = col.surface1 },
+            DiffAdded = { fg = c.rgreen },
+            DiffRemoved = { fg = c.red },
+            ExtraWhitespace = { bg = c.mred },
+            GitSignsCurrentLineBlame = { bg = col.base, fg = c.dblue },
+            GitSignsDeleteVirtLn = { bg = col.mantle, fg = c.mred },
+            IblIndent = { fg = c.dred },
+            IblScope = { fg = c.dorange },
+            LineNr = { fg = c.dblue },
+            MatchParen = { bg = col.blue, fg = col.base },
+            -- MatchParenCur = { bg = col.base, fg = col.blue },
+            Pmenu = { bg = c.dddred },
+            PmenuSel = { bg = c.dred },
+            SpellBad = { bg = col.base, fg = c.dorange },
+            SpellCap = { bg = c.blue, fg = col.base },
+            SpellLocal = { bg = c.green, fg = col.base },
+            SpellRare = { bg = c.yellow, fg = col.base },
+            TabLine = { bg = col.base, fg = col.overlay1 },
+            Visual = { bg = c.dred, fg = c.base1 },
+            ["@text.danger"] = { bg = col.base, fg = c.red, bold = true },
+            ["@text.note"] = { bg = col.base, fg = col.blue, bold = true },
+            ["@text.todo"] = { bg = col.base, fg = col.yellow, bold = true },
+            ["@text.warning"] = { bg = col.base, fg = c.yellow, bold = true },
+          }
+        end,
+      }
+
+      vim.cmd.colorscheme "catppuccin"
+    end,
+  },
 
   { "nvim-lua/plenary.nvim" },
 
@@ -1291,13 +1376,8 @@ local plugins = {
       local l = require "local_defs"
       local c = l.colour
       require("scrollbar").setup {
-        marks = {
-          Search = { text = { "─", "═" }, color = c.rgreen },
-          Error = { text = { "─", "═" }, color = c.orange },
-          Warn = { text = { "─", "═" }, color = c.yellow },
-          Info = { text = { "─", "═" }, color = c.cyan },
-          Hint = { text = { "─", "═" }, color = c.blue },
-          Misc = { text = { "─", "═" }, color = c.violet },
+        handle = {
+          color = c.ddblue,
         },
         handlers = {
           cursor = true,

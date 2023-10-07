@@ -47,7 +47,6 @@ vopt.guicursor     = "n-v-c:block-Cursor,i-ci-ve:ver25,r-cr:hor20,o:hor50," ..
 
 vopt.termguicolors = true
 vopt.background    = "dark"
-vim.cmd "colorscheme solarized"
 
 if vim.fn.executable("rg") then
   vopt.grepprg    = "rg --no-heading --hidden --glob '!.git' --vimgrep"
