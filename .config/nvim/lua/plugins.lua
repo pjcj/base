@@ -1300,6 +1300,14 @@ local plugins = {
           Hint = { text = { "─", "═" }, color = c.blue },
           Misc = { text = { "─", "═" }, color = c.violet },
         },
+        handlers = {
+          cursor = true,
+          diagnostic = true,
+          gitsigns = true,
+          handle = true,
+          search = true,
+          ale = true,
+        }
       }
       require("scrollbar.handlers.search").setup {}
 
