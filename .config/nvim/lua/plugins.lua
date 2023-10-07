@@ -1337,7 +1337,7 @@ local plugins = {
   { "ntpeters/vim-better-whitespace" },
   { "ojroques/vim-oscyank" },
   { "uga-rosa/translate.nvim" },
-  { "chrisgrieser/nvim-spider" },
+  { "chrisgrieser/nvim-spider" }, -- w moves in camelcase words
   { "kana/vim-textobj-user" },
   {
     "Julian/vim-textobj-variable-segment",
