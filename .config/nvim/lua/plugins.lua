@@ -349,12 +349,11 @@ local plugins = {
         "BufEnter",
         "BufReadPost",
         "BufWritePost",
-        "TextChanged",
+        "CursorHold",
       }, {
         callback = function(ev)
           local current_time = os.time()
-          local t = ev.event == "TextChanged" and 15 or 1
-          if current_time - last_lint_time >= t then
+          if current_time - last_lint_time >= 1 then
             last_lint_time = current_time
             require "notify"(string.format("lint: %s", ev.event))
             lint.try_lint()
