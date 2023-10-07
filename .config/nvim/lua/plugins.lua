@@ -1384,52 +1384,6 @@ local plugins = {
   },
 
   {
-    "folke/todo-comments.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    config = function()
-      require("todo-comments").setup {
-        highlight = {
-          before = "", -- "fg" or "bg" or empty
-          keyword = "fg", -- "fg", "bg", "wide" or empty
-          after = "fg", -- "fg" or "bg" or empty
-          pattern = { -- pattern or table of patterns - vim regex
-            [[ (KEYWORDS)>(:| +\d| -)]],
-          },
-          comments_only = true, -- uses treesitter to match keywords in comments
-          max_line_len = 400, -- ignore lines longer than this
-          exclude = {}, -- list of file types to exclude highlighting
-        },
-        merge_keywords = true,
-        keywords = {
-          TODO = {
-            icon = "",
-            alt = { "DEBUG" },
-          },
-          FIX = {
-            alt = { "FIXME", "BUG", "FIXIT", "ISSUE", "ERROR", "FATAL" },
-          },
-        },
-        search = {
-          pattern = [[\b(KEYWORDS)(:| +\d| -)]], -- ripgrep regex
-        },
-      }
-    end,
-  },
-  -- ERROR: red
-  -- WARN 123
-  -- XXX: bubble
-  -- INFO  456
-  -- ISSUE    78
-  -- DEBUG - rrr
-  -- BUG no
-  -- FIXIT .red
-  --ERROR: 5
-  --ERROR 6
-  --- TODO - hmmm
-
-  {
     "nvim-tree/nvim-tree.lua",
     dependencies = {
       "nvim-tree/nvim-web-devicons", -- optional, for file icon
