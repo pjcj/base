@@ -1306,7 +1306,24 @@ local plugins = {
           handle = true,
           search = true,
           ale = true,
-        }
+        },
+        render = {
+          "BufWinEnter",
+          "TabEnter",
+          "TermEnter",
+          "WinEnter",
+          "CmdwinLeave",
+          -- "TextChanged",
+          "VimResized",
+          "WinScrolled",
+          "CursorHold",
+        },
+        clear = {
+          "BufWinLeave",
+          "TabLeave",
+          "TermLeave",
+          "WinLeave",
+        },
       }
       require("scrollbar.handlers.search").setup {}
 
