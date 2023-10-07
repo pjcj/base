@@ -171,6 +171,9 @@ local_defs.fn.set_buffer_settings = function()
   local b    = vim.b             -- a table to access buffer variables
   local lopt = vim.opt_local     -- set local options
 
+  -- https://github.com/stsewd/tree-sitter-comment/issues/22
+  vim.api.nvim_set_hl(0, "@lsp.type.comment", {})
+
   if ft == "go" or ft == "gomod" or ft == "make" then
     lopt.listchars = { tab = "  ", trail = "·", nbsp = "+" }
 
