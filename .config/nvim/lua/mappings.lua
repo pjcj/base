@@ -366,6 +366,7 @@ wk.register {
       d = { tb.lsp_definitions, "lsp definitions" },
       e = { tb.resume, "resume" },
       f = { tb.builtin, "builtin" },
+      F = { ":Telescope frecency workspace=CWD<cr>", "frecency" },
       g = { tb.live_grep, "grep" },
       G = {
         function()

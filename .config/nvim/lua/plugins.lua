@@ -599,6 +599,7 @@ local plugins = {
       "debugloop/telescope-undo.nvim",
       "nvim-telescope/telescope-fzf-native.nvim",
       "nvim-telescope/telescope-symbols.nvim",
+      "nvim-telescope/telescope-frecency.nvim",
     },
     config = function()
       local telescope = require "telescope"
@@ -613,13 +614,6 @@ local plugins = {
             n = {
               ["<c-s>"] = actions.select_vertical,
               ["<c-k>"] = actions.which_key,
-            },
-          },
-          extensions = {
-            fzf = {
-              -- default options
-              fuzzy = true,
-              case_mode = "smart_case", -- or "ignore_case" or "respect_case"
             },
           },
           -- telescope prefers rg
@@ -641,11 +635,28 @@ local plugins = {
           },
           dynamic_preview_title = true,
         },
+        extensions = {
+          fzf = {
+            -- default options
+            fuzzy = true,
+            case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+          },
+          frecency = {
+            show_scores = true,
+            show_unindexed = true,
+            -- ignore_patterns = { "*.git/*", "*/tmp/*" },
+            -- disable_devicons = false,
+            default_workspace = "CWD",
+            use_sqlite = false,
+            auto_validate = false,
+          },
+        },
       }
 
       telescope.load_extension "fzf"
-      -- telescope.load_extension "refactoring"
+      telescope.load_extension "refactoring"
       telescope.load_extension "undo"
+      telescope.load_extension "frecency"
 
       vim.cmd [[
         augroup telescope
