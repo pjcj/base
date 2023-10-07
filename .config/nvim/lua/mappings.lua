@@ -588,14 +588,21 @@ wk.register {
     },
     t = {
       name = "+toggle",
-      b = { ":Gitsigns toggle_current_line_blame<CR>", "blame" },
-      c = {
-        function()
-          require("null-ls").toggle "codespell"
-        end,
-        "codespell",
+      g = {
+        name = "+git",
+        b = { ":Gitsigns toggle_current_line_blame<cr>", "blame" },
+        d = { ":Gitsigns toggle_deleted<cr>", "deleted" },
+        i = { ":Gitsigns toggle_word_diff<cr>", "diff" },
+        l = { ":Gitsigns toggle_linehl<cr>", "line hl" },
+        n = { ":Gitsigns toggle_numhl<cr>", "num hl" },
+        s = { ":Gitsigns toggle_signs<cr>", "signs" },
       },
-      d = { ":Gitsigns toggle_deleted<CR>", "deleted" },
+      -- c = {
+      --   function()
+      --     require("null-ls").toggle "codespell"
+      --   end,
+      --   "codespell",
+      -- },
       h = { ":TSBufToggle highlight<cr>", "treesitter highlight" },
       o = { ":SymbolsOutline<cr>", "symbols" },
       s = {
@@ -604,12 +611,7 @@ wk.register {
         end,
         "sidebar",
       },
-      t = {
-        function()
-          require("nvim-tree").toggle()
-        end,
-        "tree",
-      },
+      t = { ":NvimTreeToggle<cr>", "tree" },
       v = { vtext_toggle, "virtual text" },
       w = { ":ToggleWhitespace<cr>", "whitespace" },
       x = {
