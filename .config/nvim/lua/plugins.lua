@@ -474,13 +474,14 @@ local plugins = {
       require("conform").setup {
         formatters_by_ft = {
           javascript = { { "prettierd", "prettier" } }, -- run first
+          json = { "fixjson" },
           lua = { "stylua" },
           markdown = { "markdownlint", "mdformat" },
           python = { "isort", "black" },
           sh = { "shellharden", "shellcheck", "shfmt" }, -- run sequentially
           sql = { "sql_formatter" },
-          toml = { "taplo" },
           terraform = { "terraform_fmt" },
+          toml = { "taplo" },
           yaml = { "yamlfmt" }, -- yamlfix is too buggy
           ["*"] = { "codespell" },
         },
