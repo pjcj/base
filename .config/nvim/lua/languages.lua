@@ -23,6 +23,7 @@ vim.cmd [[
 
   augroup file_types
     autocmd!
+    autocmd BufNewFile,BufReadPost *.t         set ft=perl
     autocmd BufNewFile,BufReadPost *.mc        set ft=mason
     autocmd BufNewFile,BufReadPost template/** set ft=tt2html
     autocmd BufNewFile,BufReadPost *.tt2       set ft=tt2html
