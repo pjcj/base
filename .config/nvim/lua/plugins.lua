@@ -91,6 +91,7 @@ local plugins = {
             SpellRare = { bg = c.yellow, fg = col.base },
             TabLine = { bg = col.base, fg = col.overlay1 },
             Visual = { bg = c.dred, fg = c.base1 },
+            VertSplit = { bg = col.base, fg = c.yellow },
             ["@text.danger"] = { bg = col.base, fg = c.red, bold = true },
             ["@text.note"] = { bg = col.base, fg = col.blue, bold = true },
             ["@text.todo"] = { bg = col.base, fg = col.yellow, bold = true },
