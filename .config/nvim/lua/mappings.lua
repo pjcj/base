@@ -293,11 +293,18 @@ wk.register {
         },
       },
     },
-    ["."] = {
+
+    ["."] = { ":Telescope frecency workspace=CWD<cr>", "frecency" },
+    ["-"] = {
       function()
-        tb.git_files { hidden = true }
+        local fd = require("local_defs").fn.common_fd()
+        print(vim.inspect(fd))
+        tb.find_files {
+          fd = fd,
+          hidden = true,
+        }
       end,
-      "git files",
+      "common files",
     },
     [","] = {
       name = "+language",
@@ -354,6 +361,37 @@ wk.register {
     },
     f = {
       name = "+telescope",
+      [","] = {
+        name = "+find files",
+        a = {
+          function()
+            tb.find_files { hidden = true, no_ignore = true }
+          end,
+          "include ignored",
+        },
+        c = {
+          function()
+            tb.find_files {
+              fd = require("local_defs").fn.common_fd(),
+              hidden = true,
+            }
+          end,
+          "common files",
+        },
+        i = {
+          function()
+            tb.find_files { hidden = true }
+          end,
+          "honour ignores",
+        },
+        f = { ":Telescope frecency workspace=CWD<cr>", "frecency" },
+        g = {
+          function()
+            tb.git_files { hidden = true }
+          end,
+          "git files",
+        },
+      },
       a = { vim.lsp.buf.code_action, "lsp code actions" },
       A = {
         function()

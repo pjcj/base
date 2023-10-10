@@ -1,6 +1,6 @@
 local local_defs = {
   map = {
-    defmap = { noremap = true, silent = true } -- default map options,
+    defmap = { noremap = true, silent = true }, -- default map options,
   },
   colour = {
     -- stylua: ignore start
@@ -93,135 +93,66 @@ local local_defs = {
     -- b2  = "#eee8d5",
     -- b3  = "#fdf6e3",
 
-    none      = "none",
-    reverse   = "reverse",
+    none = "none",
+    reverse = "reverse",
     underline = "underline",
   },
-  fn = {
-  },
+  fn = {},
 }
 
-local function set_colour(group, part, colour)
-  vim.cmd(string.format("highlight %s %s=%s", group, part, colour))
+local function set_exclude()
+  local ex = vim.g.gutentags_ctags_exclude or {}
+  local fd = { "fd", "--type", "f", "--color", "never" }
+  local ignore_patterns = { "*.git/*", "term://*" }
+  local exclude = {
+    "tmp",
+    "blib",
+    "node_modules",
+    "dist",
+  }
+
+  local excl = os.getenv "EXCLUDE_PATHS"
+  if excl then
+    for path in string.gmatch(excl, "([^:]+)") do
+      table.insert(exclude, path)
+    end
+  end
+
+  for _, v in pairs(exclude) do
+    table.insert(ex, v)
+    table.insert(fd, "-E")
+    table.insert(fd, v)
+    table.insert(ignore_patterns, "*/" .. v .. "/*")
+  end
+
+  local_defs.gutentags_ctags_exclude = ex
+  local_defs.common_fd = fd
+  local_defs.frecency_ignore_patterns = ignore_patterns
 end
 
--- This isn't used anymore but keep it for a bit in case we need any tweaks
-local_defs.fn.set_buffer_colours = function()
-  local c = local_defs.colour
+local_defs.fn.gutentags_ctags_exclude = function()
+  set_exclude()
+  return local_defs.gutentags_ctags_exclude
+end
 
-  set_colour("Normal",                               "guifg", c.normal   )
-  set_colour("SpecialKey",                           "guibg", c.base03   )
-  set_colour("SpellBad",                             "guibg", c.base03   )
-  set_colour("SpellBad",                             "guifg", c.dorange  )
-  set_colour("SpellBad",                             "gui",   c.none     )
-  set_colour("SpellCap",                             "guibg", c.blue     )
-  set_colour("SpellCap",                             "guifg", c.base03   )
-  set_colour("SpellCap",                             "gui",   c.none     )
-  set_colour("SpellRare",                            "guibg", c.yellow   )
-  set_colour("SpellRare",                            "guifg", c.base03   )
-  set_colour("SpellRare",                            "gui",   c.none     )
-  set_colour("SpellLocal",                           "guibg", c.green    )
-  set_colour("SpellLocal",                           "guifg", c.base03   )
-  set_colour("SpellLocal",                           "gui",   c.none     )
-  set_colour("LineNr",                               "guibg", c.base03   )
-  set_colour("SignColumn",                           "guibg", c.base03   )
-  set_colour("ColorColumn",                          "guibg", c.base06   )
-  set_colour("CursorLine",                           "guibg", c.base02   )
-  set_colour("CursorColumn",                         "guibg", c.base02   )
-  set_colour("CursorLineNr",                         "guibg", c.base03   )
-  set_colour("DiffAdd",                              "guibg", c.base03   )
-  set_colour("DiffAdd",                              "guifg", c.rgreen   )
-  set_colour("DiffChange",                           "guibg", c.base03   )
-  set_colour("DiffDelete",                           "guibg", c.base03   )
-  set_colour("DiffAdded",                            "guifg", c.rgreen   )
-  set_colour("Search",                               "guibg", c.violet   )
-  set_colour("Search",                               "guifg", c.base03   )
-  set_colour("Search",                               "gui",   c.none     )
-  set_colour("TabLineSel",                           "guibg", c.base03   )
-  set_colour("TabLineSel",                           "guifg", c.violet   )
-  set_colour("Folded",                               "gui",   c.none     )
-  set_colour("MatchParen",                           "guibg", c.base00   )
-  set_colour("MatchParen",                           "guifg", c.none     )
-  set_colour("MatchParenCur",                        "guibg", c.base02   )
-  set_colour("MatchParenCur",                        "guifg", c.none     )
-  set_colour("NormalFloat",                          "guibg", c.base04   )
-  set_colour("FloatBorder",                          "guibg", c.base04   )
-  set_colour("FloatBorder",                          "guifg", c.normal   )
-  set_colour("Pmenu",                                "guifg", c.dddred   )
-  set_colour("Pmenu",                                "guibg", c.base2    )
-  set_colour("PmenuSel",                             "guifg", c.dorange  )
-  set_colour("PmenuSel",                             "guibg", c.base2    )
-  set_colour("Visual",                               "guifg", c.base1    )
-  set_colour("Visual",                               "guibg", c.dred     )
-  set_colour("Visual",                               "gui",   c.none     )
-  set_colour("QuickFixLine",                         "guibg", c.dred     )
-  set_colour("WinSeparator",                         "guibg", c.none     )
+local_defs.fn.common_fd = function()
+  set_exclude()
+  -- print(vim.inspect(local_defs.common_fd))
+  return local_defs.common_fd
+end
 
-  set_colour("Cursor",                               "guibg", c.llyellow )
-
-  set_colour("GitSignsAdd",                          "guibg", c.base03   )
-  set_colour("GitSignsAdd",                          "guifg", c.rgreen   )
-  set_colour("GitSignsChange",                       "guibg", c.base03   )
-  set_colour("GitSignsChange",                       "guifg", c.yellow   )
-  set_colour("GitSignsDelete",                       "guibg", c.base03   )
-  set_colour("GitSignsDelete",                       "guifg", c.red      )
-  set_colour("GitSignsCurrentLineBlame",             "guifg", c.base05   )
-  set_colour("GitSignsAddLnInline",                  "guibg", c.ddgreen  )
-  set_colour("GitSignsChangeLnInline",               "guibg", c.dyellow  )
-  set_colour("GitSignsDeleteLnInline",               "guibg", c.dred     )
-
-  set_colour("IndentOdd",                            "guifg", c.yellow   )
-  set_colour("IndentOdd",                            "guibg", c.none     )
-  set_colour("IndentEven",                           "guifg", c.yellow   )
-  set_colour("IndentEven",                           "guibg", c.base02   )
-
-  set_colour("IndentBlanklineContextStart",          "guibg", c.ddred    )
-  set_colour("IndentBlanklineContextStart",          "gui"  , c.underline)
-
-  set_colour("GoDiagnosticError",                    "guibg", c.none     )
-  set_colour("GoDiagnosticError",                    "guifg", c.red      )
-
-  set_colour("LspDiagnosticsDefaultError",           "guifg", c.red      )
-  set_colour("LspDiagnosticsVirtualTextError",       "guifg", c.dorange  )
-  set_colour("LspDiagnosticsVirtualTextWarning",     "guifg", c.dyellow  )
-  set_colour("LspDiagnosticsVirtualTextInformation", "guifg", c.dcyan    )
-  set_colour("LspDiagnosticsVirtualTextHint",        "guifg", c.dblue    )
-  set_colour("LspDiagnosticsSignError",              "guifg", c.orange   )
-  set_colour("LspDiagnosticsSignWarning",            "guifg", c.yellow   )
-  set_colour("LspDiagnosticsSignInformation",        "guifg", c.cyan     )
-  set_colour("LspDiagnosticsSignHint",               "guifg", c.blue     )
-
-  set_colour("TSDefinition",                         "guibg", c.yellow   )
-  set_colour("TSDefinition",                         "guifg", c.base02   )
-  set_colour("TSDefinitionUsage",                    "guibg", c.base05   )
-
-  set_colour("ALEVirtualTextError",                  "guifg", c.orange   )
-  set_colour("ALEVirtualTextWarning",                "guifg", c.yellow   )
-  set_colour("ALEVirtualTextInfo",                   "guifg", c.cyan     )
-  set_colour("AleErrorSign",                         "guifg", c.orange   )
-  set_colour("AleWarningSign",                       "guifg", c.yellow   )
-  set_colour("AleInfoSign",                          "guifg", c.cyan     )
-
-  set_colour("CmpItemAbbr",                          "guibg", c.none     )
-  set_colour("CmpItemAbbrDeprecated",                "guifg", c.red      )
-  set_colour("CmpItemAbbrMatch",                     "guifg", c.rgreen   )
-  set_colour("CmpItemAbbrMatchFuzzy",                "guifg", c.dgreen   )
-  set_colour("CmpItemKind",                          "guifg", c.yellow   )
-  set_colour("CmpItemMenu",                          "guifg", c.base0    )
-
-  set_colour("MatchArea",                            "guibg", c.ddviolet )
-  set_colour("IblIndent",                            "guifg", c.dred     )
-  set_colour("IblScope",                             "guifg", c.dorange  )
-  set_colour("ExtraWhitespace",                      "guibg", c.mred     )
+local_defs.fn.frecency_ignore_patterns = function()
+  set_exclude()
+  return local_defs.frecency_ignore_patterns
 end
 
 local wk = require "which-key"
 -- local wk -- swap these to bootstrap
 
 local_defs.fn.set_buffer_settings = function()
-  local ft   = vim.bo.filetype
-  local b    = vim.b             -- a table to access buffer variables
-  local lopt = vim.opt_local     -- set local options
+  local ft = vim.bo.filetype
+  local b = vim.b -- a table to access buffer variables
+  local lopt = vim.opt_local -- set local options
 
   -- https://github.com/stsewd/tree-sitter-comment/issues/22
   vim.api.nvim_set_hl(0, "@lsp.type.comment", {})
@@ -231,10 +162,10 @@ local_defs.fn.set_buffer_settings = function()
 
     local e = b.editorconfig
     if e == nil or e.indent_style == nil then
-      lopt.expandtab  = false
+      lopt.expandtab = false
     end
     if e == nil or e.indent_size == nil then
-      lopt.tabstop    = 2
+      lopt.tabstop = 2
       lopt.shiftwidth = 2
     end
 
@@ -264,14 +195,14 @@ local_defs.fn.set_buffer_settings = function()
   end
 
   lopt.listchars = { tab = "» ", trail = "·", nbsp = "+" }
-  lopt.tabstop   = 8
+  lopt.tabstop = 8
   lopt.expandtab = true
 
   if ft == "gitcommit" then
     lopt.colorcolumn = { 50, 72 }
-    lopt.textwidth   = 72
-    lopt.spell       = true
-    lopt.spelllang   = "en_gb"
+    lopt.textwidth = 72
+    lopt.spell = true
+    lopt.spelllang = "en_gb"
   end
 
   if ft == "perl" then

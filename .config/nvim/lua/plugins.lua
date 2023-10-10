@@ -514,18 +514,8 @@ local plugins = {
   {
     "ludovicchabant/vim-gutentags",
     config = function()
-      vim.g.gutentags_ctags_exclude = vim.g.gutentags_ctags_exclude or {}
-      local ex = vim.g.gutentags_ctags_exclude
-      local exclude = {
-        "tmp",
-        "blib",
-        "node_modules",
-        "dist",
-      }
-      for _, v in pairs(exclude) do
-        table.insert(ex, v)
-      end
-      vim.g.gutentags_ctags_exclude = ex
+      vim.g.gutentags_ctags_exclude =
+        require("local_defs").fn.gutentags_ctags_exclude()
       -- print(vim.inspect(vim.g.gutentags_ctags_exclude))
 
       -- can be extended with '*/sub/path' if required
@@ -684,6 +674,7 @@ local plugins = {
     config = function()
       local telescope = require "telescope"
       local actions = require "telescope.actions"
+
       telescope.setup {
         defaults = {
           mappings = {
@@ -724,8 +715,7 @@ local plugins = {
           frecency = {
             show_scores = true,
             show_unindexed = true,
-            -- ignore_patterns = { "*.git/*", "*/tmp/*" },
-            -- disable_devicons = false,
+            ignore_patterns = require("local_defs").fn.frecency_ignore_patterns(),
             default_workspace = "CWD",
             use_sqlite = false,
             auto_validate = false,
