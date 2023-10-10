@@ -178,11 +178,10 @@ local plugins = {
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup {
-        -- ensure_installed = "all",
+        ensure_installed = "all",
         ignore_install = {
-          "swift", -- requires glibc 2.28
-          -- "perl", -- sometimes crashes
-          "phpdoc", -- fails on MacOS
+          -- "swift", -- requires glibc 2.28
+          -- "phpdoc", -- fails on MacOS
         },
         highlight = {
           enable = true,
