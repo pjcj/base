@@ -428,7 +428,6 @@ local plugins = {
       end
       lint.linters.codespell.args = codespell_args
 
-      local last_lint_time = 0
       vim.api.nvim_create_autocmd({
         "BufEnter",
         "BufReadPost",
@@ -436,12 +435,8 @@ local plugins = {
         "CursorHold",
       }, {
         callback = function(ev)
-          local current_time = os.time()
-          if current_time - last_lint_time >= 1 then
-            last_lint_time = current_time
-            require "notify"(string.format("lint: %s", ev.event))
-            lint.try_lint()
-          end
+          require "notify"(string.format("lint: %s", ev.event))
+          lint.try_lint()
         end,
       })
     end,
