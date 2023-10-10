@@ -565,6 +565,7 @@ wk.register {
     K = { "unhighlight words" },
     l = { [[:let @/ = ""<bar> :call UncolorAllWords()<cr>]], "unhighlight all" },
     m = { tb.git_status, "find git changes" },
+    n = { ":NewFile<cr>", "new file template" },
     q = {
       name = "+quote",
       B = { [[ds`]], "delete backtick", noremap = false },
@@ -747,4 +748,13 @@ vim.cmd [[
   inoremap <expr> <C-y> pumvisible() ? "\<C-y>\<C-y>" : "\<C-y>"
 
   iabbr ,, =>
+
+  function! NewFile(type)
+    " exe 'normal ggdG'
+    exe 'r! file_template -path ' . &path . ' ' . expand('%') . ' ' . a:type
+    exe 'normal ggdd'
+    /^[ \t]*[#] *implementation/
+    w
+  endfunction
+  command! -nargs=? NewFile :call NewFile(<q-args>)
 ]]
