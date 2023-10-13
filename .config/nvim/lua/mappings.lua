@@ -671,6 +671,13 @@ wk.register({
   ["<leader>"] = {
     [" "] = {
       name = "+plugin",
+      c = { "ChatGPT", },
+      h = {
+        name = "+hunk",
+        r = { ":Gitsigns reset_hunk<cr>", "reset lines" },
+        s = { ":Gitsigns stage_hunk<cr>", "stage lines" },
+      },
+      k = { "highlight word" },
       t = {
         name = "+translate",
         d = {
@@ -690,12 +697,6 @@ wk.register({
           s = { ":Translate EN -output=split<cr>", "split" },
         },
       },
-      h = {
-        name = "+hunk",
-        r = { ":Gitsigns reset_hunk<cr>", "reset lines" },
-        s = { ":Gitsigns stage_hunk<cr>", "stage lines" },
-      },
-      k = { "highlight word" },
     },
     f = {
       name = "+telescope",
