@@ -863,7 +863,6 @@ local plugins = {
         experimental = {
           native_menu = false,
           ghost_text = true,
-          horizontal_search = true,
         },
         mapping = {
           ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
