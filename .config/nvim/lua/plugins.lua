@@ -92,6 +92,7 @@ local plugins = {
             TabLine = { bg = col.base, fg = col.overlay1 },
             Visual = { bg = c.dred, fg = c.base1 },
             VertSplit = { bg = col.base, fg = c.yellow },
+            CmpItemKindCopilot = { fg = col.peach },
             ["@text.danger"] = { bg = col.base, fg = c.red, bold = true },
             ["@text.note"] = { bg = col.base, fg = col.blue, bold = true },
             ["@text.todo"] = { bg = col.base, fg = col.yellow, bold = true },
@@ -797,6 +798,7 @@ local plugins = {
           Operator      = "",
           TypeParameter = "",
           Codeium       = "",
+          Copilot       = "",
         }
       })
       -- stylua: ignore end
@@ -893,6 +895,7 @@ local plugins = {
         sources = {
           { name = "nvim_lua" },
           { name = "nvim_lsp_signature_help" },
+          os.getenv "OPENAI_API_KEY" and { name = "copilot" } or {},
           os.getenv "OPENAI_API_KEY" and { name = "codeium" } or {},
           -- { name = "cmp_ai" },
           { name = "nvim_lsp" },
@@ -1037,6 +1040,24 @@ local plugins = {
     },
     config = function()
       require("codeium").setup {}
+    end,
+  },
+
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup {
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      }
+    end,
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    config = function()
+      require("copilot_cmp").setup()
     end,
   },
 
