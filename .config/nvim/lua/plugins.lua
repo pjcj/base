@@ -825,9 +825,10 @@ local plugins = {
         min_length = 1,
         preselect = cmp.PreselectMode.None,
         performance = {
-          fetching_timeout = 500,
-          debounce = 60,
-          throttle = 30,
+          fetching_timeout = 1000,
+          debounce = 100,
+          throttle = 300,
+          max_view_entries = 15,
         },
         formatting = {
           format = lspkind.cmp_format {
