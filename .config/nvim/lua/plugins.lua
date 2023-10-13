@@ -1030,8 +1030,7 @@ local plugins = {
   },
 
   {
-    -- "jcdickinson/codeium.nvim",
-    "0xRichardH/codeium.nvim",
+    "Exafunction/codeium.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "hrsh7th/nvim-cmp",
