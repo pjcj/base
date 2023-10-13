@@ -1139,7 +1139,7 @@ local plugins = {
         update_debounce = 1000,
         status_formatter = nil, -- Use default
         diff_opts = { internal = true }, -- If luajit is present
-        word_diff = true,
+        word_diff = false,
         current_line_blame = true,
         current_line_blame_opts = {
           virt_text = true,
