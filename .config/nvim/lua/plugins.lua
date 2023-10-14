@@ -821,6 +821,8 @@ local plugins = {
         )
       end
 
+      local hl = "Normal:Normal,FloatBorder:Float,CursorLine:Visual,Search:None"
+
       cmp.setup {
         min_length = 1,
         preselect = cmp.PreselectMode.None,
@@ -959,8 +961,13 @@ local plugins = {
           },
         },
         window = {
-          completion = cmp.config.window.bordered(),
-          documentation = cmp.config.window.bordered(),
+          completion = cmp.config.window.bordered {
+            winhighlight = hl,
+            col_offset = 10,
+          },
+          documentation = cmp.config.window.bordered {
+            winhighlight = hl,
+          },
         },
       }
 
