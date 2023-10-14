@@ -872,7 +872,7 @@ local plugins = {
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
           },
-          ["<C-x>"] = cmp.mapping.confirm { select = true },
+          ["<C-y>"] = cmp.mapping.confirm { select = true },
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
