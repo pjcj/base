@@ -872,6 +872,12 @@ local plugins = {
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
           },
+          ["<C-x>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              return cmp.complete_common_string()
+            end
+            fallback()
+          end, { "i", "s" }),
           ["<C-y>"] = cmp.mapping.confirm { select = true },
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
