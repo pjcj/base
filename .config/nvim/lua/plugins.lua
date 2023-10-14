@@ -874,6 +874,23 @@ local plugins = {
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
           },
+          ["<Right>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              local gt = cmp.core.view.ghost_text_view
+              local c = require("cmp.config").get().experimental.ghost_text
+              if c and gt.entry then
+                local _, col = unpack(vim.api.nvim_win_get_cursor(0))
+                local line = vim.api.nvim_get_current_line()
+                local text = gt.text_gen(gt, line, col)
+                if #text > 0 then
+                  local next_char = text:sub(1, 1)
+                  feedkey(next_char, "n")
+                  return
+                end
+              end
+            end
+            fallback()
+          end, { "i", "s" }),
           ["<C-x>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               return cmp.complete_common_string()
