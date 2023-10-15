@@ -44,7 +44,7 @@ c.colors = {
   cursor_bg = "#dc322f",
   cursor_fg = "#001920",
   cursor_border = "#586e75",
-  compose_cursor = "#de860e",
+  compose_cursor = "#6dd374",
   selection_bg = "#f0a63f",
   selection_fg = "#001920",
   ansi = {
@@ -71,7 +71,7 @@ c.colors = {
 
 c.disable_default_key_bindings = true
 
-c.leader = { key = "s", mods = "CTRL", timeout_milliseconds = 2000 }
+c.leader = { key = ".", mods = "CTRL", timeout_milliseconds = 3000 }
 
 c.keys = {
   { key = "s", mods = "LEADER|CTRL", action = wezterm.action.SendKey { key = "s", mods = "CTRL" } },
