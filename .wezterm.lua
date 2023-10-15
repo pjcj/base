@@ -40,7 +40,7 @@ c.adjust_window_size_when_changing_font_size = false
 -- c.color_scheme = "Solarized Dark - Patched"
 c.colors = {
   background = "#001920",
-  foreground = "#93A1A1",
+  foreground = "#fff9c7",
   cursor_bg = "#dc322f",
   cursor_fg = "#001920",
   cursor_border = "#586e75",
@@ -48,24 +48,24 @@ c.colors = {
   selection_bg = "#f0a63f",
   selection_fg = "#001920",
   ansi = {
-    "#022731",
-    "#dc322f",
-    "#25ad2e",
-    "#b58900",
-    "#268bd2",
-    "#d33682",
-    "#2aa198",
-    "#eee8d5",
+    "#022731",  -- black
+    "#dc322f",  -- red
+    "#25ad2e",  -- green
+    "#b58900",  -- yellow
+    "#268bd2",  -- blue
+    "#d33682",  -- magenta
+    "#2aa198",  -- cyan
+    "#eee8d5",  -- white
   },
   brights = {
-    "#001920",
-    "#cb4b16",
-    "#586e75",
-    "#657b83",
-    "#839496",
-    "#6c71c4",
-    "#93a1a1",
-    "#fdf6e3",
+    "#001920",  -- bright black
+    "#cb4b16",  -- bright red
+    "#586e75",  -- bright green
+    "#657b83",  -- bright yellow
+    "#839496",  -- bright blue
+    "#6c71c4",  -- bright magenta
+    "#93a1a1",  -- bright cyan
+    "#fdf6e3",  -- bright white
   },
 }
 
