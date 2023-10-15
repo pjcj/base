@@ -1102,41 +1102,6 @@ local plugins = {
     },
     config = function()
       require("chatgpt").setup {
-        edit_with_instructions = {
-          diff = false,
-          keymaps = {
-            close = "<C-c>",
-            accept = "<C-y>",
-            toggle_diff = "<C-d>",
-            toggle_settings = "<C-o>",
-            cycle_windows = "<Tab>",
-            use_output_as_input = "<C-u>",
-          },
-        },
-        chat = {
-          keymaps = {
-            close = { "<C-c>" },
-            yank_last = "<C-y>",
-            yank_last_code = "<C-k>",
-            scroll_up = "<C-u>",
-            scroll_down = "<C-d>",
-            new_session = "<C-n>",
-            cycle_windows = "<Tab>",
-            cycle_modes = "<C-f>",
-            select_session = "<Space>",
-            rename_session = "r",
-            delete_session = "d",
-            draft_message = "<C-d>",
-            toggle_settings = "<C-o>",
-            toggle_message_role = "<C-r>",
-            toggle_system_role_open = "<C-s>",
-            stop_generating = "<C-x>",
-          },
-        },
-        popup_input = {
-          submit = "<C-y>",
-          submit_n = "<Enter>",
-        },
         openai_params = {
           model = "gpt-4",
           frequency_penalty = 0,
