@@ -511,6 +511,7 @@ local plugins = {
       require("conform.formatters.codespell").args = codespell_args
     end,
   },
+  { "chrisgrieser/nvim-rulebook" },
 
   {
     "ludovicchabant/vim-gutentags",
