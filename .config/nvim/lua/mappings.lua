@@ -686,7 +686,7 @@ wk.register({
   ["<leader>"] = {
     [" "] = {
       name = "+plugin",
-      c = { "ChatGPT", },
+      c = { "ChatGPT" },
       h = {
         name = "+hunk",
         r = { ":Gitsigns reset_hunk<cr>", "reset lines" },
