@@ -164,7 +164,6 @@ else
     $pip3 install --upgrade --user \
         thefuck \
         docker-compose \
-        powerline-status \
         mdformat-gfm
 
     npm install -g fixjson

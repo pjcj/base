@@ -68,6 +68,7 @@ c.colors = {
     "#fdf6e3",  -- bright white
   },
   indexed = {
+    [151] = "#ced4d4",
     [152] = "#00090c", -- darker than base03
     [153] = "#0e3c49", -- lighter than base02
     [154] = "#012028", -- lighter than base03
