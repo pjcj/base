@@ -273,6 +273,21 @@ wk.register {
         s = { ":Lazy sync<cr>", "sync" },
       },
       o = { "<cmd>Oil --float<cr>", "edit directory" },
+      r = {
+        name = "+linter rules",
+        i = {
+          function()
+            require("rulebook").ignoreRule()
+          end,
+          "ignore",
+        },
+        l = {
+          function()
+            require("rulebook").lookupRule()
+          end,
+          "lookupRule",
+        },
+      },
       t = {
         name = "+translate",
         d = {
