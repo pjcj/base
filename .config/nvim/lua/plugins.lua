@@ -147,6 +147,7 @@ local plugins = {
 
   {
     "folke/which-key.nvim",
+    version = "*",
     config = function()
       require("which-key").setup {
         window = {
