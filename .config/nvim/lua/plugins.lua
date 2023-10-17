@@ -1253,6 +1253,7 @@ local plugins = {
       exclude = {
         filetypes = { "startify" },
       },
+      scope = { show_exact_scope = true },
     },
     init = function()
       vim.api.nvim_create_autocmd({ "VimEnter" }, {
