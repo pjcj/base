@@ -22,7 +22,7 @@ elseif hostname == "mbp.localdomain" then
   c.font_size = 15
   c.command_palette_font_size = 24
   c.initial_cols = 222
-  c.initial_rows = 56
+  c.initial_rows = 57
 else
   c.font_size = 12
   c.command_palette_font_size = 20
