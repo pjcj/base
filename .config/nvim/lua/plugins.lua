@@ -1255,6 +1255,9 @@ local plugins = {
         filetypes = { "startify" },
       },
       scope = { show_exact_scope = true },
+      whitespace = {
+        remove_blankline_trail = true,
+      }
     },
     init = function()
       vim.api.nvim_create_autocmd({ "VimEnter" }, {
