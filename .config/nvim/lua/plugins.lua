@@ -1248,6 +1248,7 @@ local plugins = {
     opts = {
       indent = {
         char = "│",
+        tab_char = "╏",
         highlight = { "IblIndent" },
       },
       exclude = {
