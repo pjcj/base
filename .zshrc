@@ -1084,7 +1084,7 @@ fi
 zshrc_load_status "keychain"
 
 # Clear up after status display
-echo -n "\rzsh loaded                                                        "
+echo "\rzsh loaded                                                        "
 
 # Handle startup
 if [[ $(uname) == Darwin ]]; then
