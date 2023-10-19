@@ -22,7 +22,7 @@ elseif string.match(hostname, "mbp") then
   c.font_size = 15
   c.command_palette_font_size = 24
   c.initial_cols = 222
-  c.initial_rows = 57
+  c.initial_rows = 58
 else
   c.font_size = 12
   c.command_palette_font_size = 20
