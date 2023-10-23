@@ -77,6 +77,14 @@ vim.cmd [[
   map <F59>    <M-C-F11>
   map <F60>    <M-C-F12>
 
+  " for mac
+  nmap <M-5> <F5>
+  nmap <M-6> <F6>
+  nmap <M-8> <F7>
+  nmap <M-9> <F8>
+  nmap <M-7> <F9>
+  nmap <M-n> <F10>
+
   " Creates map mappings for <<
   " map <F61>    <M-S-F1>
   " map <F62>    <M-S-F2>
