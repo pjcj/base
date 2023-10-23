@@ -1,14 +1,17 @@
 # Default Theme
 # If changes made here does not take effect, then try to re-create the tmux session to force reload.
 
+export TMUX_POWERLINE_STATUS_JUSTIFICATION=left
+export TMUX_POWERLINE_STATUS_INTERVAL=5
+
 if patched_font_in_use; then
   TMUX_POWERLINE_SEPARATOR_LEFT_BOLD=""
-  TMUX_POWERLINE_SEPARATOR_LEFT_THIN=""
+  # TMUX_POWERLINE_SEPARATOR_LEFT_THIN=""
   TMUX_POWERLINE_SEPARATOR_RIGHT_BOLD=""
   TMUX_POWERLINE_SEPARATOR_RIGHT_THIN=""
 else
   TMUX_POWERLINE_SEPARATOR_LEFT_BOLD="◀"
-  TMUX_POWERLINE_SEPARATOR_LEFT_THIN="❮"
+  # TMUX_POWERLINE_SEPARATOR_LEFT_THIN="❮"
   TMUX_POWERLINE_SEPARATOR_RIGHT_BOLD="▶"
   TMUX_POWERLINE_SEPARATOR_RIGHT_THIN="❯"
 fi
@@ -81,8 +84,6 @@ if [ -z "$TMUX_POWERLINE_LEFT_STATUS_SEGMENTS" ]; then
     "hostname 180 156"
     "tmux_session_info 0 7"
     # "ifstat 30 255"
-    "ifstat_sys 153 174"
-    "lan_ip 0 7"
     # ${TMUX_POWERLINE_SEPARATOR_RIGHT_THIN}"
     # "wan_ip 24 255" \
     # "vcs_branch 29 88" \
@@ -96,8 +97,15 @@ fi
 if [ -z "$TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS" ]; then
   TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS=(
     #"earthquake 3 0" \
-    # "pwd 0 7"
+    "pwd 0 7"
+    # "vcs_branch 29 88"
+    # "vcs_compare 60 255"
+    # "vcs_staged 64 255"
+    # "vcs_modified 9 255"
+    # "vcs_others 245 0"
     "macos_notification_count 29 255"
+    "ifstat_sys 153 174"
+    "lan_ip 0 7"
     #"mailcount 9 255" \
     # "now_playing 234 37" \
     # "cpu 240 136"
