@@ -67,40 +67,6 @@ c.colors = {
     "#93a1a1",  -- bright cyan
     "#fdf6e3",  -- bright white
   },
-  indexed = {
-    [151] = "#ced4d4",
-    [152] = "#00090c", -- darker than base03
-    [153] = "#0e3c49", -- lighter than base02
-    [154] = "#012028", -- lighter than base03
-    [155] = "#ffdc79", -- peach
-    [156] = "#fff179", -- pale yellow
-    [157] = "#f0a63f", -- light yellow
-    [158] = "#de860e", -- light yellow
-    [159] = "#433200", -- dark yellow
-    [160] = "#7d2500", -- dark orange
-    [161] = "#ffacaa", -- light light light red
-    [162] = "#ff8784", -- light light red
-    [163] = "#f05a5c", -- light red
-    [164] = "#64110f", -- medium red
-    [165] = "#d37b79", -- light medium red
-    [166] = "#400200", -- dark red
-    [167] = "#2b0200", -- dark dark red
-    [168] = "#150100", -- dark dark dark red
-    [169] = "#c0c3ef", -- light violet
-    [170] = "#7c81e4", -- medium violet
-    [171] = "#323799", -- dark violet
-    [172] = "#0F1363", -- dark dark violet
-    [173] = "#04746c", -- dark cyan
-    [174] = "#9fcff2", -- light light blue
-    [175] = "#73b5e4", -- light blue
-    [176] = "#06568f", -- dark blue
-    [177] = "#023458", -- dark dark blue
-    [178] = "#6dd374", -- light green
-    [179] = "#25ad2e", -- a nice green for diffs (opposite of red)
-    [180] = "#017008", -- dark green
-    [181] = "#003203", -- dark dark green
-    [182] = "#859900", -- green
-  },
 }
 
 c.disable_default_key_bindings = true
