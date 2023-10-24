@@ -175,9 +175,4 @@ if [[ "$EDITOR" == "nvim" ]]; then
     # $EDITOR --headless "+TSUpdateSync" +qall
     go install github.com/nametake/golangci-lint-langserver@latest
     go install github.com/client9/misspell/cmd/misspell@latest
-    cd ~/.local/share/nvim/lazy/nvim-treesitter/queries/perl
-    rm *.scm
-    wget https://github.com/tree-sitter-perl/tree-sitter-perl/raw/master/queries/folds.scm
-    wget https://github.com/tree-sitter-perl/tree-sitter-perl/raw/master/queries/highlights.scm
-    wget https://github.com/tree-sitter-perl/tree-sitter-perl/raw/master/queries/injections.scm
 fi
