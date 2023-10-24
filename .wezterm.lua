@@ -99,6 +99,7 @@ c.colors = {
     [179] = "#25ad2e", -- a nice green for diffs (opposite of red)
     [180] = "#017008", -- dark green
     [181] = "#003203", -- dark dark green
+    [182] = "#859900", -- green
   },
 }
 
