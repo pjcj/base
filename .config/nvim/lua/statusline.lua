@@ -323,8 +323,8 @@ local separators = {
 }
 
 local vi_mode_colors = {
-  NORMAL        = "green",
-  OP            = "green",
+  NORMAL        = c.dgreen,
+  OP            = c.dgreen,
   INSERT        = "red",
   VISUAL        = "skyblue",
   BLOCK         = "skyblue",
@@ -333,9 +333,9 @@ local vi_mode_colors = {
   ENTER         = "cyan",
   MORE          = "cyan",
   SELECT        = "orange",
-  COMMAND       = "green",
-  SHELL         = "green",
-  TERM          = "green",
+  COMMAND       = c.dgreen,
+  SHELL         = c.dgreen,
+  TERM          = c.dgreen,
   NONE          = "yellow",
 }
 
