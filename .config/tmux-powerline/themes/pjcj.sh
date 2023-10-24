@@ -98,12 +98,12 @@ if [ -z "$TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS" ]; then
   TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS=(
     #"earthquake 3 0" \
     "pwd 0 7"
-    # "vcs_branch 29 88"
-    # "vcs_compare 60 255"
-    # "vcs_staged 64 255"
-    # "vcs_modified 9 255"
-    # "vcs_others 245 0"
-    "macos_notification_count 29 255"
+    "vcs_branch 155 0"
+    "vcs_compare 3 0"
+    "vcs_staged 1 7"
+    "vcs_modified 167 7"
+    "vcs_others 172 0"
+    "macos_notification_cout 29 255"
     "ifstat_sys 153 174"
     "lan_ip 0 7"
     #"mailcount 9 255" \
