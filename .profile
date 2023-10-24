@@ -34,7 +34,7 @@ export FONTSIZE=12
 # shellcheck disable=1091
 [ -r "$HOME/.profile.local" ] && . "$HOME/.profile.local"
 
-unset LANG
+# unset LANG
 : "${LANG:=en_GB.UTF-8}"
 LANGUAGE="$LANG"
 LC_ALL="$LANG"
