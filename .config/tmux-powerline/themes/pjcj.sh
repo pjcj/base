@@ -86,11 +86,6 @@ if [ -z "$TMUX_POWERLINE_LEFT_STATUS_SEGMENTS" ]; then
     # "ifstat 30 255"
     # ${TMUX_POWERLINE_SEPARATOR_RIGHT_THIN}"
     # "wan_ip 24 255" \
-    # "vcs_branch 29 88" \
-    #"vcs_compare 60 255" \
-    #"vcs_staged 64 255" \
-    #"vcs_modified 9 255" \
-    #"vcs_others 245 0" \
   )
 fi
 
