@@ -81,7 +81,7 @@ fi
 
 if [ -z "$TMUX_POWERLINE_LEFT_STATUS_SEGMENTS" ]; then
   TMUX_POWERLINE_LEFT_STATUS_SEGMENTS=(
-    "hostname 180 156"
+    "hostname 180 15"
     "tmux_session_info 0 7"
     # "ifstat 30 255"
     # ${TMUX_POWERLINE_SEPARATOR_RIGHT_THIN}"
@@ -98,8 +98,8 @@ if [ -z "$TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS" ]; then
   TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS=(
     #"earthquake 3 0" \
     "pwd 0 7"
-    "vcs_branch 180 156"
-    "vcs_compare 3 0"
+    "vcs_branch 180 15"
+    "vcs_compare 3 8"
     "vcs_staged 9 7"
     "vcs_modified 172 7"
     "vcs_others 176 7"
