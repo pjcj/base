@@ -10,7 +10,8 @@ run_segment() {
   stats=$("$cmd" -q -l 0 -v --interval "$TMUX_POWERLINE_STATUS_INTERVAL")
   if [ "$stats" != "" ]; then
     echo "$stats" | perl -pe 's/  +/ /g; s|(\d+)MB|int($1/1024)|e;' \
-      -e 's/(\d+\.\d\d)/sprintf "%.1f", $1/eg'
+      -e 's/[▕▏]//g;' \
+      -e 's/(\d+\.\d\d)/sprintf "%.1f", $1/eg;'
   fi
   return 0
 }
