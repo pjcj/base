@@ -188,8 +188,7 @@ local plugins = {
         },
         highlight = {
           enable = true,
-          disable = {
-          },
+          disable = {},
         },
         indent = { enable = false },
         refactor = {
@@ -729,6 +728,7 @@ local plugins = {
     end,
   },
   { "stevearc/dressing.nvim" },
+  { "gabrielpoca/replacer.nvim" },
 
   {
     "hrsh7th/nvim-cmp",
@@ -1245,7 +1245,7 @@ local plugins = {
       scope = { show_exact_scope = true },
       whitespace = {
         remove_blankline_trail = true,
-      }
+      },
     },
     init = function()
       vim.api.nvim_create_autocmd({ "VimEnter" }, {
