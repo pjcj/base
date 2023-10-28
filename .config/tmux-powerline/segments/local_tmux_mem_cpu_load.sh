@@ -7,7 +7,7 @@ run_segment() {
   fi
 
   local stats
-  stats=$("$cmd" -q -l 0 -v --interval "$TMUX_POWERLINE_STATUS_INTERVAL")
+  stats=$("$cmd" -q -l 0 -v --interval 15)
   if [ "$stats" != "" ]; then
     echo "$stats" | perl -pe 's/  +/ /g; s|(\d+)MB|int($1/1024)|e;' \
       -e 's/[▕▏]//g;' \

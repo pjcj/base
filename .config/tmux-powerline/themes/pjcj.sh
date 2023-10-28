@@ -106,7 +106,7 @@ if [ -z "$TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS" ]; then
     # "cpu 240 136"
     # "load #0e3c49 #9fcff2"
     "pwd 0 7 ${TMUX_POWERLINE_SEPARATOR_LEFT_BOLD} 0 7 right_disable"
-    "tmux_mem_cpu_load 0 7 $TMUX_POWERLINE_SEPARATOR_LEFT_BOLD 0 7 both_disable separator_disable"
+    "local_tmux_mem_cpu_load 0 7 $TMUX_POWERLINE_SEPARATOR_LEFT_BOLD 0 7 both_disable separator_disable"
     # "battery 137 127" \
     # "weather 37 255" \
     #"rainbarf 0 ${TMUX_POWERLINE_DEFAULT_FOREGROUND_COLOR}" \
