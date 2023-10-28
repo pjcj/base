@@ -82,11 +82,8 @@ fi
 
 if [ -z "$TMUX_POWERLINE_LEFT_STATUS_SEGMENTS" ]; then
   TMUX_POWERLINE_LEFT_STATUS_SEGMENTS=(
-    "hostname #017008 15"
-    "tmux_session_info 0 7"
-    # "ifstat 30 255"
-    # ${TMUX_POWERLINE_SEPARATOR_RIGHT_THIN}"
-    # "wan_ip 24 255" \
+    "local_hostname 0 15 $TMUX_POWERLINE_SEPARATOR_RIGHT_BOLD 0 7 both_disable separator_disable"
+    "tmux_session_info #0e3c49 7 $TMUX_POWERLINE_SEPARATOR_RIGHT_BOLD 0 7 right_disable"
   )
 fi
 
