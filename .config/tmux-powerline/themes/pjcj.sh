@@ -4,6 +4,7 @@
 export TMUX_POWERLINE_STATUS_JUSTIFICATION=left
 export TMUX_POWERLINE_STATUS_INTERVAL=5
 export TMUX_POWERLINE_STATUS_RIGHT_LENGTH=160
+export TMUX_POWERLINE_SEG_TIME_FORMAT="%R %Z"
 
 if patched_font_in_use; then
   TMUX_POWERLINE_SEPARATOR_LEFT_BOLD=""
@@ -89,28 +90,15 @@ fi
 
 if [ -z "$TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS" ]; then
   TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS=(
-    #"earthquake 3 0" \
     "vcs_branch #017008 15"
     "vcs_compare 3 8"
     "vcs_staged 9 7"
     "vcs_modified #0F1363 7"
     "vcs_others 4 7"
-    # "macos_notification_cout 29 255"
-    "ifstat_sys #0e3c49 #9fcff2"
-    "lan_ip brightblack 7"
-    #"mailcount 9 255" \
-    # "now_playing 234 37" \
-    # "cpu 240 136"
-    # "load #0e3c49 #9fcff2"
-    "pwd 0 7 ${TMUX_POWERLINE_SEPARATOR_LEFT_BOLD} 0 7 right_disable"
+    "ifstat_sys 0 7"
+    "lan_ip 8 7"
+    "pwd 0 7 $TMUX_POWERLINE_SEPARATOR_LEFT_BOLD 0 7 right_disable"
     "local_tmux_mem_cpu_load 0 7 $TMUX_POWERLINE_SEPARATOR_LEFT_BOLD 0 7 both_disable separator_disable"
-    # "battery 137 127" \
-    # "weather 37 255" \
-    #"rainbarf 0 ${TMUX_POWERLINE_DEFAULT_FOREGROUND_COLOR}" \
-    #"xkb_layout 125 117" \
-    # "date_day 235 136" \
-    # "date 235 136 ${TMUX_POWERLINE_SEPARATOR_LEFT_THIN}" \
-    # "time 235 136 ${TMUX_POWERLINE_SEPARATOR_LEFT_THIN}" \
-    #"utc_time 235 136 ${TMUX_POWERLINE_SEPARATOR_LEFT_THIN}" \
+    "time 0 7 $TMUX_POWERLINE_SEPARATOR_LEFT_BOLD 0 7 both_disable"
   )
 fi
