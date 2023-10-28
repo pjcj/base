@@ -99,8 +99,8 @@ if [ -z "$TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS" ]; then
     "vcs_modified #0F1363 7"
     "vcs_others 4 7"
     # "macos_notification_cout 29 255"
-    # "ifstat_sys #0e3c49 #9fcff2"
-    # "lan_ip 0 7"
+    "ifstat_sys #0e3c49 #9fcff2"
+    "lan_ip brightblack 7"
     #"mailcount 9 255" \
     # "now_playing 234 37" \
     # "cpu 240 136"
