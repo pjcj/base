@@ -312,6 +312,8 @@ c.mouse_bindings = {
   },
 }
 
+c.selection_word_boundary = " \t\n{}[]()\"'`┃"
+
 c.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 
 -- c.window_frame = {
