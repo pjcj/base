@@ -190,7 +190,7 @@ local plugins = {
           enable = true,
           disable = {},
         },
-        indent = { enable = false },
+        indent = { enable = true },
         refactor = {
           highlight_definitions = { enable = true },
         },
