@@ -428,7 +428,9 @@ local plugins = {
         "CursorHold",
       }, {
         callback = function(ev)
-          require "notify"(string.format("lint: %s", ev.event))
+          if ev.event == "CursorHold" then
+            require "notify"(string.format("lint: %s", ev.event))
+          end
           lint.try_lint()
         end,
       })
@@ -1252,9 +1254,8 @@ local plugins = {
     },
     init = function()
       vim.api.nvim_create_autocmd({ "VimEnter" }, {
-        callback = function(ev)
+        callback = function()
           vim.cmd ":IBLEnable"
-          require "notify"(string.format("ibl: %s", ev.event))
         end,
       })
     end,
