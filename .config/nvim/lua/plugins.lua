@@ -242,7 +242,10 @@ local plugins = {
     config = function()
       local notify = require "notify"
       vim.notify = notify
-      notify.setup { background_colour = require("local_defs").colour.base03 }
+      notify.setup {
+        background_colour = require("local_defs").colour.base03,
+        top_down = false,
+      }
     end,
   },
 
