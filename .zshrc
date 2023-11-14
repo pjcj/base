@@ -696,9 +696,14 @@ fi
 
 if which eza >&/dev/null; then
     f() {
-        eza -lagH --colour-scale --git --time-style=long-iso --icons \
-            --colour=always "$@"
+        eza -lagH \
+            --colour-scale=all --colour-scale-mode=gradient --colour=always \
+            --git --time-style=long-iso --icons \
+            "$@"
     }
+    export EZA_COLORS="xx=00;38;5;244"
+    export EZA_ICON_SPACING=2
+    export EZA_MIN_LUMINANCE=55
 fi
 
 [[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim
@@ -746,8 +751,6 @@ elif command -v gdircolors >/dev/null; then
 else
     echo "Cannot find dircolors"
 fi
-export EXA_COLORS="xx=00;38;5;244"
-export EXA_ICON_SPACING=2
 
 zshrc_load_status "external files"
 
