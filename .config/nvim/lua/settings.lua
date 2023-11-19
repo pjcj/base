@@ -18,7 +18,7 @@ vopt.formatoptions = "tcrqnljp"
 vopt.ignorecase    = true
 vopt.inccommand    = "split"
 vopt.list          = true
-vopt.listchars     = { tab = "» ", trail = "·", nbsp = "+" }
+vopt.listchars     = { tab = "» ", trail = "·", nbsp = "␣" }
 vopt.matchpairs    = vopt.matchpairs + { "<:>" }
 vopt.mouse         = "a"
 vopt.mousefocus    = true
