@@ -175,7 +175,6 @@ local plugins = {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
       "nvim-treesitter/nvim-treesitter-refactor",
-      "JoosepAlviste/nvim-ts-context-commentstring",
       "windwp/nvim-ts-autotag",
     },
     build = ":TSUpdate",
@@ -203,15 +202,21 @@ local plugins = {
             node_decremental = "<C-F6>",
           },
         },
-        context_commentstring = {
-          enable = true,
-          enable_autocmd = false,
-        },
         autotag = {
           enable = true,
         },
       }
     end,
+  },
+
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    config = function()
+      require("ts_context_commentstring").setup {
+        enable_autocmd = true,
+        ts_context_commentstring_module = true,
+      }
+    end
   },
 
   {
