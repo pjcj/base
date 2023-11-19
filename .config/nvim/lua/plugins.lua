@@ -1,3 +1,5 @@
+--# selene: allow(mixed_table)
+
 vim.g.mapleader = ","
 vim.opt.termguicolors = true
 
