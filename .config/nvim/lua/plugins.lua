@@ -218,7 +218,7 @@ local plugins = {
         enable_autocmd = true,
         ts_context_commentstring_module = true,
       }
-    end
+    end,
   },
 
   {
@@ -733,8 +733,7 @@ local plugins = {
       vim.cmd [[
         augroup telescope
           autocmd!
-          autocmd User TelescopePreviewerLoaded setlocal number
-          autocmd User TelescopePreviewerLoaded setlocal tabstop=2
+          autocmd User TelescopePreviewerLoaded setlocal number tabstop=2
         augroup end
       ]]
     end,
