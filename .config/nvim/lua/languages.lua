@@ -8,7 +8,7 @@ vim.cmd [[
 
 vim.cmd [[
   function! BufWinEnterFunc()
-    call v:lua.require'local_defs'.fn.set_buffer_settings()
+    call v:lua.require("local_defs").fn.set_buffer_settings()
   endfunction
 
   augroup buf_enter
