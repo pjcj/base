@@ -1,3 +1,5 @@
+--# selene: allow(mixed_table)
+
 vim.g.mapleader = ","
 
 local wk = require "which-key"
