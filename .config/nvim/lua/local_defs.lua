@@ -159,7 +159,9 @@ local_defs.fn.set_buffer_settings = function()
   vim.api.nvim_set_hl(0, "@lsp.type.comment", {})
 
   if ft == "go" or ft == "gomod" or ft == "make" then
-    lopt.listchars = { tab = "  ", trail = "·", nbsp = "+" }
+    local current_listchars = vim.opt.listchars:get()
+    current_listchars.tab = "  "
+    lopt.listchars = current_listchars
 
     local e = b.editorconfig
     if e == nil or e.indent_style == nil then
@@ -195,7 +197,9 @@ local_defs.fn.set_buffer_settings = function()
     return
   end
 
-  lopt.listchars = { tab = "» ", trail = "·", nbsp = "+" }
+  local current_listchars = vim.opt.listchars:get()
+  current_listchars.tab = "» "
+  lopt.listchars = current_listchars
   lopt.tabstop = 8
   lopt.expandtab = true
 
