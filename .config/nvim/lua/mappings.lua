@@ -26,6 +26,29 @@ local vtext_toggle = function()
   vim.diagnostic.config { virtual_text = vtext_on }
 end
 
+-- parse a Perl stack trace from the + register into the quickfix list
+local function load_perl_stack_trace()
+  -- Get the content of the + register (clipboard)
+  local clipboard_content = vim.fn.getreg "+"
+  local lines = vim.split(clipboard_content, "\n")
+  local quickfix_list = {}
+
+  for _, line in ipairs(lines) do
+    -- Perl stack trace line format: "at /path/to/file.pl line 123"
+    local filename, lnum = line:match "at (%S+) line (%d+)"
+    if filename and lnum then
+      table.insert(quickfix_list, {
+        filename = filename,
+        lnum = tonumber(lnum),
+        text = line,
+      })
+    end
+  end
+
+  vim.fn.setqflist(quickfix_list)
+  vim.api.nvim_command('copen')
+end
+
 vim.cmd [[
   map <F13>    <S-F1>
   map <F14>    <S-F2>
@@ -388,6 +411,10 @@ wk.register {
             "toggle summary",
           },
         },
+      },
+      p = {
+        name = "+perl",
+        s = { function() load_perl_stack_trace() end, "stack trace to qf" },
       },
     },
     f = {
