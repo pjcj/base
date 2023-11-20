@@ -740,6 +740,32 @@ local plugins = {
   },
   { "stevearc/dressing.nvim" },
   { "gabrielpoca/replacer.nvim" },
+  {
+    "kevinhwang91/nvim-bqf",
+    config = function()
+      require("bqf").setup {
+        preview = {
+          win_height = 30,
+          winblend = 0,
+        },
+        func_map = {
+          vsplit = "<C-s>",
+        },
+        -- filter = {
+        --   fzf = {
+        --     action_for = { ["ctrl-s"] = "split", ["ctrl-t"] = "tab drop" },
+        --     extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
+        --   },
+        -- },
+      }
+    end,
+  },
+  {
+    "yorickpeterse/nvim-pqf",
+    config = function()
+      require("pqf").setup {}
+    end,
+  },
 
   {
     "hrsh7th/nvim-cmp",
