@@ -281,7 +281,12 @@ wk.register {
         s = { ":Lazy sync<cr>", "sync" },
       },
       o = { "<cmd>Oil --float<cr>", "edit directory" },
-      q = { function() require("replacer").run() end, "quickfix replacer" },
+      q = {
+        function()
+          require("replacer").run()
+        end,
+        "quickfix replacer",
+      },
       r = {
         name = "+linter rules",
         i = {
