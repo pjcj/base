@@ -947,8 +947,8 @@ local plugins = {
         sources = {
           { name = "nvim_lua" },
           { name = "nvim_lsp_signature_help" },
-          os.getenv "OPENAI_API_KEY" and { name = "copilot" } or {},
-          os.getenv "OPENAI_API_KEY" and { name = "codeium" } or {},
+          vim.env.OPENAI_API_KEY and { name = "copilot" } or {},
+          vim.env.OPENAI_API_KEY and { name = "codeium" } or {},
           -- { name = "cmp_ai" },
           { name = "nvim_lsp" },
           {
