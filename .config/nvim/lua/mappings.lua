@@ -300,6 +300,11 @@ wk.register {
         o = { ":DiffviewOpen<cr>", "open" },
       },
       m = { ":MarkdownPreviewToggle<cr>", "markdown" },
+      n = {
+        name = "+neural",
+        n = { "<Plug>(neural_prompt)", "prompt" },
+        e = { "<Plug>(neural_explain)", "explain" },
+      },
       l = {
         name = "+lazy",
         h = { ":Lazy<cr>", "home" },
