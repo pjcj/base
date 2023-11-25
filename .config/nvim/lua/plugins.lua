@@ -1208,18 +1208,14 @@ local plugins = {
           ["+"] = "₊",
         },
         on_attach = function(bufnr)
-          local function map(mode, lhs, rhs, opts)
-            opts = vim.tbl_extend(
-              "force",
-              { noremap = true, silent = true },
-              opts or {}
-            )
-            vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+          local function map(mode, l, r, opts)
+            opts = opts or {}
+            opts.buffer = bufnr
+            vim.keymap.set(mode, l, r, opts)
           end
 
           -- Text object
-          map("o", "ih", ":<C-U>Gitsigns select_hunk<CR>")
-          map("x", "ih", ":<C-U>Gitsigns select_hunk<CR>")
+          map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
         end,
       }
     end,
