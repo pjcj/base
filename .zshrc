@@ -265,44 +265,44 @@ zstyle ":completion::complete:*" use-cache 1
 
 # Local completion
 
-compctl -K _which wh
-compctl -K _make  n
-compctl -K _git   g=git
-compctl -K _git   ga=git-add
-compctl -K _git   gb=git-branch
-compctl -K _git   gbl=git-blame
-compctl -K _git   gc=git-commit
-compctl -K _git   gca=git-commit
-compctl -K _git   gcae=git-commit
-compctl -K _git   gcp=git-cherry-pick
-compctl -K _git   gd=git-diff
-compctl -K _git   gds=git-diff
-compctl -K _git   gvd=git-diff
-compctl -K _git   gf=git-fetch
-compctl -K _git   gg=git-grep
-compctl -K _git   gl=git-log
-compctl -K _git   gm=git-merge
-compctl -K _git   gld=git-log
-compctl -K _git   gll=git-log
-compctl -K _git   gls=git-log
-compctl -K _git   glsa=git-log
-compctl -K _git   gh=git-checkout
-compctl -K _git   gho=git-origin-branch-move
-compctl -K _git   gp=git-push
-compctl -K _git   gpf=git-push
-compctl -K _git   gpo=git-push
-compctl -K _git   gpof=git-push
-compctl -K _git   gr=git-rebase
-compctl -K _git   gra=git-rebase
-compctl -K _git   grc=git-rebase
-compctl -K _git   grh=git-reset
-compctl -K _git   grs=git-restore
-compctl -K _git   gri=git-rebase
-compctl -K _git   gs=git-status
-compctl -K _git   gsh=git-show
-compctl -K _git   gw=git-worktree
-compctl -K _gh    ghub
-compctl -K _dzil  z=dzil
+compdef _which wh
+compdef _make  n
+compdef _git   g=git
+compdef _git   ga=git-add
+compdef _git   gb=git-branch
+compdef _git   gbl=git-blame
+compdef _git   gc=git-commit
+compdef _git   gca=git-commit
+compdef _git   gcae=git-commit
+compdef _git   gcp=git-cherry-pick
+compdef _git   gd=git-diff
+compdef _git   gds=git-diff
+compdef _git   gvd=git-diff
+compdef _git   gf=git-fetch
+compdef _git   gg=git-grep
+compdef _git   gl=git-log
+compdef _git   gm=git-merge
+compdef _git   gld=git-log
+compdef _git   gll=git-log
+compdef _git   gls=git-log
+compdef _git   glsa=git-log
+compdef _git   gh=git-checkout
+compdef _git   gho=git-origin-branch-move
+compdef _git   gp=git-push
+compdef _git   gpf=git-push
+compdef _git   gpo=git-push
+compdef _git   gpof=git-push
+compdef _git   gr=git-rebase
+compdef _git   gra=git-rebase
+compdef _git   grc=git-rebase
+compdef _git   grh=git-reset
+compdef _git   grs=git-restore
+compdef _git   gri=git-rebase
+compdef _git   gs=git-status
+compdef _git   gsh=git-show
+compdef _git   gw=git-worktree
+compdef _gh    ghub
+compdef _dzil  z=dzil
 
 _git-branch-full-delete() { __git_branch_names }
 zstyle ":completion:*:*:git:*" user-commands \
@@ -569,7 +569,7 @@ __tmux-sessions() {
     sessions=( ${${(f)"$(command tmux list-sessions)"}/:[ $'\t']##/:} )
     _describe -t sessions "sessions" sessions "$@"
 }
-compctl -K __tmux-sessions tm
+compdef __tmux-sessions tm
 
 __gwm() {
     local -a records=( ${(ps.\n\n.)"$(_call_program directories git worktree list --porcelain)"} )
@@ -593,7 +593,7 @@ done
 _wanted directories expl 'working tree' compadd -ld descriptions -S ' ' -f -M 'r:|/=* r:|=*' -a directories
 
 }
-compctl -K __gwm gwm
+compdef __gwm gwm
 
 zshrc_load_status "hashed directories"
 

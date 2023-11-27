@@ -8,4 +8,4 @@ function _tw() {
     local -a options
     eval "_arguments $(command tw -options)"
 }
-compctl -K _tw tw
+compdef _tw tw
