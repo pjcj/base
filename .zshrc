@@ -265,8 +265,10 @@ zstyle ":completion::complete:*" use-cache 1
 
 # Local completion
 
-compdef _which wh
-compdef _make  n
+compdef wh=which
+compdef n=make
+compdef z=dzil
+compdef _gh    ghub
 compdef _git   g=git
 compdef _git   ga=git-add
 compdef _git   gb=git-branch
@@ -301,8 +303,6 @@ compdef _git   gri=git-rebase
 compdef _git   gs=git-status
 compdef _git   gsh=git-show
 compdef _git   gw=git-worktree
-compdef _gh    ghub
-compdef _dzil  z=dzil
 
 _git-branch-full-delete() { __git_branch_names }
 zstyle ":completion:*:*:git:*" user-commands \
