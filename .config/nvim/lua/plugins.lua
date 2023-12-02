@@ -751,12 +751,16 @@ local plugins = {
         func_map = {
           vsplit = "<C-s>",
         },
-        -- filter = {
-        --   fzf = {
-        --     action_for = { ["ctrl-s"] = "split", ["ctrl-t"] = "tab drop" },
-        --     extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
-        --   },
-        -- },
+        filter = {
+          fzf = {
+            action_for = { ["ctrl-s"] = "vsplit" },
+            extra_opts = {
+              "--bind",
+              "ctrl-o:toggle-all",
+              "--inline-info",
+            },
+          },
+        },
       }
     end,
   },
@@ -766,6 +770,7 @@ local plugins = {
       require("pqf").setup {}
     end,
   },
+  { "junegunn/fzf" },
 
   {
     "hrsh7th/nvim-cmp",
