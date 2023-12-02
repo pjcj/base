@@ -32,4 +32,8 @@ vim.cmd [[
     autocmd!
     autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | execute 'OSCYankRegister +' | endif
   augroup end
+
+  augroup quickfix
+    autocmd FileType qf setlocal winheight=20
+  augroup end
 ]]
