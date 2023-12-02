@@ -4,16 +4,14 @@ vim.cmd [[
     autocmd TextYankPost * silent!
       \ lua vim.highlight.on_yank{ higroup="Cursor", timeout=1000 }
   augroup end
-]]
 
-vim.cmd [[
   function! BufWinEnterFunc()
     call v:lua.require("local_defs").fn.set_buffer_settings()
   endfunction
 
   augroup buf_enter
     autocmd!
-    autocmd BufWinEnter        * call BufWinEnterFunc()
+    autocmd BufWinEnter * call BufWinEnterFunc()
   augroup end
 
   augroup autowrite
@@ -28,4 +26,10 @@ vim.cmd [[
     autocmd BufNewFile,BufReadPost template/** set ft=tt2html
     autocmd BufNewFile,BufReadPost *.tt2       set ft=tt2html
     autocmd BufNewFile,BufReadPost *.tt        set ft=tt2html
+  augroup end
+
+  augroup osc
+    autocmd!
+    autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | execute 'OSCYankRegister +' | endif
+  augroup end
 ]]

@@ -54,10 +54,3 @@ if vim.fn.executable("rg") then
 else
   vopt.grepprg    = "git grep -n"
 end
-
-vim.cmd [[
-  augroup osc
-    autocmd!
-    autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '+' | execute 'OSCYankRegister +' | endif
-  augroup end
-]]
