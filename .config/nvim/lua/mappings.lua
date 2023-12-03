@@ -46,7 +46,7 @@ local function load_perl_stack_trace()
   end
 
   vim.fn.setqflist(quickfix_list)
-  vim.api.nvim_command('copen')
+  vim.api.nvim_command "copen"
 end
 
 vim.cmd [[
@@ -419,7 +419,12 @@ wk.register {
       },
       p = {
         name = "+perl",
-        s = { function() load_perl_stack_trace() end, "stack trace to qf" },
+        s = {
+          function()
+            load_perl_stack_trace()
+          end,
+          "stack trace to qf",
+        },
       },
     },
     f = {
