@@ -1537,7 +1537,7 @@ local plugins = {
   },
 
   {
-    "edluffy/specs.nvim",
+    "edluffy/specs.nvim", -- zooms in on cursor to show jumps
     config = function()
       local specs = require "specs"
       specs.setup {
