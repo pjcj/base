@@ -627,7 +627,13 @@ wk.register {
         },
         c = { gl.create_comment, "create comment" },
         d = { gl.toggle_discussions, "toggle discussions" },
+        m = { gl.create_multiline_comment, "create multiline comment" },
+        M = {
+          gl.move_to_discussion_tree_from_diagnostic,
+          "move to discussion tree from diagnostic",
+        },
         n = { gl.create_note, "create note" },
+        o = { gl.open_in_browser, "open in browser" },
         p = { gl.pipeline, "pipeline" },
         r = { gl.review, "review" },
         R = {
@@ -636,6 +642,7 @@ wk.register {
           d = { gl.delete_reviewer, "delete reviewer" },
         },
         s = { gl.summary, "summary" },
+        S = { gl.create_comment_suggestion, "create comment suggestion" },
         V = { gl.revoke, "revoke" },
       },
     },
