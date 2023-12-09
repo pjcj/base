@@ -853,6 +853,81 @@ local plugins = {
         )
       end
 
+      local buf_is_big = function(bufnr)
+        local max_filesize = 200 * 1024 -- 200 KB
+        local ok, stats =
+          pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))
+        if ok and stats and stats.size > max_filesize then
+          return true
+        else
+          return false
+        end
+      end
+
+      local default_sources = {
+        { name = "nvim_lua" },
+        { name = "nvim_lsp_signature_help" },
+        vim.env.OPENAI_API_KEY and { name = "copilot" } or {},
+        vim.env.OPENAI_API_KEY and { name = "codeium" } or {},
+        -- { name = "cmp_ai" },
+        { name = "nvim_lsp" },
+        {
+          name = "buffer",
+          max_item_count = 10,
+          option = {
+            get_bufnrs = function()
+              return vim.api.nvim_list_bufs()
+            end,
+            -- keywords or just words
+            keyword_pattern = [[\%(\k\+\|\w\+\)]],
+          },
+        },
+        { name = "tags", max_item_count = 10 },
+        { name = "async_path" },
+        { name = "git" },
+        {
+          name = "tmux",
+          max_item_count = 10,
+          option = {
+            all_panes = true,
+            label = "[tmux]",
+          },
+        },
+        { name = "calc" },
+        { name = "nerdfont" },
+        { name = "emoji" },
+        {
+          name = "dictionary",
+          keyword_length = 2,
+          max_item_count = 10,
+        },
+        { name = "cmdline" },
+      }
+
+      vim.api.nvim_create_autocmd("BufReadPre", {
+        callback = function(t)
+          local sources = default_sources
+          if buf_is_big(t.buf) then
+            local codeium_index = nil
+            for i, source in ipairs(sources) do
+              if source.name == "copilot" then
+                codeium_index = i + 1
+                break
+              end
+            end
+            if codeium_index then
+              table.remove(sources, codeium_index)
+            end
+          end
+          -- for i, source in ipairs(default_sources) do
+          --   print(i, source.name)
+          -- end
+          cmp.setup.buffer {
+            sources = sources,
+          }
+        end,
+      })
+
       local hl = "Normal:Normal,FloatBorder:Float,CursorLine:Visual,Search:None"
 
       cmp.setup {
@@ -948,43 +1023,6 @@ local plugins = {
               feedkey("<Plug>(vsnip-jump-prev)", "")
             end
           end, { "i", "s" }),
-        },
-        sources = {
-          { name = "nvim_lua" },
-          { name = "nvim_lsp_signature_help" },
-          vim.env.OPENAI_API_KEY and { name = "copilot" } or {},
-          vim.env.OPENAI_API_KEY and { name = "codeium" } or {},
-          -- { name = "cmp_ai" },
-          { name = "nvim_lsp" },
-          {
-            name = "buffer",
-            max_item_count = 10,
-            option = {
-              get_bufnrs = function()
-                return vim.api.nvim_list_bufs()
-              end,
-              -- keywords or just words
-              keyword_pattern = [[\%(\k\+\|\w\+\)]],
-            },
-          },
-          { name = "tags", max_item_count = 10 },
-          { name = "path" },
-          { name = "git" },
-          {
-            name = "tmux",
-            max_item_count = 10,
-            option = {
-              all_panes = true,
-              label = "[tmux]",
-            },
-          },
-          { name = "calc" },
-          { name = "emoji" },
-          {
-            name = "dictionary",
-            keyword_length = 2,
-            max_item_count = 10,
-          },
         },
         snippet = {
           expand = function(args)
