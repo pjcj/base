@@ -853,6 +853,17 @@ local plugins = {
         )
       end
 
+      local dict = require("cmp_dictionary")
+      dict.setup {
+        first_case_insensitive = true,
+      }
+      dict.switcher {
+        spelllang = {
+          en = vim.fn.expand "~/g/base/dict/en.dict",
+          de = vim.fn.expand "~/g/base/dict/de.dict",
+        },
+      }
+
       local buf_is_big = function(bufnr)
         local max_filesize = 200 * 1024 -- 200 KB
         local ok, stats =
