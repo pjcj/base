@@ -856,7 +856,7 @@ local plugins = {
         )
       end
 
-      local dict = require("cmp_dictionary")
+      local dict = require "cmp_dictionary"
       dict.setup {
         first_case_insensitive = true,
       }
