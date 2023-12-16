@@ -678,6 +678,7 @@ elif [[ $(uname) == FreeBSD ]]; then
 else
     if which dmidecode >&/dev/null; then
         (sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
+        ulimit -n 4096
     fi
     cp() { command cp -bv --backup=numbered "$@" }
     f()  { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
@@ -693,6 +694,8 @@ else
         s() { echo Cannot find open command; echo "$@" }
     fi
 fi
+
+[[ $ISVM == 1 ]] && ulimit -n 4096
 
 if which eza >&/dev/null; then
     f() {
