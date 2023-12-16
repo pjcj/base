@@ -677,8 +677,7 @@ elif [[ $(uname) == FreeBSD ]]; then
     LESS='--LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS'
 else
     if which dmidecode >&/dev/null; then
-        (sudo dmidecode -t system | grep -q VirtualBox) && ISVM=1
-        ulimit -n 4096
+        (sudo dmidecode -t system | grep -Eq 'VirtualBox|VMware') && ISVM=1
     fi
     cp() { command cp -bv --backup=numbered "$@" }
     f()  { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
