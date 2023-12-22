@@ -412,6 +412,7 @@ local plugins = {
       local lint = require "lint"
       lint.linters_by_ft = {
         docker = { "codespell", "typos", "hadolint" },
+        go = { "codespell", "typos" },
         html = { "codespell", "typos", "tidy" },
         javascript = { "codespell", "typos", "eslint" },
         json = { "codespell", "typos", "jsonlint" },
