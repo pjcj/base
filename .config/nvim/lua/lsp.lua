@@ -192,7 +192,8 @@ local function setup_servers()
     settings = {
       perlnavigator = {
         includePaths = split_env_var(os.getenv("LINT_PERL_PATHS") or "", ":"),
-        perlcriticEnabled = false,
+        perlcriticEnabled = vim.fn.filereadable(".perlcriticrc"),
+        perlcriticProfile = ".perlcriticrc",
         enableWarnings = false,
       },
     },
