@@ -302,8 +302,11 @@ wk.register {
       m = { ":MarkdownPreviewToggle<cr>", "markdown" },
       n = {
         name = "+neural",
-        n = { "<Plug>(neural_prompt)", "prompt" },
+        b = { "<Plug>(neural_buffer)", "buffer" },
+        c = { "<Plug>(neural_completion)", "completion" },
         e = { "<Plug>(neural_explain)", "explain" },
+        n = { "<Plug>(neural_prompt)", "prompt" },
+        s = { "<Plug>(neural_stop)", "stop" },
       },
       l = {
         name = "+lazy",
@@ -753,6 +756,14 @@ wk.register({
         s = { ":Gitsigns stage_hunk<cr>", "stage lines" },
       },
       k = { "highlight word" },
+      n = {
+        name = "+neural",
+        b = { "<Plug>(neural_buffer)", "buffer" },
+        c = { "<Plug>(neural_completion)", "completion" },
+        e = { "<Plug>(neural_explain)", "explain" },
+        n = { "<Plug>(neural_prompt)", "prompt" },
+        s = { "<Plug>(neural_stop)", "stop" },
+      },
       t = {
         name = "+translate",
         d = {
