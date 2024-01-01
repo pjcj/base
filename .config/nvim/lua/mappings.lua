@@ -304,9 +304,9 @@ wk.register {
         name = "+neural",
         b = { "<Plug>(neural_buffer)", "buffer" },
         c = { "<Plug>(neural_completion)", "completion" },
-        e = { "<Plug>(neural_explain)", "explain" },
         n = { "<Plug>(neural_prompt)", "prompt" },
         s = { "<Plug>(neural_stop)", "stop" },
+        x = { "<Plug>(neural_explain)", "explain" },
       },
       l = {
         name = "+lazy",
@@ -760,9 +760,9 @@ wk.register({
         name = "+neural",
         b = { "<Plug>(neural_buffer)", "buffer" },
         c = { "<Plug>(neural_completion)", "completion" },
-        e = { "<Plug>(neural_explain)", "explain" },
         n = { "<Plug>(neural_prompt)", "prompt" },
         s = { "<Plug>(neural_stop)", "stop" },
+        x = { "<Plug>(neural_explain)", "explain" },
       },
       t = {
         name = "+translate",
