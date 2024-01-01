@@ -302,11 +302,11 @@ wk.register {
       m = { ":MarkdownPreviewToggle<cr>", "markdown" },
       n = {
         name = "+neural",
-        b = { "<Plug>(neural_buffer)", "buffer" },
-        c = { "<Plug>(neural_completion)", "completion" },
-        n = { "<Plug>(neural_prompt)", "prompt" },
-        s = { "<Plug>(neural_stop)", "stop" },
-        x = { "<Plug>(neural_explain)", "explain" },
+        b = { "<Plug>(neural_buffer)", "buffer", mode = { "n", "v" } },
+        c = { "<Plug>(neural_completion)", "completion", mode = { "n", "v" } },
+        n = { "<Plug>(neural_prompt)", "prompt", mode = { "n", "v" } },
+        s = { "<Plug>(neural_stop)", "stop", mode = { "n", "v" } },
+        x = { "<Plug>(neural_explain)", "explain", mode = { "n", "v" } },
       },
       l = {
         name = "+lazy",
@@ -756,14 +756,7 @@ wk.register({
         s = { ":Gitsigns stage_hunk<cr>", "stage lines" },
       },
       k = { "highlight word" },
-      n = {
-        name = "+neural",
-        b = { "<Plug>(neural_buffer)", "buffer" },
-        c = { "<Plug>(neural_completion)", "completion" },
-        n = { "<Plug>(neural_prompt)", "prompt" },
-        s = { "<Plug>(neural_stop)", "stop" },
-        x = { "<Plug>(neural_explain)", "explain" },
-      },
+      n = { "neural" },
       t = {
         name = "+translate",
         d = {
