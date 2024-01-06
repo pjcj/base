@@ -85,6 +85,7 @@ local plugins = {
             GitSignsDeleteVirtLn = { bg = col.mantle, fg = c.mred },
             IblIndent = { fg = c.dred },
             IblScope = { fg = c.dorange },
+            Whitespace = { fg = c.red },
             LineNr = { fg = c.dblue },
             MatchParen = { bg = col.blue, fg = col.base },
             -- MatchParenCur = { bg = col.base, fg = col.blue },
