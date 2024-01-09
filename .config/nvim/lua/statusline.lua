@@ -144,28 +144,28 @@ local severity = vim.diagnostic.severity
 table.insert(components.active[1], {
   provider = "diagnostic_errors",
   enabled  = function() return lsp.diagnostics_exist(severity.ERROR) end,
-  hl       = { bg = c.base05, fg = "red" },
+  hl       = { bg = c.base05, fg = c.c_red },
   icon     = " E ",
 })
 
 table.insert(components.active[1], {
   provider = "diagnostic_warnings",
   enabled  = function() return lsp.diagnostics_exist(severity.WARN) end,
-  hl       = { bg = c.base05, fg = "yellow" },
+  hl       = { bg = c.base05, fg = c.c_yellow },
   icon     = " W ",
 })
 
 table.insert(components.active[1], {
   provider = "diagnostic_info",
   enabled  = function() return lsp.diagnostics_exist(severity.INFO) end,
-  hl       = { bg = c.base05, fg = "cyan" },
+  hl       = { bg = c.base05, fg = c.c_sky },
   icon     = " I ",
 })
 
 table.insert(components.active[1], {
   provider = "diagnostic_hints",
   enabled  = function() return lsp.diagnostics_exist(severity.HINT) end,
-  hl       = { bg = c.base05, fg = "skyblue" },
+  hl       = { bg = c.base05, fg = c.blue },
   icon     = " H ",
 })
 
