@@ -62,7 +62,7 @@ local lsp_sig_cfg = {
 --   }
 -- end
 
-local navic = require("nvim-navic")
+local navic = require "nvim-navic"
 local on_attach = function(client, bufnr)
   print("attach", client.name)
 
@@ -124,9 +124,9 @@ local function setup_servers()
       icons = {
         package_installed = "✓",
         package_pending = "➜",
-        package_uninstalled = "✗"
-      }
-    }
+        package_uninstalled = "✗",
+      },
+    },
   }
 
   local lsps = {
@@ -191,14 +191,14 @@ local function setup_servers()
   lspconfig.perlnavigator.setup {
     settings = {
       perlnavigator = {
-        includePaths = split_env_var(os.getenv("LINT_PERL_PATHS") or "", ":"),
-        perlcriticEnabled = vim.fn.filereadable(".perlcriticrc"),
+        includePaths = split_env_var(os.getenv "LINT_PERL_PATHS" or "", ":"),
+        perlcriticEnabled = vim.fn.filereadable ".perlcriticrc",
         perlcriticProfile = ".perlcriticrc",
         enableWarnings = false,
       },
     },
     on_attach = on_attach,
-    debounce_text_changes = 5000,  -- milliseconds
+    debounce_text_changes = 5000, -- milliseconds
   }
 
   lspconfig.tsserver.setup {
@@ -210,7 +210,7 @@ local function setup_servers()
       ts_utils.setup {}
       ts_utils.setup_client(client)
       on_attach(client, bufnr)
-    end
+    end,
   }
 
   lspconfig.volar.setup {
@@ -218,7 +218,7 @@ local function setup_servers()
       client.server_capabilities.document_formatting = false
       client.server_capabilities.document_range_formatting = false
       on_attach(client, bufnr)
-    end
+    end,
   }
 
   lspconfig.yamlls.setup {
@@ -327,8 +327,10 @@ local function filter(arr, func)
 end
 
 local function filter_diagnostics(diagnostic)
-  if diagnostic.source == "bash-language-server" and
-      string.match(diagnostic.message, "includeAllWorkspaceSymbols") then
+  if
+    diagnostic.source == "bash-language-server"
+    and string.match(diagnostic.message, "includeAllWorkspaceSymbols")
+  then
     return false
   end
 
@@ -342,14 +344,20 @@ local function filter_diagnostics(diagnostic)
   end
 
   -- Ignore false positives of subroutine redefined
-  if string.match(diagnostic.message, "Subroutine") and
-      string.match(diagnostic.message, "redefined at") then
+  if
+    string.match(diagnostic.message, "Subroutine")
+    and string.match(diagnostic.message, "redefined at")
+  then
     return false
   end
 
   -- Ignore false positive in CHECK in Devel::Cover
-  if string.match(diagnostic.message,
-      "Undefined subroutine &Devel::Cover::set_first_init_and_end called") then
+  if
+    string.match(
+      diagnostic.message,
+      "Undefined subroutine &Devel::Cover::set_first_init_and_end called"
+    )
+  then
     return false
   end
 
@@ -361,8 +369,7 @@ local function custom_on_publish_diagnostics(a, params, client_id, c, config)
   vim.lsp.diagnostic.on_publish_diagnostics(a, params, client_id, c, config)
 end
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  custom_on_publish_diagnostics, {}
-)
+vim.lsp.handlers["textDocument/publishDiagnostics"] =
+  vim.lsp.with(custom_on_publish_diagnostics, {})
 
 return M
