@@ -473,6 +473,7 @@ wk.register {
       b = { tb.buffers, "buffers" },
       c = { tb.commands, "commands" },
       d = { tb.lsp_definitions, "lsp definitions" },
+      D = { tb.diagnostics, "diagnostics" },
       e = { tb.resume, "resume" },
       f = { tb.builtin, "builtin" },
       F = { ":Telescope frecency workspace=CWD<cr>", "frecency" },
