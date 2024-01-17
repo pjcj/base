@@ -38,7 +38,7 @@ repositories:
 * [urlview](https://github.com/sigpipe/urlview) (extract URLs from text)
 * [shellcheck](https://github.com/koalaman/shellcheck) (shell linter)
 * [fzf](https://github.com/junegunn/fzf) (fuzzy finder)
-* [PathPicker](https://github.com/facebook/PathPicker) (file selecter)
+* [PathPicker](https://github.com/facebook/PathPicker) (file selector)
 * [htop](https://github.com/hishamhm/htop) (better top)
 * [hosts](https://github.com/StevenBlack/hosts) (safe hosts file)
 
@@ -48,7 +48,7 @@ plugins:
 * [zsh-completions](https://github.com/zsh-users/zsh-completions) (extra
   completions)
 * [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
-  (hightlighting on the command line)
+  (highlighting on the command line)
 * [zsh-dwim](https://github.com/oknowton/zsh-dwim) (predict next command with
   ^U)
 * [git-extras](https://github.com/tj/git-extras) (additional git commands)
@@ -149,7 +149,7 @@ following plugins:
 * [fzf](https://github.com/junegunn/fzf.vim) (fuzzy finder)
 * [denite](https://github.com/Shougo/denite.vim) (ctrl-p-like interface)
 * [denite-extra](https://github.com/chemzqm/denite-extra.vim) (extra sources)
-* [unite](https://github.com/Shougo/unite.vim) (for lagacy sources)
+* [unite](https://github.com/Shougo/unite.vim) (for legacy sources)
 * [neomru](https://github.com/Shougo/neomru.vim) (MRU for unite)
 * [unite-git](https://github.com/yuku-t/unite-git) (git in unite)
 * [unite-outline](https://github.com/Shougo/unite-outline) (outline for unite)
