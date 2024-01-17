@@ -3,16 +3,16 @@
 vim.g.mapleader = ","
 vim.opt.termguicolors = true
 
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system {
+  vim.fn.system({
     "git",
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
     "--branch=stable", -- latest stable release
     lazypath,
-  }
+  })
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -24,7 +24,7 @@ local plugins = {
     priority = 1000,
     config = function()
       local c = require("local_defs").colour
-      require("catppuccin").setup {
+      require("catppuccin").setup({
         color_overrides = {
           all = {
             -- stylua: ignore start
@@ -112,9 +112,9 @@ local plugins = {
             ["@text.warning"] = { bg = col.base, fg = c.yellow, bold = true },
           }
         end,
-      }
+      })
 
-      vim.cmd.colorscheme "catppuccin"
+      vim.cmd.colorscheme("catppuccin")
     end,
   },
 
@@ -126,13 +126,13 @@ local plugins = {
       "neovim/nvim-lspconfig",
     },
     config = function()
-      require("nvim-navic").setup {
+      require("nvim-navic").setup({
         separator = " >",
         depth_limit = 0,
         depth_limit_indicator = "..",
         safe_output = true,
         click = true,
-      }
+      })
     end,
   },
 
@@ -145,7 +145,7 @@ local plugins = {
       "linrongbin16/lsp-progress.nvim",
     },
     config = function()
-      require "statusline"
+      require("statusline")
     end,
   },
 
@@ -154,7 +154,7 @@ local plugins = {
     event = { "VimEnter" },
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
-      require("lsp-progress").setup {}
+      require("lsp-progress").setup({})
     end,
   },
 
@@ -162,7 +162,7 @@ local plugins = {
     "folke/which-key.nvim",
     version = "*",
     config = function()
-      require("which-key").setup {
+      require("which-key").setup({
         window = {
           border = "single",
         },
@@ -180,7 +180,7 @@ local plugins = {
             suggestions = 20,
           },
         },
-      }
+      })
     end,
   },
 
@@ -192,7 +192,7 @@ local plugins = {
     },
     build = ":TSUpdate",
     config = function()
-      require("nvim-treesitter.configs").setup {
+      require("nvim-treesitter.configs").setup({
         ensure_installed = "all",
         ignore_install = {
           -- "swift", -- requires glibc 2.28
@@ -218,17 +218,17 @@ local plugins = {
         autotag = {
           enable = true,
         },
-      }
+      })
     end,
   },
 
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
     config = function()
-      require("ts_context_commentstring").setup {
+      require("ts_context_commentstring").setup({
         enable_autocmd = true,
         ts_context_commentstring_module = true,
-      }
+      })
     end,
   },
 
@@ -238,14 +238,14 @@ local plugins = {
       "JoosepAlviste/nvim-ts-context-commentstring",
     },
     config = function()
-      require("nvim_comment").setup {
+      require("nvim_comment").setup({
         line_mapping = "-",
         comment_empty = false,
         hook = function()
           require("ts_context_commentstring.internal").update_commentstring()
         end,
-      }
-      local l = require "local_defs"
+      })
+      local l = require("local_defs")
       vim.api.nvim_set_keymap(
         "v",
         "-",
@@ -258,12 +258,12 @@ local plugins = {
   {
     "rcarriga/nvim-notify", -- ,fn
     config = function()
-      local notify = require "notify"
+      local notify = require("notify")
       vim.notify = notify
-      notify.setup {
+      notify.setup({
         background_colour = require("local_defs").colour.base03,
         top_down = false,
-      }
+      })
     end,
   },
 
@@ -278,13 +278,13 @@ local plugins = {
       "antoinemadec/FixCursorHold.nvim",
     },
     config = function()
-      vim.cmd [[
+      vim.cmd([[
         augroup lightbulb
           autocmd!
           autocmd CursorHold,CursorHoldI * lua require "nvim-lightbulb".update_lightbulb()
         augroup end
-      ]]
-      require("nvim-lightbulb").setup {
+      ]])
+      require("nvim-lightbulb").setup({
         sign = {
           enabled = false,
           priority = 1,
@@ -292,7 +292,7 @@ local plugins = {
         virtual_text = {
           enabled = true,
         },
-      }
+      })
     end,
   },
 
@@ -417,7 +417,7 @@ local plugins = {
   {
     "mfussenegger/nvim-lint",
     config = function()
-      local lint = require "lint"
+      local lint = require("lint")
       lint.linters_by_ft = {
         docker = { "codespell", "typos", "hadolint" },
         go = { "codespell", "typos" },
@@ -448,7 +448,7 @@ local plugins = {
       }, {
         callback = function(ev)
           if ev.event == "CursorHold" then
-            require "notify"(string.format("lint: %s", ev.event))
+            require("notify")(string.format("lint: %s", ev.event))
           end
           lint.try_lint()
         end,
@@ -479,7 +479,7 @@ local plugins = {
     version = "*",
     opts = {},
     config = function()
-      require("conform").setup {
+      require("conform").setup({
         formatters_by_ft = {
           javascript = { { "prettierd", "prettier" } }, -- run first
           json = { "fixjson" },
@@ -493,7 +493,7 @@ local plugins = {
           yaml = { "yamlfmt" }, -- yamlfix is too buggy
           ["*"] = { "codespell" },
         },
-      }
+      })
 
       require("conform.formatters.mdformat").args = {
         "--number",
@@ -557,7 +557,7 @@ local plugins = {
       "leoluz/nvim-dap-go",
     },
     config = function()
-      require("go").setup {
+      require("go").setup({
         goimport = "goimports",
         gofmt_args = {
           "--max-len=80",
@@ -614,7 +614,7 @@ local plugins = {
           -- The color of the hints
           highlight = "Comment",
         },
-      }
+      })
     end,
   },
 
@@ -627,16 +627,16 @@ local plugins = {
       "nvim-neotest/neotest-go",
     },
     config = function()
-      require("neotest").setup {
+      require("neotest").setup({
         adapters = {
-          require "neotest-go" {
+          require("neotest-go")({
             -- experimental = {
             --   test_table = true,
             -- },
             args = { "-count=1", "-timeout=60s" },
-          },
+          }),
         },
-      }
+      })
     end,
   },
 
@@ -659,10 +659,10 @@ local plugins = {
       "nvim-treesitter/nvim-treesitter",
     },
     config = function()
-      local refactoring = require "refactoring"
-      refactoring.setup {
-        installation_path = vim.fn.stdpath "data" .. "/dapinstall/",
-      }
+      local refactoring = require("refactoring")
+      refactoring.setup({
+        installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+      })
     end,
   },
 
@@ -686,10 +686,10 @@ local plugins = {
       "nvim-telescope/telescope-frecency.nvim",
     },
     config = function()
-      local telescope = require "telescope"
-      local actions = require "telescope.actions"
+      local telescope = require("telescope")
+      local actions = require("telescope.actions")
 
-      telescope.setup {
+      telescope.setup({
         defaults = {
           mappings = {
             i = {
@@ -735,19 +735,19 @@ local plugins = {
             auto_validate = false,
           },
         },
-      }
+      })
 
-      telescope.load_extension "fzf"
-      telescope.load_extension "refactoring"
-      telescope.load_extension "undo"
-      telescope.load_extension "frecency"
+      telescope.load_extension("fzf")
+      telescope.load_extension("refactoring")
+      telescope.load_extension("undo")
+      telescope.load_extension("frecency")
 
-      vim.cmd [[
+      vim.cmd([[
         augroup telescope
           autocmd!
           autocmd User TelescopePreviewerLoaded setlocal number tabstop=2
         augroup end
-      ]]
+      ]])
     end,
   },
   { "stevearc/dressing.nvim" },
@@ -755,7 +755,7 @@ local plugins = {
   {
     "kevinhwang91/nvim-bqf",
     config = function()
-      require("bqf").setup {
+      require("bqf").setup({
         preview = {
           win_height = 30,
           winblend = 0,
@@ -773,13 +773,13 @@ local plugins = {
             },
           },
         },
-      }
+      })
     end,
   },
   {
     "yorickpeterse/nvim-pqf",
     config = function()
-      require("pqf").setup {}
+      require("pqf").setup({})
     end,
   },
   { "junegunn/fzf" },
@@ -808,9 +808,9 @@ local plugins = {
       -- "tzachar/cmp-ai",
     },
     config = function()
-      require("cmp_nvim_lsp").setup {}
-      local cmp = require "cmp"
-      local lspkind = require "lspkind"
+      require("cmp_nvim_lsp").setup({})
+      local cmp = require("cmp")
+      local lspkind = require("lspkind")
       local compare = cmp.config.compare
 
       -- stylua: ignore start
@@ -853,7 +853,7 @@ local plugins = {
           and vim.api
               .nvim_buf_get_lines(0, line - 1, line, true)[1]
               :sub(col, col)
-              :match "%s"
+              :match("%s")
             == nil
       end
 
@@ -865,16 +865,16 @@ local plugins = {
         )
       end
 
-      local dict = require "cmp_dictionary"
-      dict.setup {
+      local dict = require("cmp_dictionary")
+      dict.setup({
         first_case_insensitive = true,
-      }
-      dict.switcher {
+      })
+      dict.switcher({
         spelllang = {
-          en = vim.fn.expand "~/g/base/dict/en.dict",
-          de = vim.fn.expand "~/g/base/dict/de.dict",
+          en = vim.fn.expand("~/g/base/dict/en.dict"),
+          de = vim.fn.expand("~/g/base/dict/de.dict"),
         },
-      }
+      })
 
       local buf_is_big = function(bufnr)
         local max_filesize = 120 * 1024 -- 120 KB
@@ -945,15 +945,15 @@ local plugins = {
           -- for i, source in ipairs(default_sources) do
           --   print(i, source.name)
           -- end
-          cmp.setup.buffer {
+          cmp.setup.buffer({
             sources = sources,
-          }
+          })
         end,
       })
 
       local hl = "Normal:Normal,FloatBorder:Float,CursorLine:Visual,Search:None"
 
-      cmp.setup {
+      cmp.setup({
         min_length = 1,
         preselect = cmp.PreselectMode.None,
         performance = {
@@ -963,7 +963,7 @@ local plugins = {
           max_view_entries = 15,
         },
         formatting = {
-          format = lspkind.cmp_format {
+          format = lspkind.cmp_format({
             mode = "symbol_text",
             maxwidth = 80,
             menu = {
@@ -990,7 +990,7 @@ local plugins = {
               })[entry.source.name] or 0
               return vim_item
             end,
-          },
+          }),
         },
         experimental = {
           native_menu = false,
@@ -1000,10 +1000,10 @@ local plugins = {
           ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
           ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
           ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-          ["<C-e>"] = cmp.mapping {
+          ["<C-e>"] = cmp.mapping({
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
-          },
+          }),
           ["<C-Right>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               local gt = cmp.core.view.ghost_text_view
@@ -1027,7 +1027,7 @@ local plugins = {
             end
             fallback()
           end, { "i", "s" }),
-          ["<C-y>"] = cmp.mapping.confirm { select = true },
+          ["<C-y>"] = cmp.mapping.confirm({ select = true }),
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
@@ -1071,15 +1071,15 @@ local plugins = {
           },
         },
         window = {
-          completion = cmp.config.window.bordered {
+          completion = cmp.config.window.bordered({
             winhighlight = hl,
             col_offset = 10,
-          },
-          documentation = cmp.config.window.bordered {
+          }),
+          documentation = cmp.config.window.bordered({
             winhighlight = hl,
-          },
+          }),
         },
-      }
+      })
 
       -- local cmp_ai = require('cmp_ai.config')
 
@@ -1114,7 +1114,7 @@ local plugins = {
       --   },
       -- })
 
-      require("cmp_dictionary").setup {
+      require("cmp_dictionary").setup({
         dic = {
           ["*"] = { "/usr/share/dict/words" },
           -- ["lua"] = "path/to/lua.dic",
@@ -1133,7 +1133,7 @@ local plugins = {
         -- async = false,
         -- capacity = 5,
         -- debug = false,
-      }
+      })
 
       -- Use buffer source for `/`.
       cmp.setup.cmdline("/", {
@@ -1162,7 +1162,7 @@ local plugins = {
       "hrsh7th/nvim-cmp",
     },
     config = function()
-      require("codeium").setup {}
+      require("codeium").setup({})
     end,
   },
 
@@ -1171,10 +1171,10 @@ local plugins = {
     cmd = "Copilot",
     event = "InsertEnter",
     config = function()
-      require("copilot").setup {
+      require("copilot").setup({
         suggestion = { enabled = false },
         panel = { enabled = false },
-      }
+      })
     end,
   },
   {
@@ -1193,7 +1193,7 @@ local plugins = {
       "nvim-telescope/telescope.nvim",
     },
     config = function()
-      require("chatgpt").setup {
+      require("chatgpt").setup({
         -- openai_params = {
         --   model = "gpt-4-32k",
         --   frequency_penalty = 0,
@@ -1211,7 +1211,7 @@ local plugins = {
         --   top_p = 1,
         --   n = 1,
         -- },
-      }
+      })
     end,
   },
 
@@ -1222,7 +1222,7 @@ local plugins = {
       "ElPiloto/significant.nvim",
     },
     config = function()
-      require("neural").setup {
+      require("neural").setup({
         source = {
           openai = {
             -- model = "gpt-3.5-turbo-instruct",
@@ -1230,7 +1230,7 @@ local plugins = {
             api_key = vim.env.OPENAI_API_KEY,
           },
         },
-      }
+      })
     end,
   },
 
@@ -1238,7 +1238,7 @@ local plugins = {
     "lewis6991/gitsigns.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
-      require("gitsigns").setup {
+      require("gitsigns").setup({
         signs = {
           add = { show_count = true, text = "+" },
           change = { show_count = true, text = "~" },
@@ -1283,7 +1283,7 @@ local plugins = {
           -- Text object
           map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
         end,
-      }
+      })
     end,
   },
 
@@ -1339,11 +1339,11 @@ local plugins = {
     "AckslD/nvim-neoclip.lua",
     dependencies = { "tami5/sqlite.lua", module = "sqlite" },
     config = function()
-      require("neoclip").setup {
+      require("neoclip").setup({
         enable_persistent_history = true,
-        db_path = vim.fn.stdpath "data" .. "/databases/neoclip.sqlite3",
+        db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
         default_register = '"',
-      }
+      })
     end,
   },
 
@@ -1369,7 +1369,7 @@ local plugins = {
     init = function()
       vim.api.nvim_create_autocmd({ "VimEnter" }, {
         callback = function()
-          vim.cmd ":IBLEnable"
+          vim.cmd(":IBLEnable")
         end,
       })
     end,
@@ -1420,25 +1420,25 @@ local plugins = {
   {
     "rareitems/hl_match_area.nvim",
     config = function()
-      require("hl_match_area").setup {
+      require("hl_match_area").setup({
         n_lines_to_search = 500,
         highlight_in_insert_mode = true,
         delay = 500,
-      }
+      })
     end,
   },
 
   {
     "cohama/lexima.vim",
     config = function()
-      vim.cmd [[
+      vim.cmd([[
         call lexima#add_rule({"char": '"', "at": '\%#\(\w\|\$\)'})
         call lexima#add_rule({"char": "'", "at": '\%#\(\w\|\$\)'})
         call lexima#add_rule({"char": '`', "at": '\%#\(\w\|\$\)'})
         call lexima#add_rule({"char": '(', "at": '\%#\(\w\|\$\)'})
         call lexima#add_rule({"char": '[', "at": '\%#\(\w\|\$\)'})
         call lexima#add_rule({"char": '{', "at": '\%#\(\w\|\$\)'})
-      ]]
+      ]])
     end,
   },
 
@@ -1446,7 +1446,7 @@ local plugins = {
     "kylechui/nvim-surround",
     -- tag = "*",
     config = function()
-      require("nvim-surround").setup {}
+      require("nvim-surround").setup({})
     end,
   },
 
@@ -1471,33 +1471,33 @@ local plugins = {
   {
     "axieax/urlview.nvim", -- ,fu ,fU
     config = function()
-      require("urlview").setup {
+      require("urlview").setup({
         default_picker = "telescope",
         default_action = "clipboard",
-      }
+      })
     end,
   },
 
   {
     "kevinhwang91/nvim-hlslens",
     config = function()
-      require("hlslens").setup {}
+      require("hlslens").setup({})
     end,
   },
 
   {
     "stevearc/overseer.nvim",
     config = function()
-      require("overseer").setup {}
+      require("overseer").setup({})
     end,
   },
 
   {
     "petertriho/nvim-scrollbar",
     config = function()
-      local l = require "local_defs"
+      local l = require("local_defs")
       local c = l.colour
-      require("scrollbar").setup {
+      require("scrollbar").setup({
         handle = {
           color = c.ddblue,
         },
@@ -1526,22 +1526,22 @@ local plugins = {
           "TermLeave",
           "WinLeave",
         },
-      }
-      require("scrollbar.handlers.search").setup {}
+      })
+      require("scrollbar.handlers.search").setup({})
 
-      vim.cmd [[
+      vim.cmd([[
         hi default link HlSearchNear SpellCap
         hi default link HlSearchLens SpellLocal
         hi default link HlSearchLensNear SpellRare
         hi default link HlSearchFloat Search
-      ]]
+      ]])
     end,
   },
 
   {
     "sidebar-nvim/sidebar.nvim",
     config = function()
-      local sidebar = require "sidebar-nvim"
+      local sidebar = require("sidebar-nvim")
       local opts = {
         open = false,
         sections = { "git", "diagnostics", "buffers", "symbols" },
@@ -1564,7 +1564,7 @@ local plugins = {
       "folke/which-key.nvim",
     },
     config = function()
-      require("symbols-outline").setup {
+      require("symbols-outline").setup({
         width = 40,
         auto_close = true,
         -- keymaps = { -- These keymaps can be a string or a table for multiple keys
@@ -1581,7 +1581,7 @@ local plugins = {
         --   unfold_all = "E",
         --   fold_reset = "R",
         -- },
-      }
+      })
     end,
   },
 
@@ -1591,17 +1591,17 @@ local plugins = {
       "nvim-tree/nvim-web-devicons", -- optional, for file icon
     },
     config = function()
-      require("nvim-tree").setup {
+      require("nvim-tree").setup({
         hijack_directories = { enable = false },
-      }
+      })
     end,
   },
 
   {
     "edluffy/specs.nvim", -- zooms in on cursor to show jumps
     config = function()
-      local specs = require "specs"
-      specs.setup {
+      local specs = require("specs")
+      specs.setup({
         show_jumps = true,
         min_jump = 5,
         popup = {
@@ -1615,8 +1615,8 @@ local plugins = {
         },
         ignore_filetypes = {},
         ignore_buftypes = { nofile = true },
-      }
-      local l = require "local_defs"
+      })
+      local l = require("local_defs")
       vim.api.nvim_set_keymap(
         "n",
         "ä",
@@ -1629,19 +1629,19 @@ local plugins = {
   {
     "tzachar/highlight-undo.nvim",
     config = function()
-      require("highlight-undo").setup {
+      require("highlight-undo").setup({
         hlgroup = "Cursor",
         duration = 1500,
-      }
+      })
     end,
   },
 
   {
     "gen740/SmoothCursor.nvim",
     config = function()
-      require("smoothcursor").setup {
+      require("smoothcursor").setup({
         priority = 1,
-      }
+      })
     end,
   },
 
@@ -1659,7 +1659,7 @@ local plugins = {
   {
     "RaafatTurki/hex.nvim",
     config = function()
-      require("hex").setup {}
+      require("hex").setup({})
     end,
   },
 }
