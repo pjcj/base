@@ -706,6 +706,13 @@ wk.register {
     },
     t = {
       name = "+toggle",
+      -- C = {
+      --   function()
+      --     require("null-ls").toggle "codespell"
+      --   end,
+      --   "codespell",
+      -- },
+      c = { ":TSContextToggle<cr>", "context" },
       g = {
         name = "+git",
         b = { ":Gitsigns toggle_current_line_blame<cr>", "blame" },
@@ -715,12 +722,6 @@ wk.register {
         n = { ":Gitsigns toggle_numhl<cr>", "num hl" },
         s = { ":Gitsigns toggle_signs<cr>", "signs" },
       },
-      -- c = {
-      --   function()
-      --     require("null-ls").toggle "codespell"
-      --   end,
-      --   "codespell",
-      -- },
       h = { ":TSBufToggle highlight<cr>", "treesitter highlight" },
       o = { ":SymbolsOutline<cr>", "symbols" },
       s = {
