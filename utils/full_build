@@ -6,14 +6,13 @@ gobase() { cd ~/g/base || exit 1; }
 
 cd ~
 
-if [ ! -e .tmux.conf ]; then
-    [[ -e .profile ]] && ! [[ -e .profile.local ]] && mv .profile .profile.local
-    ln -s g/base/{utils,.abcde.conf,.gitconfig,.gitignore_global,.profile} ~
-    ln -s g/base/{.urlview,.vimrc,.Xdefaults,.vim,.nvim,.tmux.conf,.tigrc} ~
-    [[ -d ~/.config ]] || mkdir ~/.config
-    ln -s ~/g/base/.config/* ~/.config
-    ( cd ~ && ln -s g/base/.zshrc* g/base/.zshenv . )
-fi
+[[ -e .profile ]] && ! [[ -e .profile.local ]] && mv .profile .profile.local
+ln -sf g/base/{utils,.abcde.conf,.gitconfig,.gitignore_global,.profile} .
+ln -sf g/base/{.urlview,.vimrc,.Xdefaults,.vim,.nvim,.tmux.conf,.tigrc} .
+ln -sf g/base/{.gitconfig.lazy,.zshenv} .
+ln -sf g/base/.zshrc* .
+[[ -d ~/.config ]] || mkdir ~/.config
+ln -sf ~/g/base/.config/* ~/.config
 
 [[ -e ~/.ssh/rc      ]] || ln -s ~/g/base/.ssh/rc ~/.ssh
 [[ -e ~/.ssh/config  ]] || cp ~/g/base/.ssh/config ~/.ssh
