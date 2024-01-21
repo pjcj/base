@@ -227,11 +227,20 @@ local plugins = {
               ["af"] = "@function.outer",
               ["if"] = "@function.inner",
               ["ac"] = "@class.outer",
-              -- You can optionally set descriptions to the mappings (used in the desc parameter of
-              -- nvim_buf_set_keymap) which plugins like which-key display
-              ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-              -- You can also use captures from other query groups like `locals.scm`
-              ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+              -- You can optionally set descriptions to the mappings (used in
+              -- the desc parameter of nvim_buf_set_keymap) which plugins like
+              -- which-key display
+              ["ic"] = {
+                query = "@class.inner",
+                desc = "Select inner part of a class region",
+              },
+              -- You can also use captures from other query groups like
+              -- `locals.scm`
+              ["as"] = {
+                query = "@scope",
+                query_group = "locals",
+                desc = "Select language scope",
+              },
             },
             -- You can choose the select mode (default is charwise 'v')
             --
@@ -245,10 +254,10 @@ local plugins = {
               ["@function.outer"] = "V", -- linewise
               ["@class.outer"] = "<c-v>", -- blockwise
             },
-            -- If you set this to `true` (default is `false`) then any textobject is
-            -- extended to include preceding or succeeding whitespace. Succeeding
-            -- whitespace has priority in order to act similarly to eg the built-in
-            -- `ap`.
+            -- If you set this to `true` (default is `false`) then any
+            -- textobject is extended to include preceding or succeeding
+            -- whitespace. Succeeding whitespace has priority in order to act
+            -- similarly to eg the built-in `ap`.
             --
             -- Can also be a function which gets passed a table with the keys
             -- * query_string: eg '@function.inner'
@@ -258,7 +267,7 @@ local plugins = {
           },
         },
         autotag = {
-          enable = true,  -- closes tags automatically (eq html)
+          enable = true, -- closes tags automatically (eq html)
         },
       })
       require("treesitter-context").setup({
@@ -268,7 +277,7 @@ local plugins = {
         line_numbers = true,
         multiline_threshold = 20, -- Maximum number of lines to show for a single context
         trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-        mode = "cursor",  -- Line used to calculate context. Choices: 'cursor', 'topline'
+        mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
         -- Separator between context and content. Should be a single character string, like '-'.
         -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
         separator = nil,
