@@ -169,3 +169,5 @@
     relative-paths                = true
 [include]
     path = ~/.gitconfig.local
+[includeIf "gitdir:**/lazy/**"]
+    path = ~/.gitconfig.lazy
