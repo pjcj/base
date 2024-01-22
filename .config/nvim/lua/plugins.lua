@@ -930,11 +930,10 @@ local plugins = {
         )
       end
 
-      local dict = require("cmp_dictionary")
-      dict.setup({
+      require("cmp_dictionary").setup({
         first_case_insensitive = true,
         paths = {
-          -- vim.fn.expand("~/g/base/dict/en.dict"),
+          vim.fn.expand("~/g/base/dict/en.dict"),
           -- vim.fn.expand("~/g/base/dict/de.dict"),
         },
       })
