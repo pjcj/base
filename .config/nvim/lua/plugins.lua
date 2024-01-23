@@ -1680,7 +1680,14 @@ local plugins = {
     config = function()
       require("smoothcursor").setup({
         priority = 1,
+        fancy = { enable = true },
+        show_last_positions = "enter",
       })
+      vim.fn.sign_define("smoothcursor_v", { text = " " })
+      vim.fn.sign_define("smoothcursor_V", { text = "" })
+      vim.fn.sign_define("smoothcursor_i", { text = "" })
+      vim.fn.sign_define("smoothcursor_�", { text = "" })
+      vim.fn.sign_define("smoothcursor_R", { text = "󰊄" })
     end,
   },
 
