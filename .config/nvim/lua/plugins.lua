@@ -484,17 +484,13 @@ local plugins = {
     config = function()
       local lint = require("lint")
       lint.linters_by_ft = {
-        docker = { "codespell", "typos", "hadolint" },
-        go = { "codespell", "typos" },
-        html = { "codespell", "typos", "tidy" },
-        javascript = { "codespell", "typos", "eslint" },
-        json = { "codespell", "typos", "jsonlint" },
-        lua = { "codespell", "typos" },
-        markdown = { "codespell", "typos", "markdownlint" },
-        perl = { "codespell", "typos" },
-        rst = { "codespell", "typos", "rstlint" },
-        sh = { "codespell", "typos" },
-        yaml = { "codespell", "typos", "yamllint" },
+        docker = { "hadolint" },
+        html = { "tidy" },
+        javascript = { "eslint" },
+        json = { "jsonlint" },
+        markdown = { "markdownlint" },
+        rst = { "rstlint" },
+        yaml = { "yamllint" },
       }
 
       local codespell_args = { "--builtin", "clear,rare,informal,usage,names" }
@@ -516,6 +512,8 @@ local plugins = {
             require("notify")(string.format("lint: %s", ev.event))
           end
           lint.try_lint()
+          lint.try_lint("codespell")
+          lint.try_lint("typos")
         end,
       })
     end,
