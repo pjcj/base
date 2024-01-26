@@ -1312,6 +1312,7 @@ local plugins = {
           [9] = "₉",
           ["+"] = "₊",
         },
+        attach_to_untracked = false,
         on_attach = function(bufnr)
           local function map(mode, l, r, opts)
             opts = opts or {}
