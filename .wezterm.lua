@@ -11,6 +11,7 @@ c.term = "wezterm"
 if hostname == "T52U" then
   c.front_end = "WebGpu"
   c.webgpu_power_preference = "HighPerformance"
+  c.max_fps = 120
 
   c.font = wezterm.font("Inconsolata NF")
   c.font_size = 15
