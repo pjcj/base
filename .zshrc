@@ -789,11 +789,18 @@ if [[ -e ~/.plenv ]] then
     eval "$(plenv init - zsh)"
 fi
 
-if [[ $(uname -s) = Darwin ]]; then
-    PATH="/usr/local/opt/node@14/bin:$PATH:~/Library/Python/3.9/bin"
-    LDFLAGS="-L/usr/local/opt/node@14/lib"
-    CPPFLAGS="-I/usr/local/opt/node@14/include"
+zshrc_load_status "nvm"
+if [[ -d $(brew --prefix nvm) ]] then
+    export NVM_DIR=~/.config/nvm
+    mkdir -p $NVM_DIR
+    load $(brew --prefix nvm)/nvm.sh
 fi
+
+# if [[ $(uname -s) = Darwin ]]; then
+#     PATH="/usr/local/opt/node@14/bin:$PATH:~/Library/Python/3.9/bin"
+#     LDFLAGS="-L/usr/local/opt/node@14/lib"
+#     CPPFLAGS="-I/usr/local/opt/node@14/include"
+# fi
 
 zshrc_load_status "fzf"
 
