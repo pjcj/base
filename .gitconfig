@@ -124,6 +124,7 @@
 [push]
     default             = current
     followTags          = true
+    useForceIfIncludes  = true
 [status]
     showUntrackedFiles  = all
 [rerere]
