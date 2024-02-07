@@ -21,6 +21,10 @@
   verbose                       = true
 [fetch]
   writeCommitGraph              = true
+[rebase]
+  rebaseMerges                  = true
+  updateRefs                    = true
+  instructionFormat             = %an (%ar)  %s
 [merge]
   ff                            = only
   stat                          = true
