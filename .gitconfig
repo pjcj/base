@@ -1,78 +1,83 @@
 [user]
-  name               = Paul Johnson
-  email              = paul@pjcj.net
+  name                = Paul Johnson
+  email               = paul@pjcj.net
 [core]
-  pager              = delta
-  whitespace         = trailing-space,space-before-tab
-  autocrlf           = input
-  excludesfile       = ~/.gitignore_global
-  commitGraph        = true
+  pager               = delta
+  whitespace          = trailing-space,space-before-tab
+  autocrlf            = input
+  excludesfile        = ~/.gitignore_global
+  commitGraph         = true
 [pack]
-  threads            = 0
+  threads             = 0
 [init]
-  defaultBranch      = main
+  defaultBranch       = main
 [diff]
-  renamelimit        = 0
-  renames            = copies
-  mnemonicprefix     = true
-  algorithm          = histogram
-  colorMoved         = default
+  renamelimit         = 0
+  renames             = copies
+  mnemonicprefix      = true
+  algorithm           = histogram
+  colorMoved          = default
 [commit]
-  verbose            = true
+  verbose             = true
 [fetch]
-  writeCommitGraph   = true
+  writeCommitGraph    = true
 [merge]
-  ff                 = only
-  stat               = true
-  tool               = nvimdiff
-  conflictstyle      = diff3
+  ff                  = only
+  stat                = true
+  tool                = nvimdiff
+  conflictstyle       = zdiff3
 [merge "keep_ours"]
-  name               = always keep our version during merge
-  driver             = true
+  name                = always keep our version during merge
+  driver              = true
 [mergetool "nvimdiff"]
-  layout             = "LOCAL,BASE,REMOTE / MERGED + BASE,LOCAL + BASE,REMOTE + (LOCAL/BASE/REMOTE),MERGED"
+  layout              = "LOCAL,BASE,REMOTE / MERGED + BASE,LOCAL + BASE,REMOTE + (LOCAL/BASE/REMOTE),MERGED"
 [pull]
-  ff                 = only
+  ff                  = only
 [push]
-  default            = current
-  followTags         = true
-  autoSetupRemote    = true
-  useForceIfIncludes = true
+  default             = current
+  followTags          = true
+  autoSetupRemote     = true
+  useForceIfIncludes  = true
 [interactive]
-  diffFilter         = delta --color-only
+  diffFilter          = delta --color-only
 [status]
-  showUntrackedFiles = all
+  showUntrackedFiles  = all
 [rerere]
-  enabled            = true
-  autoupdate         = true
+  enabled             = true
+  autoupdate          = true
+[blame]
+  markUnblamableLines = true
+  markIgnoredLines    = true
+[grep]
+  patternType         = perl
 [github]
-  user               = pjcj
+  user                = pjcj
 [url "git://github.com/"]
-  insteadOf          = github:
+  insteadOf           = github:
 [hub]
-  protocol           = ssh
+  protocol            = ssh
 [color]
-  ui                 = auto
+  ui                  = auto
 [color.grep]
-  context            = blue
-  filename           = "#3f86dc"
-  function           = yellow
-  linenumber         = "#833652"
-  match              = "#f0c53f"
-  separator          = magenta
+  context             = blue
+  filename            = "#3f86dc"
+  function            = yellow
+  linenumber          = "#833652"
+  match               = "#f0c53f"
+  separator           = magenta
 [color "diff"]
-  meta               = yellow
-  commit             = green
-  frag               = magenta
-  old                = "#dc322f"
-  new                = "#25ad2e"
-  whitespace         = blue reverse
-  newMoved           = "#f0c53f"
+  meta                = yellow
+  commit              = green
+  frag                = magenta
+  old                 = "#dc322f"
+  new                 = "#25ad2e"
+  whitespace          = blue reverse
+  newMoved            = "#f0c53f"
 [color "diff-highlight"]
-  oldNormal          = "#dc322f"
-  newNormal          = "#25ad2e"
-  oldHighlight       = "#ff8166 #400200"
-  newHighlight       = "#4dbf77 #003203"
+  oldNormal           = "#dc322f"
+  newNormal           = "#25ad2e"
+  oldHighlight        = "#ff8166 #400200"
+  newHighlight        = "#4dbf77 #003203"
 [delta]
   commit-style                  = green
   file-decoration-style         = yellow box
@@ -186,6 +191,6 @@
     --pretty='format:  %h -> { %p }' \"$@\" | \
     sed 's/[0-9a-f][0-9a-f]*/\"&\"/g'; echo '}'; }; f"
 [include]
-  path               = ~/.gitconfig.local
+  path = ~/.gitconfig.local
 [includeIf "gitdir:lazy/"]
-  path               = ~/.gitconfig.lazy
+  path = ~/.gitconfig.lazy
