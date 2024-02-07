@@ -1,174 +1,191 @@
 [user]
-    name                = Paul Johnson
-    email               = paul@pjcj.net
-[color]
-    ui                  = auto
-[color.grep]
-    context             = blue
-    filename            = "#3f86dc"
-    function            = yellow
-    linenumber          = "#833652"
-    match               = "#f0c53f"
-    separator           = magenta
-[color "diff"]
-    meta                = yellow
-    commit              = green
-    frag                = magenta
-    old                 = "#dc322f"
-    new                 = "#25ad2e"
-    whitespace          = blue reverse
-    newMoved            = "#f0c53f"
-[color "diff-highlight"]
-    oldNormal           = "#dc322f"
-    newNormal           = "#25ad2e"
-    oldHighlight        = "#ff8166 #400200"
-    newHighlight        = "#4dbf77 #003203"
-[diff-so-fancy]
-    markEmptyLines      = true
-    stripLeadingSymbols = true
+  name               = Paul Johnson
+  email              = paul@pjcj.net
 [core]
-    pager               = delta
-    whitespace          = trailing-space,space-before-tab
-    autocrlf            = input
-    excludesfile        = ~/.gitignore_global
-    commitGraph         = true
-[interactive]
-    diffFilter          = delta --color-only
+  pager              = delta
+  whitespace         = trailing-space,space-before-tab
+  autocrlf           = input
+  excludesfile       = ~/.gitignore_global
+  commitGraph        = true
 [pack]
-    threads             = 0
-[diff]
-    renamelimit         = 0
-    renames             = copies
-    mnemonicprefix      = true
-    algorithm           = histogram
-    colorMoved          = default
-[mergetool "vim_mergetool"]
-    cmd                 = nvim -f -c "MergetoolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
-    trustExitCode       = true
-[mergetool "vimdiff3"]
-    cmd                 = nvim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
-[mergetool "vimdiff"]
-    path = nvim
-[merge]
-    ff                  = only
-    stat                = true
-    tool                = vim_mergetool
-    conflictstyle       = diff3
-[merge "keep_ours"]
-    name                = always keep our version during merge
-    driver              = true
-[alias]
-    git                 = !exec git
-    g                   = !exec git
-    distclean           = clean -dxf
-    st                  = status -sb
-    ci                  = commit
-    co                  = checkout
-    br                  = branch
-    bc                  = branch-current
-    bfd                 = branch-full-delete
-    tfd                 = tag-full-delete
-    alias               = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
-    lc                  = log ORIG_HEAD.. --stat --no-merges
-    whatis              = show -s --pretty='tformat:%h (%s, %ad)' --date=short
-    graphviz            = "!f() { echo 'digraph git {'; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g'; echo '}'; }; f"
-    ll                  = log --graph --topo-order --pretty=format:'%C("#833652")%h%Creset -%C("#f0c53f")%d%C("#9599dc") %s %C("#3f86dc")(%ad) %C("#687e85")%an%Creset' --date=relative
-    lgemail             = log --graph --topo-order --pretty=format:'%C("#833652")%h%Creset -%C("#f0c53f")%d%C("#9599dc") %s %C("#3f86dc")(%ad) %C("#687e85")%ae%Creset' --date=relative
-    lge                 = log --graph --topo-order --pretty=format:'%C("#833652")%h%Creset -%C("#f0c53f")%d%C("#9599dc") %s %C("#3f86dc")(%ad) %C("#687e85")%an <%ae>%Creset' --date=relative
-    lla                 = "!f() { git ll --all; }; f"
-    lgm                 = "!f() { git ll $( git reflog | awk '{print $1}' ); }; f"
-    lgr                 = "!f() { git ll $( git fsck --no-reflog | awk '/dangling commit/ {print $3}' ); }; f"
-    lgn                 = "!f() { git log --graph --topo-order --pretty=format:'%Cred%H%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --date=relative $@ | git name-rev --stdin --name-only; }; f | less"
-    vgc                 = repack -f -a -d --depth=250 --window=250
-    nvgc                = !ionice -n7 nice -n20 git vgc
-    fullgc              = "!f() { nice git gc && nice git repack -Ad --threads=0; }; f"
-    amend               = commit -a --amend -C HEAD
-    diffwords           = diff --word-diff
-    bl                  = blame -wMC
-    latest              = for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname:short)  %(authorname)'
-    ignore              = !git update-index --assume-unchanged
-    unignore            = !git update-index --no-assume-unchanged
-    ignored             = !git ls-files -v | grep "^[[:lower:]]"
-    bmv                 = branch -f
-    omv                 = origin-branch-move
-    omvo                = "!f() { git origin-branch-move $1 && git checkout -q $1; }; f"
-    bmvp                = "!f() { git bmv $1 $2 && git push origin --force-with-lease $1; }; f"
-    # git nd [[[[year] month] day] hour]
-    nd                  = "!f() { git commit --amend --no-edit --date=$(git --no-pager show --format='%ai' | head -1 |  perl -e '@n = reverse qq(@ARGV) =~ /(\\d+)/g; @d = <STDIN> =~ /(\\d+)/g; printf q(%04d-%02d-%02dT%02d:%02d:%02d), $n[3] // $d[0], $n[2] // $d[1], $n[1] // $d[2], $n[0] // $d[3], rand 60, rand 60' $@); }; f"
-    churn               = !git log --all -M -C --name-only --format='format:' "$@" | sort | grep -v '^$' | uniq -c | sort | awk 'BEGIN {print "count,file"} {print $1 ", " $2}' | sort -rn | less
-    # git change-commits GIT_COMMITTER_NAME "old name" "new name"
-    change-commits      = "!f() { VAR1=$1; VAR='$'$1; OLD=$2; NEW=$3; echo -n \"Are you sure for replace $VAR $OLD => $NEW ? (Y/N) \";read OK;if [ \"$OK\" = 'Y' ] ; then shift 3; git filter-branch --env-filter \"if [ \\\"${VAR}\\\" = '$OLD' ]; then export $VAR1='$NEW';echo 'to $NEW'; fi\" $@; fi;}; f"
-    rm-untracked        = "!f() { git status --porcelain | grep '??' | awk '{print $2}' | xargs rm; }; f"
-    lp = "!git ll --color=always \"$@\" \
-        | fzf --ansi -m --no-sort --reverse --tiebreak=index --preview-window=down --height=100%  \
-        --preview \"(grep -o '[a-f0-9]\\{7\\}' | head -1 | xargs -I % sh -c 'git -c core.pager=cat show --color=never % | delta --width=$(tput cols)') <<< {}\" #"
-    lpr = "!git ll --color=always \"$@\" \
-        | fzf --ansi -m --no-sort --reverse --tiebreak=index --preview-window=right:60% --height=100%  \
-        --preview \"(grep -o '[a-f0-9]\\{7\\}' | head -1 | xargs -I % sh -c 'git -c core.pager=cat show --color=never % | delta --width=$(expr $(tput cols) \\* 6 / 10)') <<< {}\" #"
-    bl = blame -wMC
-    lg = "!f() { \
-        local f=\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad)\"; \
-        f=\"$f %C(blue)<%an>%Creset\"; \
-        git log --graph --pretty=format:\"$f\" \
-        --abbrev-commit --date=relative --date-order \"$@\"; \
-    }; f"
-    lga = "!f() { git lg --all; }; f"
-[commit]
-    verbose             = true
-[fetch]
-    writeCommitGraph    = true
-[merge]
-    ff                  = false
-[pull]
-    ff                  = only
-[push]
-    default             = current
-    followTags          = true
-    useForceIfIncludes  = true
-[status]
-    showUntrackedFiles  = all
-[rerere]
-    enabled             = true
-    autoupdate          = true
-[github]
-    user                = pjcj
-[url "git://github.com/"]
-    insteadOf           = github:
-[ghq]
-    root                = ~/g/ghq
-[hub]
-    protocol            = ssh
+  threads            = 0
 [init]
-    defaultBranch       = main
-[delta]
-    commit-style                  = green
-    file-decoration-style         = yellow box
-    file-style                    = yellow
-    hunk-header-decoration-style  = blue box
-    hunk-header-style             = file line-number blue
-    line-numbers-left-format      = {nm:^5}
-    line-numbers-left-style       = blue
-    line-numbers-minus-style      = "#dc322f" dim
-    line-numbers-plus-style       = "#25ad2e" dim
-    line-numbers-right-format     = │{np:^5}
-    line-numbers-right-style      = blue
-    line-numbers                  = true
-    line-numbers-zero-style       = "#0E3C49"
-    minus-emph-style              = "#ff8166" "#400200"
-    minus-empty-line-marker-style = normal
-    minus-non-emph-style          = "#dc322f"
-    minus-style                   = "#dc322f"
-    plus-emph-style               = "#4dbf77" "#003203"
-    plus-empty-line-marker-style  = normal
-    plus-non-emph-style           = "#25ad2e"
-    plus-style                    = "#25ad2e"
-    syntax-theme                  = Solarized (dark)
-    tabs                          = 2
-    whitespace-error-style        = reverse blue
-    zero-style                    = normal
-    side-by-side                  = true
-    relative-paths                = true
+  defaultBranch      = main
+[diff]
+  renamelimit        = 0
+  renames            = copies
+  mnemonicprefix     = true
+  algorithm          = histogram
+  colorMoved         = default
+[commit]
+  verbose            = true
+[fetch]
+  writeCommitGraph   = true
+[merge]
+  ff                 = only
+  stat               = true
+  tool               = nvimdiff
+  conflictstyle      = diff3
+[merge "keep_ours"]
+  name               = always keep our version during merge
+  driver             = true
+[mergetool "nvimdiff"]
+  layout             = "LOCAL,BASE,REMOTE / MERGED + BASE,LOCAL + BASE,REMOTE + (LOCAL/BASE/REMOTE),MERGED"
+[pull]
+  ff                 = only
+[push]
+  default            = current
+  followTags         = true
+  autoSetupRemote    = true
+  useForceIfIncludes = true
+[interactive]
+  diffFilter         = delta --color-only
+[status]
+  showUntrackedFiles = all
+[rerere]
+  enabled            = true
+  autoupdate         = true
+[github]
+  user               = pjcj
+[url "git://github.com/"]
+  insteadOf          = github:
+[hub]
+  protocol           = ssh
 [include]
-    path = ~/.gitconfig.local
+  path               = ~/.gitconfig.local
 [includeIf "gitdir:lazy/"]
-    path = ~/.gitconfig.lazy
+  path               = ~/.gitconfig.lazy
+[color]
+  ui                 = auto
+[color.grep]
+  context            = blue
+  filename           = "#3f86dc"
+  function           = yellow
+  linenumber         = "#833652"
+  match              = "#f0c53f"
+  separator          = magenta
+[color "diff"]
+  meta               = yellow
+  commit             = green
+  frag               = magenta
+  old                = "#dc322f"
+  new                = "#25ad2e"
+  whitespace         = blue reverse
+  newMoved           = "#f0c53f"
+[color "diff-highlight"]
+  oldNormal          = "#dc322f"
+  newNormal          = "#25ad2e"
+  oldHighlight       = "#ff8166 #400200"
+  newHighlight       = "#4dbf77 #003203"
+[delta]
+  commit-style                  = green
+  file-decoration-style         = yellow box
+  file-style                    = yellow
+  hunk-header-decoration-style  = blue box
+  hunk-header-style             = file line-number blue
+  line-numbers-left-format      = {nm:^5}
+  line-numbers-left-style       = blue
+  line-numbers-minus-style      = "#dc322f" dim
+  line-numbers-plus-style       = "#25ad2e" dim
+  line-numbers-right-format     = │{np:^5}
+  line-numbers-right-style      = blue
+  line-numbers                  = true
+  line-numbers-zero-style       = "#0E3C49"
+  minus-emph-style              = "#ff8166" "#400200"
+  minus-empty-line-marker-style = normal
+  minus-non-emph-style          = "#dc322f"
+  minus-style                   = "#dc322f"
+  plus-emph-style               = "#4dbf77" "#003203"
+  plus-empty-line-marker-style  = normal
+  plus-non-emph-style           = "#25ad2e"
+  plus-style                    = "#25ad2e"
+  syntax-theme                  = Solarized (dark)
+  tabs                          = 2
+  whitespace-error-style        = reverse blue
+  zero-style                    = normal
+  side-by-side                  = true
+  relative-paths                = true
+[alias]
+  git    = !exec git
+  g      = !exec git
+  dclean = clean -dxf
+  st     = status -sb
+  ci     = commit
+  co     = checkout
+  br     = branch
+  bc     = branch --show-current
+  bfd    = branch-full-delete
+  tfd    = tag-full-delete
+  alias  = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | \
+             sort
+  whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+  vgc    = repack -f -a -d --depth=250 --window=250
+  nvgc   = !ionice -n7 nice -n20 git vgc
+  fullgc = "!f() { nice git gc && nice git repack -Ad --threads=0; }; f"
+  amend  = commit -a --amend -C HEAD
+  bl     = blame -wMC
+  latest = for-each-ref --sort=-committerdate \
+             --format='%(committerdate:short) %(refname:short)  %(authorname)'
+  bmv    = branch -f
+  bmvp   = "!f() { git bmv $1 $2 && \
+             git push origin --force-with-lease $1; }; f"
+  omv    = origin-branch-move
+  omvo   = "!f() { git origin-branch-move $1 && git checkout -q $1; }; f"
+  bl     = blame -wMC
+  lgm    = "!f() { git ll $( git reflog | awk '{print $1}' ); }; f"
+  lgr    = "!f() { git ll $( git fsck --no-reflog | \
+             awk '/dangling commit/ {print $3}' ); }; f"
+  lla    = ll --all
+  lga    = lg --all
+  ll = "!f() { \
+    local f=\"%C(#833652)%h%Creset -%C(#f0c53f)%d%C(#9599dc) %s\"; \
+    f=\"$f %C(#3f86dc)(%ad) %C(#687e85)%an%Creset\"; \
+    git log --graph --topo-order --pretty=format:\"$f\" \
+      --date=relative --date-order \"$@\"; \
+  }; f"
+  lle = "!f() { \
+    local f=\"%C(#833652)%h%Creset -%C(#f0c53f)%d%C(#9599dc) %s\"; \
+    f=\"$f %C(#3f86dc)(%ad) %C(#687e85)%an <%ae>%Creset\"; \
+    git log --graph --topo-order --pretty=format:\"$f\" \
+      --date=relative --date-order \"$@\"; \
+  }; f"
+  lg = "!f() { \
+    local f=\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad)\"; \
+    f=\"$f %C(blue)<%an>%Creset\"; \
+    git log --graph --pretty=format:\"$f\" \
+      --date=relative --date-order \"$@\"; \
+  }; f"
+  # git nd [[[[year] month] day] hour]
+  nd  = "!f() { git commit --amend --no-edit --date=$(git --no-pager show \
+    --format='%ai' | head -1 |  perl -e '@n = reverse qq(@ARGV) =~ /(\\d+)/g; \
+    @d = <STDIN> =~ /(\\d+)/g; printf q(%04d-%02d-%02dT%02d:%02d:%02d), \
+    $n[3] // $d[0], $n[2] // $d[1], $n[1] // $d[2], $n[0] // $d[3], \
+    rand 60, rand 60' $@); }; f"
+  churn = !git log --all -M -C --name-only --format='format:' "$@" | sort | \
+    grep -v '^$' | uniq -c | sort | \
+    awk 'BEGIN {print "count,file"} {print $1 ", " $2}' | sort -rn | less
+  # git change-commits GIT_COMMITTER_NAME "old name" "new name"
+  change-commits = "!f() { VAR1=$1; VAR='$'$1; OLD=$2; NEW=$3; \
+    echo -n \"Are you sure for replace $VAR $OLD => $NEW ? (Y/N) \"; read OK; \
+    if [ \"$OK\" = 'Y' ] ; then shift 3; \
+    git filter-branch --env-filter \
+      \"if [ \\\"${VAR}\\\" = '$OLD' ]; then \
+      export $VAR1='$NEW'; echo 'to $NEW'; fi\" \
+    $@; fi;}; f"
+  rm-untracked  = "!f() { git status --porcelain | grep '??' | \
+    awk '{print $2}' | xargs rm; }; f"
+  lp = "!git ll --color=always \"$@\" | \
+    fzf --ansi -m --no-sort --reverse --tiebreak=index --preview-window=down \
+    --height=100%  --preview \"(grep -o '[a-f0-9]\\{7\\}' | head -1 | \
+    xargs -I % sh -c 'git -c core.pager=cat show --color=never % | \
+    delta --width=$(tput cols)') <<< {}\" #"
+  lpr = "!git ll --color=always \"$@\" | \
+    fzf --ansi -m --no-sort --reverse --tiebreak=index \
+    --preview-window=right:60% --height=100% \
+    --preview \"(grep -o '[a-f0-9]\\{7\\}' | head -1 | \
+    xargs -I % sh -c 'git -c core.pager=cat show --color=never % | \
+    delta --width=$(expr $(tput cols) \\* 6 / 10)') <<< {}\" #"
+  # git graphviz | dot -Tpdf >| /tmp/g.pdf
+  graphviz = "!f() { echo 'digraph git {'; git log \
+    --pretty='format:  %h -> { %p }' \"$@\" | \
+    sed 's/[0-9a-f][0-9a-f]*/\"&\"/g'; echo '}'; }; f"
