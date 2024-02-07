@@ -51,10 +51,6 @@
   insteadOf          = github:
 [hub]
   protocol           = ssh
-[include]
-  path               = ~/.gitconfig.local
-[includeIf "gitdir:lazy/"]
-  path               = ~/.gitconfig.lazy
 [color]
   ui                 = auto
 [color.grep]
@@ -189,3 +185,7 @@
   graphviz = "!f() { echo 'digraph git {'; git log \
     --pretty='format:  %h -> { %p }' \"$@\" | \
     sed 's/[0-9a-f][0-9a-f]*/\"&\"/g'; echo '}'; }; f"
+[include]
+  path               = ~/.gitconfig.local
+[includeIf "gitdir:lazy/"]
+  path               = ~/.gitconfig.lazy
