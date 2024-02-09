@@ -24,7 +24,7 @@
 [rebase]
   rebaseMerges                  = true
   updateRefs                    = true
-  instructionFormat             = %an (%ar)  %s
+  instructionFormat             = %an (%ai)  %s
 [merge]
   ff                            = only
   stat                          = true
