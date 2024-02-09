@@ -480,7 +480,7 @@ gpu()     { git push --set-upstream origin $(git branch --show-current) }
 gpf()     { git push --force-with-lease "$@" }
 gpo()     { git push origin "$@" }
 gpof()    { git push origin --force-with-lease "$@" }
-gr()      { git rebase --rebase-merges "$@" }
+gr()      { git rebase "$@" }
 gra()     { git rebase --abort "$@" }
 grc()     { git rebase --continue "$@" }
 grh()     { git reset HEAD "$@" }
