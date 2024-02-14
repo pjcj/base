@@ -1,3 +1,25 @@
+[files]
+  extend-exclude = [ ".codespell" ]
+  ignore-hidden = false
+
 [default.extend-words]
-importas = "importas"
-nd = "nd"
+  importas = "importas"
+  nd = "nd"
+
+[default.extend-identifiers]
+  bui = "bui"
+  iterm2_shell_integration = "iterm2_shell_integration"
+  LESS_TERMCAP_ue = "LESS_TERMCAP_ue"
+
+[default]
+
+extend-ignore-words-re = [
+]
+
+extend-ignore-identifiers-re = [
+]
+
+extend-ignore-re = [
+  '"[^"]+"\n\n__END__\n\n',     # quotes
+  '::ProhibitMultipleWiths\b',  # perl critic
+]
