@@ -157,6 +157,10 @@ if [ $EUID -ne 0 ]; then
         eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
     [ -e /usr/local/bin/brew ] && \
         eval $(/usr/local/bin/brew shellenv)
+    [ -e /opt/homebrew/bin/brew ] && \
+        eval $(/opt/homebrew/bin/brew shellenv)
+    [ -e /opt/homebrew/bin/brew ] && \
+        eval $(/opt/homebrew/bin/brew shellenv)
 fi
 
 fpath=(
