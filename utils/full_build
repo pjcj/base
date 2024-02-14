@@ -64,7 +64,7 @@ if [[ "$(uname)" == Darwin ]]; then
         brew upgrade --cask
         brew bundle dump --file=Brewfile --force
     else
-        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         brew bundle install --file=Brewfile
     fi
 
