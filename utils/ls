@@ -5,7 +5,8 @@ if [ -t 1 ]; then
         eval $(dircolors -b ~/g/base/dircolours)
     elif [ $(uname) = Darwin ]; then
         eval $(gdircolors -b ~/g/base/dircolours)
-        exec /usr/local/bin/gls "$@"
+        [[ -e /usr/local/bin/gls ]] && exec /usr/local/bin/gls "$@"
+        exec /opt/homebrew/opt/coreutils/libexec/gnubin/ls "$@"
     fi
 fi
 
