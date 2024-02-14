@@ -196,5 +196,3 @@
     sed 's/[0-9a-f][0-9a-f]*/\"&\"/g'; echo '}'; }; f"
 [include]
   path = ~/.gitconfig.local
-[includeIf "gitdir:lazy/"]
-  path = ~/.gitconfig.lazy
