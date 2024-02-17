@@ -332,7 +332,13 @@ wk.register {
           function()
             require("rulebook").lookupRule()
           end,
-          "lookupRule",
+          "lookup rule",
+        },
+        y = {
+          function()
+            require("rulebook").yankDiagnosticCode()
+          end,
+          "yank diagnostic code",
         },
       },
       t = {
