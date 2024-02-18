@@ -56,6 +56,13 @@ bat cache --build
 
 mkdir -p ~/.local/share/nvim/backup
 
+create_wezterm_terminfo() {
+    tempfile=$(mktemp) \
+        && curl -o $tempfile https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo \
+        && tic -x -o ~/.terminfo $tempfile \
+        && rm $tempfile
+}
+
 if [[ "$(uname)" == Darwin ]]; then
     if which brew >&/dev/null; then
         brew update
@@ -67,10 +74,7 @@ if [[ "$(uname)" == Darwin ]]; then
         brew bundle install --file=Brewfile
     fi
 
-    tempfile=$(mktemp) \
-        && curl -o $tempfile https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo \
-        && tic -x -o ~/.terminfo $tempfile \
-        && rm $tempfile
+    create_wezterm_terminfo
 
 
     cargo install devicon-lookup
@@ -149,10 +153,7 @@ else
 
     # $pip3 install --upgrade --user pip
 
-    tempfile=$(mktemp) \
-        && curl -o $tempfile https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo \
-        && tic -x -o ~/.terminfo $tempfile \
-        && rm $tempfile
+    create_wezterm_terminfo
 fi
 
 if [[ "$(uname)" == FreeBSD ]]; then
