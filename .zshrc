@@ -207,14 +207,14 @@ HOMEBREW_NO_ANALYTICS=1
 
 zshrc_load_status "path"
 
-[[ -n $HOMEBREW_PREFIX ]] &&
-  PATH=$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$HOMEBREW_PREFIX/bin:$PATH
 perldir=$(dirname $(readlink -f $(which perl)))
 [[ $perldir == "/usr/bin" ]] || PATH="$perldir":$PATH
 PATH=~/.local/bin:~/bin:~/g/sw/bin:~/g/sw/usr/bin:$PATH
 PATH=~/.cargo/bin:$NPM_PACKAGES/bin:$PATH
 # PATH=~/.yarn/bin:~/.config/yarn/global/node_modules/.bin:$PATH
 PATH=/snap/bin:$PATH
+[[ -n $HOMEBREW_PREFIX ]] &&
+  PATH=$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$HOMEBREW_PREFIX/bin:$PATH
 PATH=~/g/local_base/utils:~/g/base/utils:$PATH
 PATH=~/g/base/utils/${(L)$(uname)}:$PATH
 PATH=/usr/local/bin:$PATH:~/g/go/bin:/usr/local/sbin:/usr/sbin:/sbin
