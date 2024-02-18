@@ -169,7 +169,6 @@ fpath=(
     ~/g/go/src/github.com/motemen/ghq/zsh(N)
     $fpath
 )
-typeset -U fpath
 
 # Ignore these corrections
 CORRECT_IGNORE="[._]*"
@@ -976,10 +975,12 @@ fi
 
 zshrc_load_status "paths"
 
-typeset -U path
+typeset -U path          # unique
 typeset -U manpath
-path=($^path(N))
+typeset -U fpath
+path=($^path(N))         # glob to remove non-existent dirs
 manpath=($^manpath(N))
+fpath=($^fpath(N))
 
 # from command-not-found package
 
