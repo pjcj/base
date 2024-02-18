@@ -67,11 +67,11 @@ if [[ "$(uname)" == Darwin ]]; then
         brew bundle install --file=Brewfile
     fi
 
-    fzfcomp=/usr/local/opt/fzf/shell/completion.zsh
-    if ! grep -q "emulate -L zsh" $fzfcomp; then
-        perl -pi -e 's/fzf-completion\(\) \{\K/\n  emulate -L zsh/' \
-            $fzfcomp
-    fi
+    tempfile=$(mktemp) \
+        && curl -o $tempfile https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo \
+        && tic -x -o ~/.terminfo $tempfile \
+        && rm $tempfile
+
 
     cargo install devicon-lookup
 
