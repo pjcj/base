@@ -9,8 +9,7 @@ cd ~
 [[ -e .profile ]] && ! [[ -e .profile.local ]] && mv .profile .profile.local
 ln -sf g/base/{utils,.abcde.conf,.gitconfig,.gitignore_global,.profile} .
 ln -sf g/base/{.urlview,.vimrc,.Xdefaults,.vim,.tmux.conf,.tigrc} .
-ln -sf g/base/{.zshenv,.wezterm.lua} .
-ln -sf g/base/.zshrc* .
+ln -sf g/base/{.zshenv,.zshrc,.wezterm.lua} .
 [[ -d ~/.config ]] || mkdir ~/.config
 ln -sf ~/g/base/.config/* ~/.config
 
