@@ -164,10 +164,12 @@ if [ $EUID -ne 0 ]; then
 fi
 
 fpath=(
-    /home/linuxbrew/.linuxbrew/share/zsh/site-functions
     ~/{lib/zsh,.zsh,g/base/zsh}/{functions,scripts}(N)
     ~/g/go/src/github.com/motemen/ghq/zsh(N)
     $fpath
+)
+[[ -n $HOMEBREW_PREFIX ]] && fpath=(
+    $HOMEBREW_PREFIX/Cellar/zsh/5.9/share/zsh/functions $fpath
 )
 
 # Ignore these corrections
