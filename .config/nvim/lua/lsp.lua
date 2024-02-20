@@ -194,6 +194,7 @@ local function setup_servers()
   lspconfig.perlnavigator.setup {
     settings = {
       perlnavigator = {
+        perlPath = os.getenv "LINT_PERL_PATH" or "",
         includePaths = split_env_var(os.getenv "LINT_PERL_PATHS" or "", ":"),
         perlcriticEnabled = vim.fn.filereadable ".perlcriticrc",
         perlcriticProfile = ".perlcriticrc",
