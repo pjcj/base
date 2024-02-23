@@ -1109,6 +1109,7 @@ echo "\rzsh loaded                                                        "
 
 # Handle startup
 if [[ $(uname) == Darwin ]]; then
+    ulimit -n 4096
     ssh-add --apple-load-keychain
 elif [[ $(uname) == FreeBSD ]]; then
     :
