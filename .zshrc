@@ -169,7 +169,9 @@ fpath=(
     $fpath
 )
 [[ -n $HOMEBREW_PREFIX ]] && fpath=(
-    $HOMEBREW_PREFIX/Cellar/zsh/5.9/share/zsh/functions $fpath
+    $HOMEBREW_PREFIX/share/zsh/site-functions
+    $HOMEBREW_PREFIX/Cellar/zsh/5.9/share/zsh/functions
+    $fpath
 )
 
 # Ignore these corrections
