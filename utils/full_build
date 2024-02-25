@@ -166,6 +166,13 @@ else
     fixup_fzf_completion
 fi
 
+if [[ "$EDITOR" == "nvim" ]]; then
+    # $EDITOR --headless "+Lazy! sync" +qall
+    # $EDITOR --headless "+TSUpdateSync" +qall
+    go install github.com/nametake/golangci-lint-langserver@latest
+    go install github.com/client9/misspell/cmd/misspell@latest
+fi
+
 if [[ "$(uname)" == FreeBSD ]]; then
     sudo npm install -g fixjson
     sudo npm update -g
@@ -176,12 +183,5 @@ else
         mdformat-gfm
 
     npm install -g fixjson
-    npm update -g
-fi
-
-if [[ "$EDITOR" == "nvim" ]]; then
-    # $EDITOR --headless "+Lazy! sync" +qall
-    # $EDITOR --headless "+TSUpdateSync" +qall
-    go install github.com/nametake/golangci-lint-langserver@latest
-    go install github.com/client9/misspell/cmd/misspell@latest
+    exec npm update -g
 fi
