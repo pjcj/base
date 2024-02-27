@@ -262,7 +262,7 @@ wk.register {
         },
         a = {
           "<cmd>ChatGPTRun add_tests<cr>",
-          "qdd tests",
+          "add tests",
           mode = { "n", "v" },
         },
         o = {
