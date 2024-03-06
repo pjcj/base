@@ -1374,14 +1374,18 @@ local plugins = {
       "MunifTanjim/nui.nvim",
       "nvim-lua/plenary.nvim",
       "sindrets/diffview.nvim",
-      "stevearc/dressing.nvim", -- Recommended but not required. Better UI for pickers.
+      "stevearc/dressing.nvim", -- Recommended. Better UI for pickers.
+      "nvim-tree/nvim-web-devicons" -- Recommended. Icons in discussion tree.
     },
     enabled = true,
     build = function()
       require("gitlab.server").build(true)
     end, -- Builds the Go binary
     config = function()
-      require("gitlab").setup()
+      require("gitlab").setup({
+        debug = { go_request = true, go_response = true },
+        popup = { exit = "<leader>q" },
+      })
     end,
   },
 
