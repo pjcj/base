@@ -651,10 +651,19 @@ wk.register {
         },
         c = { gl.create_comment, "create comment" },
         d = { gl.toggle_discussions, "toggle discussions" },
-        m = { gl.create_multiline_comment, "create multiline comment" },
-        M = {
+        l = {
+          name = "+label",
+          a = { gl.add_label, "add label" },
+          d = { gl.delete_label, "delete label" },
+        },
+        m = {
           gl.move_to_discussion_tree_from_diagnostic,
           "move to discussion tree from diagnostic",
+        },
+        M = {
+          name = "+MR",
+          c = { gl.create_mr, "create mr" },
+          m = { gl.merge, "merge" },
         },
         n = { gl.create_note, "create note" },
         o = { gl.open_in_browser, "open in browser" },
@@ -666,7 +675,6 @@ wk.register {
           d = { gl.delete_reviewer, "delete reviewer" },
         },
         s = { gl.summary, "summary" },
-        S = { gl.create_comment_suggestion, "create comment suggestion" },
         V = { gl.revoke, "revoke" },
       },
     },
@@ -761,7 +769,6 @@ wk.register {
 
 wk.register({
   ["<F1>"] = { ":Gitsigns stage_hunk<cr>", "stage lines" },
-  glf = { lb.range_formatting, "format" },
   ["r<C-k><C-k>"] = { "<esc>:lua bd.digraphs('visual')<cr>", "digraph" },
   ["<leader>"] = {
     [" "] = {
@@ -828,11 +835,19 @@ wk.register({
       },
     },
     g = {
-      name = "+goto",
+      name = "+git",
       l = {
-        name = "+lsp",
-        f = { "format" },
+        name = "+gitlab",
+        c = { gl.create_multiline_comment, "create multiline comment" },
+        s = { gl.create_comment_suggestion, "create comment suggestion" },
       },
+    },
+  },
+  g = {
+    name = "+goto",
+    l = {
+      name = "+lsp",
+      f = { lb.range_formatting, "format" },
     },
   },
 }, { mode = "v" })
