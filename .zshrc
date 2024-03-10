@@ -579,6 +579,12 @@ __tmux-sessions() {
 }
 compdef __tmux-sessions tm
 
+sshtm() {
+    local server=${1?}
+    ssh -t "$server" zsh -i -c "tm base"
+}
+compdef sshtm=ssh
+
 __gwm() {
     local -a records=( ${(ps.\n\n.)"$(_call_program directories git worktree list --porcelain)"} )
     local -a directories descriptions
