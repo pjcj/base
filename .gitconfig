@@ -137,6 +137,12 @@
   omv    = origin-branch-move
   omvo   = "!f() { git origin-branch-move $1 && git checkout -q $1; }; f"
   bl     = blame -wMC
+
+  # Pick our version of a file while merging
+  ours   = "!f() { git co --ours $@ && git add $@; }; f"
+  # Pick their version of a file while merging
+  theirs = "!f() { git co --theirs $@ && git add $@; }; f"
+
   lgm    = "!f() { git ll $( git reflog | awk '{print $1}' ); }; f"
   lgr    = "!f() { git ll $( git fsck --no-reflog | \
              awk '/dangling commit/ {print $3}' ); }; f"
