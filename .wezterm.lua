@@ -73,6 +73,13 @@ c.disable_default_key_bindings = true
 
 c.leader = { key = ".", mods = "CTRL", timeout_milliseconds = 3000 }
 
+local mod
+if string.match(hostname, "mbp") then
+  mod = "CMD"
+else
+  mod = "ALT"
+end
+
 c.keys = {
   { key = "s", mods = "LEADER|CTRL", action = wezterm.action.SendKey { key = "s", mods = "CTRL" } },
 
@@ -83,8 +90,8 @@ c.keys = {
   { key = "Enter", mods = "ALT", action = act.ToggleFullScreen },
   { key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
   { key = "Tab", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(-1) },
-  { key = "c", mods = "ALT", action = act.CopyTo "Clipboard" },
-  { key = "v", mods = "ALT", action = act.PasteFrom "Clipboard" },
+  { key = "c", mods = mod, action = act.CopyTo "Clipboard" },
+  { key = "v", mods = mod, action = act.PasteFrom "Clipboard" },
   { key = "d", mods = "LEADER", action = act.ShowDebugOverlay },
   { key = "r", mods = "LEADER", action = act.ReloadConfiguration },
   { key = 'l', mods = 'LEADER', action = act.ShowLauncher },
