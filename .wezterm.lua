@@ -12,7 +12,6 @@ if hostname == "T52U" then
   c.front_end = "WebGpu"
   c.webgpu_power_preference = "HighPerformance"
   c.max_fps = 120
-
   c.font = wezterm.font("Inconsolata NF")
   c.font_size = 15
   c.command_palette_font_size = 24
@@ -20,7 +19,7 @@ if hostname == "T52U" then
   c.initial_rows = 96
 elseif string.match(hostname, "mbp") then
   c.font = wezterm.font("Inconsolata")
-  c.font_size = 14
+  c.font_size = 17
   c.command_palette_font_size = 24
   c.initial_cols = 200
   c.initial_rows = 54
