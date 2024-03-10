@@ -20,10 +20,10 @@ if hostname == "T52U" then
   c.initial_rows = 96
 elseif string.match(hostname, "mbp") then
   c.font = wezterm.font("Inconsolata")
-  c.font_size = 15
+  c.font_size = 14
   c.command_palette_font_size = 24
-  c.initial_cols = 222
-  c.initial_rows = 58
+  c.initial_cols = 200
+  c.initial_rows = 54
 else
   c.font_size = 12
   c.command_palette_font_size = 20
