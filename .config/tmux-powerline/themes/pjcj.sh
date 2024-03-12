@@ -2,7 +2,7 @@
 # If changes made here does not take effect, then try to re-create the tmux session to force reload.
 
 export TMUX_POWERLINE_STATUS_JUSTIFICATION=left
-export TMUX_POWERLINE_STATUS_INTERVAL=5
+export TMUX_POWERLINE_STATUS_INTERVAL=1
 export TMUX_POWERLINE_STATUS_RIGHT_LENGTH=160
 export TMUX_POWERLINE_SEG_TIME_FORMAT="%R %Z"
 
