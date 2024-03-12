@@ -60,8 +60,9 @@ if [ -z "$TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS" ]; then
     "vcs_others 4 7"
     "ifstat_sys 0 7"
     "lan_ip 8 7"
-    "pwd 0 7 $TMUX_POWERLINE_SEPARATOR_LEFT_BOLD 0 7 right_disable"
-    "local_tmux_mem_cpu_load 0 7 $TMUX_POWERLINE_SEPARATOR_LEFT_BOLD 0 7 both_disable separator_disable"
-    "time 0 7 $TMUX_POWERLINE_SEPARATOR_LEFT_BOLD 0 7 both_disable"
+    "pwd 0 7 $TMUX_POWERLINE_SEPARATOR_LEFT_BOLD 0 0 right_disable"
+    "local_tmux_mem_cpu_load 0 7 x 0 0 both_disable separator_disable"
+    "battery 0 15 $TMUX_POWERLINE_SEPARATOR_LEFT_BOLD 0 0 left_disable"
+    "time 8 7 $TMUX_POWERLINE_SEPARATOR_LEFT_BOLD 0 0 right_disable"
   )
 fi
