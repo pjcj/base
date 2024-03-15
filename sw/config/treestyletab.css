@@ -1,0 +1,16 @@
+/* Highlight active tab */
+tab-item.active tab-item-substance {
+  height: 39px !important;
+}
+tab-item.active .background {
+  background-color: steelblue;
+}
+tab-item.active .label-content {
+  font-weight: bold;
+  font-size: 14px;
+}
+tab-item.active tab-twisty,
+tab-item.active .label-content,
+tab-item.active tab-counter {
+  color: #fff;
+}

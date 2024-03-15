@@ -1,0 +1,48 @@
+{
+  "__ConfigsMigration__userValeusSameToDefaultAreCleared": true,
+  "autoCollapseExpandSubtreeOnAttach": false,
+  "autoCollapseExpandSubtreeOnSelect": false,
+  "avoidDiscardedTabToBeActivatedIfPossible": true,
+  "cachedExternalAddons": [
+    "tst_fade_old_tabs@emvaized.com",
+    "{724545b6-7e17-4fa2-96e0-71eddf3c3319}",
+    "@tst-search",
+    "tst_colorize_tabs@emvaized.com"
+  ],
+  "chunkedUserStyleRules0": "LyogSGlnaGxpZ2h0IGFjdGl2ZSB0YWIgKi8KdGFiLWl0ZW0uYWN0aXZlIHRhYi1pdGVtLXN1YnN0YW5jZSB7CiAgaGVpZ2h0OiAzOXB4ICFpbXBvcnRhbnQ7Cn0KdGFiLWl0ZW0uYWN0aXZlIC5iYWNrZ3JvdW5kIHsKICBiYWNrZ3JvdW5kLWNvbG9yOiBzdGVlbGJsdWU7Cn0KdGFiLWl0ZW0uYWN0aXZlIC5sYWJlbC1jb250ZW50IHsKICBmb250LXdlaWdodDogYm9sZDsKICBmb250LXNpemU6IDE0cHg7Cn0KdGFiLWl0ZW0uYWN0aXZlIHRhYi10d2lzdHksCnRhYi1pdGVtLmFjdGl2ZSAubGFiZWwtY29udGVudCwKdGFiLWl0ZW0uYWN0aXZlIHRhYi1jb3VudGVyIHsKICBjb2xvcjogI2ZmZjsKfQo=",
+  "closeParentBehaviorMode": 1,
+  "configsVersion": 31,
+  "context_sendTreeToDevice": true,
+  "insertNewChildAt": 3,
+  "insertNewTabFromPinnedTabAt": 0,
+  "lastSelectedSubPanelProviderId": "@tst-search",
+  "lastSubPanelHeight": 35,
+  "notifiedFeaturesVersion": 9,
+  "optionsExpandedSections": [
+    "section-appearance",
+    "section-newTabWithOwner",
+    "section-newTab",
+    "section-advanced",
+    "section-addons",
+    "section-drag",
+    "section-treeBehavior",
+    "section-debug"
+  ],
+  "parentTabOperationBehaviorMode": 1,
+  "showContextualIdentitiesSelector": true,
+  "showDialogInSidebar": true,
+  "showExpertOptions": true,
+  "style": "proton",
+  "syncDeviceExpirationDays": 32,
+  "syncDevices": {
+    "device-1693836973333-13038": {
+      "id": "device-1693836973333-13038",
+      "name": "Firefox on Linux",
+      "icon": "device-desktop",
+      "timestamp": 1706817121931
+    }
+  },
+  "userStyleRules": "",
+  "userStyleRulesFieldHeight": "130px",
+  "workaroundForBug1548949DroppedTabs": "1710380959289-59138/36"
+}
