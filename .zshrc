@@ -455,6 +455,16 @@ v() {
 }
 vs() { v -S /tmp/tmp_session.vim "$@" }
 
+vv() {
+    if [ "$EDITOR" = "nvim" ]; then
+        mkdir -p $VIMTMP
+        TMPDIR=$VIMTMP command $EDITOR "$@"
+    else
+        command $EDITOR -u NONE "$@"
+    fi
+}
+vvs() { vv -S /tmp/tmp_session.vim "$@" }
+
 cd()      { c "$@" && d }
 ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
 dh()      { f "$@" | head }
