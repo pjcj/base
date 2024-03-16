@@ -447,7 +447,7 @@ u() { popd }
 v() {
     if [ "$EDITOR" = "nvim" ]; then
         mkdir -p $VIMTMP
-        TMPDIR=$VIMTMP TERM=screen-256color command $EDITOR "$@"
+        [[ -n $openai_api_key ]] && OPENAI_API_KEY=$openai_api_key
         TMPDIR=$VIMTMP command $EDITOR "$@"
     else
         command $EDITOR -u NONE "$@"
