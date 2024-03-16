@@ -453,6 +453,7 @@ v() {
         command $EDITOR -u NONE "$@"
     fi
 }
+vs() { v -S /tmp/tmp_session.vim "$@" }
 
 cd()      { c "$@" && d }
 ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
