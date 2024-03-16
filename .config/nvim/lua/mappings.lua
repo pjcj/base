@@ -721,6 +721,7 @@ wk.register {
       ["{"] = { [[ysiw{]], "insert braces with space", noremap = false },
       ["}"] = { [[ysiw}]], "insert braces without space", noremap = false },
     },
+    r = { ":mksess! /tmp/tmp_session.vim<cr>:xa<cr>", "save session and exit" },
     s = {
       name = "+spell",
       d = { ":setlocal spell spelllang=de_ch<cr>", "Deutsch" },
