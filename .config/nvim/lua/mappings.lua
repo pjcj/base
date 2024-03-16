@@ -703,7 +703,7 @@ wk.register {
     },
     k = { "highlight word" },
     K = { "unhighlight words" },
-    l = { [[:let @/ = ""<bar> :call UncolorAllWords()<cr>]], "unhighlight all" },
+    l = { [[:let @/ = ""<bar>:call UncolorAllWords()<cr>]], "unhighlight all" },
     m = { tb.git_status, "find git changes" },
     n = { ":NewFile<cr>", "new file template" },
     q = {
