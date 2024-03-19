@@ -689,6 +689,7 @@ local plugins = {
       "nvim-treesitter/nvim-treesitter",
       "antoinemadec/FixCursorHold.nvim",
       "nvim-neotest/neotest-go",
+      "nvim-neotest/nvim-nio",
     },
     config = function()
       require("neotest").setup({
