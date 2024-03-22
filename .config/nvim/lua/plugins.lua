@@ -622,7 +622,7 @@ local plugins = {
     },
     config = function()
       require("go").setup({
-        goimport = "goimports",
+        goimports = "goimports",
         gofmt_args = {
           "--max-len=80",
           "--tab-len=2",
@@ -631,7 +631,6 @@ local plugins = {
         -- log_path = vim.fn.expand("$HOME") .. "/g/tmp/gonvimx.log",
         log_path = "/tmp/gonvim.log",
         lsp_cfg = false,
-        lsp_diag_hdlr = false,
         lsp_fmt_async = true,
         lsp_gofumpt = true,
         -- max_line_len = 80, -- max line length in goline format
