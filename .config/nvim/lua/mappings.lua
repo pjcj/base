@@ -908,4 +908,7 @@ vim.cmd [[
     w
   endfunction
   command! -nargs=? NewFile :call NewFile(<q-args>)
+
+  command! -nargs=+ Xshell 10new | execute "Shell" <q-args> | wincmd p
+  command! -nargs=+ Sshell vnew | execute "Shell" <q-args> | wincmd p
 ]]

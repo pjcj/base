@@ -1733,6 +1733,11 @@ local plugins = {
       require("hex").setup({})
     end,
   },
+
+  {
+    "siadat/shell.nvim",
+    opts = {},
+  },
 }
 
 local opts = {
