@@ -49,6 +49,14 @@ local function load_perl_stack_trace()
   vim.api.nvim_command "copen"
 end
 
+local function smart_open()
+  require("telescope").extensions.smart_open.smart_open {
+    cwd_only = true,
+    filename_first = false,
+    show_scores = false,
+  }
+end
+
 vim.cmd [[
   map <F13>    <S-F1>
   map <F14>    <S-F2>
@@ -362,17 +370,12 @@ wk.register {
       },
     },
 
-    ["."] = { ":Telescope frecency workspace=CWD<cr>", "frecency" },
+    ["."] = { smart_open, "smart open" },
     ["-"] = {
       function()
-        local fd = require("local_defs").fn.common_fd()
-        print(vim.inspect(fd))
-        tb.find_files {
-          fd = fd,
-          hidden = true,
-        }
+        tb.find_files { hidden = true }
       end,
-      "common files",
+      "honour ignores",
     },
     [","] = {
       name = "+language",
@@ -455,12 +458,6 @@ wk.register {
           end,
           "common files",
         },
-        i = {
-          function()
-            tb.find_files { hidden = true }
-          end,
-          "honour ignores",
-        },
         f = { ":Telescope frecency workspace=CWD<cr>", "frecency" },
         g = {
           function()
@@ -468,6 +465,13 @@ wk.register {
           end,
           "git files",
         },
+        i = {
+          function()
+            tb.find_files { hidden = true }
+          end,
+          "honour ignores",
+        },
+        s = { smart_open, "smart open" },
       },
       a = { vim.lsp.buf.code_action, "lsp code actions" },
       A = {
