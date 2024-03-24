@@ -490,8 +490,8 @@ wk.register {
       },
       D = { tb.lsp_definitions, "lsp definitions" },
       e = { tb.resume, "resume" },
+      E = { tb.treesitter, "tree sitter" },
       f = { tb.builtin, "builtin" },
-      F = { ":Telescope frecency workspace=CWD<cr>", "frecency" },
       g = { tb.live_grep, "grep" },
       G = {
         function()
@@ -506,14 +506,19 @@ wk.register {
       h = { tb.help_tags, "help" },
       H = { tb.highlights, "highlight colours" },
       i = {
-        function()
-          tb.find_files { hidden = true }
-        end,
-        "find files",
+        name = "+git",
+        b = { tb.git_branches, "branches" },
+        c = { tb.git_commits, "commits" },
+        f = { tb.git_files, "files" },
+        h = { t.extensions.git_file_history.git_file_history, "file history" },
+        s = { tb.git_status, "status" },
+        t = { tb.git_stash, "stash" },
+        u = { tb.git_bcommits, "buffer commits" },
       },
       j = { tb.jumplist, "jump list" },
       l = { tb.current_buffer_fuzzy_find, "fuzzy find" },
       m = { tb.keymaps, "mappings" },
+      M = { tb.man_pages, "man pages" },
       n = {
         function()
           require("telescope").extensions.notify.notify()
@@ -636,9 +641,6 @@ wk.register {
             "grep string word",
           },
         },
-      },
-      z = {
-        t.extensions.git_file_history.git_file_history, "git file history"
       },
     },
     g = {
@@ -807,6 +809,8 @@ wk.register({
     },
     f = {
       name = "+telescope",
+      e = { tb.resume, "resume" },
+      f = { tb.builtin, "builtin" },
       s = { tb.grep_string, "grep string" },
       y = {
         name = "+grep type",
