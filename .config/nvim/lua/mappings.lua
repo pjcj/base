@@ -637,6 +637,9 @@ wk.register {
           },
         },
       },
+      z = {
+        t.extensions.git_file_history.git_file_history, "git file history"
+      },
     },
     g = {
       name = "+git",

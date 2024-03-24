@@ -748,6 +748,7 @@ local plugins = {
       "nvim-telescope/telescope-fzf-native.nvim",
       "nvim-telescope/telescope-symbols.nvim",
       "nvim-telescope/telescope-frecency.nvim",
+      "isak102/telescope-git-file-history.nvim",
     },
     config = function()
       local telescope = require("telescope")
@@ -805,6 +806,7 @@ local plugins = {
       telescope.load_extension("refactoring")
       telescope.load_extension("undo")
       telescope.load_extension("frecency")
+      telescope.load_extension("git_file_history")  -- ^G - open in browser
 
       vim.cmd([[
         augroup telescope
