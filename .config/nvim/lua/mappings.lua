@@ -2,7 +2,7 @@
 
 vim.g.mapleader = ","
 
-local wk = require "which-key"
+local wk = require("which-key")
 -- {
 --   mode = "n", -- NORMAL mode
 --   prefix = "",
@@ -14,28 +14,28 @@ local wk = require "which-key"
 
 local lb = vim.lsp.buf
 local d = vim.diagnostic
-local t = require "telescope"
-local tb = require "telescope.builtin"
-local bd = require "better-digraphs"
-local gs = require "gitsigns"
-local gl = require "gitlab"
+local t = require("telescope")
+local tb = require("telescope.builtin")
+local bd = require("better-digraphs")
+local gs = require("gitsigns")
+local gl = require("gitlab")
 
 local vtext_on = true
 local vtext_toggle = function()
   vtext_on = not vtext_on
-  vim.diagnostic.config { virtual_text = vtext_on }
+  vim.diagnostic.config({ virtual_text = vtext_on })
 end
 
 -- parse a Perl stack trace from the + register into the quickfix list
 local function load_perl_stack_trace()
   -- Get the content of the + register (clipboard)
-  local clipboard_content = vim.fn.getreg "+"
+  local clipboard_content = vim.fn.getreg("+")
   local lines = vim.split(clipboard_content, "\n")
   local quickfix_list = {}
 
   for _, line in ipairs(lines) do
     -- Perl stack trace line format: "at /path/to/file.pl line 123"
-    local filename, lnum = line:match "at (%S+) line (%d+)"
+    local filename, lnum = line:match("at (%S+) line (%d+)")
     if filename and lnum then
       table.insert(quickfix_list, {
         filename = filename,
@@ -46,18 +46,18 @@ local function load_perl_stack_trace()
   end
 
   vim.fn.setqflist(quickfix_list)
-  vim.api.nvim_command "copen"
+  vim.api.nvim_command("copen")
 end
 
 local function smart_open()
-  require("telescope").extensions.smart_open.smart_open {
+  require("telescope").extensions.smart_open.smart_open({
     cwd_only = true,
     filename_first = false,
     show_scores = false,
-  }
+  })
 end
 
-vim.cmd [[
+vim.cmd([[
   map <F13>    <S-F1>
   map <F14>    <S-F2>
   map <F15>    <S-F3>
@@ -131,9 +131,9 @@ vim.cmd [[
   " map <F70>    <M-S-F10>
   " map <F71>    <M-S-F11>
   " map <F72>    <M-S-F12>
-]]
+]])
 
-wk.register {
+wk.register({
   ["<F1>"] = { gs.stage_hunk, "stage hunk" },
   ["<F2>"] = { gs.prev_hunk, "previous hunk" },
   ["<F3>"] = { gs.next_hunk, "next hunk" },
@@ -145,7 +145,7 @@ wk.register {
   -- ["<F4>"] = { [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]], "jump to tag" },
   ["<F4>"] = {
     function()
-      tb.tags { default_text = vim.fn.expand "<cword>" }
+      tb.tags({ default_text = vim.fn.expand("<cword>") })
     end,
     "cword tags",
   },
@@ -236,7 +236,7 @@ wk.register {
     ["<F11>"] = { "r`", "`" },
     ["<C-k><C-k>"] = {
       function()
-        bd.digraphs "normal"
+        bd.digraphs("normal")
       end,
       "digraph",
     },
@@ -373,7 +373,7 @@ wk.register {
     ["."] = { smart_open, "smart open" },
     ["-"] = {
       function()
-        tb.find_files { hidden = true }
+        tb.find_files({ hidden = true })
       end,
       "honour ignores",
     },
@@ -390,7 +390,7 @@ wk.register {
         },
         i = {
           function()
-            local i = os.getenv "VIM_GO_IMPORT_LOCAL" or "xxxxxx"
+            local i = os.getenv("VIM_GO_IMPORT_LOCAL") or "xxxxxx"
             require("go.format").goimport("-local", i)
             require("go.format").gofmt()
           end,
@@ -409,7 +409,7 @@ wk.register {
           },
           f = {
             function()
-              local file = vim.fn.expand "%"
+              local file = vim.fn.expand("%")
               print(file)
               require("neotest").run.run(file)
             end,
@@ -417,7 +417,7 @@ wk.register {
           },
           o = {
             function()
-              require("neotest").output.open { enter = true }
+              require("neotest").output.open({ enter = true })
             end,
             "open results",
           },
@@ -445,29 +445,29 @@ wk.register {
         name = "+find files",
         a = {
           function()
-            tb.find_files { hidden = true, no_ignore = true }
+            tb.find_files({ hidden = true, no_ignore = true })
           end,
           "include ignored",
         },
         c = {
           function()
-            tb.find_files {
+            tb.find_files({
               fd = require("local_defs").fn.common_fd(),
               hidden = true,
-            }
+            })
           end,
           "common files",
         },
         f = { ":Telescope frecency workspace=CWD<cr>", "frecency" },
         g = {
           function()
-            tb.git_files { hidden = true }
+            tb.git_files({ hidden = true })
           end,
           "git files",
         },
         i = {
           function()
-            tb.find_files { hidden = true }
+            tb.find_files({ hidden = true })
           end,
           "honour ignores",
         },
@@ -476,7 +476,7 @@ wk.register {
       a = { vim.lsp.buf.code_action, "lsp code actions" },
       A = {
         function()
-          tb.find_files { hidden = true, no_ignore = true }
+          tb.find_files({ hidden = true, no_ignore = true })
         end,
         "find all files",
       },
@@ -499,11 +499,11 @@ wk.register {
       g = { tb.live_grep, "grep" },
       G = {
         function()
-          tb.live_grep {
+          tb.live_grep({
             additional_args = function()
               return { "-w" }
             end,
-          }
+          })
         end,
         "grep word",
       },
@@ -540,14 +540,14 @@ wk.register {
       s = { tb.grep_string, "grep string" },
       S = {
         function()
-          tb.grep_string { word_match = "-w" }
+          tb.grep_string({ word_match = "-w" })
         end,
         "grep string word",
       },
       t = { tb.tags, "tags" },
       T = {
         function()
-          tb.tags { only_current_buffer = true }
+          tb.tags({ only_current_buffer = true })
         end,
         "local tags",
       },
@@ -555,7 +555,7 @@ wk.register {
       U = { ":UrlView buffer<cr>", "urls" },
       v = {
         function()
-          tb.tags { default_text = vim.fn.expand "<cword>" }
+          tb.tags({ default_text = vim.fn.expand("<cword>") })
         end,
         "cword tags",
       },
@@ -567,39 +567,39 @@ wk.register {
           name = "go",
           g = {
             function()
-              tb.live_grep { type_filter = "go" }
+              tb.live_grep({ type_filter = "go" })
             end,
             "grep",
           },
           G = {
             function()
-              tb.live_grep {
+              tb.live_grep({
                 type_filter = "go",
                 additional_args = function()
                   return { "-w" }
                 end,
-              }
+              })
             end,
             "grep word",
           },
           s = {
             function()
-              tb.grep_string {
+              tb.grep_string({
                 additional_args = function()
                   return { "--type=go" }
                 end,
-              }
+              })
             end,
             "grep string",
           },
           S = {
             function()
-              tb.grep_string {
+              tb.grep_string({
                 additional_args = function()
                   return { "--type=go" }
                 end,
                 word_match = "-w",
-              }
+              })
             end,
             "grep string word",
           },
@@ -608,39 +608,39 @@ wk.register {
           name = "perl",
           g = {
             function()
-              tb.live_grep { type_filter = "perl" }
+              tb.live_grep({ type_filter = "perl" })
             end,
             "grep",
           },
           G = {
             function()
-              tb.live_grep {
+              tb.live_grep({
                 type_filter = "perl",
                 additional_args = function()
                   return { "-w" }
                 end,
-              }
+              })
             end,
             "grep word",
           },
           s = {
             function()
-              tb.grep_string {
+              tb.grep_string({
                 additional_args = function()
                   return { "--type=perl" }
                 end,
-              }
+              })
             end,
             "grep string",
           },
           S = {
             function()
-              tb.grep_string {
+              tb.grep_string({
                 additional_args = function()
                   return { "--type=perl" }
                 end,
                 word_match = "-w",
-              }
+              })
             end,
             "grep string word",
           },
@@ -691,14 +691,14 @@ wk.register {
       name = "+hunk",
       b = {
         function()
-          require("gitsigns").blame_line { full = true }
+          require("gitsigns").blame_line({ full = true })
         end,
         "blame",
       },
       d = { ":Gitsigns diffthis<cr>", "diff hunk" },
       D = {
         function()
-          require("gitsigns").diffthis "~"
+          require("gitsigns").diffthis("~")
         end,
         "diff",
       },
@@ -775,7 +775,7 @@ wk.register {
     },
     W = { [[:%s/\s\+$//<cr>:let @/ = ""<cr>]], "remove trailing ws" },
   },
-}
+})
 
 wk.register({
   ["<F1>"] = { ":Gitsigns stage_hunk<cr>", "stage lines" },
@@ -822,11 +822,11 @@ wk.register({
           name = "go",
           s = {
             function()
-              tb.grep_string {
+              tb.grep_string({
                 additional_args = function()
                   return { "--type=go" }
                 end,
-              }
+              })
             end,
             "grep string",
           },
@@ -835,11 +835,11 @@ wk.register({
           name = "perl",
           s = {
             function()
-              tb.grep_string {
+              tb.grep_string({
                 additional_args = function()
                   return { "--type=perl" }
                 end,
-              }
+              })
             end,
             "grep string",
           },
@@ -875,16 +875,16 @@ wk.register({
   ["jk"] = { "<esc>", "escape" },
   ["<C-k><C-k>"] = {
     function()
-      bd.digraphs "insert"
+      bd.digraphs("insert")
     end,
     "digraph",
   },
 }, { mode = "i" })
 
 vim.keymap.set("", "glf", function()
-  require "notify" "formatting"
-  require("conform").format { async = true, lsp_fallback = true }
-  require "notify" "formatted"
+  require("notify")("formatting")
+  require("conform").format({ async = true, lsp_fallback = true })
+  require("notify")("formatted")
 end)
 
 local vmap = vim.api.nvim_set_keymap -- global mappings
@@ -903,7 +903,7 @@ vmap("v", "<C-Right>", "<Plug>MoveBlockRight", {})
 -- vim.keymap.set({"n", "o", "x"}, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" })
 -- vim.keymap.set({"n", "o", "x"}, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })
 
-vim.cmd [[
+vim.cmd([[
   cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
   inoremap <expr> <C-e> pumvisible() ? "\<C-y>\<C-e>" : "\<Esc>a\<C-e>"
@@ -922,4 +922,4 @@ vim.cmd [[
 
   command! -nargs=+ Xshell 10new | execute "Shell" <q-args> | wincmd p
   command! -nargs=+ Sshell vnew | execute "Shell" <q-args> | wincmd p
-]]
+]])
