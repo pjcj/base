@@ -67,7 +67,7 @@ local lsp_sig_cfg = {
 
 local navic = require "nvim-navic"
 local on_attach = function(client, bufnr)
-  print("attach", client.name)
+  -- print("attach", client.name)
 
   local function buf_set_option(...)
     vim.api.nvim_buf_set_option(bufnr, ...)
