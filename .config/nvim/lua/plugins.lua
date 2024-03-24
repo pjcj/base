@@ -806,7 +806,7 @@ local plugins = {
       telescope.load_extension("refactoring")
       telescope.load_extension("undo")
       telescope.load_extension("frecency")
-      telescope.load_extension("git_file_history")  -- ^G - open in browser
+      telescope.load_extension("git_file_history") -- ^G - open in browser
 
       vim.cmd([[
         augroup telescope
@@ -1386,7 +1386,7 @@ local plugins = {
       "nvim-lua/plenary.nvim",
       "sindrets/diffview.nvim",
       "stevearc/dressing.nvim", -- Recommended. Better UI for pickers.
-      "nvim-tree/nvim-web-devicons" -- Recommended. Icons in discussion tree.
+      "nvim-tree/nvim-web-devicons", -- Recommended. Icons in discussion tree.
     },
     enabled = true,
     build = function()
