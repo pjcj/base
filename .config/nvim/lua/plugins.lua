@@ -756,6 +756,7 @@ local plugins = {
       "nvim-telescope/telescope-symbols.nvim",
       "nvim-telescope/telescope-frecency.nvim",
       "isak102/telescope-git-file-history.nvim",
+      "allaman/emoji.nvim",
     },
     config = function()
       local telescope = require("telescope")
@@ -814,6 +815,7 @@ local plugins = {
       telescope.load_extension("undo")
       telescope.load_extension("frecency")
       telescope.load_extension("git_file_history") -- ^G - open in browser
+      telescope.load_extension("emoji")
 
       vim.cmd([[
         augroup telescope
@@ -877,7 +879,8 @@ local plugins = {
       -- "hrsh7th/cmp-path",
       "FelipeLema/cmp-async-path",
       "hrsh7th/cmp-calc",
-      "hrsh7th/cmp-emoji",
+      -- "hrsh7th/cmp-emoji",
+      "allaman/emoji.nvim",
       "chrisgrieser/cmp-nerdfont",
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "quangnguyen30192/cmp-nvim-tags",
@@ -1210,6 +1213,17 @@ local plugins = {
       --   }),
       -- })
     end,
+  },
+  {
+    "allaman/emoji.nvim",
+    version = "*",
+    dependencies = {
+      "hrsh7th/nvim-cmp",
+      "nvim-telescope/telescope.nvim",
+    },
+    opts = {
+      enable_cmp_integration = true,
+    },
   },
 
   {

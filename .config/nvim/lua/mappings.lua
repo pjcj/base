@@ -520,6 +520,7 @@ wk.register({
         u = { tb.git_bcommits, "buffer commits" },
       },
       j = { tb.jumplist, "jump list" },
+      J = { t.extensions.emoji.emoji, "emoji" },
       l = { tb.current_buffer_fuzzy_find, "fuzzy find" },
       m = { tb.keymaps, "mappings" },
       M = { tb.man_pages, "man pages" },
