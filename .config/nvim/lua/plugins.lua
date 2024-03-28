@@ -1545,7 +1545,6 @@ local plugins = {
 
   { "junegunn/vim-easy-align" }, -- ctrl-x for regexp
   { "tpope/vim-repeat" },
-  { "windwp/nvim-ts-autotag" },
   { "AndrewRadev/splitjoin.vim" }, -- gS, gJ
   { "Konfekt/vim-unicode-homoglyphs" }, -- gy
   { "superhawk610/ascii-blocks.nvim" }, -- :AsciiBlockify
