@@ -536,7 +536,7 @@ local plugins = {
       vim.g.ale_linters = {
         -- go = { "gofmt", "golint", "gopls", "govet", "golangci-lint" },
         go = {},
-        -- lua = {},
+        html = {},
         perl = {},
         sh = {},
         yaml = { "spectral" },
@@ -1213,6 +1213,7 @@ local plugins = {
       -- })
     end,
   },
+
   {
     "allaman/emoji.nvim",
     version = "*",
