@@ -159,12 +159,21 @@ local function setup_servers()
     ensure_installed = lsps,
   }
 
-  lspconfig.bashls.setup { on_attach = on_attach }
-  lspconfig.clangd.setup { on_attach = on_attach }
-  lspconfig.cssls.setup { on_attach = on_attach }
-  lspconfig.golangci_lint_ls.setup { on_attach = on_attach }
-  lspconfig.html.setup { on_attach = on_attach }
-  lspconfig.sqlls.setup { on_attach = on_attach }
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+  local conf = {
+    capabilities = capabilities,
+    on_attach = on_attach,
+  }
+
+  lspconfig.bashls.setup(conf)
+  lspconfig.clangd.setup(conf)
+  lspconfig.cssls.setup(conf)
+  lspconfig.golangci_lint_ls.setup(conf)
+  lspconfig.html.setup(conf)
+  lspconfig.sqlls.setup(conf)
 
   lspconfig.gopls.setup {
     settings = {
@@ -180,7 +189,7 @@ local function setup_servers()
         },
       },
     },
-    on_attach = on_attach,
+    conf
   }
 
   local function split_env_var(env_var, delimiter)
@@ -201,8 +210,8 @@ local function setup_servers()
         enableWarnings = false,
       },
     },
-    on_attach = on_attach,
     debounce_text_changes = 5000, -- milliseconds
+    conf
   }
 
   lspconfig.tsserver.setup {
@@ -241,16 +250,16 @@ local function setup_servers()
         completion = true,
       },
     },
-    on_attach = on_attach,
+     conf
   }
 
   if not is_freebsd then
-    lspconfig.clangd.setup { on_attach = on_attach }
-    lspconfig.taplo.setup { on_attach = on_attach }
+    lspconfig.clangd.setup(conf)
+    lspconfig.taplo.setup(conf)
     lspconfig.lua_ls.setup {
       init_options = { hostInfo = "neovim" },
       settings = lua_settings,
-      on_attach = on_attach,
+      conf
     }
   end
 
@@ -262,9 +271,6 @@ local function setup_servers()
     severity_sort = true,
     underline = true,
   }
-
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
 
   local border = "rounded"
   local lspconfig_window = require "lspconfig.ui.windows"
