@@ -694,12 +694,24 @@ if [[ $(uname) == Darwin ]]; then
     mv() { command gmv -bv --backup=numbered "$@" }
     s()  { open "$@" }
     fd() { command fd -H --exclude '/Volumes/' "$@" }
+    pll() {
+        ps -o user,pid,ppid,%cpu,%mem,vsz,rss,tty,state,start,cputime,command \
+            "$@"
+    }
+    pl() { pll -eww "$@" | m }
+    pp() { pl -rc "$@" | m }
 elif [[ $(uname) == FreeBSD ]]; then
     cp() { command cp -v "$@" }
     f()  { ls -ABGhl "$@" }
     ds() { f -d "$@" }
     mv() { command mv -v "$@" }
     s()  { f "$@" }
+    pll() {
+        ps -o user,pid,ppid,%cpu,%mem,vsz,rss,tty,state,start,cputime,command \
+            "$@"
+    }
+    pl() { pll -eww "$@" | m }
+    pp() { pl -rc "$@" | m }
     LESS='--LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS'
 else
     if which dmidecode >&/dev/null; then
@@ -709,6 +721,9 @@ else
     f()  { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
     ds() { f -d "$@" }
     mv() { command mv -bv --backup=numbered "$@" }
+    pll() { ps -o user,pid,ppid,pcpu,pmem,vsz,rss,tty,stat,stime,time,args "$@"}
+    pl() { pll -eww --forest "$@" | m }
+    pp() { pll -e --sort=-pcpu "$@" | m }
     if [[ -n $WSL_DISTRO_NAME ]]; then
         s()  { wslview "$@" }
     elif which xdg-open >&/dev/null; then
