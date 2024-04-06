@@ -17,6 +17,7 @@ tmp/
 .config/ranger/tagged
 .config/sxhkd/sxhkdrc
 .config/vim/yankround/history
+.config/karabiner/automatic_backups
 .vim/autoload/plug.vim*
 .vim/bundle/
 .vim/.miniyank.mpack
