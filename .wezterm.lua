@@ -73,25 +73,27 @@ c.disable_default_key_bindings = true
 
 c.leader = { key = ".", mods = "CTRL", timeout_milliseconds = 3000 }
 
-local mod
+local mod1, mod2
 if string.match(hostname, "mbp") then
-  mod = "CMD"
+  mod1 = "CMD"
+  mod2 = "CMD"
 else
-  mod = "ALT"
+  mod1 = "ALT"
+  mod2 = "CTRL"
 end
 
 c.keys = {
   { key = "s", mods = "LEADER|CTRL", action = wezterm.action.SendKey { key = "s", mods = "CTRL" } },
 
-  { key = "+", mods = "CTRL", action = "IncreaseFontSize" },
-  { key = "-", mods = "CTRL", action = "DecreaseFontSize" },
-  { key = '*', mods = 'CTRL', action = act.ResetFontSize },
+  { key = "+", mods = mod2, action = "IncreaseFontSize" },
+  { key = "-", mods = mod2, action = "DecreaseFontSize" },
+  { key = '*', mods = mod2, action = act.ResetFontSize },
   { key = "Enter", mods = "CTRL|SHIFT", action = wezterm.action.TogglePaneZoomState },
   { key = "Enter", mods = "ALT", action = act.ToggleFullScreen },
   { key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
   { key = "Tab", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(-1) },
-  { key = "c", mods = mod, action = act.CopyTo "Clipboard" },
-  { key = "v", mods = mod, action = act.PasteFrom "Clipboard" },
+  { key = "c", mods = mod1, action = act.CopyTo "Clipboard" },
+  { key = "v", mods = mod1, action = act.PasteFrom "Clipboard" },
   { key = "d", mods = "LEADER", action = act.ShowDebugOverlay },
   { key = "r", mods = "LEADER", action = act.ReloadConfiguration },
   { key = 'l', mods = 'LEADER', action = act.ShowLauncher },
