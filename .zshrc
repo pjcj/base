@@ -522,10 +522,7 @@ lu()      { fc -e - lsq=usq -1 }
 m()       { bat --tabs=2 "$@" }
 mn()      { nroff -man "$@" | m }
 mutt()    { mkdir -p /tmp/ml && command mutt "$@" }
-pll()     { ps -o user,pid,ppid,pcpu,pmem,vsz,rss,tty,stat,stime,time,args "$@"}
-pl()      { pll -eww --forest "$@" | m }
 pm()      { pod2man "$@" | mn }
-pp()      { pll -e --sort=-pcpu "$@" | m }
 restart() { exec $SHELL "$@" }
 rssh()    { ssh -p 9999 "$@" localhost }
 rtunnel() { ssh -N -f -R 9999:localhost:22 "$@" }
