@@ -507,7 +507,7 @@ grh()     { git reset HEAD "$@" }
 grs()     { git restore --staged "$@" }
 gri()     { git rebase -i "$@" }
 gs()      { git st "$@" }
-gsh()     { git show "$@" }
+gsh()     { git show --remerge-diff "$@" }
 gw()      { git worktree "$@" }
 gwa()     { git worktree add "$(git rev-parse --git-common-dir)/../../$@" }
 gwm()     { cd "$@" }
@@ -897,7 +897,7 @@ _fzf_compgen_dir() {
 
 _fzfgv() {
     local pc=${1:-$FZF_WIDTH}
-    local gsh="git -c core.pager=cat show --color=never %"
+    local gsh="git -c core.pager=cat show --remerge-diff --color=never %"
     local disp="$gsh | delta --width=$(expr $(tput cols) \* $pc / 100)"
     echo "xargs -I % sh -c '$disp'"
 }
@@ -918,7 +918,7 @@ git-commit-sel() {
     g ll --color=always "$@" | \
         $(__fzfcmd) --ansi --tiebreak=index \
             --header="f1 exit, f2 toggle, f3 diff, f4 sha" \
-            --bind 'f3:preview:echo {} | grep -o "'"[a-f0-9]\\+"'" | head -1 | xargs -I % sh -c "'"git -c delta.side-by-side=false show --color=always %"'"' \
+            --bind 'f3:preview:echo {} | grep -o "'"[a-f0-9]\\+"'" | head -1 | xargs -I % sh -c "'"git -c delta.side-by-side=false show --remerge-diff --color=always %"'"' \
             --bind "f4:execute:echo {} | $get_sha | osc52" \
             --preview="$cmd" | \
         while read item; do
