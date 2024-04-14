@@ -212,7 +212,7 @@ local_defs.fn.set_buffer_settings = function()
 
   if ft == "perl" then
     wk.register({
-      ["<F2>"] = { "sub ($self) {<CR>}<ESC>kea<Space>", "new sub" },
+      ["<F2>"] = { "sub ($self) {<cr>}<esc>kea<space>", "new sub" },
       ["<F4>"] = { "$self->", "$self->" },
       ["<S-F4>"] = { "->", "->" },
     }, { buffer = 0, mode = "i" })
