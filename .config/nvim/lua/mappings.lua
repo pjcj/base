@@ -650,7 +650,10 @@ wk.register({
     },
     g = {
       name = "+git",
-      g = { ":set cmdheight=2 | silent tab Git commit | exe 'normal O' | startinsert<cr>", "commit" },
+      g = {
+        ":set cmdheight=2 | tab Git commit | exe 'normal O' | startinsert<cr>",
+        "commit",
+      },
       l = {
         name = "+gitlab",
         a = { gl.approve, "approve" },
