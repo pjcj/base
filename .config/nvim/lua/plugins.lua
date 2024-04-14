@@ -1398,7 +1398,12 @@ local plugins = {
     end,
   },
 
-  { "tpope/vim-fugitive" },
+{
+    "tpope/vim-fugitive",
+    config = function()
+      vim.api.nvim_command("autocmd User FugitiveChanged set cmdheight=0")
+    end,
+  },
 
   {
     "harrisoncramer/gitlab.nvim",
