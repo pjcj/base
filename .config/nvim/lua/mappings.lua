@@ -654,12 +654,11 @@ wk.register({
         function()
           vim.opt.cmdheight = 2
           vim.cmd("tab Git commit")
-          if vim.fn.getline(2) == "" then
+          if vim.fn.getline(2) ~= "" then
             vim.cmd("normal O")
           end
           vim.cmd("startinsert")
         end,
-        -- ":set cmdheight=2 | tab Git commit | :if getline(2) == '' | exe 'normal O' | endif | startinsert<cr>",
         "commit",
       },
       l = {
