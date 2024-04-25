@@ -561,8 +561,8 @@ bui() {
 }
 
 setup_plenv() {
-    build plenv
-    build Perl-Build
+    brew install plenv
+    brew install perl-build
 }
 
 wh() {
