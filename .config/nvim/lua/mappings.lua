@@ -804,7 +804,7 @@ wk.register({
       },
       h = { ":TSBufToggle highlight<cr>", "treesitter highlight" },
       l = { ltext_toggle, "lsp lines" },
-      o = { ":SymbolsOutline<cr>", "symbols" },
+      o = { ":Outline<cr>", "symbols" },
       s = {
         function()
           require("sidebar-nvim").toggle()

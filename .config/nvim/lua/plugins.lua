@@ -1675,28 +1675,18 @@ local plugins = {
   },
 
   {
-    "simrat39/symbols-outline.nvim",
+    "hedyhli/outline.nvim",
     dependencies = {
       "folke/which-key.nvim",
     },
     config = function()
-      require("symbols-outline").setup({
-        width = 40,
-        auto_close = true,
-        -- keymaps = { -- These keymaps can be a string or a table for multiple keys
-        --   close = { "<Esc>", "q" },
-        --   goto_location = "<Cr>",
-        --   focus_location = "o",
-        --   hover_symbol = "<C-space>",
-        --   toggle_preview = "K",
-        --   rename_symbol = "r",
-        --   code_actions = "a",
-        --   fold = "h",
-        --   unfold = "l",
-        --   fold_all = "W",
-        --   unfold_all = "E",
-        --   fold_reset = "R",
-        -- },
+      require("outline").setup({
+        outline_window = {
+          position = "right",
+          width = 60,
+          relative_width = false,
+          auto_close = true,
+        },
       })
     end,
   },
