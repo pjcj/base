@@ -95,7 +95,7 @@ local plugins = {
             LspDiagnosticsDefaultHint = { fg = c.blue },
             LspDiagnosticsHint = { fg = c.blue },
             LspDiagnosticsVirtualTextHint = { fg = c.blue },
-            MatchParen = { bg = col.yellow, fg = col.base },
+            MatchParen = { bg = col.blue, fg = col.base },
             Pmenu = { bg = c.dddred },
             PmenuSel = { bg = c.dred },
             Search = { bg = c.lyellow, fg = col.surface1 },
