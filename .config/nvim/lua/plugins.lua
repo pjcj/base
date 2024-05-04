@@ -1559,7 +1559,6 @@ local plugins = {
 
   { "junegunn/vim-easy-align" }, -- ctrl-x for regexp
   { "tpope/vim-repeat" },
-  { "AndrewRadev/splitjoin.vim" }, -- gS, gJ
   { "Konfekt/vim-unicode-homoglyphs" }, -- gy
   { "superhawk610/ascii-blocks.nvim" }, -- :AsciiBlockify
   { "ntpeters/vim-better-whitespace" },
@@ -1580,6 +1579,17 @@ local plugins = {
       require("urlview").setup({
         default_picker = "telescope",
         default_action = "clipboard",
+      })
+    end,
+  },
+
+  {
+    "Wansmer/treesj",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("treesj").setup({
+        use_default_keymaps = false,
+        max_join_length = 80,
       })
     end,
   },

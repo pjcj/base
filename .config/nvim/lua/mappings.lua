@@ -324,6 +324,30 @@ wk.register({
         F = { ":DiffviewFileHistory %<cr>", "file history %" },
         o = { ":DiffviewOpen<cr>", "open" },
       },
+      j = {
+        name = "+join",
+        j = { require("treesj").join, "join" },
+        J = {
+          function()
+            require("treesj").join({ split = { recursive = true } })
+          end,
+          "recursive join",
+        },
+        s = { require("treesj").split, "split" },
+        S = {
+          function()
+            require("treesj").split({ split = { recursive = true } })
+          end,
+          "recursive split",
+        },
+        t = { require("treesj").toggle, "toggle" },
+        T = {
+          function()
+            require("treesj").toggle({ split = { recursive = true } })
+          end,
+          "recursive toggle",
+        },
+      },
       m = { ":MarkdownPreviewToggle<cr>", "markdown" },
       n = {
         name = "+neural",
