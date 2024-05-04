@@ -21,9 +21,22 @@ local gs = require("gitsigns")
 local gl = require("gitlab")
 
 local vtext_on = true
+local llines_on = false
 local vtext_toggle = function()
   vtext_on = not vtext_on
   vim.diagnostic.config({ virtual_text = vtext_on })
+  if vtext_on then
+    llines_on = false
+    vim.diagnostic.config({ virtual_lines = llines_on })
+  end
+end
+local ltext_toggle = function()
+  llines_on = not llines_on
+  vim.diagnostic.config({ virtual_lines = llines_on })
+  if llines_on then
+    vtext_on = false
+    vim.diagnostic.config({ virtual_text = vtext_on })
+  end
 end
 
 -- parse a Perl stack trace from the + register into the quickfix list
@@ -767,6 +780,7 @@ wk.register({
         s = { ":Gitsigns toggle_signs<cr>", "signs" },
       },
       h = { ":TSBufToggle highlight<cr>", "treesitter highlight" },
+      l = { ltext_toggle, "lsp lines" },
       o = { ":SymbolsOutline<cr>", "symbols" },
       s = {
         function()
