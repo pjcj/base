@@ -32,7 +32,11 @@ local vtext_toggle = function()
 end
 local ltext_toggle = function()
   llines_on = not llines_on
-  vim.diagnostic.config({ virtual_lines = llines_on })
+  if llines_on then
+    vim.diagnostic.config({ virtual_lines = { highlight_whole_line = false } })
+  else
+    vim.diagnostic.config({ virtual_lines = llines_on })
+  end
   if llines_on then
     vtext_on = false
     vim.diagnostic.config({ virtual_text = vtext_on })
