@@ -1431,7 +1431,7 @@ local plugins = {
     config = function()
       vim.opt.termguicolors = true
       require("nvim-highlight-colors").setup({
-        render = "background",  -- background, foreground,virtual
+        render = "background", -- background, foreground, virtual
         virtual_symbol = "■",
         enable_named_colors = true,
         enable_tailwind = true,
