@@ -285,12 +285,13 @@ local function setup_servers()
     return win_opts
   end
 
-  local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-  function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+  local orig_open_floating_preview = vim.lsp.util.open_floating_preview
+  local new_open_floating_preview = function(contents, syntax, opts, ...)
     opts = opts or {}
     opts.border = opts.border or border
-    return orig_util_open_floating_preview(contents, syntax, opts, ...)
+    return orig_open_floating_preview(contents, syntax, opts, ...)
   end
+  vim.lsp.util.open_floating_preview = new_open_floating_preview
 
   vim.fn.sign_define("LspDiagnosticsSignError", { text = "E" })
   vim.fn.sign_define("LspDiagnosticsSignWarning", { text = "W" })
