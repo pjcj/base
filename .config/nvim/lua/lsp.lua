@@ -69,8 +69,8 @@ local navic = require "nvim-navic"
 local on_attach = function(client, bufnr)
   -- print("attach", client.name)
 
-  local function buf_set_option(...)
-    vim.api.nvim_buf_set_option(bufnr, ...)
+  local function buf_set_option(option, value)
+    vim.bo[bufnr][option] = value
   end
 
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
