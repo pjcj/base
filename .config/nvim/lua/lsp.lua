@@ -269,9 +269,7 @@ local function setup_servers()
 
   vim.diagnostic.config({
     virtual_text = { prefix = "●" },
-    float = {
-      source = "always", -- or "if_many"
-    },
+    float = { source = true },
     severity_sort = true,
     underline = true,
   })
