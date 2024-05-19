@@ -65,7 +65,7 @@ local lsp_sig_cfg = {
 --   }
 -- end
 
-local navic = require "nvim-navic"
+local navic = require("nvim-navic")
 local on_attach = function(client, bufnr)
   -- print("attach", client.name)
 
@@ -115,8 +115,8 @@ local lua_settings = {
     workspace = {
       -- Make the server aware of Neovim runtime files
       library = {
-        [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-        [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+        [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+        [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
       },
     },
   },
@@ -124,9 +124,9 @@ local lua_settings = {
 
 -- lsp-install
 local function setup_servers()
-  local lspconfig = require "lspconfig"
+  local lspconfig = require("lspconfig")
 
-  require("mason").setup {
+  require("mason").setup({
     ui = {
       icons = {
         package_installed = "✓",
@@ -134,7 +134,7 @@ local function setup_servers()
         package_uninstalled = "✗",
       },
     },
-  }
+  })
 
   local lsps = {
     "bashls",
@@ -159,9 +159,9 @@ local function setup_servers()
     table.insert(lsps, "taplo")
   end
 
-  require("mason-lspconfig").setup {
+  require("mason-lspconfig").setup({
     ensure_installed = lsps,
-  }
+  })
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
@@ -179,7 +179,7 @@ local function setup_servers()
   lspconfig.html.setup(conf)
   lspconfig.sqlls.setup(conf)
 
-  lspconfig.gopls.setup {
+  lspconfig.gopls.setup({
     settings = {
       gopls = {
         hints = {
@@ -193,8 +193,8 @@ local function setup_servers()
         },
       },
     },
-    conf
-  }
+    conf,
+  })
 
   local function split_env_var(env_var, delimiter)
     local parts = {}
@@ -204,41 +204,41 @@ local function setup_servers()
     return parts
   end
 
-  lspconfig.perlnavigator.setup {
+  lspconfig.perlnavigator.setup({
     settings = {
       perlnavigator = {
-        perlPath = os.getenv "LINT_PERL_PATH" or "perl",
-        includePaths = split_env_var(os.getenv "LINT_PERL_PATHS" or "", ":"),
-        perlcriticEnabled = vim.fn.filereadable ".perlcriticrc",
+        perlPath = os.getenv("LINT_PERL_PATH") or "perl",
+        includePaths = split_env_var(os.getenv("LINT_PERL_PATHS") or "", ":"),
+        perlcriticEnabled = vim.fn.filereadable(".perlcriticrc"),
         perlcriticProfile = ".perlcriticrc",
         enableWarnings = false,
       },
     },
     debounce_text_changes = 5000, -- milliseconds
-    conf
-  }
+    conf,
+  })
 
-  lspconfig.tsserver.setup {
+  lspconfig.tsserver.setup({
     init_options = { hostInfo = "neovim" },
     on_attach = function(client, bufnr)
       client.server_capabilities.document_formatting = false
       client.server_capabilities.document_range_formatting = false
-      local ts_utils = require "nvim-lsp-ts-utils"
-      ts_utils.setup {}
+      local ts_utils = require("nvim-lsp-ts-utils")
+      ts_utils.setup({})
       ts_utils.setup_client(client)
       on_attach(client, bufnr)
     end,
-  }
+  })
 
-  lspconfig.volar.setup {
+  lspconfig.volar.setup({
     on_attach = function(client, bufnr)
       client.server_capabilities.document_formatting = false
       client.server_capabilities.document_range_formatting = false
       on_attach(client, bufnr)
     end,
-  }
+  })
 
-  lspconfig.yamlls.setup {
+  lspconfig.yamlls.setup({
     settings = {
       yaml = {
         format = {
@@ -254,30 +254,30 @@ local function setup_servers()
         completion = true,
       },
     },
-     conf
-  }
+    conf,
+  })
 
   if not is_freebsd then
     lspconfig.clangd.setup(conf)
     lspconfig.taplo.setup(conf)
-    lspconfig.lua_ls.setup {
+    lspconfig.lua_ls.setup({
       init_options = { hostInfo = "neovim" },
       settings = lua_settings,
-      conf
-    }
+      conf,
+    })
   end
 
-  vim.diagnostic.config {
+  vim.diagnostic.config({
     virtual_text = { prefix = "●" },
     float = {
       source = "always", -- or "if_many"
     },
     severity_sort = true,
     underline = true,
-  }
+  })
 
   local border = "rounded"
-  local lspconfig_window = require "lspconfig.ui.windows"
+  local lspconfig_window = require("lspconfig.ui.windows")
   local old_defaults = lspconfig_window.default_opts
   function lspconfig_window.default_opts(opts)
     local win_opts = old_defaults(opts)
