@@ -1435,10 +1435,15 @@ local plugins = {
   },
 
   {
-    "norcalli/nvim-colorizer.lua",
+    "brenoprata10/nvim-highlight-colors",
     config = function()
       vim.opt.termguicolors = true
-      require("colorizer").setup()
+      require("nvim-highlight-colors").setup({
+        render = "background",  -- background, foreground,virtual
+        virtual_symbol = "■",
+        enable_named_colors = true,
+        enable_tailwind = true,
+      })
     end,
   },
 
