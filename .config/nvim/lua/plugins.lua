@@ -1704,35 +1704,6 @@ local plugins = {
   },
 
   {
-    "edluffy/specs.nvim", -- zooms in on cursor to show jumps
-    config = function()
-      local specs = require("specs")
-      specs.setup({
-        show_jumps = true,
-        min_jump = 5,
-        popup = {
-          delay_ms = 0, -- delay before popup displays
-          inc_ms = 5, -- time increments used for fade/resize effects
-          blend = 30, -- starting blend, between 0-100, see :h winblend
-          width = 60,
-          winhl = "SpellRare",
-          fader = specs.linear_fader,
-          resizer = specs.shrink_resizer,
-        },
-        ignore_filetypes = {},
-        ignore_buftypes = { nofile = true },
-      })
-      local l = require("local_defs")
-      vim.api.nvim_set_keymap(
-        "n",
-        "ä",
-        [[<cmd>lua require "specs".show_specs()<cr>]],
-        l.map.defmap
-      )
-    end,
-  },
-
-  {
     "tzachar/highlight-undo.nvim",
     config = function()
       require("highlight-undo").setup({
