@@ -517,7 +517,40 @@ wk.register({
         "find all files",
       },
       b = { tb.buffers, "buffers" },
-      c = { tb.commands, "commands" },
+      c = {
+        name = "+copilot",
+        c = {
+          function()
+            local input = vim.fn.input("Quick Chat: ")
+            if input ~= "" then
+              require("CopilotChat").ask(
+                input,
+                { selection = require("CopilotChat.select").buffer }
+              )
+            end
+          end,
+          "chat",
+        },
+        h = {
+          function()
+            local actions = require("CopilotChat.actions")
+            require("CopilotChat.integrations.telescope").pick(
+              actions.help_actions()
+            )
+          end,
+          "help",
+        },
+        p = {
+          function()
+            local actions = require("CopilotChat.actions")
+            require("CopilotChat.integrations.telescope").pick(
+              actions.prompt_actions()
+            )
+          end,
+          "prompt",
+        },
+      },
+      C = { tb.commands, "commands" },
       d = {
         name = "+diagnostics",
         d = { ":Telescope diagnostics<cr>", "all" },
@@ -861,6 +894,39 @@ wk.register({
     },
     f = {
       name = "+telescope",
+      c = {
+        name = "+copilot",
+        c = {
+          function()
+            local input = vim.fn.input("Quick Chat: ")
+            if input ~= "" then
+              require("CopilotChat").ask(
+                input,
+                { selection = require("CopilotChat.select").buffer }
+              )
+            end
+          end,
+          "chat",
+        },
+        h = {
+          function()
+            local actions = require("CopilotChat.actions")
+            require("CopilotChat.integrations.telescope").pick(
+              actions.help_actions()
+            )
+          end,
+          "help",
+        },
+        p = {
+          function()
+            local actions = require("CopilotChat.actions")
+            require("CopilotChat.integrations.telescope").pick(
+              actions.prompt_actions()
+            )
+          end,
+          "prompt",
+        },
+      },
       e = { tb.resume, "resume" },
       f = { tb.builtin, "builtin" },
       s = { tb.grep_string, "grep string" },
