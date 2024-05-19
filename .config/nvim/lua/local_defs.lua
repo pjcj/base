@@ -220,7 +220,7 @@ local_defs.fn.set_buffer_settings = function()
   end
 
   if ft == "helm" then
-    vim.diagnostic.disable()
+    vim.diagnostic.enable(false)
   end
 end
 
