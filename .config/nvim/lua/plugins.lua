@@ -210,10 +210,10 @@ local plugins = {
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection = "<C-F5>",
-            scope_incremental = "<C-F7>",
-            node_incremental = "<C-F5>",
-            node_decremental = "<C-F6>",
+            init_selection = "<F53>", -- option-f5
+            scope_incremental = "<F55>", -- option-f7
+            node_incremental = "<F53>", -- option-f5
+            node_decremental = "<F54>", -- option-f6
           },
         },
         refactor = {
