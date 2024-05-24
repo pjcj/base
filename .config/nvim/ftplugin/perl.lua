@@ -48,4 +48,13 @@ require("which-key").register({
     end,
     "format subroutine",
   },
+  [",pi"] = {
+    function()
+      local vopt = vim.opt
+      vopt.shiftwidth = 2
+      vopt.tabstop = 2
+      vopt.expandtab = true
+    end,
+    "set indentation",
+  },
 }, { prefix = "<leader>" })
