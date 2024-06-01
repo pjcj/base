@@ -1242,7 +1242,7 @@ local plugins = {
     },
   },
 
-  {
+  {  -- TODO - consider https://github.com/monkoose/neocodeium
     "Exafunction/codeium.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
