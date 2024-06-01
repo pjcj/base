@@ -121,6 +121,7 @@ local plugins = {
   },
 
   { "nvim-lua/plenary.nvim" },
+  { "kkharji/sqlite.lua" },
 
   {
     "SmiteshP/nvim-navic",
@@ -765,6 +766,8 @@ local plugins = {
       "nvim-telescope/telescope-frecency.nvim",
       "isak102/telescope-git-file-history.nvim",
       "allaman/emoji.nvim",
+      "danielfalk/smart-open.nvim",
+      "AckslD/nvim-neoclip.lua",
     },
     config = function()
       local telescope = require("telescope")
@@ -824,6 +827,7 @@ local plugins = {
       telescope.load_extension("frecency")
       telescope.load_extension("git_file_history") -- ^G - open in browser
       telescope.load_extension("emoji")
+      telescope.load_extension("smart_open")
 
       vim.cmd([[
         augroup telescope
@@ -834,11 +838,15 @@ local plugins = {
     end,
   },
   {
-    "danielfalk/smart-open.nvim",
+    "AckslD/nvim-neoclip.lua",
+    dependencies = { "kkharji/sqlite.lua", module = "sqlite" },
     config = function()
-      require("telescope").load_extension("smart_open")
+      require("neoclip").setup({
+        enable_persistent_history = true,
+        db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
+        default_register = '"',
+      })
     end,
-    dependencies = { "kkharji/sqlite.lua" },
   },
   { "stevearc/dressing.nvim" },
   { "gabrielpoca/replacer.nvim" },
@@ -1435,18 +1443,6 @@ local plugins = {
         virtual_symbol = "■",
         enable_named_colors = true,
         enable_tailwind = true,
-      })
-    end,
-  },
-
-  {
-    "AckslD/nvim-neoclip.lua",
-    dependencies = { "tami5/sqlite.lua", module = "sqlite" },
-    config = function()
-      require("neoclip").setup({
-        enable_persistent_history = true,
-        db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
-        default_register = '"',
       })
     end,
   },
