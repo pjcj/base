@@ -25,18 +25,17 @@ S<B<[ files ]>>
 
 =head1 DESCRIPTION
 
-C<rename> renames the filenames supplied according to the rules specif
-+ied. If a given filename is not modified, it will not be renamed. If 
-+no filenames are given on the command line, filenames will be read vi
-+a standard input.
+C<rename> renames the filenames supplied according to the rules specified. If a
+given filename is not modified, it will not be renamed. If no filenames are
+given on the command line, filenames will be read via standard input.
 
-For example, to rename all files matching C<*.bak> to strip the extens
-+ion, you might say
+For example, to rename all files matching C<*.bak> to strip the extension, you
+might say
 
  rename 's/\.bak$//' *.bak
 
-If are confident that none of the filenames has C<.bak> anywhere else 
-+than at the end, you can also use the much easier typed
+If are confident that none of the filenames has C<.bak> anywhere else than at
+the end, you can also use the much easier typed
 
  rename -s .bak '' *.bak
 
@@ -44,43 +43,42 @@ You can always do multiple changes in one ago:
 
  rename -s .tgz .tar.gz -s .tbz2 .tar.bz2 *.tar.*
 
-Note however that expressive options are order sensitive. The followin
-+g would probably surprise you:
+Note however that expressive options are order sensitive. The following would probably surprise you:
 
  rename -s foo bar -s bar baz *
 
-Because changes are cumulative, this would end up substituting a F<foo
-+> match in a filename with F<baz>, not F<bar>! To get the intended re
-+sults in the above example, you could reverse the order of options:
+Because changes are cumulative, this would end up substituting a F<foo> match in
+a filename with F<baz>, not F<bar>! To get the intended results in the above
+example, you could reverse the order of options:
 
  rename -s bar baz -s foo bar *
 
-If you placed the C<-c> after the C<-e> in the above example, files wi
-+th F<.zip> and F<.ZIP> extensions would be (attempted to be) moved to
-+ different directories.
+If you placed the C<-c> after the C<-e> in the above example, files with F<.zip>
+and F<.ZIP> extensions would be (attempted to be) moved to different
+directories.
 
 To translate uppercase names to lower, you'd use
 
  rename -c *
 
-If you have files with control characters and blanks in their names, C
-+<-z> will clean them up.
+If you have files with control characters and blanks in their names, C<-z> will
+clean them up.
 
  rename -z *
 
-You can combine all of these to suit your needs. F.ex files from Windo
-+ws systems often have blanks and (sometimes nothing but) capital lett
-+ers. Let's say you have a bunch of such files to clean up, and you al
-+so want to move them to subdirectories based on extension. The follow
-+ing command should help, provided all directories already exist:
+You can combine all of these to suit your needs. F.ex files from Windows systems
+often have blanks and (sometimes nothing but) capital letters. Let's say you
+have a bunch of such files to clean up, and you also want to move them to
+subdirectories based on extension. The following command should help, provided
+all directories already exist:
 
  rename -cz -e '$_ = "$1/$_" if /(\..*)\z/' *
 
-Again you need to pay attention to order sensitivity for expressive op
-+tions. If you placed the C<-c> after the C<-e> in the above example, 
-+files with F<.zip> and F<.ZIP> extensions would be (attempted to be) 
-+moved to different directories because the directory name prefix woul
-+d be added before the filenames were normalized.
+Again you need to pay attention to order sensitivity for expressive options. If
+you placed the C<-c> after the C<-e> in the above example, files with F<.zip>
+and F<.ZIP> extensions would be (attempted to be) moved to different directories
+because the directory name prefix would be added before the filenames were
+normalized.
 
 =head1 ARGUMENTS
 
@@ -98,11 +96,10 @@ Browse the manpage.
 
 =item B<-0>, B<--null>
 
-When reading file names from C<STDIN>, split on null bytes instead of 
-+newlines. This is useful in combination with GNU find's C<-print0> op
-+tion, GNU grep's C<-Z> option, and GNU sort's C<-z> option, to name j
-+ust a few. B<Only valid if no filenames have been given on the comman
-+dline.>
+When reading file names from C<STDIN>, split on null bytes instead of
+newlines. This is useful in combination with GNU find's C<-print0> option, GNU
+grep's C<-Z> option, and GNU sort's C<-z> option, to name just a few. B<Only
+valid if no filenames have been given on the commandline.>
 
 =item B<-c>, B<--lower-case>
 
@@ -114,11 +111,10 @@ Converts file names to all upper case.
 
 =item B<-e>, B<--expr>
 
-The C<code> argument to this option should be a Perl expression that a
-+ssumes the filename in the C<$_> variable and modifies it for the fil
-+enames to be renamed. When no other C<-c>, C<-C>, C<-e>, C<-s>, or C<
-+-z> options are given, you can omit the C<-e> from infront of the cod
-+e.
+The C<code> argument to this option should be a Perl expression that assumes the
+filename in the C<$_> variable and modifies it for the filenames to be
+renamed. When no other C<-c>, C<-C>, C<-e>, C<-s>, or C<-z> options are given,
+you can omit the C<-e> from in front of the code.
 
 =item B<-f>, B<--force>
 
@@ -130,13 +126,13 @@ Ask the user to confirm every action before it is taken.
 
 =item B<-l>, B<--symlink>
 
-Create symlinks from the new names to the existing ones, instead of re
-+naming the files. B<Cannot be used in conjunction with C<-L>.>
+Create symlinks from the new names to the existing ones, instead of renaming the
+files. B<Cannot be used in conjunction with C<-L>.>
 
 =item B<-L>, B<--hardlink>
 
-Create hard links from the new names to the existing ones, instead of 
-+renaming the files. B<Cannot be used in conjunction with C<-l>.>
+Create hard links from the new names to the existing ones, instead of renaming
+the files. B<Cannot be used in conjunction with C<-l>.>
 
 =item B<-n>, B<--dry-run>, B<--just-print>
 
@@ -144,8 +140,8 @@ Show how the files would be renamed, but don't actually do anything.
 
 =item B<-s>, B<--subst>, B<--simple>
 
-Perform a simple textual substitution of C<from> to C<to>. The C<from>
-+ and C<to> parameters must immediately follow the argument.
+Perform a simple textual substitution of C<from> to C<to>. The C<from> and C<to>
+parameters must immediately follow the argument.
 
 This is equivalent to supplying a C<perlexpr> of C<s/\Qfrom/to/>.
 
@@ -155,8 +151,8 @@ Print additional information about the operations (not) executed.
 
 =item B<-z>, B<--sanitize>
 
-Replaces consecutive blanks, shell meta characters, and control charac
-+ters in filenames with underscores.
+Replaces consecutive blanks, shell meta characters, and control characters in
+filenames with underscores.
 
 =back
 
