@@ -116,7 +116,7 @@ EOF
 Usage: $prog [options] [input_file [output_file]]
 
 Convert a program source to syntax highlighted HTML,
-or any other format for wich rules are defined.
+or any other format for which rules are defined.
 
 -l, --language-mode   set language mode
     --fallback LANG   fallback language mode
@@ -500,7 +500,7 @@ sub create_snippetlist
     my ( $regexps_ref, $code, $snippetlist_ref, $style_ref ) = @_ ;
     my $length = length( $code );
 
-    ## An array of regular expression sturctures, each of which is an
+    ## An array of regular expression structures, each of which is an
     ## array.  @res is kept sorted by starting position of the RExen and
     ## then by the position of the regex in the language file.  This allows
     ## us to just evaluate $res[0], and to hand write fast code that typically
