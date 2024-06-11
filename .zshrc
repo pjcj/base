@@ -1091,8 +1091,24 @@ elif [ 1 = 1 ]; then
     line() { printf "%.s$char" {1..$(tput cols)} }
     PROMPT=$'$(line)$(gitprompt)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
 
+    perl_here() {
+        if [[ -d perl || -d t || -e Makefile.PL ]]; then
+            echo 1
+        else
+            echo 0
+        fi
+    }
     perlv () {
-        if [[ ${PROMPT_SHOW_PERL:-0} == 1 ]]; then
+        if [[ ${PROMPT_SHOW_PERL:-$(perl_here)} == 1 ]]; then
+            if which plenv >&/dev/null; then
+                local perl=$(plenv version-name)
+                if [[ $perl == system ]]; then
+                    perl -e 'print "$^V "'
+                else
+                    echo "$perl "
+                fi
+                return
+            fi
             perl -e '
                 $t = -e "Makefile";
                 $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`;
