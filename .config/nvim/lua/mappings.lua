@@ -10,6 +10,7 @@ local wk = require("which-key")
 --   silent = true, -- use `silent` when creating keymaps
 --   noremap = true, -- use `noremap` when creating keymaps
 --   nowait = false, -- use `nowait` when creating keymaps
+--   expr = false, -- use `expr` when creating keymaps
 -- }
 
 local lb = vim.lsp.buf
@@ -377,6 +378,13 @@ wk.register({
             require("rulebook").lookupRule()
           end,
           "lookup rule",
+        },
+        s = {
+          function()
+            require("rulebook").suppressFormatter()
+          end,
+          "suppress formatter",
+          mode = { "n", "x" },
         },
         y = {
           function()
