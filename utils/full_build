@@ -177,10 +177,10 @@ if [[ "$(uname)" == FreeBSD ]]; then
     sudo npm install -g fixjson
     sudo npm update -g
 else
-    $pip3 install --upgrade --user \
-        thefuck \
-        docker-compose \
-        mdformat-gfm
+    # $pip3 install --upgrade --user \
+    #     thefuck \
+    #     docker-compose \
+    #     mdformat-gfm
 
     npm install -g fixjson
     exec npm update -g
