@@ -516,6 +516,7 @@ local plugins = {
       if found then
         vim.list_extend(codespell_args, { "-I", found })
       end
+      vim.list_extend(codespell_args, { "--stdin-single-line", "-" })
       lint.linters.codespell.args = codespell_args
 
       vim.api.nvim_create_autocmd({
