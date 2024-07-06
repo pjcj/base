@@ -69,6 +69,10 @@ c.colors = {
     "#93a1a1",  -- bright cyan
     "#fdf6e3",  -- bright white
   },
+  quick_select_label_bg = { Color = "#fff179" },
+  quick_select_label_fg = { Color = "#001920" },
+  quick_select_match_bg = { Color = "#f0a63f" },
+  quick_select_match_fg = { Color = "#001920" },
 }
 
 c.disable_default_key_bindings = true
@@ -101,6 +105,7 @@ c.keys = {
   { key = 'l', mods = "LEADER", action = act.ShowLauncher },
   { key = 'p', mods = "LEADER", action = act.ActivateCommandPalette },
   { key = 'n', mods = "LEADER", action = act.SpawnWindow },
+  { key = "phys:Space", mods = "LEADER", action = act.QuickSelect },
 
 
   -- { key = '0', mods = 'CTRL', action = act.ActivateTab(0) },
@@ -394,6 +399,8 @@ wezterm.on(
 c.pane_focus_follows_mouse = true
 
 c.window_close_confirmation = "NeverPrompt"
+
+c.quick_select_alphabet = "asdfqweryxcvjkluiopmghtzbn"
 
 if hostname == "T52U" then
   c.ssh_domains = {
