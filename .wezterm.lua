@@ -106,6 +106,8 @@ c.keys = {
   { key = 'p', mods = "LEADER", action = act.ActivateCommandPalette },
   { key = 'n', mods = "LEADER", action = act.SpawnWindow },
   { key = "phys:Space", mods = "LEADER", action = act.QuickSelect },
+  { key = "UpArrow", mods = "SHIFT", action = act.ScrollToPrompt(-1) },
+  { key = "DownArrow", mods = "SHIFT", action = act.ScrollToPrompt(1) },
 
 
   -- { key = '0', mods = 'CTRL', action = act.ActivateTab(0) },
