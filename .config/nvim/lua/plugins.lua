@@ -1454,6 +1454,7 @@ local plugins = {
       require("nvim-highlight-colors").setup({
         render = "background", -- background, foreground, virtual
         virtual_symbol = "■",
+        enable_short_hex = false,
         enable_named_colors = true,
         enable_tailwind = true,
       })
