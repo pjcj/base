@@ -211,7 +211,7 @@ zshrc_load_status "path"
 
 perldir=$(dirname $(readlink -f $(which perl)))
 [[ $perldir == "/usr/bin" ]] || PATH="$perldir":$PATH
-PATH=~/.local/bin:~/bin:~/g/sw/bin:~/g/sw/usr/bin:$PATH
+PATH=~/.local/bin:~/g/sw/bin:~/g/sw/usr/bin:$PATH
 PATH=~/.cargo/bin:$NPM_PACKAGES/bin:$PATH
 # PATH=~/.yarn/bin:~/.config/yarn/global/node_modules/.bin:$PATH
 PATH=/snap/bin:$PATH
@@ -220,6 +220,7 @@ PATH=/snap/bin:$PATH
 PATH=~/g/local_base/utils:~/g/base/utils:$PATH
 PATH=~/g/base/utils/${(L)$(uname)}:$PATH
 PATH=/usr/local/bin:$PATH:~/g/go/bin:/usr/local/sbin:/usr/sbin:/sbin
+PATH=~/bin:$PATH
 MANPATH=/usr/share/man:${MANPATH:-manpath}
 MANPATH=~/g/sw/share/man:$NPM_PACKAGES/share/man:$MANPATH
 
