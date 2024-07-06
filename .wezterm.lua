@@ -98,8 +98,9 @@ c.keys = {
   { key = "v", mods = mod1, action = act.PasteFrom "Clipboard" },
   { key = "d", mods = "LEADER", action = act.ShowDebugOverlay },
   { key = "r", mods = "LEADER", action = act.ReloadConfiguration },
-  { key = 'l', mods = 'LEADER', action = act.ShowLauncher },
-  { key = 'p', mods = 'LEADER', action = act.ActivateCommandPalette },
+  { key = 'l', mods = "LEADER", action = act.ShowLauncher },
+  { key = 'p', mods = "LEADER", action = act.ActivateCommandPalette },
+  { key = 'n', mods = "LEADER", action = act.SpawnWindow },
 
 
   -- { key = '0', mods = 'CTRL', action = act.ActivateTab(0) },
