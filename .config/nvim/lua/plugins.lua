@@ -943,6 +943,7 @@ local plugins = {
           TypeParameter = "",
           Codeium       = "",
           Copilot       = "",
+          Supermaven    = "",
         }
       })
       -- stylua: ignore end
@@ -989,6 +990,7 @@ local plugins = {
         { name = "nvim_lsp_signature_help" },
         vim.env.OPENAI_API_KEY and { name = "copilot" } or {},
         vim.env.OPENAI_API_KEY and { name = "codeium" } or {},
+        vim.env.OPENAI_API_KEY and { name = "supermaven" } or {},
         -- { name = "cmp_ai" },
         { name = "nvim_lsp" },
         {
@@ -1251,6 +1253,16 @@ local plugins = {
     },
     config = function()
       require("codeium").setup({})
+    end,
+  },
+
+  {
+    "supermaven-inc/supermaven-nvim",
+    config = function()
+      require("supermaven-nvim").setup({
+        disable_inline_completion = true,
+        disable_keymaps = true,
+      })
     end,
   },
 
