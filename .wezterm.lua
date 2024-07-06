@@ -19,6 +19,8 @@ if hostname == "T52U" then
   c.initial_rows = 96
 elseif string.match(hostname, "mbp") then
   c.font = wezterm.font("Inconsolata")
+  -- Enable ligatures >= <= != == === !== => <= >= -> <- >>= <<=
+  c.harfbuzz_features = { "dlig=1" }
   c.font_size = 17
   c.command_palette_font_size = 24
   c.initial_cols = 200
