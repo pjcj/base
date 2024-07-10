@@ -49,7 +49,7 @@ zinit load "zdharma/fast-syntax-highlighting"
 zshrc_load_status "options"
 
 setopt                        \
-       all_export             \
+    NO_all_export             \
        always_last_prompt     \
     NO_always_to_end          \
        append_history         \
@@ -202,10 +202,10 @@ WATCHFMT="[%B%t%b] %B%n%b has %a %B%l%b from %B%M%b"
 
 KEYTIMEOUT=1
 
-MANPAGER="nvim +Man!"
-MANWIDTH=999
+export MANPAGER="nvim +Man!"
+export MANWIDTH=999
 
-HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_ANALYTICS=1
 
 zshrc_load_status "path"
 
@@ -397,10 +397,10 @@ zshrc_load_status "miscellaneous"
 # url-quote-magic breaks fast-syntax-highlighting
 # autoload -U url-quote-magic && zle -N self-insert url-quote-magic
 
-REPORTTIME=30  # 3 seconds
-TIMEFMT="  %J  %E %P  %U user + %S system  %W swaps  %Mk mem"
+export REPORTTIME=5  # 3 seconds
+export TIMEFMT="  %J  %E %P  %U user + %S system  %W swaps  %Mk mem"
 
-LS_OPTIONS=
+export LS_OPTIONS=
 
 export NPM_PACKAGES=~/g/sw/.npm-packages
 
@@ -653,14 +653,14 @@ export LANGUAGE LANG LC_ALL
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#056e75"
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
-ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(
+export ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(
     forward-char
     end-of-line
     vi-end-of-line
     vi-add-eol
 )
-ZSH_AUTOSUGGEST_EXECUTE_WIDGETS=(vi-forward-blank-word-end)
-ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(
+export ZSH_AUTOSUGGEST_EXECUTE_WIDGETS=(vi-forward-blank-word-end)
+export ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(
     forward-word
     emacs-forward-word
     vi-forward-word
@@ -712,7 +712,7 @@ elif [[ $(uname) == FreeBSD ]]; then
     }
     pl() { pll -eww "$@" | m }
     pp() { pl -rc "$@" | m }
-    LESS='--LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS'
+    export LESS='--LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS'
 else
     if which dmidecode >&/dev/null; then
         (sudo dmidecode -t system | grep -Eq 'VirtualBox|VMware') && ISVM=1
@@ -1069,23 +1069,23 @@ if [ 1 = 0 ]; then
 
     RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %T%{$reset_color%}'
 elif [ 1 = 1 ]; then
-    ZSH_GIT_PROMPT_FORCE_BLANK=1
-    ZSH_THEME_GIT_PROMPT_PREFIX=""
-    ZSH_THEME_GIT_PROMPT_SUFFIX=" "
-    ZSH_THEME_GIT_PROMPT_SEPARATOR=" "
-    ZSH_THEME_GIT_PROMPT_DETACHED="%{$fg_no_bold[cyan]%}:"
-    ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
-    ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg[yellow]%}%{↓%G%}"
-    ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[yellow]%}%{↑%G%}"
-    ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}%{⋆%G%}"
-    ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}%{⦁%G%}"
-    ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$fg[blue]%}%{+%G%}"
-    ZSH_THEME_GIT_PROMPT_UNTRACKED="%{…%G%}"
-    ZSH_THEME_GIT_PROMPT_STASHED="%{$efs_base01%}⚑"
-    ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✔"
+    export ZSH_GIT_PROMPT_FORCE_BLANK=1
+    export ZSH_THEME_GIT_PROMPT_PREFIX=""
+    export ZSH_THEME_GIT_PROMPT_SUFFIX=" "
+    export ZSH_THEME_GIT_PROMPT_SEPARATOR=" "
+    export ZSH_THEME_GIT_PROMPT_DETACHED="%{$fg_no_bold[cyan]%}:"
+    export ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
+    export ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg[yellow]%}%{↓%G%}"
+    export ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[yellow]%}%{↑%G%}"
+    export ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}%{⋆%G%}"
+    export ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}%{⦁%G%}"
+    export ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$fg[blue]%}%{+%G%}"
+    export ZSH_THEME_GIT_PROMPT_UNTRACKED="%{…%G%}"
+    export ZSH_THEME_GIT_PROMPT_STASHED="%{$efs_base01%}⚑"
+    export ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✔"
 
-    ZSH_GIT_PROMPT_SHOW_STASH=1
-    ZSH_GIT_PROMPT_SHOW_UPSTREAM=
+    export ZSH_GIT_PROMPT_SHOW_STASH=1
+    export ZSH_GIT_PROMPT_SHOW_UPSTREAM=
 
     . ~/.local/share/zinit/plugins/woefe---git-prompt.zsh/git-prompt.zsh
 
