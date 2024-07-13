@@ -2,6 +2,7 @@ local vopt = vim.opt  -- set options
 
 vopt.autowriteall  = true
 vopt.backspace     = { "indent", "eol", "start" }
+vopt.background    = "dark"
 vopt.backup        = true
 vopt.backupcopy    = { "yes", "breakhardlink" }
 vopt.backupdir     = vopt.backupdir - { "." }
@@ -45,9 +46,6 @@ vopt.wildoptions   = "pum,tagfile"
 vopt.guicursor     = "n-v-c:block-Cursor,i-ci-ve:ver25,r-cr:hor20,o:hor50," ..
                     "a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor," ..
                     "sm:block-blinkwait175-blinkoff150-blinkon175"
-
-vopt.termguicolors = true
-vopt.background    = "dark"
 
 if vim.fn.executable("rg") then
   vopt.grepprg    = "rg --no-heading --hidden --glob '!.git' --vimgrep"
