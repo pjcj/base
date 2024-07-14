@@ -96,7 +96,7 @@ end
 wk.add({
   { "<F13>", "<S-F1>", hidden = true, noremap = false },
   { "<F14>", "<S-F2>", hidden = true, noremap = false },
-  { "<F14>", "<S-F2>", hidden = true, noremap = false },
+  { "<F15>", "<S-F3>", hidden = true, noremap = false },
   { "<F16>", "<S-F4>", hidden = true, noremap = false },
   { "<F17>", "<S-F5>", hidden = true, noremap = false },
   { "<F18>", "<S-F6>", hidden = true, noremap = false },
@@ -432,7 +432,7 @@ wk.add({
     { "<leader> tes", ":Translate EN -output=split<cr>", desc = "split" },
   },
 
-  { "<leader>,", smart_open, desc = "smart open" },
+  { "<leader>.", smart_open, desc = "smart open" },
   {
     "<leader>-",
     function()
