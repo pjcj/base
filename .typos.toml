@@ -5,6 +5,7 @@
 [default.extend-words]
   importas = "importas"
   nd = "nd"
+  fo = "fo"
 
 [default.extend-identifiers]
   bui = "bui"
