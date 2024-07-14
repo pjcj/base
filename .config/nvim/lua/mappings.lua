@@ -3,14 +3,30 @@
 vim.g.mapleader = ","
 
 local wk = require("which-key")
+-- v2
 -- {
 --   mode = "n", -- NORMAL mode
 --   prefix = "",
---   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+--   buffer = nil, -- Global mappings. Specify a buffer number for buffer local
+--     mappings
 --   silent = true, -- use `silent` when creating keymaps
 --   noremap = true, -- use `noremap` when creating keymaps
 --   nowait = false, -- use `nowait` when creating keymaps
 --   expr = false, -- use `expr` when creating keymaps
+-- }
+-- v3
+-- {
+--   [1]: (string) lhs (required)
+--   [2]: (string|fun()) rhs (optional): when present, it will create the
+--     mapping
+--   desc: (string) description (required)
+--   mode: (string|string[]) mode (optional, defaults to "n")
+--   group: (string) group name (optional)
+--   cond: (boolean|fun():boolean) condition to enable the mapping (optional)
+--   hidden: (boolean) hide the mapping (optional)
+--   icon: (string|wk.Icon) icon spec (optional)
+--   any other option valid for vim.keymap.set. These are only used for creating
+--     mappings.
 -- }
 
 local lb = vim.lsp.buf
@@ -20,6 +36,8 @@ local tb = require("telescope.builtin")
 local bd = require("better-digraphs")
 local gs = require("gitsigns")
 local gl = require("gitlab")
+local tj = require("treesj")
+local nt = require("neotest")
 
 local vtext_on = true
 local llines_on = false
@@ -75,414 +93,717 @@ local function smart_open()
   })
 end
 
-vim.cmd([[
-  map <F13>    <S-F1>
-  map <F14>    <S-F2>
-  map <F15>    <S-F3>
-  map <F16>    <S-F4>
-  map <F17>    <S-F5>
-  map <F18>    <S-F6>
-  map <F19>    <S-F7>
-  map <F20>    <S-F8>
-  map <F21>    <S-F9>
-  map <F22>    <S-F10>
-  map <F23>    <S-F11>
-  map <F24>    <S-F12>
+wk.add({
+  { "<F13>", "<S-F1>", hidden = true, noremap = false },
+  { "<F14>", "<S-F2>", hidden = true, noremap = false },
+  { "<F14>", "<S-F2>", hidden = true, noremap = false },
+  { "<F16>", "<S-F4>", hidden = true, noremap = false },
+  { "<F17>", "<S-F5>", hidden = true, noremap = false },
+  { "<F18>", "<S-F6>", hidden = true, noremap = false },
+  { "<F19>", "<S-F7>", hidden = true, noremap = false },
+  { "<F20>", "<S-F8>", hidden = true, noremap = false },
+  { "<F21>", "<S-F9>", hidden = true, noremap = false },
+  { "<F22>", "<S-F10>", hidden = true, noremap = false },
+  { "<F23>", "<S-F11>", hidden = true, noremap = false },
+  { "<F24>", "<S-F12>", hidden = true, noremap = false },
 
-  map <F25>    <C-F1>
-  map <F26>    <C-F2>
-  map <F27>    <C-F3>
-  map <F28>    <C-F4>
-  map <F29>    <C-F5>
-  map <F30>    <C-F6>
-  map <F31>    <C-F7>
-  map <F32>    <C-F8>
-  map <F33>    <C-F9>
-  map <F34>    <C-F10>
-  map <F35>    <C-F11>
-  map <F36>    <C-F12>
+  { "<F25>", "<C-F1>", hidden = true, noremap = false },
+  { "<F26>", "<C-F2>", hidden = true, noremap = false },
+  { "<F27>", "<C-F3>", hidden = true, noremap = false },
+  { "<F28>", "<C-F4>", hidden = true, noremap = false },
+  { "<F29>", "<C-F5>", hidden = true, noremap = false },
+  { "<F30>", "<C-F6>", hidden = true, noremap = false },
+  { "<F31>", "<C-F7>", hidden = true, noremap = false },
+  { "<F32>", "<C-F8>", hidden = true, noremap = false },
+  { "<F33>", "<C-F9>", hidden = true, noremap = false },
+  { "<F34>", "<C-F10>", hidden = true, noremap = false },
+  { "<F35>", "<C-F11>", hidden = true, noremap = false },
+  { "<F36>", "<C-F12>", hidden = true, noremap = false },
 
-  map <F37>    <M-F1>
-  map <F38>    <M-F2>
-  map <F39>    <M-F3>
-  map <F40>    <M-F4>
-  map <F41>    <M-F5>
-  map <F42>    <M-F6>
-  map <F43>    <M-F7>
-  map <F44>    <M-F8>
-  map <F45>    <M-F9>
-  map <F46>    <M-F10>
-  map <F47>    <M-F11>
-  map <F48>    <M-F12>
+  { "<F37>", "<C-F1>", hidden = true, noremap = false },
+  { "<F38>", "<C-F2>", hidden = true, noremap = false },
+  { "<F39>", "<C-F3>", hidden = true, noremap = false },
+  { "<F40>", "<C-F4>", hidden = true, noremap = false },
+  { "<F41>", "<C-F5>", hidden = true, noremap = false },
+  { "<F42>", "<C-F6>", hidden = true, noremap = false },
+  { "<F43>", "<C-F7>", hidden = true, noremap = false },
+  { "<F44>", "<C-F8>", hidden = true, noremap = false },
+  { "<F45>", "<C-F9>", hidden = true, noremap = false },
+  { "<F46>", "<C-F10>", hidden = true, noremap = false },
+  { "<F47>", "<C-F11>", hidden = true, noremap = false },
+  { "<F48>", "<C-F12>", hidden = true, noremap = false },
 
-  map <F49>    <M-C-F1>
-  map <F50>    <M-C-F2>
-  map <F51>    <M-C-F3>
-  map <F52>    <M-C-F4>
-  map <F53>    <M-C-F5>
-  map <F54>    <M-C-F6>
-  map <F55>    <M-C-F7>
-  map <F56>    <M-C-F8>
-  map <F57>    <M-C-F9>
-  map <F58>    <M-C-F10>
-  map <F59>    <M-C-F11>
-  map <F60>    <M-C-F12>
+  { "<F49>", "<C-F1>", hidden = true, noremap = false },
+  { "<F50>", "<C-F2>", hidden = true, noremap = false },
+  { "<F51>", "<C-F3>", hidden = true, noremap = false },
+  { "<F52>", "<C-F4>", hidden = true, noremap = false },
+  { "<F53>", "<C-F5>", hidden = true, noremap = false },
+  { "<F54>", "<C-F6>", hidden = true, noremap = false },
+  { "<F55>", "<C-F7>", hidden = true, noremap = false },
+  { "<F56>", "<C-F8>", hidden = true, noremap = false },
+  { "<F57>", "<C-F9>", hidden = true, noremap = false },
+  { "<F58>", "<C-F10>", hidden = true, noremap = false },
+  { "<F59>", "<C-F11>", hidden = true, noremap = false },
+  { "<F60>", "<C-F12>", hidden = true, noremap = false },
 
-  " for mac
-  nmap <M-5> <F5>
-  nmap <M-6> <F6>
-  nmap <M-8> <F7>
-  nmap <M-9> <F8>
-  nmap <M-7> <F9>
-  nmap <M-n> <F10>
+  { "<F61>", "<M-S-F1>", hidden = true, noremap = false },
+  { "<F62>", "<M-S-F2>", hidden = true, noremap = false },
+  { "<F63>", "<M-S-F3>", hidden = true, noremap = false },
+  { "<F64>", "<M-S-F4>", hidden = true, noremap = false },
+  { "<F65>", "<M-S-F5>", hidden = true, noremap = false },
+  { "<F66>", "<M-S-F6>", hidden = true, noremap = false },
+  { "<F67>", "<M-S-F7>", hidden = true, noremap = false },
+  { "<F68>", "<M-S-F8>", hidden = true, noremap = false },
+  { "<F69>", "<M-S-F9>", hidden = true, noremap = false },
+  { "<F70>", "<M-S-F10>", hidden = true, noremap = false },
+  { "<F71>", "<M-S-F11>", hidden = true, noremap = false },
+  { "<F72>", "<M-S-F12>", hidden = true, noremap = false },
 
-  " Creates map mappings for <<
-  " map <F61>    <M-S-F1>
-  " map <F62>    <M-S-F2>
-  " map <F63>    <M-S-F3>
-  " map <F64>    <M-S-F4>
-  " map <F65>    <M-S-F5>
-  " map <F66>    <M-S-F6>
-  " map <F67>    <M-S-F7>
-  " map <F68>    <M-S-F8>
-  " map <F69>    <M-S-F9>
-  " map <F70>    <M-S-F10>
-  " map <F71>    <M-S-F11>
-  " map <F72>    <M-S-F12>
-]])
+  { "<M-5>", "<F5>", hidden = true, noremap = false },
+  { "<M-5>", "<F5>", hidden = true, noremap = false },
+  { "<M-5>", "<F5>", hidden = true, noremap = false },
+  { "<M-5>", "<F5>", hidden = true, noremap = false },
+  { "<M-5>", "<F5>", hidden = true, noremap = false },
+  { "<M-5>", "<F5>", hidden = true, noremap = false },
 
-wk.register({
-  ["<F1>"] = { gs.stage_hunk, "stage hunk" },
-  ["<F2>"] = { gs.prev_hunk, "previous hunk" },
-  ["<F3>"] = { gs.next_hunk, "next hunk" },
-  ["<S-F1>"] = { ":q<cr>", "quit" },
-  ["<S-F2>"] = { d.goto_prev, "previous diagnostic" },
-  ["<S-F3>"] = { d.goto_next, "next diagnostic" },
-  ["<C-F2>"] = { "<Plug>(ale_previous_wrap)", "previous diagnostic" },
-  ["<C-F3>"] = { "<Plug>(ale_next_wrap)", "next diagnostic" },
-  -- ["<F4>"] = { [[:execute "tjump /^\\(_build_\\)\\?" . expand("<cword>") . "$"<cr>]], "jump to tag" },
-  ["<F4>"] = {
+  { "<F1>", gs.stage_hunk, mode = { "n", "v" }, desc = "stage hunk" },
+  { "<F2>", gs.prev_hunk, desc = "previous hunk" },
+  { "<F3>", gs.next_hunk, desc = "next hunk" },
+  { "<S-F1>", ":q<cr>", desc = "quit" },
+  { "<S-F2>", d.goto_prev, desc = "previous diagnostic" },
+  { "<S-F3>", d.goto_next, desc = "next diagnostic" },
+  { "<C-F2>", "<Plug>(ale_previous_wrap)", desc = "previous diagnostic" },
+  { "<C-F3>", "<Plug>(ale_next_wrap)", desc = "next diagnostic" },
+  {
+    "<F4>",
     function()
       tb.tags({ default_text = vim.fn.expand("<cword>") })
     end,
-    "cword tags",
+    desc = "cword tags",
   },
-  ["<F6>"] = { ":cprevious<cr>", "quickfix next" },
-  ["<S-F6>"] = { ":lprevious<cr>", "location next" },
-  ["<F7>"] = { ":cnext<cr>", "quickfix previous" },
-  ["<S-F7>"] = { ":lnext<cr>", "location next" },
-  ["<F9>"] = { ":cclose<bar>lclose<bar>only<cr>", "close other windows" },
-  ["<C-F5>"] = { "expand selection" },
-  ["<C-F6>"] = { "reduce selection" },
-  ["<C-F7>"] = { "expand selection to name" },
-  ["<F12>"] = { "", "previous buffer" },
-  ["<PageUp>"] = { "0", "page up" },
-  ["<PageDown>"] = { "0", "page down" },
-  ["<C-L>"] = { "refresh" },
-  ["-"] = { "comment" },
-  ["ä"] = { "show cursor" },
-  ["ö"] = { ":w<cr> | :wa<cr>", "write all" },
+  { "<F6>", ":cprevious<cr>", desc = "quickfix next" },
+  { "<S-F6>", ":lprevious<cr>", desc = "location next" },
+  { "<F7>", ":cnext<cr>", desc = "quickfix previous" },
+  { "<S-F7>", ":lnext<cr>", desc = "location next" },
+  { "<F9>", ":cclose<bar>lclose<bar>only<cr>", desc = "close other windows" },
+  { "<C-F5>", "expand selection" },
+  { "<C-F6>", "reduce selection" },
+  { "<C-F7>", "expand selection to name" },
+  { "<F12>", "", desc = "previous buffer" },
 
-  ["n"] = {
-    [[<cmd>execute("normal! " . v:count1 . "n")<cr><cmd>lua require("hlslens").start()<cr>]],
-    "next match",
-  },
-  ["N"] = {
-    [[<cmd>execute("normal! " . v:count1 . "N")<cr><cmd>lua require("hlslens").start()<cr>]],
-    "previous match",
-  },
-  ["*"] = { [[*<cmd>lua require("hlslens").start()<cr>]], "next word" },
-  ["#"] = { [[#<cmd>lua require("hlslens").start()<cr>]], "previous word" },
-  ["g*"] = { [[g*<cmd>lua require("hlslens").start()<cr>]], "next word part" },
-  ["g#"] = {
+  { "<PageUp>", "0", desc = "page up" },
+  { "<PageDown>", "0", desc = "page down" },
+  { "<C-L>", desc = "refresh" },
+  { "-", desc = "comment" },
+  { "ä", desc = "show cursor" },
+  { "ö", ":w<cr> | :wa<cr>", desc = "write all" },
+
+  { "*", [[*<cmd>lua require("hlslens").start()<cr>]], desc = "next word" },
+  { "#", [[#<cmd>lua require("hlslens").start()<cr>]], desc = "previous word" },
+  {
+    "g#",
     [[g#<cmd>lua require("hlslens").start()<cr>]],
-    "previous word part",
+    desc = "previous word part",
+  },
+  {
+    "n",
+    [[<cmd>execute("normal! " . v:count1 . "n")<cr><cmd>lua require("hlslens").start()<cr>]],
+    desc = "next match",
+  },
+  {
+    "N",
+    [[<cmd>execute("normal! " . v:count1 . "N")<cr><cmd>lua require("hlslens").start()<cr>]],
+    desc = "previous match",
   },
 
-  g = {
-    name = "+goto",
-    D = { lb.declaration, "declaration" },
-    d = { lb.definition, "definition" },
-    i = { lb.implementation, "implementation" },
-    r = { lb.references, "references" },
-    l = {
-      name = "+lsp",
-      a = { lb.code_action, "action" },
-      D = { lb.type_definition, "type definition" },
-      f = { "format" },
-      F = { ":ALEFix<cr>", "ALE fix" },
-      i = { lb.incoming_calls, "incoming calls" },
-      K = { lb.hover, "hover" },
-      k = { lb.signature_help, "signature" },
-      l = { vim.diagnostic.open_float, "show" },
-      o = { lb.outgoing_calls, "outgoing calls" },
-      q = { vim.diagnostic.setqflist, "quickfix" },
-      r = { lb.rename, "rename" },
-      s = { lb.lsp_document_symbols, "symbols" },
-      v = {
-        name = "+virtual text",
-        h = { d.hide, "hide" },
-        s = { d.show, "show" },
-      },
-      w = {
-        name = "+workspace",
-        a = { lb.add_workspace_folder, "add" },
-        l = {
-          function()
-            print(vim.inspect(lb.list_workspace_folders()))
-          end,
-          "list",
-        },
-        r = { lb.remove_workspace_folder, "remove" },
-      },
-      y = {
-        name = "+tsserver",
-        i = { ":TSLspImportAll<cr>", "import all" },
-        o = { ":TSLspOrganize<cr>", "organise" },
-        r = { ":TSLspRenameFile<cr>", "rename file" },
-      },
+  { "g", group = "goto" },
+  { "gD", lb.declaration, desc = "declaration" },
+  { "gd", lb.definition, desc = "definition" },
+  { "gi", lb.implementation, desc = "implementation" },
+  { "gr", lb.references, desc = "references" },
+
+  { "gl", group = "lsp" },
+  { "gla", lb.code_action, desc = "action" },
+  { "glD", lb.type_definition, desc = "type definition" },
+  { "glf", "format" },
+  { "glF", ":ALEFix<cr>", desc = "ALE fix" },
+  { "gli", lb.incoming_calls, desc = "incoming calls" },
+  { "glK", lb.hover, desc = "hover" },
+  { "glk", lb.signature_help, desc = "signature" },
+  { "gll", vim.diagnostic.open_float, desc = "show" },
+  { "glo", lb.outgoing_calls, desc = "outgoing calls" },
+  { "glq", vim.diagnostic.setqflist, desc = "quickfix" },
+  { "glr", lb.rename, desc = "rename" },
+  { "gls", lb.lsp_document_symbols, desc = "symbols" },
+
+  { "glv", group = "virtual text" },
+  { "glvh", d.hide, desc = "hide" },
+  { "glvs", d.show, desc = "show" },
+
+  { "glw", group = "workspace" },
+  { "glwa", lb.add_workspace_folder, desc = "add" },
+  {
+    "glwl",
+    function()
+      print(vim.inspect(lb.list_workspace_folders()))
+    end,
+    desc = "list",
+  },
+  { "glwr", lb.remove_workspace_folder, desc = "remove" },
+
+  { "gly", group = "tsserver" },
+  { "glyi", ":TSLspImportAll<cr>", desc = "import all" },
+  { "glyo", ":TSLspOrganize<cr>", desc = "organise" },
+  { "glyr", ":TSLspRenameFile<cr>", desc = "rename file" },
+
+  {
+    mode = { "n", "v" },
+    { "r", group = "replace" },
+    { "r<F5>", "[", desc = "[" },
+    { "r<F6>", "]", desc = "]" },
+    { "r<F7>", "{", desc = "{" },
+    { "r<F8>", "}", desc = "}" },
+    { "r<F9>", "~", desc = "~" },
+    { "r<F10>", "|", desc = "|" },
+    { "r<F11>", "`", desc = "`" },
+    { "r<C-k><C-k>", bd.digraphs, desc = "digraph" },
+  },
+
+  { "<leader>", group = "leader" },
+  { "<leader> ", group = "plugin" },
+
+  {
+    mode = { "n", "v" },
+    { "<leader> c", group = "ChatGPT" },
+    { "<leader> cc", "<cmd>ChatGPT<cr>", desc = "ChatGPT" },
+    {
+      "<leader> ce",
+      "<cmd>ChatGPTEditWithInstruction<cr>",
+      desc = "edit with instruction",
+    },
+    {
+      "<leader> cg",
+      "<cmd>ChatGPTRun grammar_correction<cr>",
+      desc = "grammar correction",
+    },
+    {
+      "<leader> ct",
+      "<cmd>ChatGPTRun translate<cr>",
+      desc = "translate",
+    },
+    { "<leader> ck", "<cmd>ChatGPTRun keywords<cr>", desc = "Keywords" },
+    {
+      "<leader> cd",
+      "<cmd>ChatGPTRun docstring<cr>",
+      desc = "docstring",
+    },
+    { "<leader> ca", "<cmd>ChatGPTRun add_tests<cr>", desc = "add tests" },
+    {
+      "<leader> co",
+      "<cmd>ChatGPTRun optimize_code<cr>",
+      desc = "optimise code",
+    },
+    { "<leader> cs", "<cmd>ChatGPTRun summarize<cr>", desc = "summarize" },
+    { "<leader> cf", "<cmd>ChatGPTRun fix_bugs<cr>", desc = "Fix Bugs" },
+    {
+      "<leader> cx",
+      "<cmd>ChatGPTRun explain_code<cr>",
+      desc = "explain code",
+    },
+    {
+      "<leader> cr",
+      "<cmd>ChatGPTRun roxygen_edit<cr>",
+      desc = "roxygen edit",
+    },
+    {
+      "<leader> cl",
+      "<cmd>ChatGPTRun code_readability_analysis<cr>",
+      desc = "code readability analysis",
     },
   },
-  r = {
-    name = "+replace",
-    ["<F5>"] = { "r[", "[" },
-    ["<F6>"] = { "r]", "]" },
-    ["<F7>"] = { "r{", "{" },
-    ["<F8>"] = { "r}", "}" },
-    ["<F9>"] = { "r~", "~" },
-    ["<F10>"] = { "r|", "|" },
-    ["<F11>"] = { "r`", "`" },
-    ["<C-k><C-k>"] = {
+
+  { "<leader> d", group = "diffview" },
+  { "<leader> dc", ":DiffviewClose<cr>", desc = "close" },
+  { "<leader> df", ":DiffviewFileHistory<cr>", desc = "file history" },
+  { "<leader> dF", ":DiffviewFileHistory %<cr>", desc = "file history %" },
+  { "<leader> do", ":DiffviewOpen<cr>", desc = "open" },
+
+  { "<leader> j", group = "join" },
+  { "<leader> jj", tj.join, desc = "join" },
+  {
+    "<leader> jJ",
+    function()
+      tj.join({ split = { recursive = true } })
+    end,
+    desc = "recursive join",
+  },
+  { "<leader> js", tj.split, desc = "split" },
+  {
+    "<leader> jS",
+    function()
+      tj.split({ split = { recursive = true } })
+    end,
+    desc = "recursive split",
+  },
+  { "<leader> jt", tj.toggle, desc = "toggle" },
+  {
+    "<leader> jT",
+    function()
+      tj.toggle({ split = { recursive = true } })
+    end,
+    desc = "recursive toggle",
+  },
+
+  { "<leader> m", ":MarkdownPreviewToggle<cr>", desc = "markdown" },
+
+  {
+    mode = { "n", "v" },
+    { "<leader> n", group = "neural" },
+    { "<leader> nb", "<Plug>(neural_buffer)", desc = "buffer" },
+    {
+      "<leader> nc",
+      "<Plug>(neural_completion)",
+      desc = "completion",
+    },
+    { "<leader> np", "<Plug>(neural_prompt)", desc = "prompt" },
+    { "<leader> ns", "<Plug>(neural_stop)", desc = "stop" },
+    { "<leader> nx", "<Plug>(neural_explain)", desc = "explain" },
+  },
+
+  { "<leader> l", group = "lazy" },
+  { "<leader> lh", ":Lazy<cr>", desc = "home" },
+  { "<leader> ls", ":Lazy sync<cr>", desc = "sync" },
+  { "<leader> o", "<cmd>Oil --float<cr>", desc = "edit directory" },
+  { "<leader> q", require("replacer").run, desc = "quickfix replacer" },
+
+  { "<leader> r", group = "linter rules" },
+  {
+    "<leader> ri",
+    function()
+      require("rulebook").ignoreRule()
+    end,
+    desc = "ignore",
+  },
+  {
+    "<leader> rl",
+    function()
+      require("rulebook").lookupRule()
+    end,
+    desc = "lookup rule",
+  },
+  {
+    "<leader> rs",
+    function()
+      require("rulebook").suppressFormatter()
+    end,
+    mode = { "n", "x" },
+    desc = "suppress formatter",
+  },
+  {
+    "<leader> ry",
+    function()
+      require("rulebook").yankDiagnosticCode()
+    end,
+    desc = "yank diagnostic code",
+  },
+
+  { "<leader> t", group = "translate" },
+  { "<leader> td", group = "deutsch" },
+  { "<leader> tdf", ":Translate DE -output=floating<cr>", desc = "floating" },
+  { "<leader> tdg", ":Translate DE -output=register<cr>", desc = "register" },
+  { "<leader> tdi", ":Translate DE -output=insert<cr>", desc = "insert" },
+  { "<leader> tdr", ":Translate DE -output=replace<cr>", desc = "replace" },
+  { "<leader> tds", ":Translate DE -output=split<cr>", desc = "split" },
+
+  { "<leader> te", group = "english" },
+  { "<leader> tef", ":Translate EN -output=floating<cr>", desc = "floating" },
+  { "<leader> teg", ":Translate EN -output=register<cr>", desc = "register" },
+  { "<leader> tei", ":Translate EN -output=insert<cr>", desc = "insert" },
+  { "<leader> ter", ":Translate EN -output=replace<cr>", desc = "replace" },
+  { "<leader> tes", ":Translate EN -output=split<cr>", desc = "split" },
+
+  { "<leader>,", smart_open, desc = "smart open" },
+  {
+    "<leader>-",
+    function()
+      tb.find_files({ hidden = true })
+    end,
+    desc = "honour ignores",
+  },
+
+  { "<leader>,", group = "language" },
+  { "<leader>,g", group = "go" },
+  { "<leader>,ga", ":GoAlt!<cr>", desc = "alternative file" },
+  { "<leader>,gc", ":GoCoverage<cr>", desc = "coverage" },
+
+  { "<leader>,gd", group = "debug" },
+  { "<leader>,gds", ":GoDebug<cr>", desc = "start" },
+  { "<leader>,gdt", ":GoDbgStop<cr>", desc = "stop" },
+
+  {
+    "<leader>,gi",
+    function()
+      local i = os.getenv("VIM_GO_IMPORT_LOCAL") or "xxxxxx"
+      local gf = require("go.format")
+      gf.goimport("-local", i)
+      gf.gofmt()
+    end,
+    desc = "imports",
+  },
+  {
+    "<leader>,gn",
+    ":lua require('dap-go').debug_test()<cr>",
+    desc = "run nearest test",
+  },
+
+  { "<leader>,gt", group = "test" },
+  {
+    "<leader>,gta",
+    function()
+      local file = "."
+      print(file)
+      nt.run.run(file)
+    end,
+    desc = "all",
+  },
+  {
+    "<leader>,gtf",
+    function()
+      local file = vim.fn.expand("%")
+      print(file)
+      nt.run.run(file)
+    end,
+    desc = "file",
+  },
+  {
+    "<leader>,gto",
+    function()
+      nt.output.open({ enter = true })
+    end,
+    desc = "open results",
+  },
+  {
+    "<leader>,gts",
+    function()
+      nt.summary.toggle()
+    end,
+    desc = "toggle summary",
+  },
+
+  { "<leader>,p", group = "perl" },
+  {
+    "<leader>,ps",
+    function()
+      load_perl_stack_trace()
+    end,
+    desc = "stack trace to qf",
+  },
+
+  {
+    mode = "i",
+    { "<F5>", "[", noremap = false, desc = "[" },
+    { "<F6>", "]", noremap = false, desc = "]" },
+    { "<F7>", "{", noremap = false, desc = "{" },
+    { "<F8>", "}", noremap = false, desc = "}" },
+    { "<F9>", "~", noremap = false, desc = "~" },
+    { "<F10>", "|", noremap = false, desc = "|" },
+    { "<F11>", "`", noremap = false, desc = "`" },
+    { "jk", "<esc>", desc = "escape" },
+    {
+      "<C-k><C-k>",
       function()
-        bd.digraphs("normal")
+        bd.digraphs("insert")
       end,
-      "digraph",
+      desc = "digraph",
     },
   },
+})
+
+wk.register({
+  -- g = {
+  -- name = "+goto",
+  -- D = { lb.declaration, "declaration" },
+  -- d = { lb.definition, "definition" },
+  -- i = { lb.implementation, "implementation" },
+  -- r = { lb.references, "references" },
+  --   l = {
+  --     name = "+lsp",
+  --     a = { lb.code_action, "action" },
+  --     D = { lb.type_definition, "type definition" },
+  --     f = { "format" },
+  --     F = { ":ALEFix<cr>", "ALE fix" },
+  --     i = { lb.incoming_calls, "incoming calls" },
+  --     K = { lb.hover, "hover" },
+  --     k = { lb.signature_help, "signature" },
+  --     l = { vim.diagnostic.open_float, "show" },
+  --     o = { lb.outgoing_calls, "outgoing calls" },
+  --     q = { vim.diagnostic.setqflist, "quickfix" },
+  --     r = { lb.rename, "rename" },
+  --     s = { lb.lsp_document_symbols, "symbols" },
+  --     v = {
+  --       name = "+virtual text",
+  --       h = { d.hide, "hide" },
+  --       s = { d.show, "show" },
+  --     },
+  --     w = {
+  --       name = "+workspace",
+  --       a = { lb.add_workspace_folder, "add" },
+  --       l = {
+  --         function()
+  --           print(vim.inspect(lb.list_workspace_folders()))
+  --         end,
+  --         "list",
+  --       },
+  --       r = { lb.remove_workspace_folder, "remove" },
+  --     },
+  --     y = {
+  --       name = "+tsserver",
+  --       i = { ":TSLspImportAll<cr>", "import all" },
+  --       o = { ":TSLspOrganize<cr>", "organise" },
+  --       r = { ":TSLspRenameFile<cr>", "rename file" },
+  --     },
+  --   },
+  -- },
+  -- r = {
+  --   name = "+replace",
+  --   ["<F5>"] = { "r[", "[" },
+  --   ["<F6>"] = { "r]", "]" },
+  --   ["<F7>"] = { "r{", "{" },
+  --   ["<F8>"] = { "r}", "}" },
+  --   ["<F9>"] = { "r~", "~" },
+  --   ["<F10>"] = { "r|", "|" },
+  --   ["<F11>"] = { "r`", "`" },
+  --   ["<C-k><C-k>"] = {
+  --     function()
+  --       bd.digraphs("normal")
+  --     end,
+  --     "digraph",
+  --   },
+  -- },
   ["<leader>"] = {
-    [" "] = {
-      name = "+plugin",
-      c = {
-        name = "ChatGPT",
-        c = { "<cmd>ChatGPT<cr>", "ChatGPT" },
-        e = {
-          "<cmd>ChatGPTEditWithInstruction<cr>",
-          "edit with instruction",
-          mode = { "n", "v" },
-        },
-        g = {
-          "<cmd>ChatGPTRun grammar_correction<cr>",
-          "grammar correction",
-          mode = { "n", "v" },
-        },
-        t = {
-          "<cmd>ChatGPTRun translate<cr>",
-          "translate",
-          mode = { "n", "v" },
-        },
-        k = { "<cmd>ChatGPTRun keywords<cr>", "Keywords", mode = { "n", "v" } },
-        d = {
-          "<cmd>ChatGPTRun docstring<cr>",
-          "docstring",
-          mode = { "n", "v" },
-        },
-        a = {
-          "<cmd>ChatGPTRun add_tests<cr>",
-          "add tests",
-          mode = { "n", "v" },
-        },
-        o = {
-          "<cmd>ChatGPTRun optimize_code<cr>",
-          "optimise code",
-          mode = { "n", "v" },
-        },
-        s = {
-          "<cmd>ChatGPTRun summarize<cr>",
-          "summarize",
-          mode = { "n", "v" },
-        },
-        f = { "<cmd>ChatGPTRun fix_bugs<cr>", "Fix Bugs", mode = { "n", "v" } },
-        x = {
-          "<cmd>ChatGPTRun explain_code<cr>",
-          "explain code",
-          mode = { "n", "v" },
-        },
-        r = {
-          "<cmd>ChatGPTRun roxygen_edit<cr>",
-          "roxygen edit",
-          mode = { "n", "v" },
-        },
-        l = {
-          "<cmd>ChatGPTRun code_readability_analysis<cr>",
-          "code readability analysis",
-          mode = { "n", "v" },
-        },
-      },
-      d = {
-        name = "+diffview",
-        c = { ":DiffviewClose<cr>", "close" },
-        f = { ":DiffviewFileHistory<cr>", "file history" },
-        F = { ":DiffviewFileHistory %<cr>", "file history %" },
-        o = { ":DiffviewOpen<cr>", "open" },
-      },
-      j = {
-        name = "+join",
-        j = { require("treesj").join, "join" },
-        J = {
-          function()
-            require("treesj").join({ split = { recursive = true } })
-          end,
-          "recursive join",
-        },
-        s = { require("treesj").split, "split" },
-        S = {
-          function()
-            require("treesj").split({ split = { recursive = true } })
-          end,
-          "recursive split",
-        },
-        t = { require("treesj").toggle, "toggle" },
-        T = {
-          function()
-            require("treesj").toggle({ split = { recursive = true } })
-          end,
-          "recursive toggle",
-        },
-      },
-      m = { ":MarkdownPreviewToggle<cr>", "markdown" },
-      n = {
-        name = "+neural",
-        b = { "<Plug>(neural_buffer)", "buffer", mode = { "n", "v" } },
-        c = { "<Plug>(neural_completion)", "completion", mode = { "n", "v" } },
-        n = { "<Plug>(neural_prompt)", "prompt", mode = { "n", "v" } },
-        s = { "<Plug>(neural_stop)", "stop", mode = { "n", "v" } },
-        x = { "<Plug>(neural_explain)", "explain", mode = { "n", "v" } },
-      },
-      l = {
-        name = "+lazy",
-        h = { ":Lazy<cr>", "home" },
-        s = { ":Lazy sync<cr>", "sync" },
-      },
-      o = { "<cmd>Oil --float<cr>", "edit directory" },
-      q = { require("replacer").run, "quickfix replacer" },
-      r = {
-        name = "+linter rules",
-        i = {
-          function()
-            require("rulebook").ignoreRule()
-          end,
-          "ignore",
-        },
-        l = {
-          function()
-            require("rulebook").lookupRule()
-          end,
-          "lookup rule",
-        },
-        s = {
-          function()
-            require("rulebook").suppressFormatter()
-          end,
-          "suppress formatter",
-          mode = { "n", "x" },
-        },
-        y = {
-          function()
-            require("rulebook").yankDiagnosticCode()
-          end,
-          "yank diagnostic code",
-        },
-      },
-      t = {
-        name = "+translate",
-        d = {
-          name = "+deutsch",
-          f = { ":Translate DE -output=floating<cr>", "floating" },
-          g = { ":Translate DE -output=register<cr>", "register" },
-          i = { ":Translate DE -output=insert<cr>", "insert" },
-          r = { ":Translate DE -output=replace<cr>", "replace" },
-          s = { ":Translate DE -output=split<cr>", "split" },
-        },
-        e = {
-          name = "+english",
-          f = { ":Translate EN -output=floating<cr>", "floating" },
-          g = { ":Translate EN -output=register<cr>", "register" },
-          i = { ":Translate EN -output=insert<cr>", "insert" },
-          r = { ":Translate EN -output=replace<cr>", "replace" },
-          s = { ":Translate EN -output=split<cr>", "split" },
-        },
-      },
-    },
+    -- [" "] = {
+    --   name = "+plugin",
+    --   c = {
+    --     name = "ChatGPT",
+    --     c = { "<cmd>ChatGPT<cr>", "ChatGPT" },
+    --     e = {
+    --       "<cmd>ChatGPTEditWithInstruction<cr>",
+    --       "edit with instruction",
+    --       mode = { "n", "v" },
+    --     },
+    --     g = {
+    --       "<cmd>ChatGPTRun grammar_correction<cr>",
+    --       "grammar correction",
+    --       mode = { "n", "v" },
+    --     },
+    --     t = {
+    --       "<cmd>ChatGPTRun translate<cr>",
+    --       "translate",
+    --       mode = { "n", "v" },
+    --     },
+    --     k = { "<cmd>ChatGPTRun keywords<cr>", "Keywords", mode = { "n", "v" } },
+    --     d = {
+    --       "<cmd>ChatGPTRun docstring<cr>",
+    --       "docstring",
+    --       mode = { "n", "v" },
+    --     },
+    --     a = {
+    --       "<cmd>ChatGPTRun add_tests<cr>",
+    --       "add tests",
+    --       mode = { "n", "v" },
+    --     },
+    --     o = {
+    --       "<cmd>ChatGPTRun optimize_code<cr>",
+    --       "optimise code",
+    --       mode = { "n", "v" },
+    --     },
+    --     s = {
+    --       "<cmd>ChatGPTRun summarize<cr>",
+    --       "summarize",
+    --       mode = { "n", "v" },
+    --     },
+    --     f = { "<cmd>ChatGPTRun fix_bugs<cr>", "Fix Bugs", mode = { "n", "v" } },
+    --     x = {
+    --       "<cmd>ChatGPTRun explain_code<cr>",
+    --       "explain code",
+    --       mode = { "n", "v" },
+    --     },
+    --     r = {
+    --       "<cmd>ChatGPTRun roxygen_edit<cr>",
+    --       "roxygen edit",
+    --       mode = { "n", "v" },
+    --     },
+    --     l = {
+    --       "<cmd>ChatGPTRun code_readability_analysis<cr>",
+    --       "code readability analysis",
+    --       mode = { "n", "v" },
+    --     },
+    --   },
+    --   d = {
+    --     name = "+diffview",
+    --     c = { ":DiffviewClose<cr>", "close" },
+    --     f = { ":DiffviewFileHistory<cr>", "file history" },
+    --     F = { ":DiffviewFileHistory %<cr>", "file history %" },
+    --     o = { ":DiffviewOpen<cr>", "open" },
+    --   },
+    --   j = {
+    --     name = "+join",
+    --     j = { require("treesj").join, "join" },
+    --     J = {
+    --       function()
+    --         require("treesj").join({ split = { recursive = true } })
+    --       end,
+    --       "recursive join",
+    --     },
+    --     s = { require("treesj").split, "split" },
+    --     S = {
+    --       function()
+    --         require("treesj").split({ split = { recursive = true } })
+    --       end,
+    --       "recursive split",
+    --     },
+    --     t = { require("treesj").toggle, "toggle" },
+    --     T = {
+    --       function()
+    --         require("treesj").toggle({ split = { recursive = true } })
+    --       end,
+    --       "recursive toggle",
+    --     },
+    --   },
+    --   m = { ":MarkdownPreviewToggle<cr>", "markdown" },
+    --   n = {
+    --     name = "+neural",
+    --     b = { "<Plug>(neural_buffer)", "buffer", mode = { "n", "v" } },
+    --     c = { "<Plug>(neural_completion)", "completion", mode = { "n", "v" } },
+    --     n = { "<Plug>(neural_prompt)", "prompt", mode = { "n", "v" } },
+    --     s = { "<Plug>(neural_stop)", "stop", mode = { "n", "v" } },
+    --     x = { "<Plug>(neural_explain)", "explain", mode = { "n", "v" } },
+    --   },
+    --   l = {
+    --     name = "+lazy",
+    --     h = { ":Lazy<cr>", "home" },
+    --     s = { ":Lazy sync<cr>", "sync" },
+    --   },
+    --   o = { "<cmd>Oil --float<cr>", "edit directory" },
+    --   q = { require("replacer").run, "quickfix replacer" },
+    --   r = {
+    --     name = "+linter rules",
+    --     i = {
+    --       function()
+    --         require("rulebook").ignoreRule()
+    --       end,
+    --       "ignore",
+    --     },
+    --     l = {
+    --       function()
+    --         require("rulebook").lookupRule()
+    --       end,
+    --       "lookup rule",
+    --     },
+    --     s = {
+    --       function()
+    --         require("rulebook").suppressFormatter()
+    --       end,
+    --       "suppress formatter",
+    --       mode = { "n", "x" },
+    --     },
+    --     y = {
+    --       function()
+    --         require("rulebook").yankDiagnosticCode()
+    --       end,
+    --       "yank diagnostic code",
+    --     },
+    --   },
+    --   t = {
+    --     name = "+translate",
+    --     d = {
+    --       name = "+deutsch",
+    --       f = { ":Translate DE -output=floating<cr>", "floating" },
+    --       g = { ":Translate DE -output=register<cr>", "register" },
+    --       i = { ":Translate DE -output=insert<cr>", "insert" },
+    --       r = { ":Translate DE -output=replace<cr>", "replace" },
+    --       s = { ":Translate DE -output=split<cr>", "split" },
+    --     },
+    --     e = {
+    --       name = "+english",
+    --       f = { ":Translate EN -output=floating<cr>", "floating" },
+    --       g = { ":Translate EN -output=register<cr>", "register" },
+    --       i = { ":Translate EN -output=insert<cr>", "insert" },
+    --       r = { ":Translate EN -output=replace<cr>", "replace" },
+    --       s = { ":Translate EN -output=split<cr>", "split" },
+    --     },
+    --   },
+    -- },
 
-    ["."] = { smart_open, "smart open" },
-    ["-"] = {
-      function()
-        tb.find_files({ hidden = true })
-      end,
-      "honour ignores",
-    },
-    [","] = {
-      name = "+language",
-      g = {
-        name = "+go",
-        a = { ":GoAlt!<cr>", "alternative file" },
-        c = { ":GoCoverage<cr>", "coverage" },
-        d = {
-          name = "+debug",
-          s = { ":GoDebug<cr>", "start" },
-          t = { ":GoDbgStop<cr>", "stop" },
-        },
-        i = {
-          function()
-            local i = os.getenv("VIM_GO_IMPORT_LOCAL") or "xxxxxx"
-            require("go.format").goimport("-local", i)
-            require("go.format").gofmt()
-          end,
-          "imports",
-        },
-        n = { ":lua require('dap-go').debug_test()<cr>", "run nearest test" },
-        t = {
-          name = "+test",
-          a = {
-            function()
-              local file = "."
-              print(file)
-              require("neotest").run.run(file)
-            end,
-            "all",
-          },
-          f = {
-            function()
-              local file = vim.fn.expand("%")
-              print(file)
-              require("neotest").run.run(file)
-            end,
-            "file",
-          },
-          o = {
-            function()
-              require("neotest").output.open({ enter = true })
-            end,
-            "open results",
-          },
-          s = {
-            function()
-              require("neotest").summary.toggle()
-            end,
-            "toggle summary",
-          },
-        },
-      },
-      p = {
-        name = "+perl",
-        s = {
-          function()
-            load_perl_stack_trace()
-          end,
-          "stack trace to qf",
-        },
-      },
-    },
+    -- ["."] = { smart_open, "smart open" },
+    -- ["-"] = {
+    --   function()
+    --     tb.find_files({ hidden = true })
+    --   end,
+    --   "honour ignores",
+    -- },
+    -- [","] = {
+    --   name = "+language",
+    --   g = {
+    --     name = "+go",
+    --     a = { ":GoAlt!<cr>", "alternative file" },
+    --     c = { ":GoCoverage<cr>", "coverage" },
+    --     d = {
+    --       name = "+debug",
+    --       s = { ":GoDebug<cr>", "start" },
+    --       t = { ":GoDbgStop<cr>", "stop" },
+    --     },
+    --     i = {
+    --       function()
+    --         local i = os.getenv("VIM_GO_IMPORT_LOCAL") or "xxxxxx"
+    --         require("go.format").goimport("-local", i)
+    --         require("go.format").gofmt()
+    --       end,
+    --       "imports",
+    --     },
+    --     n = { ":lua require('dap-go').debug_test()<cr>", "run nearest test" },
+    --     t = {
+    --       name = "+test",
+    --       a = {
+    --         function()
+    --           local file = "."
+    --           print(file)
+    --           require("neotest").run.run(file)
+    --         end,
+    --         "all",
+    --       },
+    --       f = {
+    --         function()
+    --           local file = vim.fn.expand("%")
+    --           print(file)
+    --           require("neotest").run.run(file)
+    --         end,
+    --         "file",
+    --       },
+    --       o = {
+    --         function()
+    --           require("neotest").output.open({ enter = true })
+    --         end,
+    --         "open results",
+    --       },
+    --       s = {
+    --         function()
+    --           require("neotest").summary.toggle()
+    --         end,
+    --         "toggle summary",
+    --       },
+    --     },
+    --   },
+    --   p = {
+    --     name = "+perl",
+    --     s = {
+    --       function()
+    --         load_perl_stack_trace()
+    --       end,
+    --       "stack trace to qf",
+    --     },
+    --   },
+    -- },
     f = {
       name = "+telescope",
       [","] = {
@@ -867,39 +1188,39 @@ wk.register({
 })
 
 wk.register({
-  ["<F1>"] = { ":Gitsigns stage_hunk<cr>", "stage lines" },
-  ["r<C-k><C-k>"] = { "<esc>:lua bd.digraphs('visual')<cr>", "digraph" },
+  -- ["<F1>"] = { ":Gitsigns stage_hunk<cr>", "stage lines" },
+  -- ["r<C-k><C-k>"] = { "<esc>:lua bd.digraphs('visual')<cr>", "digraph" },
   ["<leader>"] = {
-    [" "] = {
-      name = "+plugin",
-      c = { "ChatGPT" },
-      h = {
-        name = "+hunk",
-        r = { ":Gitsigns reset_hunk<cr>", "reset lines" },
-        s = { ":Gitsigns stage_hunk<cr>", "stage lines" },
-      },
-      k = { "highlight word" },
-      n = { "neural" },
-      t = {
-        name = "+translate",
-        d = {
-          name = "+deutsch",
-          f = { ":Translate DE -source=EN -output=floating<cr>", "floating" },
-          g = { ":Translate DE -source=EN -output=register<cr>", "register" },
-          i = { ":Translate DE -source=EN -output=insert<cr>", "insert" },
-          r = { ":Translate DE -source=EN -output=replace<cr>", "replace" },
-          s = { ":Translate DE -source=EN -output=split<cr>", "split" },
-        },
-        e = {
-          name = "+english",
-          f = { ":Translate EN -output=floating<cr>", "floating" },
-          g = { ":Translate EN -output=register<cr>", "register" },
-          i = { ":Translate EN -output=insert<cr>", "insert" },
-          r = { ":Translate EN -output=replace<cr>", "replace" },
-          s = { ":Translate EN -output=split<cr>", "split" },
-        },
-      },
-    },
+    -- [" "] = {
+    --   name = "+plugin",
+    --   c = { "ChatGPT" },
+    --   h = {
+    --     name = "+hunk",
+    --     r = { ":Gitsigns reset_hunk<cr>", "reset lines" },
+    --     s = { ":Gitsigns stage_hunk<cr>", "stage lines" },
+    --   },
+    --   k = { "highlight word" },
+    --   n = { "neural" },
+    --   t = {
+    --     name = "+translate",
+    --     d = {
+    --       name = "+deutsch",
+    --       f = { ":Translate DE -source=EN -output=floating<cr>", "floating" },
+    --       g = { ":Translate DE -source=EN -output=register<cr>", "register" },
+    --       i = { ":Translate DE -source=EN -output=insert<cr>", "insert" },
+    --       r = { ":Translate DE -source=EN -output=replace<cr>", "replace" },
+    --       s = { ":Translate DE -source=EN -output=split<cr>", "split" },
+    --     },
+    --     e = {
+    --       name = "+english",
+    --       f = { ":Translate EN -output=floating<cr>", "floating" },
+    --       g = { ":Translate EN -output=register<cr>", "register" },
+    --       i = { ":Translate EN -output=insert<cr>", "insert" },
+    --       r = { ":Translate EN -output=replace<cr>", "replace" },
+    --       s = { ":Translate EN -output=split<cr>", "split" },
+    --     },
+    --   },
+    -- },
     f = {
       name = "+telescope",
       c = {
@@ -986,22 +1307,22 @@ wk.register({
   },
 }, { mode = "v" })
 
-wk.register({
-  ["<F5>"] = { "[", "[", noremap = false },
-  ["<F6>"] = { "]", "]", noremap = false },
-  ["<F7>"] = { "{", "{", noremap = false },
-  ["<F8>"] = { "}", "}", noremap = false },
-  ["<F9>"] = { "~", "~" },
-  ["<F10>"] = { "|", "|" },
-  ["<F11>"] = { "`", "`" },
-  ["jk"] = { "<esc>", "escape" },
-  ["<C-k><C-k>"] = {
-    function()
-      bd.digraphs("insert")
-    end,
-    "digraph",
-  },
-}, { mode = "i" })
+-- wk.register({
+--   ["<F5>"] = { "[", "[", noremap = false },
+--   ["<F6>"] = { "]", "]", noremap = false },
+--   ["<F7>"] = { "{", "{", noremap = false },
+--   ["<F8>"] = { "}", "}", noremap = false },
+--   ["<F9>"] = { "~", "~" },
+--   ["<F10>"] = { "|", "|" },
+--   ["<F11>"] = { "`", "`" },
+--   ["jk"] = { "<esc>", "escape" },
+--   ["<C-k><C-k>"] = {
+--     function()
+--       bd.digraphs("insert")
+--     end,
+--     "digraph",
+--   },
+-- }, { mode = "i" })
 
 vim.keymap.set("", "glf", function()
   require("notify")("formatting")
