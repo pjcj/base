@@ -167,7 +167,7 @@ local plugins = {
     version = "*",
     config = function()
       require("which-key").setup({
-        window = {
+        win = {
           border = "single",
         },
         layout = {
@@ -176,12 +176,6 @@ local plugins = {
           },
           height = {
             max = 40,
-          },
-        },
-        plugins = {
-          spelling = {
-            enabled = true,
-            suggestions = 20,
           },
         },
       })
