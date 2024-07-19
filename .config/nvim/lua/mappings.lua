@@ -966,7 +966,7 @@ wk.add({
     desc = "hex",
   },
   {
-    "<leader>tW",
+    "<leader>W",
     [[:%s/\s\+$//<cr>:let @/ = ""<cr>]],
     desc = "remove trailing ws",
   },
