@@ -88,8 +88,9 @@ local plugins = {
             ExtraWhitespace = { bg = c.mred },
             GitSignsCurrentLineBlame = { bg = col.base, fg = c.dblue },
             GitSignsDeleteVirtLn = { bg = col.mantle, fg = c.mred },
-            IblIndent = { fg = c.dred },
-            IblScope = { fg = c.dorange },
+            IblIndent1 = { fg = c.dblue },
+            IblIndent2 = { fg = c.dviolet },
+            IblScope = { fg = c.yellow },
             IncSearch = { bg = col.yellow, fg = col.surface1 },
             LineNr = { fg = c.dblue },
             LspDiagnosticsDefaultHint = { fg = c.blue },
@@ -1477,12 +1478,20 @@ local plugins = {
       indent = {
         char = "│",
         tab_char = "╏",
-        highlight = { "IblIndent" },
+        highlight = { "IblIndent1", "IblIndent2" },
       },
       exclude = {
         filetypes = { "startify" },
       },
-      scope = { show_exact_scope = true },
+      scope = {
+        show_exact_scope = true,
+        include = {
+          node_type = {
+            go = { "import_declaration" },
+            lua = { "return_statement", "table_constructor" },
+          },
+        },
+      },
       whitespace = {
         remove_blankline_trail = true,
       },
