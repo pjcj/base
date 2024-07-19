@@ -75,7 +75,9 @@ local plugins = {
         },
         custom_highlights = function(col)
           return {
+            CmpItemKindCodeium = { fg = col.lavender },
             CmpItemKindCopilot = { fg = col.peach },
+            CmpItemKindSupermaven = { fg = col.teal },
             Cursor = { bg = c.llyellow },
             CursorColumn = { bg = col.surface1 },
             CursorLine = { bg = col.surface1 },
@@ -984,8 +986,8 @@ local plugins = {
         { name = "nvim_lua" },
         { name = "nvim_lsp_signature_help" },
         vim.env.OPENAI_API_KEY and { name = "copilot" } or {},
-        vim.env.OPENAI_API_KEY and { name = "codeium" } or {},
         vim.env.OPENAI_API_KEY and { name = "supermaven" } or {},
+        vim.env.OPENAI_API_KEY and { name = "codeium" } or {},
         -- { name = "cmp_ai" },
         { name = "nvim_lsp" },
         {
@@ -1022,27 +1024,32 @@ local plugins = {
       }
 
       vim.api.nvim_create_autocmd("BufReadPre", {
-        callback = function(t)
-          local sources = default_sources
-          if buf_is_big(t.buf) then
-            local codeium_index = nil
-            for i, source in ipairs(sources) do
-              if source.name == "copilot" then
-                codeium_index = i + 1
-                break
-              end
-            end
-            if codeium_index then
-              table.remove(sources, codeium_index)
-            end
-          end
-          -- for i, source in ipairs(default_sources) do
-          --   print(i, source.name)
-          -- end
+        callback = function()
           cmp.setup.buffer({
-            sources = sources,
+            sources = default_sources,
           })
         end,
+        -- callback = function(t)
+        --   local sources = default_sources
+        --   if buf_is_big(t.buf) then
+        --     local next_index = nil
+        --     for i, source in ipairs(sources) do
+        --       if source.name == "copilot" then
+        --         next_index = i + 1
+        --         break
+        --       end
+        --     end
+        --     if next_index then
+        --       table.remove(sources, next_index)
+        --     end
+        --   end
+        --   -- for i, source in ipairs(default_sources) do
+        --   --   print(i, source.name)
+        --   -- end
+        --   cmp.setup.buffer({
+        --     sources = sources,
+        --   })
+        -- end,
       })
 
       local hl = "Normal:Normal,FloatBorder:Float,CursorLine:Visual,Search:None"
@@ -1240,7 +1247,7 @@ local plugins = {
     },
   },
 
-  {  -- TODO - consider https://github.com/monkoose/neocodeium
+  { -- TODO - consider https://github.com/monkoose/neocodeium
     "Exafunction/codeium.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
