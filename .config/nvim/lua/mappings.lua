@@ -617,7 +617,6 @@ wk.add({
   { "<leader>fe", tb.resume, mode = { "n", "v" }, desc = "resume" },
   { "<leader>ff", tb.builtin, mode = { "n", "v" }, desc = "builtin" },
   { "<leader>fE", tb.treesitter, desc = "treesitter" },
-  { "<leader>fe", tb.builtin, desc = "builtin" },
   { "<leader>fg", tb.live_grep, desc = "live grep" },
   {
     "<leader>fG",
