@@ -102,7 +102,7 @@ local plugins = {
             Pmenu = { bg = c.dddred },
             PmenuSel = { bg = c.dred },
             Search = { bg = c.lyellow, fg = col.surface1 },
-            SpellBad = { bg = col.base, fg = c.dorange },
+            -- SpellBad = { bg = col.base, fg = c.dorange },
             SpellCap = { bg = c.blue, fg = col.base },
             SpellLocal = { bg = c.green, fg = col.base },
             SpellRare = { bg = c.yellow, fg = col.base },
