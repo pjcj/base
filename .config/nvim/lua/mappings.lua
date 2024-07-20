@@ -93,78 +93,27 @@ local function smart_open()
   })
 end
 
+local function full_map(from, to)
+  return { from, to, hidden = true, noremap = false, mode = "nvxsoitc" }
+end
+
+for i = 1, 12 do
+  wk.add({
+    full_map("<F" .. i + 12 .. ">", "<S-F" .. i .. ">"),
+    full_map("<F" .. i + 24 .. ">", "<C-F" .. i .. ">"),
+    full_map("<F" .. i + 36 .. ">", "<M-F" .. i .. ">"),
+    full_map("<F" .. i + 48 .. ">", "<M-C-F" .. i .. ">"),
+    full_map("<F" .. i + 60 .. ">", "<M-S-F" .. i .. ">"),
+  })
+end
+
 wk.add({
-  { "<F13>", "<S-F1>", hidden = true, noremap = false },
-  { "<F14>", "<S-F2>", hidden = true, noremap = false },
-  { "<F15>", "<S-F3>", hidden = true, noremap = false },
-  { "<F16>", "<S-F4>", hidden = true, noremap = false },
-  { "<F17>", "<S-F5>", hidden = true, noremap = false },
-  { "<F18>", "<S-F6>", hidden = true, noremap = false },
-  { "<F19>", "<S-F7>", hidden = true, noremap = false },
-  { "<F20>", "<S-F8>", hidden = true, noremap = false },
-  { "<F21>", "<S-F9>", hidden = true, noremap = false },
-  { "<F22>", "<S-F10>", hidden = true, noremap = false },
-  { "<F23>", "<S-F11>", hidden = true, noremap = false },
-  { "<F24>", "<S-F12>", hidden = true, noremap = false },
-
-  { "<F25>", "<C-F1>", hidden = true, noremap = false },
-  { "<F26>", "<C-F2>", hidden = true, noremap = false },
-  { "<F27>", "<C-F3>", hidden = true, noremap = false },
-  { "<F28>", "<C-F4>", hidden = true, noremap = false },
-  { "<F29>", "<C-F5>", hidden = true, noremap = false },
-  { "<F30>", "<C-F6>", hidden = true, noremap = false },
-  { "<F31>", "<C-F7>", hidden = true, noremap = false },
-  { "<F32>", "<C-F8>", hidden = true, noremap = false },
-  { "<F33>", "<C-F9>", hidden = true, noremap = false },
-  { "<F34>", "<C-F10>", hidden = true, noremap = false },
-  { "<F35>", "<C-F11>", hidden = true, noremap = false },
-  { "<F36>", "<C-F12>", hidden = true, noremap = false },
-
-  { "<F37>", "<C-F1>", hidden = true, noremap = false },
-  { "<F38>", "<C-F2>", hidden = true, noremap = false },
-  { "<F39>", "<C-F3>", hidden = true, noremap = false },
-  { "<F40>", "<C-F4>", hidden = true, noremap = false },
-  { "<F41>", "<C-F5>", hidden = true, noremap = false },
-  { "<F42>", "<C-F6>", hidden = true, noremap = false },
-  { "<F43>", "<C-F7>", hidden = true, noremap = false },
-  { "<F44>", "<C-F8>", hidden = true, noremap = false },
-  { "<F45>", "<C-F9>", hidden = true, noremap = false },
-  { "<F46>", "<C-F10>", hidden = true, noremap = false },
-  { "<F47>", "<C-F11>", hidden = true, noremap = false },
-  { "<F48>", "<C-F12>", hidden = true, noremap = false },
-
-  { "<F49>", "<C-F1>", hidden = true, noremap = false },
-  { "<F50>", "<C-F2>", hidden = true, noremap = false },
-  { "<F51>", "<C-F3>", hidden = true, noremap = false },
-  { "<F52>", "<C-F4>", hidden = true, noremap = false },
-  { "<F53>", "<C-F5>", hidden = true, noremap = false },
-  { "<F54>", "<C-F6>", hidden = true, noremap = false },
-  { "<F55>", "<C-F7>", hidden = true, noremap = false },
-  { "<F56>", "<C-F8>", hidden = true, noremap = false },
-  { "<F57>", "<C-F9>", hidden = true, noremap = false },
-  { "<F58>", "<C-F10>", hidden = true, noremap = false },
-  { "<F59>", "<C-F11>", hidden = true, noremap = false },
-  { "<F60>", "<C-F12>", hidden = true, noremap = false },
-
-  { "<F61>", "<M-S-F1>", hidden = true, noremap = false },
-  { "<F62>", "<M-S-F2>", hidden = true, noremap = false },
-  { "<F63>", "<M-S-F3>", hidden = true, noremap = false },
-  { "<F64>", "<M-S-F4>", hidden = true, noremap = false },
-  { "<F65>", "<M-S-F5>", hidden = true, noremap = false },
-  { "<F66>", "<M-S-F6>", hidden = true, noremap = false },
-  { "<F67>", "<M-S-F7>", hidden = true, noremap = false },
-  { "<F68>", "<M-S-F8>", hidden = true, noremap = false },
-  { "<F69>", "<M-S-F9>", hidden = true, noremap = false },
-  { "<F70>", "<M-S-F10>", hidden = true, noremap = false },
-  { "<F71>", "<M-S-F11>", hidden = true, noremap = false },
-  { "<F72>", "<M-S-F12>", hidden = true, noremap = false },
-
-  { "<M-5>", "<F5>", hidden = true, noremap = false },
-  { "<M-5>", "<F5>", hidden = true, noremap = false },
-  { "<M-5>", "<F5>", hidden = true, noremap = false },
-  { "<M-5>", "<F5>", hidden = true, noremap = false },
-  { "<M-5>", "<F5>", hidden = true, noremap = false },
-  { "<M-5>", "<F5>", hidden = true, noremap = false },
+  full_map("<M-5>", "<F5>"),
+  full_map("<M-6>", "<F6>"),
+  full_map("<M-7>", "<F7>"),
+  full_map("<M-8>", "<F8>"),
+  full_map("<M-9>", "<F9>"),
+  full_map("<M-0>", "<F10>"),
 
   { "<F1>", gs.stage_hunk, mode = { "n", "v" }, desc = "stage hunk" },
   { "<F2>", gs.prev_hunk, desc = "previous hunk" },
