@@ -35,26 +35,37 @@ function Perl_format_sub()
   end
 end
 
-require("which-key").register({
-  [",ps"] = {
+require("which-key").add({
+  {
+    "<leader>,ps",
     function()
       Perl_select_subroutine()
     end,
-    "select subroutine",
+    desc = "select subroutine",
   },
-  [",pp"] = {
+  {
+    "<leader>,pp",
     function()
       Perl_format_sub()
     end,
-    "format subroutine",
+    desc = "format subroutine",
   },
-  [",pi"] = {
+  {
+    "<leader>,pi",
     function()
       local vopt = vim.opt
       vopt.shiftwidth = 2
       vopt.tabstop = 2
       vopt.expandtab = true
     end,
-    "set indentation",
+    desc = "set indentation",
   },
-}, { prefix = "<leader>" })
+  {
+    mode = "i",
+    { "<F2>", "sub ($self) {<cr>}<esc>kea<space>", desc = "new sub" },
+    { "<F4>", "$self->", desc = "$self->" },
+    { "<S-F4>", "->", desc = "->" },
+  },
+})
+
+vim.opt_local.formatoptions = "tcrqnljp"
