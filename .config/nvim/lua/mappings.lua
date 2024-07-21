@@ -94,7 +94,7 @@ local function smart_open()
 end
 
 local function full_map(from, to)
-  return { from, to, hidden = true, noremap = false, mode = "nvxsoitc" }
+  return { from, to, hidden = true, noremap = false, mode = "nvoitc" }
 end
 
 for i = 1, 12 do
