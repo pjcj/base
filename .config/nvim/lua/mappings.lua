@@ -650,7 +650,7 @@ wk.add({
     desc = "grep",
   },
   {
-    "<leader>fygg",
+    "<leader>fygG",
     function()
       tb.live_grep({
         type_filter = "go",
@@ -683,7 +683,8 @@ wk.add({
         word_match = "-w",
       })
     end,
-    desc = "grep string",
+    mode = { "n", "v" },
+    desc = "grep string word",
   },
 
   { "<leader>fyp", group = "perl" },
@@ -695,7 +696,7 @@ wk.add({
     desc = "grep",
   },
   {
-    "<leader>fypg",
+    "<leader>fypG",
     function()
       tb.live_grep({
         type_filter = "perl",
@@ -728,7 +729,8 @@ wk.add({
         word_match = "-w",
       })
     end,
-    desc = "grep string",
+    mode = { "n", "v" },
+    desc = "grep string word",
   },
 
   { "<leader>g", group = "git" },
