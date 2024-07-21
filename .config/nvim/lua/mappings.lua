@@ -459,7 +459,7 @@ wk.add({
   },
 
   { "<leader>f", group = "telescope" },
-  { "<leader>,", group = "find files" },
+  { "<leader>f,", group = "find files" },
   {
     "<leader>f,a",
     function()
