@@ -1585,7 +1585,6 @@ local plugins = {
   { "tpope/vim-repeat" },
   { "Konfekt/vim-unicode-homoglyphs" }, -- gy
   { "superhawk610/ascii-blocks.nvim" }, -- :AsciiBlockify
-  { "ntpeters/vim-better-whitespace" },
   { "ojroques/vim-oscyank" },
   { "uga-rosa/translate.nvim" },
   { "chrisgrieser/nvim-spider" }, -- w moves in camelcase words
