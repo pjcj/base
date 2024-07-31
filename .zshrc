@@ -216,7 +216,9 @@ PATH=~/.cargo/bin:$NPM_PACKAGES/bin:$PATH
 # PATH=~/.yarn/bin:~/.config/yarn/global/node_modules/.bin:$PATH
 PATH=/snap/bin:$PATH
 [[ -n $HOMEBREW_PREFIX ]] &&
-  PATH=$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$HOMEBREW_PREFIX/bin:$PATH
+  PATH=$HOMEBREW_PREFIX/bin:$PATH &&
+  PATH=$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH &&
+  PATH=$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH
 PATH=~/g/local_base/utils:~/g/base/utils:$PATH
 PATH=~/g/base/utils/${(L)$(uname)}:$PATH
 PATH=/usr/local/bin:$PATH:~/g/go/bin:/usr/local/sbin:/usr/sbin:/sbin
