@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+script=$(basename "$0")
+srcdir=$(readlink -f "$(dirname "$0")")
+readonly LOG_FILE="/tmp/$script.log"
+_p() {
+  l=$1
+  shift
+  echo "$l $script: $*" | tee -a "$LOG_FILE" >&2
+}
+pt() { _p "[TRACE]  " "$*"; }
+pd() { _p "[DEBUG]  " "$*"; }
+pi() { _p "[INFO]   " "$*"; }
+pw() { _p "[WARNING]" "$*"; }
+pe() { _p "[ERROR]  " "$*"; }
+pf() {
+  _p "[FATAL]  " "$*"
+  exit 1
+}
+
+usage() {
+  cat <<EOT
+$script --help
+$script --trace --verbose
+$script options
+EOT
+  exit 0
+}
+
+cleanup() {
+  declare -r res=$?
+  ((verbose)) && pi "Cleaning up"
+  exit $res
+}
+
+PATH="$srcdir:$PATH"
+verbose=0
+dryrun=0
+force=0
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+  -h | --help)
+    usage
+    ;;
+  -t | --trace)
+    set -x
+    shift
+    ;;
+  -v | --verbose)
+    verbose=1
+    shift
+    ;;
+  -d | --dryrun)
+    dryrun=1
+    shift
+    ;;
+  -f | --force)
+    force=1
+    shift
+    ;;
+  *)
+    break
+    ;;
+  esac
+done
+
+main() {
+  local from=${1:-}
+  local to=${2:-}
+  local diff same
+  diff=$(diff -rq "$from" "$to") || true
+  ((verbose)) && echo "$diff"
+  same=$(echo -n "$diff" | grep -cv "Only in") || true
+  if ((same > 0)); then
+    echo "Some files would be overwritten:"
+    ((verbose)) || echo "$diff"
+    ((force)) || pf "Not overwriting existing files. Use --force to continue."
+  fi
+  opts="-avh --progress --exclude=.DS_Store"
+  ((dryrun)) && opts+=" --dry-run"
+  # shellcheck disable=SC2086
+  echo rsync $opts "$from/" "$to/"
+  # shellcheck disable=SC2086
+  rsync $opts "$from/" "$to/"
+}
+
+if [[ "${BASH_SOURCE[0]}" = "$0" ]]; then
+  trap cleanup EXIT INT
+  main "$@"
+fi
+
+# For zsh completion:
+# _utils/dir_merge() { reply=($(utils/dir_merge options)) }
+# compctl -K _utils/dir_merge utils/dir_merge
