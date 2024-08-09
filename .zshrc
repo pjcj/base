@@ -790,10 +790,10 @@ for c in s_base03 s_base02 s_base01 s_base00 s_base0 s_base1 s_base2 s_base3 \
     export eb$c="$(print -rP "%K{${(P)c}}")"  # background terminal esc sequence
 done
 
-if command -v dircolors >/dev/null; then
-    eval "$(dircolors -b ~/g/base/dircolours)"
-elif command -v gdircolors >/dev/null; then
+if command -v gdircolors >/dev/null; then
     eval "$(gdircolors -b ~/g/base/dircolours)"
+elif command -v dircolors >/dev/null; then
+    eval "$(dircolors -b ~/g/base/dircolours)"
 else
     echo "Cannot find dircolors"
 fi
