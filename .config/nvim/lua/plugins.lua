@@ -59,7 +59,6 @@ local plugins = {
         },
         integrations = {
           cmp = true,
-          gitgutter = true,
           gitsigns = true,
           indent_blankline = true,
           mason = true,
