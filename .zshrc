@@ -475,6 +475,7 @@ ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
 dh()      { f "$@" | head }
 dht()     { dh -rs created "$@" }
 dm()      { fc -e - d=m -1 }
+dt()      { d -T "$@" }
 fd()      { command fd -H "$@" }
 g()       { git "$@" }
 ga()      { git add "$@" }
