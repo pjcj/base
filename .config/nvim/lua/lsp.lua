@@ -209,8 +209,14 @@ local function setup_servers()
       perlnavigator = {
         perlPath = os.getenv("LINT_PERL_PATH") or "perl",
         includePaths = split_env_var(os.getenv("LINT_PERL_PATHS") or "", ":"),
+
         perlcriticEnabled = vim.fn.filereadable(".perlcriticrc"),
         perlcriticProfile = ".perlcriticrc",
+
+        perlimportsProfile = ".perlimports.toml",
+        perlimportsLintEnabled = vim.fn.filereadable(".perlimports.toml"),
+        perlimportsTidyEnabled = vim.fn.filereadable(".perlimports.toml"),
+
         enableWarnings = false,
       },
     },
