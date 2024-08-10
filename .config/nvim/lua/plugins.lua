@@ -1345,6 +1345,29 @@ local plugins = {
   },
 
   {
+    "frankroeder/parrot.nvim",
+    version = "*",
+    dependencies = {
+      "ibhagwan/fzf-lua",
+      "nvim-lua/plenary.nvim",
+      "rcarriga/nvim-notify",
+    },
+    config = function()
+      require("parrot").setup({
+        -- Providers must be explicitly added to make them available.
+        providers = {
+          openai = {
+            api_key = os.getenv("OPENAI_API_KEY"),
+          },
+          anthropic = {
+            api_key = os.getenv("CLAUDE_API_KEY"),
+          },
+        },
+      })
+    end,
+  },
+
+  {
     "lewis6991/gitsigns.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()

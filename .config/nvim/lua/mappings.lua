@@ -224,6 +224,26 @@ wk.add({
 
   {
     mode = { "n", "v" },
+
+    { "<leader> a", group = "parrot ai" },
+    { "<leader> aI", "<cmd>PrtInfo<cr>", desc = "info" },
+    { "<leader> aP", "<cmd>PrtProvider<cr>", desc = "provider" },
+    { "<leader> aa", "<cmd>PrtAppend<cr>", desc = "append" },
+    { "<leader> ai", "<cmd>PrtImplement<cr>", desc = "implement" },
+    { "<leader> al", "<cmd>PrtLog<cr>", desc = "log" },
+    { "<leader> am", "<cmd>PrtModel<cr>", desc = "model" },
+    { "<leader> ap", "<cmd>PrtPrepend<cr>", desc = "prepend" },
+    { "<leader> ar", "<cmd>PrtRewrite<cr>", desc = "rewrite" },
+
+    { "<leader> ac", group = "chat" },
+    { "<leader> acd", "<cmd>PrtChatDelete<cr>", desc = "delete" },
+    { "<leader> acf", "<cmd>PrtChatFinder<cr>", desc = "finder" },
+    { "<leader> acn", "<cmd>PrtChatNew<cr>", desc = "new" },
+    { "<leader> acp", "<cmd>PrtChatPaste<cr>", desc = "paste" },
+    { "<leader> acr", "<cmd>PrtChatRespond<cr>", desc = "respond" },
+    { "<leader> acs", "<cmd>PrtChatStop<cr>", desc = "stop" },
+    { "<leader> act", "<cmd>PrtChatToggle<cr>", desc = "toggle" },
+
     { "<leader> c", group = "ChatGPT" },
     { "<leader> cc", "<cmd>ChatGPT<cr>", desc = "ChatGPT" },
     {
