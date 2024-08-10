@@ -193,7 +193,8 @@ local function setup_servers()
         },
       },
     },
-    conf,
+    capabilities = capabilities,
+    on_attach = on_attach,
   })
 
   local function split_env_var(env_var, delimiter)
@@ -221,7 +222,8 @@ local function setup_servers()
       },
     },
     debounce_text_changes = 5000, -- milliseconds
-    conf,
+    capabilities = capabilities,
+    on_attach = on_attach,
   })
 
   lspconfig.tsserver.setup({
@@ -260,7 +262,8 @@ local function setup_servers()
         completion = true,
       },
     },
-    conf,
+    capabilities = capabilities,
+    on_attach = on_attach,
   })
 
   if not is_freebsd then
@@ -269,7 +272,8 @@ local function setup_servers()
     lspconfig.lua_ls.setup({
       init_options = { hostInfo = "neovim" },
       settings = lua_settings,
-      conf,
+      capabilities = capabilities,
+      on_attach = on_attach,
     })
   end
 
