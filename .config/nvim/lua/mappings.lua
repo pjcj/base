@@ -304,8 +304,6 @@ wk.add({
     desc = "recursive toggle",
   },
 
-  { "<leader> m", ":MarkdownPreviewToggle<cr>", desc = "markdown" },
-
   {
     mode = { "n", "v" },
     { "<leader> n", group = "neural" },
@@ -897,6 +895,11 @@ wk.add({
 
   { "<leader>th", ":TSBufToggle highlight<cr>", desc = "treesitter highlight" },
   { "<leader>tl", ltext_toggle, desc = "lsp lines" },
+
+  { "<leader>tm", group = "markdown" },
+  { "<leader>tmp", ":MarkdownPreviewToggle<cr>", desc = "preview" },
+  { "<leader>tmv", ":Markview toggle<cr>", desc = "view" },
+
   { "<leader>to", ":Outline<cr>", desc = "symbols" },
   {
     "<leader>ts",
