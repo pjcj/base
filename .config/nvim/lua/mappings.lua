@@ -627,7 +627,12 @@ wk.add({
     desc = "local tags",
   },
   { "<leader>fu", t.extensions.undo.undo, desc = "undo" },
-  { "<leader>fU", ":UrlView buffer<cr>", desc = "urls" },
+
+  { "<leader>fU", group = "url" },
+  { "<leader>fUu", ":UrlView buffer<cr>", desc = "yank url" },
+  { "<leader>fUU", ":UrlView buffer action=system<cr>", desc = "open url" },
+  { "<leader>fUl", ":UrlView lazy<cr>", desc = "yank lazy url" },
+  { "<leader>fUL", ":UrlView lazy action=system<cr>", desc = "open lazy url" },
   {
     "<leader>fv",
     function()
