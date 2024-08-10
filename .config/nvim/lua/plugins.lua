@@ -1597,7 +1597,7 @@ local plugins = {
   },
 
   {
-    "axieax/urlview.nvim", -- ,fu ,fU
+    "axieax/urlview.nvim", -- ,fU
     config = function()
       require("urlview").setup({
         default_picker = "telescope",
