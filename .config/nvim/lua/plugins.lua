@@ -1573,6 +1573,7 @@ local plugins = {
   },
 
   { "junegunn/vim-easy-align" }, -- ctrl-x for regexp
+  { "machakann/vim-swap" }, -- g< g> gs
   { "tpope/vim-repeat" },
   { "Konfekt/vim-unicode-homoglyphs" }, -- gy
   { "superhawk610/ascii-blocks.nvim" }, -- :AsciiBlockify
