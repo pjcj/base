@@ -244,6 +244,27 @@ wk.add({
     { "<leader> acs", "<cmd>PrtChatStop<cr>", desc = "stop" },
     { "<leader> act", "<cmd>PrtChatToggle<cr>", desc = "toggle" },
 
+    { "<leader> ah", group = "hooks" },
+    { "<leader> ahb", "<cmd>PrtFixBugs<cr>", desc = "fix bugs" },
+    { "<leader> ahc", "<cmd>PrtComplete<cr>", desc = "complete" },
+    { "<leader> ahd", "<cmd>PrtDebug<cr>", desc = "debug" },
+    { "<leader> ahe", "<cmd>PrtExplain<cr>", desc = "explain" },
+    {
+      "<leader> ahf",
+      "<cmd>PrtCompleteFullContext<cr>",
+      desc = "complete full context",
+    },
+    { "<leader> ahg", "<cmd>PrtCommitMsg<cr>", desc = "git commit msg" },
+    {
+      "<leader> ahm",
+      "<cmd>PrtCompleteMultiContext<cr>",
+      desc = "complete multi context",
+    },
+    { "<leader> aho", "<cmd>PrtOptimise<cr>", desc = "optimise" },
+    { "<leader> ahp", "<cmd>PrtProofReader<cr>", desc = "proof reader" },
+    { "<leader> ahs", "<cmd>PrtSpellCheck<cr>", desc = "spell check" },
+    { "<leader> aht", "<cmd>PrtUnitTests<cr>", desc = "unit tests" },
+
     { "<leader> c", group = "ChatGPT" },
     { "<leader> cc", "<cmd>ChatGPT<cr>", desc = "ChatGPT" },
     {
