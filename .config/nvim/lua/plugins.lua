@@ -962,16 +962,16 @@ local plugins = {
         },
       })
 
-      local buf_is_big = function(bufnr)
-        local max_filesize = 120 * 1024 -- 120 KB
-        local ok, stats =
-          pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))
-        if ok and stats and stats.size > max_filesize then
-          return true
-        else
-          return false
-        end
-      end
+      -- local buf_is_big = function(bufnr)
+      --   local max_filesize = 120 * 1024 -- 120 KB
+      --   local ok, stats =
+      --     pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))
+      --   if ok and stats and stats.size > max_filesize then
+      --     return true
+      --   else
+      --     return false
+      --   end
+      -- end
 
       local default_sources = {
         { name = "nvim_lua" },
