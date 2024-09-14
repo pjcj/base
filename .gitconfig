@@ -25,7 +25,7 @@
   writeCommitGraph              = true
 [rebase]
   rebaseMerges                  = true
-  updateRefs                    = true
+  updateRefs                    = false
   instructionFormat             = %an (%ai)  %s
 [merge]
   ff                            = only
