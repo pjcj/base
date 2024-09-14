@@ -513,10 +513,11 @@ local plugins = {
         "BufWritePost",
         "CursorHold",
       }, {
-        callback = function(ev)
-          if ev.event == "CursorHold" then
-            require("notify")(string.format("lint: %s", ev.event))
-          end
+        callback = function()
+        -- callback = function(ev)
+          -- if ev.event == "CursorHold" then
+          --   require("notify")(string.format("lint: %s", ev.event))
+          -- end
           lint.try_lint()
           lint.try_lint("codespell")
           lint.try_lint("typos")
