@@ -536,6 +536,7 @@ local plugins = {
         -- go = { "gofmt", "golint", "gopls", "govet", "golangci-lint" },
         go = {},
         html = {},
+        markdown = {},
         perl = {},
         sh = {},
         yaml = { "spectral" },
@@ -551,18 +552,22 @@ local plugins = {
     config = function()
       require("conform").setup({
         formatters_by_ft = {
+          dockerfile = { "dprint" },
           javascript = { { "prettierd", "prettier" } }, -- run first
           json = { "fixjson" },
           lua = { "stylua" },
           markdown = { "markdownlint", "mdformat" },
           python = { "isort", "black" },
           sh = { "shellharden", "shellcheck", "shfmt" }, -- run sequentially
+          bash = { "shellharden", "shellcheck", "shfmt" }, -- run sequentially
+          zsh = { "shellharden", "shellcheck" }, -- run sequentially
           sql = { "sql_formatter" },
           terraform = { "terraform_fmt" },
           toml = { "taplo" },
           yaml = { "yamlfmt" }, -- yamlfix is too buggy
           ["*"] = { "codespell" },
         },
+        log_level = vim.log.levels.DEBUG,
       })
 
       require("conform.formatters.mdformat").args = {
