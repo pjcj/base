@@ -1010,8 +1010,8 @@ end)
 
 local vmap = vim.api.nvim_set_keymap -- global mappings
 
-vmap("n", "ga", "<Plug>(EasyAlign)", {})
-vmap("x", "ga", "<Plug>(EasyAlign)", {})
+vmap("n", "gA", "<Plug>(EasyAlign)", {})
+vmap("x", "gA", "<Plug>(EasyAlign)", {})
 vmap("v", "<Enter>", "<Plug>(EasyAlign)", {})
 
 vmap("v", "<C-Up>", "<Plug>MoveBlockUp", {})
