@@ -217,14 +217,26 @@ PATH=~/.cargo/bin:$NPM_PACKAGES/bin:$PATH
 PATH=/snap/bin:$PATH
 [[ -n $HOMEBREW_PREFIX ]] &&
   PATH=$HOMEBREW_PREFIX/bin:$PATH &&
+  PATH=$HOMEBREW_PREFIX/opt/mysql@8.4/bin:$PATH &&
   PATH=$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH &&
   PATH=$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH
 PATH=~/g/local_base/utils:~/g/base/utils:$PATH
 PATH=~/g/base/utils/${(L)$(uname)}:$PATH
 PATH=/usr/local/bin:$PATH:~/g/go/bin:/usr/local/sbin:/usr/sbin:/sbin
 PATH=~/bin:$PATH
+
 MANPATH=/usr/share/man:${MANPATH:-manpath}
 MANPATH=~/g/sw/share/man:$NPM_PACKAGES/share/man:$MANPATH
+
+[[ -n $HOMEBREW_PREFIX ]] &&
+  LDFLAGS="-L$HOMEBREW_PREFIX/opt/mysql@8.4/lib $LDFLAGS" &&
+  CPPFLAGS="-I$HOMEBREW_PREFIX/opt/mysql@8.4/include $CPPFLAGS" &&
+  PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/mysql@8.4/lib/pkgconfig"
+
+# To start mysql@8.4 now and restart at login:
+#   brew services start mysql@8.4
+# Or, if you don't want/need a background service you can just run:
+#   /opt/homebrew/opt/mysql@8.4/bin/mysqld_safe --datadir\=/opt/homebrew/var/mysql
 
 zshrc_load_status "compinit"
 
