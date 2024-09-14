@@ -11,6 +11,8 @@
   threads                       = 0
 [init]
   defaultBranch                 = main
+[help]
+  autocorrect                   = 50
 [diff]
   renamelimit                   = 0
   renames                       = copies
