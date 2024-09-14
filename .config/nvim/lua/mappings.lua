@@ -790,6 +790,18 @@ wk.add({
     end,
     desc = "commit",
   },
+  {
+    "<leader>gG",
+    function()
+      vim.opt.cmdheight = 2
+      vim.cmd("tab Git commit --no-verify")
+      if vim.fn.getline(2) ~= "" then
+        vim.cmd("normal O")
+      end
+      vim.cmd("startinsert")
+    end,
+    desc = "commit --no-verify",
+  },
 
   { "<leader>gl", group = "gitlab" },
   { "<leader>gla", gl.approve, desc = "approve" },
