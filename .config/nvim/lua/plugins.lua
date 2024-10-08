@@ -326,6 +326,7 @@ local plugins = {
 
   {
     "rcarriga/nvim-notify", -- ,fn
+    version = "*",
     config = function()
       local notify = require("notify")
       vim.notify = notify
@@ -700,6 +701,7 @@ local plugins = {
 
   {
     "nvim-neotest/neotest",
+    version = "*",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
@@ -849,7 +851,10 @@ local plugins = {
       })
     end,
   },
-  { "stevearc/dressing.nvim" },
+  {
+    "stevearc/dressing.nvim",
+    version = "*",
+  },
   { "gabrielpoca/replacer.nvim" },
   {
     "kevinhwang91/nvim-bqf",
@@ -1298,6 +1303,7 @@ local plugins = {
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     branch = "canary",
+    version = "*",
     dependencies = {
       { "zbirenbaum/copilot.lua" },
       { "nvim-lua/plenary.nvim" },
@@ -1701,6 +1707,7 @@ local plugins = {
 
   {
     "harrisoncramer/gitlab.nvim",
+    version = "*",
     dependencies = {
       "MunifTanjim/nui.nvim",
       "nvim-lua/plenary.nvim",
@@ -1981,6 +1988,7 @@ local plugins = {
 
   {
     "nvim-tree/nvim-tree.lua",
+    version = "*",
     dependencies = {
       "nvim-tree/nvim-web-devicons", -- optional, for file icon
     },
