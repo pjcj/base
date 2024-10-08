@@ -889,7 +889,8 @@ local plugins = {
   { "junegunn/fzf" },
 
   {
-    "hrsh7th/nvim-cmp",
+    -- "hrsh7th/nvim-cmp",
+    "iguanacucumber/magazine.nvim",  -- includes performance and other PRs
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lua",
