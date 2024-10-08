@@ -2046,18 +2046,12 @@ local plugins = {
     config = function()
       local presets = require("markview.presets")
       require("markview").setup({
-        highlight_groups = presets.highlight_groups.h_decorated,
-        headings = presets.headings.decorated_labels,
-        tables = presets.tables.border_double,
+        checkboxes = presets.checkboxes.nerd,
+        headings = presets.headings.slanted,
+        horizontal_rules = presets.horizontal_rules.double,
 
         modes = { "n", "i", "no", "c" },
         hybrid_modes = { "i" },
-        callbacks = {
-          on_enable = function(_, win)
-            vim.wo[win].conceallevel = 2
-            vim.wo[win].concealcursor = "nc"
-          end,
-        },
       })
     end,
   },
