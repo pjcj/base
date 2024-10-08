@@ -23,7 +23,11 @@ usage() {
   cat <<EOT
 $script --help
 $script --trace --verbose
-$script options
+$script --dryrun from/dir to/dir
+$script --force from/dir to/dir
+
+--dryrun   : Show what would be done
+--force    : Overwrite existing files
 EOT
   exit 0
 }
