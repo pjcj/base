@@ -286,6 +286,12 @@ local plugins = {
   },
 
   {
+    "chrisgrieser/nvim-various-textobjs",
+    event = "UIEnter",
+    opts = { useDefaultKeymaps = true },
+  },
+
+  {
     "JoosepAlviste/nvim-ts-context-commentstring",
     config = function()
       require("ts_context_commentstring").setup({
