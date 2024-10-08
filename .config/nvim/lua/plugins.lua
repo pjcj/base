@@ -521,7 +521,7 @@ local plugins = {
         "CursorHold",
       }, {
         callback = function()
-        -- callback = function(ev)
+          -- callback = function(ev)
           -- if ev.event == "CursorHold" then
           --   require("notify")(string.format("lint: %s", ev.event))
           -- end
@@ -1861,13 +1861,13 @@ local plugins = {
   { "ojroques/vim-oscyank" },
   { "uga-rosa/translate.nvim" },
   { "chrisgrieser/nvim-spider" }, -- w moves in camelcase words
-  { "kana/vim-textobj-user" },
-  {
-    "Julian/vim-textobj-variable-segment",
-    dependencies = {
-      "vim-textobj-user",
-    },
-  },
+  -- { "kana/vim-textobj-user" },
+  -- {
+  --   "Julian/vim-textobj-variable-segment",
+  --   dependencies = {
+  --     "kana/vim-textobj-user",
+  --   },
+  -- },
 
   {
     "axieax/urlview.nvim", -- ,fU
