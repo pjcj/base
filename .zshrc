@@ -851,6 +851,7 @@ if [[ -d $(brew --prefix nvm) ]] then
     export NVM_DIR=~/.config/nvm
     mkdir -p $NVM_DIR
     load $(brew --prefix nvm)/nvm.sh
+    load $(brew --prefix nvm)/etc/bash_completion.d/nvm
 fi
 
 # if [[ $(uname -s) = Darwin ]]; then
