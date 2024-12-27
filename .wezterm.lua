@@ -1,4 +1,4 @@
-local wezterm = require "wezterm"
+local wezterm = require("wezterm")
 local mux = wezterm.mux
 local act = wezterm.action
 
@@ -38,8 +38,6 @@ c.inactive_pane_hsb = {
   brightness = 0.5,
 }
 
-c.adjust_window_size_when_changing_font_size = false
-
 -- c.color_scheme = "Solarized Dark - Patched"
 c.colors = {
   background = "#001920",
@@ -51,24 +49,24 @@ c.colors = {
   selection_bg = "#f0a63f",
   selection_fg = "#001920",
   ansi = {
-    "#022731",  -- black
-    "#dc322f",  -- red
-    "#25ad2e",  -- green
-    "#b58900",  -- yellow
-    "#268bd2",  -- blue
-    "#d33682",  -- magenta
-    "#2aa198",  -- cyan
-    "#eee8d5",  -- white
+    "#022731", -- black
+    "#dc322f", -- red
+    "#25ad2e", -- green
+    "#b58900", -- yellow
+    "#268bd2", -- blue
+    "#d33682", -- magenta
+    "#2aa198", -- cyan
+    "#eee8d5", -- white
   },
   brights = {
-    "#001920",  -- bright black
-    "#cb4b16",  -- bright red
-    "#586e75",  -- bright green
-    "#657b83",  -- bright yellow
-    "#839496",  -- bright blue
-    "#6c71c4",  -- bright magenta
-    "#93a1a1",  -- bright cyan
-    "#fdf6e3",  -- bright white
+    "#001920", -- bright black
+    "#cb4b16", -- bright red
+    "#586e75", -- bright green
+    "#657b83", -- bright yellow
+    "#839496", -- bright blue
+    "#6c71c4", -- bright magenta
+    "#93a1a1", -- bright cyan
+    "#fdf6e3", -- bright white
   },
   quick_select_label_bg = { Color = "#fff179" },
   quick_select_label_fg = { Color = "#001920" },
@@ -76,9 +74,14 @@ c.colors = {
   quick_select_match_fg = { Color = "#001920" },
 }
 
+c.adjust_window_size_when_changing_font_size = false
 c.disable_default_key_bindings = true
-
 c.leader = { key = ".", mods = "CTRL", timeout_milliseconds = 3000 }
+c.pane_focus_follows_mouse = true
+c.quick_select_alphabet = "asdfqweryxcvjkluiopmghtzbn"
+c.selection_word_boundary = " \t\n{}[]()\"'`┃←→"
+c.window_close_confirmation = "NeverPrompt"
+c.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 
 local mod1, mod2
 if string.match(hostname, "mbp") then
@@ -90,26 +93,33 @@ else
 end
 
 c.keys = {
-  { key = "s", mods = "LEADER|CTRL", action = wezterm.action.SendKey { key = "s", mods = "CTRL" } },
+  {
+    key = "s",
+    mods = "LEADER|CTRL",
+    action = wezterm.action.SendKey({ key = "s", mods = "CTRL" }),
+  },
 
   { key = "+", mods = mod2, action = "IncreaseFontSize" },
   { key = "-", mods = mod2, action = "DecreaseFontSize" },
-  { key = '*', mods = mod2, action = act.ResetFontSize },
-  { key = "Enter", mods = "CTRL|SHIFT", action = wezterm.action.TogglePaneZoomState },
+  { key = "*", mods = mod2, action = act.ResetFontSize },
+  {
+    key = "Enter",
+    mods = "CTRL|SHIFT",
+    action = wezterm.action.TogglePaneZoomState,
+  },
   { key = "Enter", mods = "ALT", action = act.ToggleFullScreen },
   { key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
   { key = "Tab", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(-1) },
-  { key = "c", mods = mod1, action = act.CopyTo "Clipboard" },
-  { key = "v", mods = mod1, action = act.PasteFrom "Clipboard" },
+  { key = "c", mods = mod1, action = act.CopyTo("Clipboard") },
+  { key = "v", mods = mod1, action = act.PasteFrom("Clipboard") },
   { key = "d", mods = "LEADER", action = act.ShowDebugOverlay },
   { key = "r", mods = "LEADER", action = act.ReloadConfiguration },
-  { key = 'l', mods = "LEADER", action = act.ShowLauncher },
-  { key = 'p', mods = "LEADER", action = act.ActivateCommandPalette },
-  { key = 'n', mods = "LEADER", action = act.SpawnWindow },
+  { key = "l", mods = "LEADER", action = act.ShowLauncher },
+  { key = "p", mods = "LEADER", action = act.ActivateCommandPalette },
+  { key = "n", mods = "LEADER", action = act.SpawnWindow },
   { key = "phys:Space", mods = "LEADER", action = act.QuickSelect },
   { key = "UpArrow", mods = "SHIFT", action = act.ScrollToPrompt(-1) },
   { key = "DownArrow", mods = "SHIFT", action = act.ScrollToPrompt(1) },
-
 
   -- { key = '0', mods = 'CTRL', action = act.ActivateTab(0) },
   -- { key = '!', mods = 'SHIFT|CTRL', action = act.ActivateTab(0) },
@@ -332,12 +342,8 @@ c.mouse_bindings = {
   },
 }
 
-c.selection_word_boundary = " \t\n{}[]()\"'`┃←→"
-
-c.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
-
 -- c.window_frame = {
- -- font = wezterm.font { family = "Noto Sans", weight = "Regular" },
+-- font = wezterm.font { family = "Noto Sans", weight = "Regular" },
 -- }
 
 -- The filled in variant of the < symbol
@@ -362,19 +368,19 @@ local function tab_title(tab_info)
 end
 
 wezterm.on(
-  'format-tab-title',
+  "format-tab-title",
   -- function(tab, tabs, panes, config, hover, max_width)
   function(tab, _, _, _, hover, max_width)
-    local edge_background = '#0b0022'
-    local background = '#1b1032'
-    local foreground = '#808080'
+    local edge_background = "#0b0022"
+    local background = "#1b1032"
+    local foreground = "#808080"
 
     if tab.is_active then
-      background = '#2b2042'
-      foreground = '#c0c0c0'
+      background = "#2b2042"
+      foreground = "#c0c0c0"
     elseif hover then
-      background = '#3b3052'
-      foreground = '#909090'
+      background = "#3b3052"
+      foreground = "#909090"
     end
 
     local edge_foreground = background
@@ -399,12 +405,6 @@ wezterm.on(
   end
 )
 
-c.pane_focus_follows_mouse = true
-
-c.window_close_confirmation = "NeverPrompt"
-
-c.quick_select_alphabet = "asdfqweryxcvjkluiopmghtzbn"
-
 if hostname == "T52U" then
   c.ssh_domains = {
     {
@@ -413,14 +413,14 @@ if hostname == "T52U" then
       username = "pjcj",
       ssh_option = {
         IdentityFile = "/mnt/c/Users/pjcj/.ssh/id_ed25519",
-      }
+      },
     },
   }
   c.default_domain = "WSL:Ubuntu"
   c.unix_domains = {
     {
       name = "unix",
-    }
+    },
   }
 end
 
@@ -430,50 +430,50 @@ wezterm.on("gui-startup", function()
 
   if hostname == "T52U" then
     tab:set_title("wsl")
-    pane2 = pane1:split { direction = "Left", size = 0.4 }
-    pane3 = pane2:split { direction = "Bottom", size = 0.5 }
-    pane1:send_text 'tm sh\n'
+    pane2 = pane1:split({ direction = "Left", size = 0.4 })
+    pane3 = pane2:split({ direction = "Bottom", size = 0.5 })
+    pane1:send_text("tm sh\n")
     pane2:send_text([[ ssh -t pjcj 'zsh -i -c "tm main"' ]] .. "\n")
     pane3:send_text([[ ssh -t cp1 'zsh -i -c "tm cp1"' ]] .. "\n")
 
-    tab, pane1, window = window:spawn_tab {}
+    tab, pane1, window = window:spawn_tab({})
     tab:set_title("pyx")
-    pane2 = pane1:split { direction = "Left", size = 0.25 }
+    pane2 = pane1:split({ direction = "Left", size = 0.25 })
     pane1:send_text([[ ssh -t pyx-22 'zsh -i -c "tm base"' ]] .. "\n")
-    pane2:send_text 'ssh pyx-22\n'
+    pane2:send_text("ssh pyx-22\n")
 
-    tab, pane1, window = window:spawn_tab {}
+    tab, pane1, window = window:spawn_tab({})
     tab:set_title("ca")
-    pane2 = pane1:split { direction = "Left", size = 0.25 }
+    pane2 = pane1:split({ direction = "Left", size = 0.25 })
     pane1:send_text([[ ssh -t ca 'zsh -i -c "tm base"' ]] .. "\n")
-    pane2:send_text 'ssh ca\n'
+    pane2:send_text("ssh ca\n")
 
-    tab, pane1, window = window:spawn_tab {}
+    tab, pane1, window = window:spawn_tab({})
     tab:set_title("ca-22")
-    pane2 = pane1:split { direction = "Left", size = 0.25 }
+    pane2 = pane1:split({ direction = "Left", size = 0.25 })
     pane1:send_text([[ ssh -t ca-22 'zsh -i -c "tm base"' ]] .. "\n")
-    pane2:send_text 'ssh ca-22\n'
+    pane2:send_text("ssh ca-22\n")
 
-    tab, pane1, window = window:spawn_tab {}
+    tab, pane1, window = window:spawn_tab({})
     tab:set_title("tmp")
-    pane2 = pane1:split { direction = "Left", size = 0.25 }
-    pane3 = pane2:split { direction = "Bottom", size = 0.75 }
+    pane2 = pane1:split({ direction = "Left", size = 0.25 })
+    pane3 = pane2:split({ direction = "Bottom", size = 0.75 })
   elseif hostname == "pyx-22" then
     tab:set_title("pyx")
-    pane2 = pane1:split { direction = "Left", size = 0.4 }
-    pane1:send_text 'tm base\n'
+    pane2 = pane1:split({ direction = "Left", size = 0.4 })
+    pane1:send_text("tm base\n")
   elseif hostname == "ca" then
     tab:set_title("ca")
-    pane2 = pane1:split { direction = "Left", size = 0.4 }
-    pane1:send_text 'tm base\n'
+    pane2 = pane1:split({ direction = "Left", size = 0.4 })
+    pane1:send_text("tm base\n")
   elseif hostname == "ca-22" then
     tab:set_title("ca-22")
-    pane2 = pane1:split { direction = "Left", size = 0.4 }
-    pane1:send_text 'tm base\n'
+    pane2 = pane1:split({ direction = "Left", size = 0.4 })
+    pane1:send_text("tm base\n")
   elseif hostname == "mbp.localdomain" then
     tab:set_title("mbp")
-    pane2 = pane1:split { direction = "Left", size = 0.25 }
-    pane1:send_text 'tm base\n'
+    pane2 = pane1:split({ direction = "Left", size = 0.25 })
+    pane1:send_text("tm base\n")
   end
 
   window:gui_window():perform_action(act.ActivateTab(0), pane1)
