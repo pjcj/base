@@ -429,7 +429,20 @@ wk.add({
     desc = "honour ignores",
   },
 
+  { "<leader> ", group = "plugins" },
   { "<leader>,", group = "language" },
+  { "<leader>,a", group = "all" },
+  {
+    "<leader>,ai",
+    function()
+      local vopt = vim.opt
+      vopt.shiftwidth = 2
+      vopt.tabstop = 2
+      vopt.expandtab = true
+    end,
+    desc = "set indentation",
+  },
+  { "<leader>,c", group = "claude" },
   { "<leader>,g", group = "go" },
   { "<leader>,ga", ":GoAlt!<cr>", desc = "alternative file" },
   { "<leader>,gc", ":GoCoverage<cr>", desc = "coverage" },
@@ -929,6 +942,7 @@ wk.add({
     desc = "insert braces without space",
   },
 
+  { "<leader>r", group = "session & git" },
   {
     "<leader>rr",
     ":mksess! /tmp/tmp_session.vim<cr>:xa<cr>",
