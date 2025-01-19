@@ -19,6 +19,9 @@ ln -sf ~/g/base/.config/* ~/.config
 
 gobase
 
+[[ -d ~/.zplug ]] || curl -sL --proto-redir -all,https \
+    https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 source "$ZINIT_HOME/zinit.zsh"
 zinit self-update
