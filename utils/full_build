@@ -22,6 +22,11 @@ gobase
 [[ -d ~/.zplug ]] || curl -sL --proto-redir -all,https \
     https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 
+if [[ -z $TMUX ]]; then
+    echo "Start tmux and then run full_build"
+    exit
+fi
+
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 source "$ZINIT_HOME/zinit.zsh"
 zinit self-update
