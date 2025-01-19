@@ -4,7 +4,8 @@ vim.g.mapleader = ","
 vim.opt.termguicolors = true
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.fn.isdirectory(lazypath) then
+local exists = vim.fn.isdirectory(lazypath) == 1
+if not exists then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
   local out = vim.fn.system({
     "git",
