@@ -4,7 +4,7 @@
 
 gobase() { cd ~/g/base || exit 1; }
 
-cd ~
+cd ~ || exit
 
 [[ -e .profile ]] && ! [[ -e .profile.local ]] && mv .profile .profile.local
 ln -sf g/base/{utils,.abcde.conf,.gitconfig,.gitignore_global,.profile} .
@@ -42,9 +42,9 @@ LOCALCHECKOUT=~/.tmux/plugins/tpm
 if [ ! -d $LOCALCHECKOUT ]; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 else
-    pushd $LOCALCHECKOUT
+    pushd $LOCALCHECKOUT || exit
     git pull origin master
-    popd
+    popd || exit
 fi
 
 ~/.tmux/plugins/tpm/bin/install_plugins
