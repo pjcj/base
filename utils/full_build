@@ -158,9 +158,6 @@ else
     # sudo aptitude -y install golang python-pip python3-dev python3-pip cargo libncurses-dev libncursesw5-dev
 
     cargo install devicon-lookup
-
-    # $pip3 install --upgrade --user pip
-
     create_wezterm_terminfo
     fixup_fzf_completion
 fi
@@ -176,11 +173,6 @@ if [[ "$(uname)" == FreeBSD ]]; then
     sudo npm install -g fixjson
     sudo npm update -g
 else
-    # $pip3 install --upgrade --user \
-    #     thefuck \
-    #     docker-compose \
-    #     mdformat-gfm
-
     npm install -g fixjson
     exec npm update -g
 fi
