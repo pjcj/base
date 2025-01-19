@@ -96,10 +96,7 @@ if [[ "$(uname)" == Darwin ]]; then
 
   create_wezterm_terminfo
   fixup_fzf_completion
-
   cargo install devicon-lookup
-
-  pip3=pip3
 elif [[ "$(uname)" == FreeBSD ]]; then
   sudo pkg update
   sudo pkg upgrade
@@ -139,8 +136,6 @@ elif [[ "$(uname)" == FreeBSD ]]; then
     vim \
     wget \
     zsh
-
-  pip3=pip
 else
   sudo locale-gen en_GB.UTF-8 en_US.UTF-8
   sudo update-locale
@@ -165,7 +160,6 @@ else
     brew bundle install --file=$brewfile
   fi
 
-  export pip3=pip3
   cargo install devicon-lookup
   create_wezterm_terminfo
   fixup_fzf_completion
