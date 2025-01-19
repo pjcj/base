@@ -7,7 +7,7 @@ uname=$(uname)
 gobase() { cd ~/g/base || exit 1; }
 
 initialise() {
-  mkdir -p ~/.local/share/nvim/backup
+  mkdir -p ~/.local/share/nvim/backup ~/.local/share/nvim/lazy
 }
 
 update_packages() {
