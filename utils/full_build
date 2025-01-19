@@ -1,70 +1,126 @@
 #!/usr/bin/env zsh
-#!/usr/bin/env bash  # for tooling
 
 # set -x
 
+uname=$(uname)
+
 gobase() { cd ~/g/base || exit 1; }
 
-cd ~ || exit
+initialise() {
+  mkdir -p ~/.local/share/nvim/backup
+}
 
-[[ -e .profile ]] && ! [[ -e .profile.local ]] && mv .profile .profile.local
-ln -sf g/base/{utils,.abcde.conf,.gitconfig,.gitignore_global,.profile} .
-ln -sf g/base/{.urlview,.vimrc,.Xdefaults,.vim,.tmux.conf,.tigrc} .
-ln -sf g/base/{.zshenv,.zshrc,.wezterm.lua} .
-[[ -d ~/.config ]] || mkdir ~/.config
-ln -sf ~/g/base/.config/* ~/.config
+update_packages() {
+  [[ $uname == Darwin ]] && return
+  if [[ $uname == FreeBSD ]]; then
+    sudo pkg update
+    sudo pkg upgrade
+    sudo pkg install \
+      base64 \
+      bash \
+      bat \
+      codespell \
+      exa \
+      fd-find \
+      fzf \
+      git \
+      git-delta \
+      go \
+      hs-ShellCheck \
+      multitail \
+      neovim \
+      node \
+      npm-node18 \
+      opendircolors \
+      pigz \
+      pixz \
+      py39-pip \
+      py39-powerline-status \
+      py39-proselint \
+      py39-ranger \
+      py39-yamllint \
+      ripgrep \
+      rust \
+      selene \
+      shellharden \
+      shfmt \
+      thefuck \
+      tig \
+      tmux \
+      universal-ctags \
+      vim \
+      wget \
+      zsh
+  else
+    sudo locale-gen en_GB.UTF-8 en_US.UTF-8
+    sudo update-locale
 
-[[ -e ~/.ssh/rc ]] || ln -s ~/g/base/.ssh/rc ~/.ssh
-[[ -e ~/.ssh/config ]] || cp ~/g/base/.ssh/config ~/.ssh
-[[ -d ~/.ssh/sockets ]] || mkdir -p ~/.ssh/sockets
+    sudo apt autoremove -y
+    sudo apt update
+    sudo apt full-upgrade
+  fi
+}
 
-gobase
+update_brew() {
+  [[ $uname == FreeBSD ]] && return
+  local brewfile
+  if [[ $uname == Darwin ]]; then
+    brewfile=Brewfile
+    if which brew >&/dev/null; then
+      brew update
+      brew upgrade
+      brew upgrade --cask
+      brew bundle dump --file=$brewfile --force
+    else
+      bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      brew bundle install --file=$brewfile
+    fi
+  else
+    if [[ -n $WSL_DISTRO_NAME ]]; then
+      brewfile=Brewfile.wsl
+    else
+      brewfile=Brewfile.linux.headless
+    fi
+    if which brew >&/dev/null; then
+      brew update
+      brew upgrade
+      brew bundle dump --file=$brewfile --force
+    else
+      sudo apt-get install build-essential procps curl file git
+      sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+      brew bundle install --file=$brewfile
+    fi
+  fi
+}
 
-[[ -d ~/.zplug ]] || curl -sL --proto-redir -all,https \
-  https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+do_zplug() {
+  [[ -d ~/.zplug ]] || curl -sL --proto-redir -all,https \
+    https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 
-if [[ -z $TMUX ]]; then
-  echo "Start tmux and then run full_build"
-  exit
-fi
+  ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+  # shellcheck disable=SC1091
+  source "$ZINIT_HOME/zinit.zsh"
+  zinit self-update
+  zinit update --parallel
+}
 
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-source "$ZINIT_HOME/zinit.zsh"
-zinit self-update
-zinit update --parallel
+completion() {
+  curl -SL https://github.com/docker/cli/raw/master/contrib/completion/zsh/_docker \
+    >|~/g/base/zsh/functions/_docker
+  curl -SL https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose \
+    >|~/g/base/zsh/functions/_docker-compose
+  curl -SL https://raw.githubusercontent.com/docker/machine/master/contrib/completion/zsh/_docker-machine \
+    >|~/g/base/zsh/functions/_docker-machine
+  curl -SL https://raw.githubusercontent.com/perlpunk/shell-completions/master/zsh/_dzil \
+    >|~/g/base/zsh/functions/_dzil
+  if [[ "$(uname)" == Darwin ]]; then
+    curl https://raw.githubusercontent.com/zsh-users/zsh/master/Completion/Unix/Command/_git \
+      >|~/g/base/zsh/functions/_git
+  fi
 
-curl -SL https://github.com/docker/cli/raw/master/contrib/completion/zsh/_docker \
-  >|~/g/base/zsh/functions/_docker
-curl -SL https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose \
-  >|~/g/base/zsh/functions/_docker-compose
-curl -SL https://raw.githubusercontent.com/docker/machine/master/contrib/completion/zsh/_docker-machine \
-  >|~/g/base/zsh/functions/_docker-machine
-curl -SL https://raw.githubusercontent.com/perlpunk/shell-completions/master/zsh/_dzil \
-  >|~/g/base/zsh/functions/_dzil
-if [[ "$(uname)" == Darwin ]]; then
-  curl https://raw.githubusercontent.com/zsh-users/zsh/master/Completion/Unix/Command/_git \
-    >|~/g/base/zsh/functions/_git
-fi
-rm -f ~/.zcompdump
-autoload -Uz compinit && compinit -i
-
-LOCALCHECKOUT=~/.tmux/plugins/tpm
-if [ ! -d $LOCALCHECKOUT ]; then
-  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-else
-  pushd $LOCALCHECKOUT || exit
-  git pull origin master
-  popd || exit
-fi
-
-~/.tmux/plugins/tpm/bin/install_plugins
-~/.tmux/plugins/tpm/bin/update_plugins all
-~/.tmux/plugins/tpm/bin/clean_plugins
-
-bat cache --clear
-bat cache --build
-
-mkdir -p ~/.local/share/nvim/backup
+  rm -f ~/.zcompdump
+  autoload -Uz compinit && compinit -i
+}
 
 create_wezterm_terminfo() {
   tempfile=$(mktemp) &&
@@ -83,99 +139,73 @@ fixup_fzf_completion() {
   done
 }
 
-if [[ "$(uname)" == Darwin ]]; then
-  if which brew >&/dev/null; then
-    brew update
-    brew upgrade
-    brew upgrade --cask
-    brew bundle dump --file=Brewfile --force
+do_tpm() {
+  local dir=~/.tmux/plugins/tpm
+  if [ ! -d $dir ]; then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
   else
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    brew bundle install --file=Brewfile
+    pushd $dir || exit
+    git pull origin master
+    popd || exit
   fi
 
+  ~/.tmux/plugins/tpm/bin/install_plugins
+  ~/.tmux/plugins/tpm/bin/update_plugins all
+  ~/.tmux/plugins/tpm/bin/clean_plugins
+}
+
+finalise() {
+  bat cache --clear
+  bat cache --build
+  cargo install devicon-lookup
+
+  if [[ $EDITOR == "nvim" ]]; then
+    # $EDITOR --headless "+Lazy! sync" +qall
+    # $EDITOR --headless "+TSUpdateSync" +qall
+    go install github.com/nametake/golangci-lint-langserver@latest
+    go install github.com/client9/misspell/cmd/misspell@latest
+  fi
+
+  if [[ $uname == FreeBSD ]]; then
+    sudo npm install -g fixjson
+    sudo npm update -g
+  else
+    npm install -g fixjson
+    npm update -g
+  fi
+}
+
+main() {
+  cd ~ || exit
+
+  [[ -e .profile ]] && ! [[ -e .profile.local ]] && mv .profile .profile.local
+  ln -sf g/base/{utils,.abcde.conf,.gitconfig,.gitignore_global,.profile} .
+  ln -sf g/base/{.urlview,.vimrc,.Xdefaults,.vim,.tmux.conf,.tigrc} .
+  ln -sf g/base/{.zshenv,.zshrc,.wezterm.lua} .
+  [[ -d ~/.config ]] || mkdir ~/.config
+  ln -sf ~/g/base/.config/* ~/.config
+
+  [[ -e ~/.ssh/rc ]] || ln -s ~/g/base/.ssh/rc ~/.ssh
+  [[ -e ~/.ssh/config ]] || cp ~/g/base/.ssh/config ~/.ssh
+  [[ -d ~/.ssh/sockets ]] || mkdir -p ~/.ssh/sockets
+
+  gobase
+
+  initialise
+  update_packages
+  update_brew
+  do_zplug
+  completion
   create_wezterm_terminfo
   fixup_fzf_completion
-  cargo install devicon-lookup
-elif [[ "$(uname)" == FreeBSD ]]; then
-  sudo pkg update
-  sudo pkg upgrade
-  sudo pkg install \
-    base64 \
-    bash \
-    bat \
-    codespell \
-    exa \
-    fd-find \
-    fzf \
-    git \
-    git-delta \
-    go \
-    hs-ShellCheck \
-    multitail \
-    neovim \
-    node \
-    npm-node18 \
-    opendircolors \
-    pigz \
-    pixz \
-    py39-pip \
-    py39-powerline-status \
-    py39-proselint \
-    py39-ranger \
-    py39-yamllint \
-    ripgrep \
-    rust \
-    selene \
-    shellharden \
-    shfmt \
-    thefuck \
-    tig \
-    tmux \
-    universal-ctags \
-    vim \
-    wget \
-    zsh
-else
-  sudo locale-gen en_GB.UTF-8 en_US.UTF-8
-  sudo update-locale
 
-  sudo apt autoremove -y
-  sudo apt update
-  sudo apt full-upgrade
-
-  if [[ -n $WSL_DISTRO_NAME ]]; then
-    brewfile=Brewfile.wsl
-  else
-    brewfile=Brewfile.linux
+  if [[ -z $TMUX ]]; then
+    echo "Start tmux and then run full_build"
+    exit
   fi
 
-  if which brew >&/dev/null; then
-    brew update
-    brew upgrade
-    brew bundle dump --file=$brewfile --force
-  else
-    sudo apt-get install build-essential procps curl file git
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-    brew bundle install --file=$brewfile
-  fi
+  do_tpm
+  finalise
+}
 
-  cargo install devicon-lookup
-  create_wezterm_terminfo
-  fixup_fzf_completion
-fi
-
-if [[ $EDITOR == "nvim" ]]; then
-  # $EDITOR --headless "+Lazy! sync" +qall
-  # $EDITOR --headless "+TSUpdateSync" +qall
-  go install github.com/nametake/golangci-lint-langserver@latest
-  go install github.com/client9/misspell/cmd/misspell@latest
-fi
-
-if [[ "$(uname)" == FreeBSD ]]; then
-  sudo npm install -g fixjson
-  sudo npm update -g
-else
-  npm install -g fixjson
-  exec npm update -g
-fi
+main
