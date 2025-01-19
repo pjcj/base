@@ -58,16 +58,17 @@ mkdir -p ~/.local/share/nvim/backup
 
 create_wezterm_terminfo() {
     tempfile=$(mktemp) \
-        && curl -o $tempfile https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo \
-        && tic -x -o ~/.terminfo $tempfile \
-        && rm $tempfile
+        && curl -o "$tempfile" https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo \
+        && tic -x -o ~/.terminfo "$tempfile" \
+        && rm "$tempfile"
 }
 
 fixup_fzf_completion() {
-    for fzfcomp in "$(find $HOMEBREW_CELLAR -name 'completion.zsh')"; do
-        if ! grep -q "emulate -L zsh" $fzfcomp; then
+    # shellcheck disable=SC2044
+    for fzfcomp in $(find "$HOMEBREW_CELLAR" -name 'completion.zsh'); do
+        if ! grep -q "emulate -L zsh" "$fzfcomp"; then
             perl -pi -e 's/fzf-completion\(\) \{\K/\n  emulate -L zsh/' \
-                $fzfcomp
+                "$fzfcomp"
         fi
     done
 }
