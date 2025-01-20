@@ -172,7 +172,11 @@ local function setup_servers()
     on_attach = on_attach,
   }
 
-  lspconfig.bashls.setup(conf)
+  lspconfig.bashls.setup({
+    filetypes = { "sh", "bash", "zsh" },
+    capabilities = capabilities,
+    on_attach = on_attach,
+  })
   lspconfig.clangd.setup(conf)
   lspconfig.cssls.setup(conf)
   lspconfig.golangci_lint_ls.setup(conf)
