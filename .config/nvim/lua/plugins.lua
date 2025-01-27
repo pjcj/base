@@ -927,15 +927,22 @@ local plugins = {
   },
   { "junegunn/fzf" },
 
+  -- magazine sources
+  { "iguanacucumber/mag-nvim-lsp", name = "cmp-nvim-lsp", opts = {} },
+  { "iguanacucumber/mag-nvim-lua", name = "cmp-nvim-lua" },
+  { "iguanacucumber/mag-buffer", name = "cmp-buffer" },
+  { "iguanacucumber/mag-cmdline", name = "cmp-cmdline" },
+
   {
     -- "hrsh7th/nvim-cmp",
-    "iguanacucumber/magazine.nvim",  -- includes performance and other PRs
+    "iguanacucumber/magazine.nvim", -- includes performance and other PRs
+    -- name = "nvim-cmp", -- Otherwise highlighting gets messed up
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-nvim-lua",
+      -- "hrsh7th/cmp-nvim-lsp",  # magazine
+      -- "hrsh7th/cmp-nvim-lua",  # magazine
       "hrsh7th/vim-vsnip",
       "hrsh7th/vim-vsnip-integ",
-      "hrsh7th/cmp-buffer",
+      -- "hrsh7th/cmp-buffer",  # magazine
       "petertriho/cmp-git",
       -- "hrsh7th/cmp-path",
       "FelipeLema/cmp-async-path",
@@ -949,7 +956,7 @@ local plugins = {
       "onsails/lspkind-nvim",
       "rafamadriz/friendly-snippets",
       "uga-rosa/cmp-dictionary",
-      "hrsh7th/cmp-cmdline",
+      -- "hrsh7th/cmp-cmdline",  # magazine
       -- "tzachar/cmp-ai",
     },
     config = function()
