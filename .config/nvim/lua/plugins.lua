@@ -2078,6 +2078,7 @@ local plugins = {
   {
     "OXY2DEV/markview.nvim",
     lazy = false,
+    version = "*",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
@@ -2085,12 +2086,24 @@ local plugins = {
     config = function()
       local presets = require("markview.presets")
       require("markview").setup({
-        checkboxes = presets.checkboxes.nerd,
-        headings = presets.headings.slanted,
-        horizontal_rules = presets.horizontal_rules.double,
-
-        modes = { "n", "i", "no", "c" },
-        hybrid_modes = { "i" },
+        markdown = {
+          presets = {
+            checkboxes = presets.checkboxes.nerd,
+            headings = presets.headings.slanted,
+            horizontal_rules = presets.horizontal_rules.double,
+            tables = presets.tables.rounded,
+          },
+          preview = {
+            modes = { "n", "i", "no", "c" },
+            hybrid_modes = { "i" },
+          },
+            checkboxes = presets.checkboxes.nerd,
+            headings = presets.headings.slanted,
+            horizontal_rules = presets.horizontal_rules.double,
+            tables = presets.tables.rounded,
+            modes = { "n", "i", "no", "c" },
+            hybrid_modes = { "i" },
+        },
       })
     end,
   },
