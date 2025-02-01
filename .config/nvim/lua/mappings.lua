@@ -971,6 +971,7 @@ wk.add({
   { "<leader>tm", group = "markdown" },
   { "<leader>tmp", ":MarkdownPreviewToggle<cr>", desc = "preview" },
   { "<leader>tmv", ":Markview toggle<cr>", desc = "view" },
+  { "<leader>tms", ":Markview splitToggle<cr>", desc = "split" },
 
   { "<leader>to", ":Outline<cr>", desc = "symbols" },
   {
