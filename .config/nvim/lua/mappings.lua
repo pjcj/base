@@ -880,13 +880,30 @@ wk.add({
     end,
     desc = "diff",
   },
-  { "<leader>hi", gs.show, desc = "show index" },
+  { "<leader>hi", gs.preview_hunk_inline, desc = "preview hunk inline" },
   { "<leader>hp", gs.preview_hunk, desc = "preview hunk" },
-  { "<leader>hr", gs.reset_hunk, mode = { "n", "v" }, desc = "reset hunk" },
+  { "<leader>hr", gs.reset_hunk, desc = "reset hunk" },
+  {
+    "<leader>hr",
+    function()
+      gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end,
+    mode = "v",
+    desc = "reset hunk",
+  },
   { "<leader>hR", gs.reset_buffer, desc = "reset_buffer" },
-  { "<leader>hs", gs.stage_hunk, mode = { "n", "v" }, desc = "stage hunk" },
+  { "<leader>hs", gs.stage_hunk, desc = "stage hunk" },
+  {
+    "<leader>hs",
+    function()
+      gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end,
+    mode = "v",
+    desc = "stage hunk",
+  },
   { "<leader>hS", gs.stage_buffer, desc = "stage buffer" },
   { "<leader>hu", gs.undo_stage_hunk, desc = "unstage hunk" },
+  { "<leader>hx", gs.show, desc = "show index" },
 
   { "<leader>k", mode = { "n", "v" }, desc = "highlight word" },
   { "<leader>K", mode = { "n", "v" }, desc = "unhighlight words" },
