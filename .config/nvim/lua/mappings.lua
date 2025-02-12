@@ -115,7 +115,15 @@ wk.add({
   full_map("<M-9>", "<F9>"),
   full_map("<M-0>", "<F10>"),
 
-  { "<F1>", gs.stage_hunk, mode = { "n", "v" }, desc = "stage hunk" },
+  { "<F1>", gs.stage_hunk, desc = "stage hunk" },
+  {
+    "<F1>",
+    function()
+      gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end,
+    mode = "v",
+    desc = "stage hunk",
+  },
   { "<F2>", gs.prev_hunk, desc = "previous hunk" },
   { "<F3>", gs.next_hunk, desc = "next hunk" },
   { "<S-F1>", ":q<cr>", desc = "quit" },
