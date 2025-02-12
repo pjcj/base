@@ -868,35 +868,25 @@ wk.add({
   {
     "<leader>hb",
     function()
-      require("gitsigns").blame_line({ full = true })
+      gs.blame_line({ full = true })
     end,
     desc = "blame",
   },
-  { "<leader>hd", ":Gitsigns diffthis<cr>", desc = "diff hunk" },
+  { "<leader>hd", gs.diffthis, desc = "diff hunk" },
   {
     "<leader>hD",
     function()
-      require("gitsigns").diffthis("~")
+      gs.diffthis("~")
     end,
     desc = "diff",
   },
-  { "<leader>hi", ":Gitsigns show<cr>", desc = "show index" },
-  { "<leader>hp", ":Gitsigns preview_hunk<cr>", desc = "preview hunk" },
-  {
-    "<leader>hr",
-    ":Gitsigns reset_hunk<cr>",
-    mode = { "n", "v" },
-    desc = "reset hunk",
-  },
-  { "<leader>hR", ":Gitsigns reset_buffer<cr>", desc = "reset_buffer" },
-  {
-    "<leader>hs",
-    ":Gitsigns stage_hunk<cr>",
-    mode = { "n", "v" },
-    desc = "stage hunk",
-  },
-  { "<leader>hS", ":Gitsigns stage_buffer<cr>", desc = "stage buffer" },
-  { "<leader>hu", ":Gitsigns undo_stage_hunk<cr>", desc = "unstage hunk" },
+  { "<leader>hi", gs.show, desc = "show index" },
+  { "<leader>hp", gs.preview_hunk, desc = "preview hunk" },
+  { "<leader>hr", gs.reset_hunk, mode = { "n", "v" }, desc = "reset hunk" },
+  { "<leader>hR", gs.reset_buffer, desc = "reset_buffer" },
+  { "<leader>hs", gs.stage_hunk, mode = { "n", "v" }, desc = "stage hunk" },
+  { "<leader>hS", gs.stage_buffer, desc = "stage buffer" },
+  { "<leader>hu", gs.undo_stage_hunk, desc = "unstage hunk" },
 
   { "<leader>k", mode = { "n", "v" }, desc = "highlight word" },
   { "<leader>K", mode = { "n", "v" }, desc = "unhighlight words" },
