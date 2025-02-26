@@ -88,6 +88,7 @@ local plugins = {
             CmpItemKindCodeium = { fg = col.lavender },
             CmpItemKindCopilot = { fg = col.peach },
             CmpItemKindSupermaven = { fg = col.teal },
+            CurSearch = { bg = col.surface2, fg = col.yellow },
             Cursor = { bg = c.llyellow },
             CursorColumn = { bg = col.surface1 },
             CursorLine = { bg = col.surface1 },
