@@ -810,6 +810,7 @@ wk.add({
   {
     "<leader>gg",
     function()
+      vim.opt.cmdheight = 2
       vim.cmd("tab Git commit")
       check_git_commit()
     end,
