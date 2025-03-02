@@ -112,6 +112,14 @@ c.keys = {
   { key = "Tab", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(-1) },
   { key = "c", mods = mod1, action = act.CopyTo("Clipboard") },
   { key = "v", mods = mod1, action = act.PasteFrom("Clipboard") },
+  {
+    key = "c",
+    mods = "LEADER",
+    action = act.CharSelect({
+      copy_on_select = true,
+      copy_to = "ClipboardAndPrimarySelection",
+    }),
+  },
   { key = "d", mods = "LEADER", action = act.ShowDebugOverlay },
   { key = "r", mods = "LEADER", action = act.ReloadConfiguration },
   { key = "l", mods = "LEADER", action = act.ShowLauncher },
