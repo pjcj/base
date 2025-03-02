@@ -98,7 +98,6 @@ local function full_map(from, to)
 end
 
 local function check_git_commit()
-  vim.cmd("tab Git commit")
   local result = vim.fn.FugitiveResult()
   if result.exit_status == nil or result.exit_status == 0 then
     if vim.fn.getline(2) ~= "" then
