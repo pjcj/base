@@ -450,7 +450,21 @@ wk.add({
     end,
     desc = "set indentation",
   },
-  { "<leader>,c", group = "claude" },
+  { "<leader>,c", group = "copilot" },
+  { "<leader>,cc", ":CopilotChatToggle<cr>", desc = "toggle" },
+    {
+      "<leader>,cq",
+      function()
+        local input = vim.fn.input("Quick Chat: ")
+        if input ~= "" then
+          require("CopilotChat").ask(
+            input,
+            { selection = require("CopilotChat.select").buffer }
+          )
+        end
+      end,
+      desc = "quick chat",
+    },
   { "<leader>,g", group = "go" },
   { "<leader>,ga", ":GoAlt!<cr>", desc = "alternative file" },
   { "<leader>,gc", ":GoCoverage<cr>", desc = "coverage" },
@@ -565,37 +579,14 @@ wk.add({
     mode = { "n", "v" },
     { "<leader>fc", group = "copilot" },
     {
-      "<leader>fcc",
-      function()
-        local input = vim.fn.input("Quick Chat: ")
-        if input ~= "" then
-          require("CopilotChat").ask(
-            input,
-            { selection = require("CopilotChat.select").buffer }
-          )
-        end
-      end,
-      desc = "chat",
-    },
-    {
-      "<leader>fch",
-      function()
-        local actions = require("CopilotChat.actions")
-        require("CopilotChat.integrations.telescope").pick(
-          actions.help_actions()
-        )
-      end,
-      desc = "help",
-    },
-    {
-      "<leader>fcp",
+      "<leader>fca",
       function()
         local actions = require("CopilotChat.actions")
         require("CopilotChat.integrations.telescope").pick(
           actions.prompt_actions()
         )
       end,
-      desc = "prompt",
+      desc = "actions",
     },
   },
 
