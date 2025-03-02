@@ -2048,13 +2048,18 @@ local plugins = {
   },
 
   {
-    "tzachar/highlight-undo.nvim",
-    config = function()
-      require("highlight-undo").setup({
-        hlgroup = "Cursor",
-        duration = 1500,
-      })
-    end,
+    "aileot/emission.nvim",  -- highlight additions and deletions
+    event = "VeryLazy",
+    opts = {
+      highlight = {
+        duration = 500,
+      },
+      added = {
+        hl_map = {
+          link = "Cursor",
+        },
+      },
+    },
   },
 
   {
