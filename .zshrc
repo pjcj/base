@@ -566,6 +566,8 @@ zb()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil build "$@" }
 zt()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil test "$@" }
 = ()      { echo "$@" | bc -l }
 
+vd() { dirs -v "$@" | fzf | cut -f 1 | { local d=`cat /dev/stdin`; cd "+$d" } }
+
 glk() {
     if [[ -n $FZF_GIT_K ]]; then
         gl $FZF_GIT_K "$@"

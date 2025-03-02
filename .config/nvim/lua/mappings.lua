@@ -97,6 +97,24 @@ local function full_map(from, to)
   return { from, to, hidden = true, noremap = false, mode = "nvoitc" }
 end
 
+local function check_git_commit()
+  vim.cmd("tab Git commit")
+  local result = vim.fn.FugitiveResult()
+  if result.exit_status == nil or result.exit_status == 0 then
+    if vim.fn.getline(2) ~= "" then
+      vim.cmd("normal O")
+    end
+    vim.cmd("startinsert")
+  else
+    if result and vim.fn.filereadable(result.file) == 1 then
+      vim.cmd("tabnew " .. result.file)
+    else
+      print("Git commit failed. Press Enter to continue.")
+      vim.fn.input("")
+    end
+  end
+end
+
 for i = 1, 12 do
   wk.add({
     full_map("<F" .. i + 12 .. ">", "<S-F" .. i .. ">"),
@@ -793,12 +811,8 @@ wk.add({
   {
     "<leader>gg",
     function()
-      vim.opt.cmdheight = 2
       vim.cmd("tab Git commit")
-      if vim.fn.getline(2) ~= "" then
-        vim.cmd("normal O")
-      end
-      vim.cmd("startinsert")
+      check_git_commit()
     end,
     desc = "commit",
   },
@@ -807,10 +821,7 @@ wk.add({
     function()
       vim.opt.cmdheight = 2
       vim.cmd("tab Git commit --no-verify")
-      if vim.fn.getline(2) ~= "" then
-        vim.cmd("normal O")
-      end
-      vim.cmd("startinsert")
+      check_git_commit()
     end,
     desc = "commit --no-verify",
   },
