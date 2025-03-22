@@ -497,6 +497,7 @@ ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
 dh()      { f "$@" | head }
 dht()     { dh -rs created "$@" }
 dm()      { fc -e - d=m -1 }
+ds()      { f -d "$@" }
 dt()      { d -T "$@" }
 fd()      { command fd -H "$@" }
 g()       { git "$@" }
@@ -716,8 +717,7 @@ fi
 export ISVM=
 if [[ $(uname) == Darwin ]]; then
     cp() { command gcp -bv --backup=numbered "$@" }
-    f()  { lsd -Ahl "$@" }
-    ds() { lsd -hld "$@" }
+    f()  { ls -ABGhl "$@" }
     mv() { command gmv -bv --backup=numbered "$@" }
     s()  { open "$@" }
     fd() { command fd -H --exclude '/Volumes/' "$@" }
@@ -730,7 +730,6 @@ if [[ $(uname) == Darwin ]]; then
 elif [[ $(uname) == FreeBSD ]]; then
     cp() { command cp -v "$@" }
     f()  { ls -ABGhl "$@" }
-    ds() { f -d "$@" }
     mv() { command mv -v "$@" }
     s()  { f "$@" }
     pll() {
@@ -746,7 +745,6 @@ else
     fi
     cp() { command cp -bv --backup=numbered "$@" }
     f()  { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
-    ds() { f -d "$@" }
     mv() { command mv -bv --backup=numbered "$@" }
     pll() { ps -o user,pid,ppid,pcpu,pmem,vsz,rss,tty,stat,stime,time,args "$@"}
     pl() { pll -eww --forest "$@" | m }
@@ -768,12 +766,14 @@ if which eza >&/dev/null; then
     f() {
         eza -lagH \
             --colour-scale=all --colour-scale-mode=gradient --colour=always \
-            --git --time-style=long-iso --icons \
+            --git --time-style=long-iso --icons --show-symlinks \
             "$@"
     }
     export EZA_COLORS="xx=00;38;5;244"
     export EZA_ICON_SPACING=2
     export EZA_MIN_LUMINANCE=55
+    da() { d -hMOZ "$@" }
+    daz() { da --total-size "$@" }
 fi
 
 [[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim
