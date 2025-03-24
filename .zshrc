@@ -409,6 +409,19 @@ bindkey "^[OQ" fzf_git_commit_widget_l       # f2
 bindkey -s "^[OR" "^[0Digs^M"                # f3
 bindkey -s "^[OS" "^[0Digd^M"                # f4
 
+autoload -Uz select-bracketed select-quoted
+zle -N select-quoted
+zle -N select-bracketed
+for km in viopp visual; do
+  bindkey -M $km -- '-' vi-up-line-or-history
+  for c in {a,i}${(s..)^:-\'\"\`\|,./:;=+@}; do
+    bindkey -M $km $c select-quoted
+  done
+  for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+    bindkey -M $km $c select-bracketed
+  done
+done
+
 zshrc_load_status "miscellaneous"
 
 # url-quote-magic breaks fast-syntax-highlighting
