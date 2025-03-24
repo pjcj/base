@@ -99,18 +99,19 @@ end
 
 local function check_git_commit()
   local result = vim.fn.FugitiveResult()
+  -- print(vim.inspect(result))
   if result.exit_status == nil or result.exit_status == 0 then
     if vim.fn.getline(2) ~= "" then
       vim.cmd("normal O")
     end
     vim.cmd("startinsert")
   else
-    if result and vim.fn.filereadable(result.file) == 1 then
-      vim.cmd("tabnew " .. result.file)
-    else
+    -- if result and vim.fn.filereadable(result.file) == 1 then
+      -- vim.cmd("tabnew " .. result.file)
+    -- else
       print("Git commit failed. Press Enter to continue.")
       vim.fn.input("")
-    end
+    -- end
   end
 end
 
