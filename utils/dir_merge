@@ -25,9 +25,11 @@ $script --help
 $script --trace --verbose
 $script --dryrun from/dir to/dir
 $script --force from/dir to/dir
+$script --delete 10 from/dir to/dir
 
 --dryrun   : Show what would be done
 --force    : Overwrite existing files
+--delete n : Delete up to n files
 EOT
   exit 0
 }
@@ -42,6 +44,7 @@ PATH="$srcdir:$PATH"
 verbose=0
 dryrun=0
 force=0
+delete=0
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -64,6 +67,10 @@ while [ $# -gt 0 ]; do
     force=1
     shift
     ;;
+  --delete)
+    delete=${2:-}
+    shift 2
+    ;;
   *)
     break
     ;;
@@ -83,6 +90,8 @@ main() {
     ((force)) || pf "Not overwriting existing files. Use --force to continue."
   fi
   opts="-avh --progress --exclude=.DS_Store"
+  # ((delete)) && opts+=" --delete --max-delete=$delete"
+  ((delete)) && echo "--delete probably doesn't do what you want"
   ((dryrun)) && opts+=" --dry-run"
   # shellcheck disable=SC2086
   echo rsync $opts "$from/" "$to/"
