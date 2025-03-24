@@ -11,8 +11,14 @@
   threads                       = 0
 [init]
   defaultBranch                 = main
+[column]
+  ui                            = auto
 [help]
-  autocorrect                   = 50
+  autocorrect                   = prompt
+[branch]
+  sort                          = -committerdate
+[tag]
+  sort                          = version:refname
 [diff]
   renamelimit                   = 0
   renames                       = copies
@@ -23,6 +29,10 @@
   verbose                       = true
 [fetch]
   writeCommitGraph              = true
+  prune                         = true
+  pruneTags                     = true
+  all                           = true
+  showForcedUpdates             = true
 [rebase]
   rebaseMerges                  = true
   updateRefs                    = false
@@ -130,7 +140,7 @@
   nvgc   = !ionice -n7 nice -n20 git vgc
   fullgc = "!f() { nice git gc && nice git repack -Ad --threads=0; }; f"
   amend  = commit -a --amend -C HEAD
-  bl     = blame -wMC
+  bl     = blame -wMCCC
   latest = for-each-ref --sort=-committerdate \
              --format='%(committerdate:short) %(refname:short)  %(authorname)'
   bmv    = branch -f
@@ -138,7 +148,6 @@
              git push origin --force-with-lease $1; }; f"
   omv    = origin-branch-move
   omvo   = "!f() { git origin-branch-move $1 && git checkout -q $1; }; f"
-  bl     = blame -wMC
 
   # Pick our version of a file while merging
   ours   = "!f() { git co --ours $@ && git add $@; }; f"
@@ -154,7 +163,7 @@
     local f=\"%C(#833652)%h%Creset -%C(#f0c53f)%d%C(#9599dc) %s\"; \
     f=\"$f %C(#3f86dc)(%ad) %C(#687e85)%an%Creset\"; \
     git log --graph --topo-order --pretty=format:\"$f\" \
-      --date=relative --date-order \"$@\"; \
+      --date=relative \"$@\"; \
   }; f"
   lle = "!f() { \
     local f=\"%C(#833652)%h%Creset -%C(#f0c53f)%d%C(#9599dc) %s\"; \
