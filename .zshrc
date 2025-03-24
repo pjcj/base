@@ -891,6 +891,15 @@ if [[ -d $(brew --prefix pyenv) ]] then
     eval "$(pyenv virtualenv-init -)"
 fi
 
+zshrc_load_status "zoxide"
+_ZO_DATA_DIR=~/.config/zoxide
+_ZO_ECHO=1
+# _ZO_EXCLUDE_DIRS=
+# _ZO_FZF_OPTS=
+# _ZO_MAXAGE=
+_ZO_RESOLVE_SYMLINKS=1
+eval "$(zoxide init zsh --cmd q)"
+
 zshrc_load_status "fzf"
 
 # Commands:
