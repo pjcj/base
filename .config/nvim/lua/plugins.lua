@@ -543,7 +543,6 @@ local plugins = {
         markdown = { "markdownlint" },
         rst = { "rstlint" },
         yaml = { "yamllint" },
-        zsh = { "shellcheck" },
       }
 
       local codespell_args = { "--builtin", "clear,rare,informal,usage,names" }
