@@ -891,12 +891,6 @@ if [[ -d $(brew --prefix pyenv) ]] then
     eval "$(pyenv virtualenv-init -)"
 fi
 
-# if [[ $(uname -s) = Darwin ]]; then
-#     PATH="/usr/local/opt/node@14/bin:$PATH:~/Library/Python/3.9/bin"
-#     LDFLAGS="-L/usr/local/opt/node@14/lib"
-#     CPPFLAGS="-I/usr/local/opt/node@14/include"
-# fi
-
 zshrc_load_status "fzf"
 
 # Commands:
