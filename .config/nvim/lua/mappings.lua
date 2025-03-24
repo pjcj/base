@@ -250,6 +250,7 @@ wk.add({
   {
     mode = { "n", "v" },
 
+    { "<leader>  ", require("yazi").yazi, desc = "yazi" },
     { "<leader> a", group = "parrot ai" },
     { "<leader> aI", "<cmd>PrtInfo<cr>", desc = "info" },
     { "<leader> aP", "<cmd>PrtProvider<cr>", desc = "provider" },
@@ -972,6 +973,7 @@ wk.add({
   { "<leader>so", ":set nospell<cr>", desc = "off" },
 
   { "<leader>t", group = "toggle" },
+  { "<leader>t ", ":Yazi toggle<cr>", desc = "yazi" },
   { "<leader>tc", ":TSContextToggle<cr>", desc = "context" },
 
   { "<leader>tg", group = "git" },
