@@ -2067,7 +2067,7 @@ local plugins = {
   },
 
   {
-    "aileot/emission.nvim",  -- highlight additions and deletions
+    "aileot/emission.nvim", -- highlight additions and deletions
     event = "VeryLazy",
     opts = {
       highlight = {
