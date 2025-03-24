@@ -79,7 +79,7 @@
   "nvim-spider": { "branch": "main", "commit": "9b9a1cf88a10790de69d3b0562d7d612f23561d5" },
   "nvim-surround": { "branch": "main", "commit": "caf6f633d4d77a29b6e265b560c5a035d171a913" },
   "nvim-tree.lua": { "branch": "master", "commit": "6709463b2d18e77f7a946027917aa00d4aaed6f4" },
-  "nvim-treesitter": { "branch": "master", "commit": "d26ce0126694283cf32bf1f4192ef37ef404c037" },
+  "nvim-treesitter": { "branch": "master", "commit": "e329e94a6a0a5ccf6ec8bfec1d10faf5eaae665f" },
   "nvim-treesitter-context": { "branch": "master", "commit": "93b29a32d5f4be10e39226c6b796f28d68a8b483" },
   "nvim-treesitter-refactor": { "branch": "master", "commit": "d8b74fa87afc6a1e97b18da23e762efb032dc270" },
   "nvim-treesitter-textobjects": { "branch": "master", "commit": "9937e5e356e5b227ec56d83d0a9d0a0f6bc9cad4" },
@@ -131,5 +131,5 @@
   "vim-vsnip": { "branch": "master", "commit": "02a8e79295c9733434aab4e0e2b8c4b7cea9f3a9" },
   "vim-vsnip-integ": { "branch": "master", "commit": "90ae474e8b05ed41e36d6f58382a9fbfb4b672c4" },
   "which-key.nvim": { "branch": "main", "commit": "fcbf4eea17cb299c02557d576f0d568878e354a4" },
-  "yazi.nvim": { "branch": "main", "commit": "a4c14eab6787b13ab14ef1c2fbb44a0383b9c9c2" }
+  "yazi.nvim": { "branch": "main", "commit": "88384dcf39e6840d66e3acc122bdb5bc58d90114" }
 }
