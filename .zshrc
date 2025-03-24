@@ -164,6 +164,7 @@ if [ $EUID -ne 0 ]; then
         eval $(/opt/homebrew/bin/brew shellenv)
 fi
 
+# shellcheck disable=SC1036
 fpath=(
     ~/{lib/zsh,.zsh,g/base/zsh}/{functions,scripts}(N)
     ~/g/go/src/github.com/motemen/ghq/zsh(N)
@@ -242,6 +243,7 @@ MANPATH=~/g/sw/share/man:$NPM_PACKAGES/share/man:$MANPATH
 zshrc_load_status "compinit"
 
 autoload -Uz compinit
+# shellcheck disable=1072,1009,1073,1036
 if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
     compinit -u
 else
