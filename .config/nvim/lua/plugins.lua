@@ -182,7 +182,8 @@ local plugins = {
   },
 
   {
-    "freddiehaddad/feline.nvim",
+    -- "freddiehaddad/feline.nvim",
+    dir = "~/g/base/sw/nvim/feline.nvim",
     version = "*",
     lazy = false,
     dependencies = {
