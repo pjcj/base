@@ -543,6 +543,7 @@ local plugins = {
         markdown = { "markdownlint" },
         rst = { "rstlint" },
         yaml = { "yamllint" },
+        zsh = { "shellcheck" },
       }
 
       local codespell_args = { "--builtin", "clear,rare,informal,usage,names" }
@@ -607,7 +608,7 @@ local plugins = {
           python = { "isort", "black" },
           sh = { "shellharden", "shellcheck", "shfmt" }, -- run sequentially
           bash = { "shellharden", "shellcheck", "shfmt" }, -- run sequentially
-          zsh = { "shellharden", "shellcheck" }, -- run sequentially
+          zsh = { "shellharden", "shellcheck", "shfmt" }, -- run sequentially
           sql = { "sql_formatter" },
           terraform = { "terraform_fmt" },
           toml = { "taplo" },
@@ -619,6 +620,11 @@ local plugins = {
 
       require("conform.formatters.mdformat").args = {
         "--number",
+        "-",
+      }
+
+      require("conform.formatters.shellcheck").args = {
+        "--shell=bash",
         "-",
       }
 
