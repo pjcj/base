@@ -1012,8 +1012,7 @@ local plugins = {
         vim.env.OPENAI_API_KEY and { name = "copilot" } or {},
         vim.env.OPENAI_API_KEY and { name = "supermaven" } or {},
         vim.env.OPENAI_API_KEY and { name = "codeium" } or {},
-        -- vim.env.GEMINI_API_KEY and { name = "minuet" } or {},
-        { name = "minuet" },
+        vim.env.GEMINI_API_KEY and { name = "minuet" } or {},
         -- { name = "cmp_ai" },
         { name = "nvim_lsp" },
         {
@@ -1682,27 +1681,6 @@ local plugins = {
     "milanglacier/minuet-ai.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "hrsh7th/nvim-cmp" },
     config = function()
-      local languages = {
-        "bash",
-        "c",
-        "cpp",
-        "dockerfile",
-        "gitcommit",
-        "go",
-        "javascript",
-        "json",
-        "lua",
-        "markdown",
-        "perl",
-        "python",
-        "sh",
-        "sql",
-        "terraform",
-        "toml",
-        "yaml",
-        "zsh",
-      }
-
       require("minuet").setup({
         provider = "gemini",
         provider_options = {
@@ -1715,10 +1693,6 @@ local plugins = {
           -- api_key = "GEMINI_API_KEY",
           -- optional = {},
           -- },
-        },
-        lsp = {
-          enabled_ft = languages,
-          enabled_auto_trigger_ft = languages,
         },
       })
     end,
