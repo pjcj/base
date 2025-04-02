@@ -973,6 +973,7 @@ local plugins = {
           Codeium       = "",
           Copilot       = "",
           Supermaven    = "",
+          gemini        = "",
         }
       })
       -- stylua: ignore end
@@ -1020,6 +1021,8 @@ local plugins = {
         vim.env.OPENAI_API_KEY and { name = "copilot" } or {},
         vim.env.OPENAI_API_KEY and { name = "supermaven" } or {},
         vim.env.OPENAI_API_KEY and { name = "codeium" } or {},
+        -- vim.env.GEMINI_API_KEY and { name = "minuet" } or {},
+        { name = "minuet" },
         -- { name = "cmp_ai" },
         { name = "nvim_lsp" },
         {
@@ -1090,7 +1093,7 @@ local plugins = {
         min_length = 1,
         preselect = cmp.PreselectMode.None,
         performance = {
-          fetching_timeout = 1000,
+          fetching_timeout = 3000,
           debounce = 100,
           throttle = 300,
           max_view_entries = 15,
@@ -1303,7 +1306,7 @@ local plugins = {
   -- {
   --   "pasky/claude.vim",
   --   config = function()
-  --     vim.g.claude_api_key = os.getenv("CLAUDE_API_KEY")
+  --     vim.g.claude_api_key = os.getenv("ANTHROPIC_API_KEY")
   --   end,
   -- },
 
@@ -1402,7 +1405,7 @@ local plugins = {
             api_key = os.getenv("OPENAI_API_KEY"),
           },
           anthropic = {
-            api_key = os.getenv("CLAUDE_API_KEY"),
+            api_key = os.getenv("ANTHROPIC_API_KEY"),
           },
         },
         chat_conceal_model_params = false,
@@ -1645,6 +1648,106 @@ local plugins = {
         },
       })
     end,
+  },
+
+  {
+    "olimorris/codecompanion.nvim",
+    -- config = true,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    opts = {
+      strategies = {
+        chat = { adapter = "gemini25" },
+        inline = { adapter = "gemini25" },
+        cmd = { adapter = "gemini25" },
+      },
+    },
+    config = function()
+      require("codecompanion").setup({
+        adapters = {
+          gemini25 = function()
+            return require("codecompanion.adapters").extend("gemini", {
+              name = "gemini25", -- Give this adapter a different name to differentiate it from the default gemini adapter
+              schema = {
+                model = {
+                  default = "gemini-2.5-pro-exp-03-25",
+                },
+                -- num_ctx = {
+                --   default = 16384,
+                -- },
+                -- num_predict = {
+                --   default = -1,
+                -- },
+              },
+            })
+          end,
+        },
+      })
+    end,
+  },
+  {
+    "milanglacier/minuet-ai.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "hrsh7th/nvim-cmp" },
+    config = function()
+      require("minuet").setup({
+        provider = "gemini",
+        provider_options = {
+          -- gemini = {
+          -- model = "gemini-2.5-pro-exp-03-25",
+          -- system = "see [Prompt] section for the default value",
+          -- few_shots = "see [Prompt] section for the default value",
+          -- chat_input = "See [Prompt Section for default value]",
+          -- stream = true,
+          -- api_key = "GEMINI_API_KEY",
+          -- optional = {},
+          -- },
+        },
+        lsp = {
+          enabled_ft = {
+            "bash",
+            "c",
+            "cpp",
+            "dockerfile",
+            "go",
+            "javascript",
+            "json",
+            "lua",
+            "markdown",
+            "perl",
+            "python",
+            "sh",
+            "sql",
+            "terraform",
+            "toml",
+            "yaml",
+            "zsh",
+          },
+          -- Enables automatic completion triggering using `vim.lsp.completion.enable`
+          enabled_auto_trigger_ft = {
+            "bash",
+            "c",
+            "cpp",
+            "dockerfile",
+            "go",
+            "javascript",
+            "json",
+            "lua",
+            "markdown",
+            "perl",
+            "python",
+            "sh",
+            "sql",
+            "terraform",
+            "toml",
+            "yaml",
+            "zsh",
+          },
+        },
+      })
+    end,
+    -- notify = debug,
   },
 
   {
