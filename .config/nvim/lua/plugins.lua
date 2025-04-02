@@ -1683,6 +1683,7 @@ local plugins = {
         "c",
         "cpp",
         "dockerfile",
+        "gitcommit",
         "go",
         "javascript",
         "json",
