@@ -170,15 +170,13 @@ local plugins = {
     dependencies = {
       "neovim/nvim-lspconfig",
     },
-    config = function()
-      require("nvim-navic").setup({
-        separator = " >",
-        depth_limit = 0,
-        depth_limit_indicator = "..",
-        safe_output = true,
-        click = true,
-      })
-    end,
+    opts = {
+      separator = " >",
+      depth_limit = 0,
+      depth_limit_indicator = "..",
+      safe_output = true,
+      click = true,
+    },
   },
 
   {
@@ -207,21 +205,19 @@ local plugins = {
   {
     "folke/which-key.nvim",
     version = "*",
-    config = function()
-      require("which-key").setup({
-        win = {
-          border = "single",
+    opts = {
+      win = {
+        border = "single",
+      },
+      layout = {
+        width = {
+          max = 80,
         },
-        layout = {
-          width = {
-            max = 80,
-          },
-          height = {
-            max = 40,
-          },
+        height = {
+          max = 40,
         },
-      })
-    end,
+      },
+    },
   },
 
   {
@@ -2019,9 +2015,7 @@ local plugins = {
   {
     "kylechui/nvim-surround",
     -- tag = "*",
-    config = function()
-      require("nvim-surround").setup({})
-    end,
+    opts = {},
   },
 
   { "junegunn/vim-easy-align" }, -- ctrl-x for regexp
