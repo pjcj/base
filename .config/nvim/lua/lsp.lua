@@ -391,12 +391,12 @@ local function filter_diagnostics(diagnostic)
   return true
 end
 
-local function custom_on_publish_diagnostics(a, params, ctx, config)
+local function custom_on_publish_diagnostics(a, params, ctx)
   filter(params.diagnostics, filter_diagnostics)
-  vim.lsp.diagnostic.on_publish_diagnostics(a, params, ctx, config)
+  vim.lsp.diagnostic.on_publish_diagnostics(a, params, ctx)
 end
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
-  vim.lsp.with(custom_on_publish_diagnostics, {})
+  custom_on_publish_diagnostics
 
 return M
