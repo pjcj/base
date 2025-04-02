@@ -721,18 +721,16 @@ local plugins = {
       "nvim-neotest/neotest-go",
       "nvim-neotest/nvim-nio",
     },
-    config = function()
-      require("neotest").setup({
-        adapters = {
-          require("neotest-go")({
-            -- experimental = {
-            --   test_table = true,
-            -- },
-            args = { "-count=1", "-timeout=60s" },
-          }),
-        },
-      })
-    end,
+    opts = {
+      adapters = {
+        require("neotest-go")({
+          -- experimental = {
+          --   test_table = true,
+          -- },
+          args = { "-count=1", "-timeout=60s" },
+        }),
+      },
+    },
   },
 
   {
@@ -753,12 +751,9 @@ local plugins = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
-    config = function()
-      local refactoring = require("refactoring")
-      refactoring.setup({
-        installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
-      })
-    end,
+    opts = {
+      installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+    },
   },
 
   {
@@ -868,27 +863,25 @@ local plugins = {
   { "gabrielpoca/replacer.nvim" },
   {
     "kevinhwang91/nvim-bqf",
-    config = function()
-      require("bqf").setup({
-        preview = {
-          win_height = 30,
-          winblend = 0,
-        },
-        func_map = {
-          vsplit = "<C-s>",
-        },
-        filter = {
-          fzf = {
-            action_for = { ["ctrl-s"] = "vsplit" },
-            extra_opts = {
-              "--bind",
-              "ctrl-o:toggle-all",
-              "--inline-info",
-            },
+    opts = {
+      preview = {
+        win_height = 30,
+        winblend = 0,
+      },
+      func_map = {
+        vsplit = "<C-s>",
+      },
+      filter = {
+        fzf = {
+          action_for = { ["ctrl-s"] = "vsplit" },
+          extra_opts = {
+            "--bind",
+            "ctrl-o:toggle-all",
+            "--inline-info",
           },
         },
-      })
-    end,
+      },
+    },
   },
   {
     "yorickpeterse/nvim-pqf",
