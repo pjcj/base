@@ -3,7 +3,6 @@
 
 export TMUX_POWERLINE_STATUS_JUSTIFICATION=left
 export TMUX_POWERLINE_STATUS_INTERVAL=1
-export TMUX_POWERLINE_STATUS_RIGHT_LENGTH=160
 export TMUX_POWERLINE_SEG_TIME_FORMAT="%R %Z"
 
 TMUX_POWERLINE_SEPARATOR_LEFT_BOLD=""
@@ -16,6 +15,24 @@ TMUX_POWERLINE_SEPARATOR_RIGHT_THIN=""
 
 : "${TMUX_POWERLINE_DEFAULT_LEFTSIDE_SEPARATOR:=$TMUX_POWERLINE_SEPARATOR_RIGHT_BOLD}"
 : "${TMUX_POWERLINE_DEFAULT_RIGHTSIDE_SEPARATOR:=$TMUX_POWERLINE_SEPARATOR_LEFT_BOLD}"
+
+export TMUX_POWERLINE_WINDOW_STATUS_CURRENT=(
+  "#[$(format inverse)]"
+  "$TMUX_POWERLINE_DEFAULT_LEFTSIDE_SEPARATOR"
+  " #I#F#W "
+  "#[$(format regular)]"
+  "$TMUX_POWERLINE_DEFAULT_LEFTSIDE_SEPARATOR"
+)
+
+export TMUX_POWERLINE_WINDOW_STATUS_STYLE=(
+  "$(format regular)"
+)
+
+export TMUX_POWERLINE_WINDOW_STATUS_FORMAT=(
+  "#[$(format regular)]"
+  " #I#{?window_flags,#F, }#W "
+  "$TMUX_POWERLINE_SEPARATOR_RIGHT_THIN"
+)
 
 # Format: segment_name background_color foreground_color [non_default_separator] [separator_background_color] [separator_foreground_color] [spacing_disable] [separator_disable]
 #
@@ -47,20 +64,21 @@ TMUX_POWERLINE_SEPARATOR_RIGHT_THIN=""
 if [ -z "$TMUX_POWERLINE_LEFT_STATUS_SEGMENTS" ]; then
   TMUX_POWERLINE_LEFT_STATUS_SEGMENTS=(
     "local_hostname 0 15 $TMUX_POWERLINE_SEPARATOR_RIGHT_BOLD 0 7 both_disable separator_disable"
-    "tmux_session_info #0e3c49 7 $TMUX_POWERLINE_SEPARATOR_RIGHT_THIN 0 7"
+    # "tmux_session_info #0e3c49 7 $TMUX_POWERLINE_SEPARATOR_RIGHT_THIN 0 7"
+    "tmux_session_info 0 7"
   )
 fi
 
 if [ -z "$TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS" ]; then
   TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS=(
-    "vcs_branch #017008 15"
-    "vcs_compare 3 8"
-    "vcs_staged 9 7"
-    "vcs_modified #0F1363 7"
-    "vcs_others 4 7"
-    "ifstat_sys 0 7"
+    # "vcs_branch #017008 15"
+    # "vcs_compare 3 8"
+    # "vcs_staged 9 7"
+    # "vcs_modified #0F1363 7"
+    # "vcs_others 4 7"
+    # "ifstat_sys 0 7"
     "lan_ip 8 7"
-    "pwd 0 7 $TMUX_POWERLINE_SEPARATOR_LEFT_BOLD 0 0 right_disable"
+    # "pwd 0 7 $TMUX_POWERLINE_SEPARATOR_LEFT_BOLD 0 0 right_disable"
     "local_tmux_mem_cpu_load 0 7 x 0 0 both_disable separator_disable"
     "battery 0 15 $TMUX_POWERLINE_SEPARATOR_LEFT_BOLD 0 0 left_disable"
     "time 8 7 $TMUX_POWERLINE_SEPARATOR_LEFT_BOLD 0 0 right_disable"
