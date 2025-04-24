@@ -252,7 +252,7 @@ fi;
 
 zshrc_load_status "completion system"
 
-zinit cdreplay
+zinit cdreplay -q
 zmodload -i zsh/complist
 autoload -U zargs
 
