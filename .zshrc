@@ -1220,7 +1220,7 @@ echo "\rzsh loaded                                                        "
 if [[ $(uname) == Darwin ]]; then
     ulimit -n 65536
     ulimit -s 32768
-    ssh-add --apple-load-keychain
+    [[ -z $TMUX ]] && ssh-add --apple-load-keychain
 elif [[ $(uname) == FreeBSD ]]; then
     :
 else
