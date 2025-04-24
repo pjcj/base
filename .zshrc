@@ -1213,9 +1213,6 @@ fi
 
 zshrc_load_status "keychain"
 
-# Clear up after status display
-echo "\rzsh loaded                                                        "
-
 # Handle startup
 if [[ $(uname) == Darwin ]]; then
     ulimit -n 65536
@@ -1237,3 +1234,6 @@ else
         fi
     fi
 fi
+
+# Clear up after status display
+echo "\rzsh loaded                                                        "
