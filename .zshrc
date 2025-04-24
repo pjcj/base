@@ -880,7 +880,7 @@ if [[ -d $(brew --prefix nvm) ]] then
     mkdir -p $NVM_DIR
     load $(brew --prefix nvm)/nvm.sh
     load $(brew --prefix nvm)/etc/bash_completion.d/nvm
-    nvm use system
+    nvm use --silent system
 fi
 
 zshrc_load_status "pyenv"
