@@ -293,7 +293,6 @@ zstyle ":completion::complete:*" use-cache 1
 
 compdef wh=which
 compdef n=make
-compdef z=dzil
 compdef _gh  ghub
 compdef _git ga=git-add
 compdef _git gb=git-branch
@@ -869,9 +868,26 @@ if [[ -e $PERLBREW_ROOT/etc/bashrc ]] then
     complete -F _perlbrew_compgen pb
 fi
 
+function _dzil_compdef_setup() {
+  autoload -Uz _dzil
+  if (( $+functions[_dzil] )); then
+    compdef _dzil z
+  else
+    compdef -d z
+  fi
+}
+
 if [[ -e ~/.plenv ]] then
-    export PATH=~/.plenv/bin:$PATH
-    eval "$(plenv init - zsh)"
+  export PATH=~/.plenv/bin:$PATH
+  eval "$(plenv init - zsh)"
+  autoload -Uz add-zsh-hook
+
+  # Run on directory change (useful for .perl-version switching)
+  add-zsh-hook chpwd _dzil_compdef_setup
+  # Run before each prompt (in case plenv changes outside chpwd)
+  add-zsh-hook precmd _dzil_compdef_setup
+  # Also run at shell startup
+  _dzil_compdef_setup
 fi
 
 zshrc_load_status "nvm"
