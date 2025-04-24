@@ -145,8 +145,20 @@ wk.add({
   { "<F2>", gs.prev_hunk, desc = "previous hunk" },
   { "<F3>", gs.next_hunk, desc = "next hunk" },
   { "<S-F1>", ":q<cr>", desc = "quit" },
-  { "<S-F2>", d.goto_prev, desc = "previous diagnostic" },
-  { "<S-F3>", d.goto_next, desc = "next diagnostic" },
+  {
+    "<S-F2>",
+    function()
+      vim.diagnostic.jump({ count = -1, float = true })
+    end,
+    desc = "previous diagnostic",
+  },
+  {
+    "<S-F3>",
+    function()
+      vim.diagnostic.jump({ count = 1, float = true })
+    end,
+    desc = "next diagnostic",
+  },
   { "<C-F2>", "<Plug>(ale_previous_wrap)", desc = "previous diagnostic" },
   { "<C-F3>", "<Plug>(ale_next_wrap)", desc = "next diagnostic" },
   {
