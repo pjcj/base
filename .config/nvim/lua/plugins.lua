@@ -179,15 +179,23 @@ local plugins = {
     },
   },
 
+  -- {
+  --   -- "freddiehaddad/feline.nvim",
+  --   dir = "~/g/base/sw/nvim/feline.nvim",
+  --   version = "*",
+  --   lazy = false,
+  --   dependencies = {
+  --     "SmiteshP/nvim-navic",
+  --     "linrongbin16/lsp-progress.nvim",
+  --   },
+  --   config = function()
+  --     require("statusline")
+  --   end,
+  -- },
   {
-    -- "freddiehaddad/feline.nvim",
-    dir = "~/g/base/sw/nvim/feline.nvim",
-    version = "*",
+    "nvim-lualine/lualine.nvim",
     lazy = false,
-    dependencies = {
-      "SmiteshP/nvim-navic",
-      "linrongbin16/lsp-progress.nvim",
-    },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       require("statusline")
     end,
