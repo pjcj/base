@@ -91,16 +91,8 @@ require("lualine").setup({
       { "diff", source = diff_source },
       {
         "diagnostics",
-        sources = { "nvim_diagnostic" },
-        sections = { "error", "warn", "info", "hint" },
+        sources = { "nvim_diagnostic", "ale" },
         symbols = { error = "E", warn = "W", info = "I", hint = "H" },
-        colored = true,
-        diagnostics_color = {
-          error = { fg = c.c_red },
-          warn = { fg = c.c_yellow },
-          info = { fg = c.c_sky },
-          hint = { fg = c.blue },
-        },
       },
       -- { navic_component, cond = function() return navic_component() ~= "" end },
     },
