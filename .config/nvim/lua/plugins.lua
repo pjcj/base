@@ -896,10 +896,18 @@ local plugins = {
       local default_sources = {
         { name = "nvim_lua" },
         { name = "nvim_lsp_signature_help" },
-        vim.env.OPENAI_API_KEY and { name = "copilot" } or {},
-        vim.env.OPENAI_API_KEY and { name = "supermaven" } or {},
-        vim.env.OPENAI_API_KEY and { name = "codeium" } or {},
-        vim.env.GEMINI_API_KEY and { name = "minuet" } or {},
+        vim.env.ENABLE_AI_PLUGINS and vim.env.OPENAI_API_KEY and {
+          name = "copilot",
+        } or {},
+        vim.env.ENABLE_AI_PLUGINS and vim.env.OPENAI_API_KEY and {
+          name = "supermaven",
+        } or {},
+        vim.env.ENABLE_AI_PLUGINS and vim.env.OPENAI_API_KEY and {
+          name = "codeium",
+        } or {},
+        vim.env.ENABLE_AI_PLUGINS and vim.env.GEMINI_API_KEY and {
+          name = "minuet",
+        } or {},
         -- { name = "cmp_ai" },
         { name = "nvim_lsp" },
         {
@@ -1161,6 +1169,7 @@ local plugins = {
 
   { -- TODO - consider https://github.com/monkoose/neocodeium
     "Exafunction/codeium.nvim",
+    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "hrsh7th/nvim-cmp",
@@ -1172,6 +1181,7 @@ local plugins = {
 
   {
     "supermaven-inc/supermaven-nvim",
+    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
     config = function()
       require("supermaven-nvim").setup({
         disable_inline_completion = true,
@@ -1189,6 +1199,7 @@ local plugins = {
 
   {
     "zbirenbaum/copilot.lua",
+    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
     cmd = "Copilot",
     event = "InsertEnter",
     config = function()
@@ -1200,12 +1211,14 @@ local plugins = {
   },
   {
     "zbirenbaum/copilot-cmp",
+    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
     config = function()
       require("copilot_cmp").setup()
     end,
   },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
+    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
     -- branch = "canary",
     version = "*",
     dependencies = {
@@ -1217,6 +1230,7 @@ local plugins = {
   },
   {
     "jackMort/ChatGPT.nvim",
+    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
     event = "VeryLazy",
     dependencies = {
       "MunifTanjim/nui.nvim",
@@ -1249,6 +1263,7 @@ local plugins = {
 
   {
     "dense-analysis/neural",
+    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
     dependencies = {
       "MunifTanjim/nui.nvim",
       "ElPiloto/significant.nvim",
@@ -1268,6 +1283,7 @@ local plugins = {
 
   {
     "frankroeder/parrot.nvim",
+    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
     version = "*",
     dependencies = {
       "ibhagwan/fzf-lua",
@@ -1532,6 +1548,7 @@ local plugins = {
 
   {
     "olimorris/codecompanion.nvim",
+    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
     -- config = true,
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -1569,6 +1586,7 @@ local plugins = {
   },
   {
     "milanglacier/minuet-ai.nvim",
+    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
     dependencies = { "nvim-lua/plenary.nvim", "hrsh7th/nvim-cmp" },
     config = function()
       require("minuet").setup({
@@ -1590,6 +1608,7 @@ local plugins = {
   },
   {
     "ravitemer/mcphub.nvim",
+    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -1607,6 +1626,7 @@ local plugins = {
   },
   {
     "yetone/avante.nvim",
+    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
     event = "VeryLazy",
     version = false, -- Never set this value to "*"! Never!
     dependencies = {

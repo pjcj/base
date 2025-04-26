@@ -478,6 +478,7 @@ v() {
     if [ "$EDITOR" = "nvim" ]; then
         mkdir -p $VIMTMP
         TMPDIR=$VIMTMP \
+            ENABLE_AI_PLUGINS=1 \
             OPENAI_API_KEY=$openai_api_key \
             ANTHROPIC_API_KEY=$anthropic_api_key \
             GEMINI_API_KEY=$gemini_api_key \
