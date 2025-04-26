@@ -310,8 +310,20 @@ wk.add({
     { "<leader> aht", "<cmd>PrtUnitTests<cr>", desc = "unit tests" },
 
     { "<leader> c", group = "CodeCompanion" },
-    { "<leader> ca", require("codecompanion").actions, desc = "Actions" },
-    { "<leader> cc", require("codecompanion").toggle, desc = "Chat" },
+    {
+      "<leader> ca",
+      function()
+        require("codecompanion").actions()
+      end,
+      desc = "Actions",
+    },
+    {
+      "<leader> cc",
+      function()
+        require("codecompanion").toggle()
+      end,
+      desc = "Chat",
+    },
   },
 
   { "<leader> d", group = "diffview" },
