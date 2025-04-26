@@ -106,12 +106,8 @@ local function check_git_commit()
     end
     vim.cmd("startinsert")
   else
-    -- if result and vim.fn.filereadable(result.file) == 1 then
-      -- vim.cmd("tabnew " .. result.file)
-    -- else
-      print("Git commit failed. Press Enter to continue.")
-      vim.fn.input("")
-    -- end
+    print("Git commit failed. Press Enter to continue.")
+    vim.fn.input("")
   end
 end
 
