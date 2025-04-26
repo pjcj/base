@@ -309,52 +309,9 @@ wk.add({
     { "<leader> ahs", "<cmd>PrtSpellCheck<cr>", desc = "spell check" },
     { "<leader> aht", "<cmd>PrtUnitTests<cr>", desc = "unit tests" },
 
-    { "<leader> c", group = "ChatGPT" },
-    { "<leader> cc", "<cmd>ChatGPT<cr>", desc = "ChatGPT" },
-    {
-      "<leader> ce",
-      "<cmd>ChatGPTEditWithInstruction<cr>",
-      desc = "edit with instruction",
-    },
-    {
-      "<leader> cg",
-      "<cmd>ChatGPTRun grammar_correction<cr>",
-      desc = "grammar correction",
-    },
-    {
-      "<leader> ct",
-      "<cmd>ChatGPTRun translate<cr>",
-      desc = "translate",
-    },
-    { "<leader> ck", "<cmd>ChatGPTRun keywords<cr>", desc = "Keywords" },
-    {
-      "<leader> cd",
-      "<cmd>ChatGPTRun docstring<cr>",
-      desc = "docstring",
-    },
-    { "<leader> ca", "<cmd>ChatGPTRun add_tests<cr>", desc = "add tests" },
-    {
-      "<leader> co",
-      "<cmd>ChatGPTRun optimize_code<cr>",
-      desc = "optimise code",
-    },
-    { "<leader> cs", "<cmd>ChatGPTRun summarize<cr>", desc = "summarize" },
-    { "<leader> cf", "<cmd>ChatGPTRun fix_bugs<cr>", desc = "Fix Bugs" },
-    {
-      "<leader> cx",
-      "<cmd>ChatGPTRun explain_code<cr>",
-      desc = "explain code",
-    },
-    {
-      "<leader> cr",
-      "<cmd>ChatGPTRun roxygen_edit<cr>",
-      desc = "roxygen edit",
-    },
-    {
-      "<leader> cl",
-      "<cmd>ChatGPTRun code_readability_analysis<cr>",
-      desc = "code readability analysis",
-    },
+    { "<leader> c", group = "CodeCompanion" },
+    { "<leader> ca", require("codecompanion").actions, desc = "Actions" },
+    { "<leader> cc", require("codecompanion").toggle, desc = "Chat" },
   },
 
   { "<leader> d", group = "diffview" },
