@@ -85,6 +85,7 @@ require("lualine").setup({
       {
         "filename",
         file_status = true, -- Shows file modification status
+        newfile_status = true,
         path = 1, -- Relative path
         shorting_target = 40,
       },
