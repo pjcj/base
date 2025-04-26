@@ -362,13 +362,8 @@ local plugins = {
       "antoinemadec/FixCursorHold.nvim",
     },
     config = function()
-      vim.cmd([[
-        augroup lightbulb
-          autocmd!
-          autocmd CursorHold,CursorHoldI * lua require "nvim-lightbulb".update_lightbulb()
-        augroup end
-      ]])
       require("nvim-lightbulb").setup({
+        autocmd = { enabled = true },
         sign = {
           enabled = false,
           priority = 1,
