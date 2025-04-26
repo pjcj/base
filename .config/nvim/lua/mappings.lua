@@ -259,6 +259,7 @@ wk.add({
 
   { "<leader>", group = "leader" },
   { "<leader> ", group = "plugin" },
+  { "<leader>a", group = "avante" },
 
   {
     mode = { "n", "v" },
