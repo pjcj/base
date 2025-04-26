@@ -479,7 +479,7 @@ v() {
         mkdir -p $VIMTMP
         TMPDIR=$VIMTMP \
             OPENAI_API_KEY=$openai_api_key \
-            AMTHROPIC_API_KEY=$anthropic_api_key \
+            ANTHROPIC_API_KEY=$anthropic_api_key \
             GEMINI_API_KEY=$gemini_api_key \
             command $EDITOR "$@"
     else
