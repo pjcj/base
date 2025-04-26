@@ -1397,6 +1397,9 @@ local plugins = {
           anthropic = {
             api_key = os.getenv("ANTHROPIC_API_KEY"),
           },
+          gemini = {
+            api_key = os.getenv("GEMINI_API_KEY"),
+          },
         },
         chat_conceal_model_params = false,
         hooks = {
