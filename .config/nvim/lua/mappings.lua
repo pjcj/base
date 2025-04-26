@@ -39,26 +39,34 @@ local gl = require("gitlab")
 local tj = require("treesj")
 local nt = require("neotest")
 
-local vtext_on = true
-local llines_on = false
-local vtext_toggle = function()
-  vtext_on = not vtext_on
-  vim.diagnostic.config({ virtual_text = vtext_on })
-  if vtext_on then
-    llines_on = false
-    vim.diagnostic.config({ virtual_lines = llines_on })
-  end
-end
-local ltext_toggle = function()
-  llines_on = not llines_on
-  if llines_on then
-    vim.diagnostic.config({ virtual_lines = { highlight_whole_line = false } })
-  else
-    vim.diagnostic.config({ virtual_lines = llines_on })
-  end
-  if llines_on then
-    vtext_on = false
-    vim.diagnostic.config({ virtual_text = vtext_on })
+-- 0: off, 1: virtual text, 2: virtual lines
+local virtual_diagnostic_mode = 1
+local function toggle_virtual_diagnostics()
+  virtual_diagnostic_mode = (virtual_diagnostic_mode + 1) % 3
+  if virtual_diagnostic_mode == 0 then
+    vim.diagnostic.config({ virtual_text = false, virtual_lines = false })
+    vim.notify(
+      "Virtual diagnostics OFF",
+      vim.log.levels.INFO,
+      { title = "Diagnostics" }
+    )
+  elseif virtual_diagnostic_mode == 1 then
+    vim.diagnostic.config({
+      virtual_text = { prefix = "●" },
+      virtual_lines = false,
+    })
+    vim.notify(
+      "Virtual text ON",
+      vim.log.levels.INFO,
+      { title = "Diagnostics" }
+    )
+  else -- virtual_diagnostic_mode == 2
+    vim.diagnostic.config({ virtual_text = false, virtual_lines = true })
+    vim.notify(
+      "Virtual lines ON",
+      vim.log.levels.INFO,
+      { title = "Diagnostics" }
+    )
   end
 end
 
@@ -995,7 +1003,6 @@ wk.add({
   { "<leader>tgs", ":Gitsigns toggle_signs<cr>", desc = "signs" },
 
   { "<leader>th", ":TSBufToggle highlight<cr>", desc = "treesitter highlight" },
-  { "<leader>tl", ltext_toggle, desc = "lsp lines" },
 
   { "<leader>tm", group = "markdown" },
   { "<leader>tmp", ":MarkdownPreviewToggle<cr>", desc = "preview" },
@@ -1011,7 +1018,11 @@ wk.add({
     desc = "sidebar",
   },
   { "<leader>tt", ":NvimTreeToggle<cr>", desc = "tree" },
-  { "<leader>tv", vtext_toggle, desc = "virtual text" },
+  {
+    "<leader>tv",
+    toggle_virtual_diagnostics,
+    desc = "toggle virtual diagnostics",
+  },
   { "<leader>tw", ":ToggleWhitespace<cr>", desc = "whitespace" },
   {
     "<leader>tx",
