@@ -1027,7 +1027,6 @@ wk.add({
 })
 
 vim.keymap.set("", "glf", function()
-  require("notify")("formatting")
   require("conform").format({ async = true, lsp_fallback = true })
   require("notify")("formatted")
 end)
