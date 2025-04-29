@@ -88,7 +88,7 @@ require("lualine").setup({
       {
         "filename",
         separator = "",
-        padding = { left = 0, right = 0 },
+        padding = { left = 1, right = 0 },
         file_status = true, -- Shows file modification status
         newfile_status = true,
         path = 1, -- Relative path
