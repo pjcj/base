@@ -79,32 +79,51 @@ require("lualine").setup({
     },
   },
   sections = {
-    lualine_a = { { "mode", padding = { left = 0, right = 1 } } },
-    lualine_b = { cwd_basename, "branch" },
+    lualine_a = { { "mode", padding = { left = 0, right = 0 } } },
+    lualine_b = {
+      { cwd_basename, padding = { left = 1, right = 0 } },
+      { "branch", padding = { left = 1, right = 0 } },
+    },
     lualine_c = {
       {
         "filename",
+        padding = { left = 0, right = 0 },
         file_status = true, -- Shows file modification status
         newfile_status = true,
         path = 1, -- Relative path
         shorting_target = 40,
       },
-      { "diff", source = diff_source },
+      {
+        "diff",
+        padding = { left = 1, right = 0 },
+        source = diff_source,
+      },
       {
         "diagnostics",
+        padding = { left = 1, right = 0 },
         sources = { "nvim_diagnostic", "ale" },
         symbols = { error = "E", warn = "W", info = "I", hint = "H" },
       },
       -- { navic_component, cond = function() return navic_component() ~= "" end },
     },
     lualine_x = {
-      "lsp_status",
+      {
+        "lsp_status",
+        padding = { left = 0, right = 1 },
+      },
     },
     lualine_y = {
-      "filetype",
-      "encoding",
+      {
+        "filetype",
+        padding = { left = 0, right = 1 },
+      },
+      {
+        "encoding",
+        padding = { left = 0, right = 0 },
+      },
       {
         "fileformat",
+        padding = { left = 0, right = 0 },
         icons_enabled = true,
         symbols = {
           unix = "LF",
@@ -114,12 +133,19 @@ require("lualine").setup({
       },
       {
         "filesize",
+        padding = { left = 0, right = 1 },
         cond = function()
           return vim.fn.getfsize(vim.fn.expand("%:p")) > 0
         end,
       },
     },
-    lualine_z = { "progress", "location" }, -- progress = %, location = line:col
+    lualine_z = {
+      { "progress", padding = { left = 0, right = 1 } },
+      {
+        "location",
+        padding = { left = 0, right = 0 },
+      },
+    }, -- progress = %, location = line:col
   },
   inactive_sections = {
     -- Simplified inactive statusline
