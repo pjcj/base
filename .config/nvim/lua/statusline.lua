@@ -81,12 +81,13 @@ require("lualine").setup({
   sections = {
     lualine_a = { { "mode", padding = { left = 0, right = 0 } } },
     lualine_b = {
-      { cwd_basename, padding = { left = 1, right = 0 } },
-      { "branch", padding = { left = 1, right = 0 } },
+      { cwd_basename, separator = "", padding = { left = 1, right = 1 } },
+      { "branch", padding = { left = 0, right = 0 } },
     },
     lualine_c = {
       {
         "filename",
+        separator = "",
         padding = { left = 0, right = 0 },
         file_status = true, -- Shows file modification status
         newfile_status = true,
@@ -95,6 +96,7 @@ require("lualine").setup({
       },
       {
         "diff",
+        separator = "",
         padding = { left = 1, right = 0 },
         source = diff_source,
       },
@@ -115,15 +117,18 @@ require("lualine").setup({
     lualine_y = {
       {
         "filetype",
+        separator = "",
         padding = { left = 0, right = 1 },
       },
       {
         "encoding",
-        padding = { left = 0, right = 0 },
+        separator = "",
+        padding = { left = 0, right = 1 },
       },
       {
         "fileformat",
-        padding = { left = 0, right = 0 },
+        separator = "",
+        padding = { left = 0, right = 1 },
         icons_enabled = true,
         symbols = {
           unix = "LF",
@@ -140,11 +145,8 @@ require("lualine").setup({
       },
     },
     lualine_z = {
-      { "progress", padding = { left = 0, right = 1 } },
-      {
-        "location",
-        padding = { left = 0, right = 0 },
-      },
+      { "progress", separator = "", padding = { left = 0, right = 1 } },
+      { "location", padding = { left = 0, right = 0 } },
     }, -- progress = %, location = line:col
   },
   inactive_sections = {
