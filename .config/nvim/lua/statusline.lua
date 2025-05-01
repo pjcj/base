@@ -62,6 +62,26 @@ local function diff_source()
   end
 end
 
+local function mcphub_component_definition()
+  local ok, mcphub_ext_component = pcall(require, "mcphub.extensions.lualine")
+  if ok and mcphub_ext_component then
+    return {
+      mcphub_ext_component,
+      separator = "",
+      padding = { left = 0, right = 0 },
+      -- color = { fg = c.red, bg = c.base02 },
+    }
+  else
+    return {
+      function()
+        return " ﮿"
+      end,
+      separator = "",
+      padding = { left = 0, right = 0 },
+    }
+  end
+end
+
 require("lualine").setup({
   options = {
     theme = custom_theme,
@@ -109,9 +129,10 @@ require("lualine").setup({
       -- { navic_component, cond = function() return navic_component() ~= "" end },
     },
     lualine_x = {
+      mcphub_component_definition(),
       {
         "lsp_status",
-        padding = { left = 0, right = 1 },
+        padding = { left = 1, right = 1 },
       },
     },
     lualine_y = {
