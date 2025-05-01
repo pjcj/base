@@ -1602,6 +1602,9 @@ local plugins = {
     build = "npm install -g mcp-hub@latest",
     config = function()
       require("mcphub").setup({
+        log = {
+          level = vim.log.levels.DEBUG, -- DEBUG, INFO, WARN, ERROR
+        },
         extensions = {
           avante = {
             auto_approve_mcp_tool_calls = false, -- auto approve mcp tool calls
