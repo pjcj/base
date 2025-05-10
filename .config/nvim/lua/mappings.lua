@@ -49,7 +49,7 @@ local function smart_star_search()
     )
     return
   end
-  local search_pattern = "\\C\\V" .. vim.fn.escape(word, "/\\")
+  local search_pattern = "\\C\\V\\<" .. vim.fn.escape(word, "/\\") .. "\\>"
   -- Set the last search pattern register
   vim.fn.setreg("/", search_pattern)
   -- Execute a command that uses the last search pattern, like 'n'
