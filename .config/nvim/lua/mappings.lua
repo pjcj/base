@@ -211,17 +211,16 @@ wk.add({
   { "ä", desc = "show cursor" },
   { "ö", ":w<cr> | :wa<cr>", desc = "write all" },
 
-  { "*", smart_star_search, desc = "highlight word" },
-  { "#", [[#<cmd>lua require("hlslens").start()<cr>]], desc = "previous word" },
+  { "*", smart_star_search, desc = "highlight word (case sensitive)" },
+  {
+    "#",
+    [[*``<cmd>lua require("hlslens").start()<cr>]],
+    desc = "highlight word (case insensitive)",
+  },
   {
     "g*",
     [[g*``<cmd>lua require("hlslens").start()<cr>]],
     desc = "highlight word part",
-  },
-  {
-    "g#",
-    [[g#<cmd>lua require("hlslens").start()<cr>]],
-    desc = "previous word part",
   },
   {
     "n",
