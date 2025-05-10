@@ -676,14 +676,8 @@ wk.add({
     end,
     desc = "grep string word",
   },
-  { "<leader>ft", tb.tags, desc = "tags" },
-  {
-    "<leader>fT",
-    function()
-      tb.tags({ only_current_buffer = true })
-    end,
-    desc = "local tags",
-  },
+  { "<leader>ft", tb.current_buffer_tags, desc = "local tags" },
+  { "<leader>fT", tb.tags, desc = "tags" },
   { "<leader>fu", t.extensions.undo.undo, desc = "undo" },
 
   { "<leader>fU", group = "url" },
@@ -793,6 +787,7 @@ wk.add({
     mode = { "n", "v" },
     desc = "grep string word",
   },
+  { "<leader>fz", tb.lsp_document_symbols, desc = "lsp symbols" },
 
   { "<leader>g", group = "git" },
   {
