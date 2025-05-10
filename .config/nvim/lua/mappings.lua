@@ -189,17 +189,17 @@ wk.add({
   { "ä", desc = "show cursor" },
   { "ö", ":w<cr> | :wa<cr>", desc = "write all" },
 
-  { "*", [[*<cmd>lua require("hlslens").start()<cr>]], desc = "next word" },
+  { "*", [[*``<cmd>lua require("hlslens").start()<cr>]], desc = "highlight word" },
   { "#", [[#<cmd>lua require("hlslens").start()<cr>]], desc = "previous word" },
+  {
+    "g*",
+    [[g*``<cmd>lua require("hlslens").start()<cr>]],
+    desc = "highlight word part",
+  },
   {
     "g#",
     [[g#<cmd>lua require("hlslens").start()<cr>]],
     desc = "previous word part",
-  },
-  {
-    "g*",
-    [[g*<cmd>lua require("hlslens").start()<cr>]],
-    desc = "next word part",
   },
   {
     "n",
