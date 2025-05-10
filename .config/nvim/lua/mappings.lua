@@ -39,6 +39,28 @@ local gl = require("gitlab")
 local tj = require("treesj")
 local nt = require("neotest")
 
+local function smart_star_search()
+  ---@diagnostic disable-next-line: undefined-field
+  local original_ignorecase = vim.opt.ignorecase:get()
+  ---@diagnostic disable-next-line: undefined-field
+  local original_smartcase = vim.opt.smartcase:get()
+
+  vim.opt.ignorecase = false
+  vim.opt.smartcase = false
+
+  vim.cmd("normal! *")
+  vim.cmd("normal! ``") -- Jump back to original position after '*' jumps
+
+  -- Trigger hlslens
+  if pcall(require, "hlslens") then
+    require("hlslens").start()
+  end
+
+  -- Restore settings
+  vim.opt.ignorecase = original_ignorecase
+  vim.opt.smartcase = original_smartcase
+end
+
 -- 0: off, 1: virtual text, 2: virtual lines
 local virtual_diagnostic_mode = 1
 local function toggle_virtual_diagnostics()
@@ -189,7 +211,7 @@ wk.add({
   { "ä", desc = "show cursor" },
   { "ö", ":w<cr> | :wa<cr>", desc = "write all" },
 
-  { "*", [[*``<cmd>lua require("hlslens").start()<cr>]], desc = "highlight word" },
+  { "*", smart_star_search, desc = "highlight word" },
   { "#", [[#<cmd>lua require("hlslens").start()<cr>]], desc = "previous word" },
   {
     "g*",
