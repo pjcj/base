@@ -210,11 +210,39 @@ local function setup_servers()
     return parts
   end
 
+  -- Print environment variables for perlnavigator before use
+  -- print("LINT_PERL_PATH:", os.getenv("LINT_PERL_PATH"))
+  -- print("LINT_PERL_PATHS (raw from env):", os.getenv("LINT_PERL_PATHS"))
+
+  -- Define default include paths
+  local default_include_paths = { "./lib", "./local/lib/perl5", "./t/lib" }
+
+  -- Get paths from environment variable
+  local env_paths_str = os.getenv("LINT_PERL_PATHS") or ""
+  local env_specific_paths = split_env_var(env_paths_str, ":")
+
+  -- Combine paths: environment paths first, then default paths
+  local final_include_paths = {}
+  -- Add paths from the environment variable first
+  for _, path in ipairs(env_specific_paths) do
+    table.insert(final_include_paths, path)
+  end
+  -- Then, append default paths
+  for _, path in ipairs(default_include_paths) do
+    table.insert(final_include_paths, path)
+  end
+
+  -- Print the final calculated includePaths
+  -- print(
+  --   "Final includePaths for perlnavigator:",
+  --   vim.inspect(final_include_paths)
+  -- )
+
   lspconfig.perlnavigator.setup({
     settings = {
       perlnavigator = {
         perlPath = os.getenv("LINT_PERL_PATH") or "perl",
-        includePaths = split_env_var(os.getenv("LINT_PERL_PATHS") or "", ":"),
+        includePaths = final_include_paths, -- Use the final combined list
 
         perlcriticEnabled = vim.fn.filereadable(".perlcriticrc"),
         perlcriticProfile = ".perlcriticrc",
