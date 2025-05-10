@@ -197,6 +197,11 @@ wk.add({
     desc = "previous word part",
   },
   {
+    "g*",
+    [[g*<cmd>lua require("hlslens").start()<cr>]],
+    desc = "next word part",
+  },
+  {
     "n",
     [[<cmd>execute("normal! " . v:count1 . "n")<cr><cmd>lua require("hlslens").start()<cr>]],
     desc = "next match",
