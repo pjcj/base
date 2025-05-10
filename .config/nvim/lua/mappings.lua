@@ -42,7 +42,11 @@ local nt = require("neotest")
 local function smart_star_search()
   local word = vim.fn.expand("<cword>")
   if word == "" then
-    print("No word under cursor for star search")
+    vim.notify(
+      "No word under the cursor",
+      vim.log.levels.WARN,
+      { title = "Star Search" }
+    )
     return
   end
   local search_pattern = "\\C\\V" .. vim.fn.escape(word, "/\\")
