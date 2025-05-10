@@ -40,25 +40,20 @@ local tj = require("treesj")
 local nt = require("neotest")
 
 local function smart_star_search()
-  ---@diagnostic disable-next-line: undefined-field
-  local original_ignorecase = vim.opt.ignorecase:get()
-  ---@diagnostic disable-next-line: undefined-field
-  local original_smartcase = vim.opt.smartcase:get()
-
-  vim.opt.ignorecase = false
-  vim.opt.smartcase = false
-
-  vim.cmd("normal! *")
-  vim.cmd("normal! ``") -- Jump back to original position after '*' jumps
-
-  -- Trigger hlslens
+  local word = vim.fn.expand("<cword>")
+  if word == "" then
+    print("No word under cursor for star search")
+    return
+  end
+  local search_pattern = "\\C\\V" .. vim.fn.escape(word, "/\\")
+  -- Set the last search pattern register
+  vim.fn.setreg("/", search_pattern)
+  -- Execute a command that uses the last search pattern, like 'n'
+  -- Then jump back to the original position
+  vim.cmd("normal! n``")
   if pcall(require, "hlslens") then
     require("hlslens").start()
   end
-
-  -- Restore settings
-  vim.opt.ignorecase = original_ignorecase
-  vim.opt.smartcase = original_smartcase
 end
 
 -- 0: off, 1: virtual text, 2: virtual lines
