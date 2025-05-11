@@ -2158,6 +2158,10 @@ local plugins = {
       })
     end,
   },
+  {
+    "OXY2DEV/helpview.nvim",
+    lazy = false,
+  },
 
   {
     "RaafatTurki/hex.nvim",
