@@ -69,3 +69,10 @@ require("which-key").add({
 })
 
 vim.opt_local.formatoptions = "tcrqnljp"
+
+local perl_inc_dirs =
+  table.concat(require("local_defs").fn.perl_inc_dirs(), ",")
+
+-- Prepend the custom paths to the global default path for this buffer.
+-- This avoids repeatedly adding paths if the ftplugin is sourced multiple times.
+vim.bo.path = perl_inc_dirs .. "," .. vim.go.path
