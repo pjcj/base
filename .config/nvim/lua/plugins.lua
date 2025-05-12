@@ -406,8 +406,10 @@ local plugins = {
           --   require("notify")(string.format("lint: %s", ev.event))
           -- end
           lint.try_lint()
-          lint.try_lint("codespell")
-          lint.try_lint("typos")
+          if vim.bo.filetype ~= "SidebarNvim" then
+            lint.try_lint("codespell")
+            lint.try_lint("typos")
+          end
         end,
       })
     end,
