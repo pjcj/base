@@ -1,10 +1,12 @@
 tap "chase/tap"
 tap "common-fate/granted"
 tap "dimentium/autoraise"
+tap "felixkratz/formulae"
 tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
 tap "homebrew/services"
 tap "iina/mpv-iina"
+tap "nikitabobko/tap"
 brew "perl"
 brew "abcde"
 brew "cairo"
@@ -55,6 +57,7 @@ brew "multitail"
 brew "mutt"
 brew "mysql@8.4"
 brew "neovim"
+brew "neovide"
 brew "nicotine-plus"
 brew "nvm"
 brew "openvpn"
@@ -97,7 +100,9 @@ brew "zsh"
 brew "chase/tap/awrit"
 brew "common-fate/granted/granted"
 brew "dimentium/autoraise/autoraise"
+brew "felixkratz/formulae/borders"
 cask "1password"
+cask "aerospace"
 cask "clementine"
 cask "cursorcerer"
 cask "disk-inventory-x"
@@ -132,10 +137,3 @@ cask "vmware-fusion"
 cask "wezterm"
 cask "xld"
 cask "zoom"
-mas "1Password for Safari", id: 1569813296
-mas "GarageBand", id: 682658836
-mas "iMovie", id: 408981434
-mas "Keynote", id: 409183694
-mas "Numbers", id: 409203825
-mas "Pages", id: 409201541
-mas "Tailscale", id: 1475387142
