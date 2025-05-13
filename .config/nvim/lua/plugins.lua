@@ -2024,7 +2024,7 @@ local plugins = {
       local sidebar = require("sidebar-nvim")
       local opts = {
         open = false,
-        sections = { "git", "diagnostics", "buffers", "symbols" },
+        sections = { "git", "diagnostics", "todos", "symbols" },
         disable_closing_prompt = true,
       }
       sidebar.setup(opts)
