@@ -21,7 +21,7 @@ elseif string.match(hostname, "mbp") then
   c.font = wezterm.font("Inconsolata")
   -- Enable ligatures >= <= != == === !== => =< -> <-
   c.harfbuzz_features = { "dlig=1" }
-  c.font_size = 17
+  c.font_size = 19
   c.command_palette_font_size = 24
   c.initial_cols = 200
   c.initial_rows = 54
