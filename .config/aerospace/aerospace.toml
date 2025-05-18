@@ -236,3 +236,39 @@ alt-shift-l = ["join-with right", "mode main"]
 down = "volume down"
 up = "volume up"
 shift-down = ["volume set 0", "mode main"]
+
+[[on-window-detected]]
+if.app-name-regex-substring = "WezTerm"
+run = "move-node-to-workspace 1"
+
+[[on-window-detected]]
+if.app-name-regex-substring = "Firefox"
+run = "move-node-to-workspace 2"
+
+[[on-window-detected]]
+if.app-name-regex-substring = "Safari"
+run = "move-node-to-workspace 2"
+
+[[on-window-detected]]
+if.app-name-regex-substring = "Slack"
+run = "move-node-to-workspace 8"
+
+[[on-window-detected]]
+if.app-name-regex-substring = "Signal"
+run = "move-node-to-workspace 8"
+
+[[on-window-detected]]
+if.app-name-regex-substring = "Python"
+run = "move-node-to-workspace 5"
+
+[[on-window-detected]]
+if.app-name-regex-substring = "DBeaver"
+run = "move-node-to-workspace 5"
+
+[[on-window-detected]]
+if.app-name-regex-substring = "1Password"
+run = ["layout floating", "move-node-to-workspace 2"]
+
+[[on-window-detected]]
+if.app-name-regex-substring = "zoom.us"
+run = ["layout floating", "move-node-to-workspace 8"]
