@@ -59,7 +59,7 @@ automatically-unhide-macos-hidden-apps = false
 # Possible values: (qwerty|dvorak|colemak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
 [key-mapping]
-preset = 'qwerty'
+preset = "qwerty"
 
 [key-mapping.key-notation-to-key-code]
 "/" = "minus"
@@ -216,11 +216,11 @@ alt-period = "mode service"
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
-esc = ['reload-config', 'mode main']
-r = ["flatten-workspace-tree", 'mode main'] # reset layout
+esc = ["reload-config", "mode main"]
+r = ["flatten-workspace-tree", "mode main"] # reset layout
 f = [
   "layout floating tiling",
-  'mode main',
+  "mode main",
 ] # Toggle between floating and tiling layout
 backspace = ["close-all-windows-but-current", "mode main"]
 
