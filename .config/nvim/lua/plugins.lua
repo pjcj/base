@@ -383,6 +383,7 @@ local plugins = {
         markdown = { "markdownlint" },
         rst = { "rstlint" },
         yaml = { "yamllint" },
+        zsh = { "zsh" },
       }
 
       local codespell_args = { "--builtin", "clear,rare,informal,usage,names" }
