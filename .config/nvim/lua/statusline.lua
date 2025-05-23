@@ -182,5 +182,14 @@ require("lualine").setup({
   tabline = {},
   winbar = {},
   inactive_winbar = {},
-  extensions = { "fugitive", "fzf", "lazy", "man", "mason", "oil", "quickfix" },
+  extensions = {
+    "avante",
+    "fugitive",
+    "fzf",
+    "lazy",
+    "man",
+    "mason",
+    "oil",
+    "quickfix",
+  },
 })
