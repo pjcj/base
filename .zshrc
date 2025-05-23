@@ -393,15 +393,6 @@ autoload edit-command-line;
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
-# bindkey -s "§" "lC"
-bindkey -s "^[[15~" "["   #f5
-bindkey -s "^[[17~" "]"   #f6
-bindkey -s "^[[18~" "{"   #f7
-bindkey -s "^[[19~" "}"   #f8
-bindkey -s "^[[20~" "~"   #f9
-bindkey -s "^[[21~" "|"   #f10
-bindkey -s "^[[23~" "\`"  #f11
-
 bindkey "^[OP" fzf_git_commit_widget_k       # f1
 bindkey "^[[25~" fzf_git_commit_widget_lall  # shift-f1
 bindkey "^[OQ" fzf_git_commit_widget_l       # f2
