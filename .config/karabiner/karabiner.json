@@ -105,7 +105,7 @@
                         "description": "f5 -> [",
                         "manipulators": [
                             {
-                                "from": { "key_code": "f5" },
+                                "from": { "key_code": "ff5" },
                                 "to": {
                                     "key_code": "5",
                                     "modifiers": ["right_option"]
@@ -137,7 +137,7 @@
                         "description": "f6 -> ]",
                         "manipulators": [
                             {
-                                "from": { "key_code": "f6" },
+                                "from": { "key_code": "ff6" },
                                 "to": {
                                     "key_code": "6",
                                     "modifiers": ["right_option"]
@@ -169,7 +169,7 @@
                         "description": "f7 -> {",
                         "manipulators": [
                             {
-                                "from": { "key_code": "f7" },
+                                "from": { "key_code": "ff7" },
                                 "to": {
                                     "key_code": "8",
                                     "modifiers": ["right_option"]
@@ -201,10 +201,7 @@
                         "description": "f8 -> }",
                         "manipulators": [
                             {
-                                "from": {
-                                    "key_code": "f8",
-                                    "modifiers": {}
-                                },
+                                "from": { "key_code": "ff8" },
                                 "to": {
                                     "key_code": "9",
                                     "modifiers": ["right_option"]
@@ -274,7 +271,7 @@
                         "description": "f10 -> |",
                         "manipulators": [
                             {
-                                "from": { "key_code": "f10" },
+                                "from": { "key_code": "ff10" },
                                 "to": {
                                     "key_code": "7",
                                     "modifiers": ["right_option"]
@@ -287,7 +284,7 @@
                         "description": "f9 -> ~",
                         "manipulators": [
                             {
-                                "from": { "key_code": "f9" },
+                                "from": { "key_code": "ff9" },
                                 "to": {
                                     "key_code": "n",
                                     "modifiers": ["right_option"]
