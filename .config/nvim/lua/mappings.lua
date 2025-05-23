@@ -276,13 +276,6 @@ wk.add({
   {
     mode = { "n", "v" },
     { "r", group = "replace" },
-    { "r<F5>", "[", desc = "[" },
-    { "r<F6>", "]", desc = "]" },
-    { "r<F7>", "{", desc = "{" },
-    { "r<F8>", "}", desc = "}" },
-    { "r<F9>", "~", desc = "~" },
-    { "r<F10>", "|", desc = "|" },
-    { "r<F11>", "`", desc = "`" },
     { "r<C-k><C-k>", bd.digraphs, desc = "digraph" },
   },
 
@@ -1028,13 +1021,6 @@ wk.add({
 
   {
     mode = "i",
-    { "<F5>", "[", noremap = false, desc = "[" },
-    { "<F6>", "]", noremap = false, desc = "]" },
-    { "<F7>", "{", noremap = false, desc = "{" },
-    { "<F8>", "}", noremap = false, desc = "}" },
-    { "<F9>", "~", noremap = false, desc = "~" },
-    { "<F10>", "|", noremap = false, desc = "|" },
-    { "<F11>", "`", noremap = false, desc = "`" },
     { "jk", "<esc>", desc = "escape" },
     {
       "<C-k><C-k>",
