@@ -148,7 +148,6 @@ local function setup_servers()
     "perlnavigator",
     "sqlls",
     -- "ts_ls",
-    "volar",
     "yamlls",
   }
 
@@ -234,14 +233,6 @@ local function setup_servers()
   --     on_attach(client, bufnr)
   --   end,
   -- })
-
-  lspconfig.volar.setup({
-    on_attach = function(client, bufnr)
-      client.server_capabilities.document_formatting = false
-      client.server_capabilities.document_range_formatting = false
-      on_attach(client, bufnr)
-    end,
-  })
 
   lspconfig.yamlls.setup({
     settings = {
