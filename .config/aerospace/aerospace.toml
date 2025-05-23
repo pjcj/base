@@ -132,6 +132,9 @@ alt-shift-l = "move right"
 alt-keypadMinus = "resize smart -50"
 alt-keypadPlus = "resize smart +50"
 
+ctrl-left = "workspace --wrap-around prev"
+ctrl-right = "workspace --wrap-around next"
+
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = "workspace-back-and-forth"
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
