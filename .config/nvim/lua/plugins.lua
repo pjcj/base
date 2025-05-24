@@ -218,10 +218,6 @@ local plugins = {
     config = function()
       require("nvim-treesitter.configs").setup({
         ensure_installed = "all",
-        ignore_install = {
-          -- "swift", -- requires glibc 2.28
-          -- "phpdoc", -- fails on MacOS
-        },
         highlight = {
           enable = true,
           disable = {},
@@ -239,24 +235,18 @@ local plugins = {
         refactor = {
           highlight_definitions = { enable = true },
         },
-        -- textobjects = {
-        --   select = {
-        --     enable = true,
-        --     lookahead = true, -- This might improve selection for certain types of text objects
-        --     keymaps = {
-        --       -- Custom text object for comments
-        --       ["ia"] = {
-        --         query = "@comment.inner",
-        --         desc = "Select inner part of a comment",
-        --       },
-        --       ["aa"] = {
-        --         query = "@comment.outer",
-        --         desc = "Select outer part of a comment",
-        --       },
-        --     },
-        --     include_surrounding_whitespace = false,
-        --   },
-        -- },
+        textobjects = {
+          select = {
+            enable = true,
+            lookahead = true, -- Automatically jump forward to the text object
+            keymaps = {
+              -- Custom text object for comments
+              ["ia"] = "@comment.inner", -- Select inner part of a comment
+              ["aa"] = "@comment.outer", -- Select outer part of a comment
+            },
+            include_surrounding_whitespace = false,
+          },
+        },
         autotag = {
           enable = true, -- closes tags automatically (eq html)
         },
