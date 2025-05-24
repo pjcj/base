@@ -1,6 +1,0 @@
-_dc() {
-    reply=(`utils/dc options`)
-}
-compctl -K _dc dc
-
-export DEVEL_COVER_CPUS=2
