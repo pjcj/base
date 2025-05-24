@@ -650,10 +650,11 @@ local plugins = {
       "nvim-lua/plenary.nvim",
       "protex/better-digraphs.nvim",
       "nvim-telescope/telescope-dap.nvim",
-      "debugloop/telescope-undo.nvim",
       "nvim-telescope/telescope-fzf-native.nvim",
       "nvim-telescope/telescope-symbols.nvim",
       "nvim-telescope/telescope-frecency.nvim",
+      "nvim-telescope/telescope-ui-select.nvim",
+      "debugloop/telescope-undo.nvim",
       "isak102/telescope-git-file-history.nvim",
       "allaman/emoji.nvim",
       "danielfalk/smart-open.nvim",
@@ -708,6 +709,9 @@ local plugins = {
             use_sqlite = false,
             auto_validate = false,
           },
+          ["ui-select"] = {
+            require("telescope.themes").get_dropdown({}),
+          },
         },
       })
 
@@ -718,6 +722,7 @@ local plugins = {
       telescope.load_extension("git_file_history") -- ^G - open in browser
       telescope.load_extension("emoji")
       telescope.load_extension("smart_open")
+      telescope.load_extension("ui-select")
 
       vim.cmd([[
         augroup telescope
