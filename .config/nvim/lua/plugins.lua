@@ -1651,21 +1651,46 @@ local plugins = {
       },
     },
     opts = {
-      -- add any opts here
-      -- for example
-      provider = "gemini",
+      provider = "copilot",
+      -- provider = "perplexity",
+      -- provider = "gemini",
+      copilot = {
+        model = "claude-3.7-sonnet",
+        -- model = "claude-3.7-sonnet-thought",
+        timeout = 60000,
+        max_tokens = 81920,
+      },
       gemini = {
         model = "gemini-2.5-pro-exp-03-25",
-        timeout = 300000, -- Timeout in milliseconds, increase this for reasoning models
+        timeout = 60000,
         max_tokens = 81920,
       },
       openai = {
-        endpoint = "https://api.openai.com/v1",
-        model = "gpt-4o", -- your desired model (or use gpt-4o, etc.)
-        timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
-        temperature = 0,
-        max_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
-        --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
+        -- endpoint = "https://api.openai.com/v1",
+        model = "gpt-4o",
+        timeout = 60000, -- timeout in milliseconds
+        -- temperature = 0,
+        max_tokens = 81920, -- include reasoning tokens (for reasoning models)
+        -- reasoning_effort = "medium", -- low|medium|high, for reasoning models
+      },
+      vendors = {
+        perplexity = {
+          __inherited_from = "openai",
+          api_key_name = "PPLX_API_KEY",
+          endpoint = "https://api.perplexity.ai",
+          model = "llama-3.1-sonar-large-128k-online",
+          max_tokens = 81920,
+        },
+      },
+      -- thinking = {
+      --   type = "enabled",
+      --   budget_tokens = 20480,
+      -- },
+      dual_boost = {
+        enabled = true,
+        first_provider = "copilot",
+        second_provider = "perplexity",
+        timeout = 60000, -- timeout in milliseconds
       },
       -- system_prompt as function ensures LLM always has latest MCP server
       -- state - evaluated for every message, even in existing chats.
