@@ -1579,15 +1579,10 @@ local plugins = {
       require("minuet").setup({
         provider = "gemini",
         provider_options = {
-          -- gemini = {
-          -- model = "gemini-2.5-pro-exp-03-25",
-          -- system = "see [Prompt] section for the default value",
-          -- few_shots = "see [Prompt] section for the default value",
-          -- chat_input = "See [Prompt Section for default value]",
-          -- stream = true,
-          -- api_key = "GEMINI_API_KEY",
-          -- optional = {},
-          -- },
+          gemini = {
+            model = "gemini-1.5-flash", -- fastest Gemini model
+            stream = true, -- streaming responses are generally faster
+          },
         },
       })
     end,
