@@ -1537,6 +1537,7 @@ local plugins = {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
+      "ravitemer/mcphub.nvim",
     },
     opts = {
       strategies = {
@@ -1550,7 +1551,9 @@ local plugins = {
         adapters = {
           gemini25 = function()
             return require("codecompanion.adapters").extend("gemini", {
-              name = "gemini25", -- Give this adapter a different name to differentiate it from the default gemini adapter
+              -- give this adapter a different name to differentiate it from the
+              -- default gemini adapter
+              name = "gemini25",
               schema = {
                 model = {
                   default = "gemini-2.5-pro-exp-03-25",
