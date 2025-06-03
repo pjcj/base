@@ -1009,7 +1009,7 @@ local plugins = {
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
           }),
-          ["<C-Right>"] = cmp.mapping(function(fallback)
+          ["<C-S-Right>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               local gt = cmp.core.view.ghost_text_view
               local c = require("cmp.config").get().experimental.ghost_text
