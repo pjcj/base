@@ -1535,23 +1535,69 @@ local plugins = {
 
   {
     "olimorris/codecompanion.nvim",
+    version = "*",
     enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
-    -- config = true,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       "ravitemer/mcphub.nvim",
     },
-    opts = {
-      strategies = {
-        chat = { adapter = "gemini25" },
-        inline = { adapter = "gemini25" },
-        cmd = { adapter = "gemini25" },
-      },
-    },
     config = function()
       require("codecompanion").setup({
+        strategies = {
+          chat = {
+            adapter = "claude4sonnet",
+            keymaps = {
+              completion = {
+                modes = {
+                  i = "<C-n>",
+                },
+              },
+            },
+          },
+          inline = { adapter = "claude4sonnet" },
+          cmd = { adapter = "claude4sonnet" },
+        },
+        display = {
+          chat = {
+            -- intro_message = "Welcome to CodeCompanion ✨! Press ? for options",
+            show_header_separator = false, -- Show header separators in the chat buffer? Set this to false if you're using an external markdown formatting plugin
+            separator = "─", -- The separator between the different messages in the chat buffer
+            show_references = true, -- Show references (from slash commands and variables) in the chat buffer?
+            show_settings = false, -- Show LLM settings at the top of the chat buffer?
+            show_token_count = true, -- Show the token count for each response?
+            start_in_insert_mode = true, -- Open the chat buffer in insert mode?
+            border = "rounded", -- Add border styling
+            window = {
+              width = 120,
+            },
+          },
+        },
         adapters = {
+          claude4sonnet = function()
+            return require("codecompanion.adapters").extend("copilot", {
+              schema = {
+                model = {
+                  default = "claude-sonnet-4",
+                },
+                -- max_tokens = {
+                --   default = 81920,
+                -- },
+              },
+            })
+          end,
+          claude37sonnet = function()
+            return require("codecompanion.adapters").extend("copilot", {
+              schema = {
+                model = {
+                  default = "claude-3.7-sonnet",
+                },
+                -- max_tokens = {
+                --   default = 81920,
+                -- },
+              },
+            })
+          end,
           gemini25 = function()
             return require("codecompanion.adapters").extend("gemini", {
               -- give this adapter a different name to differentiate it from the
@@ -1559,7 +1605,7 @@ local plugins = {
               name = "gemini25",
               schema = {
                 model = {
-                  default = "gemini-2.5-pro-exp-03-25",
+                  default = "gemini-2.5-pro",
                 },
                 -- num_ctx = {
                 --   default = 16384,
@@ -1571,6 +1617,32 @@ local plugins = {
             })
           end,
         },
+        extensions = {
+          mcphub = {
+            callback = "mcphub.extensions.codecompanion",
+            opts = {
+              show_result_in_chat = true, -- Show mcp tool results in chat
+              make_vars = true, -- Convert resources to #variables
+              make_slash_commands = true, -- Add prompts as /slash commands
+            },
+          },
+        },
+      })
+      local group = vim.api.nvim_create_augroup("CodeCompanionHooks", {})
+
+      vim.api.nvim_create_autocmd({ "User" }, {
+        pattern = "CodeCompanionChatModel",
+        group = group,
+        callback = function(event)
+          vim.api.nvim_buf_set_name(
+            event.data.bufnr,
+            string.format(
+              "[CodeCompanion] %d (%s)",
+              event.data.bufnr,
+              event.data.model
+            )
+          )
+        end,
       })
     end,
   },
