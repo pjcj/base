@@ -2258,6 +2258,13 @@ local plugins = {
     ft = { "markdown" },
   },
   {
+    "MeanderingProgrammer/render-markdown.nvim",
+    opts = {
+      file_types = { "Avante", "codecompanion" },
+    },
+    ft = { "Avante", "codecompanion" },
+  },
+  {
     "OXY2DEV/markview.nvim",
     lazy = false,
     version = "*",
@@ -2268,23 +2275,17 @@ local plugins = {
     config = function()
       local presets = require("markview.presets")
       require("markview").setup({
+        preview = {
+          -- filetypes = { "markdown", "codecompanion" },
+          ignore_buftypes = {},
+          modes = { "n", "i", "no", "c" },
+          hybrid_modes = { "n", "i", "no", "c" },
+        },
         markdown = {
-          presets = {
-            checkboxes = presets.checkboxes.nerd,
-            headings = presets.headings.slanted,
-            horizontal_rules = presets.horizontal_rules.double,
-            tables = presets.tables.rounded,
-          },
-          preview = {
-            modes = { "n", "i", "no", "c" },
-            hybrid_modes = { "i" },
-          },
           checkboxes = presets.checkboxes.nerd,
           headings = presets.headings.slanted,
           horizontal_rules = presets.horizontal_rules.double,
           tables = presets.tables.rounded,
-          modes = { "n", "i", "no", "c" },
-          hybrid_modes = { "i" },
         },
       })
     end,
