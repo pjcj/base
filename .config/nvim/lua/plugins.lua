@@ -1700,71 +1700,110 @@ local plugins = {
       "nvim-tree/nvim-web-devicons",
       "zbirenbaum/copilot.lua", -- for providers='copilot'
       "ravitemer/mcphub.nvim",
-      {
-        -- support for image pasting
-        "HakonHarnes/img-clip.nvim",
-        event = "VeryLazy",
-        opts = {
-          -- recommended settings
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            -- drag_and_drop = {
-            --   insert_mode = true,
-            -- },
-            use_absolute_path = true, -- required for Windows
-          },
-        },
-      },
-      {
-        -- be sure to set this up properly if you have lazy=true
-        "MeanderingProgrammer/render-markdown.nvim",
-        opts = {
-          file_types = { "Avante" },
-        },
-        ft = { "Avante" },
-      },
+      "MeanderingProgrammer/render-markdown.nvim",
+      -- {
+      --   -- support for image pasting
+      --   "HakonHarnes/img-clip.nvim",
+      --   event = "VeryLazy",
+      --   opts = {
+      --     -- recommended settings
+      --     default = {
+      --       embed_image_as_base64 = false,
+      --       prompt_for_file_name = false,
+      --       -- drag_and_drop = {
+      --       --   insert_mode = true,
+      --       -- },
+      --       use_absolute_path = true, -- required for Windows
+      --     },
+      --   },
+      -- },
+      -- {
+      --   -- be sure to set this up properly if you have lazy=true
+      --   "MeanderingProgrammer/render-markdown.nvim",
+      --   opts = {
+      --     file_types = { "Avante" },
+      --   },
+      --   ft = { "Avante" },
+      -- },
     },
     opts = {
-      provider = "copilot",
-      -- provider = "perplexity",
-      -- provider = "gemini",
-      copilot = {
-        model = "claude-3.7-sonnet",
-        -- model = "claude-3.7-sonnet-thought",
-        timeout = 60000,
-        max_tokens = 81920,
-      },
-      gemini = {
-        model = "gemini-2.5-pro-exp-03-25",
-        timeout = 60000,
-        max_tokens = 81920,
-      },
-      openai = {
-        -- endpoint = "https://api.openai.com/v1",
-        model = "gpt-4o",
-        timeout = 60000, -- timeout in milliseconds
-        -- temperature = 0,
-        max_tokens = 81920, -- include reasoning tokens (for reasoning models)
-        -- reasoning_effort = "medium", -- low|medium|high, for reasoning models
-      },
-      vendors = {
-        perplexity = {
+      provider = "copilot_claude_sonnet_4",
+      providers = {
+        copilot_claude_sonnet_4 = {
+          __inherited_from = "copilot",
+          model = "claude-sonnet-4",
+          timeout = 60000,
+          extra_request_body = {
+            max_tokens = 200000,
+          },
+        },
+        copilot_gemini = {
+          __inherited_from = "copilot",
+          model = "gemini-2.5-pro",
+          timeout = 60000,
+          extra_request_body = {
+            max_tokens = 2097152,
+          },
+        },
+        perplexity_llama_3_1_sonar_large_128k_online = {
           __inherited_from = "openai",
           api_key_name = "PPLX_API_KEY",
           endpoint = "https://api.perplexity.ai",
           model = "llama-3.1-sonar-large-128k-online",
-          max_tokens = 81920,
+          timeout = 60000,
+          extra_request_body = {
+            max_tokens = 128000,
+          },
         },
+        -- copilot = {
+        --   -- -- https://codecompanion.olimorris.dev/usage/chat-buffer/agents#compatibility
+        --   -- model = "claude-3.7-sonnet",  -- gives 400 error
+        --   -- model = "claude-3.7-sonnet-thought",  -- gives 400 error
+        --   model = "claude-sonnet-4",
+        --   -- model = "gpt-4.1",
+        --   -- model = "o1",
+        --   -- model = "o4-mini",  -- not available
+        --   -- model = "gemini-2.5-pro",  -- not available
+        --   timeout = 60000,
+        --   extra_request_body = {
+        --     max_tokens = 200000, -- Maximum possible for Claude Sonnet 4
+        --   },
+        -- },
+        -- gemini = {
+        --   model = "gemini-2.5-pro",
+        --   timeout = 60000,
+        --   extra_request_body = {
+        --     max_tokens = 2097152, -- 2M tokens (Gemini 2.5 Pro max context)
+        --   },
+        -- },
+        -- openai = {
+        --   -- endpoint = "https://api.openai.com/v1",
+        --   model = "gpt-4o",
+        --   timeout = 60000, -- timeout in milliseconds
+        --   extra_request_body = {
+        --     -- temperature = 0,
+        --     max_tokens = 128000, -- Maximum context window for GPT-4o
+        --     -- reasoning_effort = "medium", -- low|medium|high, for reasoning models
+        --   },
+        -- },
+        -- perplexity = {
+        --   __inherited_from = "openai",
+        --   api_key_name = "PPLX_API_KEY",
+        --   endpoint = "https://api.perplexity.ai",
+        --   model = "llama-3.1-sonar-large-128k-online",
+        --   extra_request_body = {
+        --     max_tokens = 128000, -- Maximum context window for llama-3.1-sonar-large-128k-online
+        --   },
+        -- },
       },
-      -- thinking = {
-      --   type = "enabled",
-      --   budget_tokens = 20480,
-      -- },
+      thinking = {
+        type = "enabled",
+        budget_tokens = 50000, -- Increased thinking budget for maximum reasoning
+      },
       dual_boost = {
         enabled = true,
-        first_provider = "copilot",
-        second_provider = "perplexity",
+        first_provider = "copilot_claude_sonnet_4",
+        second_provider = "copilot_gemini",
         timeout = 60000, -- timeout in milliseconds
       },
       -- system_prompt as function ensures LLM always has latest MCP server
