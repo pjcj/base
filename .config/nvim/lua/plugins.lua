@@ -1200,70 +1200,70 @@ local plugins = {
       require("copilot_cmp").setup()
     end,
   },
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
-    -- branch = "canary",
-    version = "*",
-    dependencies = {
-      { "zbirenbaum/copilot.lua" },
-      { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
-    },
-    build = "make tiktoken", -- Only on MacOS or Linux
-    opts = { debug = false },
-  },
-  {
-    "jackMort/ChatGPT.nvim",
-    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
-    event = "VeryLazy",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "folke/trouble.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
-    config = function()
-      require("chatgpt").setup({
-        -- openai_params = {
-        --   model = "gpt-4-32k",
-        --   frequency_penalty = 0,
-        --   presence_penalty = 0,
-        --   max_tokens = 2000,
-        --   temperature = 0,
-        --   top_p = 1,
-        --   n = 1,
-        -- },
-        -- openai_edit_params = {
-        --   model = "gpt-4-32k",
-        --   frequency_penalty = 0,
-        --   presence_penalty = 0,
-        --   temperature = 0,
-        --   top_p = 1,
-        --   n = 1,
-        -- },
-      })
-    end,
-  },
+  -- {
+  --   "CopilotC-Nvim/CopilotChat.nvim",
+  --   enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+  --   -- branch = "canary",
+  --   version = "*",
+  --   dependencies = {
+  --     { "zbirenbaum/copilot.lua" },
+  --     { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+  --   },
+  --   build = "make tiktoken", -- Only on MacOS or Linux
+  --   opts = { debug = false },
+  -- },
+  -- {
+  --   "jackMort/ChatGPT.nvim",
+  --   enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+  --   event = "VeryLazy",
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "folke/trouble.nvim",
+  --     "nvim-telescope/telescope.nvim",
+  --   },
+  --   config = function()
+  --     require("chatgpt").setup({
+  --       -- openai_params = {
+  --       --   model = "gpt-4-32k",
+  --       --   frequency_penalty = 0,
+  --       --   presence_penalty = 0,
+  --       --   max_tokens = 2000,
+  --       --   temperature = 0,
+  --       --   top_p = 1,
+  --       --   n = 1,
+  --       -- },
+  --       -- openai_edit_params = {
+  --       --   model = "gpt-4-32k",
+  --       --   frequency_penalty = 0,
+  --       --   presence_penalty = 0,
+  --       --   temperature = 0,
+  --       --   top_p = 1,
+  --       --   n = 1,
+  --       -- },
+  --     })
+  --   end,
+  -- },
 
-  {
-    "dense-analysis/neural",
-    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "ElPiloto/significant.nvim",
-    },
-    config = function()
-      require("neural").setup({
-        source = {
-          openai = {
-            -- model = "gpt-3.5-turbo-instruct",
-            max_tokens = 2048,
-            api_key = vim.env.OPENAI_API_KEY,
-          },
-        },
-      })
-    end,
-  },
+  -- {
+  --   "dense-analysis/neural",
+  --   enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --     "ElPiloto/significant.nvim",
+  --   },
+  --   config = function()
+  --     require("neural").setup({
+  --       source = {
+  --         openai = {
+  --           -- model = "gpt-3.5-turbo-instruct",
+  --           max_tokens = 2048,
+  --           api_key = vim.env.OPENAI_API_KEY,
+  --         },
+  --       },
+  --     })
+  --   end,
+  -- },
 
   -- {
   --   "frankroeder/parrot.nvim",
