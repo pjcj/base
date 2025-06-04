@@ -1186,12 +1186,10 @@ local plugins = {
     enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
     cmd = "Copilot",
     event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
-    end,
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+    }
   },
   {
     "zbirenbaum/copilot-cmp",
