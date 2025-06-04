@@ -129,6 +129,24 @@ require("lualine").setup({
       -- { navic_component, cond = function() return navic_component() ~= "" end },
     },
     lualine_x = {
+      {
+        "copilot",
+        symbols = {
+          status = {
+            hl = {
+              enabled = c.rgreen,
+              sleep = c.base1,
+              disabled = c.base01,
+              warning = c.yellow,
+              unknown = c.red,
+            },
+          },
+          spinners = "bouncing_ball",
+          spinner_color = c.peach,
+        },
+        show_colors = true,
+        show_loading = true,
+      },
       mcphub_component_definition(),
       {
         "lsp_status",

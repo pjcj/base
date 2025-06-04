@@ -1200,6 +1200,7 @@ local plugins = {
       require("copilot_cmp").setup()
     end,
   },
+  { "AndreM222/copilot-lualine" },
   -- {
   --   "CopilotC-Nvim/CopilotChat.nvim",
   --   enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
