@@ -1189,7 +1189,8 @@ local plugins = {
     opts = {
       suggestion = { enabled = false },
       panel = { enabled = false },
-    }
+      copilot_model = "claude-sonnet-4",
+    },
   },
   {
     "zbirenbaum/copilot-cmp",
