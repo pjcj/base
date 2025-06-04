@@ -1190,6 +1190,9 @@ local plugins = {
       suggestion = { enabled = false },
       panel = { enabled = false },
       copilot_model = "claude-sonnet-4",
+      filetypes = {
+        ["*"] = true, -- enable copilot for all filetypes
+      },
     },
   },
   {
