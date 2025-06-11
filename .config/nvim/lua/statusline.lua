@@ -43,13 +43,13 @@ local function cwd_basename()
 end
 
 -- Custom Navic component
-local function navic_component()
-  local navic_ok, navic = pcall(require, "nvim-navic")
-  if navic_ok and navic.is_available() then
-    return navic.get_location()
-  end
-  return ""
-end
+-- local function navic_component()
+--   local navic_ok, navic = pcall(require, "nvim-navic")
+--   if navic_ok and navic.is_available() then
+--     return navic.get_location()
+--   end
+--   return ""
+-- end
 
 local function diff_source()
   local gitsigns = vim.b.gitsigns_status_dict
