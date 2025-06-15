@@ -1,0 +1,18 @@
+---
+# model
+# anthropic-api-key:
+
+# output
+dark-mode: true
+
+# git
+auto-commits: false
+dirty-commits: false
+show-diffs: true
+
+# analytics
+analytics-disable: true
+
+# other
+vim: false
+multiline: false

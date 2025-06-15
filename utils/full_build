@@ -196,7 +196,7 @@ main() {
   [[ -e .profile ]] && ! [[ -e .profile.local ]] && mv .profile .profile.local
   ln -sf g/base/{utils,.abcde.conf,.gitconfig,.gitignore_global,.profile} .
   ln -sf g/base/{.urlview,.vimrc,.Xdefaults,.vim,.tmux.conf,.tigrc} .
-  ln -sf g/base/{.zshenv,.zshrc,.wezterm.lua} .
+  ln -sf g/base/{.zshenv,.zshrc,.wezterm.lua,.aider.conf.yml} .
   [[ -d ~/.config ]] || mkdir ~/.config
   ln -sf ~/g/base/.config/* ~/.config
 

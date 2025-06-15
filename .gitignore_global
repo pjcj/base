@@ -2,3 +2,4 @@
 .gitlab.nvim
 .gonvim/
 .fseventsd/
+.aider*
