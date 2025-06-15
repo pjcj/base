@@ -288,14 +288,9 @@ wk.add({
 
     { "<leader>  ", require("yazi").yazi, desc = "yazi" },
     { "<leader> ,", group = "aider" },
+    { "<leader> ,,", "<cmd>AiderOpen", desc = "open" },
     {
-      "<leader> ,,",
-      "<cmd>AiderOpen --dark-mode --no-auto-commits "
-        .. "--anthropic-api-key=$(op read op://Private/anthropic/api-key)<cr>",
-      desc = "open",
-    },
-    {
-      "<leader> ,m",
+      "<leader> , ",
       "<cmd>AiderAddModifiedFiles<cr>",
       desc = "add modified files",
     },
