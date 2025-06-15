@@ -1,6 +1,5 @@
 {
   "nativeMCPServers": [
-    
   ],
   "mcpServers": {
     "fetch": {
@@ -13,6 +12,20 @@
         "API_KEY": ""
       },
       "command": "uvx"
+    },
+
+    "perplexity-server": {
+      "command": "node",
+      "args": ["${HOME}/.mcphub/servers/github.com/pashpashpash/perplexity-mcp/build/index.js"],
+      "env": {
+        "PERPLEXITY_API_KEY": "${cmd: op read op://Private/perplexity-ai/api-key}"
+      },
+      "autoApprove": [
+        "search",
+        "get_documentation",
+        "find_apis",
+        "check_deprecated_code"
+      ]
     }
   }
 }
