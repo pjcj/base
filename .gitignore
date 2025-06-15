@@ -32,3 +32,5 @@ zsh/functions/_docker-machine
 zsh/functions/_git
 
 .glab-cli
+.aider*
+.idea/
