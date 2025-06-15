@@ -1642,6 +1642,24 @@ local plugins = {
               make_slash_commands = true, -- Add prompts as /slash commands
             },
           },
+
+          vectorcode = {
+            opts = {
+              add_tool = true,
+              add_slash_command = true,
+              ---@type VectorCode.CodeCompanion.ToolOpts
+              tool_opts = {
+                max_num = { chunk = -1, document = -1 },
+                default_num = { chunk = 50, document = 10 },
+                include_stderr = true,
+                use_lsp = true,
+                auto_submit = { ls = true, query = false },
+                ls_on_start = true,
+                no_duplicate = true,
+                chunk_mode = false,
+              },
+            },
+          },
         },
       })
       local group = vim.api.nvim_create_augroup("CodeCompanionHooks", {})
@@ -1659,6 +1677,31 @@ local plugins = {
             )
           )
         end,
+      })
+    end,
+  },
+  {
+    "Davidyz/VectorCode",
+    version = "*", -- optional, depending on whether you're on nightly or release
+    build = "uv tool upgrade vectorcode", -- This helps keeping the CLI up-to-date
+    dependencies = { "nvim-lua/plenary.nvim" },
+    cmd = "VectorCode", -- if you're lazy-loading VectorCode
+    config = function()
+      require("vectorcode").setup({
+        -- number of retrieved documents
+        n_query = 3,
+        -- number of retrieved chunks per document
+        n_chunk = 50,
+        -- whether to use the LSP server for code completion
+        use_lsp = true,
+        -- whether to include stderr in the results
+        includeuse_lsp = true,
+        -- whether to automatically submit the query when the LSP server is ready
+        auto_submit = { ls = true, query = false },
+        -- whether to run the LSP server on startup
+        ls_on_start = true,
+        -- whether to avoid duplicate results
+        no_duplicate = true,
       })
     end,
   },
