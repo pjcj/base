@@ -290,7 +290,8 @@ wk.add({
     { "<leader> ,", group = "aider" },
     {
       "<leader> ,,",
-      "<cmd>AiderOpen --dark-mode --no-auto-commits --anthropic-api-key=$(op read op://Private/anthropic/api-key)<cr>",
+      "<cmd>AiderOpen --dark-mode --no-auto-commits "
+        .. "--anthropic-api-key=$(op read op://Private/anthropic/api-key)<cr>",
       desc = "open",
     },
     {
