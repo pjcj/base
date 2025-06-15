@@ -53,105 +53,133 @@ plugins:
   ^U)
 - [git-extras](https://github.com/tj/git-extras) (additional git commands)
 
-The vim config uses [vim-plug](https://github.com/junegunn/vim-plug) and the
+The neovim config uses [lazy.nvim](https://github.com/folke/lazy.nvim) and the
 following plugins:
 
-- [ale](https://github.com/w0rp/ale) (syntax checking)
-- [clever-f](https://github.com/rhysd/clever-f.vim) (extends f and t)
-- [ctrlp-extensions](https://github.com/sgur/ctrlp-extensions) (cmdline, yank
-  and menu for ctrlp)
-- [ctrlp](https://github.com/ctrlpvim/ctrlp.vim) (fuzzy finder)
-- [deoplete](https://github.com/Shougo/deoplete.nvim) (completion)
-- [diffchar](https://github.com/vim-scripts/diffchar.vim) (show diffs by
-  character)
-- [gitv](https://github.com/gregsexton/gitv) (gitk-alike)
-- [godown-vim](https://github.com/davinche/godown-vim) (show markdown in
-  browser as it is edited)
-- [incsearch-fuzzy](https://github.com/haya14busa/incsearch-fuzzy.vim) (fuzzy
-  search)
-- [incsearch](https://github.com/haya14busa/incsearch.vim) (show all matches on
-  incsearch)
-- [neco-syntax](https://github.com/Shougo/neco-syntax) (for use with deoplete)
-- [neovim-colors-solarized-truecolor-only](https://github.com/pjcj/neovim-colors-solarized-truecolor-only)
-  (my version of truecolour solarized colours)
-- [nerdtree-git-plugin](https://github.com/Xuyuanp/nerdtree-git-plugin) (show
-  git status against files)
-- [nerdtree](https://github.com/scrooloose/nerdtree) (file tree)
-- [nginx](https://github.com/chr4/nginx.vim) (nginx syntax)
-- [nvim-miniyank](https://github.com/bfredl/nvim-miniyank) (yankring)
-- [quickfix-reflector](https://github.com/stefandtw/quickfix-reflector.vim)
-  (edit text in quickfix window)
-- [salt-vim](https://github.com/saltstack/salt-vim) (salt syntax)
-- [sideways](https://andrewradev/sideways.vim) (operate on arglists)
-- [sparkup](https://github.com/rstacruz/sparkup) (HTML helper)
-- [supertab](https://github.com/ervandew/supertab) (tab completion)
-- [tagbar](https://github.com/majutsushi/tagbar) (display tags)
-- [targets](https://github.com/wellle/targets.vim) (add * | and _ targets)
-- [tmux-complete](https://github.com/wellle/tmux-complete.vim) (completion from
-  tmux buffers)
-- [ultisnips](https://github.com/SirVer/ultisnips) (snippets)
-- [undotree](https://github.com/mbbill/undotree) (undo tree management)
-- [unicode](https://github.com/chrisbra/unicode.vim) (unicode table, search,
-  complete)
-- [vim-abolish](https://github.com/tpope/vim-abolish) (handle word variants)
-- [vim-airline](https://github.com/vim-airline/vim-airline) (status line)
-- [vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)
-  (status line themes)
-- [vim-argwrap](https://github.com/FooSoft/vim-argwrap) (wrap multiline args)
-- [vim-autoswap](https://github.com/gioele/vim-autoswap) (deal with swap files
-  intelligently)
-- [vim-closetag](https://github.com/alvan/vim-closetag) (close tags)
-- [vim-commentary](https://github.com/tpope/vim-commentary) (code comments)
-- [vim-css-color](https://github.com/ap/vim-css-color) (add colour to
-  descriptions)
-- [vim-diff-enhanced](https://github.com/chrisbra/vim-diff-enhanced) (change
-  diff algorithm)
-- [vim-dispatch](https://github.com/tpope/vim-dispatch) (asynchronous jobs)
-- [vim-easy-align](https://github.com/junegunn/vim-easy-align) (vertical
-  alignment)
-- [vim-eunuch](https://github.com/tpope/vim-eunuch) (unix commands)
-- [vim-fetch](https://github.com/kopischke/vim-fetch) (use line numbers in file
-  paths)
-- [vim-fugitive-blame-ext](https://github.com/tommcdo/vim-fugitive-blame-ext)
-  (extend :Gblame)
-- [vim-fugitive](https://github.com/tpope/vim-fugitive) (work with git)
-- [vim-gitgutter](https://github.com/airblade/vim-gitgutter) (show git changes
-  in gutter)
-- [vim-gutentags](https://github.com/ludovicchabant/vim-gutentags) (generate
-  tags dynamically)
-- [vim-indent-guides](https://github.com/nathanaelkane/vim-indent-guides)
-  (guidelines for indentation)
-- [vim-interestingwords](https://github.com/vasconcelloslf/vim-interestingwords)
-  (highlighting and navigation)
-- [vim-lion](https://github.com/tommcdo/vim-lion) (alignment)
-- [vim-matchit](https://github.com/Spaceghost/vim-matchit) (extended % matching)
-- [vim-polyglot](https://github.com/sheerun/vim-polyglot) (extra syntax files)
-- [vim-repeat](https://github.com/tpope/vim-repeat) (make . work more often)
-- [vim-schlepp](https://github.com/zirrostig/vim-schlepp) (move blocks of text)
-- [vim-searchindex](https://github.com/google/vim-searchindex) (show m/n for
-  searches)
-- [vim-search-pulse](https://github.com/inside/vim-search-pulse) (pulse on
-  search)
-- [vim-signature](https://github.com/kshenoy/vim-signature) (show marks)
-- [vim-snippets](https://github.com/honza/vim-snippets) (snippets)
-- [vim-surround](https://github.com/tpope/vim-surround) (manage surrounding
-  characters)
-- [vim-sxhkdrc](https://github.com/baskerville/vim-sxhkdrc) (syntax
-  highlighting)
-- [vim-tmux](https://github.com/tmux-plugins/vim-tmux) (tmux syntax highlighting
-  and more)
-- [vitality](https://github.com/akracun/vitality.vim) (focus lost and gained
-  inside tmux)
-- [vim-perl](https://github.com/vim-perl/vim-perl) (perl functionality)
-- [vim-perl6](https://github.com/vim-perl/vim-perl6) (perl6 functionality)
-- [perlomni](https://github.com/c9s/perlomni.vim) (perl omni completion)
-- [vim-shortcut](https://github.com/sunaku/vim-shortcut) (describe shortcuts)
-- [fzf](https://github.com/junegunn/fzf.vim) (fuzzy finder)
-- [denite](https://github.com/Shougo/denite.vim) (ctrl-p-like interface)
-- [denite-extra](https://github.com/chemzqm/denite-extra.vim) (extra sources)
-- [unite](https://github.com/Shougo/unite.vim) (for legacy sources)
-- [neomru](https://github.com/Shougo/neomru.vim) (MRU for unite)
-- [unite-git](https://github.com/yuku-t/unite-git) (git in unite)
-- [unite-outline](https://github.com/Shougo/unite-outline) (outline for unite)
-- [unite-perl-module](https://github.com/soh335/unite-perl-module) (integrate
-  Perl modules into unite)
+**Core & UI:**
+- [catppuccin/nvim](https://github.com/catppuccin/nvim) (colorscheme)
+- [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) (file icons)
+- [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) (status line)
+- [which-key.nvim](https://github.com/folke/which-key.nvim) (key binding help)
+- [nvim-navic](https://github.com/SmiteshP/nvim-navic) (breadcrumbs)
+
+**LSP & Completion:**
+- [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) (LSP configuration)
+- [mason.nvim](https://github.com/williamboman/mason.nvim) (LSP installer)
+- [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim) (mason integration)
+- [magazine.nvim](https://github.com/iguanacucumber/magazine.nvim) (completion engine)
+- [lsp_signature.nvim](https://github.com/ray-x/lsp_signature.nvim) (signature help)
+- [nvim-lightbulb](https://github.com/kosayoda/nvim-lightbulb) (code actions indicator)
+- [lsp-colors.nvim](https://github.com/folke/lsp-colors.nvim) (LSP colors)
+
+**Treesitter:**
+- [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) (syntax highlighting)
+- [nvim-treesitter-refactor](https://github.com/nvim-treesitter/nvim-treesitter-refactor) (refactoring)
+- [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects) (text objects)
+- [nvim-treesitter-context](https://github.com/nvim-treesitter/nvim-treesitter-context) (context)
+- [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag) (auto close tags)
+- [nvim-ts-context-commentstring](https://github.com/JoosepAlviste/nvim-ts-context-commentstring) (context comments)
+
+**Fuzzy Finding & Navigation:**
+- [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) (fuzzy finder)
+- [telescope-fzf-native.nvim](https://github.com/nvim-telescope/telescope-fzf-native.nvim) (fzf integration)
+- [telescope-frecency.nvim](https://github.com/nvim-telescope/telescope-frecency.nvim) (frecency algorithm)
+- [telescope-ui-select.nvim](https://github.com/nvim-telescope/telescope-ui-select.nvim) (UI select)
+- [telescope-undo.nvim](https://github.com/debugloop/telescope-undo.nvim) (undo tree)
+- [smart-open.nvim](https://github.com/danielfalk/smart-open.nvim) (smart file opening)
+
+**Git:**
+- [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) (git signs)
+- [git-messenger.vim](https://github.com/rhysd/git-messenger.vim) (git blame popup)
+- [conflict-marker.vim](https://github.com/rhysd/conflict-marker.vim) (conflict markers)
+- [diffview.nvim](https://github.com/sindrets/diffview.nvim) (diff viewer)
+- [vim-gh-line](https://github.com/ruanyl/vim-gh-line) (GitHub line links)
+- [vim-fugitive](https://github.com/tpope/vim-fugitive) (git integration)
+- [gitlab.nvim](https://github.com/harrisoncramer/gitlab.nvim) (GitLab integration)
+
+**AI & Completion Sources:**
+- [copilot.lua](https://github.com/zbirenbaum/copilot.lua) (GitHub Copilot)
+- [copilot-cmp](https://github.com/zbirenbaum/copilot-cmp) (Copilot completion)
+- [codeium.nvim](https://github.com/Exafunction/codeium.nvim) (Codeium AI)
+- [supermaven-nvim](https://github.com/supermaven-inc/supermaven-nvim) (Supermaven AI)
+- [minuet-ai.nvim](https://github.com/milanglacier/minuet-ai.nvim) (Gemini AI)
+- [codecompanion.nvim](https://github.com/olimorris/codecompanion.nvim) (AI chat)
+- [avante.nvim](https://github.com/yetone/avante.nvim) (AI assistant)
+- [mcphub.nvim](https://github.com/ravitemer/mcphub.nvim) (MCP integration)
+- [VectorCode](https://github.com/Davidyz/VectorCode) (code search)
+
+**Language Support:**
+- [go.nvim](https://github.com/ray-x/go.nvim) (Go development)
+- [vim-perl](https://github.com/vim-perl/vim-perl) (Perl support)
+- [vim-terraform](https://github.com/hashivim/vim-terraform) (Terraform)
+- [vim-helm](https://github.com/towolf/vim-helm) (Helm charts)
+
+**Testing & Debugging:**
+- [neotest](https://github.com/nvim-neotest/neotest) (testing framework)
+- [neotest-go](https://github.com/nvim-neotest/neotest-go) (Go testing)
+
+**Linting & Formatting:**
+- [nvim-lint](https://github.com/mfussenegger/nvim-lint) (linting)
+- [ale](https://github.com/dense-analysis/ale) (async linting)
+- [conform.nvim](https://github.com/stevearc/conform.nvim) (formatting)
+- [nvim-rulebook](https://github.com/chrisgrieser/nvim-rulebook) (rule checking)
+
+**File Management:**
+- [nvim-tree.lua](https://github.com/nvim-tree/nvim-tree.lua) (file tree)
+- [oil.nvim](https://github.com/stevearc/oil.nvim) (file editing)
+- [yazi.nvim](https://github.com/mikavilpas/yazi.nvim) (file manager)
+- [outline.nvim](https://github.com/hedyhli/outline.nvim) (code outline)
+
+**Text Manipulation:**
+- [nvim-surround](https://github.com/kylechui/nvim-surround) (surround text)
+- [vim-easy-align](https://github.com/junegunn/vim-easy-align) (alignment)
+- [vim-move](https://github.com/matze/vim-move) (move lines/blocks)
+- [nvim-comment](https://github.com/terrortylor/nvim-comment) (commenting)
+- [treesj](https://github.com/Wansmer/treesj) (split/join code)
+- [refactoring.nvim](https://github.com/ThePrimeagen/refactoring.nvim) (refactoring)
+- [nvim-spider](https://github.com/chrisgrieser/nvim-spider) (camelCase motion)
+- [nvim-various-textobjs](https://github.com/chrisgrieser/nvim-various-textobjs) (text objects)
+
+**UI Enhancements:**
+- [nvim-highlight-colors](https://github.com/brenoprata10/nvim-highlight-colors) (color highlighting)
+- [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim) (indent guides)
+- [nvim-hlslens](https://github.com/kevinhwang91/nvim-hlslens) (search lens)
+- [nvim-scrollbar](https://github.com/petertriho/nvim-scrollbar) (scrollbar)
+- [hl_match_area.nvim](https://github.com/rareitems/hl_match_area.nvim) (match highlighting)
+- [lfv89/vim-interestingwords](https://github.com/lfv89/vim-interestingwords) (word highlighting)
+- [SmoothCursor.nvim](https://github.com/gen740/SmoothCursor.nvim) (smooth cursor)
+- [emission.nvim](https://github.com/aileot/emission.nvim) (change highlighting)
+
+**Utilities:**
+- [vim-autoswap](https://github.com/gioele/vim-autoswap) (swap file handling)
+- [vim-lastplace](https://github.com/farmergreg/vim-lastplace) (restore cursor position)
+- [vim-startify](https://github.com/mhinz/vim-startify) (start screen)
+- [crazy8.nvim](https://github.com/zsugabubus/crazy8.nvim) (utilities)
+- [lexima.vim](https://github.com/cohama/lexima.vim) (auto pairs)
+- [vim-repeat](https://github.com/tpope/vim-repeat) (repeat plugin actions)
+- [vim-gutentags](https://github.com/ludovicchabant/vim-gutentags) (tag generation)
+
+**Quickfix & Search:**
+- [nvim-bqf](https://github.com/kevinhwang91/nvim-bqf) (better quickfix)
+- [nvim-pqf](https://github.com/yorickpeterse/nvim-pqf) (pretty quickfix)
+- [replacer.nvim](https://github.com/gabrielpoca/replacer.nvim) (search replace)
+
+**Markdown & Documentation:**
+- [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) (markdown preview)
+- [render-markdown.nvim](https://github.com/MeanderingProgrammer/render-markdown.nvim) (markdown rendering)
+- [markview.nvim](https://github.com/OXY2DEV/markview.nvim) (markdown viewer)
+- [helpview.nvim](https://github.com/OXY2DEV/helpview.nvim) (help viewer)
+
+**Miscellaneous:**
+- [nvim-notify](https://github.com/rcarriga/nvim-notify) (notifications)
+- [nvim-lsp-notify](https://github.com/mrded/nvim-lsp-notify) (LSP notifications)
+- [dressing.nvim](https://github.com/stevearc/dressing.nvim) (UI improvements)
+- [overseer.nvim](https://github.com/stevearc/overseer.nvim) (task runner)
+- [sidebar.nvim](https://github.com/sidebar-nvim/sidebar.nvim) (sidebar)
+- [hex.nvim](https://github.com/RaafatTurki/hex.nvim) (hex editor)
+- [shell.nvim](https://github.com/siadat/shell.nvim) (shell integration)
+- [urlview.nvim](https://github.com/axieax/urlview.nvim) (URL viewer)
+- [translate.nvim](https://github.com/uga-rosa/translate.nvim) (translation)
+- [vim-oscyank](https://github.com/ojroques/vim-oscyank) (OSC52 clipboard)
+- [ascii-blocks.nvim](https://github.com/superhawk610/ascii-blocks.nvim) (ASCII art)
+- [vim-unicode-homoglyphs](https://github.com/Konfekt/vim-unicode-homoglyphs) (unicode handling)
