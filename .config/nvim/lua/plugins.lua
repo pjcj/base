@@ -1550,6 +1550,19 @@ local plugins = {
         strategies = {
           chat = {
             adapter = "claude4sonnet",
+            tools = {
+              opts = {
+                wait_timeout = 600000, -- 10 minutes
+                auto_submit_errors = true, -- Automatically submit errors to the LLM
+                auto_submit_success = true, -- Automatically submit successful results to the LLM
+                default_tools = {
+                  "full_stack_dev",
+                  "next_edit_suggestion",
+                  "vectorcode",
+                  "mcp"
+                },
+              },
+            },
             keymaps = {
               completion = {
                 modes = {
