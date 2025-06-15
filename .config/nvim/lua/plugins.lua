@@ -1559,7 +1559,7 @@ local plugins = {
                   "full_stack_dev",
                   "next_edit_suggestion",
                   "vectorcode",
-                  "mcp"
+                  "mcp",
                 },
               },
             },
@@ -1955,6 +1955,16 @@ local plugins = {
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",
+  },
+  {
+    "joshuavial/aider.nvim",
+    opts = {
+      -- your configuration comes here
+      -- if you don't want to use the default settings
+      auto_manage_context = true, -- automatically manage buffer context
+      default_bindings = false, -- use default <leader>A keybindings
+      debug = false, -- enable debug logging
+    },
   },
 
   {

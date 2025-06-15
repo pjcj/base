@@ -287,6 +287,18 @@ wk.add({
     mode = { "n", "v" },
 
     { "<leader>  ", require("yazi").yazi, desc = "yazi" },
+    { "<leader> ,", group = "aider" },
+    {
+      "<leader> ,,",
+      "<cmd>AiderOpen --dark-mode --no-auto-commits --anthropic-api-key=$(op read op://Private/anthropic/api-key)<cr>",
+      desc = "open",
+    },
+    {
+      "<leader> ,m",
+      "<cmd>AiderAddModifiedFiles<cr>",
+      desc = "add modified files",
+    },
+
     { "<leader> a", group = "parrot ai" },
     { "<leader> aI", "<cmd>PrtInfo<cr>", desc = "info" },
     { "<leader> aP", "<cmd>PrtProvider<cr>", desc = "provider" },
