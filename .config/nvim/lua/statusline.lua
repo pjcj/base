@@ -82,6 +82,45 @@ local function mcphub_component_definition()
   end
 end
 
+local function avante_rag_status()
+  local ok, _ = pcall(require, "avante.api")
+  if not ok then
+    return ""
+  end
+
+  -- Check if rag service is enabled and get its status
+  local config = require("avante.config")
+  if not config.rag_service or not config.rag_service.enabled then
+    return ""
+  end
+
+  -- Try to get rag service status
+  local rag_ok, rag_status = pcall(function()
+    local rag_service = require("avante.rag_service")
+    if rag_service and rag_service.get_rag_service_status then
+      return rag_service.get_rag_service_status()
+    end
+    return "unknown"
+  end)
+
+  if not rag_ok then
+    return " ⚠️" -- Default icon when status can't be determined
+  end
+
+  -- Return status with appropriate icon and color
+  local status_icons = {
+    running = " 🏃",
+    stopped = " 🛑",
+    ready = " ✅",
+    indexing = " ⏳",
+    error = " ❗",
+    disabled = " 🚫",
+    unknown = " ❓",
+  }
+
+  return status_icons[rag_status] or " 🔍"
+end
+
 require("lualine").setup({
   options = {
     theme = custom_theme,
@@ -131,6 +170,8 @@ require("lualine").setup({
     lualine_x = {
       {
         "copilot",
+        separator = "",
+        padding = { left = 0, right = 1 },
         symbols = {
           status = {
             hl = {
@@ -146,6 +187,51 @@ require("lualine").setup({
         },
         show_colors = true,
         show_loading = true,
+      },
+      {
+        require("minuet.lualine"),
+        -- the following is the default configuration
+        -- the name displayed in the lualine. Set to "provider", "model" or "both"
+        -- display_name = 'both',
+        -- separator between provider and model name for option "both"
+        -- provider_model_separator = ':',
+        -- whether show display_name when no completion requests are active
+        display_on_idle = true,
+      },
+      require("vectorcode.integrations").lualine({ show_job_count = true }),
+      {
+        avante_rag_status,
+        separator = "",
+        padding = { left = 0, right = 1 },
+        color = function()
+          local rag_ok, rag_status = pcall(function()
+            local rag_service = require("avante.rag_service")
+            if rag_service and rag_service.get_rag_service_status then
+              return rag_service.get_rag_service_status()
+            end
+            return "unknown"
+          end)
+
+          if not rag_ok then
+            return { fg = c.base1 }
+          end
+
+          local status_colors = {
+            running = { fg = c.rgreen },
+            stopped = { fg = c.red },
+            ready = { fg = c.rgreen },
+            indexing = { fg = c.yellow },
+            error = { fg = c.red },
+            disabled = { fg = c.base01 },
+            unknown = { fg = c.base1 },
+          }
+
+          return status_colors[rag_status] or { fg = c.base1 }
+        end,
+        cond = function()
+          local config_ok, config = pcall(require, "avante.config")
+          return config_ok and config.rag_service and config.rag_service.enabled
+        end,
       },
       mcphub_component_definition(),
       {
