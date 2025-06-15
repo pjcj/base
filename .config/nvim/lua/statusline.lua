@@ -198,7 +198,7 @@ require("lualine").setup({
         -- whether show display_name when no completion requests are active
         display_on_idle = true,
       },
-      require("vectorcode.integrations").lualine({ show_job_count = true }),
+      -- require("vectorcode.integrations").lualine({ show_job_count = true }),
       {
         avante_rag_status,
         separator = "",
