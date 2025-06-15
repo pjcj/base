@@ -475,6 +475,9 @@ v() {
             GEMINI_API_KEY=$gemini_api_key \
             PPLX_API_KEY=$pplx_api_key \
             command $EDITOR "$@"
+            # OLLAMA_NUM_BATCH=2048 \
+            # OLLAMA_NUM_CTX=4096 \
+            # OLLAMA_NUM_GPU=1 \
     else
         command $EDITOR -u NONE "$@"
     fi
@@ -1226,6 +1229,13 @@ zshrc_load_status "keychain"
 if [[ $(uname) == Darwin ]]; then
     ulimit -n 65536
     ulimit -s 32768
+    # launchctl setenv OLLAMA_NUM_BATCH 2048
+    # launchctl setenv OLLAMA_NUM_CTX 4096
+    # launchctl setenv OLLAMA_NUM_GPU 1
+
+    export PYTORCH_ENABLE_MPS_FALLBACK=1
+    export ACCELERATE_USE_MPS=1
+
     [[ -z $TMUX ]] && ssh-add --apple-load-keychain
 elif [[ $(uname) == FreeBSD ]]; then
     :
