@@ -1919,6 +1919,26 @@ local plugins = {
         second_provider = "copilot_gemini",
         timeout = 60000, -- timeout in milliseconds
       },
+      rag_service = {
+        enabled = false,
+        host_mount = os.getenv("HOME") .. "/g",
+        runner = "docker",
+        llm = {
+          provider = "ollama",
+          endpoint = "http://host.docker.internal:11434",
+          model = "qwen2.5-coder",
+          -- model = "llama3",
+          api_key = "",
+        },
+        embed = {
+          provider = "ollama",
+          endpoint = "http://host.docker.internal:11434",
+          model = "mxbai-embed-large",
+          -- model = "nomic-embed-text",
+          api_key = "",
+        },
+      },
+
       -- system_prompt as function ensures LLM always has latest MCP server
       -- state - evaluated for every message, even in existing chats.
       system_prompt = function()
