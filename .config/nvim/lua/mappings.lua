@@ -288,7 +288,7 @@ wk.add({
 
     { "<leader>  ", require("yazi").yazi, desc = "yazi" },
     { "<leader> ,", group = "aider" },
-    { "<leader> ,,", "<cmd>AiderOpen", desc = "open" },
+    { "<leader> ,,", "<cmd>AiderOpen<cr>", desc = "open" },
     {
       "<leader> , ",
       "<cmd>AiderAddModifiedFiles<cr>",
