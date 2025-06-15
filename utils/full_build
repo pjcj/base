@@ -118,6 +118,21 @@ completion() {
       >|~/g/base/zsh/functions/_git
   fi
 
+  # if which vectorcode >/dev/null; then
+  #   # vectorcode -s zsh >|~/g/base/zsh/functions/_vectorcode
+  #     echo "Generating vectorcode completion..."
+  #     if vectorcode -s zsh | sed '/^if \[\[ \$zsh_eval_context\[-1\] == eval \]\]; then$/,$d' > ~/g/base/zsh/functions/_vectorcode.tmp; then
+  #         echo "compdef _shtab_vectorcode vectorcode" >> ~/g/base/zsh/functions/_vectorcode.tmp
+  #         mv ~/g/base/zsh/functions/_vectorcode.tmp ~/g/base/zsh/functions/_vectorcode
+  #         echo "✓ vectorcode completion generated and fixed"
+  #     else
+  #         echo "✗ Failed to generate vectorcode completion"
+  #         rm -f ~/g/base/zsh/functions/_vectorcode.tmp
+  #     fi
+  #   else
+  #     echo "vectorcode not found in PATH, skipping completion"
+  # fi
+
   rm -f ~/.zcompdump
   autoload -Uz compinit && compinit -i
 }
