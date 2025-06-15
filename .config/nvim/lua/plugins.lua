@@ -1622,6 +1622,7 @@ local plugins = {
               schema = {
                 model = {
                   default = "gemini-2.5-pro",
+                  -- default = "gemini-2.5-pro-preview-06-05",
                 },
                 -- num_ctx = {
                 --   default = 16384,
@@ -1840,7 +1841,7 @@ local plugins = {
       -- },
     },
     opts = {
-      provider = "copilot_claude_sonnet_4",
+      provider = "copilot_gemini",
       providers = {
         copilot_claude_sonnet_4 = {
           __inherited_from = "copilot",
