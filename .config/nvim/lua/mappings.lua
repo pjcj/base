@@ -297,6 +297,7 @@ wk.add({
 
     { "<leader> .", group = "nvim-aider" },
     { "<leader> ..", "<cmd>Aider toggle<cr>", desc = "toggle" },
+    { "<leader> . ", "<cmd>Aider<cr>", desc = "picker" },
     {
       "<leader> .s",
       "<cmd>Aider send<cr>",
