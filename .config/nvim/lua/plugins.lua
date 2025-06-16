@@ -2007,6 +2007,14 @@ local plugins = {
     },
     config = function()
       require("nvim_aider").setup({
+        args = {
+          "--openai-api-base", "https://api.githubcopilot.com",
+          "--openai-api-key", "$(op read op://Private/GitHub/copilot-api-key)",
+          "--model", "openai/claude-3.7-sonnet",
+          "--weak-model", "openai/claude-3.5-sonnet",
+          "--no-show-model-warnings",
+          "--edit-format", "diff"
+        },
         -- args = {
         --   "--no-auto-commits",
         --   "--pretty",
