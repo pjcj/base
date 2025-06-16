@@ -189,7 +189,13 @@ require("lualine").setup({
         show_loading = true,
       },
       {
-        require("minuet.lualine"),
+        function()
+          local ok, minuet_lualine = pcall(require, "minuet.lualine")
+          if ok then
+            return minuet_lualine()
+          end
+          return ""
+        end,
         -- the following is the default configuration
         -- the name displayed in the lualine. Set to "provider", "model" or "both"
         -- display_name = 'both',
@@ -197,6 +203,10 @@ require("lualine").setup({
         -- provider_model_separator = ':',
         -- whether show display_name when no completion requests are active
         display_on_idle = true,
+        cond = function()
+          local ok, _ = pcall(require, "minuet.lualine")
+          return ok
+        end,
       },
       -- require("vectorcode.integrations").lualine({ show_job_count = true }),
       {
