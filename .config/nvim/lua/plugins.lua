@@ -1972,6 +1972,22 @@ local plugins = {
       debug = false, -- enable debug logging
     },
   },
+  {
+    "GeorgesAlkhouri/nvim-aider",
+    cmd = "Aider",
+    dependencies = {
+      "folke/snacks.nvim",
+      "catppuccin/nvim",
+      "nvim-tree/nvim-tree.lua",
+      {
+        "nvim-neo-tree/neo-tree.nvim",
+        optional = true,
+        opts = function(_, opts)
+          require("nvim_aider.neo_tree").setup(opts)
+        end,
+      },
+    },
+  },
 
   {
     "lewis6991/gitsigns.nvim",
