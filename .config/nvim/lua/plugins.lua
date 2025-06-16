@@ -1733,14 +1733,20 @@ local plugins = {
           repo_context = function(_, _, _)
             local prompt_message = ""
             print("Gemini repo context requested")
-            if has_vc then
+            if
+              has_vc
+              and vectorcode_cacher
+              and vectorcode_cacher.query_from_cache
+            then
               local cache_result = vectorcode_cacher.query_from_cache(0)
-              for _, file in ipairs(cache_result) do
-                prompt_message = prompt_message
-                  .. "<file_separator>"
-                  .. file.path
-                  .. "\n"
-                  .. file.document
+              if cache_result then
+                for _, file in ipairs(cache_result) do
+                  prompt_message = prompt_message
+                    .. "<file_separator>"
+                    .. file.path
+                    .. "\n"
+                    .. file.document
+                end
               end
             end
 
