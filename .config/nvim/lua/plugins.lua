@@ -2068,6 +2068,43 @@ local plugins = {
       })
     end,
   },
+  {
+    "coder/claudecode.nvim",
+    config = true,
+    opts = {
+      auto_start = false,
+      terminal = {
+        -- provider = "native",
+        split_width_percentage = 0.4,
+      },
+    },
+    keys = {
+      {
+        "<leader>,ll",
+        "<cmd>ClaudeCode<cr><cmd>horizontal wincmd =<cr>",
+        desc = "Toggle Claude",
+      },
+      { "<leader>,lf", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+      { "<leader>,lr", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+      {
+        "<leader>,lC",
+        "<cmd>ClaudeCode --continue<cr>",
+        desc = "Continue Claude",
+      },
+      {
+        "<leader>,ls",
+        "<cmd>ClaudeCodeSend<cr>",
+        mode = "v",
+        desc = "Send to Claude",
+      },
+      {
+        "<leader>,ls",
+        "<cmd>ClaudeCodeTreeAdd<cr>",
+        desc = "Add file",
+        ft = { "NvimTree", "neo-tree", "oil" },
+      },
+    },
+  },
 
   {
     "lewis6991/gitsigns.nvim",
