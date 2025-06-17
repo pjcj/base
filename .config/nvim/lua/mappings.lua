@@ -579,6 +579,8 @@ wk.add({
     desc = "toggle summary",
   },
 
+  { "<leader>,l", group = "claude" },
+
   { "<leader>,p", group = "perl" },
   {
     "<leader>,ps",
