@@ -2020,6 +2020,10 @@ local plugins = {
           "--openai-api-key", "$(op read op://Private/GitHub/copilot-api-key)",
           "--model", "openai/claude-3.7-sonnet",
           "--weak-model", "openai/claude-3.5-sonnet",
+          -- "--model", "openai/gpt-4o",
+          -- "--model", "openai/gpt-4.1",
+          -- "--weak-model", "openai/gpt-4o-mini",
+          -- "--model", "openai/gemini-2.5-pro",
           "--no-show-model-warnings",
           "--edit-format", "diff"
         },
