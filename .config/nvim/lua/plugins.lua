@@ -1549,7 +1549,7 @@ local plugins = {
       require("codecompanion").setup({
         strategies = {
           chat = {
-            adapter = "claude4sonnet",
+            adapter = "claude37sonnet",
             tools = {
               opts = {
                 wait_timeout = 600000, -- 10 minutes
@@ -1571,8 +1571,8 @@ local plugins = {
               },
             },
           },
-          inline = { adapter = "claude4sonnet" },
-          cmd = { adapter = "claude4sonnet" },
+          inline = { adapter = "claude37sonnet" },
+          cmd = { adapter = "claude37sonnet" },
         },
         display = {
           chat = {
@@ -1847,8 +1847,16 @@ local plugins = {
       -- },
     },
     opts = {
-      provider = "copilot_gemini",
+      provider = "copilot_claude_sonnet_3_7",
       providers = {
+        copilot_claude_sonnet_3_7 = {
+          __inherited_from = "copilot",
+          model = "claude-3.7-sonnet",
+          timeout = 60000,
+          extra_request_body = {
+            max_tokens = 200000,
+          },
+        },
         copilot_claude_sonnet_4 = {
           __inherited_from = "copilot",
           model = "claude-sonnet-4",
@@ -1922,7 +1930,7 @@ local plugins = {
       },
       dual_boost = {
         enabled = true,
-        first_provider = "copilot_claude_sonnet_4",
+        first_provider = "copilot_claude_sonnet_3_7",
         second_provider = "copilot_gemini",
         timeout = 60000, -- timeout in milliseconds
       },
