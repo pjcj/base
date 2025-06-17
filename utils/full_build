@@ -118,6 +118,10 @@ completion() {
       >|~/g/base/zsh/functions/_git
   fi
 
+  if which aider >/dev/null; then
+    aider --shell-completions zsh >|~/g/base/zsh/functions/_aider
+  fi
+
   # if which vectorcode >/dev/null; then
   #   # vectorcode -s zsh >|~/g/base/zsh/functions/_vectorcode
   #     echo "Generating vectorcode completion..."
