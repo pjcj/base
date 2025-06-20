@@ -1,0 +1,1447 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use utf8;
+use feature 'signatures';
+no warnings 'experimental::signatures';
+
+use open qw(:std :utf8);
+use HTTP::Tiny;
+use XML::Simple;
+use File::Find;
+use File::Basename;
+use File::Path qw(make_path);
+use File::Copy;
+use File::Spec;
+use Getopt::Long;
+use List::Util qw(first);
+use URI::Escape;
+use Time::HiRes        qw(time);
+use Encode             qw(decode_utf8 encode_utf8 FB_CROAK);
+use Unicode::Normalize qw(NFD NFC);
+use charnames ':full';
+
+# Configuration
+my $Plex_server   = "";
+my $Plex_token    = "";
+my $Mp3_dir       = "$ENV{HOME}/Desktop/m";
+my $Output_dir    = "$ENV{HOME}/Desktop/playlists";
+my $Debug         = 0;
+my $Dry_run       = 0;
+my $List_only     = 0;
+my $Playlist_name = "";
+my $List_users    = 0;
+my $User_id       = "";
+my $Username      = "";
+my $Password      = "";
+
+GetOptions(
+  "server=s"   => \$Plex_server,
+  "token=s"    => \$Plex_token,
+  "username=s" => \$Username,
+  "password=s" => \$Password,
+  "mp3-dir=s"  => \$Mp3_dir,
+  "output=s"   => \$Output_dir,
+  "debug"      => \$Debug,
+  "dry-run"    => \$Dry_run,
+  "list"       => \$List_only,
+  "playlist=s" => \$Playlist_name,
+  "list-users" => \$List_users,
+  "user=s"     => \$User_id,
+  "help"       => \&show_help
+);
+
+sub show_help () {
+  print <<~"EOF";
+    Usage: plex_playlist_sync [options]
+
+    Options:
+        --server URL        Plex server URL (e.g., http://192.168.1.100:32400)
+        --token TOKEN       Plex authentication token
+        --username EMAIL    Plex username/email (for automatic token generation)
+        --password PASS     Plex password (will prompt if not provided)
+        --mp3-dir PATH      Path to MP3 directory (default: ~/Desktop/m)
+        --output PATH       Output directory for synced playlists (default: ~/Desktop/playlists)
+        --debug             Enable debug output
+        --dry-run           Show what would be done without making changes
+        --list              Show available playlists only (no sync)
+        --playlist NAME     Sync only the specified playlist
+        --list-users        Show available users on the server
+        --user ID           Access playlists for specific user (requires admin token)
+        --help              Show this help message
+
+    Sync Behavior:
+        - Preserves directory structure from MP3 source (Artist/Album/Track.mp3)
+        - Handles accented characters in track names (é, ñ, ü, etc.)
+        - Automatically removes files no longer in the playlist
+        - Cleans up empty directories after file removal
+
+    Examples:
+        # Authenticate with username/password and list playlists
+        plex_playlist_sync --server URL --username your\@email.com --list
+
+        # List all users on the server (using credentials)
+        plex_playlist_sync --server URL --username your\@email.com --list-users
+
+        # List playlists for a specific user
+        plex_playlist_sync --server URL --username your\@email.com --user 12345 --list
+
+        # Sync specific user's playlist
+        plex_playlist_sync --server URL --username your\@email.com --user 12345 --playlist "Trance"
+
+        # Using existing token
+        plex_playlist_sync --server URL --token TOKEN --list
+
+    Authentication Methods:
+    1. Username/Password (recommended): --username your\@email.com
+    2. Existing Token: --token YOUR_TOKEN
+    3. Browser method: Extract X-Plex-Token from app.plex.tv dev tools
+
+    Security Notes:
+    - Use HTTPS server URLs for remote connections to protect credentials
+    - HTTP is only safe for local network servers (192.168.x.x, 10.x.x.x, etc.)
+    - Passwords are cleared from memory after authentication
+
+    EOF
+  exit 0;
+}
+
+sub debug_print ($msg) {
+  return unless $Debug;
+
+  # Handle potential UTF-8 issues
+  $msg = decode_utf8($msg) unless utf8::is_utf8($msg);
+  print "[DEBUG] $msg\n";
+}
+
+sub create_http_client () {
+  debug_print("Creating HTTP client with enhanced security settings");
+
+  my %ssl_options
+    = (timeout => 30, agent => "PlexPlaylistSync/1.0", verify_SSL => 1);
+
+  # Enhanced SSL verification for HTTPS connections
+  if ($Plex_server && $Plex_server =~ /^https:\/\//) {
+    $ssl_options{SSL_options} = {
+      SSL_verify_mode     => 0x01,    # SSL_VERIFY_PEER
+      SSL_verifycn_scheme => 'http',  # Verify hostname
+    };
+    debug_print("Enhanced SSL verification enabled for HTTPS server");
+  }
+
+  return HTTP::Tiny->new(%ssl_options);
+}
+
+sub get_plex_token_from_credentials ($Username, $Password, $http) {
+
+  debug_print("Attempting to authenticate with Plex using credentials...");
+
+  my $auth_url  = "https://plex.tv/users/sign_in.xml";
+  my $form_data = { 'user[login]' => $Username, 'user[password]' => $Password };
+
+  my $headers = {
+    'X-Plex-Client-Identifier' => 'PlexPlaylistSync',
+    'X-Plex-Product'           => 'PlexPlaylistSync',
+    'X-Plex-Version'           => '1.0',
+  };
+
+  debug_print("POST $auth_url");
+
+  my $response
+    = $http->post_form($auth_url, $form_data, { headers => $headers });
+
+  unless ($response->{success}) {
+    die "Authentication failed: $response->{status} $response->{reason}\n";
+  }
+
+  debug_print("Authentication response received");
+
+  my $xs   = XML::Simple->new;
+  my $data = $xs->XMLin($response->{content}, KeyAttr => {});
+
+  if ($data->{authToken}) {
+    debug_print("Successfully obtained authentication token");
+    return $data->{authToken};
+  } elsif ($data->{error}) {
+    die "Plex authentication error: $data->{error}\n";
+  } else {
+    die "Unable to extract token from response\n";
+  }
+}
+
+sub get_machine_identifier ($http) {
+
+  debug_print("Getting server machine identifier");
+  my $url = "$Plex_server/";
+  my $headers
+    = { 'X-Plex-Token' => $Plex_token, 'Accept' => 'application/xml' };
+
+  my $response = $http->get($url, { headers => $headers });
+  if ($response->{success} && $response->{content}) {
+    if ($response->{content} =~ /machineIdentifier="([^"]+)"/) {
+      debug_print("Found machine identifier: $1");
+      return $1;
+    }
+  }
+
+  warn "Could not get machine identifier from server\n";
+  return undef;
+}
+
+sub get_user_token ($http, $User_id, $machine_id) {
+
+  debug_print(
+    "Attempting to get user token for user $User_id on machine $machine_id");
+
+  my $url = "https://plex.tv/api/servers/$machine_id/shared_servers";
+  my $headers
+    = { 'X-Plex-Token' => $Plex_token, 'Accept' => 'application/xml' };
+
+  debug_print("Requesting: $url");
+  my $response = $http->get($url, { headers => $headers });
+
+  if ($response->{success} && $response->{content}) {
+    debug_print("Got shared servers response");
+
+    # Parse XML to find user's access token
+    my $xs         = XML::Simple->new;
+    my $user_token = undef;
+
+    eval {
+      my $data = $xs->XMLin(
+        $response->{content},
+        KeyAttr    => {},
+        ForceArray => ['SharedServer']
+      );
+      debug_print(
+        "Parsed XML structure: " . (keys %$data ? "has data" : "empty"));
+
+      # Check different possible structures
+      if ($data->{SharedServer}) {
+        my $servers = $data->{SharedServer};
+        $servers = [$servers] unless ref($servers) eq 'ARRAY';
+        debug_print("Found " . scalar(@$servers) . " shared servers");
+
+        for my $server (@$servers) {
+          debug_print("Server: userID="
+              . ($server->{userID} || "none")
+              . ", accessToken="
+              . ($server->{accessToken} ? "present" : "none"));
+          if ( $server->{userID}
+            && $server->{userID} eq $User_id
+            && $server->{accessToken})
+          {
+            debug_print("Found access token for user $User_id");
+            $user_token = $server->{accessToken};
+            last;  # Exit the loop
+          }
+        }
+      } else {
+        debug_print(
+          "No SharedServer element found, checking other structures...");
+        # Maybe it's a different structure - let's check direct access
+        my $content_preview = substr $response->{content}, 0, 500;
+        debug_print("Raw content preview: $content_preview");
+      }
+    } or do {
+      debug_print("Failed to parse shared servers XML: $@");
+    };
+
+    if ($user_token) {
+      debug_print("Successfully retrieved user token for user $User_id");
+      return $user_token;
+    }
+  }
+
+  debug_print("No user-specific token found for user $User_id");
+  return undef;
+}
+
+sub plex_api_request ($http, $endpoint, $User_id = undef) {
+
+  die "Plex server URL not specified. Use --server option.\n"
+    unless $Plex_server;
+  die "Plex token not specified. Use --token option.\n" unless $Plex_token;
+
+  my $url = "$Plex_server$endpoint";
+
+  my $headers
+    = { 'X-Plex-Token' => $Plex_token, 'Accept' => 'application/xml' };
+
+  # Use user-specific token if available
+  if ($User_id) {
+    debug_print("Request for user ID: $User_id");
+    # Note: User token should be set globally before calling this function
+  }
+
+  debug_print("Making API request to: $url");
+  debug_print("Request headers: X-Plex-Token=*****, Accept=application/xml"
+      . ($User_id ? ", User=$User_id" : ""));
+
+  my $start_time = time;
+  debug_print("Starting HTTP request at " . localtime);
+
+  my $response = $http->get($url, { headers => $headers });
+
+  my $elapsed = time - $start_time;
+  debug_print(
+    "HTTP request completed in " . sprintf("%.2f", $elapsed) . " seconds");
+  debug_print("Response received - Status: $response->{status}, Success: "
+      . ($response->{success} ? "YES" : "NO"));
+
+  if ($response->{content}) {
+    debug_print(
+      "Response content length: " . length($response->{content}) . " bytes");
+
+    # Safely preview content, handling UTF-8
+    my $preview = substr $response->{content}, 0, 200;
+    $preview
+      =~ s/[^\x20-\x7E\x{00A0}-\x{FFFF}]/?/g;  # Replace non-printable chars
+    debug_print("Response content preview: $preview...");
+  } else {
+    debug_print("No response content received");
+  }
+
+  unless ($response->{success}) {
+    die "API request failed: $response->{status} $response->{reason}\n";
+  }
+
+  return $response->{content};
+}
+
+sub extract_metadata_from_path ($full_path) {
+
+  # Get just the filename without extension
+  my $filename = basename($full_path, ".mp3");
+
+  # Get directory path components (for Artist/Album detection)
+  my $dir_path  = dirname($full_path);
+  my @dir_parts = split /[\/\\]/, $dir_path;
+
+  my %metadata = (
+    filename  => $filename,
+    full_path => $full_path,
+    dir_parts => \@dir_parts,
+  );
+
+  # Extract artist and track from common filename patterns
+  # First check for track numbers (most common pattern)
+  if ($filename =~ /^\d+[_\-\s]+(.+)$/) {
+    my $track_part = $1;
+
+    # First check for version info (parentheses) - more common in numbered tracks
+    if ($track_part =~ /^(.+?)\s*\((.+?)\)$/) {
+      $metadata{track_from_filename} = $1;
+      $metadata{version_info}        = $2;
+    }
+    # Then check if there's an artist-track pattern (only if no parentheses)
+    elsif ($track_part =~ /^(.+?)\s*-\s*(.+)$/) {
+      $metadata{artist_from_filename} = $1;
+      $metadata{track_from_filename}  = $2;
+    } else {
+      $metadata{track_from_filename} = $track_part;
+    }
+  }
+  # Pattern: "Artist - Track" (when no track number)
+  elsif ($filename =~ /^(.+?)\s*-\s*(.+)$/) {
+    $metadata{artist_from_filename} = $1;
+    my $track_part = $2;
+
+    # Check if track part has version info in parentheses
+    if ($track_part =~ /^(.+?)\s*\((.+?)\)$/) {
+      $metadata{track_from_filename} = $1;
+      $metadata{version_info}        = $2;
+    } else {
+      $metadata{track_from_filename} = $track_part;
+    }
+  }
+  # Pattern: "Track (feat. Artist)" or "Track (Artist Remix)"
+  elsif ($filename =~ /^(.+?)\s*\((.+?)\)$/) {
+    $metadata{track_from_filename} = $1;
+    $metadata{version_info}        = $2;
+  } else {
+    # Simple filename without patterns
+    $metadata{track_from_filename} = $filename;
+  }
+
+  # Extract potential album/artist from directory structure
+  # Common patterns: /Artist/Album/, /Music/Artist/Album/, /Genre/Artist/Album/
+  if (@dir_parts >= 2) {
+    $metadata{album_from_dir} = $dir_parts[-1]; # Last directory (usually album)
+    $metadata{artist_from_dir}
+      = $dir_parts[-2];  # Second to last (usually artist)
+  }
+
+  return \%metadata;
+}
+
+sub scan_mp3_files ($dir) {
+  my %mp3_files;
+  my @mp3_metadata;
+
+  print "Scanning MP3 files in $dir...\n";
+
+  find(
+    sub {
+      my $file = $_;
+      return unless -f $file && $file =~ /\.mp3$/i;
+      my $full_path = $File::Find::name;
+      my $basename  = basename($file, ".mp3");
+
+      # Store in old format for backward compatibility
+      $mp3_files{$basename} = $full_path;
+      $mp3_files{$file}     = $full_path;
+
+      # Extract detailed metadata for better matching
+      my $metadata = extract_metadata_from_path($full_path);
+      push @mp3_metadata, $metadata;
+
+      debug_print("Found MP3: $basename -> $full_path");
+    },
+    $dir
+  );
+
+  my $count = keys %mp3_files;
+  print "Found " . ($count / 2) . " MP3 files\n";
+
+  # Return both old format (for compatibility) and new metadata
+  return (\%mp3_files, \@mp3_metadata);
+}
+
+sub fetch_and_parse_playlists_xml ($http, $User_id) {
+  debug_print("Step 1: Requesting /playlists endpoint");
+  my $playlists_xml;
+  eval { $playlists_xml = plex_api_request($http, "/playlists", $User_id) }
+    or do {
+      die "Failed to get playlists: $@";
+    };
+  debug_print("Step 1 completed - Got playlists XML response");
+
+  debug_print("Step 2: Parsing playlists XML");
+  my $xs = XML::Simple->new;
+  my $playlists_data;
+  eval {
+    $playlists_data
+      = $xs->XMLin($playlists_xml, KeyAttr => {}, ForceArray => ['Playlist']);
+  } or do {
+    die "Failed to parse playlists XML: $@\nXML content: "
+      . substr($playlists_xml, 0, 500) . "...\n";
+  };
+  debug_print("Step 2 completed - XML parsed successfully");
+
+  return $playlists_data;
+}
+
+sub extract_track_metadata ($track_node, $track_count) {
+  my $track_title  = $track_node->{title}            || "";
+  my $album_title  = $track_node->{parentTitle}      || "";
+  my $artist_title = $track_node->{grandparentTitle} || "";
+
+  # Handle UTF-8 in track metadata
+  $track_title  = decode_utf8($track_title) unless utf8::is_utf8($track_title);
+  $album_title  = decode_utf8($album_title) unless utf8::is_utf8($album_title);
+  $artist_title = decode_utf8($artist_title)
+    unless utf8::is_utf8($artist_title);
+
+  debug_print("  Track $track_count: '$track_title' by '$artist_title'");
+
+  return {
+    track_title  => $track_title,
+    album_title  => $album_title,
+    artist_title => $artist_title,
+    track_id     => $track_node->{ratingKey},
+  };
+}
+
+sub process_playlist_tracks ($http, $playlist_id, $playlist_title, $User_id) {
+  debug_print("Getting tracks for playlist '$playlist_title'");
+  my $tracks_xml;
+  eval {
+    $tracks_xml
+      = plex_api_request($http, "/playlists/$playlist_id/items", $User_id);
+  } or do {
+    warn "Failed to get tracks for playlist '$playlist_title': $@";
+    return [];
+  };
+  debug_print("Got tracks XML for playlist '$playlist_title'");
+
+  debug_print("Parsing tracks XML for '$playlist_title'");
+  my $xs = XML::Simple->new;
+  my $tracks_data;
+  eval {
+    $tracks_data
+      = $xs->XMLin($tracks_xml, KeyAttr => {}, ForceArray => ['Track']);
+  } or do {
+    warn "Failed to parse tracks XML for playlist '$playlist_title': $@";
+    return [];
+  };
+
+  my @tracks;
+  my $track_nodes = $tracks_data->{Track} || [];
+  $track_nodes = [$track_nodes] unless ref($track_nodes) eq 'ARRAY';
+  debug_print("Found "
+      . scalar(@$track_nodes)
+      . " tracks in playlist '$playlist_title'");
+
+  my $track_count = 0;
+  for my $track_node (@$track_nodes) {
+    $track_count++;
+    my $track = extract_track_metadata($track_node, $track_count);
+    push @tracks, $track;
+  }
+
+  return \@tracks;
+}
+
+sub extract_playlists ($http, $specific_playlist = undef, $User_id = undef) {
+  my @playlists;
+
+  if ($specific_playlist) {
+    print "Extracting playlist '$specific_playlist' from Plex server...\n";
+    debug_print("Starting single playlist extraction for: $specific_playlist");
+  } else {
+    print "Extracting all playlists from Plex server...\n";
+    debug_print("Starting playlist extraction process");
+  }
+
+  my $playlists_data = fetch_and_parse_playlists_xml($http, $User_id);
+
+  debug_print("Step 3: Processing playlist data structure");
+  my $playlist_nodes = $playlists_data->{Playlist} || [];
+  $playlist_nodes = [$playlist_nodes] unless ref($playlist_nodes) eq 'ARRAY';
+  debug_print(
+    "Found " . scalar(@$playlist_nodes) . " total playlists (all types)");
+
+  my $audio_playlist_count = 0;
+  for my $playlist_node (@$playlist_nodes) {
+    my $playlist_type  = $playlist_node->{playlistType} || "unknown";
+    my $playlist_title = $playlist_node->{title}        || "unnamed";
+    my $playlist_id    = $playlist_node->{ratingKey}    || "no-id";
+
+    # Ensure proper UTF-8 handling for titles
+    $playlist_title = decode_utf8($playlist_title)
+      unless utf8::is_utf8($playlist_title);
+
+    debug_print(
+      "Processing playlist: '$playlist_title' (ID: $playlist_id, Type: $playlist_type)"
+    );
+
+    next
+      unless $playlist_node->{playlistType}
+      && $playlist_node->{playlistType} eq 'audio';
+
+    # If looking for specific playlist, check if this matches
+    if ($specific_playlist) {
+      next unless $playlist_title eq $specific_playlist;
+      debug_print(
+        "✓ Found matching playlist: $playlist_title (ID: $playlist_id)");
+    }
+
+    $audio_playlist_count++;
+    debug_print(
+      "✓ Audio playlist #$audio_playlist_count: $playlist_title (ID: $playlist_id)"
+    );
+
+    my $tracks
+      = process_playlist_tracks($http, $playlist_id, $playlist_title, $User_id);
+
+    if (@$tracks) {
+      push @playlists,
+        { id => $playlist_id, title => $playlist_title, tracks => $tracks };
+      debug_print("✓ Added playlist '$playlist_title' with "
+          . scalar(@$tracks)
+          . " tracks");
+    } else {
+      debug_print("⚠ Skipping empty playlist '$playlist_title'");
+    }
+  }
+
+  debug_print("Playlist extraction completed");
+
+  if ($specific_playlist && !@playlists) {
+    die
+      "Playlist '$specific_playlist' not found. Use --list to see available playlists.\n";
+  }
+
+  if ($specific_playlist) {
+    print "Found playlist '$specific_playlist'\n";
+  } else {
+    print "Found " . scalar(@playlists) . " audio playlists\n";
+  }
+
+  return \@playlists;
+}
+
+sub format_playlist_duration ($duration) {
+  return "" unless $duration > 0;
+
+  my $hours   = int($duration / 3_600_000);
+  my $minutes = int(($duration % 3_600_000) / 60_000);
+
+  return sprintf " [%dh %dm]", $hours, $minutes if $hours > 0;
+  return sprintf " [%dm]", $minutes if $minutes > 0;
+  return "";
+}
+
+sub process_playlist_for_listing ($playlist_node, $playlist_count) {
+
+  my $playlist_type  = $playlist_node->{playlistType} || "unknown";
+  my $playlist_title = $playlist_node->{title}        || "unnamed";
+  my $playlist_id    = $playlist_node->{ratingKey}    || "no-id";
+  my $item_count     = $playlist_node->{leafCount}    || 0;
+  my $duration       = $playlist_node->{duration}     || 0;
+
+  # Ensure proper UTF-8 handling for titles
+  $playlist_title = decode_utf8($playlist_title)
+    unless utf8::is_utf8($playlist_title);
+
+  debug_print(
+    "Found playlist: '$playlist_title' (ID: $playlist_id, Type: $playlist_type, Items: $item_count)"
+  );
+
+  return
+    unless $playlist_node->{playlistType}
+    && $playlist_node->{playlistType} eq 'audio';
+
+  my $duration_str = format_playlist_duration($duration);
+  printf "[%2d] %-50s (%d tracks)%s\n", $playlist_count, $playlist_title,
+    $item_count, $duration_str;
+
+  return { id => $playlist_id, title => $playlist_title, count => $item_count };
+}
+
+sub list_playlists_only ($http, $User_id = undef) {
+  print "Available Plex Playlists\n";
+  print "========================\n";
+  debug_print("Starting playlist listing (no track fetching)");
+
+  my $playlists_data = fetch_and_parse_playlists_xml($http, $User_id);
+
+  my $playlist_nodes = $playlists_data->{Playlist} || [];
+  $playlist_nodes = [$playlist_nodes] unless ref($playlist_nodes) eq 'ARRAY';
+  debug_print(
+    "Found " . scalar(@$playlist_nodes) . " total playlists (all types)");
+
+  my @audio_playlists;
+  my $playlist_count = 0;
+
+  for my $playlist_node (@$playlist_nodes) {
+    my $playlist
+      = process_playlist_for_listing($playlist_node, $playlist_count + 1);
+    if ($playlist) {
+      $playlist_count++;
+      push @audio_playlists, $playlist;
+    }
+  }
+
+  print "\nFound $playlist_count audio playlists\n";
+
+  if ($playlist_count > 0) {
+    print "\nTo sync a specific playlist, use:\n";
+    print "  --playlist \"PLAYLIST_NAME\"\n\n";
+    print "Examples:\n";
+    for my $playlist (@audio_playlists[ 0 .. 2 ]) {  # Show first 3 as examples
+      last unless $playlist;
+      print
+        "  plex_playlist_sync --server \"$Plex_server\" --token \"***\" --playlist \"$playlist->{title}\"\n";
+    }
+  }
+
+  return \@audio_playlists;
+}
+
+sub list_users ($http) {
+
+  print "Available Plex Users\n";
+  print "====================\n";
+  debug_print("Starting user listing");
+
+  debug_print("Requesting /accounts endpoint");
+  my $users_xml;
+  eval { $users_xml = plex_api_request($http, "/accounts"); } or do {
+    die "Failed to get users: $@";
+  };
+  debug_print("Got users XML response");
+
+  debug_print("Parsing users XML");
+  my $xs = XML::Simple->new;
+  my $users_data;
+  eval {
+    $users_data
+      = $xs->XMLin($users_xml, KeyAttr => {}, ForceArray => ['Account']);
+  } or do {
+    die "Failed to parse users XML: $@\nXML content: "
+      . substr($users_xml, 0, 500) . "...\n";
+  };
+  debug_print("XML parsed successfully");
+
+  my $account_nodes = $users_data->{Account} || [];
+  $account_nodes = [$account_nodes] unless ref($account_nodes) eq 'ARRAY';
+  debug_print("Found " . scalar(@$account_nodes) . " user accounts");
+
+  my @users;
+  my $user_count = 0;
+
+  for my $account_node (@$account_nodes) {
+    my $account_id = $account_node->{id}    || "no-id";
+    my $user_name  = $account_node->{name}  || "unnamed";
+    my $user_title = $account_node->{title} || $user_name;
+
+    # Ensure proper UTF-8 handling for names
+    $user_name  = decode_utf8($user_name)  unless utf8::is_utf8($user_name);
+    $user_title = decode_utf8($user_title) unless utf8::is_utf8($user_title);
+
+    $user_count++;
+
+    debug_print(
+      "Found user: '$user_title' (ID: $account_id, Name: $user_name)");
+
+    printf "[%2d] %-30s (ID: %s)\n", $user_count, $user_title, $account_id;
+
+    push @users,
+      { id => $account_id, name => $user_name, title => $user_title };
+  }
+
+  print "\nFound $user_count users\n";
+
+  if ($user_count > 0) {
+    print "\nTo access a specific user's playlists, use:\n";
+    print "  --user USER_ID\n\n";
+    print "Examples:\n";
+    for my $user (@users[ 0 .. 2 ]) {  # Show first 3 as examples
+      last unless $user;
+      print "  # List $user->{title}'s playlists\n";
+      print
+        "  plex_playlist_sync --server \"$Plex_server\" --token \"***\" --user $user->{id} --list\n\n";
+    }
+  }
+
+  return \@users;
+}
+
+sub normalize_text ($text) {
+  return "" unless defined $text;
+
+  # Ensure proper UTF-8 handling
+  $text = decode_utf8($text) unless utf8::is_utf8($text);
+
+  # Normalize Unicode characters - decompose accented characters
+  $text = NFD($text);
+
+  # Remove combining diacritical marks (accents)
+  $text =~ s/\p{Mn}//g;
+
+  # Recompose what's left
+  $text = NFC($text);
+
+  # Convert to lowercase
+  $text = lc $text;
+
+  # Remove track numbers from the beginning
+  $text =~ s/^\d+[_\-\s]+//;  # Remove leading track numbers
+
+  # Handle common remix/version patterns more carefully
+  # Remove parentheses content that might contain version info
+  $text =~ s/\([^)]*remix[^)]*\)//gi;    # Remove remix info in parentheses
+  $text =~ s/\([^)]*mix[^)]*\)//gi;      # Remove mix info in parentheses
+  $text =~ s/\([^)]*version[^)]*\)//gi;  # Remove version info in parentheses
+  $text =~ s/\([^)]*edit[^)]*\)//gi;     # Remove edit info in parentheses
+
+  # Remove other common punctuation but preserve word boundaries
+  $text =~ s/[^\w\s]/ /g;                # Replace punctuation with spaces
+  $text =~ s/\s+/ /g;                    # Normalize spaces
+  $text =~ s/^\s+|\s+$//g;               # Trim
+
+  return $text;
+}
+
+sub count_matching_words ($plex_words_ref, $mp3_words_ref) {
+  my $matching_words = 0;
+  my %matched_mp3_words;
+
+  for my $plex_word (@$plex_words_ref) {
+    next if length($plex_word) < 3;  # Skip short words
+    for my $mp3_word (@$mp3_words_ref) {
+      if ($plex_word eq $mp3_word && !$matched_mp3_words{$mp3_word}) {
+        $matching_words++;
+        $matched_mp3_words{$mp3_word} = 1;
+        last;
+      }
+    }
+  }
+
+  return $matching_words;
+}
+
+sub calculate_fuzzy_track_score ($plex_track_norm, $mp3_track_norm) {
+
+  my @plex_words = split /\s+/, $plex_track_norm;
+  my @mp3_words  = split /\s+/, $mp3_track_norm;
+
+  my $matching_words = count_matching_words(\@plex_words, \@mp3_words);
+
+  my $plex_word_count = @plex_words;
+  my $mp3_word_count  = @mp3_words;
+  my $min_words
+    = $plex_word_count < $mp3_word_count ? $plex_word_count : $mp3_word_count;
+  my $max_words
+    = $plex_word_count > $mp3_word_count ? $plex_word_count : $mp3_word_count;
+
+  # Very stringent requirements to avoid false positives
+  my $word_ratio = $max_words / $min_words;
+
+  if ( $matching_words >= 2
+    && $matching_words / $min_words >= 0.8
+    && $matching_words / $max_words >= 0.6
+    && !($word_ratio > 2 && $matching_words == $min_words))
+  {
+    my $fuzzy_score = int(80 * ($matching_words / $max_words));
+    return ($fuzzy_score,
+      "fuzzy_track($matching_words/$plex_word_count vs $mp3_word_count)");
+  }
+
+  return (0, "");
+}
+
+sub calculate_track_title_score ($plex_track_norm, $mp3_track_norm) {
+  return (100, "exact_track") if $plex_track_norm eq $mp3_track_norm;
+
+  if ($plex_track_norm && $mp3_track_norm) {
+    return calculate_fuzzy_track_score($plex_track_norm, $mp3_track_norm);
+  }
+
+  return (0, "");
+}
+
+sub calculate_artist_score ($plex_artist_norm, $mp3_meta) {
+  my $mp3_artist_file_norm = normalize_text($mp3_meta->{artist_from_filename});
+  my $mp3_artist_dir_norm  = normalize_text($mp3_meta->{artist_from_dir});
+
+  return (75, "exact_artist_file")
+    if $plex_artist_norm eq $mp3_artist_file_norm;
+  return (70, "exact_artist_dir") if $plex_artist_norm eq $mp3_artist_dir_norm;
+
+  if (
+       $mp3_artist_file_norm
+    && length($mp3_artist_file_norm) >= 3
+    && ( $plex_artist_norm =~ /\Q$mp3_artist_file_norm\E/
+      || $mp3_artist_file_norm =~ /\Q$plex_artist_norm\E/)
+  ) {
+    return (35, "fuzzy_artist_file");
+  }
+
+  if (
+       $mp3_artist_dir_norm
+    && length($mp3_artist_dir_norm) >= 3
+    && ( $plex_artist_norm =~ /\Q$mp3_artist_dir_norm\E/
+      || $mp3_artist_dir_norm =~ /\Q$plex_artist_norm\E/)
+  ) {
+    return (30, "fuzzy_artist_dir");
+  }
+
+  # Penalty for wrong artist when we have artist info available
+  return (-20, "artist_mismatch")
+    if $mp3_artist_file_norm || $mp3_artist_dir_norm;
+
+  return (0, "");
+}
+
+sub calculate_album_score ($plex_album_norm, $mp3_meta) {
+  my $mp3_album_norm = normalize_text($mp3_meta->{album_from_dir});
+
+  return (200, "exact_album") if $plex_album_norm eq $mp3_album_norm;
+
+  if ($mp3_album_norm && length($mp3_album_norm) >= 3) {
+    return (50, "fuzzy_album") if $plex_album_norm =~ /\Q$mp3_album_norm\E/;
+    return (40, "fuzzy_album_reverse")
+      if $mp3_album_norm =~ /\Q$plex_album_norm\E/;
+  }
+
+  return (0, "");
+}
+
+sub calculate_match_score ($plex_track, $mp3_meta) {
+
+  my $plex_track_norm  = normalize_text($plex_track->{track_title});
+  my $plex_artist_norm = normalize_text($plex_track->{artist_title});
+  my $plex_album_norm  = normalize_text($plex_track->{album_title});
+
+  my $score = 0;
+  my @reasons;
+
+  # Track title matching (most important)
+  my $mp3_track_norm = normalize_text($mp3_meta->{track_from_filename});
+  my ($track_score, $track_reason)
+    = calculate_track_title_score($plex_track_norm, $mp3_track_norm);
+  $score += $track_score;
+  push @reasons, $track_reason if $track_reason;
+
+  # Require at least some track title match before considering other factors
+  return (0, []) if $score == 0;
+
+  # Artist matching (high importance) - only if we have a track match
+  if ($plex_artist_norm) {
+    my ($artist_score, $artist_reason)
+      = calculate_artist_score($plex_artist_norm, $mp3_meta);
+    $score += $artist_score;
+    push @reasons, $artist_reason if $artist_reason;
+  }
+
+  # Album matching (HIGH importance when track matches) - prioritize exact album matches
+  if ($plex_album_norm) {
+    my ($album_score, $album_reason)
+      = calculate_album_score($plex_album_norm, $mp3_meta);
+    $score += $album_score;
+    push @reasons, $album_reason if $album_reason;
+  }
+
+  # Version info bonus (helps with remixes, live versions, etc.)
+  if ($mp3_meta->{version_info}) {
+    my $version_norm = normalize_text($mp3_meta->{version_info});
+    if (
+         $version_norm
+      && length($version_norm) >= 3
+      && ( $plex_track_norm =~ /\Q$version_norm\E/
+        || $plex_album_norm =~ /\Q$version_norm\E/)
+    ) {
+      $score += 10;
+      push @reasons, "version_match";
+    }
+  }
+
+  return ($score, \@reasons);
+}
+
+sub try_exact_filename_matches ($track_title, $mp3_files, $used_files) {
+  return unless $track_title;
+
+  # Quick exact matches first (backward compatibility)
+  if (exists $mp3_files->{$track_title}
+    && !$used_files->{ $mp3_files->{$track_title} })
+  {
+    return $mp3_files->{$track_title};
+  }
+
+  if (exists $mp3_files->{"$track_title.mp3"}
+    && !$used_files->{ $mp3_files->{"$track_title.mp3"} })
+  {
+    debug_print("Exact filename match: $track_title.mp3");
+    return $mp3_files->{"$track_title.mp3"};
+  }
+
+  return;
+}
+
+sub find_best_metadata_match ($track, $mp3_metadata, $used_files) {
+  my $best_match;
+  my $best_score = 0;
+  my $best_reasons;
+
+  for my $mp3_meta (@$mp3_metadata) {
+    # Skip files that have already been used
+    next if $used_files && $used_files->{ $mp3_meta->{full_path} };
+
+    my ($score, $reasons) = calculate_match_score($track, $mp3_meta);
+
+    if ($score > $best_score) {
+      $best_score   = $score;
+      $best_match   = $mp3_meta->{full_path};
+      $best_reasons = $reasons;
+    }
+  }
+
+  return ($best_match, $best_score, $best_reasons);
+}
+
+sub try_fallback_fuzzy_match ($track_title, $mp3_files, $used_files) {
+  for my $filename (keys %$mp3_files) {
+    my $file_path = $mp3_files->{$filename};
+    next if $used_files && $used_files->{$file_path};
+    next
+      if $filename =~ /\.mp3$/i
+      && exists $mp3_files->{ basename($filename, ".mp3") };
+
+    if ($filename =~ /\Q$track_title\E/i || $track_title =~ /\Q$filename\E/i) {
+      debug_print("Fallback fuzzy match found: $filename");
+      return $file_path;
+    }
+  }
+
+  return;
+}
+
+sub match_track_to_mp3 ($track, $mp3_files, $mp3_metadata, $used_files = undef)
+{
+  my $track_title  = $track->{track_title}  || "";
+  my $album_title  = $track->{album_title}  || "";
+  my $artist_title = $track->{artist_title} || "";
+
+  debug_print(
+    "Matching track: '$track_title' by '$artist_title' from '$album_title'");
+
+  # Try exact filename matches first
+  my $exact_match
+    = try_exact_filename_matches($track_title, $mp3_files, $used_files);
+  return $exact_match if $exact_match;
+
+  # Try advanced metadata matching
+  my ($best_match, $best_score, $best_reasons)
+    = find_best_metadata_match($track, $mp3_metadata, $used_files);
+
+  # Evaluate the best match based on score thresholds
+  if ($best_score >= 100) {  # Exact track title match required
+    debug_print("Best match: "
+        . basename($best_match)
+        . " (score: $best_score, reasons: "
+        . join(", ", @$best_reasons)
+        . ")");
+    return $best_match;
+  } elsif ($best_score >= 80) {  # Strong fuzzy match
+    debug_print("Good match: "
+        . basename($best_match)
+        . " (score: $best_score, reasons: "
+        . join(", ", @$best_reasons)
+        . ")");
+    return $best_match;
+  } else {
+    debug_print("No confident match found (best score: $best_score)");
+  }
+
+  # Fallback to old fuzzy matching if new method fails
+  my $fallback_match
+    = try_fallback_fuzzy_match($track_title, $mp3_files, $used_files);
+  return $fallback_match if $fallback_match;
+
+  debug_print("No match found for: '$track_title' by '$artist_title'");
+  return;
+}
+
+sub cleanup_old_files ($playlist_dir, $current_files, $playlist_title) {
+
+  # Create lookup of files that should exist (no UTF-8 manipulation needed)
+  my %should_exist = map { $_ => 1 } @$current_files;
+
+  # Add the M3U file to the list of files that should exist
+  $should_exist{"$playlist_title.m3u"} = 1;
+
+  my @files_to_delete;
+
+  # Find all files currently in the playlist directory
+  find(
+    sub {
+      my $file = $_;
+      return unless -f $file;
+
+      # Use file paths as-is from filesystem
+      my $found_file    = $File::Find::name;
+      my $relative_path = File::Spec->abs2rel($found_file, $playlist_dir);
+
+      # Skip if this file should exist
+      return if $should_exist{$relative_path};
+
+      # Skip hidden files and system files
+      return if $relative_path =~ /^\./;
+
+      push @files_to_delete, $found_file;
+      debug_print("Found orphaned file: $relative_path");
+    },
+    $playlist_dir
+  ) if -d $playlist_dir;
+
+  # Delete the orphaned files
+  for my $file_path (@files_to_delete) {
+    my $relative_path = File::Spec->abs2rel($file_path, $playlist_dir);
+
+    print "  🗑️  Removing: $relative_path\n";
+
+    unless ($Dry_run) {
+      if (-e $file_path) {
+        unlink $file_path or warn "Failed to delete $file_path: $!";
+      } else {
+        debug_print("File already removed: $file_path");
+      }
+    }
+  }
+
+  # Clean up empty directories
+  unless ($Dry_run) {
+    cleanup_empty_dirs($playlist_dir);
+  }
+
+  return scalar @files_to_delete;
+}
+
+sub cleanup_empty_dirs ($base_dir) {
+
+  # Get all directories, sorted by depth (deepest first)
+  my @dirs;
+  find(
+    sub {
+      my $dir = $_;
+      return unless -d $dir;
+      return
+        if $File::Find::name eq $base_dir;  # Don't delete the base directory
+      push @dirs, $File::Find::name;
+    },
+    $base_dir
+  ) if -d $base_dir;
+
+  # Sort by depth (deepest first) so we can remove empty subdirectories first
+  @dirs = sort { (split /\//, $b) <=> (split /\//, $a) } @dirs;
+
+  for my $dir (@dirs) {
+    # Check if directory is empty
+    opendir my $dh, $dir or next;
+    my @contents = grep { $_ ne '.' && $_ ne '..' } readdir $dh;
+    closedir $dh;
+
+    if (@contents == 0) {
+      debug_print(
+        "Removing empty directory: " . File::Spec->abs2rel($dir, $base_dir));
+      rmdir $dir or warn "Failed to remove empty directory $dir: $!";
+    }
+  }
+}
+
+sub prepare_playlist_directory ($playlist_title) {
+  my $safe_title = $playlist_title;
+  $safe_title =~ s/[^\w\s-]/_/g;
+  $safe_title =~ s/\s+/_/g;
+
+  my $playlist_dir = "$Output_dir/$safe_title";
+
+  unless ($Dry_run || -d $playlist_dir) {
+    make_path($playlist_dir);
+  }
+
+  return ($playlist_dir, $safe_title);
+}
+
+sub group_tracks_by_identity ($tracks) {
+  my %track_groups;
+  for my $track (@$tracks) {
+    my $key = lc($track->{track_title} || '') . '|'
+      . lc($track->{artist_title} || '');
+    push @{ $track_groups{$key} }, $track;
+  }
+  return \%track_groups;
+}
+
+sub process_single_track ($track, $mp3_files, $mp3_metadata, $used_files,
+  $playlist_dir,)
+{
+  debug_print(
+    "Processing unique track: '$track->{track_title}' by '$track->{artist_title}' from '$track->{album_title}'"
+  );
+
+  my $mp3_path
+    = match_track_to_mp3($track, $mp3_files, $mp3_metadata, $used_files);
+  return unless $mp3_path;
+
+  $used_files->{$mp3_path} = 1;
+  my $relative_path = File::Spec->abs2rel($mp3_path, $Mp3_dir);
+  my $dest_path     = File::Spec->catfile($playlist_dir, $relative_path);
+
+  my $dest_dir = dirname($dest_path);
+  unless ($Dry_run || -d $dest_dir) {
+    make_path($dest_dir);
+  }
+
+  print "  ✓ $track->{track_title} -> $relative_path\n";
+
+  unless ($Dry_run) {
+    copy($mp3_path, $dest_path) or warn "Failed to copy $mp3_path: $!";
+  }
+
+  return $relative_path;
+}
+
+sub find_best_track_version ($tracks, $mp3_files, $mp3_metadata, $used_files) {
+  my $best_track;
+  my $best_mp3_path;
+  my $best_score = -1;
+
+  debug_print("Found "
+      . scalar(@$tracks)
+      . " versions of '$tracks->[0]->{track_title}' by '$tracks->[0]->{artist_title}':"
+  );
+
+  for my $track (@$tracks) {
+    debug_print("  Version from album: '$track->{album_title}'");
+
+    my $mp3_path
+      = match_track_to_mp3($track, $mp3_files, $mp3_metadata, $used_files);
+    next unless $mp3_path;
+
+    # Calculate the score this match would get
+    my $score = 0;
+    for my $mp3_meta (@$mp3_metadata) {
+      next if $mp3_meta->{full_path} ne $mp3_path;
+      my ($calc_score, $reasons) = calculate_match_score($track, $mp3_meta);
+      $score = $calc_score;
+      debug_print("    Score: $calc_score (" . join(", ", @$reasons) . ")");
+      last;
+    }
+
+    if ($score > $best_score) {
+      $best_score    = $score;
+      $best_track    = $track;
+      $best_mp3_path = $mp3_path;
+    }
+  }
+
+  return ($best_track, $best_mp3_path, $best_score);
+}
+
+sub process_multiple_track_versions ($tracks, $mp3_files, $mp3_metadata,
+  $used_files, $playlist_dir,)
+{
+  my ($best_track, $best_mp3_path, $best_score)
+    = find_best_track_version($tracks, $mp3_files, $mp3_metadata, $used_files);
+
+  return unless $best_mp3_path;
+
+  $used_files->{$best_mp3_path} = 1;
+  my $relative_path = File::Spec->abs2rel($best_mp3_path, $Mp3_dir);
+  my $dest_path     = File::Spec->catfile($playlist_dir, $relative_path);
+
+  my $dest_dir = dirname($dest_path);
+  unless ($Dry_run || -d $dest_dir) {
+    make_path($dest_dir);
+  }
+
+  print "  ✓ $best_track->{track_title} -> $relative_path (best of "
+    . scalar(@$tracks)
+    . " versions, score: $best_score)\n";
+
+  unless ($Dry_run) {
+    copy($best_mp3_path, $dest_path)
+      or warn "Failed to copy $best_mp3_path: $!";
+  }
+
+  return $relative_path;
+}
+
+sub create_m3u_playlist ($playlist_dir, $playlist_title, $m3u_entries) {
+  return unless @$m3u_entries && !$Dry_run;
+
+  my $m3u_path = "$playlist_dir/$playlist_title.m3u";
+  open my $fh, '>', $m3u_path or die "Cannot write $m3u_path: $!";
+  print $fh "#EXTM3U\n";
+  print $fh "$_\n" for @$m3u_entries;
+  close $fh or warn "Failed to close M3U file: $!";
+  print "  Created playlist: $m3u_path\n";
+}
+
+sub sync_playlist ($playlist, $mp3_files, $mp3_metadata) {
+  my ($playlist_dir, $safe_title)
+    = prepare_playlist_directory($playlist->{title});
+
+  print "\nSyncing playlist: $playlist->{title}\n";
+  print "Output directory: $playlist_dir\n";
+
+  my @m3u_entries;
+  my @current_files;
+  my %used_files;
+  my $matched = 0;
+  my $total   = scalar(@{ $playlist->{tracks} });
+
+  my $track_groups = group_tracks_by_identity($playlist->{tracks});
+
+  # Process each unique track group, keeping only the best match
+  for my $track_key (sort keys %$track_groups) {
+    my $tracks = $track_groups->{$track_key};
+
+    my $relative_path;
+    if (@$tracks == 1) {
+      # Single version - process normally
+      $relative_path = process_single_track(
+        $tracks->[0], $mp3_files, $mp3_metadata,
+        \%used_files, $playlist_dir
+      );
+      if ($relative_path) {
+        $matched++;
+        push @m3u_entries,   $relative_path;
+        push @current_files, $relative_path;
+      } else {
+        print "  ✗ $tracks->[0]->{track_title} (not found)\n";
+      }
+    } else {
+      # Multiple versions - find the best match
+      $relative_path
+        = process_multiple_track_versions($tracks, $mp3_files, $mp3_metadata,
+          \%used_files, $playlist_dir);
+      if ($relative_path) {
+        $matched++;
+        push @m3u_entries,   $relative_path;
+        push @current_files, $relative_path;
+      } else {
+        print
+          "  ✗ $tracks->[0]->{track_title} (no matches found for any version)\n";
+      }
+    }
+  }
+
+  create_m3u_playlist($playlist_dir, $safe_title, \@m3u_entries);
+
+  # Clean up files that are no longer in the playlist
+  my $deleted_count
+    = cleanup_old_files($playlist_dir, \@current_files, $safe_title);
+
+  print "  Matched: $matched/$total tracks\n";
+  if ($deleted_count > 0) {
+    print "  Cleaned up: $deleted_count orphaned files\n";
+  }
+
+  return $matched;
+}
+
+sub validate_initial_setup () {
+  die "Plex server URL not specified. Use --server option.\n"
+    unless $Plex_server;
+
+  # Check for insecure HTTP usage
+  if ($Plex_server && $Plex_server =~ /^http:\/\//) {
+    warn
+      "⚠️  WARNING: Using HTTP will send authentication tokens unencrypted!\n";
+    warn "⚠️  For remote servers, use HTTPS to protect your credentials.\n";
+    warn "⚠️  HTTP is only safe for local network servers.\n\n";
+  }
+
+  # Check authentication options
+  unless ($Plex_token || $Username) {
+    die
+      "Authentication required. Use either --token TOKEN or --username EMAIL.\n";
+  }
+}
+
+sub handle_credential_authentication ($http) {
+  return unless $Username && !$Plex_token;
+
+  print "Authenticating with Plex using credentials...\n";
+
+  unless ($Password) {
+    print "Enter your Plex password: ";
+    system 'stty -echo' unless $^O eq 'MSWin32';
+    chomp($Password = <>);
+    system 'stty echo' unless $^O eq 'MSWin32';
+    print "\n";
+  }
+
+  unless ($Username && $Password) {
+    die "Username and password are required for credential authentication.\n";
+  }
+
+  eval {
+    $Plex_token
+      = get_plex_token_from_credentials($Username, $Password, $http);
+  } or do {
+    # Clear password from memory for security
+    $Password = undef;
+    die "Failed to authenticate with Plex: $@";
+  };
+
+  # Clear password from memory for security
+  $Password = undef;
+
+  print "✓ Authentication successful!\n";
+  print "✓ Token obtained: " . substr($Plex_token, 0, 10) . "...\n\n";
+}
+
+sub handle_user_specific_token ($http) {
+  return unless $User_id;
+
+  print "Getting user-specific token for user ID: $User_id...\n";
+
+  my $machine_id = get_machine_identifier($http);
+  if ($machine_id) {
+    my $user_token = get_user_token($http, $User_id, $machine_id);
+    if ($user_token) {
+      print "✓ Got user-specific token for user $User_id\n";
+      $Plex_token = $user_token;  # Replace global token
+      debug_print("Switched to user token");
+    } else {
+      warn "⚠ Could not get user-specific token, using admin token\n";
+      warn "This may show admin playlists instead of user playlists\n";
+    }
+  } else {
+    warn "⚠ Could not get machine identifier, using admin token\n";
+  }
+  print "\n";
+}
+
+sub handle_special_modes ($http) {
+  # Handle list-users mode
+  if ($List_users) {
+    list_users($http);
+    return 1;
+  }
+
+  # Handle list-only mode
+  if ($List_only) {
+    list_playlists_only($http, $User_id);
+    return 1;
+  }
+
+  return 0;
+}
+
+sub print_sync_configuration () {
+  print "Plex Server: $Plex_server\n";
+  print "MP3 Directory: $Mp3_dir\n";
+  print "Output Directory: $Output_dir\n";
+  print "Mode: " .     ($Dry_run       ? "DRY RUN"          : "LIVE") . "\n";
+  print "Playlist: " . ($Playlist_name ? "'$Playlist_name'" : "ALL") . "\n\n";
+}
+
+sub process_playlists_and_sync ($http) {
+  die "MP3 directory not found: $Mp3_dir\n" unless -d $Mp3_dir;
+
+  my ($mp3_files, $mp3_metadata) = scan_mp3_files($Mp3_dir);
+  my $playlists = extract_playlists($http, $Playlist_name, $User_id);
+
+  if (!@$playlists) {
+    if ($Playlist_name) {
+      print "Playlist '$Playlist_name' not found or empty.\n";
+    } else {
+      print "No playlists found on Plex server.\n";
+    }
+    return;
+  }
+
+  my $total_matched = 0;
+  my $total_tracks  = 0;
+
+  for my $playlist (@$playlists) {
+    my $matched = sync_playlist($playlist, $mp3_files, $mp3_metadata);
+    $total_matched += $matched;
+    $total_tracks  += scalar(@{ $playlist->{tracks} });
+  }
+
+  print "\nSummary:\n";
+  print "Playlists processed: " . scalar(@$playlists) . "\n";
+  print "Tracks matched: $total_matched/$total_tracks\n";
+  print "Match rate: "
+    . sprintf("%.1f%%", ($total_matched / $total_tracks) * 100) . "\n"
+    if $total_tracks > 0;
+}
+
+sub main () {
+  print "Plex Playlist Sync Tool\n";
+  print "========================\n";
+
+  validate_initial_setup();
+
+  my $http = create_http_client;
+
+  handle_credential_authentication($http);
+  handle_user_specific_token($http);
+
+  # Handle special modes (list users/playlists)
+  return if handle_special_modes($http);
+
+  print_sync_configuration();
+  process_playlists_and_sync($http);
+}
+
+main() unless caller;
