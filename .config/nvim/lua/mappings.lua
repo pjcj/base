@@ -241,8 +241,15 @@ wk.add({
   { "gl", group = "lsp" },
   { "gla", lb.code_action, desc = "action" },
   { "glD", lb.type_definition, desc = "type definition" },
-  { "glf", desc = "format" },
-  { "glf", lb.range_formatting, mode = "v", desc = "format" },
+  {
+    "glf",
+    function()
+      require("conform").format({ async = true, lsp_fallback = true })
+      require("notify")("formatted")
+    end,
+    mode = { "n", "v" },
+    desc = "format",
+  },
   { "glF", ":ALEFix<cr>", desc = "ALE fix" },
   { "gli", lb.incoming_calls, desc = "incoming calls" },
   { "glk", lb.signature_help, desc = "signature" },
@@ -1066,11 +1073,6 @@ wk.add({
     },
   },
 })
-
-vim.keymap.set("", "glf", function()
-  require("conform").format({ async = true, lsp_fallback = true })
-  require("notify")("formatted")
-end)
 
 local vmap = vim.api.nvim_set_keymap -- global mappings
 
