@@ -4,4 +4,5 @@
 .fseventsd/
 .aider*
 CLAUDE.md
+CLAUDE.prompts
 .claude/
