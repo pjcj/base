@@ -2072,7 +2072,7 @@ local plugins = {
     "coder/claudecode.nvim",
     config = true,
     opts = {
-      auto_start = false,
+      auto_start = true,
       terminal = {
         -- provider = "native",
         split_width_percentage = 0.4,
@@ -2087,9 +2087,14 @@ local plugins = {
       { "<leader>,lf", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
       { "<leader>,lr", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
       {
-        "<leader>,lC",
+        "<leader>,lc",
         "<cmd>ClaudeCode --continue<cr>",
         desc = "Continue Claude",
+      },
+      {
+        "<leader>,lb",
+        "<cmd>ClaudeCodeAdd %<cr>",
+        desc = "Add current buffer",
       },
       {
         "<leader>,ls",
@@ -2103,6 +2108,9 @@ local plugins = {
         desc = "Add file",
         ft = { "NvimTree", "neo-tree", "oil" },
       },
+      -- Diff management
+      { "<leader>,la", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+      { "<leader>,ld", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
     },
   },
 
