@@ -1060,6 +1060,20 @@ wk.add({
     [[:%s/\s\+$//<cr>:let @/ = ""<cr>]],
     desc = "remove trailing ws",
   },
+  {
+    "<leader>G",
+    function()
+      vim.fn.setreg("+", vim.fn.expand("%:p"))
+    end,
+    desc = "copy filename",
+  },
+  {
+    "<leader><C-g>",
+    function()
+      vim.fn.setreg("+", vim.fn.expand("%"))
+    end,
+    desc = "copy relative filename",
+  },
 
   {
     mode = "i",
