@@ -1837,14 +1837,6 @@ local plugins = {
       --     },
       --   },
       -- },
-      -- {
-      --   -- be sure to set this up properly if you have lazy=true
-      --   "MeanderingProgrammer/render-markdown.nvim",
-      --   opts = {
-      --     file_types = { "Avante" },
-      --   },
-      --   ft = { "Avante" },
-      -- },
     },
     opts = {
       provider = "copilot_claude_sonnet_3_7",
