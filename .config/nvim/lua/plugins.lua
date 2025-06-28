@@ -2026,7 +2026,9 @@ local plugins = {
           -- "--model", "openai/gemini-2.5-pro",
           "--no-show-model-warnings",
           "--edit-format",
-          "diff",
+          "udiff",
+          -- "--multiline",
+          "--show-diffs",
         },
         -- args = {
         --   "--no-auto-commits",
