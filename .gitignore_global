@@ -3,6 +3,5 @@
 .gonvim/
 .fseventsd/
 .aider*
-CLAUDE.md
-CLAUDE.prompts
+CLAUDE.*
 .claude/
