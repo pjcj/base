@@ -1161,8 +1161,6 @@ elif [ 1 = 1 ]; then
     if [ $EUID -eq 0 ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
     local char="─"
     grep -Eq '(18|20)\.04' /etc/os-release 2>|/dev/null && char="-"
-    line() { printf "%.s$char" {1..$(tput cols)} }
-    PROMPT=$'$(line)$(gitprompt)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
 
     perl_here() {
         if [[ -d perl || -d t || -e Makefile.PL ]]; then
@@ -1171,6 +1169,7 @@ elif [ 1 = 1 ]; then
             echo 0
         fi
     }
+
     perlv () {
         if [[ ${PROMPT_SHOW_PERL:-$(perl_here)} == 1 ]]; then
             if which plenv >&/dev/null; then
@@ -1192,7 +1191,58 @@ elif [ 1 = 1 ]; then
             '
         fi
     }
-    RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %{$fg_bold[magenta]%}%T%{$reset_color%}'
+
+    # Function to calculate actual display width of prompt strings
+    prompt-length() {
+        emulate -L zsh
+        local -i COLUMNS=${2:-COLUMNS}
+        local -i x y=${#1} m
+        if (( y )); then
+            while (( ${${(%):-$1%$y(l.1.0)}[-1]} )); do
+                x=y
+                (( y *= 2 ))
+            done
+            while (( y > x + 1 )); do
+                (( m = x + (y - x) / 2 ))
+                (( ${${(%):-$1%$m(l.1.0)}[-1]} && (x = m) || (y = m) ))
+            done
+        fi
+        REPLY=$x
+    }
+
+    custom_prompt() {
+        local term_width=$(tput cols)
+
+        local p_git="$(gitprompt)"
+        local p_status="%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )"
+        local p_hist="%{$fg[$NCOLOUR]%}%h%{$reset_color%}"
+        local p_perl="%{$fg[blue]%}$(perlv)%{$reset_color%}"
+        local p_location="%{$fg[green]%}%m:%~ %{$reset_color%}"
+        local p_time="%{$fg_bold[yellow]%}%T%{$reset_color%}"
+        local content="$p_time $p_hist $p_git$p_status$p_perl$p_location"
+
+        prompt-length "$content"
+        local content_length=$REPLY
+
+        local extra_spaces=2
+        local total_length=$((content_length + extra_spaces))
+
+        local fill_length=$((term_width - total_length))
+        if [[ $fill_length -lt 0 ]]; then
+            fill_length=0
+        fi
+
+        local fill=""
+        if [[ $fill_length -gt 0 ]]; then
+            fill=$(printf "%.s$char" {1..$fill_length})
+        fi
+
+        echo "${content}  ${fill}"
+        echo -n "%{$fg[yellow]%}❯ %{$reset_color%}"
+    }
+
+    PROMPT='$(custom_prompt)'
+    RPROMPT=""
 else
     AGKOZAK_PROMPT_DIRTRIM=0
     AGKOZAK_MULTILINE=0
