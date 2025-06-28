@@ -188,61 +188,61 @@ require("lualine").setup({
         show_colors = true,
         show_loading = true,
       },
-      {
-        function()
-          local ok, minuet_lualine = pcall(require, "minuet.lualine")
-          if ok then
-            return minuet_lualine()
-          end
-          return ""
-        end,
-        -- the following is the default configuration
-        -- the name displayed in the lualine. Set to "provider", "model" or "both"
-        -- display_name = 'both',
-        -- separator between provider and model name for option "both"
-        -- provider_model_separator = ':',
-        -- whether show display_name when no completion requests are active
-        display_on_idle = true,
-        cond = function()
-          local ok, _ = pcall(require, "minuet.lualine")
-          return ok
-        end,
-      },
+      -- {
+      --   function()
+      --     local ok, minuet_lualine = pcall(require, "minuet.lualine")
+      --     if ok then
+      --       return minuet_lualine()
+      --     end
+      --     return ""
+      --   end,
+      --   -- the following is the default configuration
+      --   -- the name displayed in the lualine. Set to "provider", "model" or "both"
+      --   -- display_name = 'both',
+      --   -- separator between provider and model name for option "both"
+      --   -- provider_model_separator = ':',
+      --   -- whether show display_name when no completion requests are active
+      --   display_on_idle = true,
+      --   cond = function()
+      --     local ok, _ = pcall(require, "minuet.lualine")
+      --     return ok
+      --   end,
+      -- },
       -- require("vectorcode.integrations").lualine({ show_job_count = true }),
-      {
-        avante_rag_status,
-        separator = "",
-        padding = { left = 0, right = 1 },
-        color = function()
-          local rag_ok, rag_status = pcall(function()
-            local rag_service = require("avante.rag_service")
-            if rag_service and rag_service.get_rag_service_status then
-              return rag_service.get_rag_service_status()
-            end
-            return "unknown"
-          end)
+      -- {
+      --   avante_rag_status,
+      --   separator = "",
+      --   padding = { left = 0, right = 1 },
+      --   color = function()
+      --     local rag_ok, rag_status = pcall(function()
+      --       local rag_service = require("avante.rag_service")
+      --       if rag_service and rag_service.get_rag_service_status then
+      --         return rag_service.get_rag_service_status()
+      --       end
+      --       return "unknown"
+      --     end)
 
-          if not rag_ok then
-            return { fg = c.base1 }
-          end
+      --     if not rag_ok then
+      --       return { fg = c.base1 }
+      --     end
 
-          local status_colors = {
-            running = { fg = c.rgreen },
-            stopped = { fg = c.red },
-            ready = { fg = c.rgreen },
-            indexing = { fg = c.yellow },
-            error = { fg = c.red },
-            disabled = { fg = c.base01 },
-            unknown = { fg = c.base1 },
-          }
+      --     local status_colors = {
+      --       running = { fg = c.rgreen },
+      --       stopped = { fg = c.red },
+      --       ready = { fg = c.rgreen },
+      --       indexing = { fg = c.yellow },
+      --       error = { fg = c.red },
+      --       disabled = { fg = c.base01 },
+      --       unknown = { fg = c.base1 },
+      --     }
 
-          return status_colors[rag_status] or { fg = c.base1 }
-        end,
-        cond = function()
-          local config_ok, config = pcall(require, "avante.config")
-          return config_ok and config.rag_service and config.rag_service.enabled
-        end,
-      },
+      --     return status_colors[rag_status] or { fg = c.base1 }
+      --   end,
+      --   cond = function()
+      --     local config_ok, config = pcall(require, "avante.config")
+      --     return config_ok and config.rag_service and config.rag_service.enabled
+      --   end,
+      -- },
       mcphub_component_definition(),
       {
         "lsp_status",
