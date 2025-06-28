@@ -1839,7 +1839,7 @@ local plugins = {
       -- },
     },
     opts = {
-      provider = "copilot_claude_sonnet_3_7",
+      provider = "copilot_claude_sonnet_4",
       providers = {
         copilot_claude_sonnet_3_7 = {
           __inherited_from = "copilot",
@@ -1854,7 +1854,7 @@ local plugins = {
           model = "claude-sonnet-4",
           timeout = 60000,
           extra_request_body = {
-            max_tokens = 200000,
+            max_tokens = 2000000,
           },
         },
         copilot_gemini = {
@@ -2013,9 +2013,9 @@ local plugins = {
           "--openai-api-key",
           "$(op read op://Private/GitHub/copilot-api-key)",
           "--model",
-          "openai/claude-3.7-sonnet",
+          "openai/claude-sonnet-4",
           "--weak-model",
-          "openai/claude-3.5-sonnet",
+          "openai/claude-3.7-sonnet",
           -- "--model", "openai/gpt-4o",
           -- "--model", "openai/gpt-4.1",
           -- "--weak-model", "openai/gpt-4o-mini",
