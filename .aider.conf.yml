@@ -23,3 +23,5 @@ multiline: false
 
 read:
   - ~/conventions.md
+  - ~/.claude/CLAUDE.md
+  - CLAUDE.md
