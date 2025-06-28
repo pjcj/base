@@ -1921,7 +1921,7 @@ local plugins = {
         budget_tokens = 50000, -- Increased thinking budget for maximum reasoning
       },
       dual_boost = {
-        enabled = true,
+        enabled = false,
         first_provider = "copilot_claude_sonnet_3_7",
         second_provider = "copilot_gemini",
         timeout = 60000, -- timeout in milliseconds
@@ -1944,6 +1944,10 @@ local plugins = {
           -- model = "nomic-embed-text",
           api_key = "",
         },
+      },
+
+      {
+        selector = { provider = "telescope" },
       },
 
       -- system_prompt as function ensures LLM always has latest MCP server
