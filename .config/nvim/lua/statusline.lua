@@ -86,9 +86,9 @@ local function get_aider_info()
 
     -- Try to read from running aider process
     if not model then
-      local handle = io.popen(
-        "ps aux 2>/dev/null | grep '[a]ider' | grep -o '\\--model [^ ]*' | head -1 | cut -d' ' -f2 2>/dev/null"
-      )
+      local cmd = "ps aux 2>/dev/null | grep '[a]ider' | "
+        .. "grep -o '\\--model [^ ]*' | head -1 | cut -d' ' -f2 2>/dev/null"
+      local handle = io.popen(cmd)
       if handle then
         local result = handle:read("*a")
         handle:close()
