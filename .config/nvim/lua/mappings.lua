@@ -46,6 +46,31 @@ local function aider_cmd(cmd)
   end
 end
 
+local function aider_add_all_windows()
+  -- Get all open buffers in all windows
+  local buffers = {}
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    local bufname = vim.api.nvim_buf_get_name(buf)
+    -- Only add file buffers (not empty, terminal, or special buffers)
+    if bufname ~= "" and vim.bo[buf].buftype == "" then
+      buffers[bufname] = true
+    end
+  end
+
+  -- Add each unique buffer to aider using the API
+  for bufname, _ in pairs(buffers) do
+    require("nvim_aider").api.add_file(bufname)
+  end
+  vim.cmd("stopinsert")
+
+  local count = 0
+  for _ in pairs(buffers) do
+    count = count + 1
+  end
+  vim.notify("Added " .. count .. " files to aider", vim.log.levels.INFO)
+end
+
 local function smart_star_search()
   local word = vim.fn.expand("<cword>")
   if word == "" then
@@ -323,6 +348,7 @@ wk.add({
     { "<leader> ,a", aider_cmd("Aider add"), desc = "add file" },
     { "<leader> ,d", aider_cmd("Aider drop"), desc = "drop file" },
     { "<leader> ,r", aider_cmd("Aider add readonly"), desc = "add read-only" },
+    { "<leader> ,w", aider_add_all_windows, desc = "add all windows" },
     { "<leader> ,R", aider_cmd("Aider reset"), desc = "reset session" },
     {
       "<leader> ,l",
