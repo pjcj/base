@@ -294,8 +294,40 @@ require("lualine").setup({
     lualine_z = { "location" },
   },
   tabline = {},
-  winbar = {},
-  inactive_winbar = {},
+  winbar = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {
+      {
+        "filename",
+        file_status = true, -- Shows file modification status
+        newfile_status = true,
+        path = 1, -- Relative path
+        shorting_target = 40,
+        color = { fg = c.base1, bg = c.base05 },
+      }
+    },
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  inactive_winbar = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {
+      {
+        "filename",
+        file_status = true,
+        newfile_status = true,
+        path = 1, -- Relative path
+        shorting_target = 40,
+        color = { fg = c.base01, bg = c.base02 },
+      }
+    },
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {}
+  },
   extensions = {
     "avante",
     "fugitive",
