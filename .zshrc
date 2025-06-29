@@ -244,11 +244,12 @@ zshrc_load_status "compinit"
 
 autoload -Uz compinit
 # shellcheck disable=1072,1009,1073,1036
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-    compinit -u
+# Use fast compinit if dump file exists and is less than 24 hours old
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+    compinit -C
 else
-    compinit -C;
-fi;
+    compinit -u
+fi
 
 zshrc_load_status "completion system"
 
