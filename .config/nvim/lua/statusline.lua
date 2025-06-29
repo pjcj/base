@@ -37,6 +37,40 @@ local custom_theme = {
   },
 }
 
+-- Helper function to check if there are multiple windows
+local function has_multiple_windows()
+  return #vim.api.nvim_tabpage_list_wins(0) > 1
+end
+
+-- Custom function for conditional filename display
+local function conditional_filename()
+  if has_multiple_windows() then
+    return "" -- Don't show filename in statusline when there are multiple windows
+  else
+    return vim.fn.expand("%:t") -- Show just the filename when single window
+  end
+end
+
+local function winbar_component(active_colors)
+  return {
+    function()
+      if has_multiple_windows() then
+        return vim.fn.expand("%:~:.") -- Show relative path when multiple windows
+      else
+        return "" -- Don't show winbar when single window
+      end
+    end,
+    padding = { left = 1, right = 1 },
+    color = function()
+      if has_multiple_windows() then
+        return active_colors or { fg = c.base1, bg = c.base05 }
+      else
+        return {}
+      end
+    end,
+  }
+end
+
 -- Custom function for CWD (last part only)
 local function cwd_basename()
   return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
@@ -145,13 +179,9 @@ require("lualine").setup({
     },
     lualine_c = {
       {
-        "filename",
+        conditional_filename,
         separator = "",
         padding = { left = 1, right = 0 },
-        file_status = true, -- Shows file modification status
-        newfile_status = true,
-        path = 1, -- Relative path
-        shorting_target = 40,
       },
       {
         "diff",
@@ -298,14 +328,7 @@ require("lualine").setup({
     lualine_a = {},
     lualine_b = {},
     lualine_c = {
-      {
-        "filename",
-        file_status = true, -- Shows file modification status
-        newfile_status = true,
-        path = 1, -- Relative path
-        shorting_target = 40,
-        color = { fg = c.base1, bg = c.base05 },
-      }
+      winbar_component({ fg = c.pyellow, bg = c.base05 })
     },
     lualine_x = {},
     lualine_y = {},
@@ -315,14 +338,7 @@ require("lualine").setup({
     lualine_a = {},
     lualine_b = {},
     lualine_c = {
-      {
-        "filename",
-        file_status = true,
-        newfile_status = true,
-        path = 1, -- Relative path
-        shorting_target = 40,
-        color = { fg = c.base01, bg = c.base02 },
-      }
+      winbar_component({ fg = c.base01, bg = c.base02 })
     },
     lualine_x = {},
     lualine_y = {},
