@@ -46,6 +46,36 @@ local function aider_cmd(cmd)
   end
 end
 
+local function aider_add_git_changes()
+  -- Get all files with changes according to git
+  local git_cmd = "git diff --name-only HEAD"
+  local handle = io.popen(git_cmd)
+  if not handle then
+    vim.notify("Failed to execute git command", vim.log.levels.ERROR)
+    return
+  end
+
+  local result = handle:read("*a")
+  handle:close()
+
+  if result == "" then
+    vim.notify("No git changes found", vim.log.levels.INFO)
+    return
+  end
+
+  local files = vim.split(result, "\n", { trimempty = true })
+
+  -- Add each changed file to aider
+  for _, file in ipairs(files) do
+    if file ~= "" then
+      require("nvim_aider").api.add_file(file)
+    end
+  end
+  vim.cmd("stopinsert")
+
+  vim.notify("Added " .. #files .. " git-changed files to aider", vim.log.levels.INFO)
+end
+
 local function aider_add_all_windows()
   -- Get all open buffers in all windows
   local buffers = {}
@@ -349,6 +379,7 @@ wk.add({
     { "<leader> ,d", aider_cmd("Aider drop"), desc = "drop file" },
     { "<leader> ,r", aider_cmd("Aider add readonly"), desc = "add read-only" },
     { "<leader> ,w", aider_add_all_windows, desc = "add all windows" },
+    { "<leader> ,g", aider_add_git_changes, desc = "add git changes" },
     { "<leader> ,R", aider_cmd("Aider reset"), desc = "reset session" },
     {
       "<leader> ,l",
