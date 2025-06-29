@@ -51,18 +51,111 @@ local function conditional_filename()
   end
 end
 
+-- Function to get aider model info
+local function get_aider_info()
+  local bufname = vim.api.nvim_buf_get_name(0)
+  local filetype = vim.bo.filetype
+
+  -- Check if this is an aider buffer
+  if
+    filetype == "aider"
+    or string.match(bufname, "aider")
+    or string.match(bufname, "Aider")
+  then
+    local model = nil
+
+    -- Try to get model from nvim-aider plugin configuration
+    local ok, nvim_aider = pcall(require, "nvim_aider")
+    if ok and nvim_aider then
+      local config = nvim_aider.config or {}
+      local args = config.args or {}
+
+      -- Look for --model in the args
+      for i, arg in ipairs(args) do
+        if arg == "--model" and args[i + 1] then
+          model = args[i + 1]
+          break
+        end
+      end
+    end
+
+    -- Try to get from buffer variables
+    if not model then
+      model = vim.b.aider_model or vim.g.aider_model
+    end
+
+    -- Try to read from running aider process
+    if not model then
+      local handle = io.popen(
+        "ps aux 2>/dev/null | grep '[a]ider' | grep -o '\\--model [^ ]*' | head -1 | cut -d' ' -f2 2>/dev/null"
+      )
+      if handle then
+        local result = handle:read("*a")
+        handle:close()
+        if result and result ~= "" then
+          model = result:gsub("%s+", "")
+        end
+      end
+    end
+
+    -- Try to read from aider config files
+    if not model then
+      local config_paths = {
+        ".aider.conf.yml",
+        os.getenv("HOME") .. "/.aider.conf.yml",
+        ".aiderrc",
+        os.getenv("HOME") .. "/.aiderrc",
+      }
+
+      for _, config_path in ipairs(config_paths) do
+        local file = io.open(config_path, "r")
+        if file then
+          local content = file:read("*a")
+          file:close()
+          -- Look for model specification in YAML config
+          model = content:match("model:%s*([%w%-%./:]+)")
+          if model and not model:match("^#") then
+            break
+          else
+            model = nil
+          end
+        end
+      end
+    end
+
+    -- Extract just the model name from full model paths like
+    -- "openai/claude-sonnet-4"
+    if model then
+      local clean_model = model:match("([^/]+)$") or model
+      return "aider:" .. clean_model
+    end
+
+    return "aider:default"
+  end
+  return nil
+end
+
 local function winbar_component(active_colors)
   return {
     function()
+      -- Check if this is an aider window first
+      local aider_info = get_aider_info()
+      if aider_info then
+        return aider_info
+      end
+
       if has_multiple_windows() then
-        return vim.fn.expand("%:~:.") -- Show relative path when multiple windows
+        return vim.fn.expand("%:~:.") -- Show relative path
       else
         return "" -- Don't show winbar when single window
       end
     end,
     padding = { left = 1, right = 1 },
     color = function()
-      if has_multiple_windows() then
+      local aider_info = get_aider_info()
+      if aider_info then
+        return { fg = c.lgreen, bg = c.base05 } -- Special color for aider windows
+      elseif has_multiple_windows() then
         return active_colors or { fg = c.base1, bg = c.base05 }
       else
         return {}
@@ -328,21 +421,21 @@ require("lualine").setup({
     lualine_a = {},
     lualine_b = {},
     lualine_c = {
-      winbar_component({ fg = c.pyellow, bg = c.base05 })
+      winbar_component({ fg = c.pyellow, bg = c.base05 }),
     },
     lualine_x = {},
     lualine_y = {},
-    lualine_z = {}
+    lualine_z = {},
   },
   inactive_winbar = {
     lualine_a = {},
     lualine_b = {},
     lualine_c = {
-      winbar_component({ fg = c.base01, bg = c.base02 })
+      winbar_component({ fg = c.base01, bg = c.base02 }),
     },
     lualine_x = {},
     lualine_y = {},
-    lualine_z = {}
+    lualine_z = {},
   },
   extensions = {
     "avante",
