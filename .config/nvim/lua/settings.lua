@@ -49,6 +49,19 @@ vopt.guicursor     = "n-v-c:block-Cursor,i-ci-ve:ver25,r-cr:hor20,o:hor50," ..
                     "sm:block-blinkwait175-blinkoff150-blinkon175"
 -- stylua: ignore end
 
+-- Temporarily increase cmdheight during session loading to prevent
+-- "Press ENTER" prompts
+if vim.v.argv and vim.tbl_contains(vim.v.argv, "-S") then
+  vim.opt.cmdheight = 1
+  vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function()
+      vim.defer_fn(function()
+        vim.opt.cmdheight = 0
+      end, 100)
+    end,
+  })
+end
+
 if vim.fn.executable("rg") then
   vopt.grepprg = "rg --no-heading --hidden --glob '!.git' --vimgrep"
   vopt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
