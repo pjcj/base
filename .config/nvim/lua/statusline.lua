@@ -82,44 +82,44 @@ local function mcphub_component_definition()
   end
 end
 
-local function avante_rag_status()
-  local ok, _ = pcall(require, "avante.api")
-  if not ok then
-    return ""
-  end
+-- local function avante_rag_status()
+--   local ok, _ = pcall(require, "avante.api")
+--   if not ok then
+--     return ""
+--   end
 
-  -- Check if rag service is enabled and get its status
-  local config = require("avante.config")
-  if not config.rag_service or not config.rag_service.enabled then
-    return ""
-  end
+--   -- Check if rag service is enabled and get its status
+--   local config = require("avante.config")
+--   if not config.rag_service or not config.rag_service.enabled then
+--     return ""
+--   end
 
-  -- Try to get rag service status
-  local rag_ok, rag_status = pcall(function()
-    local rag_service = require("avante.rag_service")
-    if rag_service and rag_service.get_rag_service_status then
-      return rag_service.get_rag_service_status()
-    end
-    return "unknown"
-  end)
+--   -- Try to get rag service status
+--   local rag_ok, rag_status = pcall(function()
+--     local rag_service = require("avante.rag_service")
+--     if rag_service and rag_service.get_rag_service_status then
+--       return rag_service.get_rag_service_status()
+--     end
+--     return "unknown"
+--   end)
 
-  if not rag_ok then
-    return " ⚠️" -- Default icon when status can't be determined
-  end
+--   if not rag_ok then
+--     return " ⚠️" -- Default icon when status can't be determined
+--   end
 
-  -- Return status with appropriate icon and color
-  local status_icons = {
-    running = " 🏃",
-    stopped = " 🛑",
-    ready = " ✅",
-    indexing = " ⏳",
-    error = " ❗",
-    disabled = " 🚫",
-    unknown = " ❓",
-  }
+--   -- Return status with appropriate icon and color
+--   local status_icons = {
+--     running = " 🏃",
+--     stopped = " 🛑",
+--     ready = " ✅",
+--     indexing = " ⏳",
+--     error = " ❗",
+--     disabled = " 🚫",
+--     unknown = " ❓",
+--   }
 
-  return status_icons[rag_status] or " 🔍"
-end
+--   return status_icons[rag_status] or " 🔍"
+-- end
 
 require("lualine").setup({
   options = {
