@@ -39,7 +39,18 @@ local custom_theme = {
 
 -- Helper function to check if there are multiple windows
 local function has_multiple_windows()
-  return #vim.api.nvim_tabpage_list_wins(0) > 1
+  local wins = vim.api.nvim_tabpage_list_wins(0)
+  local normal_win_count = 0
+
+  for _, win in ipairs(wins) do
+    local config = vim.api.nvim_win_get_config(win)
+    -- Only count normal windows (not floating, not external)
+    if config.relative == "" then
+      normal_win_count = normal_win_count + 1
+    end
+  end
+
+  return normal_win_count > 1
 end
 
 -- Custom function for conditional filename display
