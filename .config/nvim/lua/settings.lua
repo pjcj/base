@@ -1,5 +1,6 @@
-local vopt = vim.opt  -- set options
+local vopt = vim.opt -- set options
 
+-- stylua: ignore start
 vopt.autowriteall  = true
 vopt.backspace     = { "indent", "eol", "start" }
 vopt.background    = "dark"
@@ -46,10 +47,11 @@ vopt.wildoptions   = "pum,tagfile"
 vopt.guicursor     = "n-v-c:block-Cursor,i-ci-ve:ver25,r-cr:hor20,o:hor50," ..
                     "a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor," ..
                     "sm:block-blinkwait175-blinkoff150-blinkon175"
+-- stylua: ignore end
 
 if vim.fn.executable("rg") then
-  vopt.grepprg    = "rg --no-heading --hidden --glob '!.git' --vimgrep"
+  vopt.grepprg = "rg --no-heading --hidden --glob '!.git' --vimgrep"
   vopt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
 else
-  vopt.grepprg    = "git grep -n"
+  vopt.grepprg = "git grep -n"
 end
