@@ -39,6 +39,13 @@ local gl = require("gitlab")
 local tj = require("treesj")
 local nt = require("neotest")
 
+local function aider_cmd(cmd)
+  return function()
+    vim.cmd(cmd)
+    vim.cmd("stopinsert")
+  end
+end
+
 local function smart_star_search()
   local word = vim.fn.expand("<cword>")
   if word == "" then
@@ -295,28 +302,28 @@ wk.add({
 
     { "<leader>  ", require("yazi").yazi, desc = "yazi" },
     { "<leader> .", group = "aider" },
-    { "<leader> ..", "<cmd>AiderOpen<cr>", desc = "open" },
+    { "<leader> ..", aider_cmd("AiderOpen"), desc = "open" },
     {
       "<leader> . ",
-      "<cmd>AiderAddModifiedFiles<cr>",
+      aider_cmd("AiderAddModifiedFiles"),
       desc = "add modified files",
     },
 
     { "<leader> ,", group = "nvim-aider" },
-    { "<leader> ,,", "<cmd>Aider toggle<cr>", desc = "toggle" },
-    { "<leader> , ", "<cmd>Aider<cr>", desc = "picker" },
+    { "<leader> ,,", aider_cmd("Aider toggle"), desc = "toggle" },
+    { "<leader> , ", aider_cmd("Aider"), desc = "picker" },
     {
       "<leader> ,s",
-      "<cmd>Aider send<cr>",
+      aider_cmd("Aider send"),
       desc = "send",
       mode = { "n", "v" },
     },
-    { "<leader> ,c", "<cmd>Aider command<cr>", desc = "commands" },
-    { "<leader> ,b", "<cmd>Aider buffer<cr>", desc = "send buffer" },
-    { "<leader> ,a", "<cmd>Aider add<cr>", desc = "add file" },
-    { "<leader> ,d", "<cmd>Aider drop<cr>", desc = "drop file" },
-    { "<leader> ,r", "<cmd>Aider add readonly<cr>", desc = "add read-only" },
-    { "<leader> ,R", "<cmd>Aider reset<cr>", desc = "reset session" },
+    { "<leader> ,c", aider_cmd("Aider command"), desc = "commands" },
+    { "<leader> ,b", aider_cmd("Aider buffer"), desc = "send buffer" },
+    { "<leader> ,a", aider_cmd("Aider add"), desc = "add file" },
+    { "<leader> ,d", aider_cmd("Aider drop"), desc = "drop file" },
+    { "<leader> ,r", aider_cmd("Aider add readonly"), desc = "add read-only" },
+    { "<leader> ,R", aider_cmd("Aider reset"), desc = "reset session" },
     {
       "<leader> ,l",
       require("nvim_aider").api.send_diagnostics_with_prompt,
@@ -324,8 +331,8 @@ wk.add({
     },
 
     { "<leader> ,t", group = "tree integration" },
-    { "<leader> ,ta", "<cmd>AiderTreeAddFile<cr>", desc = "add from tree" },
-    { "<leader> ,td", "<cmd>AiderTreeDropFile<cr>", desc = "drop from tree" },
+    { "<leader> ,ta", aider_cmd("AiderTreeAddFile"), desc = "add from tree" },
+    { "<leader> ,td", aider_cmd("AiderTreeDropFile"), desc = "drop from tree" },
 
     { "<leader> a", group = "parrot ai" },
     { "<leader> aI", "<cmd>PrtInfo<cr>", desc = "info" },
