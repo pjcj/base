@@ -1,0 +1,77 @@
+# Terminal identification
+term = xterm-256color
+
+# Font configuration
+font-family = Inconsolata
+font-size = 20
+
+# Window configuration
+window-decoration = false
+window-padding-x = 0
+window-padding-y = 0
+
+# Cursor configuration
+cursor-style = block
+cursor-style-blink = false
+
+# Colors (Solarized Dark theme matching WezTerm)
+background = #001920
+foreground = #fff9c7
+cursor-color = #dc322f
+selection-background = #f0a63f
+selection-foreground = #001920
+
+# ANSI colors
+palette = 0=#022731
+palette = 1=#dc322f
+palette = 2=#25ad2e
+palette = 3=#b58900
+palette = 4=#268bd2
+palette = 5=#d33682
+palette = 6=#2aa198
+palette = 7=#eee8d5
+palette = 8=#001920
+palette = 9=#cb4b16
+palette = 10=#586e75
+palette = 11=#657b83
+palette = 12=#839496
+palette = 13=#6c71c4
+palette = 14=#93a1a1
+palette = 15=#fdf6e3
+
+# Key bindings
+# keybind = ctrl+equal=increase_font_size
+# keybind = ctrl+minus=decrease_font_size
+# keybind = ctrl+shift+eight=reset_font_size
+# keybind = ctrl+shift+enter=toggle_fullscreen
+# keybind = alt+enter=toggle_fullscreen
+# keybind = ctrl+page_down=next_tab
+# keybind = ctrl+page_up=previous_tab
+# keybind = cmd+c=copy_to_clipboard
+# keybind = cmd+v=paste_from_clipboard
+# keybind = ctrl+shift+c=copy_to_clipboard
+# keybind = ctrl+shift+v=paste_from_clipboard
+
+# Mouse configuration
+mouse-hide-while-typing = true
+mouse-scroll-multiplier = 10
+
+# Scrollback
+scrollback-limit = 10000
+
+# Shell integration
+shell-integration = zsh
+shell-integration-features = cursor,sudo,title
+
+# Performance
+unfocused-split-opacity = 0.5
+
+# Other settings
+confirm-close-surface = false
+quit-after-last-window-closed = true
+
+# Shaders
+# custom-shader = shaders/cursor_blaze.glsl
+custom-shader = shaders/cursor_blaze_no_trail.glsl
+# custom-shader = shaders/cursor_smear.glsl
+custom-shader = shaders/cursor_smear_fade.glsl
