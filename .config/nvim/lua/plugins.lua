@@ -2068,37 +2068,37 @@ local plugins = {
     },
     keys = {
       {
-        "<leader>,ll",
+        "<leader> ..",
         "<cmd>ClaudeCode<cr><cmd>horizontal wincmd =<cr>",
         desc = "Toggle Claude",
       },
-      { "<leader>,lf", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
-      { "<leader>,lr", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+      { "<leader> .f", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+      { "<leader> .r", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
       {
-        "<leader>,lc",
+        "<leader> .c",
         "<cmd>ClaudeCode --continue<cr>",
         desc = "Continue Claude",
       },
       {
-        "<leader>,lb",
+        "<leader> .b",
         "<cmd>ClaudeCodeAdd %<cr>",
         desc = "Add current buffer",
       },
       {
-        "<leader>,ls",
+        "<leader> .s",
         "<cmd>ClaudeCodeSend<cr>",
         mode = "v",
         desc = "Send to Claude",
       },
       {
-        "<leader>,ls",
+        "<leader> .s",
         "<cmd>ClaudeCodeTreeAdd<cr>",
         desc = "Add file",
         ft = { "NvimTree", "neo-tree", "oil" },
       },
       -- Diff management
-      { "<leader>,la", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
-      { "<leader>,ld", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+      { "<leader> .a", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+      { "<leader> .d", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
     },
   },
 

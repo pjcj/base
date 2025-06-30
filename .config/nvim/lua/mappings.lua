@@ -364,6 +364,7 @@ wk.add({
     mode = { "n", "v" },
 
     { "<leader>  ", require("yazi").yazi, desc = "yazi" },
+    { "<leader> .", group = "claude" },
 
     { "<leader> ,", group = "nvim-aider" },
     { "<leader> ,,", aider_cmd("Aider toggle"), desc = "toggle" },
