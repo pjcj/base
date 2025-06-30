@@ -364,13 +364,6 @@ wk.add({
     mode = { "n", "v" },
 
     { "<leader>  ", require("yazi").yazi, desc = "yazi" },
-    { "<leader> .", group = "aider" },
-    { "<leader> ..", aider_cmd("AiderOpen"), desc = "open" },
-    {
-      "<leader> . ",
-      aider_cmd("AiderAddModifiedFiles"),
-      desc = "add modified files",
-    },
 
     { "<leader> ,", group = "nvim-aider" },
     { "<leader> ,,", aider_cmd("Aider toggle"), desc = "toggle" },
