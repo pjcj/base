@@ -73,7 +73,10 @@ local function aider_add_git_changes()
   end
   vim.cmd("stopinsert")
 
-  vim.notify("Added " .. #files .. " git-changed files to aider", vim.log.levels.INFO)
+  vim.notify(
+    "Added " .. #files .. " git-changed files to aider",
+    vim.log.levels.INFO
+  )
 end
 
 local function aider_add_all_windows()
@@ -93,6 +96,11 @@ local function aider_add_all_windows()
     require("nvim_aider").api.add_file(bufname)
   end
   vim.cmd("stopinsert")
+
+  -- Wait a moment for aider to potentially create new windows, then equalize
+  vim.defer_fn(function()
+    vim.cmd("wincmd =")
+  end, 100)
 
   local count = 0
   for _ in pairs(buffers) do
