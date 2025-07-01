@@ -1239,7 +1239,7 @@ elif [ 1 = 1 ]; then
         fi
 
         echo "${content}  ${fill}"
-        echo -n "%{$fg[yellow]%}❯ %{$reset_color%}"
+        echo -n "%{$fg[yellow]%}❯❯❯ %{$reset_color%}"
     }
 
     PROMPT='$(custom_prompt)'
