@@ -54,7 +54,7 @@ palette = 15=#fdf6e3
 
 # Mouse configuration
 mouse-hide-while-typing = true
-mouse-scroll-multiplier = 10
+mouse-scroll-multiplier = 0.25
 
 # Scrollback
 scrollback-limit = 10000
