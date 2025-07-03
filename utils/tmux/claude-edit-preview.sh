@@ -104,6 +104,9 @@ if [ -z "$preview_pane" ]; then
   if [ -n "$line_number" ] && [ "$line_number" != "null" ] && \
      [ "$line_number" != "empty" ]; then
     tmux send-keys -t "$preview_pane" "nvim +$line_number '$file_path'" Enter
+    # Position the line at the top of the view (like z<CR>)
+    sleep 0.2  # Wait for nvim to load
+    tmux send-keys -t "$preview_pane" "z" Enter
   else
     tmux send-keys -t "$preview_pane" "nvim '$file_path'" Enter
   fi
@@ -124,6 +127,9 @@ else
     if [ -n "$line_number" ] && [ "$line_number" != "null" ] && \
        [ "$line_number" != "empty" ]; then
       tmux send-keys -t "$preview_pane" ":edit +$line_number $file_path" Enter
+      # Position the line at the top of the view (like z<CR>)
+      sleep 0.1  # Brief wait for command to execute
+      tmux send-keys -t "$preview_pane" "z" Enter
     else
       tmux send-keys -t "$preview_pane" ":edit $file_path" Enter
     fi
@@ -132,6 +138,9 @@ else
     if [ -n "$line_number" ] && [ "$line_number" != "null" ] && \
        [ "$line_number" != "empty" ]; then
       tmux send-keys -t "$preview_pane" "nvim +$line_number '$file_path'" Enter
+      # Position the line at the top of the view (like z<CR>)
+      sleep 0.2  # Wait for nvim to load
+      tmux send-keys -t "$preview_pane" "z" Enter
     else
       tmux send-keys -t "$preview_pane" "nvim '$file_path'" Enter
     fi
