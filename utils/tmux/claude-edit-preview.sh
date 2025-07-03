@@ -8,7 +8,7 @@ preview_pane_file="/tmp/claude-preview-$session_name-$window_id"
 lock_file="/tmp/claude-preview-lock-$session_name-$window_id"
 
 # Prevent multiple instances from running simultaneously
-if [ -f "$lock_file" ]; then
+if [[ -f "$lock_file" ]]; then
   echo "$(date): Another instance is already running, exiting" \
     >>/tmp/claude-preview-debug.log
   exit 0
@@ -19,10 +19,10 @@ trap 'rm -f "$lock_file"' EXIT
 # Wait for tool-use.json to be available and stable
 max_attempts=5
 attempt=0
-while [ $attempt -lt $max_attempts ]; do
-  if [ -f "/tmp/tool-use.json" ]; then
+while (( attempt < max_attempts )); do
+  if [[ -f "/tmp/tool-use.json" ]]; then
     # Check if file has content and is not being written to
-    if [ -s "/tmp/tool-use.json" ]; then
+    if [[ -s "/tmp/tool-use.json" ]]; then
       # Wait a short time to ensure file is stable
       sleep 0.1
       break
@@ -32,7 +32,7 @@ while [ $attempt -lt $max_attempts ]; do
   sleep 0.1
 done
 
-if [ ! -f "/tmp/tool-use.json" ] || [ ! -s "/tmp/tool-use.json" ]; then
+if [[ ! -f "/tmp/tool-use.json" ]] || [[ ! -s "/tmp/tool-use.json" ]]; then
   echo "$(date): No valid tool-use.json found after $max_attempts attempts" \
     >>/tmp/claude-preview-debug.log
   exit 0
@@ -51,22 +51,22 @@ echo "$(date): Looking for preview pane: $preview_pane_name" \
   >>/tmp/claude-preview-debug.log
 
 # Exit if no file path found
-if [ -z "$file_path" ] || [ "$file_path" = "null" ] || \
-   [ "$file_path" = "empty" ]; then
+if [[ -z "$file_path" ]] || [[ "$file_path" = "null" ]] || \
+   [[ "$file_path" = "empty" ]]; then
   echo "$(date): No valid file path found (got: '$file_path')" \
     >>/tmp/claude-preview-debug.log
   exit 0
 fi
 
 # Exit if file doesn't exist
-if [ ! -f "$file_path" ]; then
+if [[ ! -f "$file_path" ]]; then
   echo "$(date): File does not exist: $file_path" \
     >>/tmp/claude-preview-debug.log
   exit 0
 fi
 
 # Exit if not in tmux
-if [ -z "$TMUX" ]; then
+if [[ -z "$TMUX" ]]; then
   exit 0
 fi
 
@@ -78,7 +78,7 @@ current_pane_title=$(tmux display-message -p '#{pane_title}')
 target_pane=""
 
 # Case 1: If we're already in a Claude pane, use it
-if [ "$current_pane_title" = "claude" ]; then
+if [[ "$current_pane_title" = "claude" ]]; then
   target_pane="$current_pane"
   echo "$(date): Using current Claude pane as target" \
     >>/tmp/claude-preview-debug.log
@@ -87,7 +87,7 @@ else
   claude_pane=$(tmux list-panes -F '#{pane_id} #{pane_title}' | \
     grep ' claude$' | head -1 | cut -d' ' -f1)
   
-  if [ -n "$claude_pane" ]; then
+  if [[ -n "$claude_pane" ]]; then
     target_pane="$claude_pane"
     echo "$(date): Found Claude pane $claude_pane in window" \
       >>/tmp/claude-preview-debug.log
@@ -95,14 +95,14 @@ else
 fi
 
 # Case 3: If no Claude relationship found, use current pane
-if [ -z "$target_pane" ]; then
+if [[ -z "$target_pane" ]]; then
   target_pane="$current_pane"
   echo "$(date): No Claude relationship found, using current pane" \
     >>/tmp/claude-preview-debug.log
 fi
 
 # Check if preview pane exists (stored in file)
-if [ -f "$preview_pane_file" ]; then
+if [[ -f "$preview_pane_file" ]]; then
   preview_pane=$(cat "$preview_pane_file")
   # Verify the pane still exists
   if tmux list-panes -F '#{pane_id}' | grep -q "^$preview_pane$"; then
@@ -119,7 +119,7 @@ else
   preview_pane=""
 fi
 
-if [ -z "$preview_pane" ]; then
+if [[ -z "$preview_pane" ]]; then
   echo "$(date): Creating new preview pane" >>/tmp/claude-preview-debug.log
   # Create new pane above target pane (30% height)
   tmux split-window -v -b -p 30 -t "$target_pane"
@@ -129,8 +129,8 @@ if [ -z "$preview_pane" ]; then
   echo "$preview_pane" >"$preview_pane_file"
 
   # Open file in neovim (new pane) with line number if available
-  if [ -n "$line_number" ] && [ "$line_number" != "null" ] && \
-     [ "$line_number" != "empty" ]; then
+  if [[ -n "$line_number" ]] && [[ "$line_number" != "null" ]] && \
+     [[ "$line_number" != "empty" ]]; then
     tmux send-keys -t "$preview_pane" "nvim +$line_number '$file_path'" Enter
     # Position the line at the top of the view (like z<CR>)
     sleep 0.2  # Wait for nvim to load
@@ -152,8 +152,8 @@ else
   if [[ $pane_command == "nvim" ]]; then
     # Neovim is running, use :edit command and jump to line
     tmux send-keys -t "$preview_pane" Escape # Ensure we're in normal mode
-    if [ -n "$line_number" ] && [ "$line_number" != "null" ] && \
-       [ "$line_number" != "empty" ]; then
+    if [[ -n "$line_number" ]] && [[ "$line_number" != "null" ]] && \
+       [[ "$line_number" != "empty" ]]; then
       tmux send-keys -t "$preview_pane" ":edit +$line_number $file_path" Enter
       # Position the line at the top of the view (like z<CR>)
       sleep 0.1  # Brief wait for command to execute
@@ -163,8 +163,8 @@ else
     fi
   else
     # Shell is running, start neovim with line number if available
-    if [ -n "$line_number" ] && [ "$line_number" != "null" ] && \
-       [ "$line_number" != "empty" ]; then
+    if [[ -n "$line_number" ]] && [[ "$line_number" != "null" ]] && \
+       [[ "$line_number" != "empty" ]]; then
       tmux send-keys -t "$preview_pane" "nvim +$line_number '$file_path'" Enter
       # Position the line at the top of the view (like z<CR>)
       sleep 0.2  # Wait for nvim to load
