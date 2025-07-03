@@ -2585,6 +2585,23 @@ local plugins = {
     "siadat/shell.nvim",
     opts = {},
   },
+
+  {
+    "mrjones2014/smart-splits.nvim",
+    config = function()
+      require("smart-splits").setup({
+        ignored_filetypes = {
+          "nofile",
+          "quickfix",
+          "prompt",
+        },
+        ignored_buftypes = { "nofile" },
+        default_amount = 3,
+        at_edge = "wrap",
+        cursor_follows_swapped_bufs = true,
+      })
+    end,
+  },
 }
 
 local opts = {

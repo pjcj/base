@@ -228,6 +228,18 @@ wk.add({
   full_map("<M-9>", "<F9>"),
   full_map("<M-0>", "<F10>"),
 
+  -- Smart splits navigation
+  { "<C-h>", require("smart-splits").move_cursor_left, desc = "move left" },
+  { "<C-j>", require("smart-splits").move_cursor_down, desc = "move down" },
+  { "<C-k>", require("smart-splits").move_cursor_up, desc = "move up" },
+  { "<C-l>", require("smart-splits").move_cursor_right, desc = "move right" },
+
+  -- Smart splits resizing
+  { "<A-h>", require("smart-splits").resize_left, desc = "resize left" },
+  { "<A-j>", require("smart-splits").resize_down, desc = "resize down" },
+  { "<A-k>", require("smart-splits").resize_up, desc = "resize up" },
+  { "<A-l>", require("smart-splits").resize_right, desc = "resize right" },
+
   { "<F1>", gs.stage_hunk, desc = "stage hunk" },
   {
     "<F1>",
@@ -275,7 +287,6 @@ wk.add({
 
   { "<PageUp>", "0", desc = "page up" },
   { "<PageDown>", "0", desc = "page down" },
-  { "<C-L>", desc = "refresh" },
   { "-", desc = "comment" },
   { "ä", desc = "show cursor" },
   { "ö", ":w<cr> | :wa<cr>", desc = "write all" },
