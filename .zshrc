@@ -505,7 +505,7 @@ y() {
 }
 
 cd()      { c "$@" && d }
-claude()  {  ~/.claude/local/claude }
+claude()  {  ~/.claude/local/claude "$@" }
 ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
 dh()      { f "$@" | head }
 dht()     { dh -rs created "$@" }
@@ -674,6 +674,7 @@ hash -d local_base=~/g/local_base
 zshrc_load_status "environment"
 
 export BAT_THEME="Solarized (dark)"
+export CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR=1
 export GOPATH=~/g/go
 export LESS='--LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS --mouse'
 export NOPASTE_SERVICES="Gist Pastie Snitch Shadowcat"
