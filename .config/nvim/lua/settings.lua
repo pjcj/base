@@ -38,6 +38,7 @@ vopt.splitbelow    = true
 vopt.splitright    = true
 vopt.termguicolors = true
 vopt.title         = true
+vopt.titlestring   = "%t"
 vopt.undofile      = true
 vopt.undolevels    = 10000
 vopt.updatecount   = 40
