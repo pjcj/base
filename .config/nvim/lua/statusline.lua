@@ -53,15 +53,6 @@ local function has_multiple_windows()
   return normal_win_count > 1
 end
 
--- Custom function for conditional filename display
-local function conditional_filename()
-  if has_multiple_windows() then
-    return "" -- Don't show filename in statusline when there are multiple windows
-  else
-    return vim.fn.expand("%:~:.") -- Show relative path when single window
-  end
-end
-
 -- Function to get aider model info
 local function get_aider_info()
   local bufname = vim.api.nvim_buf_get_name(0)
@@ -283,9 +274,16 @@ require("lualine").setup({
     },
     lualine_c = {
       {
-        conditional_filename,
+        function() return vim.fn.expand("%:~:.") end,
         separator = "",
         padding = { left = 1, right = 0 },
+        color = function()
+          if vim.bo.modified then
+            return { fg = c.red, gui = "bold" }
+          else
+            return {}
+          end
+        end,
       },
       {
         "diff",
