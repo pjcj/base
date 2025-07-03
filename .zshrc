@@ -505,6 +505,7 @@ y() {
 }
 
 cd()      { c "$@" && d }
+claude()  {  ~/.claude/local/claude }
 ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
 dh()      { f "$@" | head }
 dht()     { dh -rs created "$@" }
