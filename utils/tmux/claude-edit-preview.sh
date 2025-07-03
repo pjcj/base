@@ -72,15 +72,33 @@ fi
 
 # Get current pane ID (to restore focus later)
 current_pane=$(tmux display-message -p '#{pane_id}')
+current_pane_title=$(tmux display-message -p '#{pane_title}')
 
-# Find the Claude pane
-claude_pane=$(tmux list-panes -F '#{pane_id} #{pane_title}' | \
-  grep ' claude$' | cut -d' ' -f1)
+# Determine which pane to use as the target
+target_pane=""
 
-if [ -z "$claude_pane" ]; then
-  echo "$(date): No Claude pane found, exiting" \
+# Case 1: If we're already in a Claude pane, use it
+if [ "$current_pane_title" = "claude" ]; then
+  target_pane="$current_pane"
+  echo "$(date): Using current Claude pane as target" \
     >>/tmp/claude-preview-debug.log
-  exit 0
+else
+  # Case 2: Look for any Claude pane in current window
+  claude_pane=$(tmux list-panes -F '#{pane_id} #{pane_title}' | \
+    grep ' claude$' | head -1 | cut -d' ' -f1)
+  
+  if [ -n "$claude_pane" ]; then
+    target_pane="$claude_pane"
+    echo "$(date): Found Claude pane $claude_pane in window" \
+      >>/tmp/claude-preview-debug.log
+  fi
+fi
+
+# Case 3: If no Claude relationship found, use current pane
+if [ -z "$target_pane" ]; then
+  target_pane="$current_pane"
+  echo "$(date): No Claude relationship found, using current pane" \
+    >>/tmp/claude-preview-debug.log
 fi
 
 # Check if preview pane exists (stored in file)
@@ -103,8 +121,8 @@ fi
 
 if [ -z "$preview_pane" ]; then
   echo "$(date): Creating new preview pane" >>/tmp/claude-preview-debug.log
-  # Create new pane above Claude pane (30% height)
-  tmux split-window -v -b -p 30 -t "$claude_pane"
+  # Create new pane above target pane (30% height)
+  tmux split-window -v -b -p 30 -t "$target_pane"
   # Get the new pane ID (the split-window creates it as the active pane)
   preview_pane=$(tmux display-message -p '#{pane_id}')
   # Store the pane ID in file for future reuse
