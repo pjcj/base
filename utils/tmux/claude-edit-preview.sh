@@ -1,6 +1,9 @@
 #!/bin/bash
 
-preview_pane_name="claude-preview"
+# Create unique preview pane name based on session and window
+session_name=$(tmux display-message -p '#{session_name}')
+window_id=$(tmux display-message -p '#{window_id}')
+preview_pane_name="claude-preview-$session_name-$window_id"
 
 # Read the tool use data from the JSON file
 if [ ! -f "/tmp/tool-use.json" ]; then
