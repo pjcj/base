@@ -58,6 +58,7 @@ mouse-scroll-multiplier = 0.25
 copy-on-select = clipboard
 click-repeat-interval = 500
 mouse-shift-capture = false
+focus-follows-mouse = true
 
 # Scrollback
 scrollback-limit = 10000
