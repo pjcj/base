@@ -1163,7 +1163,7 @@ elif [ 1 = 1 ]; then
 
     if [ $EUID -eq 0 ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
     local char="─"
-    grep -Eq '(18|20)\.04' /etc/os-release 2>|/dev/null && char="-"
+    # grep -Eq '(18|20)\.04' /etc/os-release 2>|/dev/null && char="-"
 
     perl_here() {
         if [[ -d perl || -d t || -e Makefile.PL ]]; then
