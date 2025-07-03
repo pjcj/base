@@ -1218,11 +1218,10 @@ elif [ 1 = 1 ]; then
 
         local p_git="$(gitprompt)"
         local p_status="%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )"
-        local p_hist="%{$fg[$NCOLOUR]%}%h%{$reset_color%}"
         local p_perl="%{$fg[blue]%}$(perlv)%{$reset_color%}"
         local p_location="%{$fg[green]%}%m:%~ %{$reset_color%}"
         local p_time="%{$fg_bold[yellow]%}%T%{$reset_color%}"
-        local content="$p_time $p_hist $p_git$p_status$p_perl$p_location"
+        local content="$p_time $p_git$p_status$p_perl$p_location"
 
         prompt-length "$content"
         local content_length=$REPLY
