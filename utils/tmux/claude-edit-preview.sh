@@ -70,8 +70,18 @@ if [ -z "$TMUX" ]; then
   exit 0
 fi
 
-# Get current pane ID
+# Get current pane ID (to restore focus later)
 current_pane=$(tmux display-message -p '#{pane_id}')
+
+# Find the Claude pane
+claude_pane=$(tmux list-panes -F '#{pane_id} #{pane_title}' | \
+  grep ' claude$' | cut -d' ' -f1)
+
+if [ -z "$claude_pane" ]; then
+  echo "$(date): No Claude pane found, exiting" \
+    >>/tmp/claude-preview-debug.log
+  exit 0
+fi
 
 # Check if preview pane exists (stored in file)
 if [ -f "$preview_pane_file" ]; then
@@ -93,8 +103,8 @@ fi
 
 if [ -z "$preview_pane" ]; then
   echo "$(date): Creating new preview pane" >>/tmp/claude-preview-debug.log
-  # Create new pane above current pane (30% height)
-  tmux split-window -v -b -p 30 -t "$current_pane"
+  # Create new pane above Claude pane (30% height)
+  tmux split-window -v -b -p 30 -t "$claude_pane"
   # Get the new pane ID (the split-window creates it as the active pane)
   preview_pane=$(tmux display-message -p '#{pane_id}')
   # Store the pane ID in file for future reuse
