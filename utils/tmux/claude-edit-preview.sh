@@ -150,27 +150,6 @@ fi
 # Return focus to original pane
 tmux select-pane -t "$current_pane"
 
-# Set up auto-close timer for preview pane (60 seconds)
-timer_file="/tmp/claude-preview-timer-$session_name-$window_id"
-# Cancel any existing timer
-if [ -f "$timer_file" ]; then
-  old_timer_pid=$(cat "$timer_file")
-  kill "$old_timer_pid" 2>/dev/null || true
-  rm -f "$timer_file"
-fi
-# Start new timer
-(
-  sleep 60
-  # Check if preview pane still exists and close it
-  if [ -f "$preview_pane_file" ]; then
-    stored_pane=$(cat "$preview_pane_file")
-    if tmux list-panes -F '#{pane_id}' | grep -q "^$stored_pane$"; then
-      tmux kill-pane -t "$stored_pane" 2>/dev/null || true
-      rm -f "$preview_pane_file"
-      echo "$(date): Auto-closed preview pane $stored_pane after 60s" \
-        >>/tmp/claude-preview-debug.log
-    fi
-  fi
-  rm -f "$timer_file"
-) &
-echo $! > "$timer_file"
+# Auto-close preview pane after 60 seconds
+(sleep 60; tmux kill-pane -t "$preview_pane" 2>/dev/null || true; \
+ rm -f "$preview_pane_file") &
