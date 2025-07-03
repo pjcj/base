@@ -1161,7 +1161,7 @@ elif [ 1 = 1 ]; then
 
     . ~/.local/share/zinit/plugins/woefe---git-prompt.zsh/git-prompt.zsh
 
-    if [ $EUID -eq 0 ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
+    if [ $EUID -eq 0 ]; then NCOLOUR="red"; else NCOLOUR="green"; fi
     local char="─"
     # grep -Eq '(18|20)\.04' /etc/os-release 2>|/dev/null && char="-"
 
@@ -1219,7 +1219,7 @@ elif [ 1 = 1 ]; then
         local p_git="$(gitprompt)"
         local p_status="%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )"
         local p_perl="%{$fg[blue]%}$(perlv)%{$reset_color%}"
-        local p_location="%{$fg[green]%}%m:%~ %{$reset_color%}"
+        local p_location="%{$fg[$NCOLOUR]%}%m:%~ %{$reset_color%}"
         local p_time="%{$fg_bold[yellow]%}%T%{$reset_color%}"
         local content="$p_time $p_git$p_status$p_perl$p_location"
 
