@@ -58,7 +58,7 @@ local function conditional_filename()
   if has_multiple_windows() then
     return "" -- Don't show filename in statusline when there are multiple windows
   else
-    return vim.fn.expand("%:t") -- Show just the filename when single window
+    return vim.fn.expand("%:~:.") -- Show relative path when single window
   end
 end
 
