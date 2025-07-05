@@ -1034,6 +1034,7 @@ wk.add({
   { "<leader>hS", gs.stage_buffer, desc = "stage buffer" },
   { "<leader>hu", gs.undo_stage_hunk, desc = "unstage hunk" },
   { "<leader>hx", gs.show, desc = "show index" },
+  { "ih", gs.select_hunk, mode = { "o", "x" }, desc = "select hunk" },
 
   { "<leader>k", mode = { "n", "v" }, desc = "highlight word" },
   { "<leader>K", mode = { "n", "v" }, desc = "unhighlight words" },
