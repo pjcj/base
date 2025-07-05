@@ -1,5 +1,7 @@
 #!/bin/bash
 
+exit  # this isn't quite there yet unfortunately
+
 # Create unique preview pane identifier based on session and window
 session_name=$(tmux display-message -p '#{session_name}')
 window_id=$(tmux display-message -p '#{window_id}')
@@ -86,7 +88,7 @@ else
   # Case 2: Look for any Claude pane in current window
   claude_pane=$(tmux list-panes -F '#{pane_id} #{pane_title}' | \
     grep ' claude$' | head -1 | cut -d' ' -f1)
-  
+
   if [[ -n "$claude_pane" ]]; then
     target_pane="$claude_pane"
     echo "$(date): Found Claude pane $claude_pane in window" \
