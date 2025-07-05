@@ -35,9 +35,15 @@ else
       # Focus existing claude pane
       tmux select-pane -t "$claude_pane"
     else
+      # If we split from a neovim pane, start ClaudeCode for IDE integration
+      if [ "$current_pane_command" = "nvim" ]; then
+        # Send command to the original neovim pane
+        tmux send-keys -t "$current_pane_id" Escape
+        tmux send-keys -t "$current_pane_id" ":ClaudeCode" Enter
+      fi
       # Create new claude pane
       tmux split-window -h -l 35% \
-        "$HOME/.claude/local/claude --dangerously-skip-permissions"
+        "$HOME/.claude/local/claude --ide --dangerously-skip-permissions"
       tmux select-pane -T 'claude'
 
       # If we split from a neovim pane, equalize its windows horizontally

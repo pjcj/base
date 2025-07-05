@@ -2058,6 +2058,7 @@ local plugins = {
   },
   {
     "coder/claudecode.nvim",
+    lazy = false,
     config = true,
     opts = {
       auto_start = true,
