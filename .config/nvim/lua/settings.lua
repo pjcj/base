@@ -1,6 +1,7 @@
 local vopt = vim.opt -- set options
 
 -- stylua: ignore start
+vopt.autoread      = true
 vopt.autowriteall  = true
 vopt.backspace     = { "indent", "eol", "start" }
 vopt.background    = "dark"
@@ -69,3 +70,44 @@ if vim.fn.executable("rg") then
 else
   vopt.grepprg = "git grep -n"
 end
+
+-- Auto-refresh buffers when files change on disk
+-- Only affects visible buffers with no unsaved changes
+local function setup_auto_refresh()
+  local function refresh_visible_buffers()
+    -- Get all visible buffers (buffers currently displayed in windows)
+    local visible_buffers = {}
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      local buf = vim.api.nvim_win_get_buf(win)
+      visible_buffers[buf] = true
+    end
+
+    -- Check each visible buffer for file changes
+    for buf, _ in pairs(visible_buffers) do
+      if vim.api.nvim_buf_is_valid(buf) then
+        local buf_name = vim.api.nvim_buf_get_name(buf)
+        -- Only refresh if buffer has a file, is not modified, and file exists
+        if
+          buf_name ~= ""
+          and not vim.bo[buf].modified
+          and vim.fn.filereadable(buf_name) == 1
+        then
+          vim.cmd.checktime()
+        end
+      end
+    end
+  end
+
+  -- Use vim.fn.timer_start for compatibility
+  vim.fn.timer_start(2000, function()
+    vim.schedule(refresh_visible_buffers)
+  end, { ["repeat"] = -1 })
+end
+
+-- Set up auto-refresh after VimEnter to ensure everything is initialised
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    setup_auto_refresh()
+  end,
+  desc = "Setup auto-refresh for file changes",
+})
