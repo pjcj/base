@@ -1,9 +1,9 @@
 {
   "FixCursorHold.nvim": { "branch": "master", "commit": "1900f89dc17c603eec29960f57c00bd9ae696495" },
   "SmoothCursor.nvim": { "branch": "main", "commit": "12518b284e1e3f7c6c703b346815968e1620bee2" },
-  "ale": { "branch": "master", "commit": "9e49019a2683bff012d53f28546ff968075ea3b9" },
+  "ale": { "branch": "master", "commit": "edccdfa9efb7a4b37fb846e55b2137b55275d39e" },
   "ascii-blocks.nvim": { "branch": "main", "commit": "a8a7d99fc52df30d7c4e7664818542fd44839d97" },
-  "avante.nvim": { "branch": "main", "commit": "39ac64aca65d66d05409e712fac666eb298561f5" },
+  "avante.nvim": { "branch": "main", "commit": "6227d5c34051a132a573fb4d94e9039beb6d8968" },
   "better-digraphs.nvim": { "branch": "master", "commit": "c895f619cbd2e23860285baea6d2933649a28b26" },
   "catppuccin": { "branch": "main", "commit": "fa42eb5e26819ef58884257d5ae95dd0552b9a66" },
   "claudecode.nvim": { "branch": "main", "commit": "91357d810ccf92f6169f3754436901c6ff5237ec" },
@@ -32,7 +32,7 @@
   "emission.nvim": { "branch": "main", "commit": "9a8e8806b01723da229befc95d3f7ecbcc35faac" },
   "emoji.nvim": { "branch": "main", "commit": "a79e45d35853bb6446638f4d74c6f778ddebd8e3" },
   "friendly-snippets": { "branch": "main", "commit": "572f5660cf05f8cd8834e096d7b4c921ba18e175" },
-  "fzf": { "branch": "master", "commit": "ff1550bb383c74267416132592516aae8662833d" },
+  "fzf": { "branch": "master", "commit": "0076ec2e8d66a725555c256acbe46292019dc1a7" },
   "git-messenger.vim": { "branch": "master", "commit": "fd124457378a295a5d1036af4954b35d6b807385" },
   "gitlab.nvim": { "branch": "main", "commit": "e29909cd1064a7b53c3150bff49449a548dadf8d" },
   "gitsigns.nvim": { "branch": "main", "commit": "362fe61f9f19e9bceff178792780df5cce118a7d" },
@@ -53,9 +53,9 @@
   "markview.nvim": { "branch": "main", "commit": "b8465d5993e173bec7c2d103949bc54bb526214c" },
   "mason-lspconfig.nvim": { "branch": "main", "commit": "5477d67a5ca12b704f2a8a55a057fc79750f3dbb" },
   "mason.nvim": { "branch": "main", "commit": "8024d64e1330b86044fed4c8494ef3dcd483a67c" },
-  "mcphub.nvim": { "branch": "main", "commit": "15d490149502a8fb523a148dd564d597d34c3eb4" },
+  "mcphub.nvim": { "branch": "main", "commit": "3f676c6060bb9c610f74b85b0f11a66798877f4a" },
   "minuet-ai.nvim": { "branch": "main", "commit": "a7337d07bb4f50cd6c92dd62c15c85d6b141b8ad" },
-  "neotest": { "branch": "master", "commit": "d66cf4e05a116957f0d3a7755a24291c7d1e1f72" },
+  "neotest": { "branch": "master", "commit": "61d1951131e6770c815243d84a27ccd0436ec61c" },
   "neotest-go": { "branch": "main", "commit": "92950ad7be2ca02a41abca5c6600ff6ffaf5b5d6" },
   "nui.nvim": { "branch": "main", "commit": "de740991c12411b663994b2860f1a4fd0937c130" },
   "nvim-aider": { "branch": "main", "commit": "e15ea121074e774e436eb2223929fde7a01d4f52" },
@@ -72,7 +72,7 @@
   "nvim-lint": { "branch": "master", "commit": "3c5e34c24834a67b1cb37600ab7663eefd2b0390" },
   "nvim-lsp-notify": { "branch": "main", "commit": "9541bdde0b84b7a33a24dbc2eccc3df33d4a0cdb" },
   "nvim-lsp-ts-utils": { "branch": "main", "commit": "0a6a16ef292c9b61eac6dad00d52666c7f84b0e7" },
-  "nvim-lspconfig": { "branch": "master", "commit": "d8f03bfd5b54b10352276a0ed1f2ffe9c2e0676f" },
+  "nvim-lspconfig": { "branch": "master", "commit": "7fac9025a967a4d0846660f751cd392fac6bb788" },
   "nvim-navic": { "branch": "master", "commit": "f887d794a0f4594882814d7780980a949200a238" },
   "nvim-neoclip.lua": { "branch": "main", "commit": "831a97c7697736411a05ff8b91e8798ea4c2d6fb" },
   "nvim-nio": { "branch": "master", "commit": "21f5324bfac14e22ba26553caf69ec76ae8a7662" },
@@ -136,5 +136,5 @@
   "vim-vsnip": { "branch": "master", "commit": "0a4b8419e44f47c57eec4c90df17567ad4b1b36e" },
   "vim-vsnip-integ": { "branch": "master", "commit": "90ae474e8b05ed41e36d6f58382a9fbfb4b672c4" },
   "which-key.nvim": { "branch": "main", "commit": "fcbf4eea17cb299c02557d576f0d568878e354a4" },
-  "yazi.nvim": { "branch": "main", "commit": "fd8526c77a7316ccaf9df8e898ccfa750225f70c" }
+  "yazi.nvim": { "branch": "main", "commit": "924db6fa6201d26ab5fc979f92c9ddd77108a453" }
 }
