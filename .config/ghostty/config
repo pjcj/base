@@ -3,7 +3,7 @@ term = xterm-256color
 
 # Font configuration
 font-family = Inconsolata
-font-size = 20
+font-size = 17
 
 # Window configuration
 window-decoration = false
