@@ -354,6 +354,10 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 zstyle ':fzf-tab:*' switch-group ',' '.'
 disable-fzf-tab
 
+if which jj >&/dev/null; then
+    source <(jj util completion zsh)
+fi
+
 zshrc_load_status "ftp"
 autoload -U zfinit
 zfinit
@@ -930,7 +934,6 @@ fh() { print -z $(fc -li 1 | fzf-tmux +s --tac | sed -r 's/ *[0-9]+.{18}//') }
 
 if which lsd >&/dev/null; then
     tree="lsd -A --tree --color=always --icon=always"
-
 else
     tree="tree -C"
 fi
