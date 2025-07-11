@@ -1102,178 +1102,110 @@ zshrc_load_status "prompt"
 setopt prompt_subst
 autoload -U colors && colors # Enable colors in prompt
 
-if [ 1 = 0 ]; then
-    if [ $EUID -eq 0 ]; then NCOLOUR="red"; else NCOLOUR="cyan"; fi
+export ZSH_GIT_PROMPT_FORCE_BLANK=1
+export ZSH_THEME_GIT_PROMPT_PREFIX=""
+export ZSH_THEME_GIT_PROMPT_SUFFIX=" "
+export ZSH_THEME_GIT_PROMPT_SEPARATOR=" "
+export ZSH_THEME_GIT_PROMPT_DETACHED="%{$fg_no_bold[cyan]%}:"
+export ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
+export ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg[yellow]%}%{↓%G%}"
+export ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[yellow]%}%{↑%G%}"
+export ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}%{⋆%G%}"
+export ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}%{●%G%}"
+export ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$fg[blue]%}%{+%G%}"
+export ZSH_THEME_GIT_PROMPT_UNTRACKED="%{…%G%}"
+export ZSH_THEME_GIT_PROMPT_STASHED="%{$efs_base01%}⚑"
+export ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✔"
 
-    perlv () { perl -e '$t = -e "Makefile"; $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`; s|.*/(.*)/bin/perl.*|$1 |; s/^usr $//; s/perl-// if $t; print' }
+export ZSH_GIT_PROMPT_SHOW_STASH=1
+export ZSH_GIT_PROMPT_SHOW_UPSTREAM=
 
-    if [[ $(uname) == "FreeBSD" ]]; then
-        prompt_root=~sw/zsh-git-prompt
-        PROMPT='%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
+. ~/.local/share/zinit/plugins/woefe---git-prompt.zsh/git-prompt.zsh
+
+if [ $EUID -eq 0 ]; then NCOLOUR="red"; else NCOLOUR="green"; fi
+local char="─"
+# grep -Eq '(18|20)\.04' /etc/os-release 2>|/dev/null && char="-"
+
+perl_here() {
+    if [[ -d perl || -d t || -e Makefile.PL ]]; then
+        echo 1
     else
-        if [[ $(uname) == Linux ]]; then
-            prompt_root=$(ghq list -p zsh-git-prompt)
-        else
-            # prompt_root=/usr/local/Cellar/zsh-git-prompt/*
-            prompt_root=~sw/pkg/zsh-git-prompt
-        fi
-
-        PROMPT='$(git_super_status)%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )%{$fg[$NCOLOUR]%}%h:%{$reset_color%} '
-
-        load $prompt_root/zshrc.sh
-        if [[ -d $prompt_root/.stack-work ]] then
-            GIT_PROMPT_EXECUTABLE="haskell"
-        else
-            GIT_PROMPT_EXECUTABLE="python"
-        fi
-
-        ZSH_THEME_GIT_PROMPT_CACHE=
-        ZSH_THEME_GIT_PROMPT_PREFIX=""
-        ZSH_THEME_GIT_PROMPT_SUFFIX=" "
-        ZSH_THEME_GIT_PROMPT_SEPARATOR=""
-        ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
-        ZSH_THEME_GIT_PROMPT_BRANCH="%{\e[38;5;13m%}"
-        ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}%{⦁%G%}"
-        ZSH_THEME_GIT_PROMPT_CONFLICTS="%{$fg[red]%}%{⋆%G%}"
-        ZSH_THEME_GIT_PROMPT_CHANGED="%{$fg[blue]%}%{+%G%}"
-        ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg[yellow]%}%{↓%G%}"
-        ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[yellow]%}%{↑%G%}"
-        ZSH_THEME_GIT_PROMPT_UNTRACKED="%{…%G%}"
-        ZSH_THEME_GIT_PROMPT_CLEAN=""
+        echo 0
     fi
+}
 
-    RPROMPT='%{$fg[blue]%}$(perlv)%{$fg[green]%}%m:%~ %T%{$reset_color%}'
-elif [ 1 = 1 ]; then
-    export ZSH_GIT_PROMPT_FORCE_BLANK=1
-    export ZSH_THEME_GIT_PROMPT_PREFIX=""
-    export ZSH_THEME_GIT_PROMPT_SUFFIX=" "
-    export ZSH_THEME_GIT_PROMPT_SEPARATOR=" "
-    export ZSH_THEME_GIT_PROMPT_DETACHED="%{$fg_no_bold[cyan]%}:"
-    export ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
-    export ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg[yellow]%}%{↓%G%}"
-    export ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[yellow]%}%{↑%G%}"
-    export ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}%{⋆%G%}"
-    export ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}%{●%G%}"
-    export ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$fg[blue]%}%{+%G%}"
-    export ZSH_THEME_GIT_PROMPT_UNTRACKED="%{…%G%}"
-    export ZSH_THEME_GIT_PROMPT_STASHED="%{$efs_base01%}⚑"
-    export ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✔"
-
-    export ZSH_GIT_PROMPT_SHOW_STASH=1
-    export ZSH_GIT_PROMPT_SHOW_UPSTREAM=
-
-    . ~/.local/share/zinit/plugins/woefe---git-prompt.zsh/git-prompt.zsh
-
-    if [ $EUID -eq 0 ]; then NCOLOUR="red"; else NCOLOUR="green"; fi
-    local char="─"
-    # grep -Eq '(18|20)\.04' /etc/os-release 2>|/dev/null && char="-"
-
-    perl_here() {
-        if [[ -d perl || -d t || -e Makefile.PL ]]; then
-            echo 1
-        else
-            echo 0
-        fi
-    }
-
-    perlv () {
-        if [[ ${PROMPT_SHOW_PERL:-$(perl_here)} == 1 ]]; then
-            if which plenv >&/dev/null; then
-                local perl=$(plenv version-name)
-                if [[ $perl == system ]]; then
-                    perl -e 'print "$^V "'
-                else
-                    echo "$perl "
-                fi
-                return
+perlv () {
+    if [[ ${PROMPT_SHOW_PERL:-$(perl_here)} == 1 ]]; then
+        if which plenv >&/dev/null; then
+            local perl=$(plenv version-name)
+            if [[ $perl == system ]]; then
+                perl -e 'print "$^V "'
+            else
+                echo "$perl "
             fi
-            perl -e '
-                $t = -e "Makefile";
-                $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`;
-                s|.*/(.*)/bin/perl.*|$1 |;
-                s/^usr $//;
-                s/perl-// if $t;
-                print
-            '
+            return
         fi
-    }
+        perl -e '
+            $t = -e "Makefile";
+            $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`;
+            s|.*/(.*)/bin/perl.*|$1 |;
+            s/^usr $//;
+            s/perl-// if $t;
+            print
+        '
+    fi
+}
 
-    # Function to calculate actual display width of prompt strings
-    prompt-length() {
-        emulate -L zsh
-        local -i COLUMNS=${2:-COLUMNS}
-        local -i x y=${#1} m
-        if (( y )); then
-            while (( ${${(%):-$1%$y(l.1.0)}[-1]} )); do
-                x=y
-                (( y *= 2 ))
-            done
-            while (( y > x + 1 )); do
-                (( m = x + (y - x) / 2 ))
-                (( ${${(%):-$1%$m(l.1.0)}[-1]} && (x = m) || (y = m) ))
-            done
-        fi
-        REPLY=$x
-    }
+# Function to calculate actual display width of prompt strings
+prompt-length() {
+    emulate -L zsh
+    local -i COLUMNS=${2:-COLUMNS}
+    local -i x y=${#1} m
+    if (( y )); then
+        while (( ${${(%):-$1%$y(l.1.0)}[-1]} )); do
+            x=y
+            (( y *= 2 ))
+        done
+        while (( y > x + 1 )); do
+            (( m = x + (y - x) / 2 ))
+            (( ${${(%):-$1%$m(l.1.0)}[-1]} && (x = m) || (y = m) ))
+        done
+    fi
+    REPLY=$x
+}
 
-    custom_prompt() {
-        local term_width=$(tput cols)
+custom_prompt() {
+    local term_width=$(tput cols)
 
-        local p_git="$(gitprompt)"
-        local p_status="%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )"
-        local p_perl="%{$fg[blue]%}$(perlv)%{$reset_color%}"
-        local p_location="%{$fg[$NCOLOUR]%}%m:%~ %{$reset_color%}"
-        local p_time="%{$fg_bold[yellow]%}%T%{$reset_color%}"
-        local content="$p_time $p_git$p_status$p_perl$p_location"
+    local p_git="$(gitprompt)"
+    local p_status="%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )"
+    local p_perl="%{$fg[blue]%}$(perlv)%{$reset_color%}"
+    local p_location="%{$fg[$NCOLOUR]%}%m:%~ %{$reset_color%}"
+    local p_time="%{$fg_bold[yellow]%}%T%{$reset_color%}"
+    local content="$p_time $p_git$p_status$p_perl$p_location"
 
-        prompt-length "$content"
-        local content_length=$REPLY
+    prompt-length "$content"
+    local content_length=$REPLY
 
-        local extra_spaces=2
-        local total_length=$((content_length + extra_spaces))
+    local extra_spaces=2
+    local total_length=$((content_length + extra_spaces))
 
-        local fill_length=$((term_width - total_length))
-        if [[ $fill_length -lt 0 ]]; then
-            fill_length=0
-        fi
-
-        local fill=""
-        if [[ $fill_length -gt 0 ]]; then
-            fill=$(printf "%.s$char" {1..$fill_length})
-        fi
-
-        echo "${content}  ${fill}"
-        echo -n "%{$fg[yellow]%}❯❯❯ %{$reset_color%}"
-    }
-
-    PROMPT='$(custom_prompt)'
-    RPROMPT=""
-else
-    AGKOZAK_PROMPT_DIRTRIM=0
-    AGKOZAK_MULTILINE=0
-    AGKOZAK_PROMPT_CHAR=( ❯ ❯ ❮ )
-    AGKOZAK_CUSTOM_SYMBOLS=( '⇣⇡' '⇣' '⇡' '+' 'x' '!' '>' '?' )
-    if [[ $(uname) == "FreeBSD" ]]; then
-        AGKOZAK_COLORS_USER_HOST=32
-        AGKOZAK_COLORS_PATH=13
-        AGKOZAK_COLORS_PROMPT_CHAR=13
-        AGKOZAK_COLORS_BRANCH_STATUS=3
-    else
-        AGKOZAK_COLORS_USER_HOST=$s_blue
-        AGKOZAK_COLORS_PATH=$s_violet
-        AGKOZAK_COLORS_PROMPT_CHAR=$s_violet
-        AGKOZAK_COLORS_BRANCH_STATUS=$s_yellow
+    local fill_length=$((term_width - total_length))
+    if [[ $fill_length -lt 0 ]]; then
+        fill_length=0
     fi
 
-    AGKOZAK_CUSTOM_RPROMPT='%(3V.%F{${AGKOZAK_COLORS_BRANCH_STATUS}}%3v%f.) '
-    AGKOZAK_CUSTOM_RPROMPT+='%B%F{${AGKOZAK_COLORS_PATH}}%~%f%b '
-    AGKOZAK_CUSTOM_RPROMPT+='%F{${AGKOZAK_COLORS_USER_HOST}}%*'
+    local fill=""
+    if [[ $fill_length -gt 0 ]]; then
+        fill=$(printf "%.s$char" {1..$fill_length})
+    fi
 
-    AGKOZAK_CUSTOM_PROMPT='%(?..%B%F{${AGKOZAK_COLORS_EXIT_STATUS}}(%?%)%f%b )'
-    AGKOZAK_CUSTOM_PROMPT+='%(!.%S%B.%B%F{${AGKOZAK_COLORS_USER_HOST}})%n%1v%(!.%b%s.%f%b)'
-    AGKOZAK_CUSTOM_PROMPT+=' %B%F{${AGKOZAK_COLORS_PROMPT_CHAR}}%h%f%b'
-    AGKOZAK_CUSTOM_PROMPT+='${AGKOZAK_PROMPT_WHITESPACE}${AGKOZAK_COLORS_PROMPT_CHAR:+%F{${AGKOZAK_COLORS_PROMPT_CHAR}\}}%(4V.${AGKOZAK_PROMPT_CHAR[3]:-:}.%(!.${AGKOZAK_PROMPT_CHAR[2]:-%#}.${AGKOZAK_PROMPT_CHAR[1]:-%#}))${AGKOZAK_COLORS_PROMPT_CHAR:+%f} '
-fi
+    echo "${content}  ${fill}"
+    echo -n "%{$fg[yellow]%}❯❯❯ %{$reset_color%}"
+}
+
+PROMPT='$(custom_prompt)'
+RPROMPT=""
 
 # ensure autoenv.zsh is called
 { c ~ && c - } >/dev/null
