@@ -945,6 +945,13 @@ wk.add({
     end,
     desc = "commit --no-verify",
   },
+  {
+    "<leader>gp",
+    function()
+      vim.cmd("Git push")
+    end,
+    desc = "push",
+  },
 
   { "<leader>gl", group = "gitlab" },
   { "<leader>gla", gl.approve, desc = "approve" },
