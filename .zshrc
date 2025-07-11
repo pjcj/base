@@ -160,8 +160,6 @@ if [ $EUID -ne 0 ]; then
     eval $(/usr/local/bin/brew shellenv)
   [ -e /opt/homebrew/bin/brew ] && \
     eval $(/opt/homebrew/bin/brew shellenv)
-  [ -e /opt/homebrew/bin/brew ] && \
-    eval $(/opt/homebrew/bin/brew shellenv)
 fi
 
 # shellcheck disable=SC1036
