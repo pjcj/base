@@ -13,6 +13,7 @@ current_window_name=$(tmux display-message -p '#{window_name}')
 session_name=$(tmux display-message -p '#{session_name}')
 current_pane_id=$(tmux display-message -p '#{pane_id}')
 current_pane_command=$(tmux display-message -p '#{pane_current_command}')
+current_path=$(tmux display-message -p '#{pane_current_path}')
 
 # Check if we're currently in a hidden claude window
 if echo "$current_window_name" | grep -q "^claude-hidden-.*"; then
@@ -46,7 +47,8 @@ else
         tmux send-keys -t "$current_pane_id" ":ClaudeCode" Enter
       fi
       # Create new claude pane
-      tmux split-window -h -l 35% \
+      echo "Current path from tmux: $current_path" >> $log
+      tmux split-window -h -l 35% -c "$current_path" \
         "$HOME/.claude/local/claude --ide --dangerously-skip-permissions"
       tmux select-pane -T 'claude'
 
