@@ -1,15 +1,15 @@
 # Loading status
 zshrc_load_status () {
-    echo -n "\r.zshrc load: $* ... \e[0K"
+  echo -n "\r.zshrc load: $* ... \e[0K"
 }
 
 load() {
-    for f in $@; do
-        if [[ -r $f ]]; then
-            zshrc_load_status "$f"
-            . $f
-        fi
-    done
+  for f in $@; do
+    if [[ -r $f ]]; then
+      zshrc_load_status "$f"
+      . $f
+    fi
+  done
 }
 
 load ~/.zshrc.init.local
@@ -26,12 +26,12 @@ zshrc_load_status "plugins"
 
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [[ ! -f $ZINIT_HOME/zinit.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing zinit…%f"
-    command mkdir -p "$ZINIT_HOME" && command chmod g-rwX "$ZINIT_HOME"
-    command git clone https://github.com/zdharma-continuum/zinit.git \
-            "$ZINIT_HOME" && \
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f" || \
-        print -P "%F{160}▓▒░ The clone has failed.%f"
+  print -P "%F{33}▓▒░ %F{220}Installing zinit…%f"
+  command mkdir -p "$ZINIT_HOME" && command chmod g-rwX "$ZINIT_HOME"
+  command git clone https://github.com/zdharma-continuum/zinit.git \
+      "$ZINIT_HOME" && \
+    print -P "%F{33}▓▒░ %F{34}Installation successful.%f" || \
+    print -P "%F{160}▓▒░ The clone has failed.%f"
 fi
 source "$ZINIT_HOME/zinit.zsh"
 
@@ -49,131 +49,131 @@ zinit load "Tarrasch/zsh-bd"
 
 zshrc_load_status "options"
 
-setopt                        \
-    NO_all_export             \
-       always_last_prompt     \
-    NO_always_to_end          \
-       append_history         \
-       auto_cd                \
-       auto_list              \
-       auto_menu              \
-    NO_auto_name_dirs         \
-       auto_param_keys        \
-       auto_param_slash       \
-       auto_pushd             \
-       auto_remove_slash      \
-    NO_auto_resume            \
-       bad_pattern            \
-       bang_hist              \
-       beep                   \
-    NO_bgnice                 \
-       brace_ccl              \
-    NO_bsd_echo               \
-    NO_chase_links            \
-       cdable_vars            \
-    NO_clobber                \
-       combining_chars        \
-       complete_aliases       \
-       complete_in_word       \
-       correct                \
-    NO_correct_all            \
-       csh_junkie_history     \
-    NO_csh_junkie_loops       \
-    NO_csh_junkie_quotes      \
-    NO_csh_null_glob          \
-       equals                 \
-       extended_glob          \
-       extended_history       \
-       function_argzero       \
-       glob                   \
-    NO_glob_assign            \
-    NO_glob_complete          \
-       glob_dots              \
-    NO_glob_subst             \
-       hash_cmds              \
-       hash_dirs              \
-       hash_list_all          \
-       hist_allow_clobber     \
-       hist_beep              \
-    NO_hist_expire_dups_first \
-    NO_hist_ignore_all_dups   \
-    NO_hist_ignore_dups       \
-    NO_hist_no_functions      \
-       hist_reduce_blanks     \
-    NO_hist_save_no_dups      \
-       hist_ignore_space      \
-       hist_no_store          \
-       hist_verify            \
-    NO_hup                    \
-    NO_ignore_braces          \
-    NO_ignore_eof             \
-       interactive_comments   \
-    NO_ksh_glob               \
-    NO_list_ambiguous         \
-    NO_list_beep              \
-       list_packed            \
-    NO_list_types             \
-       long_list_jobs         \
-       magic_equal_subst      \
-       mail_warning           \
-    NO_mark_dirs              \
-    NO_menu_complete          \
-       multios                \
-       nomatch                \
-       notify                 \
-    NO_null_glob              \
-       numeric_glob_sort      \
-    NO_overstrike             \
-       path_dirs              \
-       rematch_pcre           \
-       posix_builtins         \
-       print_exit_value       \
-    NO_prompt_cr              \
-       prompt_subst           \
-       pushd_ignore_dups      \
-    NO_pushd_minus            \
-    NO_pushd_silent           \
-       pushd_to_home          \
-       rc_expand_param        \
-    NO_rc_quotes              \
-    NO_rec_exact              \
-       rm_star_silent         \
-    NO_rm_star_wait           \
-    NO_sh_file_expansion      \
-       sh_option_letters      \
-    NO_sh_word_split          \
-       share_history          \
-       short_loops            \
-    NO_single_line_zle        \
-       sun_keyboard_hack      \
-       unset                  \
-    NO_verbose                \
-    NO_xtrace                 \
-       zle
+setopt                      \
+  NO_all_export             \
+     always_last_prompt     \
+  NO_always_to_end          \
+     append_history         \
+     auto_cd                \
+     auto_list              \
+     auto_menu              \
+  NO_auto_name_dirs         \
+     auto_param_keys        \
+     auto_param_slash       \
+     auto_pushd             \
+     auto_remove_slash      \
+  NO_auto_resume            \
+     bad_pattern            \
+     bang_hist              \
+     beep                   \
+  NO_bgnice                 \
+     brace_ccl              \
+  NO_bsd_echo               \
+  NO_chase_links            \
+     cdable_vars            \
+  NO_clobber                \
+     combining_chars        \
+     complete_aliases       \
+     complete_in_word       \
+     correct                \
+  NO_correct_all            \
+     csh_junkie_history     \
+  NO_csh_junkie_loops       \
+  NO_csh_junkie_quotes      \
+  NO_csh_null_glob          \
+     equals                 \
+     extended_glob          \
+     extended_history       \
+     function_argzero       \
+     glob                   \
+  NO_glob_assign            \
+  NO_glob_complete          \
+     glob_dots              \
+  NO_glob_subst             \
+     hash_cmds              \
+     hash_dirs              \
+     hash_list_all          \
+     hist_allow_clobber     \
+     hist_beep              \
+  NO_hist_expire_dups_first \
+  NO_hist_ignore_all_dups   \
+  NO_hist_ignore_dups       \
+  NO_hist_no_functions      \
+     hist_reduce_blanks     \
+  NO_hist_save_no_dups      \
+     hist_ignore_space      \
+     hist_no_store          \
+     hist_verify            \
+  NO_hup                    \
+  NO_ignore_braces          \
+  NO_ignore_eof             \
+     interactive_comments   \
+  NO_ksh_glob               \
+  NO_list_ambiguous         \
+  NO_list_beep              \
+     list_packed            \
+  NO_list_types             \
+     long_list_jobs         \
+     magic_equal_subst      \
+     mail_warning           \
+  NO_mark_dirs              \
+  NO_menu_complete          \
+     multios                \
+     nomatch                \
+     notify                 \
+  NO_null_glob              \
+     numeric_glob_sort      \
+  NO_overstrike             \
+     path_dirs              \
+     rematch_pcre           \
+     posix_builtins         \
+     print_exit_value       \
+  NO_prompt_cr              \
+     prompt_subst           \
+     pushd_ignore_dups      \
+  NO_pushd_minus            \
+  NO_pushd_silent           \
+     pushd_to_home          \
+     rc_expand_param        \
+  NO_rc_quotes              \
+  NO_rec_exact              \
+     rm_star_silent         \
+  NO_rm_star_wait           \
+  NO_sh_file_expansion      \
+     sh_option_letters      \
+  NO_sh_word_split          \
+     share_history          \
+     short_loops            \
+  NO_single_line_zle        \
+     sun_keyboard_hack      \
+     unset                  \
+  NO_verbose                \
+  NO_xtrace                 \
+     zle
 
 zshrc_load_status "environment"
 
 if [ $EUID -ne 0 ]; then
-    [ -e /home/linuxbrew/.linuxbrew/bin/brew ] && \
-        eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-    [ -e /usr/local/bin/brew ] && \
-        eval $(/usr/local/bin/brew shellenv)
-    [ -e /opt/homebrew/bin/brew ] && \
-        eval $(/opt/homebrew/bin/brew shellenv)
-    [ -e /opt/homebrew/bin/brew ] && \
-        eval $(/opt/homebrew/bin/brew shellenv)
+  [ -e /home/linuxbrew/.linuxbrew/bin/brew ] && \
+    eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+  [ -e /usr/local/bin/brew ] && \
+    eval $(/usr/local/bin/brew shellenv)
+  [ -e /opt/homebrew/bin/brew ] && \
+    eval $(/opt/homebrew/bin/brew shellenv)
+  [ -e /opt/homebrew/bin/brew ] && \
+    eval $(/opt/homebrew/bin/brew shellenv)
 fi
 
 # shellcheck disable=SC1036
 fpath=(
-    ~/{lib/zsh,.zsh,g/base/zsh}/{functions,scripts}(N)
-    ~/g/go/src/github.com/motemen/ghq/zsh(N)
-    $fpath
+  ~/{lib/zsh,.zsh,g/base/zsh}/{functions,scripts}(N)
+  ~/g/go/src/github.com/motemen/ghq/zsh(N)
+  $fpath
 )
 [[ -n $HOMEBREW_PREFIX ]] && fpath=(
-    $HOMEBREW_PREFIX/share/zsh/site-functions
-    $HOMEBREW_PREFIX/Cellar/zsh/5.9/share/zsh/functions
-    $fpath
+  $HOMEBREW_PREFIX/share/zsh/site-functions
+  $HOMEBREW_PREFIX/Cellar/zsh/5.9/share/zsh/functions
+  $fpath
 )
 
 # Ignore these corrections
@@ -246,9 +246,9 @@ autoload -Uz compinit
 # shellcheck disable=1072,1009,1073,1036
 # Use fast compinit if dump file exists and is less than 24 hours old
 if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
-    compinit -C
+  compinit -C
 else
-    compinit -u
+  compinit -u
 fi
 
 zshrc_load_status "completion system"
@@ -264,12 +264,12 @@ zstyle ":completion:*" list-colors ""
 zstyle ":completion:*" use-perl true
 # add sort of fuzzy matching: case, and _ and - are interchangeable
 zstyle ":completion:*" matcher-list "m:{a-zA-Z-_}={A-Za-z_-}" \
-                                    "r:|[._-]=* r:|=*" "l:|=* r:|=*"
+                                  "r:|[._-]=* r:|=*" "l:|=* r:|=*"
 
 zstyle ":completion:*:*:kill:*:processes" list-colors \
-           "=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01"
+         "=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01"
 zstyle ":completion:*:*:*:*:processes" \
-           command "ps -u $USER -o pid,user,comm -w -w"
+         command "ps -u $USER -o pid,user,comm -w -w"
 
 zstyle ':completion::complete:*:*:targets' call-command true
 zstyle ':completion:*:make:*' tag-order targets
@@ -355,7 +355,7 @@ zstyle ':fzf-tab:*' switch-group ',' '.'
 disable-fzf-tab
 
 if which jj >&/dev/null; then
-    source <(jj util completion zsh)
+  source <(jj util completion zsh)
 fi
 
 zshrc_load_status "ftp"
@@ -379,9 +379,9 @@ bindkey "^[OA" history-beginning-search-backward
 bindkey "^[OB" history-beginning-search-forward
 
 autoload -U history-beginning-search-menu-space-end \
-       history-beginning-search-menu
+     history-beginning-search-menu
 zle -N history-beginning-search-menu-space-end \
-       history-beginning-search-menu
+     history-beginning-search-menu
 bindkey "^E" history-beginning-search-menu-space-end
 
 bindkey "^O" push-line-or-edit
@@ -442,28 +442,28 @@ else
 fi
 
 c() {
-    if [[ $1 == "--" ]]; then
-        shift
-    fi
+  if [[ $1 == "--" ]]; then
+    shift
+  fi
 
-    local DIR="$1:h"
-    local STRIP="$1:r"
-    local EXT="$1:e"
+  local DIR="$1:h"
+  local STRIP="$1:r"
+  local EXT="$1:e"
 
-    if [[ "$EXT" == .(gz|bz2) && "$STRIP" == *.tar ]]; then
-        STRIP="$STRIP:r"
-        EXT=".tar$EXT"
-    fi
-    if [[ -d "$1" ]]; then
-        builtin pushd "$1"
-    elif [[ "$EXT" == .(tar.(gz|bz2)|tgz|zip|TGZ|ZIP) &&
-            -d "$STRIP" ]]; then
-        builtin pushd "$STRIP"
-    elif [[ -f "$1" ]]; then
-        builtin pushd "$DIR"
-    else
-        builtin pushd "$1"
-    fi
+  if [[ "$EXT" == .(gz|bz2) && "$STRIP" == *.tar ]]; then
+    STRIP="$STRIP:r"
+    EXT=".tar$EXT"
+  fi
+  if [[ -d "$1" ]]; then
+    builtin pushd "$1"
+  elif [[ "$EXT" == .(tar.(gz|bz2)|tgz|zip|TGZ|ZIP) &&
+          -d "$STRIP" ]]; then
+    builtin pushd "$STRIP"
+  elif [[ -f "$1" ]]; then
+    builtin pushd "$DIR"
+  else
+    builtin pushd "$1"
+  fi
 }
 
 d() { f "$@" }
@@ -471,31 +471,31 @@ d() { f "$@" }
 u() { popd }
 
 v() {
-    if [ "$EDITOR" = "nvim" ]; then
-        mkdir -p $VIMTMP
-        TMPDIR=$VIMTMP \
-            ENABLE_AI_PLUGINS=1 \
-            OPENAI_API_KEY=$openai_api_key \
-            ANTHROPIC_API_KEY=$anthropic_api_key \
-            GEMINI_API_KEY=$gemini_api_key \
-            PPLX_API_KEY=$pplx_api_key \
-            command $EDITOR "$@"
-            # OLLAMA_NUM_BATCH=2048 \
-            # OLLAMA_NUM_CTX=4096 \
-            # OLLAMA_NUM_GPU=1 \
-    else
-        command $EDITOR -u NONE "$@"
-    fi
+  if [ "$EDITOR" = "nvim" ]; then
+    mkdir -p $VIMTMP
+    TMPDIR=$VIMTMP \
+        ENABLE_AI_PLUGINS=1 \
+        OPENAI_API_KEY=$openai_api_key \
+        ANTHROPIC_API_KEY=$anthropic_api_key \
+        GEMINI_API_KEY=$gemini_api_key \
+        PPLX_API_KEY=$pplx_api_key \
+        command $EDITOR "$@"
+        # OLLAMA_NUM_BATCH=2048 \
+        # OLLAMA_NUM_CTX=4096 \
+        # OLLAMA_NUM_GPU=1 \
+  else
+    command $EDITOR -u NONE "$@"
+  fi
 }
 vs() { v -S /tmp/tmp_session.vim "$@" }
 
 vv() {
-    if [ "$EDITOR" = "nvim" ]; then
-        mkdir -p $VIMTMP
-        TMPDIR=$VIMTMP command $EDITOR "$@"
-    else
-        command $EDITOR -u NONE "$@"
-    fi
+  if [ "$EDITOR" = "nvim" ]; then
+    mkdir -p $VIMTMP
+    TMPDIR=$VIMTMP command $EDITOR "$@"
+  else
+    command $EDITOR -u NONE "$@"
+  fi
 }
 vvs() { vv -S /tmp/tmp_session.vim "$@" }
 
@@ -587,81 +587,81 @@ zt()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil test "$@" }
 vd() { dirs -v "$@" | fzf | cut -f 1 | { local d=`cat /dev/stdin`; cd "+$d" } }
 
 glk() {
-    if [[ -n $FZF_GIT_K ]]; then
-        gl $FZF_GIT_K "$@"
-    else
-        gl "$@"
-    fi
+  if [[ -n $FZF_GIT_K ]]; then
+    gl $FZF_GIT_K "$@"
+  else
+    gl "$@"
+  fi
 }
 
 n() {
-    mk=make
-    which gmake >/dev/null && mk=gmake
-    $mk "$@"
+  mk=make
+  which gmake >/dev/null && mk=gmake
+  $mk "$@"
 }
 
 bui() {
-    for p in "$@"; do
-        pkg=$(echo "$p" | sed 's/,$//')
-        echo "reinstalling $pkg"
-        brew uninstall --ignore-dependencies "$pkg" && brew install "$pkg"
-    done
+  for p in "$@"; do
+    pkg=$(echo "$p" | sed 's/,$//')
+    echo "reinstalling $pkg"
+    brew uninstall --ignore-dependencies "$pkg" && brew install "$pkg"
+  done
 }
 
 setup_plenv() {
-    brew install plenv
-    brew install perl-build
+  brew install plenv
+  brew install perl-build
 }
 
 wh() {
-    echo PATH is $PATH
-    echo
-    command whence -cm "$@"
-    echo
-    command whence -afpSvm "$@"
+  echo PATH is $PATH
+  echo
+  command whence -cm "$@"
+  echo
+  command whence -afpSvm "$@"
 }
 
 tm() {
-    if [[ -z "$1" || -u "$TMUX" ]]; then
-        tmux
-    else
-        tmux has -t $1 && tmux attach -d -t $1 || tmux new -s $1
-    fi
+  if [[ -z "$1" || -u "$TMUX" ]]; then
+    tmux
+  else
+    tmux has -t $1 && tmux attach -d -t $1 || tmux new -s $1
+  fi
 }
 __tmux-sessions() {
-    local expl
-    local -a sessions
-    sessions=( ${${(f)"$(command tmux list-sessions)"}/:[ $'\t']##/:} )
-    _describe -t sessions "sessions" sessions "$@"
+  local expl
+  local -a sessions
+  sessions=( ${${(f)"$(command tmux list-sessions)"}/:[ $'\t']##/:} )
+  _describe -t sessions "sessions" sessions "$@"
 }
 compdef __tmux-sessions tm
 
 sshtm() {
-    local server=${1?}
-    ssh -t "$server" zsh -i -c "tm base"
+  local server=${1?}
+  ssh -t "$server" zsh -i -c "tm base"
 }
 compdef sshtm=ssh
 
 __gwm() {
-    local -a records=( ${(ps.\n\n.)"$(_call_program directories git worktree list --porcelain)"} )
-    local -a directories descriptions
-    local i hash branch
-    for i in $records; do
-        directories+=( ${${i%%$'\n'*}#worktree } )
-        hash=${${${"${(f)i}"[2]}#HEAD }[1,9]}
-        branch=${${"${(f)i}"[3]}#branch refs/heads/}
+  local -a records=( ${(ps.\n\n.)"$(_call_program directories git worktree list --porcelain)"} )
+  local -a directories descriptions
+  local i hash branch
+  for i in $records; do
+    directories+=( ${${i%%$'\n'*}#worktree } )
+    hash=${${${"${(f)i}"[2]}#HEAD }[1,9]}
+    branch=${${"${(f)i}"[3]}#branch refs/heads/}
 
     # Simulate the non-porcelain output
     if [[ $branch == detached ]]; then
-        # TODO: show a ref that points at $hash here, like vcs_info does?
-        branch="(detached HEAD)"
+      # TODO: show a ref that points at $hash here, like vcs_info does?
+      branch="(detached HEAD)"
     else
-        branch="[$branch]"
+      branch="[$branch]"
     fi
 
     descriptions+=( "${directories[-1]}"$'\t'"$hash $branch" )
-done
-_wanted directories expl 'working tree' compadd -ld descriptions -S ' ' -f -M 'r:|/=* r:|=*' -a directories
+  done
+  _wanted directories expl 'working tree' compadd -ld descriptions -S ' ' -f -M 'r:|/=* r:|=*' -a directories
 
 }
 compdef __gwm gwm
@@ -727,71 +727,71 @@ export LESS_TERMCAP_us=$'\e[4;32m'
 export _NROFF_U=1
 
 if which python3 >&/dev/null; then
-    export PYTHON3=python3
+  export PYTHON3=python3
 elif which python3.6 >&/dev/null; then
-    export PYTHON3=python3.6
+  export PYTHON3=python3.6
 fi
 
 export ISVM=
 if [[ $(uname) == Darwin ]]; then
-    cp() { command gcp -bv --backup=numbered "$@" }
-    f()  { ls -ABGhl "$@" }
-    mv() { command gmv -bv --backup=numbered "$@" }
-    s()  { open "$@" }
-    fd() { command fd -H --exclude '/Volumes/' "$@" }
-    pll() {
-        ps -o user,pid,ppid,%cpu,%mem,vsz,rss,tty,state,start,cputime,command \
-            "$@"
-    }
-    pl() { pll -eww "$@" | m }
-    pp() { pl -rc "$@" | m }
+  cp() { command gcp -bv --backup=numbered "$@" }
+  f()  { ls -ABGhl "$@" }
+  mv() { command gmv -bv --backup=numbered "$@" }
+  s()  { open "$@" }
+  fd() { command fd -H --exclude '/Volumes/' "$@" }
+  pll() {
+    ps -o user,pid,ppid,%cpu,%mem,vsz,rss,tty,state,start,cputime,command \
+        "$@"
+  }
+  pl() { pll -eww "$@" | m }
+  pp() { pl -rc "$@" | m }
 elif [[ $(uname) == FreeBSD ]]; then
-    cp() { command cp -v "$@" }
-    f()  { ls -ABGhl "$@" }
-    mv() { command mv -v "$@" }
-    s()  { f "$@" }
-    pll() {
-        ps -o user,pid,ppid,%cpu,%mem,vsz,rss,tty,state,start,cputime,command \
-            "$@"
-    }
-    pl() { pll -eww "$@" | m }
-    pp() { pl -rc "$@" | m }
-    export LESS='--LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS'
+  cp() { command cp -v "$@" }
+  f()  { ls -ABGhl "$@" }
+  mv() { command mv -v "$@" }
+  s()  { f "$@" }
+  pll() {
+    ps -o user,pid,ppid,%cpu,%mem,vsz,rss,tty,state,start,cputime,command \
+        "$@"
+  }
+  pl() { pll -eww "$@" | m }
+  pp() { pl -rc "$@" | m }
+  export LESS='--LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS'
 else
-    if which dmidecode >&/dev/null; then
-        (sudo dmidecode -t system | grep -Eq 'VirtualBox|VMware') && ISVM=1
-    fi
-    cp() { command cp -bv --backup=numbered "$@" }
-    f()  { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
-    mv() { command mv -bv --backup=numbered "$@" }
-    pll() { ps -o user,pid,ppid,pcpu,pmem,vsz,rss,tty,stat,stime,time,args "$@"}
-    pl() { pll -eww --forest "$@" | m }
-    pp() { pll -e --sort=-pcpu "$@" | m }
-    if [[ -n $WSL_DISTRO_NAME ]]; then
-        s()  { wslview "$@" }
-    elif which xdg-open >&/dev/null; then
-        s() { xdg-open "$@" }
-    elif which gnome-open >&/dev/null; then
-        s() { gnome-open "$@" }
-    else
-        s() { echo Cannot find open command; echo "$@" }
-    fi
+  if which dmidecode >&/dev/null; then
+    (sudo dmidecode -t system | grep -Eq 'VirtualBox|VMware') && ISVM=1
+  fi
+  cp() { command cp -bv --backup=numbered "$@" }
+  f()  { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
+  mv() { command mv -bv --backup=numbered "$@" }
+  pll() { ps -o user,pid,ppid,pcpu,pmem,vsz,rss,tty,stat,stime,time,args "$@"}
+  pl() { pll -eww --forest "$@" | m }
+  pp() { pll -e --sort=-pcpu "$@" | m }
+  if [[ -n $WSL_DISTRO_NAME ]]; then
+    s()  { wslview "$@" }
+  elif which xdg-open >&/dev/null; then
+    s() { xdg-open "$@" }
+  elif which gnome-open >&/dev/null; then
+    s() { gnome-open "$@" }
+  else
+    s() { echo Cannot find open command; echo "$@" }
+  fi
 fi
 
 [[ $ISVM == 1 ]] && ulimit -n 4096
 
 if which eza >&/dev/null; then
-    f() {
-        eza -lagH \
-            --colour-scale=all --colour-scale-mode=gradient --colour=always \
-            --git --time-style=long-iso --icons --show-symlinks \
-            "$@"
-    }
-    export EZA_COLORS="xx=00;38;5;244"
-    export EZA_ICON_SPACING=2
-    export EZA_MIN_LUMINANCE=55
-    da() { d -hMOZ "$@" }
-    daz() { da --total-size "$@" }
+  f() {
+    eza -lagH \
+        --colour-scale=all --colour-scale-mode=gradient --colour=always \
+        --git --time-style=long-iso --icons --show-symlinks \
+        "$@"
+  }
+  export EZA_COLORS="xx=00;38;5;244"
+  export EZA_ICON_SPACING=2
+  export EZA_MIN_LUMINANCE=55
+  da() { d -hMOZ "$@" }
+  daz() { da --total-size "$@" }
 fi
 
 [[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim
@@ -799,7 +799,7 @@ fi
 eval "$(thefuck --alias ff)"
 
 function preexec {
-    [[ -z $SSH_CLIENT ]] || export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+  [[ -z $SSH_CLIENT ]] || export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 }
 
 zshrc_load_status "colours"
@@ -826,49 +826,49 @@ export s_rgreen="#25ad2e"   # a nice green for diffs (opposite of s:red)
 export s_darkred="#2b0200"  # a dark red
 
 for c in s_base03 s_base02 s_base01 s_base00 s_base0 s_base1 s_base2 s_base3 \
-    s_yellow s_orange s_red s_magenta s_violet s_blue s_cyan s_green s_normal \
-    s_rgreen s_darkred; do
-    export ef$c="$(print -rP "%F{${(P)c}}")"  # foreground terminal esc sequence
-    export eb$c="$(print -rP "%K{${(P)c}}")"  # background terminal esc sequence
+  s_yellow s_orange s_red s_magenta s_violet s_blue s_cyan s_green s_normal \
+  s_rgreen s_darkred; do
+  export ef$c="$(print -rP "%F{${(P)c}}")"  # foreground terminal esc sequence
+  export eb$c="$(print -rP "%K{${(P)c}}")"  # background terminal esc sequence
 done
 
 if command -v gdircolors >/dev/null; then
-    eval "$(gdircolors -b ~/g/base/dircolours)"
+  eval "$(gdircolors -b ~/g/base/dircolours)"
 elif command -v dircolors >/dev/null; then
-    eval "$(dircolors -b ~/g/base/dircolours)"
+  eval "$(dircolors -b ~/g/base/dircolours)"
 else
-    echo "Cannot find dircolors"
+  echo "Cannot find dircolors"
 fi
 
 zshrc_load_status "external files"
 
 load \
-    /etc/zsh_command_not_found                               \
-    ~/g/sw/etc/zsh/*(N)                                      \
-    $HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh          \
-    $HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh            \
-    /usr/local/share/examples/fzf/shell/key-bindings.zsh     \
-    /usr/local/share/examples/fzf/shell/completion.zsh       \
-    ~/g/base/zsh/.wezterm.completion.zsh                     \
-    /Applications/WezTerm.app/Contents/Resources/wezterm.sh  \
-    ~/.iterm2_shell_integration.zsh                          \
-    ~/Library/Preferences/org.dystroy.broot/launcher/bash/br \
-    ~/.acme.sh/acme.sh.env                                   \
-    ~/.zshrc.local                                           \
-    ~/.zshrc.${HOST%%.*}
+  /etc/zsh_command_not_found                               \
+  ~/g/sw/etc/zsh/*(N)                                      \
+  $HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh          \
+  $HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh            \
+  /usr/local/share/examples/fzf/shell/key-bindings.zsh     \
+  /usr/local/share/examples/fzf/shell/completion.zsh       \
+  ~/g/base/zsh/.wezterm.completion.zsh                     \
+  /Applications/WezTerm.app/Contents/Resources/wezterm.sh  \
+  ~/.iterm2_shell_integration.zsh                          \
+  ~/Library/Preferences/org.dystroy.broot/launcher/bash/br \
+  ~/.acme.sh/acme.sh.env                                   \
+  ~/.zshrc.local                                           \
+  ~/.zshrc.${HOST%%.*}
 
 zshrc_load_status "perl"
 
 [[ -z $PERLBREW_ROOT ]] && export PERLBREW_ROOT="$HOME/perl5/perlbrew"
 if [[ -e $PERLBREW_ROOT/etc/bashrc ]] then
-    __path=$PATH
-    __manpath=$MANPATH
-    . $PERLBREW_ROOT/etc/bashrc 2>/dev/null
-    . $PERLBREW_ROOT/etc/perlbrew-completion.bash
-    PATH=$PERLBREW_PATH:$__path
-    MANPATH=${MANPATH:-manpath}:$__manpath
-    pb() { TEST_JOBS=9 perlbrew -j9 "$@" }
-    complete -F _perlbrew_compgen pb
+  __path=$PATH
+  __manpath=$MANPATH
+  . $PERLBREW_ROOT/etc/bashrc 2>/dev/null
+  . $PERLBREW_ROOT/etc/perlbrew-completion.bash
+  PATH=$PERLBREW_PATH:$__path
+  MANPATH=${MANPATH:-manpath}:$__manpath
+  pb() { TEST_JOBS=9 perlbrew -j9 "$@" }
+  complete -F _perlbrew_compgen pb
 fi
 
 function _dzil_compdef_setup() {
@@ -895,20 +895,20 @@ fi
 
 zshrc_load_status "nvm"
 if [[ -d $(brew --prefix nvm) ]] then
-    export NVM_DIR=~/.config/nvm
-    mkdir -p $NVM_DIR
-    load $(brew --prefix nvm)/nvm.sh
-    load $(brew --prefix nvm)/etc/bash_completion.d/nvm
-    nvm use --silent system
+  export NVM_DIR=~/.config/nvm
+  mkdir -p $NVM_DIR
+  load $(brew --prefix nvm)/nvm.sh
+  load $(brew --prefix nvm)/etc/bash_completion.d/nvm
+  nvm use --silent system
 fi
 
 zshrc_load_status "pyenv"
 if [[ -d $(brew --prefix pyenv) ]] then
-    export PYENV_ROOT=~/.config/pyenv
-    mkdir -p $PYENV_ROOT
-    PATH=$PYENV_ROOT/bin:$PATH
-    eval "$(pyenv init --path  | grep -v pyenv.zsh)"
-    eval "$(pyenv virtualenv-init -)"
+  export PYENV_ROOT=~/.config/pyenv
+  mkdir -p $PYENV_ROOT
+  PATH=$PYENV_ROOT/bin:$PATH
+  eval "$(pyenv init --path  | grep -v pyenv.zsh)"
+  eval "$(pyenv virtualenv-init -)"
 fi
 
 zshrc_load_status "zoxide"
@@ -933,9 +933,9 @@ zshrc_load_status "fzf"
 fh() { print -z $(fc -li 1 | fzf-tmux +s --tac | sed -r 's/ *[0-9]+.{18}//') }
 
 if which lsd >&/dev/null; then
-    tree="lsd -A --tree --color=always --icon=always"
+  tree="lsd -A --tree --color=always --icon=always"
 else
-    tree="tree -C"
+  tree="tree -C"
 fi
 tree() { eval $tree "$@" }
 
@@ -963,60 +963,60 @@ export FZF_ALT_C_COMMAND="fd --hidden --no-ignore-vcs --exclude .git --type d"
 # - The first argument to the function ($1) is the base path to start traversal
 # - See the source code (completion.{bash,zsh}) for the details.
 _fzf_compgen_path() {
-    fd --hidden --follow --exclude ".git" . "$1"
+  fd --hidden --follow --exclude ".git" . "$1"
 }
 
 # Use fd to generate the list for directory completion
 _fzf_compgen_dir() {
-    fd --type d --hidden --follow --exclude ".git" . "$1"
+  fd --type d --hidden --follow --exclude ".git" . "$1"
 }
 
 _fzfgv() {
-    local pc=${1:-$FZF_WIDTH}
-    local gsh="git -c core.pager=cat show --remerge-diff --color=never %"
-    local disp="$gsh | delta --width=$(expr $(tput cols) \* $pc / 100)"
-    echo "xargs -I % sh -c '$disp'"
+  local pc=${1:-$FZF_WIDTH}
+  local gsh="git -c core.pager=cat show --remerge-diff --color=never %"
+  local disp="$gsh | delta --width=$(expr $(tput cols) \* $pc / 100)"
+  echo "xargs -I % sh -c '$disp'"
 }
 
 fzfgv() {
-    echo "$(_fzfgv $1)"
+  echo "$(_fzfgv $1)"
 }
 
 fzfgvsha() {
-    local get_sha="grep -o '[a-f0-9]\+' | head -1"
-    echo "$get_sha | $(_fzfgv $1)"
+  local get_sha="grep -o '[a-f0-9]\+' | head -1"
+  echo "$get_sha | $(_fzfgv $1)"
 }
 
 git-commit-sel() {
-    setopt localoptions pipefail 2> /dev/null
-    local get_sha="grep -o '[a-f0-9]\+' | head -1 | tr -d '\n'"
-    local cmd="echo {} | $(fzfgvsha)"
-    g ll --color=always "$@" | \
-        $(__fzfcmd) --ansi --tiebreak=index \
-            --header="f1 exit, f2 toggle, f3 diff, f4 sha" \
-            --bind 'f3:preview:echo {} | grep -o "'"[a-f0-9]\\+"'" | head -1 | xargs -I % sh -c "'"git -c delta.side-by-side=false show --remerge-diff --color=always %"'"' \
-            --bind "f4:execute:echo {} | $get_sha | osc52" \
-            --preview="$cmd" | \
-        while read item; do
-            echo -n "${item}" | eval "$get_sha"
-        done
-    return $?
+  setopt localoptions pipefail 2> /dev/null
+  local get_sha="grep -o '[a-f0-9]\+' | head -1 | tr -d '\n'"
+  local cmd="echo {} | $(fzfgvsha)"
+  g ll --color=always "$@" | \
+    $(__fzfcmd) --ansi --tiebreak=index \
+        --header="f1 exit, f2 toggle, f3 diff, f4 sha" \
+        --bind 'f3:preview:echo {} | grep -o "'"[a-f0-9]\\+"'" | head -1 | xargs -I % sh -c "'"git -c delta.side-by-side=false show --remerge-diff --color=always %"'"' \
+        --bind "f4:execute:echo {} | $get_sha | osc52" \
+        --preview="$cmd" | \
+    while read item; do
+      echo -n "${item}" | eval "$get_sha"
+    done
+  return $?
 }
 
 fzf_git_commit_widget() {
-    LBUFFER="${LBUFFER}$(git-commit-sel --all)"
-    local ret=$?
-    zle redisplay
-    typeset -f zle-line-init >/dev/null && zle zle-line-init
-    return $ret
+  LBUFFER="${LBUFFER}$(git-commit-sel --all)"
+  local ret=$?
+  zle redisplay
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
 }
 zle -N fzf_git_commit_widget
 
 _fzf_git() { git-commit-sel "$@" | echo -n "" }
 # _fzf_git() { git-commit-sel "$@" | osc52 }
 fzf_git_commit_widget_k() {
-    IFS=" " read -A b <<< ${FZF_GIT_K:---all}
-    _fzf_git "${b[@]}"
+  IFS=" " read -A b <<< ${FZF_GIT_K:---all}
+  _fzf_git "${b[@]}"
 }
 zle -N fzf_git_commit_widget_k
 
@@ -1027,44 +1027,44 @@ fzf_git_commit_widget_l() { _fzf_git }
 zle -N fzf_git_commit_widget_l
 
 git-tag-sel() {
-    setopt localoptions pipefail 2> /dev/null
-    local cmd="echo {} | $(fzfgv)"
-    g tag | $(__fzfcmd) --tiebreak=index --preview="$cmd" "$@" | \
-        while read item; do
-            echo -n "${item}"
-        done
-    return $?
+  setopt localoptions pipefail 2> /dev/null
+  local cmd="echo {} | $(fzfgv)"
+  g tag | $(__fzfcmd) --tiebreak=index --preview="$cmd" "$@" | \
+    while read item; do
+      echo -n "${item}"
+    done
+  return $?
 }
 
 fzf_git_tag_widget() {
-    LBUFFER="${LBUFFER}$(git-tag-sel)"
-    local ret=$?
-    zle redisplay
-    typeset -f zle-line-init >/dev/null && zle zle-line-init
-    return $ret
+  LBUFFER="${LBUFFER}$(git-tag-sel)"
+  local ret=$?
+  zle redisplay
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
 }
 zle -N fzf_git_tag_widget
 
 git-branch-sel() {
-    setopt localoptions pipefail 2> /dev/null
-    local get_full_branch="perl -pe 's/..([^ ]+) .*/\$1/'"
-    local get_branch="perl -pe 's/.*?([-.\w]+) .*/\$1/'"
-    local cmd="echo {} | $get_full_branch | $(fzfgv)"
-    local opts="-vv --sort=-committerdate --color=always"
-    (eval "gb $opts; gb -r $opts") | \
-        $(__fzfcmd) --ansi --tiebreak=index --preview="$cmd" "$@" | \
-        while read item; do
-            echo -n "${item}" | eval "$get_branch"
-        done
-    return $?
+  setopt localoptions pipefail 2> /dev/null
+  local get_full_branch="perl -pe 's/..([^ ]+) .*/\$1/'"
+  local get_branch="perl -pe 's/.*?([-.\w]+) .*/\$1/'"
+  local cmd="echo {} | $get_full_branch | $(fzfgv)"
+  local opts="-vv --sort=-committerdate --color=always"
+  (eval "gb $opts; gb -r $opts") | \
+    $(__fzfcmd) --ansi --tiebreak=index --preview="$cmd" "$@" | \
+    while read item; do
+      echo -n "${item}" | eval "$get_branch"
+    done
+  return $?
 }
 
 fzf_git_branch_widget() {
-    LBUFFER="${LBUFFER}$(git-branch-sel)"
-    local ret=$?
-    zle redisplay
-    typeset -f zle-line-init >/dev/null && zle zle-line-init
-    return $ret
+  LBUFFER="${LBUFFER}$(git-branch-sel)"
+  local ret=$?
+  zle redisplay
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
 }
 zle -N fzf_git_branch_widget
 
@@ -1081,9 +1081,9 @@ bindkey '^Y' toggle-fzf-tab
 zshrc_load_status "aws"
 
 if which assume >/dev/null; then
-    [[ -d ~/.granted ]] && fpath=(~/.granted/zsh_autocomplete/*/ $fpath)
-    alias assume="source assume"
-    export GRANTED_ENABLE_AUTO_REASSUME=true
+  [[ -d ~/.granted ]] && fpath=(~/.granted/zsh_autocomplete/*/ $fpath)
+  alias assume="source assume"
+  export GRANTED_ENABLE_AUTO_REASSUME=true
 fi
 
 zshrc_load_status "paths"
@@ -1127,81 +1127,81 @@ local char="─"
 # grep -Eq '(18|20)\.04' /etc/os-release 2>|/dev/null && char="-"
 
 perl_here() {
-    if [[ -d perl || -d t || -e Makefile.PL ]]; then
-        echo 1
-    else
-        echo 0
-    fi
+  if [[ -d perl || -d t || -e Makefile.PL ]]; then
+    echo 1
+  else
+    echo 0
+  fi
 }
 
 perlv () {
-    if [[ ${PROMPT_SHOW_PERL:-$(perl_here)} == 1 ]]; then
-        if which plenv >&/dev/null; then
-            local perl=$(plenv version-name)
-            if [[ $perl == system ]]; then
-                perl -e 'print "$^V "'
-            else
-                echo "$perl "
-            fi
-            return
-        fi
-        perl -e '
-            $t = -e "Makefile";
-            $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`;
-            s|.*/(.*)/bin/perl.*|$1 |;
-            s/^usr $//;
-            s/perl-// if $t;
-            print
-        '
+  if [[ ${PROMPT_SHOW_PERL:-$(perl_here)} == 1 ]]; then
+    if which plenv >&/dev/null; then
+      local perl=$(plenv version-name)
+      if [[ $perl == system ]]; then
+        perl -e 'print "$^V "'
+      else
+        echo "$perl "
+      fi
+      return
     fi
+    perl -e '
+      $t = -e "Makefile";
+      $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`;
+      s|.*/(.*)/bin/perl.*|$1 |;
+      s/^usr $//;
+      s/perl-// if $t;
+      print
+    '
+  fi
 }
 
 # Function to calculate actual display width of prompt strings
 prompt-length() {
-    emulate -L zsh
-    local -i COLUMNS=${2:-COLUMNS}
-    local -i x y=${#1} m
-    if (( y )); then
-        while (( ${${(%):-$1%$y(l.1.0)}[-1]} )); do
-            x=y
-            (( y *= 2 ))
-        done
-        while (( y > x + 1 )); do
-            (( m = x + (y - x) / 2 ))
-            (( ${${(%):-$1%$m(l.1.0)}[-1]} && (x = m) || (y = m) ))
-        done
-    fi
-    REPLY=$x
+  emulate -L zsh
+  local -i COLUMNS=${2:-COLUMNS}
+  local -i x y=${#1} m
+  if (( y )); then
+    while (( ${${(%):-$1%$y(l.1.0)}[-1]} )); do
+      x=y
+      (( y *= 2 ))
+    done
+    while (( y > x + 1 )); do
+      (( m = x + (y - x) / 2 ))
+      (( ${${(%):-$1%$m(l.1.0)}[-1]} && (x = m) || (y = m) ))
+    done
+  fi
+  REPLY=$x
 }
 
 custom_prompt() {
-    local term_width=$(tput cols)
+  local term_width=$(tput cols)
 
-    local p_git="$(gitprompt)"
-    local p_status="%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )"
-    local p_perl="%{$fg[blue]%}$(perlv)%{$reset_color%}"
-    local p_location="%{$fg[$NCOLOUR]%}%m:%~ %{$reset_color%}"
-    local p_time="%{$fg_bold[yellow]%}%T%{$reset_color%}"
-    local content="$p_time $p_git$p_status$p_perl$p_location"
+  local p_git="$(gitprompt)"
+  local p_status="%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )"
+  local p_perl="%{$fg[blue]%}$(perlv)%{$reset_color%}"
+  local p_location="%{$fg[$NCOLOUR]%}%m:%~ %{$reset_color%}"
+  local p_time="%{$fg_bold[yellow]%}%T%{$reset_color%}"
+  local content="$p_time $p_git$p_status$p_perl$p_location"
 
-    prompt-length "$content"
-    local content_length=$REPLY
+  prompt-length "$content"
+  local content_length=$REPLY
 
-    local extra_spaces=2
-    local total_length=$((content_length + extra_spaces))
+  local extra_spaces=2
+  local total_length=$((content_length + extra_spaces))
 
-    local fill_length=$((term_width - total_length))
-    if [[ $fill_length -lt 0 ]]; then
-        fill_length=0
-    fi
+  local fill_length=$((term_width - total_length))
+  if [[ $fill_length -lt 0 ]]; then
+    fill_length=0
+  fi
 
-    local fill=""
-    if [[ $fill_length -gt 0 ]]; then
-        fill=$(printf "%.s$char" {1..$fill_length})
-    fi
+  local fill=""
+  if [[ $fill_length -gt 0 ]]; then
+    fill=$(printf "%.s$char" {1..$fill_length})
+  fi
 
-    echo "${content}  ${fill}"
-    echo -n "%{$fg[yellow]%}❯❯❯ %{$reset_color%}"
+  echo "${content}  ${fill}"
+  echo -n "%{$fg[yellow]%}❯❯❯ %{$reset_color%}"
 }
 
 PROMPT='$(custom_prompt)'
@@ -1214,31 +1214,31 @@ zshrc_load_status "keychain"
 
 # Handle startup
 if [[ $(uname) == Darwin ]]; then
-    ulimit -n 65536
-    ulimit -s 32768
-    # launchctl setenv OLLAMA_NUM_BATCH 2048
-    # launchctl setenv OLLAMA_NUM_CTX 4096
-    # launchctl setenv OLLAMA_NUM_GPU 1
+  ulimit -n 65536
+  ulimit -s 32768
+  # launchctl setenv OLLAMA_NUM_BATCH 2048
+  # launchctl setenv OLLAMA_NUM_CTX 4096
+  # launchctl setenv OLLAMA_NUM_GPU 1
 
-    export PYTORCH_ENABLE_MPS_FALLBACK=1
-    export ACCELERATE_USE_MPS=1
+  export PYTORCH_ENABLE_MPS_FALLBACK=1
+  export ACCELERATE_USE_MPS=1
 
-    [[ -z $TMUX ]] && ssh-add --apple-load-keychain
+  [[ -z $TMUX ]] && ssh-add --apple-load-keychain
 elif [[ $(uname) == FreeBSD ]]; then
-    :
+  :
 else
-    eval $(keychain --eval id_ed25519 id_rsa)
-    if [[ -n $WSL_DISTRO_NAME ]]; then
-        if ps aux | grep tailscaled | grep -v grep >/dev/null; then
-            echo tailscaled running
-        else
-            sudo tailscaled > /dev/null 2>&1 &
-            disown
-            sleep 5
-            sudo tailscale up --ssh
-            echo tailscaled started
-        fi
+  eval $(keychain --eval id_ed25519 id_rsa)
+  if [[ -n $WSL_DISTRO_NAME ]]; then
+    if ps aux | grep tailscaled | grep -v grep >/dev/null; then
+      echo tailscaled running
+    else
+      sudo tailscaled > /dev/null 2>&1 &
+      disown
+      sleep 5
+      sudo tailscale up --ssh
+      echo tailscaled started
     fi
+  fi
 fi
 
 # Clear up after status display
