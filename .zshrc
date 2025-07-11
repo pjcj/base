@@ -276,15 +276,15 @@ zstyle ':completion:*:n:*' tag-order targets
 zstyle ":completion::complete:*" use-cache 1
 
 # Don't complete uninteresting users
-# zstyle ":completion:*:*:*:users" ignored-patterns                             \
-        # adm amanda apache at avahi avahi-autoipd beaglidx bin cacti canna     \
-        # clamav daemon dbus distcache dnsmasq dovecot fax ftp games gdm        \
-        # gkrellmd gopher hacluster haldaemon halt hsqldb ident junkbust kdm    \
-        # ldap lp mail mailman mailnull man messagebus mldonkey mysql nagios    \
-        # named netdump news nfsnobody nobody nscd ntp nut nx obsrun openvpn    \
-        # operator pcap polkitd postfix postgres privoxy pulse pvm quagga radvd \
-        # rpc rpcuser rpm rtkit scard shutdown squid sshd statd svn sync tftp   \
-        # usbmux uucp vcsa wwwrun xfs "_*"
+# zstyle ":completion:*:*:*:users" ignored-patterns                       \
+  # adm amanda apache at avahi avahi-autoipd beaglidx bin cacti canna     \
+  # clamav daemon dbus distcache dnsmasq dovecot fax ftp games gdm        \
+  # gkrellmd gopher hacluster haldaemon halt hsqldb ident junkbust kdm    \
+  # ldap lp mail mailman mailnull man messagebus mldonkey mysql nagios    \
+  # named netdump news nfsnobody nobody nscd ntp nut nx obsrun openvpn    \
+  # operator pcap polkitd postfix postgres privoxy pulse pvm quagga radvd \
+  # rpc rpcuser rpm rtkit scard shutdown squid sshd statd svn sync tftp   \
+  # usbmux uucp vcsa wwwrun xfs "_*"
 # ... unless we really want to.
 # zstyle "*" single-ignored show
 
@@ -330,15 +330,15 @@ compdef _git gw=git-worktree
 
 _git-branch-full-delete() { __git_branch_names }
 zstyle ":completion:*:*:git:*" user-commands \
-    branch-full-delete:"delete local and remote branches"
+  branch-full-delete:"delete local and remote branches"
 
 _git-origin-branch-move() { __git_branch_names }
 zstyle ":completion:*:*:git:*" user-commands \
-    origin-branch-move:"move branch to its origin"
+  origin-branch-move:"move branch to its origin"
 
 _git-fpush() { __git_branch_names }
 zstyle ":completion:*:*:git:*" user-commands \
-    fpush:"force push even when the remote forbids it"
+  fpush:"force push even when the remote forbids it"
 
 # disable sort when completing `git checkout`
 zstyle ':completion:*:git-checkout:*' sort false
@@ -377,9 +377,8 @@ bindkey "^[OA" history-beginning-search-backward
 bindkey "^[OB" history-beginning-search-forward
 
 autoload -U history-beginning-search-menu-space-end \
-     history-beginning-search-menu
-zle -N history-beginning-search-menu-space-end \
-     history-beginning-search-menu
+  history-beginning-search-menu
+zle -N history-beginning-search-menu-space-end history-beginning-search-menu
 bindkey "^E" history-beginning-search-menu-space-end
 
 bindkey "^O" push-line-or-edit
@@ -434,9 +433,9 @@ alias mkdir "nocorrect mkdir"
 zshrc_load_status "functions"
 
 if which nvim >&/dev/null; then
-    export EDITOR=nvim
+  export EDITOR=nvim
 else
-    export EDITOR=vim
+  export EDITOR=vim
 fi
 
 c() {
@@ -454,8 +453,7 @@ c() {
   fi
   if [[ -d "$1" ]]; then
     builtin pushd "$1"
-  elif [[ "$EXT" == .(tar.(gz|bz2)|tgz|zip|TGZ|ZIP) &&
-          -d "$STRIP" ]]; then
+  elif [[ "$EXT" == .(tar.(gz|bz2)|tgz|zip|TGZ|ZIP) && -d "$STRIP" ]]; then
     builtin pushd "$STRIP"
   elif [[ -f "$1" ]]; then
     builtin pushd "$DIR"
@@ -472,15 +470,15 @@ v() {
   if [ "$EDITOR" = "nvim" ]; then
     mkdir -p $VIMTMP
     TMPDIR=$VIMTMP \
-        ENABLE_AI_PLUGINS=1 \
-        OPENAI_API_KEY=$openai_api_key \
-        ANTHROPIC_API_KEY=$anthropic_api_key \
-        GEMINI_API_KEY=$gemini_api_key \
-        PPLX_API_KEY=$pplx_api_key \
-        command $EDITOR "$@"
-        # OLLAMA_NUM_BATCH=2048 \
-        # OLLAMA_NUM_CTX=4096 \
-        # OLLAMA_NUM_GPU=1 \
+      ENABLE_AI_PLUGINS=1 \
+      OPENAI_API_KEY=$openai_api_key \
+      ANTHROPIC_API_KEY=$anthropic_api_key \
+      GEMINI_API_KEY=$gemini_api_key \
+      PPLX_API_KEY=$pplx_api_key \
+      command $EDITOR "$@"
+      # OLLAMA_NUM_BATCH=2048 \
+      # OLLAMA_NUM_CTX=4096 \
+      # OLLAMA_NUM_GPU=1 \
   else
     command $EDITOR -u NONE "$@"
   fi
@@ -698,21 +696,21 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#056e75"
 export ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd completion)
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(
-    forward-char
-    end-of-line
-    vi-end-of-line
-    vi-add-eol
+  forward-char
+  end-of-line
+  vi-end-of-line
+  vi-add-eol
 )
 export ZSH_AUTOSUGGEST_EXECUTE_WIDGETS=(vi-forward-blank-word-end)
 export ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS=(
-    forward-word
-    emacs-forward-word
-    vi-forward-word
-    vi-forward-word-end
-    vi-forward-blank-word
-    vi-find-next-char
-    vi-find-next-char-skip
-    vi-forward-char
+  forward-word
+  emacs-forward-word
+  vi-forward-word
+  vi-forward-word-end
+  vi-forward-blank-word
+  vi-find-next-char
+  vi-find-next-char-skip
+  vi-forward-char
 )
 
 export LESS_TERMCAP_mb=$'\e[1;31m'
@@ -738,8 +736,7 @@ if [[ $(uname) == Darwin ]]; then
   s()  { open "$@" }
   fd() { command fd -H --exclude '/Volumes/' "$@" }
   pll() {
-    ps -o user,pid,ppid,%cpu,%mem,vsz,rss,tty,state,start,cputime,command \
-        "$@"
+    ps -o user,pid,ppid,%cpu,%mem,vsz,rss,tty,state,start,cputime,command "$@"
   }
   pl() { pll -eww "$@" | m }
   pp() { pl -rc "$@" | m }
@@ -749,8 +746,7 @@ elif [[ $(uname) == FreeBSD ]]; then
   mv() { command mv -v "$@" }
   s()  { f "$@" }
   pll() {
-    ps -o user,pid,ppid,%cpu,%mem,vsz,rss,tty,state,start,cputime,command \
-        "$@"
+    ps -o user,pid,ppid,%cpu,%mem,vsz,rss,tty,state,start,cputime,command "$@"
   }
   pl() { pll -eww "$@" | m }
   pp() { pl -rc "$@" | m }
@@ -759,14 +755,14 @@ else
   if which dmidecode >&/dev/null; then
     (sudo dmidecode -t system | grep -Eq 'VirtualBox|VMware') && ISVM=1
   fi
-  cp() { command cp -bv --backup=numbered "$@" }
-  f()  { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
-  mv() { command mv -bv --backup=numbered "$@" }
+  cp()  { command cp -bv --backup=numbered "$@" }
+  f()   { ls -ABhl --color=tty -I \*.bak -I .\*.bak "$@" }
+  mv()  { command mv -bv --backup=numbered "$@" }
   pll() { ps -o user,pid,ppid,pcpu,pmem,vsz,rss,tty,stat,stime,time,args "$@"}
-  pl() { pll -eww --forest "$@" | m }
-  pp() { pll -e --sort=-pcpu "$@" | m }
+  pl()  { pll -eww --forest "$@" | m }
+  pp()  { pll -e --sort=-pcpu "$@" | m }
   if [[ -n $WSL_DISTRO_NAME ]]; then
-    s()  { wslview "$@" }
+    s() { wslview "$@" }
   elif which xdg-open >&/dev/null; then
     s() { xdg-open "$@" }
   elif which gnome-open >&/dev/null; then
@@ -781,14 +777,14 @@ fi
 if which eza >&/dev/null; then
   f() {
     eza -lagH \
-        --colour-scale=all --colour-scale-mode=gradient --colour=always \
-        --git --time-style=long-iso --icons --show-symlinks \
-        "$@"
+      --colour-scale=all --colour-scale-mode=gradient --colour=always \
+      --git --time-style=long-iso --icons --show-symlinks \
+      "$@"
   }
   export EZA_COLORS="xx=00;38;5;244"
   export EZA_ICON_SPACING=2
   export EZA_MIN_LUMINANCE=55
-  da() { d -hMOZ "$@" }
+  da()  { d -hMOZ "$@" }
   daz() { da --total-size "$@" }
 fi
 
@@ -943,12 +939,12 @@ export FZF_TMUX=1
 export FZF_TMUX_HEIGHT=90%
 export FZF_WIDTH=70
 export FZF_DEFAULT_OPTS="
-    --height 80% --reverse --inline-info
-    --preview-window=right:${FZF_WIDTH}%
-    --color fg:-1,bg:-1,hl:$s_blue,fg+:$s_normal,bg+:$s_darkred,hl+:$s_blue,gutter:$s_base02
-    --color info:$s_cyan,prompt:$s_violet,pointer:$s_green,marker:$s_base3,spinner:$s_yellow
-    --bind 'f1:abort'
-    --bind 'f2:toggle-preview'
+  --height 80% --reverse --inline-info
+  --preview-window=right:${FZF_WIDTH}%
+  --color fg:-1,bg:-1,hl:$s_blue,fg+:$s_normal,bg+:$s_darkred,hl+:$s_blue,gutter:$s_base02
+  --color info:$s_cyan,prompt:$s_violet,pointer:$s_green,marker:$s_base3,spinner:$s_yellow
+  --bind 'f1:abort'
+  --bind 'f2:toggle-preview'
 "
 export FZF_DEFAULT_COMMAND="fd --hidden --no-ignore-vcs --exclude .git"
 export FZF_CTRL_T_OPTS="--preview '(bat --tabs=2 --color=always {} 2>/dev/null || cat {} || $tree {}) $head'"
@@ -991,10 +987,10 @@ git-commit-sel() {
   local cmd="echo {} | $(fzfgvsha)"
   g ll --color=always "$@" | \
     $(__fzfcmd) --ansi --tiebreak=index \
-        --header="f1 exit, f2 toggle, f3 diff, f4 sha" \
-        --bind 'f3:preview:echo {} | grep -o "'"[a-f0-9]\\+"'" | head -1 | xargs -I % sh -c "'"git -c delta.side-by-side=false show --remerge-diff --color=always %"'"' \
-        --bind "f4:execute:echo {} | $get_sha | osc52" \
-        --preview="$cmd" | \
+      --header="f1 exit, f2 toggle, f3 diff, f4 sha" \
+      --bind 'f3:preview:echo {} | grep -o "'"[a-f0-9]\\+"'" | head -1 | xargs -I % sh -c "'"git -c delta.side-by-side=false show --remerge-diff --color=always %"'"' \
+      --bind "f4:execute:echo {} | $get_sha | osc52" \
+      --preview="$cmd" | \
     while read item; do
       echo -n "${item}" | eval "$get_sha"
     done
