@@ -4,6 +4,10 @@
 
 set -e
 
+log="/tmp/claude-show.log"
+echo "$(date) - starting claude-show.sh" >> $log
+echo "pwd is $(pwd)" >> $log
+
 # Get current window info
 current_window_name=$(tmux display-message -p '#{window_name}')
 session_name=$(tmux display-message -p '#{session_name}')
