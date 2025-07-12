@@ -1200,7 +1200,7 @@ custom_prompt() {
   fi
 
   echo "${content}  ${fill}"
-  echo -n "${bottom_left} %{$fg[yellow]%}❯❯❯ %{$reset_color%}"
+  echo -n "${bottom_left} %{$fg[yellow]%}❯❯❯❯❯ %{$reset_color%}"
 }
 
 PROMPT='$(custom_prompt)'
