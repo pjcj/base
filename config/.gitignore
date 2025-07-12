@@ -1,0 +1,17 @@
+# Dist::Zilla build artefacts
+.build/
+Perl-Critic-Strings-*/
+*.tar.gz
+
+# Development files
+.perl-version
+tags*
+tmp/
+
+# Perl temporary files
+*.bak
+*.old
+*~
+
+# OS generated files
+.DS_Store
