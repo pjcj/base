@@ -10,7 +10,7 @@
 
 --paren-tightness=2                    # keep parentheses tight
 --space-prototype-paren=2              # space before prototype parentheses
-# --space-signature-paren=2            # space before signature parentheses
+--space-signature-paren=2              # space before signature parentheses
                                        #   needs a recent Perl::Tidy
 --keyword-paren-inner-tightness=2      # keep keyword parentheses tight
 --space-backslash-quote=0              # no space between backslash and quote
@@ -45,7 +45,7 @@
 --delete-trailing-commas               # delete trailing commas
 --delete-weld-interfering-commas       # delete commas that interfere with welds
 
-# --multiple-token-tightness=q*        # no space in [qw( and friends
+--multiple-token-tightness=q*          # no space in [qw( and friends
                                        #   needs a recent Perl::Tidy
 --trim-pod                             # trim POD trailing whitespace
 --delete-interbracket-arrows           # delete arrows between brackets
