@@ -719,7 +719,7 @@ max_mccabe = 3
 
 
 # Give every module a `$VERSION' number.
-[Modules::RequireVersionVar]
+[-Modules::RequireVersionVar]
 # set_themes                         = core pbp readability
 # add_themes                         =
 # severity                           = 2

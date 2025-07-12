@@ -312,7 +312,7 @@ max_elsif = 10
 
 
 # Don't use operators like `not', `!~', and `le' within `until' and `unless'.
-[-ControlStructures::ProhibitNegativeExpressionsInUnlessAndUntilConditions]
+[ControlStructures::ProhibitNegativeExpressionsInUnlessAndUntilConditions]
 # set_themes                         = core maintenance pbp
 # add_themes                         =
 # severity                           = 3
@@ -424,7 +424,7 @@ script_sections = NAME | SYNOPSIS | DESCRIPTION
 
 
 # Use functions from Carp instead of `warn' or `die'.
-[-ErrorHandling::RequireCarping]
+[ErrorHandling::RequireCarping]
 # set_themes                         = certrule core maintenance pbp
 # add_themes                         =
 # severity                           = 3
@@ -481,7 +481,7 @@ only_in_void_context = 1
 
 
 # Use prompt() instead of -t.
-[-InputOutput::ProhibitInteractiveTest]
+[InputOutput::ProhibitInteractiveTest]
 # set_themes                         = bugs certrule core pbp
 # add_themes                         =
 # severity                           = 5
@@ -665,7 +665,7 @@ max_mccabe = 3
 # Put packages (especially subclasses) in separate files.
 # There can be good reasons to do this but since there is no additional config
 # we'll turn this off.
-[-Modules::ProhibitMultiplePackages]
+[Modules::ProhibitMultiplePackages]
 # set_themes                         = bugs core
 # add_themes                         =
 # severity                           = 4
@@ -1023,7 +1023,7 @@ severity                           = 2
 
 # Don't declare your own `open' function.
 # When used as method names this is fine.
-[-Subroutines::ProhibitBuiltinHomonyms]
+[Subroutines::ProhibitBuiltinHomonyms]
 # set_themes                         = bugs certrule core pbp
 # add_themes                         =
 # severity                           = 4
@@ -1087,7 +1087,7 @@ skip_object = 1
 
 
 # Don't write `sub my_function (@@) {}'.
-[-Subroutines::ProhibitSubroutinePrototypes]
+[Subroutines::ProhibitSubroutinePrototypes]
 # set_themes                         = bugs certrec core pbp
 # add_themes                         =
 # severity                           = 5
@@ -1320,7 +1320,7 @@ severity                           = 1
 
 
 # Long chains of method calls indicate tightly coupled code.
-[-ValuesAndExpressions::ProhibitLongChainsOfMethodCalls]
+[ValuesAndExpressions::ProhibitLongChainsOfMethodCalls]
 # set_themes                         = core maintenance
 # add_themes                         =
 # severity                           = 2
@@ -1414,7 +1414,7 @@ severity                           = 1
 
 
 # Require $VERSION to be a constant rather than a computed value.
-[ValuesAndExpressions::RequireConstantVersion]
+[-ValuesAndExpressions::RequireConstantVersion]
 # set_themes                         = core maintenance
 # add_themes                         =
 # severity                           = 2
@@ -1425,7 +1425,7 @@ severity                           = 1
 
 
 # Warns that you might have used single quotes when you really wanted double-quotes.
-[-ValuesAndExpressions::RequireInterpolationOfMetachars]
+[ValuesAndExpressions::RequireInterpolationOfMetachars]
 # set_themes                         = core cosmetic pbp
 # add_themes                         =
 # severity                           = 1
@@ -1564,7 +1564,7 @@ add_packages = DBI
 
 
 # Write `local $foo = $bar;' instead of just `local $foo;'.
-[-Variables::RequireInitializationForLocalVars]
+[Variables::RequireInitializationForLocalVars]
 # set_themes                         = bugs certrec core pbp
 # add_themes                         =
 # severity                           = 3
