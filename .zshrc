@@ -1176,7 +1176,12 @@ custom_prompt() {
   local p_perl="%{$fg[blue]%}$(perlv)%{$reset_color%}"
   local p_location="%{$fg[$NCOLOUR]%}%m:%~ %{$reset_color%}"
   local p_time="%{$fg_bold[yellow]%}%T%{$reset_color%}"
-  local content="$p_time $p_git$p_status$p_perl$p_location"
+
+  # Decorative elements for left side
+  local top_left="%{$fg[cyan]%}╭─%{$reset_color%}"
+  local bottom_left="%{$fg[cyan]%}╰─%{$reset_color%}"
+
+  local content="$top_left $p_time $p_git$p_status$p_perl$p_location"
 
   prompt-length "$content"
   local content_length=$REPLY
@@ -1195,7 +1200,7 @@ custom_prompt() {
   fi
 
   echo "${content}  ${fill}"
-  echo -n "%{$fg[yellow]%}❯❯❯ %{$reset_color%}"
+  echo -n "${bottom_left} %{$fg[yellow]%}❯❯❯ %{$reset_color%}"
 }
 
 PROMPT='$(custom_prompt)'
