@@ -1175,7 +1175,7 @@ custom_prompt() {
   local p_status="%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )"
   local p_perl="%{$fg[blue]%}$(perlv)%{$reset_color%}"
   local p_location="%{$fg[$NCOLOUR]%}%m:%~ %{$reset_color%}"
-  local p_time="%{$fg_bold[yellow]%}%T%{$reset_color%}"
+  local p_time="%{$fg_bold[yellow]%}%D{%H:%M}%{$reset_color%}"
 
   # Decorative elements for left side
   local top_left="%{$fg[cyan]%}╭─%{$reset_color%}"
