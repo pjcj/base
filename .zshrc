@@ -1179,7 +1179,7 @@ custom_prompt() {
 
   # Decorative elements for left side
   local top_left="%{$fg[cyan]%}╭─%{$reset_color%}"
-  local bottom_left="%{$fg[cyan]%}╰─%{$reset_color%}"
+  local bottom_left="%{$fg[cyan]%}╰─────%{$reset_color%}"
 
   local content="$top_left $p_time $p_git$p_status$p_perl$p_location"
 
@@ -1200,7 +1200,7 @@ custom_prompt() {
   fi
 
   echo "${content}  ${fill}"
-  echo -n "${bottom_left} %{$fg[yellow]%}❯❯❯❯❯ %{$reset_color%}"
+  echo -n "${bottom_left}%{$fg[cyan]%}❯❯ %{$reset_color%}"
 }
 
 PROMPT='$(custom_prompt)'
