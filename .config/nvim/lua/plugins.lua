@@ -2548,8 +2548,7 @@ local plugins = {
         preview = {
           -- filetypes = { "markdown", "codecompanion" },
           ignore_buftypes = {},
-          modes = { "n", "i", "no", "c" },
-          hybrid_modes = { "n", "i", "no", "c" },
+          modes = { "n" },
         },
         markdown = {
           checkboxes = presets.checkboxes.nerd,
