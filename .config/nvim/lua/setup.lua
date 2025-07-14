@@ -59,14 +59,16 @@ end
 
 -- Configure Devel::Cover highlights and signs for Perl code coverage
 local function setup_devel_cover_highlights()
-  vim.g.devel_cover_bg = "#002b36" -- dark for covered
-  vim.g.devel_cover_fg = "#859900" -- solarized green
-  vim.g.devel_cover_valid_bg = "#002b36" -- dark for covered
-  vim.g.devel_cover_error_bg = "#2d1616" -- dark red for uncovered
-  vim.g.devel_cover_error_fg = "#dc322f" -- solarized red
-  vim.g.devel_cover_old_bg = "#342a2a" -- darker red-tinted background
-  vim.g.devel_cover_cterm = "NONE"
-  vim.g.devel_cover_gui = "NONE"
+  local l = require("local_defs")
+  local c = l.colour
+  vim.g.devel_cover_bg = c.base03
+  vim.g.devel_cover_fg = c.rgreen
+  -- vim.g.devel_cover_valid_bg = c.base05
+  -- vim.g.devel_cover_error_bg = c.dred
+  vim.g.devel_cover_error_fg = c.red
+  vim.g.devel_cover_old_bg = c.dyellow
+  -- vim.g.devel_cover_cterm = "NONE"
+  -- vim.g.devel_cover_gui = "NONE"
 
   -- Custom sign characters (optional)
   -- vim.g.devel_cover_signs = {
