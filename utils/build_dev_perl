@@ -1,0 +1,142 @@
+#!/usr/bin/env bash
+
+set -eEuo pipefail
+shopt -s inherit_errexit
+
+# Script to install a development perl in plenv with required development tools
+
+show_help() {
+  cat <<EOF
+Usage: $(basename "$0") <version> [name]
+
+Install a development perl in plenv with essential development tools.
+
+Arguments:
+  version    Perl version to install (e.g., 5.39.9)
+  name       Optional name for the installation (defaults to 'dev')
+
+Options:
+  -h, --help    Show this help message
+
+Examples:
+  $(basename "$0") 5.39.9
+  $(basename "$0") 5.39.9 dev-experimental
+  $(basename "$0") --help
+
+The script will:
+- Remove any existing installation with the same name
+- Install perl with development options (usedevel, no man pages)
+- Install cpanm and cpm
+- Install essential development modules:
+  * Dist::Zilla
+  * Perl::Critic
+  * Perl::Tidy
+  * App::perlimports
+  * Devel::Cover
+  * Perl::Critic::Moose
+
+EOF
+}
+
+validate_requirements() {
+  if ! command -v plenv >/dev/null 2>&1; then
+    echo "Error: plenv is not installed or not in PATH" >&2
+    echo "Please install plenv first" >&2
+    exit 1
+  fi
+}
+
+remove_existing_installation() {
+  local name="$1"
+
+  echo "Removing existing '$name' installation if present..."
+
+  # Check if the version exists and uninstall it
+  if plenv versions --bare | grep -q "^${name}$"; then
+    echo "Found existing installation, uninstalling..."
+    printf "y\n" | plenv uninstall "$name" || true
+  else
+    echo "No existing installation found"
+  fi
+}
+
+install_perl() {
+  local version="$1"
+  local name="$2"
+
+  echo "Installing perl $version as '$name'..."
+  plenv install --as "$name" -j 32 -D usedevel --noman "$version"
+}
+
+setup_development_tools() {
+  local name="$1"
+
+  export PLENV_VERSION="$name"
+  echo "Using perl environment: $name"
+
+  echo "Installing cpanm..."
+  plenv install-cpanm
+
+  echo "Installing cpm..."
+  cpanm -n App::cpm
+
+  echo "Installing development modules with cpm..."
+  cpm install -g \
+    Dist::Zilla \
+    Perl::Critic \
+    Perl::Critic::Moose \
+    Perl::Tidy \
+    App::perlimports \
+    Devel::Cover \
+    Template \
+    Browser::Open
+}
+
+parse_arguments() {
+  if [[ $# -eq 0 ]]; then
+    echo "Error: Missing required version argument" >&2
+    show_help
+    exit 1
+  fi
+
+  case "${1:-}" in
+  -h | --help)
+    show_help
+    exit 0
+    ;;
+  -*)
+    echo "Error: Unknown option '$1'" >&2
+    show_help
+    exit 1
+    ;;
+  esac
+
+  if [[ $# -lt 1 ]]; then
+    echo "Error: Missing required version argument" >&2
+    show_help
+    exit 1
+  fi
+
+  readonly VERSION="$1"
+  readonly NAME="${2:-dev}"
+}
+
+main() {
+  parse_arguments "$@"
+  validate_requirements
+
+  echo "Installing perl $VERSION as '$NAME' in plenv..."
+
+  remove_existing_installation "$NAME"
+
+  # Add a brief pause to ensure uninstall completes
+  sleep 1
+
+  install_perl "$VERSION" "$NAME"
+  setup_development_tools "$NAME"
+
+  echo "Successfully installed perl $VERSION as '$NAME' with development tools"
+  echo "To use this perl: export PLENV_VERSION=$NAME"
+}
+
+main "$@"
