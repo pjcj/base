@@ -79,9 +79,9 @@ local function setup_devel_cover_highlights()
   vim.g.devel_cover_signs = {
     pod = "¶ ",
     subroutine = "ƒ ",
-    statement = "• ", -- Small bullet (unobtrusive)
-    branch = "» ",
-    condition = "? ",
+    statement = "● ", -- Medium bullet
+    branch = "⅄ ",
+    condition = "⊤ ",
   }
 end
 
