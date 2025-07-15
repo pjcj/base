@@ -204,6 +204,10 @@ if.app-name-regex-substring = "WezTerm"
 run = "move-node-to-workspace 1"
 
 [[on-window-detected]]
+if.app-name-regex-substring = "Ghostty"
+run = "move-node-to-workspace 1"
+
+[[on-window-detected]]
 if.app-name-regex-substring = "Firefox"
 run = "move-node-to-workspace 2"
 
