@@ -1200,7 +1200,7 @@ custom_prompt() {
     fill=$(printf "%.s$char" {1..$fill_length})
   fi
 
-  echo "${content}  ${fill}"
+  echo "${content}  %{$fg[cyan]%}${fill}%{$reset_color%}"
   echo -n "${bottom_left}%{$fg[cyan]%}❯❯ %{$reset_color%}"
 }
 
