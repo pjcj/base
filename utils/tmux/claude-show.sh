@@ -5,8 +5,8 @@
 set -e
 
 log="/tmp/claude-show.log"
-echo "$(date) - starting claude-show.sh" >> $log
-echo "pwd is $(pwd)" >> $log
+echo "$(date) - starting claude-show.sh" >>$log
+echo "pwd is $(pwd)" >>$log
 
 # Get current window info
 current_window_name=$(tmux display-message -p '#{window_name}')
@@ -46,10 +46,10 @@ else
         tmux send-keys -t "$current_pane_id" Escape
         tmux send-keys -t "$current_pane_id" ":ClaudeCode" Enter
       fi
-      # Create new claude pane
-      echo "Current path from tmux: $current_path" >> $log
+      # Create new claude pane with zsh to enable autoenv
+      echo "Current path from tmux: $current_path" >>$log
       tmux split-window -h -l 35% -c "$current_path" \
-        "$HOME/.claude/local/claude --ide --dangerously-skip-permissions"
+        "zsh -ic \"cd '$current_path' && '$HOME/.claude/local/claude' --ide\""
       tmux select-pane -T 'claude'
 
       # If we split from a neovim pane, equalize its windows horizontally
