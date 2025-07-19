@@ -122,6 +122,11 @@ completion() {
     aider --shell-completions zsh >|~/g/base/zsh/functions/_aider
   fi
 
+  if [[ -e /Applications/Tailscale.app/Contents/MacOS/Tailscale ]]; then
+    /Applications/Tailscale.app/Contents/MacOS/Tailscale completion zsh \
+      >|~/g/base/zsh/functions/_tailscale
+  fi
+
   # if which vectorcode >/dev/null; then
   #   # vectorcode -s zsh >|~/g/base/zsh/functions/_vectorcode
   #     echo "Generating vectorcode completion..."

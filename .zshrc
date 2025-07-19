@@ -741,6 +741,7 @@ if [[ $(uname) == Darwin ]]; then
   }
   pl() { pll -eww "$@" | m }
   pp() { pl -rc "$@" | m }
+  tailscale() { /Applications/Tailscale.app/Contents/MacOS/Tailscale "$@" }
 elif [[ $(uname) == FreeBSD ]]; then
   cp() { command cp -v "$@" }
   f()  { ls -ABGhl "$@" }
