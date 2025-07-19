@@ -1,7 +1,7 @@
 #AutoRaise config file
 pollMillis=100
 delay=2
-focusDelay=0
+focusDelay=1
 warpX=0.5
 warpY=0.1
 scale=2.5
