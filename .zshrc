@@ -1207,6 +1207,9 @@ custom_prompt() {
 PROMPT='$(custom_prompt)'
 RPROMPT=""
 
+# Initialize starship
+# eval "$(starship init zsh)"
+
 # ensure autoenv.zsh is called
 { c ~ && c - } >/dev/null
 
