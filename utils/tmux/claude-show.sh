@@ -48,8 +48,9 @@ else
       fi
       # Create new claude pane with zsh to enable autoenv
       echo "Current path from tmux: $current_path" >>$log
+      opts="--ide --permission-mode bypassPermissions"
       tmux split-window -h -l 35% -c "$current_path" \
-        "zsh -ic \"cd '$current_path' && '$HOME/.claude/local/claude' --ide\""
+        "zsh -ic \"cd '$current_path' && '$HOME/.claude/local/claude' $opts\""
       tmux select-pane -T 'claude'
 
       # If we split from a neovim pane, equalize its windows horizontally
