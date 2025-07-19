@@ -310,7 +310,9 @@ require("lualine").setup({
     },
     lualine_c = {
       {
-        function() return vim.fn.expand("%:~:.") end,
+        function()
+          return vim.fn.expand("%:~:.")
+        end,
         separator = "",
         padding = { left = 1, right = 0 },
         color = function()
