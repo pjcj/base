@@ -111,7 +111,7 @@ brew "zoxide"
 brew "zsh"
 brew "chase/tap/awrit"
 brew "common-fate/granted/granted"
-brew "dimentium/autoraise/autoraise", args: ["with-dalternative_task_switcher", "with-dexperimental_focus_first", "with-dold_activation_method"]
+brew "dimentium/autoraise/autoraise", args: ["with-dold_activation_method"]
 brew "felixkratz/formulae/borders"
 brew "tako8ki/tap/gobang"
 cask "1password"
