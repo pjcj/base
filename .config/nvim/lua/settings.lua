@@ -27,7 +27,7 @@ vopt.mouse         = "a"
 vopt.mousefocus    = true
 vopt.number        = true
 vopt.report        = 0
-vopt.scrolloff     = 5
+vopt.scrolloff     = 12
 vopt.shiftround    = true
 vopt.shiftwidth    = 2
 vopt.shortmess     = vopt.shortmess + { c = true }
