@@ -83,8 +83,11 @@ setup_development_tools() {
   echo "Installing development modules with cpm..."
   cpm install -g \
     Dist::Zilla \
+    Dist::Zilla::Plugin::Git \
+    Archive::Tar::Wrapper \
     Perl::Critic \
     Perl::Critic::Moose \
+    Perl::Critic::Policy::ValuesAndExpressions::ProhibitSingleArgArraySlice \
     Perl::Tidy \
     App::perlimports \
     Devel::Cover \
