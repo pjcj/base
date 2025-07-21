@@ -135,8 +135,8 @@ alt-keypadPlus = "resize smart +50"
 ctrl-left = "workspace --wrap-around prev"
 ctrl-right = "workspace --wrap-around next"
 
-ctrl-alt-left = 'focus-monitor left'
-ctrl-alt-right = 'focus-monitor right'
+ctrl-up = 'focus-monitor left'
+ctrl-down = 'focus-monitor right'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = "workspace-back-and-forth"
