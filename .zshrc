@@ -1159,7 +1159,6 @@ perl_here() {
 
 perlv () {
   if [[ ${PROMPT_SHOW_PERL:-$(perl_here)} == 1 ]]; then
-    print -n " "
     if which plenv >&/dev/null; then
       local perl=$(plenv version-name)
       if [[ $perl == system ]]; then
@@ -1244,16 +1243,14 @@ custom_prompt() {
   local p_time="$Reply"
   seg $s_base02 $ncol " %m:%~ "
   local p_location="$Reply"
-  seg $s_ddgreen $s_blue "$(perlv)"
-  local p_perl="$Reply"
   seg $s_base03 $s_normal " $(gitprompt)"
   local p_git="$Reply"
-  seg $s_base02 $s_base1 "  "
-  local p_gap1="$Reply"
+  seg $s_base02 $s_base1 " $(perlv)"
+  local p_perl="$Reply"
   seg $s_base03 "" " "
-  local p_gap2="$Reply"
+  local p_gap="$Reply"
 
-  local content="$top_left$p_time$p_location$p_perl$p_git$p_gap1$p_gap2"
+  local content="$top_left$p_time$p_location$p_git$p_perl$p_gap"
   prompt-length "$content"
   local content_length=$Reply
   local extra_spaces=0
