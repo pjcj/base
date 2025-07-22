@@ -1133,42 +1133,39 @@ export ZSH_GIT_PROMPT_FORCE_BLANK=1
 export ZSH_THEME_GIT_PROMPT_PREFIX=""
 export ZSH_THEME_GIT_PROMPT_SUFFIX=" "
 export ZSH_THEME_GIT_PROMPT_SEPARATOR=" "
-export ZSH_THEME_GIT_PROMPT_DETACHED="%{$fg_no_bold[cyan]%}:"
-export ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
-export ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg[yellow]%}%{↓%G%}"
-export ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[yellow]%}%{↑%G%}"
-export ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}%{⋆%G%}"
-export ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}%{●%G%}"
-export ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$fg[blue]%}%{+%G%}"
-export ZSH_THEME_GIT_PROMPT_UNTRACKED="%{…%G%}"
-export ZSH_THEME_GIT_PROMPT_STASHED="%{$efs_base01%}⚑"
-export ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✔"
+export ZSH_THEME_GIT_PROMPT_DETACHED="%{$ers_cyan%}:"
+export ZSH_THEME_GIT_PROMPT_BRANCH="%{$efs_peach%}"
+export ZSH_THEME_GIT_PROMPT_BEHIND="%{$efs_yellow%}%{↓%G%}"
+export ZSH_THEME_GIT_PROMPT_AHEAD="%{$$efs_yellow%}%{↑%G%}"
+export ZSH_THEME_GIT_PROMPT_UNMERGED="%{$efs_red%}%{⋆%G%}"
+export ZSH_THEME_GIT_PROMPT_STAGED="%{$efs_red%}%{●%G%}"
+export ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$efs_lblue%}%{+%G%}"
+export ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$efs_violet…%G%}"
+export ZSH_THEME_GIT_PROMPT_STASHED="%{$efs_dorange%}⚑"
+export ZSH_THEME_GIT_PROMPT_CLEAN="%{$efs_lgreen%}✔"
 
 export ZSH_GIT_PROMPT_SHOW_STASH=1
 export ZSH_GIT_PROMPT_SHOW_UPSTREAM=
 
 . ~/.local/share/zinit/plugins/woefe---git-prompt.zsh/git-prompt.zsh
 
-if [ $EUID -eq 0 ]; then NCOLOUR="red"; else NCOLOUR="green"; fi
-local char="─"
-# grep -Eq '(18|20)\.04' /etc/os-release 2>|/dev/null && char="-"
-
 perl_here() {
   if [[ -d perl || -d t || -e Makefile.PL ]]; then
-    echo 1
+    print 1
   else
-    echo 0
+    print 0
   fi
 }
 
 perlv () {
   if [[ ${PROMPT_SHOW_PERL:-$(perl_here)} == 1 ]]; then
+    print -n " "
     if which plenv >&/dev/null; then
       local perl=$(plenv version-name)
       if [[ $perl == system ]]; then
         perl -e 'print "$^V "'
       else
-        echo "$perl "
+        print "$perl "
       fi
       return
     fi
@@ -1198,42 +1195,84 @@ prompt-length() {
       (( ${${(%):-$1%$m(l.1.0)}[-1]} && (x = m) || (y = m) ))
     done
   fi
-  REPLY=$x
+  Reply=$x
 }
 
+# Glyph constants
+typeset -g POWERLINE_RIGHT_ARROW=$'\uE0B0'  # 
+typeset -g POWERLINE_LEFT_ARROW=$'\uE0B2'   # 
+typeset -g SEGMENT_THIN=$'\uE0B1'           #  (optional)
+
+typeset -g Sbg="NONE"
+seg() {
+  local bg=$1 fg=$2 text=$3
+  [[ -z $bg ]] && bg="$Sbg"
+  [[ -z $fg ]] && fg="default"
+
+  Reply=""
+  if [[ -n $text ]]; then
+    # Print glyph if background is about to change
+    if [[ "$Sbg" != "NONE" ]] && [[ "$bg" != "$Sbg" ]]; then
+      Reply="%{%K{$bg}%F{$Sbg}%}"
+    fi
+    Sbg="$bg"
+    Reply="$Reply%{%K{$bg}%F{$fg}%}${text}%{%f%k%}"
+  fi
+}
+
+reset_seg() { Sbg="NONE" }
+
 custom_prompt() {
+  local exit_code=$? ncol char="─"
+  local loop_bg="$s_base02" loop_fg="$s_base3" line="$efs_cyan"
+
+  # if (( exit_code )); then
+  #   p_status=$(seg "$s_base03" "$s_base3" " ✘${exit_code} ")
+  # else
+  #   p_status=$(seg "$s_base03" "$s_lblue" " ✔ ")
+  # fi
+
   local term_width=$(tput cols)
+  if [[ -n $SSH_CLIENT ]]; then ncol="$s_lllred"
+  elif [[ $EUID -eq 0 ]]; then ncol="$s_red"
+  else ncol="$s_lblue"
+  fi
 
-  local p_git="$(gitprompt)"
-  local p_status="%(?,,%{${fg_bold[white]}%}[%?]%{$reset_color%} )"
-  local p_perl="%{$fg[blue]%}$(perlv)%{$reset_color%}"
-  local p_location="%{$fg[$NCOLOUR]%}%m:%~ %{$reset_color%}"
-  local p_time="%{$fg_bold[yellow]%}%D{%H:%M}%{$reset_color%}"
+  seg $loop_bg $loop_fg "╭─ "
+  local top_left="$Reply"
+  seg $s_base03 $s_base2 " %D{%H:%M} "
+  local p_time="$Reply"
+  seg $s_base02 $ncol " %m:%~ "
+  local p_location="$Reply"
+  seg $s_ddgreen $s_blue "$(perlv)"
+  local p_perl="$Reply"
+  seg $s_base03 $s_normal " $(gitprompt)"
+  local p_git="$Reply"
+  seg $s_base02 $s_base1 "  "
+  local p_gap1="$Reply"
+  seg $s_base03 "" " "
+  local p_gap2="$Reply"
 
-  # Decorative elements for left side
-  local top_left="%{$fg[cyan]%}╭─%{$reset_color%}"
-  local bottom_left="%{$fg[cyan]%}╰─────%{$reset_color%}"
-
-  local content="$top_left $p_time $p_git$p_status$p_perl$p_location"
-
+  local content="$top_left$p_time$p_location$p_perl$p_git$p_gap1$p_gap2"
   prompt-length "$content"
-  local content_length=$REPLY
-
-  local extra_spaces=2
+  local content_length=$Reply
+  local extra_spaces=0
   local total_length=$((content_length + extra_spaces))
-
   local fill_length=$((term_width - total_length))
   if [[ $fill_length -lt 0 ]]; then
     fill_length=0
   fi
-
   local fill=""
   if [[ $fill_length -gt 0 ]]; then
     fill=$(printf "%.s$char" {1..$fill_length})
   fi
 
-  echo "${content}  %{$fg[cyan]%}${fill}%{$reset_color%}"
-  echo -n "${bottom_left}%{$fg[cyan]%}❯❯ %{$reset_color%}"
+  reset_seg
+  seg $loop_bg $loop_fg "╰───────❯❯"
+  local bottom_left="$Reply"
+
+  print "$content%{$line%}$fill%{%f%k%}"
+  print -n "$bottom_left %{%f%k%}"
 }
 
 PROMPT='$(custom_prompt)'
