@@ -851,9 +851,10 @@ export s_ddgreen="#003203"  # dark dark green
 
 for c in s_base03 s_base02 s_base01 s_base00 s_base0 s_base1 s_base2 s_base3 \
   s_yellow s_orange s_red s_magenta s_violet s_blue s_cyan s_green s_normal \
-  base04 base05 base06 peach pyellow llyellow lyellow dyellow dorange lllred \
-  llred lred mred lmred dred ddred dddred lviolet mvoilet dviolet ddviolet \
-  dcyan llblue lblue dblue ddblue lgreen rgreen dgreen ddgreen; do
+  s_base04 s_base05 s_base06 s_peach s_pyellow s_llyellow s_lyellow s_dyellow \
+  s_dorange s_lllred s_llred s_lred s_mred s_lmred s_dred s_ddred s_dddred \
+  s_lviolet s_mvoilet s_dviolet s_ddviolet s_dcyan s_llblue s_lblue s_dblue \
+  s_ddblue s_lgreen s_rgreen s_dgreen s_ddgreen; do
   export ef$c="$(print -rP "%F{${(P)c}}")"  # foreground terminal esc sequence
   export eb$c="$(print -rP "%K{${(P)c}}")"  # background terminal esc sequence
 done
