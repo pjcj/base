@@ -818,12 +818,42 @@ export s_cyan="#2aa198"
 export s_green="#859900"
 export s_normal="#9599dc"
 
-export s_rgreen="#25ad2e"   # a nice green for diffs (opposite of s:red)
-export s_darkred="#2b0200"  # a dark red
+export s_base04="#00090c"   # darker than base03
+export s_base05="#0e3c49"   # lighter than base02
+export s_base06="#012028"   # lighter than base03
+export s_peach="#ffdc79"    # peach
+export s_pyellow="#fff179"  # pale yellow
+export s_llyellow="#f0a63f" # light yellow
+export s_lyellow="#de860e"  # light yellow
+export s_dyellow="#433200"  # dark yellow
+export s_dorange="#7d2500"  # dark orange
+export s_lllred="#ffacaa"   # light light light red
+export s_llred="#ff8784"    # light light red
+export s_lred="#f05a5c"     # light red
+export s_mred="#64110f"     # medium red
+export s_lmred="#d37b79"    # light medium red
+export s_dred="#400200"     # dark red
+export s_ddred="#2b0200"    # dark dark red
+export s_dddred="#150100"   # dark dark dark red
+export s_lviolet="#c0c3ef"  # light violet
+export s_mvoilet="#7c81e4"  # medium violet
+export s_dviolet="#323799"  # dark violet
+export s_ddviolet="#0F1363" # dark dark violet
+export s_dcyan="#04746c"    # dark cyan
+export s_llblue="#9fcff2"   # light light blue
+export s_lblue="#73b5e4"    # light blue
+export s_dblue="#06568f"    # dark blue
+export s_ddblue="#023458"   # dark dark blue
+export s_lgreen="#6dd374"   # light green
+export s_rgreen="#25ad2e"   # a nice green for diffs (opposite of red)
+export s_dgreen="#017008"   # dark green
+export s_ddgreen="#003203"  # dark dark green
 
 for c in s_base03 s_base02 s_base01 s_base00 s_base0 s_base1 s_base2 s_base3 \
   s_yellow s_orange s_red s_magenta s_violet s_blue s_cyan s_green s_normal \
-  s_rgreen s_darkred; do
+  base04 base05 base06 peach pyellow llyellow lyellow dyellow dorange lllred \
+  llred lred mred lmred dred ddred dddred lviolet mvoilet dviolet ddviolet \
+  dcyan llblue lblue dblue ddblue lgreen rgreen dgreen ddgreen; do
   export ef$c="$(print -rP "%F{${(P)c}}")"  # foreground terminal esc sequence
   export eb$c="$(print -rP "%K{${(P)c}}")"  # background terminal esc sequence
 done
@@ -943,7 +973,7 @@ export FZF_WIDTH=70
 export FZF_DEFAULT_OPTS="
   --height 80% --reverse --inline-info
   --preview-window=right:${FZF_WIDTH}%
-  --color fg:-1,bg:-1,hl:$s_blue,fg+:$s_normal,bg+:$s_darkred,hl+:$s_blue,gutter:$s_base02
+  --color fg:-1,bg:-1,hl:$s_blue,fg+:$s_normal,bg+:$s_ddred,hl+:$s_blue,gutter:$s_base02
   --color info:$s_cyan,prompt:$s_violet,pointer:$s_green,marker:$s_base3,spinner:$s_yellow
   --bind 'f1:abort'
   --bind 'f2:toggle-preview'
