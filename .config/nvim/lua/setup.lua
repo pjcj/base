@@ -66,7 +66,7 @@ local function setup_devel_cover_highlights()
   -- vim.g.devel_cover_valid_bg = c.base05
   -- vim.g.devel_cover_error_bg = c.dred
   vim.g.devel_cover_error_fg = c.red
-  vim.g.devel_cover_old_bg = c.dyellow
+  vim.g.devel_cover_old_bg = c.ddviolet
   -- vim.g.devel_cover_cterm = "NONE"
   -- vim.g.devel_cover_gui = "NONE"
 
@@ -87,6 +87,116 @@ local function setup_devel_cover_highlights()
   }
 end
 
+-- Auto-execute coverage.lua when it changes
+local function setup_coverage_auto_execute()
+  local last_mtime = nil
+  local coverage_file = "cover_db/coverage.lua"
+
+  local function check_and_execute_coverage()
+    -- Only check if we have at least one Perl buffer
+    local has_perl_buffer = false
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_is_loaded(buf) then
+        local ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
+        if ft == "perl" or ft == "perl6" or ft == "raku" then
+          has_perl_buffer = true
+          break
+        end
+      end
+    end
+
+    if not has_perl_buffer then
+      vim.notify("No Perl buffers, skipping coverage check", vim.log.levels.DEBUG)
+      return
+    end
+
+    local mtime = vim.fn.getftime(coverage_file)
+    vim.notify(
+      "Checking " .. coverage_file .. " mtime=" .. tostring(mtime),
+      vim.log.levels.DEBUG
+    )
+
+    if mtime > 0 then
+      -- File exists, check if it's changed
+      vim.notify(
+        "File exists. last_mtime="
+          .. tostring(last_mtime)
+          .. " current_mtime="
+          .. tostring(mtime),
+        vim.log.levels.DEBUG
+      )
+
+      if last_mtime == nil or mtime ~= last_mtime then
+        last_mtime = mtime
+        vim.notify(
+          "Executing " .. coverage_file .. " (mtime changed)",
+          vim.log.levels.INFO
+        )
+
+        -- Execute the coverage file for all Perl buffers
+        vim.schedule(function()
+          local ok, err = pcall(dofile, coverage_file)
+          if not ok then
+            vim.notify(
+              "Error executing coverage.lua: " .. tostring(err),
+              vim.log.levels.ERROR
+            )
+          else
+            vim.notify(
+              "Successfully executed " .. coverage_file,
+              vim.log.levels.INFO
+            )
+          end
+        end)
+      else
+        vim.notify("File unchanged, skipping execution", vim.log.levels.DEBUG)
+      end
+    else
+      -- File doesn't exist, reset last_mtime
+      if last_mtime ~= nil then
+        vim.notify(
+          "File no longer exists, resetting mtime",
+          vim.log.levels.DEBUG
+        )
+      end
+      last_mtime = nil
+    end
+  end
+
+  -- Set up timer with proper repeat syntax
+  local timer_id = vim.fn.timer_start(5000, function()
+    vim.schedule(check_and_execute_coverage)
+  end, { ["repeat"] = -1 })
+
+  vim.notify(
+    "Coverage auto-execute timer started (id=" .. timer_id .. ", 5 second interval)",
+    vim.log.levels.INFO
+  )
+
+  -- Check when opening Perl buffers
+  vim.api.nvim_create_autocmd("BufReadPost", {
+    pattern = {"*.pl", "*.pm", "*.t", "*.pod"},
+    callback = function()
+      vim.notify("Perl buffer opened, checking coverage", vim.log.levels.DEBUG)
+      check_and_execute_coverage()
+    end,
+    desc = "Check coverage when opening Perl files",
+  })
+
+  -- Also check when filetype is set to perl
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = {"perl", "perl6", "raku"},
+    callback = function()
+      vim.notify("Perl filetype set, checking coverage", vim.log.levels.DEBUG)
+      check_and_execute_coverage()
+    end,
+    desc = "Check coverage when filetype is set to perl",
+  })
+
+  -- Also check immediately on startup
+  check_and_execute_coverage()
+end
+
 -- Main setup function
 local function main()
   setup_cmdheight_for_session()
@@ -97,8 +207,9 @@ local function main()
   vim.api.nvim_create_autocmd("VimEnter", {
     callback = function()
       setup_auto_refresh()
+      setup_coverage_auto_execute()
     end,
-    desc = "Setup auto-refresh for file changes",
+    desc = "Setup auto-refresh for file changes and coverage monitoring",
   })
 end
 
