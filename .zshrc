@@ -225,6 +225,7 @@ PATH=~/g/local_base/utils:~/g/base/utils:$PATH
 PATH=~/g/base/utils/${(L)$(uname)}:$PATH
 PATH=/usr/local/bin:$PATH:~/g/go/bin:/usr/local/sbin:/usr/sbin:/sbin
 PATH=~/bin:$PATH
+PATH=$PATH:~/.claude/local
 
 MANPATH=/usr/share/man:${MANPATH:-manpath}
 MANPATH=~/g/sw/share/man:$NPM_PACKAGES/share/man:$MANPATH
@@ -506,7 +507,6 @@ y() {
 }
 
 cd()      { c "$@" && d }
-claude()  {  ~/.claude/local/claude "$@" }
 ddl()     { ds /{dl,music}*/**/*(#i)"$@"*(N) }
 dh()      { f "$@" | head }
 dht()     { dh -rs created "$@" }
