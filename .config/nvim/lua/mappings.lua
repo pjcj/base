@@ -130,35 +130,26 @@ local function smart_star_search()
   end
 end
 
--- 0: off, 1: virtual text, 2: virtual lines
-local virtual_diagnostic_mode = 1
+local diagnostic_modes = {
+  { -- Mode 1: Virtual Text
+    config = { virtual_text = { prefix = "●" }, virtual_lines = false },
+    message = "Virtual text ON",
+  },
+  { -- Mode 2: Virtual Lines
+    config = { virtual_text = false, virtual_lines = true },
+    message = "Virtual lines ON",
+  },
+  { -- Mode 3: Off
+    config = { virtual_text = false, virtual_lines = false },
+    message = "Virtual diagnostics OFF",
+  },
+}
+local current_diagnostic_mode = 1
 local function toggle_virtual_diagnostics()
-  virtual_diagnostic_mode = (virtual_diagnostic_mode + 1) % 3
-  if virtual_diagnostic_mode == 0 then
-    vim.diagnostic.config({ virtual_text = false, virtual_lines = false })
-    vim.notify(
-      "Virtual diagnostics OFF",
-      vim.log.levels.INFO,
-      { title = "Diagnostics" }
-    )
-  elseif virtual_diagnostic_mode == 1 then
-    vim.diagnostic.config({
-      virtual_text = { prefix = "●" },
-      virtual_lines = false,
-    })
-    vim.notify(
-      "Virtual text ON",
-      vim.log.levels.INFO,
-      { title = "Diagnostics" }
-    )
-  else -- virtual_diagnostic_mode == 2
-    vim.diagnostic.config({ virtual_text = false, virtual_lines = true })
-    vim.notify(
-      "Virtual lines ON",
-      vim.log.levels.INFO,
-      { title = "Diagnostics" }
-    )
-  end
+  current_diagnostic_mode = (current_diagnostic_mode % #diagnostic_modes) + 1
+  local mode = diagnostic_modes[current_diagnostic_mode]
+  vim.diagnostic.config(mode.config)
+  vim.notify(mode.message, vim.log.levels.INFO, { title = "Diagnostics" })
 end
 
 -- parse a Perl stack trace from the + register into the quickfix list
