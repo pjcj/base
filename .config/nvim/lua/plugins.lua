@@ -351,7 +351,6 @@ local plugins = {
     end,
   },
 
-  { "jose-elias-alvarez/nvim-lsp-ts-utils" },
   -- {
   --   -- :lua vim.lsp.buf.incoming_calls()
   --   -- :lua vim.lsp.buf.outgoing_calls()
