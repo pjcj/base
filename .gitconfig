@@ -178,7 +178,7 @@
       --date=relative --date-order \"$@\"; \
   }; f"
   # git nd [[[[year] month] day] hour]
-  nd  = "!f() { git commit --amend --no-edit --date=$(git --no-pager show \
+  nd  = "!f() { git commit --amend --no-edit --no-verify --date=$(git --no-pager show \
     --format='%ai' | head -1 |  perl -e '@n = reverse qq(@ARGV) =~ /(\\d+)/g; \
     @d = <STDIN> =~ /(\\d+)/g; printf q(%04d-%02d-%02dT%02d:%02d:%02d), \
     $n[3] // $d[0], $n[2] // $d[1], $n[1] // $d[2], $n[0] // $d[3], \
