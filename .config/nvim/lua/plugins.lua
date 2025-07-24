@@ -2407,12 +2407,14 @@ local plugins = {
       })
       require("scrollbar.handlers.search").setup({})
 
-      vim.cmd([[
-        hi default link HlSearchNear SpellCap
-        hi default link HlSearchLens SpellLocal
-        hi default link HlSearchLensNear SpellRare
-        hi default link HlSearchFloat Search
-      ]])
+      local set_default_link = function(group, target)
+        vim.api.nvim_set_hl(0, group, { link = target, default = true })
+      end
+
+      set_default_link("HlSearchNear", "SpellCap")
+      set_default_link("HlSearchLens", "SpellLocal")
+      set_default_link("HlSearchLensNear", "SpellRare")
+      set_default_link("HlSearchFloat", "Search")
     end,
   },
 
