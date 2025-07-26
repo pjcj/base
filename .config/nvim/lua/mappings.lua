@@ -274,6 +274,7 @@ wk.add({
   { "<F2>", gs.prev_hunk, desc = "previous hunk" },
   { "<F3>", gs.next_hunk, desc = "next hunk" },
   { "<S-F1>", ":q<cr>", desc = "quit" },
+  { "<S-F1>", "<C-\\><C-n>:q<cr>", mode = "i", desc = "quit" },
   {
     "<S-F2>",
     function()
