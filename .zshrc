@@ -1134,7 +1134,7 @@ export ZSH_THEME_GIT_PROMPT_PREFIX=""
 export ZSH_THEME_GIT_PROMPT_SUFFIX=" "
 export ZSH_THEME_GIT_PROMPT_SEPARATOR=" "
 export ZSH_THEME_GIT_PROMPT_DETACHED="%{$ers_cyan%}:"
-export ZSH_THEME_GIT_PROMPT_BRANCH="%{$efs_peach%}"
+export ZSH_THEME_GIT_PROMPT_BRANCH="%{$efs_yellow%}"
 export ZSH_THEME_GIT_PROMPT_BEHIND="%{$efs_lred%}%{↓%G%}"
 export ZSH_THEME_GIT_PROMPT_AHEAD="%{$efs_lred%}%{↑%G%}"
 export ZSH_THEME_GIT_PROMPT_UNMERGED="%{$efs_red%}%{⋆%G%}"
@@ -1223,7 +1223,8 @@ reset_seg() { Sbg="NONE" }
 
 custom_prompt() {
   local exit_code=$? ncol char="─"
-  local loop_bg="$s_base02" loop_fg="$s_base3" line="$efs_cyan"
+  local loop_bg="$s_base05" loop_fg="$s_base3" line="$efs_cyan"
+  local bg1="$s_base03" bg2="$s_base05"
 
   # if (( exit_code )); then
   #   p_status=$(seg "$s_base03" "$s_base3" " ✘${exit_code} ")
@@ -1234,20 +1235,20 @@ custom_prompt() {
   local term_width=$(tput cols)
   if [[ -n $SSH_CLIENT ]]; then ncol="$s_lllred"
   elif [[ $EUID -eq 0 ]]; then ncol="$s_red"
-  else ncol="$s_lblue"
+  else ncol="$s_base2"
   fi
 
   seg $loop_bg $loop_fg "╭─❯"
   local top_left="$Reply"
-  seg $s_base03 $s_base2 " %D{%H:%M} "
+  seg $bg1 $s_base2 " %D{%H:%M} "
   local p_time="$Reply"
-  seg $s_base02 $ncol " %m:%~ "
+  seg $bg2 $ncol " %m:%~ "
   local p_location="$Reply"
-  seg $s_base03 $s_normal " $(gitprompt)"
+  seg $bg1 $s_normal " $(gitprompt)"
   local p_git="$Reply"
-  seg $s_base02 $s_base1 " $(perlv)"
+  seg $bg2 $s_base1 " $(perlv)"
   local p_perl="$Reply"
-  seg $s_base03 "" " "
+  seg $bg1 "" " "
   local p_gap="$Reply"
 
   local content="$top_left$p_time$p_location$p_git$p_perl$p_gap"
