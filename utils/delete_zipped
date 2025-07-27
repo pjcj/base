@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+directory="$1"
+
+if [ -z "$directory" ]; then
+  echo "Usage: $0 <directory>"
+  exit 1
+fi
+
+if [ ! -d "$directory" ]; then
+  echo "Error: '$directory' is not a directory"
+  exit 1
+fi
+
+find "$directory" -type f -size 0 | while read -r file; do
+    # Skip files that already end in .gz
+    if [[ "$file" == *.gz ]]; then
+        continue
+    fi
+
+    # Check if corresponding .gz file exists
+    if [ -f "${file}.gz" ]; then
+        echo "Deleting zero length file: $file (${file}.gz exists)"
+        rm "$file"
+    fi
+done
+

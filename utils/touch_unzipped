@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+directory="$1"
+
+if [ -z "$directory" ]; then
+  echo "Usage: $0 <directory>"
+  exit 1
+fi
+
+if [ ! -d "$directory" ]; then
+  echo "Error: '$directory' is not a directory"
+  exit 1
+fi
+
+find "$directory" -type f -name "*.gz" | while read -r file; do
+  new_file="${file%.gz}"
+  if [ ! -e "$new_file" ]; then
+    touch "$new_file"
+    echo "Created: $new_file"
+  fi
+done

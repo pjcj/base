@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+directory="$1"
+
+if [ -z "$directory" ]; then
+  echo "Usage: $0 <directory>"
+  exit 1
+fi
+
+if [ ! -d "$directory" ]; then
+  echo "Error: '$directory' is not a directory"
+  exit 1
+fi
+
+# Find all directories containing a 'structure' subdirectory
+find "$directory" -type d | while read -r dir; do
+  if [ -d "$dir/structure" ]; then
+    echo "Processing directory: $dir"
+
+    # Create the virtual_unzipped file if it doesn't exist
+    if [ ! -f "$dir/virtual_unzipped" ]; then
+      touch "$dir/virtual_unzipped"
+    fi
+
+    # Find all .gz files in this directory and create hard links
+    find "$dir" -maxdepth 1 -type f -name "*.gz" | while read -r gzfile; do
+      # Get the path without .gz extension
+      basefile="${gzfile%.gz}"
+
+      # Check if the target file already exists
+      if [ -e "$basefile" ]; then
+        echo "File already exists: $basefile"
+      else
+        # Create hard link
+        if ! ln "$dir/virtual_unzipped" "$basefile"; then
+          echo "Error: Failed to create link for $basefile"
+          exit 1
+        fi
+      fi
+    done
+  fi
+done

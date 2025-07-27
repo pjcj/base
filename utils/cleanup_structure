@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+directory="$1"
+
+if [ -z "$directory" ]; then
+  echo "Usage: $0 <directory>"
+  exit 1
+fi
+
+if [ ! -d "$directory" ]; then
+  echo "Error: '$directory' is not a directory"
+  exit 1
+fi
+
+find "$directory" -type d -name "structure" | while read -r dir; do
+  echo "Processing directory: $dir"
+  # Find and remove zero-length files in this directory
+  find "$dir" -type f -size 0 | while read -r file; do
+    echo "Removing zero-length file: $file"
+    rm "$file"
+  done
+done
