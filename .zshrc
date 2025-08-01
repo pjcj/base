@@ -1223,7 +1223,7 @@ reset_seg() { Sbg="NONE" }
 
 custom_prompt() {
   local exit_code=$? ncol char="─"
-  local loop_bg="$s_base05" loop_fg="$s_base3" line="$efs_cyan"
+  local loop_bg="$s_dblue" loop_fg="$s_base3" line="$efs_cyan"
   local bg1="$s_base03" bg2="$s_base05"
 
   # if (( exit_code )); then
@@ -1266,7 +1266,7 @@ custom_prompt() {
   fi
 
   reset_seg
-  seg $loop_bg $loop_fg "╰───────❯❯"
+  seg $loop_bg $loop_fg "╰──────❯❯❯"
   local bottom_left="$Reply"
 
   print "$content%{$line%}$fill%{%f%k%}"
