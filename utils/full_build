@@ -163,6 +163,11 @@ fixup_fzf_completion() {
   done
 }
 
+fixup_perlnavigator() {
+  perl -pi.bak -e 's/\b25000\b/120000/' ~/.local/share/nvim/mason/packages/perlnavigator/node_modules/perlnavigator-server/{src,out}/{formatting,diagnostics}.?s
+  perl -pi -e 's/%m~/%m - %e~/' ~/.local/share/nvim/mason/packages/perlnavigator/node_modules/perlnavigator-server/src/perl/criticWrapper.pl
+}
+
 do_tpm() {
   local dir=~/.tmux/plugins/tpm
   if [ ! -d $dir ]; then
@@ -222,6 +227,7 @@ main() {
   completion
   create_wezterm_terminfo
   fixup_fzf_completion
+  fixup_perlnavigator
 
   if [[ -z $TMUX ]]; then
     echo "Start tmux and then run full_build"
