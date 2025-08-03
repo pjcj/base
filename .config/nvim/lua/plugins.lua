@@ -2062,7 +2062,17 @@ local plugins = {
     opts = {
       auto_start = true,
       terminal = {
+        terminal_cmd = "~/.claude/local/claude",
         -- provider = "native",
+        provider = {
+          setup = function(config) end,
+          open = function(cmd_string, env_table, effective_config, focus) end,
+          close = function() end,
+          simple_toggle = function(cmd_string, env_table, effective_config) end,
+          focus_toggle = function(cmd_string, env_table, effective_config) end,
+          get_active_bufnr = function() end,
+          is_available = function() return true end,
+        },
         split_width_percentage = 0.4,
       },
     },
