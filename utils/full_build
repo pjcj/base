@@ -165,7 +165,6 @@ fixup_fzf_completion() {
 
 fixup_perlnavigator() {
   perl -pi.bak -e 's/\b25000\b/120000/' ~/.local/share/nvim/mason/packages/perlnavigator/node_modules/perlnavigator-server/{src,out}/{formatting,diagnostics}.?s
-  perl -pi -e 's/%m~/%m - %e~/' ~/.local/share/nvim/mason/packages/perlnavigator/node_modules/perlnavigator-server/src/perl/criticWrapper.pl
 }
 
 do_tpm() {
