@@ -208,6 +208,7 @@ local function setup_servers()
 
         perlcriticEnabled = vim.fn.filereadable(".perlcriticrc"),
         perlcriticProfile = ".perlcriticrc",
+        perlcriticMessageFormat = "%m - %e",
 
         perlimportsProfile = ".perlimports.toml",
         perlimportsLintEnabled = vim.fn.filereadable(".perlimports.toml"),
