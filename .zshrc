@@ -206,6 +206,7 @@ export MANPAGER="nvim +Man!"
 export MANWIDTH=999
 
 export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_DOWNLOAD_CONCURRENCY=auto
 export XDG_CONFIG_HOME=~/.config
 
 zshrc_load_status "path"
