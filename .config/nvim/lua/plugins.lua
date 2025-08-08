@@ -207,6 +207,31 @@ local plugins = {
   },
 
   {
+    "OXY2DEV/markview.nvim", -- needs to be before treesitter
+    lazy = false,
+    version = "*",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+      local presets = require("markview.presets")
+      require("markview").setup({
+        preview = {
+          -- filetypes = { "markdown", "codecompanion" },
+          ignore_buftypes = {},
+          modes = { "n" },
+        },
+        markdown = {
+          checkboxes = presets.checkboxes.nerd,
+          headings = presets.headings.slanted,
+          horizontal_rules = presets.horizontal_rules.double,
+          tables = presets.tables.rounded,
+        },
+      })
+    end,
+  },
+  {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
       "nvim-treesitter/nvim-treesitter-refactor",
@@ -2546,31 +2571,6 @@ local plugins = {
       file_types = { "Avante", "codecompanion" },
     },
     ft = { "Avante", "codecompanion" },
-  },
-  {
-    "OXY2DEV/markview.nvim",
-    lazy = false,
-    version = "*",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons",
-    },
-    config = function()
-      local presets = require("markview.presets")
-      require("markview").setup({
-        preview = {
-          -- filetypes = { "markdown", "codecompanion" },
-          ignore_buftypes = {},
-          modes = { "n" },
-        },
-        markdown = {
-          checkboxes = presets.checkboxes.nerd,
-          headings = presets.headings.slanted,
-          horizontal_rules = presets.horizontal_rules.double,
-          tables = presets.tables.rounded,
-        },
-      })
-    end,
   },
   {
     "OXY2DEV/helpview.nvim",
