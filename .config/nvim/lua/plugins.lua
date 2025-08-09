@@ -2607,7 +2607,7 @@ local plugins = {
 
   {
     "aileot/emission.nvim", -- highlight additions and deletions
-    event = "VeryLazy",
+    event = "UIEnter",
     opts = {
       highlight = {
         duration = 500,
