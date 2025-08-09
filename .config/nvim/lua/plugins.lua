@@ -2655,7 +2655,8 @@ local plugins = {
   },
   {
     "OXY2DEV/helpview.nvim",
-    lazy = false,
+    event = "BufEnter",
+    -- lazy = false, -- as specified in docs
   },
 
   {
