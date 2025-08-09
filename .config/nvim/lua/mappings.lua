@@ -435,7 +435,13 @@ wk.add({
   {
     mode = { "n", "v" },
 
-    { "<leader>  ", require("yazi").yazi, desc = "yazi" },
+    {
+      "<leader>  ",
+      function()
+        require("yazi").yazi()
+      end,
+      desc = "yazi",
+    },
     { "<leader> .", group = "claude" },
 
     { "<leader> ,", group = "nvim-aider" },
@@ -457,7 +463,9 @@ wk.add({
     { "<leader> ,R", aider_cmd("Aider reset"), desc = "reset session" },
     {
       "<leader> ,l",
-      require("nvim_aider").api.send_diagnostics_with_prompt,
+      function()
+        require("nvim_aider").api.send_diagnostics_with_prompt()
+      end,
       desc = "send lsp diagnostics",
     },
 
