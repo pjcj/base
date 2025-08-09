@@ -32,7 +32,7 @@ local plugins = {
   {
     "catppuccin/nvim",
     name = "catppuccin",
-    priority = 1000,
+    lazy =false,
     config = function()
       local c = require("local_defs").colour
       require("catppuccin").setup({
