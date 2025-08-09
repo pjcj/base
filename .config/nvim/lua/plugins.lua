@@ -2594,6 +2594,7 @@ local plugins = {
   {
     "nvim-tree/nvim-tree.lua",
     version = "*",
+    cmd = { "NvimTreeToggle", "NvimTreeOpen" },
     dependencies = {
       "nvim-tree/nvim-web-devicons", -- optional, for file icon
     },
