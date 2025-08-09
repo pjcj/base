@@ -2306,7 +2306,6 @@ local plugins = {
       "stevearc/dressing.nvim", -- Recommended. Better UI for pickers.
       "nvim-tree/nvim-web-devicons", -- Recommended. Icons in discussion tree.
     },
-    enabled = true,
     build = function()
       require("gitlab.server").build(true)
     end, -- Builds the Go binary
