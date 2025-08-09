@@ -1860,7 +1860,6 @@ local plugins = {
   {
     "yetone/avante.nvim",
     enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
-    event = "VeryLazy",
     version = false, -- never set this to "*"
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
