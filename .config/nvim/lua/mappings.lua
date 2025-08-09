@@ -40,7 +40,9 @@ end
 local function gl()
   return require("gitlab")
 end
-local tj = require("treesj")
+local function tj()
+  return require("treesj")
+end
 local nt = require("neotest")
 
 local function aider_cmd(cmd)
@@ -513,27 +515,45 @@ wk.add({
   { "<leader> do", ":DiffviewOpen<cr>", desc = "open" },
 
   { "<leader> j", group = "join" },
-  { "<leader> jj", tj.join, desc = "join" },
+  {
+    "<leader> jj",
+    function()
+      tj().join()
+    end,
+    desc = "join",
+  },
   {
     "<leader> jJ",
     function()
-      tj.join({ split = { recursive = true } })
+      tj().join({ split = { recursive = true } })
     end,
     desc = "recursive join",
   },
-  { "<leader> js", tj.split, desc = "split" },
+  {
+    "<leader> js",
+    function()
+      tj().split()
+    end,
+    desc = "split",
+  },
   {
     "<leader> jS",
     function()
-      tj.split({ split = { recursive = true } })
+      tj().split({ split = { recursive = true } })
     end,
     desc = "recursive split",
   },
-  { "<leader> jt", tj.toggle, desc = "toggle" },
+  {
+    "<leader> jt",
+    function()
+      tj().toggle()
+    end,
+    desc = "toggle",
+  },
   {
     "<leader> jT",
     function()
-      tj.toggle({ split = { recursive = true } })
+      tj().toggle({ split = { recursive = true } })
     end,
     desc = "recursive toggle",
   },
