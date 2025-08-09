@@ -1847,7 +1847,7 @@ local plugins = {
     config = function()
       require("mcphub").setup({
         log = {
-          level = vim.log.levels.DEBUG, -- DEBUG, INFO, WARN, ERROR
+          level = vim.log.levels.INFO, -- DEBUG, INFO, WARN, ERROR
         },
         extensions = {
           avante = {
