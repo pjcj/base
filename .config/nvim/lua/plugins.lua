@@ -2332,6 +2332,7 @@ local plugins = {
   {
     "lukas-reineke/indent-blankline.nvim",
     version = "*",
+    cmd = "IBLEnable",
     main = "ibl",
     opts = {
       indent = {
