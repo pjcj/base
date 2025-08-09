@@ -2421,6 +2421,7 @@ local plugins = {
 
   {
     "cohama/lexima.vim",
+    event = "InsertEnter",
     config = function()
       vim.cmd([[
         call lexima#add_rule({"char": '"', "at": '\%#\(\w\|\$\)'})
