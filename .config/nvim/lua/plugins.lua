@@ -208,7 +208,8 @@ local plugins = {
 
   {
     "OXY2DEV/markview.nvim", -- needs to be before treesitter
-    lazy = false,
+    ft = "markdown",
+    priority = 100,
     version = "*",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
