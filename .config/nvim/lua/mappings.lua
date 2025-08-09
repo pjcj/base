@@ -948,7 +948,7 @@ wk.add({
   {
     "<leader>fG",
     function()
-      tb.live_grep({
+      tb().live_grep({
         additional_args = function()
           return { "-w" }
         end,
@@ -1125,7 +1125,7 @@ wk.add({
   {
     "<leader>fS",
     function()
-      tb.grep_string({ word_match = "-w" })
+      tb().grep_string({ word_match = "-w" })
     end,
     desc = "grep string word",
   },
@@ -1171,14 +1171,14 @@ wk.add({
   {
     "<leader>fygg",
     function()
-      tb.live_grep({ type_filter = "go" })
+      tb().live_grep({ type_filter = "go" })
     end,
     desc = "grep",
   },
   {
     "<leader>fygG",
     function()
-      tb.live_grep({
+      tb().live_grep({
         type_filter = "go",
         additional_args = function()
           return { "-w" }
@@ -1190,7 +1190,7 @@ wk.add({
   {
     "<leader>fygs",
     function()
-      tb.grep_string({
+      tb().grep_string({
         additional_args = function()
           return { "--type=go" }
         end,
@@ -1202,7 +1202,7 @@ wk.add({
   {
     "<leader>fygS",
     function()
-      tb.grep_string({
+      tb().grep_string({
         additional_args = function()
           return { "--type=go" }
         end,
@@ -1217,14 +1217,14 @@ wk.add({
   {
     "<leader>fypg",
     function()
-      tb.live_grep({ type_filter = "perl" })
+      tb().live_grep({ type_filter = "perl" })
     end,
     desc = "grep",
   },
   {
     "<leader>fypG",
     function()
-      tb.live_grep({
+      tb().live_grep({
         type_filter = "perl",
         additional_args = function()
           return { "-w" }
@@ -1236,7 +1236,7 @@ wk.add({
   {
     "<leader>fyps",
     function()
-      tb.grep_string({
+      tb().grep_string({
         additional_args = function()
           return { "--type=perl" }
         end,
@@ -1248,7 +1248,7 @@ wk.add({
   {
     "<leader>fypS",
     function()
-      tb.grep_string({
+      tb().grep_string({
         additional_args = function()
           return { "--type=perl" }
         end,
