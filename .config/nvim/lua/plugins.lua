@@ -738,12 +738,16 @@ local plugins = {
       telescope.load_extension("smart_open")
       telescope.load_extension("ui-select")
 
-      vim.cmd([[
-        augroup telescope
-          autocmd!
-          autocmd User TelescopePreviewerLoaded setlocal number tabstop=2
-        augroup end
-      ]])
+      local telescope_group =
+        vim.api.nvim_create_augroup("telescope", { clear = true })
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "TelescopePreviewerLoaded",
+        group = telescope_group,
+        callback = function()
+          vim.opt_local.number = true
+          vim.opt_local.tabstop = 2
+        end,
+      })
     end,
   },
   {
