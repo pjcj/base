@@ -35,7 +35,9 @@ local t = require("telescope")
 local tb = require("telescope.builtin")
 local bd = require("better-digraphs")
 local gs = require("gitsigns")
-local gl = require("gitlab")
+local function gl()
+  return require("gitlab")
+end
 local tj = require("treesj")
 local nt = require("neotest")
 
@@ -975,52 +977,160 @@ wk.add({
   },
 
   { "<leader>gl", group = "gitlab" },
-  { "<leader>gla", gl.approve, desc = "approve" },
+  {
+    "<leader>gla",
+    function()
+      gl().approve()
+    end,
+    desc = "approve",
+  },
 
   { "<leader>glA", group = "assignee" },
-  { "<leader>glAa", gl.add_assignee, desc = "add assignee" },
-  { "<leader>glAd", gl.delete_assignee, desc = "delete assignee" },
+  {
+    "<leader>glAa",
+    function()
+      gl().add_assignee()
+    end,
+    desc = "add assignee",
+  },
+  {
+    "<leader>glAd",
+    function()
+      gl().delete_assignee()
+    end,
+    desc = "delete assignee",
+  },
 
-  { "<leader>glc", gl.create_comment, desc = "create comment" },
   {
     "<leader>glc",
-    gl.create_multiline_comment,
+    function()
+      gl().create_comment()
+    end,
+    desc = "create comment",
+  },
+  {
+    "<leader>glc",
+    function()
+      gl().create_multiline_comment()
+    end,
     mode = "v",
     desc = "create multiline comment",
   },
-  { "<leader>gld", gl.toggle_discussions, desc = "toggle discussions" },
+  {
+    "<leader>gld",
+    function()
+      gl().toggle_discussions()
+    end,
+    desc = "toggle discussions",
+  },
 
   { "<leader>gll", group = "label" },
-  { "<leader>glla", gl.add_label, desc = "add label" },
-  { "<leader>glld", gl.delete_label, desc = "delete label" },
+  {
+    "<leader>glla",
+    function()
+      gl().add_label()
+    end,
+    desc = "add label",
+  },
+  {
+    "<leader>glld",
+    function()
+      gl().delete_label()
+    end,
+    desc = "delete label",
+  },
 
   {
     "<leader>glm",
-    gl.move_to_discussion_tree_from_diagnostic,
+    function()
+      gl().move_to_discussion_tree_from_diagnostic()
+    end,
     desc = "move to discussion tree from diagnostic",
   },
 
   { "<leader>glM", group = "MR" },
-  { "<leader>glMc", gl.create_mr, desc = "create mr" },
-  { "<leader>glMm", gl.merge, desc = "merge" },
+  {
+    "<leader>glMc",
+    function()
+      gl().create_mr()
+    end,
+    desc = "create mr",
+  },
+  {
+    "<leader>glMm",
+    function()
+      gl().merge()
+    end,
+    desc = "merge",
+  },
 
-  { "<leader>gln", gl.create_note, desc = "create note" },
-  { "<leader>glo", gl.open_in_browser, desc = "open in browser" },
-  { "<leader>glp", gl.pipeline, desc = "pipeline" },
-  { "<leader>glr", gl.review, desc = "review" },
+  {
+    "<leader>gln",
+    function()
+      gl().create_note()
+    end,
+    desc = "create note",
+  },
+  {
+    "<leader>glo",
+    function()
+      gl().open_in_browser()
+    end,
+    desc = "open in browser",
+  },
+  {
+    "<leader>glp",
+    function()
+      gl().pipeline()
+    end,
+    desc = "pipeline",
+  },
+  {
+    "<leader>glr",
+    function()
+      gl().review()
+    end,
+    desc = "review",
+  },
 
   { "<leader>glR", group = "reviewer" },
-  { "<leader>glRa", gl.add_reviewer, desc = "add reviewer" },
-  { "<leader>glRd", gl.delete_reviewer, desc = "delete reviewer" },
+  {
+    "<leader>glRa",
+    function()
+      gl().add_reviewer()
+    end,
+    desc = "add reviewer",
+  },
+  {
+    "<leader>glRd",
+    function()
+      gl().delete_reviewer()
+    end,
+    desc = "delete reviewer",
+  },
 
-  { "<leader>gls", gl.summary, desc = "summary" },
   {
     "<leader>gls",
-    gl.create_comment_suggestion,
+    function()
+      gl().summary()
+    end,
+    desc = "summary",
+  },
+  {
+    "<leader>glS",
+    function()
+      gl().create_comment_suggestion()
+    end,
     mode = "v",
     desc = "create comment suggestion",
   },
-  { "<leader>glV", gl.revoke, desc = "revoke" },
+  {
+    "<leader>glV",
+    function()
+      gl().revoke()
+    end,
+    desc = "revoke",
+  },
 
   { "<leader>h", group = "hunk" },
   {
