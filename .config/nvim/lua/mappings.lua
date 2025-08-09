@@ -33,7 +33,9 @@ local lb = vim.lsp.buf
 local d = vim.diagnostic
 local t = require("telescope")
 local tb = require("telescope.builtin")
-local bd = require("better-digraphs")
+local function bd()
+  return require("better-digraphs")
+end
 local function gs()
   return require("gitsigns")
 end
@@ -413,7 +415,13 @@ wk.add({
   {
     mode = { "n", "v" },
     { "r", group = "replace" },
-    { "r<C-k><C-k>", bd.digraphs, desc = "digraph" },
+    {
+      "r<C-k><C-k>",
+      function()
+        bd().digraphs()
+      end,
+      desc = "digraph",
+    },
   },
 
   { "<leader>", group = "leader" },
@@ -1400,7 +1408,7 @@ wk.add({
     {
       "<C-k><C-k>",
       function()
-        bd.digraphs("insert")
+        bd().digraphs("insert")
       end,
       desc = "digraph",
     },
