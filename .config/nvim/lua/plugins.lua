@@ -2224,46 +2224,45 @@ local plugins = {
 
   {
     "lewis6991/gitsigns.nvim",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      require("gitsigns").setup({
-        signs = {
-          add = { show_count = true, text = "+" },
-          change = { show_count = true, text = "~" },
-          delete = { show_count = true, text = "_" },
-          topdelete = { show_count = true, text = "‾" },
-          changedelete = { show_count = true, text = "~" },
-        },
-        numhl = true,
-        linehl = false,
-        watch_gitdir = { interval = 1000 },
-        sign_priority = 6,
-        update_debounce = 1000,
-        status_formatter = nil, -- Use default
-        diff_opts = { internal = true }, -- If luajit is present
-        word_diff = false,
-        current_line_blame = true,
-        current_line_blame_opts = {
-          virt_text = true,
-          virt_text_pos = "eol",
-          ignore_whitespace = true,
-          delay = 1000,
-        },
-        count_chars = {
-          [1] = "₁",
-          [2] = "₂",
-          [3] = "₃",
-          [4] = "₄",
-          [5] = "₅",
-          [6] = "₆",
-          [7] = "₇",
-          [8] = "₈",
-          [9] = "₉",
-          ["+"] = "₊",
-        },
-        attach_to_untracked = false,
-      })
-    end,
+    opts = {
+      signs = {
+        add = { show_count = true, text = "+" },
+        change = { show_count = true, text = "~" },
+        delete = { show_count = true, text = "_" },
+        topdelete = { show_count = true, text = "‾" },
+        changedelete = { show_count = true, text = "~" },
+      },
+      numhl = true,
+      linehl = false,
+      watch_gitdir = { interval = 1000 },
+      sign_priority = 6,
+      update_debounce = 1000,
+      status_formatter = nil, -- Use default
+      diff_opts = { internal = true }, -- If luajit is present
+      word_diff = false,
+      current_line_blame = true,
+      current_line_blame_opts = {
+        virt_text = true,
+        virt_text_pos = "eol",
+        ignore_whitespace = true,
+        delay = 1000,
+      },
+      count_chars = {
+        [1] = "₁",
+        [2] = "₂",
+        [3] = "₃",
+        [4] = "₄",
+        [5] = "₅",
+        [6] = "₆",
+        [7] = "₇",
+        [8] = "₈",
+        [9] = "₉",
+        ["+"] = "₊",
+      },
+      attach_to_untracked = false,
+    },
   },
 
   {
