@@ -2376,6 +2376,7 @@ local plugins = {
 
   {
     "mhinz/vim-startify",
+    lazy = false,
     config = function()
       vim.g.startify_change_to_vcs_root = 1
       vim.g.startify_fortune_use_unicode = 1
