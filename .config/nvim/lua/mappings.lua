@@ -31,8 +31,12 @@ local wk = require("which-key")
 
 local lb = vim.lsp.buf
 local d = vim.diagnostic
-local t = require("telescope")
-local tb = require("telescope.builtin")
+local function t()
+  return require("telescope")
+end
+local function tb()
+  return require("telescope.builtin")
+end
 local function bd()
   return require("better-digraphs")
 end
@@ -186,7 +190,7 @@ local function load_perl_stack_trace()
 end
 
 local function smart_open()
-  require("telescope").extensions.smart_open.smart_open({
+  t().extensions.smart_open.smart_open({
     cwd_only = true,
     filename_first = false,
     show_scores = false,
@@ -322,7 +326,7 @@ wk.add({
   {
     "<F4>",
     function()
-      tb.tags({ default_text = vim.fn.expand("<cword>") })
+      tb().tags({ default_text = vim.fn.expand("<cword>") })
     end,
     desc = "cword tags",
   },
@@ -647,7 +651,7 @@ wk.add({
   {
     "<leader>-",
     function()
-      tb.find_files({ hidden = true })
+      tb().find_files({ hidden = true })
     end,
     desc = "honour ignores",
   },
@@ -754,14 +758,17 @@ wk.add({
   {
     "<leader>f,a",
     function()
-      t.find_files({ hidden = true, no_ignore = true })
+      t().find_files({ hidden = true, no_ignore = true })
     end,
     desc = "include ignores",
   },
   {
     "<leader>f,c",
     function()
-      t.find_files({ fd = require("local_defs").fn.common_fd(), hidden = true })
+      t().find_files({
+        fd = require("local_defs").fn.common_fd(),
+        hidden = true,
+      })
     end,
     desc = "common files",
   },
@@ -769,14 +776,14 @@ wk.add({
   {
     "<leader>f,g",
     function()
-      t.git_files({ hidden = true })
+      t().git_files({ hidden = true })
     end,
     desc = "git files",
   },
   {
     "<leader>f,i",
     function()
-      t.find_files({ hidden = true })
+      t().find_files({ hidden = true })
     end,
     desc = "honour ignores",
   },
@@ -786,11 +793,17 @@ wk.add({
   {
     "<leader>fA",
     function()
-      t.find_files({ hidden = true, no_ignore = true })
+      t().find_files({ hidden = true, no_ignore = true })
     end,
     desc = "find all files",
   },
-  { "<leader>fb", tb.buffers, desc = "buffers" },
+  {
+    "<leader>fb",
+    function()
+      tb().buffers()
+    end,
+    desc = "buffers",
+  },
 
   {
     mode = { "n", "v" },
@@ -807,7 +820,13 @@ wk.add({
     },
   },
 
-  { "<leader>fC", tb.commands, desc = "commands" },
+  {
+    "<leader>fC",
+    function()
+      tb().commands()
+    end,
+    desc = "commands",
+  },
 
   { "<leader>fd", group = "diagnostics" },
   { "<leader>fdd", ":Telescope diagnostics<cr>", desc = "all" },
@@ -830,11 +849,43 @@ wk.add({
     desc = "info",
   },
 
-  { "<leader>fD", tb.lsp_diagnostics, desc = "lsp diagnostics" },
-  { "<leader>fe", tb.resume, mode = { "n", "v" }, desc = "resume" },
-  { "<leader>ff", tb.builtin, mode = { "n", "v" }, desc = "builtin" },
-  { "<leader>fE", tb.treesitter, desc = "treesitter" },
-  { "<leader>fg", tb.live_grep, desc = "live grep" },
+  {
+    "<leader>fD",
+    function()
+      tb().lsp_diagnostics()
+    end,
+    desc = "lsp diagnostics",
+  },
+  {
+    "<leader>fe",
+    function()
+      tb().resume()
+    end,
+    mode = { "n", "v" },
+    desc = "resume",
+  },
+  {
+    "<leader>ff",
+    function()
+      tb().builtin()
+    end,
+    mode = { "n", "v" },
+    desc = "builtin",
+  },
+  {
+    "<leader>fE",
+    function()
+      tb().treesitter()
+    end,
+    desc = "treesitter",
+  },
+  {
+    "<leader>fg",
+    function()
+      tb().live_grep()
+    end,
+    desc = "live grep",
+  },
   {
     "<leader>fG",
     function()
@@ -846,41 +897,172 @@ wk.add({
     end,
     desc = "grep word",
   },
-  { "<leader>fh", tb.help_tags, desc = "help tags" },
-  { "<leader>fH", tb.highlights, desc = "highlights" },
+  {
+    "<leader>fh",
+    function()
+      tb().help_tags()
+    end,
+    desc = "help tags",
+  },
+  {
+    "<leader>fH",
+    function()
+      tb().highlights()
+    end,
+    desc = "highlights",
+  },
 
   { "<leader>fi", group = "git" },
-  { "<leader>fib", tb.git_branches, desc = "branches" },
-  { "<leader>fic", tb.git_commits, desc = "commits" },
-  { "<leader>fif", tb.git_files, desc = "files" },
+  {
+    "<leader>fib",
+    function()
+      tb().git_branches()
+    end,
+    desc = "branches",
+  },
+  {
+    "<leader>fic",
+    function()
+      tb().git_commits()
+    end,
+    desc = "commits",
+  },
+  {
+    "<leader>fif",
+    function()
+      tb().git_files()
+    end,
+    desc = "files",
+  },
   {
     "<leader>fih",
-    t.extensions.git_file_history.git_file_history,
+    function()
+      t().extensions.git_file_history.git_file_history()
+    end,
     desc = "file history",
   },
-  { "<leader>fis", tb.git_status, desc = "status" },
-  { "<leader>fit", tb.git_stash, desc = "stash" },
-  { "<leader>fiu", tb.git_commits, desc = "buffer commits" },
+  {
+    "<leader>fis",
+    function()
+      tb().git_status()
+    end,
+    desc = "status",
+  },
+  {
+    "<leader>fit",
+    function()
+      tb().git_stash()
+    end,
+    desc = "stash",
+  },
+  {
+    "<leader>fiu",
+    function()
+      tb().git_commits()
+    end,
+    desc = "buffer commits",
+  },
 
-  { "<leader>fj", tb.jumplist, desc = "jump list" },
-  { "<leader>fJ", t.extensions.emoji.emoji, desc = "emoji" },
-  { "<leader>fl", tb.current_buffer_fuzzy_find, desc = "fuzzy find" },
-  { "<leader>fm", tb.keymaps, desc = "mappings" },
-  { "<leader>fM", tb.man_pages, desc = "man pages" },
+  {
+    "<leader>fj",
+    function()
+      tb().jumplist()
+    end,
+    desc = "jump list",
+  },
+  {
+    "<leader>fJ",
+    function()
+      t().extensions.emoji.emoji()
+    end,
+    desc = "emoji",
+  },
+  {
+    "<leader>fl",
+    function()
+      tb().current_buffer_fuzzy_find()
+    end,
+    desc = "fuzzy find",
+  },
+  {
+    "<leader>fm",
+    function()
+      tb().keymaps()
+    end,
+    desc = "mappings",
+  },
+  {
+    "<leader>fM",
+    function()
+      tb().man_pages()
+    end,
+    desc = "man pages",
+  },
   {
     "<leader>fn",
-    require("telescope").extensions.notify.notify,
+    function()
+      t().extensions.notify.notify()
+    end,
     desc = "show notifications",
   },
-  { "<leader>fo", tb.vim_options, desc = "vim options" },
-  { "<leader>fO", tb.oldfiles, desc = "old files" },
-  { "<leader>fp", t.extensions.neoclip.default, desc = "paste" },
+  {
+    "<leader>fo",
+    function()
+      tb().vim_options()
+    end,
+    desc = "vim options",
+  },
+  {
+    "<leader>fO",
+    function()
+      tb().oldfiles()
+    end,
+    desc = "old files",
+  },
+  {
+    "<leader>fp",
+    function()
+      t().extensions.neoclip.default()
+    end,
+    desc = "paste",
+  },
   { "<leader>fP", ":UrlView lazy<cr>", desc = "plugins" },
-  { "<leader>fq", tb.quickfix, desc = "quickfix" },
-  { "<leader>fQ", tb.quickfixhistory, desc = "quickfix history" },
-  { "<leader>fr", tb.lsp_references, desc = "lsp references" },
-  { "<leader>fR", t.extensions.refactoring.refactors, desc = "refactor" },
-  { "<leader>fs", tb.grep_string, mode = { "n", "v" }, desc = "grep string" },
+  {
+    "<leader>fq",
+    function()
+      tb().quickfix()
+    end,
+    desc = "quickfix",
+  },
+  {
+    "<leader>fQ",
+    function()
+      tb().quickfixhistory()
+    end,
+    desc = "quickfix history",
+  },
+  {
+    "<leader>fr",
+    function()
+      tb().lsp_references()
+    end,
+    desc = "lsp references",
+  },
+  {
+    "<leader>fR",
+    function()
+      t().extensions.refactoring.refactors()
+    end,
+    desc = "refactor",
+  },
+  {
+    "<leader>fs",
+    function()
+      tb().grep_string()
+    end,
+    mode = { "n", "v" },
+    desc = "grep string",
+  },
   {
     "<leader>fS",
     function()
@@ -888,9 +1070,27 @@ wk.add({
     end,
     desc = "grep string word",
   },
-  { "<leader>ft", tb.current_buffer_tags, desc = "local tags" },
-  { "<leader>fT", tb.tags, desc = "tags" },
-  { "<leader>fu", t.extensions.undo.undo, desc = "undo" },
+  {
+    "<leader>ft",
+    function()
+      tb().current_buffer_tags()
+    end,
+    desc = "local tags",
+  },
+  {
+    "<leader>fT",
+    function()
+      tb().tags()
+    end,
+    desc = "tags",
+  },
+  {
+    "<leader>fu",
+    function()
+      t().extensions.undo.undo()
+    end,
+    desc = "undo",
+  },
 
   { "<leader>fU", group = "url" },
   { "<leader>fUu", ":UrlView buffer<cr>", desc = "yank url" },
@@ -900,7 +1100,7 @@ wk.add({
   {
     "<leader>fv",
     function()
-      tb.tags({ default_text = vim.fn.expand("<cword>") })
+      tb().tags({ default_text = vim.fn.expand("<cword>") })
     end,
     desc = "cword tags",
   },
@@ -999,7 +1199,13 @@ wk.add({
     mode = { "n", "v" },
     desc = "grep string word",
   },
-  { "<leader>fz", tb.lsp_document_symbols, desc = "lsp symbols" },
+  {
+    "<leader>fz",
+    function()
+      tb().lsp_document_symbols()
+    end,
+    desc = "lsp symbols",
+  },
 
   { "<leader>g", group = "git" },
   {
@@ -1292,7 +1498,13 @@ wk.add({
     [[:let @/ = ""<bar>:call UncolorAllWords()<cr>]],
     desc = "unhighlight all",
   },
-  { "<leader>m", tb.git_status, desc = "find git changes" },
+  {
+    "<leader>m",
+    function()
+      tb().git_status()
+    end,
+    desc = "find git changes",
+  },
   { "<leader>n", ":NewFile<cr>", desc = "new file template" },
 
   { "<leader>q", group = "quote" },
