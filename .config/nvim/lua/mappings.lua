@@ -43,7 +43,9 @@ end
 local function tj()
   return require("treesj")
 end
-local nt = require("neotest")
+local function nt()
+  return require("neotest")
+end
 
 local function aider_cmd(cmd)
   return function()
@@ -700,7 +702,7 @@ wk.add({
     function()
       local file = "."
       print(file)
-      nt.run.run(file)
+      nt().run.run(file)
     end,
     desc = "all",
   },
@@ -709,21 +711,21 @@ wk.add({
     function()
       local file = vim.fn.expand("%")
       print(file)
-      nt.run.run(file)
+      nt().run.run(file)
     end,
     desc = "file",
   },
   {
     "<leader>,gto",
     function()
-      nt.output.open({ enter = true })
+      nt().output.open({ enter = true })
     end,
     desc = "open results",
   },
   {
     "<leader>,gts",
     function()
-      nt.summary.toggle()
+      nt().summary.toggle()
     end,
     desc = "toggle summary",
   },
