@@ -2286,6 +2286,7 @@ local plugins = {
 
   {
     "tpope/vim-fugitive",
+    cmd = "Git",
     -- config = function()
     --   vim.api.nvim_command("autocmd User FugitiveChanged set cmdheight=0")
     -- end,
