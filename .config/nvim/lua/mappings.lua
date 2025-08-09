@@ -34,7 +34,9 @@ local d = vim.diagnostic
 local t = require("telescope")
 local tb = require("telescope.builtin")
 local bd = require("better-digraphs")
-local gs = require("gitsigns")
+local function gs()
+  return require("gitsigns")
+end
 local function gl()
   return require("gitlab")
 end
@@ -264,17 +266,35 @@ wk.add({
   { "<A-k>", require("smart-splits").resize_up, desc = "resize up" },
   { "<A-l>", require("smart-splits").resize_right, desc = "resize right" },
 
-  { "<F1>", gs.stage_hunk, desc = "stage hunk" },
   {
     "<F1>",
     function()
-      gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+      gs().stage_hunk()
+    end,
+    desc = "stage hunk",
+  },
+  {
+    "<F1>",
+    function()
+      gs().stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
     end,
     mode = "v",
     desc = "stage hunk",
   },
-  { "<F2>", gs.prev_hunk, desc = "previous hunk" },
-  { "<F3>", gs.next_hunk, desc = "next hunk" },
+  {
+    "<F2>",
+    function()
+      gs().prev_hunk()
+    end,
+    desc = "previous hunk",
+  },
+  {
+    "<F3>",
+    function()
+      gs().next_hunk()
+    end,
+    desc = "next hunk",
+  },
   { "<S-F1>", ":q<cr>", desc = "quit" },
   { "<S-F1>", "<C-\\><C-n>:q<cr>", mode = "i", desc = "quit" },
   {
@@ -1136,43 +1156,104 @@ wk.add({
   {
     "<leader>hb",
     function()
-      gs.blame_line({ full = true })
+      gs().blame_line({ full = true })
     end,
     desc = "blame",
   },
-  { "<leader>hd", gs.diffthis, desc = "diff hunk" },
+  {
+    "<leader>hd",
+    function()
+      gs().diffthis()
+    end,
+    desc = "diff hunk",
+  },
   {
     "<leader>hD",
     function()
-      gs.diffthis("~")
+      gs().diffthis("~")
     end,
     desc = "diff",
   },
-  { "<leader>hi", gs.preview_hunk_inline, desc = "preview hunk inline" },
-  { "<leader>hp", gs.preview_hunk, desc = "preview hunk" },
-  { "<leader>hr", gs.reset_hunk, desc = "reset hunk" },
+  {
+    "<leader>hi",
+    function()
+      gs().preview_hunk_inline()
+    end,
+    desc = "preview hunk inline",
+  },
+  {
+    "<leader>hp",
+    function()
+      gs().preview_hunk()
+    end,
+    desc = "preview hunk",
+  },
   {
     "<leader>hr",
     function()
-      gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+      gs().reset_hunk()
+    end,
+    desc = "reset hunk",
+  },
+  {
+    "<leader>hr",
+    function()
+      gs().reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
     end,
     mode = "v",
     desc = "reset hunk",
   },
-  { "<leader>hR", gs.reset_buffer, desc = "reset_buffer" },
-  { "<leader>hs", gs.stage_hunk, desc = "stage hunk" },
+  {
+    "<leader>hR",
+    function()
+      gs().reset_buffer()
+    end,
+    desc = "reset_buffer",
+  },
   {
     "<leader>hs",
     function()
-      gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+      gs().stage_hunk()
+    end,
+    desc = "stage hunk",
+  },
+  {
+    "<leader>hs",
+    function()
+      gs().stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
     end,
     mode = "v",
     desc = "stage hunk",
   },
-  { "<leader>hS", gs.stage_buffer, desc = "stage buffer" },
-  { "<leader>hu", gs.undo_stage_hunk, desc = "unstage hunk" },
-  { "<leader>hx", gs.show, desc = "show index" },
-  { "ih", gs.select_hunk, mode = { "o", "x" }, desc = "select hunk" },
+  {
+    "<leader>hS",
+    function()
+      gs().stage_buffer()
+    end,
+    desc = "stage buffer",
+  },
+  {
+    "<leader>hu",
+    function()
+      gs().undo_stage_hunk()
+    end,
+    desc = "unstage hunk",
+  },
+  {
+    "<leader>hx",
+    function()
+      gs().show()
+    end,
+    desc = "show index",
+  },
+  {
+    "ih",
+    function()
+      gs().select_hunk()
+    end,
+    mode = { "o", "x" },
+    desc = "select hunk",
+  },
 
   { "<leader>k", mode = { "n", "v" }, desc = "highlight word" },
   { "<leader>K", mode = { "n", "v" }, desc = "unhighlight words" },
