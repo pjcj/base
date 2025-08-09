@@ -2458,12 +2458,11 @@ local plugins = {
 
   {
     "axieax/urlview.nvim", -- ,fU
-    config = function()
-      require("urlview").setup({
-        default_picker = "telescope",
-        default_action = "clipboard",
-      })
-    end,
+    cmd = "UrlView",
+    opts = {
+      default_picker = "telescope",
+      default_action = "clipboard",
+    },
   },
 
   {
