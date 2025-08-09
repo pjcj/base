@@ -52,6 +52,9 @@ end
 local function nt()
   return require("neotest")
 end
+local function ss()
+  return require("smart-splits")
+end
 
 local function aider_cmd(cmd)
   return function()
@@ -265,16 +268,64 @@ wk.add({
   full_map("<M-0>", "<F10>"),
 
   -- Smart splits navigation
-  { "<C-h>", require("smart-splits").move_cursor_left, desc = "move left" },
-  { "<C-j>", require("smart-splits").move_cursor_down, desc = "move down" },
-  { "<C-k>", require("smart-splits").move_cursor_up, desc = "move up" },
-  { "<C-l>", require("smart-splits").move_cursor_right, desc = "move right" },
+  {
+    "<C-h>",
+    function()
+      ss().move_cursor_left()
+    end,
+    desc = "move left",
+  },
+  {
+    "<C-j>",
+    function()
+      ss().move_cursor_down()
+    end,
+    desc = "move down",
+  },
+  {
+    "<C-k>",
+    function()
+      ss().move_cursor_up()
+    end,
+    desc = "move up",
+  },
+  {
+    "<C-l>",
+    function()
+      ss().move_cursor_right()
+    end,
+    desc = "move right",
+  },
 
   -- Smart splits resizing
-  { "<A-h>", require("smart-splits").resize_left, desc = "resize left" },
-  { "<A-j>", require("smart-splits").resize_down, desc = "resize down" },
-  { "<A-k>", require("smart-splits").resize_up, desc = "resize up" },
-  { "<A-l>", require("smart-splits").resize_right, desc = "resize right" },
+  {
+    "<A-h>",
+    function()
+      ss().resize_left()
+    end,
+    desc = "resize left",
+  },
+  {
+    "<A-j>",
+    function()
+      ss().resize_down()
+    end,
+    desc = "resize down",
+  },
+  {
+    "<A-k>",
+    function()
+      ss().resize_up()
+    end,
+    desc = "resize up",
+  },
+  {
+    "<A-l>",
+    function()
+      ss().resize_right()
+    end,
+    desc = "resize right",
+  },
 
   {
     "<F1>",
