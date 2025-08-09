@@ -2673,19 +2673,18 @@ local plugins = {
 
   {
     "mrjones2014/smart-splits.nvim",
-    config = function()
-      require("smart-splits").setup({
-        ignored_filetypes = {
-          "nofile",
-          "quickfix",
-          "prompt",
-        },
-        ignored_buftypes = { "nofile" },
-        default_amount = 3,
-        at_edge = "wrap",
-        cursor_follows_swapped_bufs = true,
-      })
-    end,
+    version = "*",
+    opts = {
+      ignored_filetypes = {
+        "nofile",
+        "quickfix",
+        "prompt",
+      },
+      ignored_buftypes = { "nofile" },
+      default_amount = 3,
+      at_edge = "wrap",
+      cursor_follows_swapped_bufs = true,
+    },
   },
 }
 
