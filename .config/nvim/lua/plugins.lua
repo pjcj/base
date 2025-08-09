@@ -27,12 +27,38 @@ if not exists then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local kind_highlight = function(ctx)
+  if ctx.source_name == "tmux" then
+    return "BlinkCmpKindTmux"
+  elseif ctx.source_name == "codeium" then
+    return "BlinkCmpKindCodeium"
+  elseif ctx.source_name == "copilot" then
+    return "BlinkCmpKindCopilot"
+  elseif ctx.source_name == "supermaven" then
+    return "BlinkCmpKindSupermaven"
+  end
+  return ctx.kind_hl or ("BlinkCmpKind" .. (ctx.kind or "Unknown"))
+end
+
+local kind_text = function(ctx)
+  if ctx.source_name == "tmux" then
+    return "Tmux"
+  elseif ctx.source_name == "codeium" then
+    return "Codeium"
+  elseif ctx.source_name == "copilot" then
+    return "Copilot"
+  elseif ctx.source_name == "supermaven" then
+    return "Supermaven"
+  end
+  return ctx.kind
+end
+
 local plugins = {
   { "nvim-tree/nvim-web-devicons" },
   {
     "catppuccin/nvim",
     name = "catppuccin",
-    lazy =false,
+    lazy = false,
     config = function()
       local c = require("local_defs").colour
       require("catppuccin").setup({
@@ -69,7 +95,10 @@ local plugins = {
           },
         },
         integrations = {
-          cmp = true,
+          -- cmp = true,
+          blink_cmp = {
+            style = "bordered",
+          },
           gitsigns = true,
           indent_blankline = true,
           mason = true,
@@ -85,6 +114,10 @@ local plugins = {
         },
         custom_highlights = function(col)
           return {
+            BlinkCmpKindCodeium = { fg = col.lavender },
+            BlinkCmpKindCopilot = { fg = col.peach },
+            BlinkCmpKindSupermaven = { fg = col.teal },
+            BlinkCmpKindTmux = { fg = c.rgreen },
             CmpItemKindCodeium = { fg = col.lavender },
             CmpItemKindCopilot = { fg = col.peach },
             CmpItemKindSupermaven = { fg = col.teal },
@@ -312,6 +345,7 @@ local plugins = {
 
   {
     "terrortylor/nvim-comment",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "JoosepAlviste/nvim-ts-context-commentstring",
     },
@@ -528,6 +562,14 @@ local plugins = {
       if is_freebsd then
         vim.g.gutentags_ctags_executable = "/usr/local/bin/uctags"
       end
+    end,
+  },
+
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = "netmute/ctags-lsp.nvim",
+    config = function()
+      require("lspconfig").ctags_lsp.setup({})
     end,
   },
 
@@ -795,21 +837,278 @@ local plugins = {
   { "junegunn/fzf" },
 
   -- magazine sources
-  { "iguanacucumber/mag-nvim-lsp", name = "cmp-nvim-lsp", opts = {} },
-  { "iguanacucumber/mag-nvim-lua", name = "cmp-nvim-lua" },
-  { "iguanacucumber/mag-buffer", name = "cmp-buffer" },
-  { "iguanacucumber/mag-cmdline", name = "cmp-cmdline" },
+  -- { "iguanacucumber/mag-nvim-lsp", name = "cmp-nvim-lsp", opts = {} },
+  -- { "iguanacucumber/mag-nvim-lua", name = "cmp-nvim-lua" },
+  -- { "iguanacucumber/mag-buffer", name = "cmp-buffer" },
+  -- { "iguanacucumber/mag-cmdline", name = "cmp-cmdline" },
 
   {
-    -- "hrsh7th/nvim-cmp",
-    "iguanacucumber/magazine.nvim", -- includes performance and other PRs
-    -- name = "nvim-cmp", -- Otherwise highlighting gets messed up
+    "xzbdmw/colorful-menu.nvim",
+    opts = {},
+  },
+  {
+    "saghen/blink.compat",
+    version = "2.*", -- use v2.* for blink.cmp v1.*
+    opts = {},
+  },
+  {
+    "saghen/blink.cmp",
+    version = "1.*",
     dependencies = {
-      -- "hrsh7th/cmp-nvim-lsp",  # magazine
-      -- "hrsh7th/cmp-nvim-lua",  # magazine
+      "milanglacier/minuet-ai.nvim", -- Multi-provider AI
+      "fang2hou/blink-copilot",
+      "huijiro/blink-cmp-supermaven",
+      "moyiz/blink-emoji.nvim",
+      {
+        "Kaiser-Yang/blink-cmp-dictionary",
+        dependencies = { "nvim-lua/plenary.nvim" },
+      },
+      "mgalliou/blink-cmp-tmux",
       "hrsh7th/vim-vsnip",
       "hrsh7th/vim-vsnip-integ",
-      -- "hrsh7th/cmp-buffer",  # magazine
+      "https://codeberg.org/FelipeLema/bink-cmp-vsnip.git",
+      "Exafunction/codeium.nvim",
+    },
+    opts = {
+      sources = {
+        default = {
+          "lsp",
+          "path",
+          "snippets",
+          "buffer",
+          -- "omni",
+          "copilot",
+          "supermaven",
+          "minuet",
+          -- "emoji",
+          -- "dictionary",
+          "tmux",
+          "vsnip",
+          "codeium",
+        },
+        providers = {
+          lsp = {
+            async = true,
+            timeout_ms = 2000,
+            max_items = 10,
+            fallbacks = {},
+          },
+          path = {
+            opts = {
+              get_cwd = function(_)
+                return vim.fn.getcwd()
+              end,
+            },
+          },
+          buffer = {
+            max_items = 5,
+            opts = {
+              -- get all buffers, even ones like neo-tree
+              get_bufnrs = vim.api.nvim_list_bufs,
+              -- or (recommended) filter to only "normal" buffers
+              -- get_bufnrs = function()
+              --   return vim.tbl_filter(function(bufnr)
+              --     return vim.bo[bufnr].buftype == ''
+              --   end, vim.api.nvim_list_bufs())
+              -- end
+            },
+          },
+          copilot = {
+            name = "copilot",
+            module = "blink-copilot",
+            max_items = 5,
+            score_offset = 100,
+            async = true,
+          },
+          supermaven = {
+            name = "supermaven",
+            module = "blink-cmp-supermaven",
+            score_offset = 200,
+            async = true,
+          },
+          minuet = {
+            name = "minuet",
+            module = "minuet.blink",
+            score_offset = 8,
+            async = true,
+          },
+          emoji = {
+            module = "blink-emoji",
+            name = "Emoji",
+            opts = {
+              insert = true, -- Insert emoji (default) or complete its name
+              --   ---@type string|table|fun():table
+              --   trigger = function()
+              --     return { ":" }
+              --   end,
+            },
+            -- should_show_items = function()
+            --   return vim.tbl_contains(
+            --     -- Enable emoji completion only for git commits and markdown.
+            --     -- By default, enabled for all file-types.
+            --     { "gitcommit", "markdown" },
+            --     vim.o.filetype
+            --   )
+            -- end,
+          },
+          dictionary = {
+            module = "blink-cmp-dictionary",
+            name = "Dict",
+            min_keyword_length = 3,
+            max_items = 5,
+            opts = {
+              dictionary_files = vim.fn.expand("~/g/base/dict/en.dict"),
+            },
+          },
+          tmux = {
+            module = "blink-cmp-tmux",
+            name = "tmux",
+            max_items = 5,
+            async = true,
+            opts = {
+              all_panes = true,
+              capture_history = false,
+            },
+          },
+          vsnip = {
+            name = "vsnip",
+            module = "blink-cmp-vsnip",
+            opts = {},
+          },
+          codeium = {
+            -- IMPORTANT: use the same name as you would for nvim-cmp
+            name = "codeium",
+            module = "blink.compat.source",
+            score_offset = 200,
+          },
+        },
+      },
+      completion = {
+        menu = {
+          max_height = 30,
+          draw = {
+            -- columns = {
+            --   { "label", gap = 1 },
+            --   -- { "label_description" },
+            --   { "kind_icon", "kind", "label_description" },
+            -- },
+            -- components = {
+            --   label = {
+            --     width = { fill = true, max = 120 },
+            --     text = function(ctx)
+            --       return require("colorful-menu").blink_components_text(ctx)
+            --     end,
+            --     highlight = function(ctx)
+            --       return require("colorful-menu").blink_components_highlight(
+            --         ctx
+            --       )
+            --     end,
+            --   },
+            -- },
+            columns = {
+              { "label", "label_description", gap = 1 },
+              { "kind_icon", gap = 1, "kind" },
+              { "source_name" },
+            },
+            components = {
+              label = {
+                width = { fill = true, max = 120 },
+              },
+              kind = {
+                highlight = kind_highlight,
+                text = kind_text,
+              },
+              kind_icon = {
+                highlight = kind_highlight,
+              },
+            },
+
+            treesitter = { "lsp" },
+          },
+          border = "double",
+          -- winblend = 1,
+          -- list = {
+          --   max_items = 30,
+          -- },
+        },
+        trigger = {
+          -- show completion window after backspacing
+          show_on_backspace = true,
+
+          -- show completion window after backspacing into a keyword
+          show_on_backspace_in_keyword = true,
+
+          -- show the completion window after accepting a completion and then backspacing into a keyword
+          show_on_backspace_after_accept = true,
+
+          -- show the completion window after entering insert mode and backspacing into keyword
+          show_on_backspace_after_insert_enter = true,
+
+          show_on_insert = true,
+        },
+      },
+
+      -- appearance = {
+      --   use_nvim_cmp_as_default = true,
+      --   kind_icons = {
+      --     Text = "X",
+      --   },
+      -- },
+
+      -- -- Show documentation when selecting a completion item
+      -- documentation = { auto_show = false, auto_show_delay_ms = 500 },
+
+      -- -- Display a preview of the selected item on the current line
+      -- ghost_text = { enabled = false },
+
+      -- Experimental signature help support
+      signature = {
+        enabled = true,
+        window = {
+          border = "single",
+          show_documentation = false,
+        },
+      },
+      keymap = {
+        preset = "none",
+
+        ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+        ["<C-e>"] = { "hide" },
+        ["<C-y>"] = { "select_and_accept" },
+        ["<CR>"] = { "accept", "fallback" },
+
+        ["<Up>"] = { "select_prev", "fallback" },
+        ["<Down>"] = { "select_next", "fallback" },
+        ["<C-p>"] = { "select_prev", "fallback_to_mappings" },
+        ["<C-n>"] = { "select_next", "fallback_to_mappings" },
+
+        ["<C-b>"] = { "scroll_documentation_up", "fallback" },
+        ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+
+        ["<Tab>"] = { "select_next", "fallback" },
+        ["<S-Tab>"] = { "select_prev", "fallback" },
+
+        ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
+      },
+    },
+  },
+
+  {
+    "hrsh7th/nvim-cmp",
+    enabled = false,
+    -- "iguanacucumber/magazine.nvim", -- includes performance and other PRs
+    -- name = "nvim-cmp", -- Otherwise highlighting gets messed up
+    -- event = { "BufReadPre", "BufNewFile" },
+    event = "InsertEnter",
+    -- priority = 800,
+    -- lazy = false,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "hrsh7th/cmp-nvim-lsp", -- magazine
+      "hrsh7th/cmp-nvim-lua", -- magazine
+      "hrsh7th/vim-vsnip",
+      "hrsh7th/vim-vsnip-integ",
+      "hrsh7th/cmp-buffer", -- magazine
       "petertriho/cmp-git",
       -- "hrsh7th/cmp-path",
       "FelipeLema/cmp-async-path",
@@ -823,7 +1122,7 @@ local plugins = {
       "onsails/lspkind-nvim",
       "rafamadriz/friendly-snippets",
       "uga-rosa/cmp-dictionary",
-      -- "hrsh7th/cmp-cmdline",  # magazine
+      "hrsh7th/cmp-cmdline", -- magazine
       -- "tzachar/cmp-ai",
     },
     config = function()
@@ -1171,20 +1470,21 @@ local plugins = {
     "allaman/emoji.nvim",
     version = "*",
     dependencies = {
-      "hrsh7th/nvim-cmp",
+      -- "hrsh7th/nvim-cmp",
       "nvim-telescope/telescope.nvim",
     },
     opts = {
-      enable_cmp_integration = true,
+      -- enable_cmp_integration = true,
     },
   },
 
   { -- TODO - consider https://github.com/monkoose/neocodeium
     "Exafunction/codeium.nvim",
     enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+    -- enabled = false, -- disabled for now
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "hrsh7th/nvim-cmp",
+      -- "hrsh7th/nvim-cmp",
     },
     config = function()
       require("codeium").setup({})
@@ -1194,12 +1494,10 @@ local plugins = {
   {
     "supermaven-inc/supermaven-nvim",
     enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
-    config = function()
-      require("supermaven-nvim").setup({
-        disable_inline_completion = true,
-        disable_keymaps = true,
-      })
-    end,
+    opts = {
+      disable_inline_completion = true,
+      disable_keymaps = true,
+    },
   },
 
   -- {
@@ -1213,7 +1511,6 @@ local plugins = {
     "zbirenbaum/copilot.lua",
     enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
     cmd = "Copilot",
-    event = "InsertEnter",
     opts = {
       suggestion = { enabled = false },
       panel = { enabled = false },
@@ -1224,12 +1521,20 @@ local plugins = {
     },
   },
   {
-    "zbirenbaum/copilot-cmp",
-    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+    "neovim/nvim-lspconfig",
+    dependencies = "netmute/ctags-lsp.nvim",
     config = function()
-      require("copilot_cmp").setup()
+      require("lspconfig").ctags_lsp.setup({})
     end,
   },
+  -- {
+  --   "zbirenbaum/copilot-cmp",
+  --   enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   config = function()
+  --     require("copilot_cmp").setup()
+  --   end,
+  -- },
   { "AndreM222/copilot-lualine" },
   -- {
   --   "CopilotC-Nvim/CopilotChat.nvim",
@@ -1737,7 +2042,11 @@ local plugins = {
   {
     "milanglacier/minuet-ai.nvim",
     enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
-    dependencies = { "nvim-lua/plenary.nvim", "hrsh7th/nvim-cmp" },
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      -- "hrsh7th/nvim-cmp"
+    },
     config = function()
       local has_vc, vectorcode_config = pcall(require, "vectorcode.config")
       local vectorcode_cacher = nil
@@ -1798,7 +2107,7 @@ local plugins = {
           -- gemini = gemini,
           provider_options = {
             gemini = {
-              model = "gemini-2.0-flash",
+              model = "gemini-1.5-flash",
               -- optional = {
               --   generationConfig = {
               --     maxOutputTokens = 256,
@@ -1839,6 +2148,7 @@ local plugins = {
   {
     "ravitemer/mcphub.nvim",
     enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -1861,6 +2171,7 @@ local plugins = {
     "yetone/avante.nvim",
     enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
     version = false, -- never set this to "*"
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "stevearc/dressing.nvim",
@@ -1868,7 +2179,7 @@ local plugins = {
       "MunifTanjim/nui.nvim",
       -- the below dependencies are optional
       "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-      "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+      -- "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
       "nvim-tree/nvim-web-devicons",
       "zbirenbaum/copilot.lua", -- for providers='copilot'
       "ravitemer/mcphub.nvim",
@@ -2319,6 +2630,7 @@ local plugins = {
 
   {
     "brenoprata10/nvim-highlight-colors",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       vim.opt.termguicolors = true
       require("nvim-highlight-colors").setup({
@@ -2376,7 +2688,7 @@ local plugins = {
   },
 
   { "gioele/vim-autoswap" },
-  { "farmergreg/vim-lastplace" },
+  { "farmergreg/vim-lastplace", lazy = false },
 
   {
     "mhinz/vim-startify",
@@ -2439,6 +2751,7 @@ local plugins = {
 
   {
     "kylechui/nvim-surround",
+    event = { "BufReadPre", "BufNewFile" },
     -- tag = "*",
     opts = {},
   },
