@@ -845,6 +845,7 @@ local plugins = {
   {
     "saghen/blink.cmp",
     version = "1.*",
+    event = "InsertEnter",
     dependencies = {
       {
         "milanglacier/minuet-ai.nvim", -- Multi-provider AI
