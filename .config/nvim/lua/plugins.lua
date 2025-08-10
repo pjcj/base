@@ -872,7 +872,7 @@ local plugins = {
         enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
       },
     },
-    opts = function()
+    config = function()
       -- Build sources list conditionally
       local sources = {
         "lsp",
@@ -921,6 +921,9 @@ local plugins = {
             --   end, vim.api.nvim_list_bufs())
             -- end
           },
+        },
+        snippets = {
+          -- Built-in snippets provider
         },
         emoji = {
           module = "blink-emoji",
@@ -995,11 +998,11 @@ local plugins = {
         }
       end
 
-      return {
+      local config = {
         sources = {
           default = sources,
+          providers = providers,
         },
-        providers = providers,
         completion = {
           menu = {
             max_height = 30,
@@ -1063,6 +1066,12 @@ local plugins = {
 
             show_on_insert = true,
           },
+
+          -- -- Show documentation when selecting a completion item
+          -- documentation = { auto_show = false, auto_show_delay_ms = 500 },
+
+          -- -- Display a preview of the selected item on the current line
+          -- ghost_text = { enabled = false },
         },
 
         -- appearance = {
@@ -1071,12 +1080,6 @@ local plugins = {
         --     Text = "X",
         --   },
         -- },
-
-        -- -- Show documentation when selecting a completion item
-        -- documentation = { auto_show = false, auto_show_delay_ms = 500 },
-
-        -- -- Display a preview of the selected item on the current line
-        -- ghost_text = { enabled = false },
 
         -- Experimental signature help support
         signature = {
@@ -1108,6 +1111,8 @@ local plugins = {
           ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
         },
       }
+
+      require("blink.cmp").setup(config)
     end,
   },
 
