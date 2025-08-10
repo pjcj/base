@@ -1,80 +1,8 @@
 local M = {}
 
--- How much of this is default and can be deleted?
--- stylua: ignore start
-local lsp_sig_cfg = {
-  debug                          = false,                                           -- set to true to enable debug logging
-  log_path                       = vim.fn.stdpath("cache") .. "/lsp_signature.log", -- log dir when debug is on
-                                                                                    -- default is  ~/.cache/nvim/lsp_signature.log
-  verbose                        = false,                                           -- show debug line number
-  bind                           = true,                                            -- This is mandatory, otherwise border config won't get registered.
-                                                                                    -- If you want to hook lspsaga or other signature handler, pls set to false
-  doc_lines                      = 10,                                              -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
-                                                                                    -- set to 0 if you DO NOT want any API comments be shown
-                                                                                    -- This setting only take effect in insert mode, it does not affect signature help in normal
-                                                                                    -- mode, 10 by default
-
-  floating_window                = true,                                            -- show hint in a floating window, set to false for virtual text only mode
-  floating_window_above_cur_line = true,                                            -- try to place the floating above the current line when possible Note:
-                                                                                    -- will set to true when fully tested, set to false will use whichever side has more space
-                                                                                    -- this setting will be helpful if you do not want the PUM and floating win overlap
-
-  floating_window_off_x          = 0,                                               -- adjust float windows x position.
-  floating_window_off_y          = -4,                                              -- adjust float windows y position.
-  fix_pos                        = false,                                           -- set to true, the floating window will not auto-close until finish all parameters
-  hint_enable                    = true,                                            -- virtual hint enable
-  hint_prefix                    = "🐼 ",                                           -- Panda for parameter
-  hint_scheme                    = "String",
-  hi_parameter                   = "LspSignatureActiveParameter",                   -- how your parameter will be highlight
-  max_height                     = 12,                                              -- max height of signature floating_window, if content is more than max_height, you can scroll down
-                                                                                    -- to view the hiding contents
-  max_width                      = 120,                                             -- max_width of signature floating_window, line will be wrapped if exceed max_width
-  handler_opts                   = {
-    border                       =
-    "rounded"                                                                       -- double, rounded, single, shadow, none
-  },
-  always_trigger                 = false,                                           -- sometime show signature on new line or in middle of parameter can be confusing, set it to false for #58
-  auto_close_after               = nil,                                             -- autoclose signature float win after x sec, disabled if nil.
-  extra_trigger_chars            = {},                                              -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
-  zindex                         = 200,                                             -- by default it will be on top of all floating windows, set to <= 50 send it to bottom
-  padding                        = '',                                              -- character to pad on left and right of signature can be ' ', or '|'  etc
-  transparency                   = nil,                                             -- disabled by default, allow floating win transparent value 1~100
-  shadow_blend                   = 36,                                              -- if you using shadow as border use this set the opacity
-  shadow_guibg                   = 'Black',                                         -- if you using shadow as border use this set the color e.g. 'Green' or '#121315'
-  timer_interval                 = 200,                                             -- default timer check interval set to lower value if you want to reduce latency
-  toggle_key                     = nil                                              -- toggle signature on and off in insert mode,  e.g. toggle_key = '<M-x>'
-}
--- stylua: ignore end
-
--- recommended:
--- require'lsp_signature'.setup(cfg) -- no need to specify bufnr if you don't use toggle_key
-
--- You can also do this inside lsp on_attach
--- note: on_attach deprecated
--- require'lsp_signature'.on_attach(cfg, bufnr) -- no need to specify bufnr if you don't use toggle_key
-
--- config that activates keymaps and enables snippet support
--- local function make_config()
---   local capabilities = vim.lsp.protocol.make_client_capabilities()
---   capabilities.textDocument.completion.completionItem.snippetSupport = true
---   return {
---     -- enable snippet support
---     capabilities = capabilities,
---     -- map buffer local keybindings when the language server attaches
---     on_attach = on_attach,
---   }
--- end
-
+-- Custom on_attach function
 local on_attach = function(client, bufnr)
-  -- print("attach", client.name)
-
-  local function buf_set_option(option, value)
-    vim.bo[bufnr][option] = value
-  end
-
-  buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-
-  -- set autocommands conditional on server_capabilities
+  -- Set autocommands conditional on server_capabilities
   if client.server_capabilities.document_highlight then
     local group =
       vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
@@ -95,11 +23,9 @@ local on_attach = function(client, bufnr)
   if client.server_capabilities.documentSymbolProvider then
     require("nvim-navic").attach(client, bufnr)
   end
-
-  require("lsp_signature").on_attach(lsp_sig_cfg, bufnr)
 end
 
--- configure lua language server for neovim development
+-- Configure lua language server for neovim development
 local lua_settings = {
   Lua = {
     runtime = {
@@ -121,10 +47,187 @@ local lua_settings = {
   },
 }
 
--- lsp-install
-local function setup_servers()
-  local lspconfig = require("lspconfig")
+-- Register server configurations using vim.lsp.config
+vim.lsp.config.bashls = {
+  cmd = { "bash-language-server", "start" },
+  filetypes = { "sh", "bash", "zsh" },
+  root_markers = { ".git" },
+}
 
+vim.lsp.config.clangd = {
+  cmd = { "clangd" },
+  filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
+  root_markers = {
+    ".clangd",
+    ".clang-tidy",
+    ".clang-format",
+    "compile_commands.json",
+    "compile_flags.txt",
+    "configure.ac",
+    ".git",
+  },
+}
+
+vim.lsp.config.cssls = {
+  cmd = { "vscode-css-language-server", "--stdio" },
+  filetypes = { "css", "scss", "less" },
+  root_markers = { "package.json", ".git" },
+}
+
+vim.lsp.config.dockerls = {
+  cmd = { "docker-langserver", "--stdio" },
+  filetypes = { "dockerfile" },
+  root_markers = { "Dockerfile", ".git" },
+}
+
+vim.lsp.config.eslint = {
+  cmd = { "vscode-eslint-language-server", "--stdio" },
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx",
+    "vue",
+    "svelte",
+    "astro",
+  },
+  root_markers = {
+    ".eslintrc",
+    ".eslintrc.js",
+    ".eslintrc.cjs",
+    ".eslintrc.yaml",
+    ".eslintrc.yml",
+    ".eslintrc.json",
+    "eslint.config.js",
+    "package.json",
+    ".git",
+  },
+}
+
+vim.lsp.config.golangci_lint_ls = {
+  cmd = { "golangci-lint-langserver" },
+  filetypes = { "go", "gomod", "gowork", "gotmpl" },
+  root_markers = {
+    ".golangci.yml",
+    ".golangci.yaml",
+    ".golangci.toml",
+    ".golangci.json",
+    "go.mod",
+    ".git",
+  },
+}
+
+vim.lsp.config.gopls = {
+  cmd = { "gopls" },
+  filetypes = { "go", "gomod", "gowork", "gotmpl" },
+  root_markers = { "go.mod", "go.work", ".git" },
+  settings = {
+    gopls = {
+      hints = {
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        compositeLiteralTypes = true,
+        constantValues = true,
+        functionTypeParameters = true,
+        parameterNames = true,
+        rangeVariableTypes = true,
+      },
+    },
+  },
+}
+
+vim.lsp.config.html = {
+  cmd = { "vscode-html-language-server", "--stdio" },
+  filetypes = { "html" },
+  root_markers = { ".git" },
+}
+
+vim.lsp.config.jsonls = {
+  cmd = { "vscode-json-language-server", "--stdio" },
+  filetypes = { "json", "jsonc" },
+  root_markers = { ".git" },
+}
+
+vim.lsp.config.lua_ls = {
+  cmd = { "lua-language-server" },
+  filetypes = { "lua" },
+  root_markers = {
+    ".luarc.json",
+    ".luarc.jsonc",
+    ".luacheckrc",
+    ".stylua.toml",
+    "stylua.toml",
+    "selene.toml",
+    "selene.yml",
+    ".git",
+  },
+  init_options = { hostInfo = "neovim" },
+  settings = lua_settings,
+}
+
+vim.lsp.config.perlnavigator = {
+  cmd = { "perlnavigator" },
+  filetypes = { "perl" },
+  root_markers = { ".git" },
+  settings = {
+    perlnavigator = {
+      perlPath = os.getenv("LINT_PERL_PATH") or "perl",
+      includePaths = (function()
+        local ok, local_defs = pcall(require, "local_defs")
+        return ok and local_defs.fn.perl_inc_dirs() or {}
+      end)(),
+
+      perlcriticEnabled = vim.fn.filereadable(".perlcriticrc") == 1,
+      perlcriticProfile = ".perlcriticrc",
+      perlcriticMessageFormat = "%m - %e",
+
+      perlimportsProfile = ".perlimports.toml",
+      perlimportsLintEnabled = vim.fn.filereadable(".perlimports.toml") == 1,
+      perlimportsTidyEnabled = vim.fn.filereadable(".perlimports.toml") == 1,
+
+      enableWarnings = false,
+    },
+  },
+  debounce_text_changes = 5000, -- milliseconds
+}
+
+vim.lsp.config.sqlls = {
+  cmd = { "sql-language-server", "up", "--method", "stdio" },
+  filetypes = { "sql", "mysql" },
+  root_markers = { ".git" },
+}
+
+vim.lsp.config.taplo = {
+  cmd = { "taplo", "lsp", "stdio" },
+  filetypes = { "toml" },
+  root_markers = { ".git" },
+}
+
+vim.lsp.config.yamlls = {
+  cmd = { "yaml-language-server", "--stdio" },
+  filetypes = { "yaml", "yaml.docker-compose" },
+  root_markers = { ".git" },
+  settings = {
+    yaml = {
+      format = {
+        enable = true,
+        bracketSpacing = true,
+        singleQuote = false,
+      },
+      keyOrdering = false,
+      schemaStore = {
+        enable = true,
+      },
+      validate = true,
+      completion = true,
+    },
+  },
+}
+
+-- Setup function
+local function setup_servers()
   require("mason").setup({
     ui = {
       icons = {
@@ -149,211 +252,98 @@ local function setup_servers()
     "yamlls",
   }
 
-  local is_freebsd = (io.popen("uname"):read() == "FreeBSD")
+  local handle = io.popen("uname")
+  local is_freebsd = handle and handle:read() == "FreeBSD"
+  if handle then
+    handle:close()
+  end
   if not is_freebsd then
     table.insert(lsps, "clangd")
     table.insert(lsps, "lua_ls")
     table.insert(lsps, "taplo")
   end
 
-  require("mason-lspconfig").setup({
-    ensure_installed = lsps,
-    automatic_enable = false,
-  })
-
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-  local conf = {
-    capabilities = capabilities,
-    on_attach = on_attach,
-  }
-
-  lspconfig.bashls.setup({
-    filetypes = { "sh", "bash", "zsh" },
-    capabilities = capabilities,
-    on_attach = on_attach,
-  })
-  lspconfig.clangd.setup(conf)
-  lspconfig.cssls.setup(conf)
-  lspconfig.golangci_lint_ls.setup(conf)
-  lspconfig.html.setup(conf)
-  lspconfig.sqlls.setup(conf)
-
-  lspconfig.gopls.setup({
-    settings = {
-      gopls = {
-        hints = {
-          assignVariableTypes = true,
-          compositeLiteralFields = true,
-          compositeLiteralTypes = true,
-          constantValues = true,
-          functionTypeParameters = true,
-          parameterNames = true,
-          rangeVariableTypes = true,
-        },
-      },
-    },
-    capabilities = capabilities,
-    on_attach = on_attach,
-  })
-
-  lspconfig.perlnavigator.setup({
-    settings = {
-      perlnavigator = {
-        perlPath = os.getenv("LINT_PERL_PATH") or "perl",
-        includePaths = require("local_defs").fn.perl_inc_dirs(),
-
-        perlcriticEnabled = vim.fn.filereadable(".perlcriticrc"),
-        perlcriticProfile = ".perlcriticrc",
-        perlcriticMessageFormat = "%m - %e",
-
-        perlimportsProfile = ".perlimports.toml",
-        perlimportsLintEnabled = vim.fn.filereadable(".perlimports.toml"),
-        perlimportsTidyEnabled = vim.fn.filereadable(".perlimports.toml"),
-
-        enableWarnings = false,
-      },
-    },
-    debounce_text_changes = 5000, -- milliseconds
-    capabilities = capabilities,
-    on_attach = on_attach,
-  })
-
-  lspconfig.yamlls.setup({
-    settings = {
-      yaml = {
-        format = {
-          enable = true,
-          bracketSpacing = true,
-          singleQuote = false,
-        },
-        keyOrdering = false,
-        schemaStore = {
-          enable = true,
-        },
-        validate = true,
-        completion = true,
-      },
-    },
-    capabilities = capabilities,
-    on_attach = on_attach,
-  })
-
-  if not is_freebsd then
-    lspconfig.clangd.setup(conf)
-    lspconfig.taplo.setup(conf)
-    lspconfig.lua_ls.setup({
-      init_options = { hostInfo = "neovim" },
-      settings = lua_settings,
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
+  -- Set common on_attach for all servers
+  for _, server in ipairs(lsps) do
+    local config = vim.lsp.config[server]
+    if config then
+      config.on_attach = on_attach
+    end
   end
 
+  -- Enable all servers
+  vim.lsp.enable(lsps)
+
+  -- Diagnostic configuration
   vim.diagnostic.config({
     virtual_text = { prefix = "●" },
-    float = { source = true },
+    float = {
+      source = true,
+      border = "rounded",
+    },
     severity_sort = true,
     underline = true,
   })
 
-  local border = "rounded"
-  local lspconfig_window = require("lspconfig.ui.windows")
-  local old_defaults = lspconfig_window.default_opts
-  function lspconfig_window.default_opts(opts)
-    local win_opts = old_defaults(opts)
-    win_opts.border = border
-    return win_opts
-  end
-
-  local orig_open_floating_preview = vim.lsp.util.open_floating_preview
-  local new_open_floating_preview = function(contents, syntax, opts, ...)
-    opts = opts or {}
-    opts.border = opts.border or border
-    return orig_open_floating_preview(contents, syntax, opts, ...)
-  end
-  vim.lsp.util.open_floating_preview = new_open_floating_preview
-
-  vim.fn.sign_define("LspDiagnosticsSignError", { text = "E" })
-  vim.fn.sign_define("LspDiagnosticsSignWarning", { text = "W" })
-  vim.fn.sign_define("LspDiagnosticsSignInformation", { text = "I" })
-  vim.fn.sign_define("LspDiagnosticsSignHint", { text = "H" })
-
-  -- vim.lsp.handlers['window/showMessage'] = function(_, result, ctx)
-  --   local client = vim.lsp.get_client_by_id(ctx.client_id)
-  --   local lvl = ({ 'ERROR', 'WARN', 'INFO', 'DEBUG' })[result.type]
-  --   vim.notify({ result.message }, lvl, {
-  --     title = 'LSP | ' .. client.name,
-  --     timeout = 10000,
-  --     keep = function()
-  --       return lvl == 'ERROR' or lvl == 'WARN'
-  --     end,
-  --   })
-  -- end
+  -- Configure borders for LSP floating windows
+  -- Note: In Neovim v0.11+, individual border configuration is handled
+  -- through vim.diagnostic.config() above for diagnostic floats.
+  -- Other LSP floating windows (hover, signature help) use system defaults.
 end
 
 M.setup_servers = setup_servers
 
--- -- table from lsp severity to vim severity.
--- local severity = {
---   "error",
---   "warn",
---   "info",
---   "info", -- map both hint and info to info?
--- }
--- vim.lsp.handlers["window/showMessage"] = function(err, method, params, client_id)
---   print(method.message)
---   vim.notify(method.message, severity[params.type])
--- end
-
+-- Diagnostic filtering - optimised single-pass in-place filter
 local function filter(arr, func)
-  -- Filter in place
-  -- https://stackoverflow.com/questions/49709998/how-to-filter-a-lua-array-inplace
-  local new_index = 1
-  local size_orig = #arr
-  for old_index, v in ipairs(arr) do
-    if func(v, old_index) then
-      arr[new_index] = v
-      new_index = new_index + 1
+  local j = 0
+  for i = 1, #arr do
+    if func(arr[i], i) then
+      j = j + 1
+      arr[j] = arr[i]
     end
   end
-  for i = new_index, size_orig do
+  -- Clear remaining elements
+  for i = j + 1, #arr do
     arr[i] = nil
   end
 end
 
 local function filter_diagnostics(diagnostic)
-  if
-    diagnostic.source == "bash-language-server"
-    and string.match(diagnostic.message, "includeAllWorkspaceSymbols")
-  then
-    return false
-  end
+  local source = diagnostic.source
+  local message = diagnostic.message
 
-  if diagnostic.source ~= "perlnavigator" then
+  -- Early return for non-perlnavigator sources
+  if source ~= "perlnavigator" then
+    -- Special case for bash-language-server
+    if
+      source == "bash-language-server"
+      and message:find("includeAllWorkspaceSymbols", 1, true)
+    then
+      return false
+    end
     return true
   end
 
-  -- Ignore quotes at the end of the file
-  if string.match(diagnostic.message, "Useless use of a constant") then
+  -- Perlnavigator-specific filters
+  -- Using plain string search (4th parameter = true) for better performance
+  if message:find("Useless use of a constant", 1, true) then
     return false
   end
 
-  -- Ignore false positives of subroutine redefined
+  -- Check for subroutine redefined (both conditions must be true)
   if
-    string.match(diagnostic.message, "Subroutine")
-    and string.match(diagnostic.message, "redefined at")
+    message:find("Subroutine", 1, true)
+    and message:find("redefined at", 1, true)
   then
     return false
   end
 
-  -- Ignore false positive in CHECK in Devel::Cover
+  -- Devel::Cover false positive
   if
-    string.match(
-      diagnostic.message,
-      "Undefined subroutine &Devel::Cover::set_first_init_and_end called"
+    message:find(
+      "Undefined subroutine &Devel::Cover::set_first_init_and_end called",
+      1,
+      true
     )
   then
     return false
@@ -362,9 +352,19 @@ local function filter_diagnostics(diagnostic)
   return true
 end
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = function(a, params, ctx)
-  filter(params.diagnostics, filter_diagnostics)
-  vim.lsp.diagnostic.on_publish_diagnostics(a, params, ctx)
+-- Override the default diagnostic handler to filter diagnostics
+local orig_diagnostic_handler =
+  vim.lsp.handlers["textDocument/publishDiagnostics"]
+vim.lsp.handlers["textDocument/publishDiagnostics"] = function(
+  err,
+  result,
+  ctx,
+  config
+)
+  if result and result.diagnostics then
+    filter(result.diagnostics, filter_diagnostics)
+  end
+  return orig_diagnostic_handler(err, result, ctx, config)
 end
 
 return M

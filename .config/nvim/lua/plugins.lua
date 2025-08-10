@@ -390,8 +390,6 @@ local plugins = {
 
   { "neovim/nvim-lspconfig" },
   { "williamboman/mason.nvim" },
-  { "williamboman/mason-lspconfig.nvim", version = "*" },
-  { "ray-x/lsp_signature.nvim" },
   { "folke/lsp-colors.nvim" },
   {
     "kosayoda/nvim-lightbulb",
