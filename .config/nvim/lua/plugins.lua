@@ -2424,6 +2424,7 @@ local plugins = {
   },
   {
     "coder/claudecode.nvim",
+    event = { "BufReadPre", "BufNewFile" },
     config = true,
     opts = {
       auto_start = true,
