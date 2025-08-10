@@ -1058,20 +1058,22 @@ local plugins = {
             -- show completion window after backspacing into a keyword
             show_on_backspace_in_keyword = true,
 
-            -- show the completion window after accepting a completion and then backspacing into a keyword
+            -- show the completion window after accepting a completion and then
+            -- backspacing into a keyword
             show_on_backspace_after_accept = true,
 
-            -- show the completion window after entering insert mode and backspacing into keyword
+            -- show the completion window after entering insert mode and
+            -- backspacing into keyword
             show_on_backspace_after_insert_enter = true,
 
             show_on_insert = true,
           },
 
-          -- -- Show documentation when selecting a completion item
-          -- documentation = { auto_show = false, auto_show_delay_ms = 500 },
+          -- Show documentation when selecting a completion item
+          documentation = { auto_show = false, auto_show_delay_ms = 500 },
 
-          -- -- Display a preview of the selected item on the current line
-          -- ghost_text = { enabled = false },
+          -- Display a preview of the selected item on the current line
+          ghost_text = { enabled = false },
         },
 
         -- appearance = {
