@@ -1114,13 +1114,6 @@ local plugins = {
     },
   },
 
-  -- {
-  --   "pasky/claude.vim",
-  --   config = function()
-  --     vim.g.claude_api_key = os.getenv("ANTHROPIC_API_KEY")
-  --   end,
-  -- },
-
   {
     "zbirenbaum/copilot.lua",
     enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,

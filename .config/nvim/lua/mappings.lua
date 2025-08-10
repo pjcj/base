@@ -493,7 +493,7 @@ wk.add({
       end,
       desc = "yazi",
     },
-    { "<leader> .", group = "claude" },
+    { "<leader> .", group = "claudecode" },
 
     { "<leader> ,", group = "nvim-aider" },
     { "<leader> ,,", aider_cmd("Aider toggle"), desc = "toggle" },
@@ -731,8 +731,6 @@ wk.add({
     end,
     desc = "toggle summary",
   },
-
-  { "<leader>,l", group = "claude" },
 
   { "<leader>,p", group = "perl" },
   {
