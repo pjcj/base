@@ -95,7 +95,6 @@ local plugins = {
           },
         },
         integrations = {
-          -- cmp = true,
           blink_cmp = {
             style = "bordered",
           },
@@ -834,11 +833,6 @@ local plugins = {
   },
   { "junegunn/fzf" },
 
-  -- magazine sources
-  -- { "iguanacucumber/mag-nvim-lsp", name = "cmp-nvim-lsp", opts = {} },
-  -- { "iguanacucumber/mag-nvim-lua", name = "cmp-nvim-lua" },
-  -- { "iguanacucumber/mag-buffer", name = "cmp-buffer" },
-  -- { "iguanacucumber/mag-cmdline", name = "cmp-cmdline" },
 
   {
     "xzbdmw/colorful-menu.nvim",
@@ -1091,389 +1085,14 @@ local plugins = {
     },
   },
 
-  {
-    "hrsh7th/nvim-cmp",
-    enabled = false,
-    -- "iguanacucumber/magazine.nvim", -- includes performance and other PRs
-    -- name = "nvim-cmp", -- Otherwise highlighting gets messed up
-    -- event = { "BufReadPre", "BufNewFile" },
-    event = "InsertEnter",
-    -- priority = 800,
-    -- lazy = false,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "hrsh7th/cmp-nvim-lsp", -- magazine
-      "hrsh7th/cmp-nvim-lua", -- magazine
-      "hrsh7th/vim-vsnip",
-      "hrsh7th/vim-vsnip-integ",
-      "hrsh7th/cmp-buffer", -- magazine
-      "petertriho/cmp-git",
-      -- "hrsh7th/cmp-path",
-      "FelipeLema/cmp-async-path",
-      "hrsh7th/cmp-calc",
-      -- "hrsh7th/cmp-emoji",
-      "allaman/emoji.nvim",
-      "chrisgrieser/cmp-nerdfont",
-      "hrsh7th/cmp-nvim-lsp-signature-help",
-      "quangnguyen30192/cmp-nvim-tags",
-      "andersevenrud/cmp-tmux",
-      "onsails/lspkind-nvim",
-      "rafamadriz/friendly-snippets",
-      "uga-rosa/cmp-dictionary",
-      "hrsh7th/cmp-cmdline", -- magazine
-      -- "tzachar/cmp-ai",
-    },
-    config = function()
-      require("cmp_nvim_lsp").setup({})
-      local cmp = require("cmp")
-      local lspkind = require("lspkind")
-      local compare = cmp.config.compare
-
-      -- stylua: ignore start
-      lspkind.init({
-        symbol_map = {
-          Text          = "",
-          Method        = "",
-          Function      = "",
-          Constructor   = "",
-          Field         = "",
-          Variable      = "",
-          Class         = "ﴯ",
-          Interface     = "",
-          Module        = "",
-          Property      = "ﰠ",
-          Unit          = "",
-          Value         = "",
-          Enum          = "",
-          Keyword       = "",
-          Snippet       = "",
-          Color         = "",
-          File          = "",
-          Reference     = "",
-          Folder        = "",
-          EnumMember    = "",
-          Constant      = "",
-          Struct        = "פּ",
-          Event         = "",
-          Operator      = "",
-          TypeParameter = "",
-          Codeium       = "",
-          Copilot       = "",
-          Supermaven    = "",
-          gemini        = "",
-        }
-      })
-      -- stylua: ignore end
-
-      local has_words_before = function()
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0
-          and vim.api
-              .nvim_buf_get_lines(0, line - 1, line, true)[1]
-              :sub(col, col)
-              :match("%s")
-            == nil
-      end
-
-      local feedkey = function(key, mode)
-        vim.api.nvim_feedkeys(
-          vim.api.nvim_replace_termcodes(key, true, true, true),
-          mode,
-          true
-        )
-      end
-
-      require("cmp_dictionary").setup({
-        first_case_insensitive = true,
-        paths = {
-          vim.fn.expand("~/g/base/dict/en.dict"),
-          -- vim.fn.expand("~/g/base/dict/de.dict"),
-        },
-      })
-
-      -- local buf_is_big = function(bufnr)
-      --   local max_filesize = 120 * 1024 -- 120 KB
-      --   local ok, stats =
-      --     pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))
-      --   if ok and stats and stats.size > max_filesize then
-      --     return true
-      --   else
-      --     return false
-      --   end
-      -- end
-
-      local default_sources = {
-        { name = "nvim_lua" },
-        { name = "nvim_lsp_signature_help" },
-        vim.env.ENABLE_AI_PLUGINS and vim.env.OPENAI_API_KEY and {
-          name = "copilot",
-        } or {},
-        vim.env.ENABLE_AI_PLUGINS and vim.env.OPENAI_API_KEY and {
-          name = "supermaven",
-        } or {},
-        vim.env.ENABLE_AI_PLUGINS and vim.env.OPENAI_API_KEY and {
-          name = "codeium",
-        } or {},
-        vim.env.ENABLE_AI_PLUGINS and vim.env.GEMINI_API_KEY and {
-          name = "minuet",
-        } or {},
-        -- { name = "cmp_ai" },
-        { name = "nvim_lsp" },
-        {
-          name = "buffer",
-          max_item_count = 10,
-          option = {
-            get_bufnrs = function()
-              return vim.api.nvim_list_bufs()
-            end,
-            -- keywords or just words
-            keyword_pattern = [[\%(\k\+\|\w\+\)]],
-          },
-        },
-        { name = "tags", max_item_count = 10 },
-        { name = "async_path" },
-        { name = "git" },
-        {
-          name = "tmux",
-          max_item_count = 10,
-          option = {
-            all_panes = true,
-            label = "[tmux]",
-          },
-        },
-        { name = "calc" },
-        { name = "nerdfont" },
-        { name = "emoji" },
-        {
-          name = "dictionary",
-          keyword_length = 2,
-          max_item_count = 10,
-        },
-        { name = "cmdline" },
-      }
-
-      vim.api.nvim_create_autocmd("BufReadPre", {
-        callback = function()
-          cmp.setup.buffer({
-            sources = default_sources,
-          })
-        end,
-        -- callback = function(t)
-        --   local sources = default_sources
-        --   if buf_is_big(t.buf) then
-        --     local next_index = nil
-        --     for i, source in ipairs(sources) do
-        --       if source.name == "copilot" then
-        --         next_index = i + 1
-        --         break
-        --       end
-        --     end
-        --     if next_index then
-        --       table.remove(sources, next_index)
-        --     end
-        --   end
-        --   -- for i, source in ipairs(default_sources) do
-        --   --   print(i, source.name)
-        --   -- end
-        --   cmp.setup.buffer({
-        --     sources = sources,
-        --   })
-        -- end,
-      })
-
-      local hl = "Normal:Normal,FloatBorder:Float,CursorLine:Visual,Search:None"
-
-      cmp.setup({
-        min_length = 1,
-        preselect = cmp.PreselectMode.None,
-        performance = {
-          fetching_timeout = 3000,
-          debounce = 100,
-          throttle = 300,
-          max_view_entries = 15,
-        },
-        formatting = {
-          format = lspkind.cmp_format({
-            mode = "symbol_text",
-            maxwidth = 80,
-            menu = {
-              buffer = "buf",
-              nvim_lsp = "lsp",
-              nvim_lua = "lua",
-              path = "path",
-              tmux = "tmux",
-              tags = "tags",
-              vsnip = "snip",
-              calc = "calc",
-              spell = "spell",
-              emoji = "emoji",
-              dictionary = "dict",
-            },
-            before = function(entry, vim_item)
-              vim_item.dup = ({
-                nvim_lsp = 0,
-                buffer = 0,
-                tags = 0,
-                path = 0,
-                tmux = 0,
-                dictionary = 0,
-              })[entry.source.name] or 0
-              return vim_item
-            end,
-          }),
-        },
-        experimental = {
-          native_menu = false,
-          ghost_text = true,
-        },
-        mapping = {
-          ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-          ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-          ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-          ["<C-e>"] = cmp.mapping({
-            i = cmp.mapping.abort(),
-            c = cmp.mapping.close(),
-          }),
-          ["<C-S-Right>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              local gt = cmp.core.view.ghost_text_view
-              local c = require("cmp.config").get().experimental.ghost_text
-              if c and gt.entry then
-                local _, col = unpack(vim.api.nvim_win_get_cursor(0))
-                local line = vim.api.nvim_get_current_line()
-                local text = gt.text_gen(gt, line, col)
-                if #text > 0 then
-                  local next_char = text:sub(1, 1)
-                  feedkey(next_char, "n")
-                  return
-                end
-              end
-            end
-            fallback()
-          end, { "i", "s" }),
-          ["<C-x>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              return cmp.complete_common_string()
-            end
-            fallback()
-          end, { "i", "s" }),
-          ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-          ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif vim.fn["vsnip#available"](1) == 1 then
-              feedkey("<Plug>(vsnip-expand-or-jump)", "")
-            elseif has_words_before() then
-              cmp.complete()
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-          ["<S-Tab>"] = cmp.mapping(function()
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-              feedkey("<Plug>(vsnip-jump-prev)", "")
-            end
-          end, { "i", "s" }),
-        },
-        snippet = {
-          expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-          end,
-        },
-        sorting = {
-          priority_weight = 2.0,
-          comparators = {
-            compare.score,
-            -- score = score +
-            --  ((#sources - (source_index - 1)) * sorting.priority_weight)
-            compare.locality,
-            compare.recently_used,
-            compare.scopes,
-            compare.offset,
-            compare.order,
-            -- compare.score_offset,
-            -- compare.sort_text,
-            -- compare.exact,
-            -- compare.kind,
-            -- compare.length,
-          },
-        },
-        window = {
-          completion = cmp.config.window.bordered({
-            winhighlight = hl,
-            col_offset = 10,
-          }),
-          documentation = cmp.config.window.bordered({
-            winhighlight = hl,
-          }),
-        },
-      })
-
-      -- local cmp_ai = require('cmp_ai.config')
-
-      -- cmp_ai:setup{
-      --   max_lines = 1000,
-      --   provider = "OpenAI",
-      --   model = 'gpt-4',
-      --   notify = true,
-      --   notify_callback = function(msg)
-      --     vim.notify(msg)
-      --   end,
-      --   run_on_every_keystroke = true,
-      --   ignored_file_types = {
-      --     -- default is not to ignore
-      --     -- uncomment to ignore in lua:
-      --     -- lua = true
-      --   },
-      -- }
-
-      -- cmp_ai:setup({
-      --   max_lines = 1000,
-      --   provider = 'Bard',
-      --   notify = true,
-      --   notify_callback = function(msg)
-      --     vim.notify(msg)
-      --   end,
-      --   run_on_every_keystroke = true,
-      --   ignored_file_types = {
-      --     -- default is not to ignore
-      --     -- uncomment to ignore in lua:
-      --     -- lua = true
-      --   },
-      -- })
-
-      -- Use buffer source for `/`.
-      cmp.setup.cmdline("/", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = "buffer" },
-        },
-      })
-
-      -- Use cmdline & path source for ':'.
-      -- cmp.setup.cmdline(":", {
-      --   mapping = cmp.mapping.preset.cmdline(),
-      --   sources = cmp.config.sources({
-      --     { name = "path" },
-      --   }, {
-      --     { name = "cmdline" },  -- currently broken
-      --   }),
-      -- })
-    end,
-  },
 
   {
     "allaman/emoji.nvim",
     version = "*",
     dependencies = {
-      -- "hrsh7th/nvim-cmp",
       "nvim-telescope/telescope.nvim",
     },
-    opts = {
-      -- enable_cmp_integration = true,
-    },
+    opts = {},
   },
 
   { -- TODO - consider https://github.com/monkoose/neocodeium
@@ -1482,7 +1101,6 @@ local plugins = {
     -- enabled = false, -- disabled for now
     dependencies = {
       "nvim-lua/plenary.nvim",
-      -- "hrsh7th/nvim-cmp",
     },
     config = function()
       require("codeium").setup({})
@@ -1525,14 +1143,6 @@ local plugins = {
       require("lspconfig").ctags_lsp.setup({})
     end,
   },
-  -- {
-  --   "zbirenbaum/copilot-cmp",
-  --   enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
-  --   event = { "BufReadPre", "BufNewFile" },
-  --   config = function()
-  --     require("copilot_cmp").setup()
-  --   end,
-  -- },
   { "AndreM222/copilot-lualine" },
   -- {
   --   "CopilotC-Nvim/CopilotChat.nvim",
@@ -2043,7 +1653,6 @@ local plugins = {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "nvim-lua/plenary.nvim",
-      -- "hrsh7th/nvim-cmp"
     },
     config = function()
       local has_vc, vectorcode_config = pcall(require, "vectorcode.config")
@@ -2180,7 +1789,6 @@ local plugins = {
       "MunifTanjim/nui.nvim",
       -- the below dependencies are optional
       "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-      -- "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
       "nvim-tree/nvim-web-devicons",
       "zbirenbaum/copilot.lua", -- for providers='copilot'
       "ravitemer/mcphub.nvim",
