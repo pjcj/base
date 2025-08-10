@@ -1187,26 +1187,6 @@ local plugins = {
   --   end,
   -- },
 
-  -- {
-  --   "dense-analysis/neural",
-  --   enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
-  --   dependencies = {
-  --     "MunifTanjim/nui.nvim",
-  --     "ElPiloto/significant.nvim",
-  --   },
-  --   config = function()
-  --     require("neural").setup({
-  --       source = {
-  --         openai = {
-  --           -- model = "gpt-3.5-turbo-instruct",
-  --           max_tokens = 2048,
-  --           api_key = vim.env.OPENAI_API_KEY,
-  --         },
-  --       },
-  --     })
-  --   end,
-  -- },
-
   {
     "olimorris/codecompanion.nvim",
     version = "*",

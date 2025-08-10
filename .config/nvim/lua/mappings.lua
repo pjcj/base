@@ -591,20 +591,6 @@ wk.add({
     desc = "recursive toggle",
   },
 
-  {
-    mode = { "n", "v" },
-    { "<leader> n", group = "neural" },
-    { "<leader> nb", "<Plug>(neural_buffer)", desc = "buffer" },
-    {
-      "<leader> nc",
-      "<Plug>(neural_completion)",
-      desc = "completion",
-    },
-    { "<leader> np", "<Plug>(neural_prompt)", desc = "prompt" },
-    { "<leader> ns", "<Plug>(neural_stop)", desc = "stop" },
-    { "<leader> nx", "<Plug>(neural_explain)", desc = "explain" },
-  },
-
   { "<leader> l", group = "lazy" },
   { "<leader> lh", ":Lazy<cr>", desc = "home" },
   { "<leader> ls", ":Lazy sync<cr>", desc = "sync" },
