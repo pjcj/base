@@ -1905,6 +1905,7 @@ local plugins = {
 
   {
     "lfv89/vim-interestingwords",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       -- stylua: ignore
       vim.g.interestingWordsGUIColors = {
