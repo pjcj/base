@@ -674,21 +674,6 @@ wk.add({
     end,
     desc = "set indentation",
   },
-  -- { "<leader>,c", group = "copilot" },
-  -- { "<leader>,cc", ":CopilotChatToggle<cr>", desc = "toggle" },
-  -- {
-  --   "<leader>,cq",
-  --   function()
-  --     local input = vim.fn.input("Quick Chat: ")
-  --     if input ~= "" then
-  --       require("CopilotChat").ask(
-  --         input,
-  --         { selection = require("CopilotChat.select").buffer }
-  --       )
-  --     end
-  --   end,
-  --   desc = "quick chat",
-  -- },
   { "<leader>,g", group = "go" },
   { "<leader>,ga", ":GoAlt!<cr>", desc = "alternative file" },
   { "<leader>,gc", ":GoCoverage<cr>", desc = "coverage" },
