@@ -833,7 +833,6 @@ local plugins = {
   },
   { "junegunn/fzf" },
 
-
   {
     "xzbdmw/colorful-menu.nvim",
     opts = {},
@@ -1084,7 +1083,6 @@ local plugins = {
       },
     },
   },
-
 
   {
     "allaman/emoji.nvim",
@@ -1499,7 +1497,6 @@ local plugins = {
                 default_tools = {
                   "full_stack_dev",
                   "next_edit_suggestion",
-                  -- "vectorcode",
                   "mcp",
                 },
               },
@@ -1584,24 +1581,6 @@ local plugins = {
               make_slash_commands = true, -- Add prompts as /slash commands
             },
           },
-
-          -- vectorcode = {
-          --   opts = {
-          --     add_tool = true,
-          --     add_slash_command = true,
-          --     ---@type VectorCode.CodeCompanion.ToolOpts
-          --     tool_opts = {
-          --       max_num = { chunk = -1, document = -1 },
-          --       default_num = { chunk = 50, document = 10 },
-          --       include_stderr = true,
-          --       use_lsp = true,
-          --       auto_submit = { ls = true, query = false },
-          --       ls_on_start = true,
-          --       no_duplicate = true,
-          --       chunk_mode = false,
-          --     },
-          --   },
-          -- },
         },
       })
       local group = vim.api.nvim_create_augroup("CodeCompanionHooks", {})
@@ -1622,31 +1601,6 @@ local plugins = {
       })
     end,
   },
-  -- {
-  --   "Davidyz/VectorCode",
-  --   version = "*", -- optional, depending on whether you're on nightly or release
-  --   build = "uv tool upgrade vectorcode", -- This helps keeping the CLI up-to-date
-  --   dependencies = { "nvim-lua/plenary.nvim" },
-  --   cmd = "VectorCode", -- if you're lazy-loading VectorCode
-  --   config = function()
-  --     require("vectorcode").setup({
-  --       -- number of retrieved documents
-  --       n_query = 3,
-  --       -- number of retrieved chunks per document
-  --       n_chunk = 50,
-  --       -- whether to use the LSP server for code completion
-  --       use_lsp = true,
-  --       -- whether to include stderr in the results
-  --       includeuse_lsp = true,
-  --       -- whether to automatically submit the query when the LSP server is ready
-  --       auto_submit = { ls = true, query = false },
-  --       -- whether to run the LSP server on startup
-  --       ls_on_start = true,
-  --       -- whether to avoid duplicate results
-  --       no_duplicate = true,
-  --     })
-  --   end,
-  -- },
   {
     "milanglacier/minuet-ai.nvim",
     enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
@@ -1655,105 +1609,39 @@ local plugins = {
       "nvim-lua/plenary.nvim",
     },
     config = function()
-      local has_vc, vectorcode_config = pcall(require, "vectorcode.config")
-      local vectorcode_cacher = nil
-      if has_vc then
-        vectorcode_cacher = vectorcode_config.get_cacher_backend()
-      end
-
-      -- roughly equate to 2000 tokens for LLM
-      local RAG_Context_Window_Size = 8000
-
-      local gemini = {
-        -- model = "gemini-1.5-flash",
-        model = "gemini-2.0-flash",
-        stream = true, -- streaming responses are generally faster
-        system = {
-          template = "{{{prompt}}}\n{{{guidelines}}}\n{{{n_completion_template}}}\n{{{repo_context}}}",
-          repo_context = [[9. Additional context from other files in the repository will be enclosed in <repo_context> tags. Each file will be separated by <file_separator> tags, containing its relative path and content.]],
-        },
-        chat_input = {
-          template = "{{{repo_context}}}\n{{{language}}}\n{{{tab}}}\n<contextBeforeCursor>\n{{{context_before_cursor}}}<cursorPosition>\n<contextAfterCursor>\n{{{context_after_cursor}}}",
-          repo_context = function(_, _, _)
-            local prompt_message = ""
-            print("Gemini repo context requested")
-            if
-              has_vc
-              and vectorcode_cacher
-              and vectorcode_cacher.query_from_cache
-            then
-              local cache_result = vectorcode_cacher.query_from_cache(0)
-              if cache_result then
-                for _, file in ipairs(cache_result) do
-                  prompt_message = prompt_message
-                    .. "<file_separator>"
-                    .. file.path
-                    .. "\n"
-                    .. file.document
-                end
-              end
-            end
-
-            prompt_message =
-              vim.fn.strcharpart(prompt_message, 0, RAG_Context_Window_Size)
-
-            if prompt_message ~= "" then
-              prompt_message = "<repo_context>\n"
-                .. prompt_message
-                .. "\n</repo_context>"
-            end
-            print("Gemini prompt message: " .. prompt_message)
-            return prompt_message
-          end,
-        },
-      }
-
       -- Setup notification filter to prevent spam from API errors
       require("notification_filter").setup()
 
       require("minuet").setup({
         provider = "gemini",
         provider_options = {
-          -- gemini = gemini,
-          provider_options = {
-            gemini = {
-              model = "gemini-1.5-flash",
-              -- optional = {
-              --   generationConfig = {
-              --     maxOutputTokens = 256,
-              --     -- When using `gemini-2.5-flash`, it is recommended to entirely
-              --     -- disable thinking for faster completion retrieval.
-              --     thinkingConfig = {
-              --       thinkingBudget = 0,
-              --     },
-              --   },
-              --   -- safetySettings = {
-              --   --   {
-              --   --     -- HARM_CATEGORY_HATE_SPEECH,
-              --   --     -- HARM_CATEGORY_HARASSMENT
-              --   --     -- HARM_CATEGORY_SEXUALLY_EXPLICIT
-              --   --     category = "HARM_CATEGORY_DANGEROUS_CONTENT",
-              --   --     -- BLOCK_NONE
-              --   --     threshold = "BLOCK_ONLY_HIGH",
-              --   --   },
-              --   -- },
-              -- },
-            },
+          gemini = {
+            model = "gemini-1.5-flash",
+            stream = true, -- streaming responses are generally faster
+            -- optional = {
+            --   generationConfig = {
+            --     maxOutputTokens = 256,
+            --     -- When using `gemini-2.5-flash`, it is recommended to entirely
+            --     -- disable thinking for faster completion retrieval.
+            --     thinkingConfig = {
+            --       thinkingBudget = 0,
+            --     },
+            --   },
+            --   safetySettings = {
+            --     {
+            --       -- HARM_CATEGORY_HATE_SPEECH,
+            --       -- HARM_CATEGORY_HARASSMENT
+            --       -- HARM_CATEGORY_SEXUALLY_EXPLICIT
+            --       category = "HARM_CATEGORY_DANGEROUS_CONTENT",
+            --       -- BLOCK_NONE
+            --       threshold = "BLOCK_ONLY_HIGH",
+            --     },
+            --   },
+            -- },
           },
         },
       })
-
-      -- require("minuet").setup({
-      --   provider = "gemini",
-      --   provider_options = {
-      --     gemini = {
-      --       model = "gemini-1.5-flash", -- fastest Gemini model
-      --       stream = true, -- streaming responses are generally faster
-      --     },
-      --   },
-      -- })
     end,
-    -- notify = debug,
   },
   {
     "ravitemer/mcphub.nvim",
