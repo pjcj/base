@@ -846,9 +846,18 @@ local plugins = {
     "saghen/blink.cmp",
     version = "1.*",
     dependencies = {
-      "milanglacier/minuet-ai.nvim", -- Multi-provider AI
-      "fang2hou/blink-copilot",
-      "huijiro/blink-cmp-supermaven",
+      {
+        "milanglacier/minuet-ai.nvim", -- Multi-provider AI
+        enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+      },
+      {
+        "fang2hou/blink-copilot",
+        enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+      },
+      {
+        "huijiro/blink-cmp-supermaven",
+        enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+      },
       "moyiz/blink-emoji.nvim",
       {
         "Kaiser-Yang/blink-cmp-dictionary",
@@ -858,230 +867,248 @@ local plugins = {
       "hrsh7th/vim-vsnip",
       "hrsh7th/vim-vsnip-integ",
       "https://codeberg.org/FelipeLema/bink-cmp-vsnip.git",
-      "Exafunction/codeium.nvim",
-    },
-    opts = {
-      sources = {
-        default = {
-          "lsp",
-          "path",
-          "snippets",
-          "buffer",
-          -- "omni",
-          "copilot",
-          "supermaven",
-          "minuet",
-          -- "emoji",
-          -- "dictionary",
-          "tmux",
-          "vsnip",
-          "codeium",
-        },
-        providers = {
-          lsp = {
-            async = true,
-            timeout_ms = 2000,
-            max_items = 10,
-            fallbacks = {},
-          },
-          path = {
-            opts = {
-              get_cwd = function(_)
-                return vim.fn.getcwd()
-              end,
-            },
-          },
-          buffer = {
-            max_items = 5,
-            opts = {
-              -- get all buffers, even ones like neo-tree
-              get_bufnrs = vim.api.nvim_list_bufs,
-              -- or (recommended) filter to only "normal" buffers
-              -- get_bufnrs = function()
-              --   return vim.tbl_filter(function(bufnr)
-              --     return vim.bo[bufnr].buftype == ''
-              --   end, vim.api.nvim_list_bufs())
-              -- end
-            },
-          },
-          copilot = {
-            name = "copilot",
-            module = "blink-copilot",
-            max_items = 5,
-            score_offset = 100,
-            async = true,
-          },
-          supermaven = {
-            name = "supermaven",
-            module = "blink-cmp-supermaven",
-            score_offset = 200,
-            async = true,
-          },
-          minuet = {
-            name = "minuet",
-            module = "minuet.blink",
-            score_offset = 8,
-            async = true,
-          },
-          emoji = {
-            module = "blink-emoji",
-            name = "Emoji",
-            opts = {
-              insert = true, -- Insert emoji (default) or complete its name
-              --   ---@type string|table|fun():table
-              --   trigger = function()
-              --     return { ":" }
-              --   end,
-            },
-            -- should_show_items = function()
-            --   return vim.tbl_contains(
-            --     -- Enable emoji completion only for git commits and markdown.
-            --     -- By default, enabled for all file-types.
-            --     { "gitcommit", "markdown" },
-            --     vim.o.filetype
-            --   )
-            -- end,
-          },
-          dictionary = {
-            module = "blink-cmp-dictionary",
-            name = "Dict",
-            min_keyword_length = 3,
-            max_items = 5,
-            opts = {
-              dictionary_files = vim.fn.expand("~/g/base/dict/en.dict"),
-            },
-          },
-          tmux = {
-            module = "blink-cmp-tmux",
-            name = "tmux",
-            max_items = 5,
-            async = true,
-            opts = {
-              all_panes = true,
-              capture_history = false,
-            },
-          },
-          vsnip = {
-            name = "vsnip",
-            module = "blink-cmp-vsnip",
-            opts = {},
-          },
-          codeium = {
-            -- IMPORTANT: use the same name as you would for nvim-cmp
-            name = "codeium",
-            module = "blink.compat.source",
-            score_offset = 200,
-          },
-        },
-      },
-      completion = {
-        menu = {
-          max_height = 30,
-          draw = {
-            -- columns = {
-            --   { "label", gap = 1 },
-            --   -- { "label_description" },
-            --   { "kind_icon", "kind", "label_description" },
-            -- },
-            -- components = {
-            --   label = {
-            --     width = { fill = true, max = 120 },
-            --     text = function(ctx)
-            --       return require("colorful-menu").blink_components_text(ctx)
-            --     end,
-            --     highlight = function(ctx)
-            --       return require("colorful-menu").blink_components_highlight(
-            --         ctx
-            --       )
-            --     end,
-            --   },
-            -- },
-            columns = {
-              { "label", "label_description", gap = 1 },
-              { "kind_icon", gap = 1, "kind" },
-              { "source_name" },
-            },
-            components = {
-              label = {
-                width = { fill = true, max = 120 },
-              },
-              kind = {
-                highlight = kind_highlight,
-                text = kind_text,
-              },
-              kind_icon = {
-                highlight = kind_highlight,
-              },
-            },
-
-            treesitter = { "lsp" },
-          },
-          border = "double",
-          -- winblend = 1,
-          -- list = {
-          --   max_items = 30,
-          -- },
-        },
-        trigger = {
-          -- show completion window after backspacing
-          show_on_backspace = true,
-
-          -- show completion window after backspacing into a keyword
-          show_on_backspace_in_keyword = true,
-
-          -- show the completion window after accepting a completion and then backspacing into a keyword
-          show_on_backspace_after_accept = true,
-
-          -- show the completion window after entering insert mode and backspacing into keyword
-          show_on_backspace_after_insert_enter = true,
-
-          show_on_insert = true,
-        },
-      },
-
-      -- appearance = {
-      --   use_nvim_cmp_as_default = true,
-      --   kind_icons = {
-      --     Text = "X",
-      --   },
-      -- },
-
-      -- -- Show documentation when selecting a completion item
-      -- documentation = { auto_show = false, auto_show_delay_ms = 500 },
-
-      -- -- Display a preview of the selected item on the current line
-      -- ghost_text = { enabled = false },
-
-      -- Experimental signature help support
-      signature = {
-        enabled = true,
-        window = {
-          border = "single",
-          show_documentation = false,
-        },
-      },
-      keymap = {
-        preset = "none",
-
-        ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-        ["<C-e>"] = { "hide" },
-        ["<C-y>"] = { "select_and_accept" },
-        ["<CR>"] = { "accept", "fallback" },
-
-        ["<Up>"] = { "select_prev", "fallback" },
-        ["<Down>"] = { "select_next", "fallback" },
-        ["<C-p>"] = { "select_prev", "fallback_to_mappings" },
-        ["<C-n>"] = { "select_next", "fallback_to_mappings" },
-
-        ["<C-b>"] = { "scroll_documentation_up", "fallback" },
-        ["<C-f>"] = { "scroll_documentation_down", "fallback" },
-
-        ["<Tab>"] = { "select_next", "fallback" },
-        ["<S-Tab>"] = { "select_prev", "fallback" },
-
-        ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
+      {
+        "Exafunction/codeium.nvim",
+        enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
       },
     },
+    opts = function()
+      -- Build sources list conditionally
+      local sources = {
+        "lsp",
+        "path",
+        "snippets",
+        "buffer",
+        -- "omni",
+        -- "emoji",
+        -- "dictionary",
+        "tmux",
+        "vsnip",
+      }
+
+      -- Add AI sources if enabled
+      if vim.env.ENABLE_AI_PLUGINS then
+        table.insert(sources, "copilot")
+        table.insert(sources, "supermaven")
+        table.insert(sources, "minuet")
+        table.insert(sources, "codeium")
+      end
+
+      -- Build providers table
+      local providers = {
+        lsp = {
+          async = true,
+          timeout_ms = 2000,
+          max_items = 10,
+          fallbacks = {},
+        },
+        path = {
+          opts = {
+            get_cwd = function(_)
+              return vim.fn.getcwd()
+            end,
+          },
+        },
+        buffer = {
+          max_items = 5,
+          opts = {
+            -- get all buffers, even ones like neo-tree
+            get_bufnrs = vim.api.nvim_list_bufs,
+            -- or (recommended) filter to only "normal" buffers
+            -- get_bufnrs = function()
+            --   return vim.tbl_filter(function(bufnr)
+            --     return vim.bo[bufnr].buftype == ''
+            --   end, vim.api.nvim_list_bufs())
+            -- end
+          },
+        },
+        emoji = {
+          module = "blink-emoji",
+          name = "Emoji",
+          opts = {
+            insert = true, -- Insert emoji (default) or complete its name
+            --   ---@type string|table|fun():table
+            --   trigger = function()
+            --     return { ":" }
+            --   end,
+          },
+          -- should_show_items = function()
+          --   return vim.tbl_contains(
+          --     -- Enable emoji completion only for git commits and markdown.
+          --     -- By default, enabled for all file-types.
+          --     { "gitcommit", "markdown" },
+          --     vim.o.filetype
+          --   )
+          -- end,
+        },
+        dictionary = {
+          module = "blink-cmp-dictionary",
+          name = "Dict",
+          min_keyword_length = 3,
+          max_items = 5,
+          opts = {
+            dictionary_files = vim.fn.expand("~/g/base/dict/en.dict"),
+          },
+        },
+        tmux = {
+          module = "blink-cmp-tmux",
+          name = "tmux",
+          max_items = 5,
+          async = true,
+          opts = {
+            all_panes = true,
+            capture_history = false,
+          },
+        },
+        vsnip = {
+          name = "vsnip",
+          module = "blink-cmp-vsnip",
+          opts = {},
+        },
+      }
+
+      -- Conditionally add AI providers
+      if vim.env.ENABLE_AI_PLUGINS then
+        providers.copilot = {
+          name = "copilot",
+          module = "blink-copilot",
+          max_items = 5,
+          score_offset = 100,
+          async = true,
+        }
+        providers.supermaven = {
+          name = "supermaven",
+          module = "blink-cmp-supermaven",
+          score_offset = 200,
+          async = true,
+        }
+        providers.minuet = {
+          name = "minuet",
+          module = "minuet.blink",
+          score_offset = 8,
+          async = true,
+        }
+        providers.codeium = {
+          name = "codeium",
+          module = "blink.compat.source",
+          score_offset = 200,
+        }
+      end
+
+      return {
+        sources = {
+          default = sources,
+        },
+        providers = providers,
+        completion = {
+          menu = {
+            max_height = 30,
+            draw = {
+              -- columns = {
+              --   { "label", gap = 1 },
+              --   -- { "label_description" },
+              --   { "kind_icon", "kind", "label_description" },
+              -- },
+              -- components = {
+              --   label = {
+              --     width = { fill = true, max = 120 },
+              --     text = function(ctx)
+              --       return require("colorful-menu").blink_components_text(ctx)
+              --     end,
+              --     highlight = function(ctx)
+              --       return require("colorful-menu").blink_components_highlight(
+              --         ctx
+              --       )
+              --     end,
+              --   },
+              -- },
+              columns = {
+                { "label", "label_description", gap = 1 },
+                { "kind_icon", gap = 1, "kind" },
+                { "source_name" },
+              },
+              components = {
+                label = {
+                  width = { fill = true, max = 120 },
+                },
+                kind = {
+                  highlight = kind_highlight,
+                  text = kind_text,
+                },
+                kind_icon = {
+                  highlight = kind_highlight,
+                },
+              },
+
+              treesitter = { "lsp" },
+            },
+            border = "double",
+            -- winblend = 1,
+            -- list = {
+            --   max_items = 30,
+            -- },
+          },
+          trigger = {
+            -- show completion window after backspacing
+            show_on_backspace = true,
+
+            -- show completion window after backspacing into a keyword
+            show_on_backspace_in_keyword = true,
+
+            -- show the completion window after accepting a completion and then backspacing into a keyword
+            show_on_backspace_after_accept = true,
+
+            -- show the completion window after entering insert mode and backspacing into keyword
+            show_on_backspace_after_insert_enter = true,
+
+            show_on_insert = true,
+          },
+        },
+
+        -- appearance = {
+        --   use_nvim_cmp_as_default = true,
+        --   kind_icons = {
+        --     Text = "X",
+        --   },
+        -- },
+
+        -- -- Show documentation when selecting a completion item
+        -- documentation = { auto_show = false, auto_show_delay_ms = 500 },
+
+        -- -- Display a preview of the selected item on the current line
+        -- ghost_text = { enabled = false },
+
+        -- Experimental signature help support
+        signature = {
+          enabled = true,
+          window = {
+            border = "single",
+            show_documentation = false,
+          },
+        },
+        keymap = {
+          preset = "none",
+
+          ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+          ["<C-e>"] = { "hide" },
+          ["<C-y>"] = { "select_and_accept" },
+          ["<CR>"] = { "accept", "fallback" },
+
+          ["<Up>"] = { "select_prev", "fallback" },
+          ["<Down>"] = { "select_next", "fallback" },
+          ["<C-p>"] = { "select_prev", "fallback_to_mappings" },
+          ["<C-n>"] = { "select_next", "fallback_to_mappings" },
+
+          ["<C-b>"] = { "scroll_documentation_up", "fallback" },
+          ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+
+          ["<Tab>"] = { "select_next", "fallback" },
+          ["<S-Tab>"] = { "select_prev", "fallback" },
+
+          ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
+        },
+      }
+    end,
   },
 
   {
@@ -1134,7 +1161,10 @@ local plugins = {
       require("lspconfig").ctags_lsp.setup({})
     end,
   },
-  { "AndreM222/copilot-lualine" },
+  {
+    "AndreM222/copilot-lualine",
+    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+  },
   {
     "olimorris/codecompanion.nvim",
     version = "*",
@@ -1488,6 +1518,7 @@ local plugins = {
   },
   {
     "GeorgesAlkhouri/nvim-aider",
+    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
     cmd = "Aider",
     dependencies = {
       {
