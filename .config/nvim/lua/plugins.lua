@@ -880,8 +880,8 @@ local plugins = {
         "snippets",
         "buffer",
         -- "omni",
-        -- "emoji",
-        -- "dictionary",
+        "emoji",
+        "dictionary",
         "tmux",
         "vsnip",
       }
