@@ -951,7 +951,7 @@ local plugins = {
           min_keyword_length = 3,
           max_items = 5,
           opts = {
-            dictionary_files = vim.fn.expand("~/g/base/dict/en.dict"),
+            dictionary_files = { vim.fn.expand("~/g/base/dict/en.dict") },
           },
         },
         tmux = {
