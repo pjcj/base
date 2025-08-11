@@ -1003,6 +1003,19 @@ local plugins = {
         sources = {
           default = sources,
           providers = providers,
+          min_keyword_length = 1,
+          per_filetype = {
+            gitcommit = function()
+              -- Remove codeium from git commit sources to prevent nil offset error
+              local git_sources = vim.deepcopy(sources)
+              if vim.env.ENABLE_AI_PLUGINS then
+                git_sources = vim.tbl_filter(function(source)
+                  return source ~= "codeium"
+                end, git_sources)
+              end
+              return git_sources
+            end,
+          },
         },
         completion = {
           menu = {
