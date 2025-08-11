@@ -1018,6 +1018,11 @@ local plugins = {
           },
         },
         completion = {
+          list = {
+            selection = {
+              preselect = false,
+            },
+          },
           menu = {
             max_height = 30,
             draw = {
