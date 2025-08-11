@@ -977,13 +977,13 @@ local plugins = {
           name = "copilot",
           module = "blink-copilot",
           max_items = 5,
-          score_offset = 100,
+          score_offset = 10,
           async = true,
         }
         providers.supermaven = {
           name = "supermaven",
           module = "blink-cmp-supermaven",
-          score_offset = 200,
+          score_offset = 9,
           async = true,
         }
         providers.minuet = {
@@ -995,7 +995,7 @@ local plugins = {
         providers.codeium = {
           name = "codeium",
           module = "blink.compat.source",
-          score_offset = 200,
+          score_offset = 7,
         }
       end
 
