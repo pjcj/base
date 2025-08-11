@@ -58,7 +58,9 @@ local kind_text = function(ctx)
 end
 
 local plugins = {
+  -- File type icons for various plugins
   { "nvim-tree/nvim-web-devicons" },
+  -- Solarized-inspired colorscheme with custom color overrides
   {
     "catppuccin/nvim",
     name = "catppuccin",
@@ -198,9 +200,12 @@ local plugins = {
     end,
   },
 
+  -- Lua utility functions used by many plugins
   { "nvim-lua/plenary.nvim" },
+  -- SQLite bindings for Neovim (used by telescope-frecency)
   { "kkharji/sqlite.lua" },
 
+  -- LSP-based breadcrumb navigation in statusline
   {
     "SmiteshP/nvim-navic",
     dependencies = {
@@ -215,6 +220,7 @@ local plugins = {
     },
   },
 
+  -- Customizable statusline with Git, LSP, and mode indicators
   {
     "nvim-lualine/lualine.nvim",
     event = "UIEnter",
@@ -224,6 +230,7 @@ local plugins = {
     end,
   },
 
+  -- Popup showing available keybindings for partial commands
   {
     "folke/which-key.nvim",
     version = "*",
@@ -242,8 +249,9 @@ local plugins = {
     },
   },
 
+  -- Enhanced markdown rendering with checkboxes, headings, and tables
   {
-    "OXY2DEV/markview.nvim", -- needs to be before treesitter
+    "OXY2DEV/markview.nvim",
     ft = "markdown",
     priority = 100,
     version = "*",
@@ -268,6 +276,7 @@ local plugins = {
       })
     end,
   },
+  -- Syntax highlighting and code parsing using tree-sitter
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
@@ -330,22 +339,25 @@ local plugins = {
     end,
   },
 
+  -- Additional text objects for enhanced editing (numbers, URLs, etc.)
   {
     "chrisgrieser/nvim-various-textobjs",
     event = "UIEnter",
-    keymaps = { useDefaults = true },
+    opts = {
+      keymaps = { useDefaults = true },
+    },
   },
 
+  -- Context-aware comment strings for mixed-language files
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
-    config = function()
-      require("ts_context_commentstring").setup({
-        enable_autocmd = true,
-        ts_context_commentstring_module = true,
-      })
-    end,
+    opts = {
+      enable_autocmd = true,
+      ts_context_commentstring_module = true,
+    },
   },
 
+  -- Toggle comments with context-aware comment strings
   {
     "terrortylor/nvim-comment",
     event = { "BufReadPre", "BufNewFile" },
@@ -370,8 +382,9 @@ local plugins = {
     end,
   },
 
+  -- Enhanced notification system with animations and history
   {
-    "rcarriga/nvim-notify", -- ,fn
+    "rcarriga/nvim-notify",
     version = "*",
     lazy = false,
     config = function()
@@ -383,34 +396,35 @@ local plugins = {
       })
     end,
   },
+  -- LSP progress notifications using nvim-notify
   {
     "mrded/nvim-lsp-notify",
     dependencies = { "rcarriga/nvim-notify" },
-    config = function()
-      require("lsp-notify").setup({})
-    end,
+    opts = {},
   },
 
+  -- LSP client configurations for various language servers
   { "neovim/nvim-lspconfig" },
+  -- Package manager for LSP servers, DAP servers, linters, and formatters
   { "williamboman/mason.nvim" },
+  -- Automatic color highlighting for LSP diagnostics
   { "folke/lsp-colors.nvim" },
+  -- Shows lightbulb icon when LSP code actions are available
   {
     "kosayoda/nvim-lightbulb",
     dependencies = {
       "antoinemadec/FixCursorHold.nvim",
     },
-    config = function()
-      require("nvim-lightbulb").setup({
-        autocmd = { enabled = true },
-        sign = {
-          enabled = false,
-          priority = 1,
-        },
-        virtual_text = {
-          enabled = true,
-        },
-      })
-    end,
+    opts = {
+      autocmd = { enabled = true },
+      sign = {
+        enabled = false,
+        priority = 1,
+      },
+      virtual_text = {
+        enabled = true,
+      },
+    },
   },
 
   -- {
@@ -422,6 +436,7 @@ local plugins = {
   --   end,
   -- },
 
+  -- Asynchronous linting for various file types
   {
     "mfussenegger/nvim-lint",
     config = function()
@@ -466,6 +481,7 @@ local plugins = {
       })
     end,
   },
+  -- Asynchronous linting engine (legacy support)
   {
     "dense-analysis/ale",
     config = function()
@@ -486,10 +502,10 @@ local plugins = {
       -- }
     end,
   },
+  -- Code formatting with support for multiple formatters per filetype
   {
     "stevearc/conform.nvim",
     version = "*",
-    opts = {},
     config = function()
       require("conform").setup({
         formatters_by_ft = {
@@ -544,8 +560,10 @@ local plugins = {
       require("conform.formatters.codespell").args = codespell_args
     end,
   },
+  -- Rule-based linting and code analysis
   { "chrisgrieser/nvim-rulebook" },
 
+  -- Automatic ctags generation and management
   {
     "ludovicchabant/vim-gutentags",
     config = function()
@@ -574,6 +592,7 @@ local plugins = {
     end,
   },
 
+  -- Comprehensive Go development plugin with LSP, formatting, and debugging
   {
     "ray-x/go.nvim",
     dependencies = {
@@ -646,6 +665,7 @@ local plugins = {
     end,
   },
 
+  -- Testing framework with test runner and result display
   {
     "nvim-neotest/neotest",
     version = "*",
@@ -669,6 +689,7 @@ local plugins = {
     end,
   },
 
+  -- Enhanced Perl syntax highlighting and support
   {
     "vim-perl/vim-perl",
     build = "make clean carp dancer heredoc-sql highlight-all-pragmas "
@@ -678,9 +699,12 @@ local plugins = {
     end,
   },
 
+  -- Terraform syntax highlighting and indentation
   { "hashivim/vim-terraform" },
+  -- Helm template syntax highlighting
   { "towolf/vim-helm" },
 
+  -- Code refactoring operations using treesitter
   {
     "ThePrimeagen/refactoring.nvim",
     dependencies = {
@@ -692,6 +716,7 @@ local plugins = {
     },
   },
 
+  -- Native FZF sorting for Telescope (requires compilation)
   {
     "nvim-telescope/telescope-fzf-native.nvim",
     dependencies = {
@@ -699,6 +724,7 @@ local plugins = {
     },
     build = "make || gmake",
   },
+  -- Fuzzy finder for files, buffers, LSP symbols, and more
   {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
@@ -793,6 +819,7 @@ local plugins = {
       })
     end,
   },
+  -- Clipboard history manager with persistent storage
   {
     "AckslD/nvim-neoclip.lua",
     dependencies = { "kkharji/sqlite.lua", module = "sqlite" },
@@ -802,11 +829,14 @@ local plugins = {
       default_register = '"',
     },
   },
+  -- Improved UI for vim.ui interfaces (select, input)
   {
     "stevearc/dressing.nvim",
     version = "*",
   },
+  -- Find and replace with preview in quickfix window
   { "gabrielpoca/replacer.nvim" },
+  -- Better quickfix window with preview and fuzzy search
   {
     "kevinhwang91/nvim-bqf",
     opts = {
@@ -829,23 +859,26 @@ local plugins = {
       },
     },
   },
+  -- Pretty quickfix and location lists
   {
     "yorickpeterse/nvim-pqf",
-    config = function()
-      require("pqf").setup({})
-    end,
+    opts = {},
   },
+  -- Command-line fuzzy finder (required by telescope-fzf-native)
   { "junegunn/fzf" },
 
+  -- Colorful completion menu for better visual distinction
   {
     "xzbdmw/colorful-menu.nvim",
     opts = {},
   },
+  -- Compatibility layer for nvim-cmp sources with blink.cmp
   {
     "saghen/blink.compat",
     version = "2.*", -- use v2.* for blink.cmp v1.*
     opts = {},
   },
+  -- Fast completion engine with AI provider support and fuzzy matching
   {
     "saghen/blink.cmp",
     version = "1.*",
@@ -1141,6 +1174,7 @@ local plugins = {
     end,
   },
 
+  -- Emoji picker and insertion via Telescope
   {
     "allaman/emoji.nvim",
     version = "*",
@@ -1150,18 +1184,17 @@ local plugins = {
     opts = {},
   },
 
-  { -- TODO - consider https://github.com/monkoose/neocodeium
+  -- Free AI code completion (alternative: neocodeium)
+  {
     "Exafunction/codeium.nvim",
     enabled = using_ai(),
-    -- enabled = false, -- disabled for now
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
-    config = function()
-      require("codeium").setup({})
-    end,
+    opts = {},
   },
 
+  -- Fast AI code completion with local context awareness
   {
     "supermaven-inc/supermaven-nvim",
     enabled = using_ai(),
@@ -1171,6 +1204,7 @@ local plugins = {
     },
   },
 
+  -- GitHub Copilot integration with Claude Sonnet 4 model
   {
     "zbirenbaum/copilot.lua",
     enabled = using_ai(),
@@ -1184,17 +1218,20 @@ local plugins = {
       },
     },
   },
+  -- LSP server for ctags-based navigation
   {
-    "neovim/nvim-lspconfig",
-    dependencies = "netmute/ctags-lsp.nvim",
+    "netmute/ctags-lsp.nvim",
+    dependencies = "neovim/nvim-lspconfig",
     config = function()
       require("lspconfig").ctags_lsp.setup({})
     end,
   },
+  -- Display Copilot status in lualine statusline
   {
     "AndreM222/copilot-lualine",
     enabled = using_ai(),
   },
+  -- AI-powered coding assistant with chat interface and MCP tools
   {
     "olimorris/codecompanion.nvim",
     version = "*",
@@ -1321,6 +1358,7 @@ local plugins = {
       })
     end,
   },
+  -- Multi-provider AI completion with Gemini Flash model
   {
     "milanglacier/minuet-ai.nvim",
     enabled = using_ai(),
@@ -1363,6 +1401,7 @@ local plugins = {
       })
     end,
   },
+  -- Model Context Protocol hub for AI tools integration
   {
     "ravitemer/mcphub.nvim",
     enabled = using_ai(),
@@ -1385,6 +1424,7 @@ local plugins = {
       })
     end,
   },
+  -- AI-powered coding assistant with inline editing and chat
   {
     "yetone/avante.nvim",
     enabled = using_ai(),
@@ -1546,6 +1586,7 @@ local plugins = {
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",
   },
+  -- AI pair programming with aider integration
   {
     "GeorgesAlkhouri/nvim-aider",
     enabled = using_ai(),
@@ -1637,6 +1678,7 @@ local plugins = {
       })
     end,
   },
+  -- Claude Code integration for AI-powered development
   {
     "coder/claudecode.nvim",
     event = { "BufReadPre", "BufNewFile" },
@@ -1700,6 +1742,7 @@ local plugins = {
       { "<leader> .d", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
     },
   },
+  -- FZF integration for Claude Code file selection
   {
     "pittcat/claude-fzf.nvim",
     dependencies = {
@@ -1742,18 +1785,18 @@ local plugins = {
       },
     },
   },
+  -- Claude Code conversation history browser
   {
     "pittcat/claude-fzf-history.nvim",
     dependencies = { "ibhagwan/fzf-lua" },
-    config = function()
-      require("claude-fzf-history").setup()
-    end,
+    opts = {},
     cmd = { "ClaudeHistory", "ClaudeHistoryDebug" },
     keys = {
       { "<leader>ch", "<cmd>ClaudeHistory<cr>", desc = "Claude History" },
     },
   },
 
+  -- Git decorations and hunk management in the gutter
   {
     "lewis6991/gitsigns.nvim",
     event = { "BufReadPre", "BufNewFile" },
@@ -1797,6 +1840,7 @@ local plugins = {
     },
   },
 
+  -- Show git blame information in popup window
   {
     "rhysd/git-messenger.vim",
     config = function()
@@ -1807,9 +1851,12 @@ local plugins = {
     end,
   },
 
+  -- Highlight and navigate git conflict markers
   { "rhysd/conflict-marker.vim" },
+  -- Enhanced git diff viewing and file history
   { "sindrets/diffview.nvim" },
 
+  -- Open current line/selection in GitHub web interface
   {
     "ruanyl/vim-gh-line",
     config = function()
@@ -1818,6 +1865,7 @@ local plugins = {
     end,
   },
 
+  -- Comprehensive Git integration and commands
   {
     "tpope/vim-fugitive",
     cmd = "Git",
@@ -1826,6 +1874,7 @@ local plugins = {
     -- end,
   },
 
+  -- GitLab integration for MR reviews and CI/CD
   {
     "harrisoncramer/gitlab.nvim",
     version = "*",
@@ -1847,6 +1896,7 @@ local plugins = {
     end,
   },
 
+  -- Highlight color codes with their actual colors
   {
     "brenoprata10/nvim-highlight-colors",
     event = { "BufReadPre", "BufNewFile" },
@@ -1862,7 +1912,9 @@ local plugins = {
     end,
   },
 
+  -- Highlight characters that look similar but are different (homoglyphs)
   { "zsugabubus/crazy8.nvim" },
+  -- Show indent guides and scope highlighting
   {
     "lukas-reineke/indent-blankline.nvim",
     version = "*",
@@ -1899,6 +1951,7 @@ local plugins = {
     end,
   },
 
+  -- Move lines and selections up/down with Alt+j/k
   {
     "matze/vim-move",
     config = function()
@@ -1906,9 +1959,12 @@ local plugins = {
     end,
   },
 
+  -- Handle Vim swap files intelligently
   { "gioele/vim-autoswap" },
+  -- Remember cursor position when reopening files
   { "farmergreg/vim-lastplace", lazy = false },
 
+  -- Start screen with recent files and sessions
   {
     "mhinz/vim-startify",
     lazy = false,
@@ -1925,6 +1981,7 @@ local plugins = {
     end,
   },
 
+  -- Highlight multiple words in different colors
   {
     "lfv89/vim-interestingwords",
     event = { "BufReadPre", "BufNewFile" },
@@ -1943,17 +2000,17 @@ local plugins = {
     end,
   },
 
+  -- Highlight matching text under cursor in surrounding area
   {
     "rareitems/hl_match_area.nvim",
-    config = function()
-      require("hl_match_area").setup({
-        n_lines_to_search = 500,
-        highlight_in_insert_mode = true,
-        delay = 500,
-      })
-    end,
+    opts = {
+      n_lines_to_search = 500,
+      highlight_in_insert_mode = true,
+      delay = 500,
+    },
   },
 
+  -- Auto-close parentheses, brackets, and quotes
   {
     "cohama/lexima.vim",
     event = "InsertEnter",
@@ -1969,6 +2026,7 @@ local plugins = {
     end,
   },
 
+  -- Add/change/delete surrounding characters (quotes, brackets, etc.)
   {
     "kylechui/nvim-surround",
     event = { "BufReadPre", "BufNewFile" },
@@ -1976,14 +2034,22 @@ local plugins = {
     opts = {},
   },
 
-  { "junegunn/vim-easy-align" }, -- ctrl-x for regexp
-  { "machakann/vim-swap" }, -- g< g> gs
+  -- Easy text alignment with regex patterns (Ctrl-X)
+  { "junegunn/vim-easy-align" },
+  -- Swap function arguments and list items (g< g> gs)
+  { "machakann/vim-swap" },
+  -- Repeat plugin commands with dot operator
   { "tpope/vim-repeat" },
-  { "Konfekt/vim-unicode-homoglyphs" }, -- gy
-  { "superhawk610/ascii-blocks.nvim" }, -- :AsciiBlockify
+  -- Detect unicode homoglyphs (gy)
+  { "Konfekt/vim-unicode-homoglyphs" },
+  -- Convert text to ASCII art blocks (:AsciiBlockify)
+  { "superhawk610/ascii-blocks.nvim" },
+  -- Copy text to system clipboard over SSH
   { "ojroques/vim-oscyank" },
+  -- Translate text using various translation services
   { "uga-rosa/translate.nvim" },
-  { "chrisgrieser/nvim-spider" }, -- w moves in camelcase words
+  -- Enhanced word movement for camelCase and snake_case
+  { "chrisgrieser/nvim-spider" },
   -- { "kana/vim-textobj-user" },
   -- {
   --   "Julian/vim-textobj-variable-segment",
@@ -1992,8 +2058,9 @@ local plugins = {
   --   },
   -- },
 
+  -- Find and open URLs in buffer (,fU)
   {
-    "axieax/urlview.nvim", -- ,fU
+    "axieax/urlview.nvim",
     cmd = "UrlView",
     opts = {
       default_picker = "telescope",
@@ -2001,6 +2068,7 @@ local plugins = {
     },
   },
 
+  -- Split/join code blocks (functions, arrays, etc.) with treesitter
   {
     "Wansmer/treesj",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
@@ -2010,20 +2078,19 @@ local plugins = {
     },
   },
 
+  -- Enhanced search with lens showing match count and position
   {
     "kevinhwang91/nvim-hlslens",
-    config = function()
-      require("hlslens").setup({})
-    end,
+    opts = {},
   },
 
+  -- Task runner and job management
   {
     "stevearc/overseer.nvim",
-    config = function()
-      require("overseer").setup({})
-    end,
+    opts = {},
   },
 
+  -- Scrollbar with git and diagnostic indicators
   {
     "petertriho/nvim-scrollbar",
     config = function()
@@ -2072,24 +2139,23 @@ local plugins = {
     end,
   },
 
+  -- Sidebar with git status, diagnostics, todos, and symbols
   {
     "sidebar-nvim/sidebar.nvim",
-    config = function()
-      local sidebar = require("sidebar-nvim")
-      local opts = {
-        open = false,
-        sections = { "git", "diagnostics", "todos", "symbols" },
-        disable_closing_prompt = true,
-      }
-      sidebar.setup(opts)
-    end,
+    opts = {
+      open = false,
+      sections = { "git", "diagnostics", "todos", "symbols" },
+      disable_closing_prompt = true,
+    },
   },
+  -- File manager that works like a normal buffer
   {
     "stevearc/oil.nvim",
     opts = {},
     -- Optional dependencies
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
+  -- Terminal file manager integration (yazi)
   {
     "mikavilpas/yazi.nvim",
     -- dependencies = { "folke/snacks.nvim", lazy = true },
@@ -2110,6 +2176,7 @@ local plugins = {
     },
   },
 
+  -- Code outline and symbol navigation
   {
     "hedyhli/outline.nvim",
     dependencies = {
@@ -2127,6 +2194,7 @@ local plugins = {
     end,
   },
 
+  -- File explorer tree with git integration
   {
     "nvim-tree/nvim-tree.lua",
     version = "*",
@@ -2141,8 +2209,9 @@ local plugins = {
     end,
   },
 
+  -- Highlight text additions and deletions
   {
-    "aileot/emission.nvim", -- highlight additions and deletions
+    "aileot/emission.nvim",
     event = "UIEnter",
     opts = {
       highlight = {
@@ -2156,6 +2225,7 @@ local plugins = {
     },
   },
 
+  -- Smooth cursor movement animation with mode indicators
   {
     "gen740/SmoothCursor.nvim",
     config = function()
@@ -2172,6 +2242,7 @@ local plugins = {
     end,
   },
 
+  -- Live markdown preview in browser
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -2182,6 +2253,7 @@ local plugins = {
     end,
     ft = { "markdown" },
   },
+  -- Render markdown in specific filetypes (Avante, codecompanion)
   {
     "MeanderingProgrammer/render-markdown.nvim",
     opts = {
@@ -2189,24 +2261,26 @@ local plugins = {
     },
     ft = { "Avante", "codecompanion" },
   },
+  -- Enhanced help file viewer with better formatting
   {
     "OXY2DEV/helpview.nvim",
     event = "BufEnter",
     -- lazy = false, -- as specified in docs
   },
 
+  -- Hex editor for binary files
   {
     "RaafatTurki/hex.nvim",
-    config = function()
-      require("hex").setup({})
-    end,
+    opts = {},
   },
 
+  -- Enhanced shell integration and command execution
   {
     "siadat/shell.nvim",
     opts = {},
   },
 
+  -- Smart window splitting and resizing with tmux integration
   {
     "mrjones2014/smart-splits.nvim",
     version = "*",
