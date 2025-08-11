@@ -3,6 +3,10 @@
 vim.g.mapleader = ","
 vim.opt.termguicolors = true
 
+local function using_ai()
+  return vim.env.ENABLE_AI_PLUGINS and vim.env.ENABLE_AI_PLUGINS ~= "0"
+end
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 local exists = vim.fn.isdirectory(lazypath) == 1
 if not exists then
@@ -849,15 +853,15 @@ local plugins = {
     dependencies = {
       {
         "milanglacier/minuet-ai.nvim", -- Multi-provider AI
-        enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+        enabled = using_ai(),
       },
       {
         "fang2hou/blink-copilot",
-        enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+        enabled = using_ai(),
       },
       {
         "huijiro/blink-cmp-supermaven",
-        enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+        enabled = using_ai(),
       },
       "moyiz/blink-emoji.nvim",
       {
@@ -870,7 +874,7 @@ local plugins = {
       "https://codeberg.org/FelipeLema/bink-cmp-vsnip.git",
       {
         "Exafunction/codeium.nvim",
-        enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+        enabled = using_ai(),
       },
     },
     config = function()
@@ -888,7 +892,7 @@ local plugins = {
       }
 
       -- Add AI sources if enabled
-      if vim.env.ENABLE_AI_PLUGINS then
+      if using_ai() then
         table.insert(sources, "copilot")
         table.insert(sources, "supermaven")
         table.insert(sources, "minuet")
@@ -972,7 +976,7 @@ local plugins = {
       }
 
       -- Conditionally add AI providers
-      if vim.env.ENABLE_AI_PLUGINS then
+      if using_ai() then
         providers.copilot = {
           name = "copilot",
           module = "blink-copilot",
@@ -1008,7 +1012,7 @@ local plugins = {
             gitcommit = function()
               -- Remove codeium from git commit sources to prevent nil offset error
               local git_sources = vim.deepcopy(sources)
-              if vim.env.ENABLE_AI_PLUGINS then
+              if using_ai() then
                 git_sources = vim.tbl_filter(function(source)
                   return source ~= "codeium"
                 end, git_sources)
@@ -1148,7 +1152,7 @@ local plugins = {
 
   { -- TODO - consider https://github.com/monkoose/neocodeium
     "Exafunction/codeium.nvim",
-    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+    enabled = using_ai(),
     -- enabled = false, -- disabled for now
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -1160,7 +1164,7 @@ local plugins = {
 
   {
     "supermaven-inc/supermaven-nvim",
-    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+    enabled = using_ai(),
     opts = {
       disable_inline_completion = true,
       disable_keymaps = true,
@@ -1169,7 +1173,7 @@ local plugins = {
 
   {
     "zbirenbaum/copilot.lua",
-    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+    enabled = using_ai(),
     cmd = "Copilot",
     opts = {
       suggestion = { enabled = false },
@@ -1189,12 +1193,12 @@ local plugins = {
   },
   {
     "AndreM222/copilot-lualine",
-    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+    enabled = using_ai(),
   },
   {
     "olimorris/codecompanion.nvim",
     version = "*",
-    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+    enabled = using_ai(),
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
@@ -1319,7 +1323,7 @@ local plugins = {
   },
   {
     "milanglacier/minuet-ai.nvim",
-    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+    enabled = using_ai(),
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -1361,7 +1365,7 @@ local plugins = {
   },
   {
     "ravitemer/mcphub.nvim",
-    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+    enabled = using_ai(),
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -1383,7 +1387,7 @@ local plugins = {
   },
   {
     "yetone/avante.nvim",
-    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+    enabled = using_ai(),
     version = false, -- never set this to "*"
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
@@ -1544,7 +1548,7 @@ local plugins = {
   },
   {
     "GeorgesAlkhouri/nvim-aider",
-    enabled = vim.env.ENABLE_AI_PLUGINS ~= nil,
+    enabled = using_ai(),
     cmd = "Aider",
     dependencies = {
       {
