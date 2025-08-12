@@ -266,6 +266,7 @@ local plugins = {
           -- filetypes = { "markdown", "codecompanion" },
           ignore_buftypes = {},
           modes = { "n" },
+          icon_provider = "devicons",
         },
         markdown = {
           checkboxes = presets.checkboxes.nerd,
