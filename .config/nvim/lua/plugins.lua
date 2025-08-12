@@ -279,6 +279,48 @@ local plugins = {
           },
         },
       })
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "MarkviewSplitviewOpen",
+        callback = function(event)
+          local source_buffer = event.data.source
+          local preview_window = event.data.preview_window
+
+          -- Enable scrollbind and cursorbind in both windows
+          for _, win in ipairs(vim.fn.win_findbuf(source_buffer)) do
+            vim.api.nvim_set_option_value("scrollbind", true, { win = win })
+            vim.api.nvim_set_option_value("cursorbind", true, { win = win })
+          end
+
+          -- Enable scrollbind and cursorbind in the preview window
+          vim.api.nvim_set_option_value(
+            "scrollbind",
+            true,
+            { win = preview_window }
+          )
+          vim.api.nvim_set_option_value(
+            "cursorbind",
+            true,
+            { win = preview_window }
+          )
+
+          -- Sync the scroll and cursor positions
+          vim.cmd("syncbind")
+        end,
+      })
+
+      -- Optional: Clean up when splitview closes
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "MarkviewSplitviewClose",
+        callback = function(event)
+          local source_buffer = event.data.source
+
+          -- Disable scrollbind and cursorbind in source windows
+          for _, win in ipairs(vim.fn.win_findbuf(source_buffer)) do
+            vim.api.nvim_set_option_value("scrollbind", false, { win = win })
+            vim.api.nvim_set_option_value("cursorbind", false, { win = win })
+          end
+        end,
+      })
     end,
   },
   -- Syntax highlighting and code parsing using tree-sitter
