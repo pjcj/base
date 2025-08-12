@@ -273,6 +273,10 @@ local plugins = {
           headings = presets.headings.slanted,
           horizontal_rules = presets.horizontal_rules.double,
           tables = presets.tables.rounded,
+          list_items = {
+            indent_size = 2,
+            shift_width = 2,
+          },
         },
       })
     end,
