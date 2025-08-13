@@ -1890,6 +1890,7 @@ local plugins = {
   -- Show git blame information in popup window
   {
     "rhysd/git-messenger.vim",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       vim.g.git_messenger_always_into_popup = 1
       vim.g.git_messenger_include_diff = "current"
