@@ -26,32 +26,20 @@ local on_attach = function(client, bufnr)
 end
 
 -- Configure lua language server for neovim development
-local lua_settings = {
-  Lua = {
-    runtime = {
-      -- LuaJIT in the case of Neovim
-      version = "LuaJIT",
-      path = vim.split(package.path, ";"),
-    },
-    diagnostics = {
-      -- Get the language server to recognise the `vim` global
-      globals = { "vim" },
-    },
-    workspace = {
-      -- Make the server aware of Neovim runtime files
-      library = {
-        [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-        [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-      },
-    },
-  },
-}
+-- Settings are now handled by .luarc.json and lazydev.nvim
+local lua_settings = {}
 
 -- Register server configurations using vim.lsp.config
 vim.lsp.config.bashls = {
   cmd = { "bash-language-server", "start" },
   filetypes = { "sh", "bash", "zsh" },
   root_markers = { ".git" },
+}
+
+vim.lsp.config.ctags_lsp = {
+  cmd = { "ctags-lsp" },
+  filetypes = { "*" }, -- Works with all file types
+  root_markers = { ".git", "tags", ".tags" },
 }
 
 vim.lsp.config.clangd = {
@@ -240,6 +228,7 @@ local function setup_servers()
 
   local lsps = {
     "bashls",
+    "ctags_lsp",
     "cssls",
     "dockerls",
     "eslint",

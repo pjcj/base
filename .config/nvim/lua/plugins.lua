@@ -450,8 +450,24 @@ local plugins = {
     opts = {},
   },
 
-  -- LSP client configurations for various language servers
-  { "neovim/nvim-lspconfig" },
+  -- Neovim development plugin providing proper lua-language-server setup
+  {
+    "folke/lazydev.nvim",
+    lazy = false, -- Load immediately to ensure it's available for LSP setup
+    priority = 100, -- Load before other plugins
+    opts = {
+      library = {
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+        -- Always load the LazyVim library
+        "lazy.nvim",
+        -- Add vim runtime for full API support
+        { path = vim.env.VIMRUNTIME .. "/lua" },
+        { path = vim.env.VIMRUNTIME .. "/lua/vim" },
+      },
+    },
+  },
+
   -- Package manager for LSP servers, DAP servers, linters, and formatters
   { "williamboman/mason.nvim" },
   -- Automatic color highlighting for LSP diagnostics
@@ -634,19 +650,11 @@ local plugins = {
     end,
   },
 
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = "netmute/ctags-lsp.nvim",
-    config = function()
-      require("lspconfig").ctags_lsp.setup({})
-    end,
-  },
 
   -- Comprehensive Go development plugin with LSP, formatting, and debugging
   {
     "ray-x/go.nvim",
     dependencies = {
-      "neovim/nvim-lspconfig",
       "nvim-treesitter/nvim-treesitter",
       "mfussenegger/nvim-dap",
       "rcarriga/nvim-dap-ui",
@@ -1271,10 +1279,6 @@ local plugins = {
   -- LSP server for ctags-based navigation
   {
     "netmute/ctags-lsp.nvim",
-    dependencies = "neovim/nvim-lspconfig",
-    config = function()
-      require("lspconfig").ctags_lsp.setup({})
-    end,
   },
   -- Display Copilot status in lualine statusline
   {
