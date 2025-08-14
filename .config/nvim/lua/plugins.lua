@@ -486,6 +486,7 @@ local plugins = {
   -- Asynchronous linting for various file types
   {
     "mfussenegger/nvim-lint",
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       local lint = require("lint")
       lint.linters_by_ft = {
@@ -531,6 +532,7 @@ local plugins = {
   -- Asynchronous linting engine (legacy support)
   {
     "dense-analysis/ale",
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       vim.g.ale_linters_explicit = 0
       vim.g.ale_disable_lsp = "auto"
@@ -553,6 +555,7 @@ local plugins = {
   {
     "stevearc/conform.nvim",
     version = "*",
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       require("conform").setup({
         formatters_by_ft = {
