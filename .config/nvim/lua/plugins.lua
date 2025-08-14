@@ -2344,6 +2344,17 @@ local plugins = {
       cursor_follows_swapped_bufs = true,
     },
   },
+  {
+    "nvim-zh/colorful-winsep.nvim",
+    event = { "WinLeave" },
+    config = function()
+      require("colorful-winsep").setup({
+        border = "rounded",
+        highlight = { fg = require("local_defs").colour.pyellow },
+        animate = { enabled = "shift" },
+      })
+    end,
+  },
 }
 
 local opts = {
