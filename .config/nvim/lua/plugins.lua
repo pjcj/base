@@ -450,24 +450,6 @@ local plugins = {
     opts = {},
   },
 
-  -- Neovim development plugin providing proper lua-language-server setup
-  {
-    "folke/lazydev.nvim",
-    lazy = false, -- Load immediately to ensure it's available for LSP setup
-    priority = 100, -- Load before other plugins
-    opts = {
-      library = {
-        -- Load luvit types when the `vim.uv` word is found
-        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-        -- Always load the LazyVim library
-        "lazy.nvim",
-        -- Add vim runtime for full API support
-        { path = vim.env.VIMRUNTIME .. "/lua" },
-        { path = vim.env.VIMRUNTIME .. "/lua/vim" },
-      },
-    },
-  },
-
   -- Package manager for LSP servers, DAP servers, linters, and formatters
   { "williamboman/mason.nvim" },
   -- Automatic color highlighting for LSP diagnostics
