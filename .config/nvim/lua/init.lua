@@ -1,4 +1,4 @@
-require "plugins"
+require "plugins.init"
 require "settings"
 require "languages"
 require "mappings"
