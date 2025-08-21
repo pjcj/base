@@ -28,14 +28,6 @@ vim.cmd [[
     autocmd BufNewFile,BufReadPost *.tt        set ft=tt2html
   augroup end
 
-  augroup osc
-    autocmd!
-    autocmd TextYankPost *
-      \ if v:event.operator == 'y' && v:event.regname == '+' |
-      \     execute 'OSCYankRegister +' |
-      \ endif
-  augroup end
-
   augroup quickfix
     autocmd!
     autocmd FileType qf setlocal winheight=20

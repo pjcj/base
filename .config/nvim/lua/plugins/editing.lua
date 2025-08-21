@@ -175,7 +175,4 @@ return {
 
   -- Convert text to ASCII art blocks (:AsciiBlockify)
   { "superhawk610/ascii-blocks.nvim" },
-
-  -- Copy text to system clipboard over SSH
-  { "ojroques/vim-oscyank" },
 }
