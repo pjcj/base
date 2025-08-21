@@ -174,5 +174,8 @@ return {
   },
 
   -- Convert text to ASCII art blocks (:AsciiBlockify)
-  { "superhawk610/ascii-blocks.nvim" },
+  {
+    "superhawk610/ascii-blocks.nvim",
+    cmd = "AsciiBlockify",
+  },
 }
