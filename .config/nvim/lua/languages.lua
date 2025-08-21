@@ -1,35 +1,67 @@
-vim.cmd [[
-  augroup yank_highlight
-    autocmd!
-    autocmd TextYankPost * silent!
-      \ lua vim.highlight.on_yank{ higroup="Cursor", timeout=1000 }
-  augroup end
+-- Create autocommand groups
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
 
-  function! BufWinEnterFunc()
-    call v:lua.require("local_defs").fn.set_buffer_settings()
-  endfunction
+-- Yank highlight
+augroup("yank_highlight", { clear = true })
+autocmd("TextYankPost", {
+  group = "yank_highlight",
+  pattern = "*",
+  callback = function()
+    vim.highlight.on_yank({ higroup = "Cursor", timeout = 1000 })
+  end,
+})
 
-  augroup buf_enter
-    autocmd!
-    autocmd BufWinEnter * call BufWinEnterFunc()
-  augroup end
+-- Buffer enter
+augroup("buf_enter", { clear = true })
+autocmd("BufWinEnter", {
+  group = "buf_enter",
+  pattern = "*",
+  callback = function()
+    require("local_defs").fn.set_buffer_settings()
+  end,
+})
 
-  augroup autowrite
-    autocmd!
-    autocmd FocusLost,BufLeave * silent! wa
-  augroup end
+-- Autowrite
+augroup("autowrite", { clear = true })
+autocmd({ "FocusLost", "BufLeave" }, {
+  group = "autowrite",
+  pattern = "*",
+  command = "silent! wa",
+})
 
-  augroup file_types
-    autocmd!
-    autocmd BufNewFile,BufReadPost *.t         set ft=perl
-    autocmd BufNewFile,BufReadPost *.mc        set ft=mason
-    autocmd BufNewFile,BufReadPost template/** set ft=tt2html
-    autocmd BufNewFile,BufReadPost *.tt2       set ft=tt2html
-    autocmd BufNewFile,BufReadPost *.tt        set ft=tt2html
-  augroup end
+-- File types
+augroup("file_types", { clear = true })
+autocmd({ "BufNewFile", "BufReadPost" }, {
+  group = "file_types",
+  pattern = "*.t",
+  command = "set ft=perl",
+})
+autocmd({ "BufNewFile", "BufReadPost" }, {
+  group = "file_types",
+  pattern = "*.mc",
+  command = "set ft=mason",
+})
+autocmd({ "BufNewFile", "BufReadPost" }, {
+  group = "file_types",
+  pattern = "template/**",
+  command = "set ft=tt2html",
+})
+autocmd({ "BufNewFile", "BufReadPost" }, {
+  group = "file_types",
+  pattern = "*.tt2",
+  command = "set ft=tt2html",
+})
+autocmd({ "BufNewFile", "BufReadPost" }, {
+  group = "file_types",
+  pattern = "*.tt",
+  command = "set ft=tt2html",
+})
 
-  augroup quickfix
-    autocmd!
-    autocmd FileType qf setlocal winheight=20
-  augroup end
-]]
+-- Quickfix
+augroup("quickfix", { clear = true })
+autocmd("FileType", {
+  group = "quickfix",
+  pattern = "qf",
+  command = "setlocal winheight=20",
+})
