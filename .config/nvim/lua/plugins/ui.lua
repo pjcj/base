@@ -240,9 +240,10 @@ return {
     config = function()
       require("colorful-winsep").setup({
         border = "rounded",
-        highlight = { fg = require("local_defs").colour.pyellow },
+        highlight = require("local_defs").colour.pyellow,
         animate = { enabled = "shift" },
       })
     end,
   },
 }
+
