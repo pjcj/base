@@ -358,6 +358,9 @@ disable-fzf-tab
 if which jj >&/dev/null; then
   source <(jj util completion zsh)
 fi
+if which mdsf >&/dev/null; then
+  eval "$(mdsf completions zsh)"
+fi
 
 zshrc_load_status "ftp"
 autoload -U zfinit
