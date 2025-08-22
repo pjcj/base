@@ -93,6 +93,11 @@ update_brew() {
   fi
 }
 
+update_other() {
+  pipx install mbake
+  pipx upgrade-all
+}
+
 do_zplug() {
   [[ -d ~/.zplug ]] || curl -sL --proto-redir -all,https \
     https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
@@ -222,6 +227,7 @@ main() {
   initialise
   update_packages
   update_brew
+  update_other
   do_zplug
   completion
   create_wezterm_terminfo
