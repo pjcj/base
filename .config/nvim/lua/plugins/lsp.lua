@@ -123,23 +123,29 @@ local plugins = {
     config = function()
       require("conform").setup({
         formatters_by_ft = {
-          dockerfile = { "dprint" },
-          javascript = { { "prettierd", "prettier" } }, -- run first
+          dockerfile = { "dprint", "dockerfmt" },
+          javascript = { "prettierd", "prettier", stop_after_first = true },
           json = { "fixjson" },
           lua = { "stylua" },
-          markdown = { "markdownlint", "mdformat" },
+          make = { "bake" },
+          markdown = { "markdownlint", "mdformat", "injected", "mdsf" },
           python = { "isort", "black" },
-          sh = { "shellharden", "shellcheck", "shfmt" }, -- run sequentially
-          bash = { "shellharden", "shellcheck", "shfmt" }, -- run sequentially
-          zsh = { "shellharden", "shellcheck", "shfmt" }, -- run sequentially
+          sh = { "shellharden", "shellcheck", "shfmt" },
+          bash = { "shellharden", "shellcheck", "shfmt" },
+          zsh = { "shellharden", "shellcheck" },
           sql = { "sql_formatter" },
           terraform = { "terraform_fmt" },
           toml = { "taplo" },
           yaml = { "yamlfmt" }, -- yamlfix is too buggy
-          ["*"] = { "codespell" },
+          ["*"] = { "codespell", "typos" },
+        },
+        default_format_opts = {
+          lsp_format = "last",
         },
         log_level = vim.log.levels.DEBUG,
       })
+
+      require("conform.formatters.bake").command = "mbake"
 
       require("conform.formatters.mdformat").args = {
         "--number",
