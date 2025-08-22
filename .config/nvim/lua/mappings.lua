@@ -356,8 +356,8 @@ wk.add({
     end,
     desc = "next hunk",
   },
-  { "<S-F1>", ":q<cr>", desc = "quit" },
-  { "<S-F1>", "<C-\\><C-n>:q<cr>", mode = "i", desc = "quit" },
+  { "<S-F1>", ":q<cr>",            desc = "quit" },
+  { "<S-F1>", "<C-\\><C-n>:q<cr>", mode = "i",   desc = "quit" },
   {
     "<S-F2>",
     function()
@@ -373,7 +373,7 @@ wk.add({
     desc = "next diagnostic",
   },
   { "<C-F2>", "<Plug>(ale_previous_wrap)", desc = "previous diagnostic" },
-  { "<C-F3>", "<Plug>(ale_next_wrap)", desc = "next diagnostic" },
+  { "<C-F3>", "<Plug>(ale_next_wrap)",     desc = "next diagnostic" },
   {
     "<F4>",
     function()
@@ -381,23 +381,23 @@ wk.add({
     end,
     desc = "cword tags",
   },
-  { "<F6>", ":cprevious<cr>", desc = "quickfix next" },
-  { "<S-F6>", ":lprevious<cr>", desc = "location next" },
-  { "<F7>", ":cnext<cr>", desc = "quickfix previous" },
-  { "<S-F7>", ":lnext<cr>", desc = "location next" },
-  { "<F9>", ":cclose<bar>lclose<bar>only<cr>", desc = "close other windows" },
-  { "<C-F5>", "expand selection" },
-  { "<C-F6>", "reduce selection" },
-  { "<C-F7>", "expand selection to name" },
-  { "<F12>", "", desc = "previous buffer" },
+  { "<F6>",       ":cprevious<cr>",                  desc = "quickfix next" },
+  { "<S-F6>",     ":lprevious<cr>",                  desc = "location next" },
+  { "<F7>",       ":cnext<cr>",                      desc = "quickfix previous" },
+  { "<S-F7>",     ":lnext<cr>",                      desc = "location next" },
+  { "<F9>",       ":cclose<bar>lclose<bar>only<cr>", desc = "close other windows" },
+  { "<C-F5>",     "expand selection" },
+  { "<C-F6>",     "reduce selection" },
+  { "<C-F7>",     "expand selection to name" },
+  { "<F12>",      "",                               desc = "previous buffer" },
 
-  { "<PageUp>", "0", desc = "page up" },
-  { "<PageDown>", "0", desc = "page down" },
-  { "-", desc = "comment" },
-  { "ä", desc = "show cursor" },
-  { "ö", ":w<cr> | :wa<cr>", desc = "write all" },
+  { "<PageUp>",   "0",                              desc = "page up" },
+  { "<PageDown>", "0",                              desc = "page down" },
+  { "-",          desc = "comment" },
+  { "ä",          desc = "show cursor" },
+  { "ö",          ":w<cr> | :wa<cr>",                desc = "write all" },
 
-  { "*", smart_star_search, desc = "highlight word (case sensitive)" },
+  { "*",          smart_star_search,                 desc = "highlight word (case sensitive)" },
   {
     "#",
     [[*``<cmd>lua require("hlslens").start()<cr>]],
@@ -419,14 +419,14 @@ wk.add({
     desc = "previous match",
   },
 
-  { "g", group = "goto" },
-  { "gd", lb.definition, desc = "definition" },
-  { "gD", lb.declaration, desc = "declaration" },
-  { "gi", lb.implementation, desc = "implementation" },
-  { "gr", lb.references, desc = "references" },
+  { "g",   group = "goto" },
+  { "gd",  lb.definition,      desc = "definition" },
+  { "gD",  lb.declaration,     desc = "declaration" },
+  { "gi",  lb.implementation,  desc = "implementation" },
+  { "gr",  lb.references,      desc = "references" },
 
-  { "gl", group = "lsp" },
-  { "gla", lb.code_action, desc = "action" },
+  { "gl",  group = "lsp" },
+  { "gla", lb.code_action,     desc = "action" },
   { "glD", lb.type_definition, desc = "type definition" },
   {
     "glf",
@@ -455,22 +455,22 @@ wk.add({
     mode = { "n", "v" },
     desc = "format",
   },
-  { "glF", ":ALEFix<cr>", desc = "ALE fix" },
-  { "gli", lb.incoming_calls, desc = "incoming calls" },
-  { "glk", lb.signature_help, desc = "signature" },
-  { "glK", lb.hover, desc = "hover" },
-  { "gll", vim.diagnostic.open_float, desc = "show" },
-  { "glo", lb.outgoing_calls, desc = "outgoing calls" },
-  { "glq", vim.diagnostic.setqflist, desc = "quickfix" },
-  { "glr", lb.rename, desc = "rename" },
-  { "gls", lb.lsp_document_symbols, desc = "symbols" },
+  { "glF",  ":ALEFix<cr>",             desc = "ALE fix" },
+  { "gli",  lb.incoming_calls,         desc = "incoming calls" },
+  { "glk",  lb.signature_help,         desc = "signature" },
+  { "glK",  lb.hover,                  desc = "hover" },
+  { "gll",  vim.diagnostic.open_float, desc = "show" },
+  { "glo",  lb.outgoing_calls,         desc = "outgoing calls" },
+  { "glq",  vim.diagnostic.setqflist,  desc = "quickfix" },
+  { "glr",  lb.rename,                 desc = "rename" },
+  { "gls",  lb.lsp_document_symbols,   desc = "symbols" },
 
-  { "glv", group = "virtual text" },
-  { "glvh", d.hide, desc = "hide" },
-  { "glvs", d.show, desc = "show" },
+  { "glv",  group = "virtual text" },
+  { "glvh", d.hide,                    desc = "hide" },
+  { "glvs", d.show,                    desc = "show" },
 
-  { "glw", group = "workspace" },
-  { "glwa", lb.add_workspace_folder, desc = "add" },
+  { "glw",  group = "workspace" },
+  { "glwa", lb.add_workspace_folder,   desc = "add" },
   {
     "glwl",
     function()
@@ -480,10 +480,10 @@ wk.add({
   },
   { "glwr", lb.remove_workspace_folder, desc = "remove" },
 
-  { "gly", group = "tsserver" },
-  { "glyi", ":TSLspImportAll<cr>", desc = "import all" },
-  { "glyo", ":TSLspOrganize<cr>", desc = "organise" },
-  { "glyr", ":TSLspRenameFile<cr>", desc = "rename file" },
+  { "gly",  group = "tsserver" },
+  { "glyi", ":TSLspImportAll<cr>",      desc = "import all" },
+  { "glyo", ":TSLspOrganize<cr>",       desc = "organise" },
+  { "glyr", ":TSLspRenameFile<cr>",     desc = "rename file" },
 
   {
     mode = { "n", "v" },
@@ -497,7 +497,7 @@ wk.add({
     },
   },
 
-  { "<leader>", group = "leader" },
+  { "<leader>",  group = "leader" },
   { "<leader> ", group = "plugin" },
   { "<leader>a", group = "avante" },
 
@@ -511,25 +511,25 @@ wk.add({
       end,
       desc = "yazi",
     },
-    { "<leader> .", group = "claudecode" },
+    { "<leader> .",  group = "claudecode" },
 
-    { "<leader> ,", group = "nvim-aider" },
+    { "<leader> ,",  group = "nvim-aider" },
     { "<leader> ,,", aider_cmd("Aider toggle"), desc = "toggle" },
-    { "<leader> , ", aider_cmd("Aider"), desc = "picker" },
+    { "<leader> , ", aider_cmd("Aider"),        desc = "picker" },
     {
       "<leader> ,s",
       aider_cmd("Aider send"),
       desc = "send",
       mode = { "n", "v" },
     },
-    { "<leader> ,c", aider_cmd("Aider command"), desc = "commands" },
-    { "<leader> ,b", aider_cmd("Aider buffer"), desc = "send buffer" },
-    { "<leader> ,a", aider_cmd("Aider add"), desc = "add file" },
-    { "<leader> ,d", aider_cmd("Aider drop"), desc = "drop file" },
+    { "<leader> ,c", aider_cmd("Aider command"),      desc = "commands" },
+    { "<leader> ,b", aider_cmd("Aider buffer"),       desc = "send buffer" },
+    { "<leader> ,a", aider_cmd("Aider add"),          desc = "add file" },
+    { "<leader> ,d", aider_cmd("Aider drop"),         desc = "drop file" },
     { "<leader> ,r", aider_cmd("Aider add readonly"), desc = "add read-only" },
-    { "<leader> ,w", aider_add_all_windows, desc = "add all windows" },
-    { "<leader> ,g", aider_add_git_changes, desc = "add git changes" },
-    { "<leader> ,R", aider_cmd("Aider reset"), desc = "reset session" },
+    { "<leader> ,w", aider_add_all_windows,           desc = "add all windows" },
+    { "<leader> ,g", aider_add_git_changes,           desc = "add git changes" },
+    { "<leader> ,R", aider_cmd("Aider reset"),        desc = "reset session" },
     {
       "<leader> ,l",
       function()
@@ -538,11 +538,11 @@ wk.add({
       desc = "send lsp diagnostics",
     },
 
-    { "<leader> ,t", group = "tree integration" },
-    { "<leader> ,ta", aider_cmd("AiderTreeAddFile"), desc = "add from tree" },
+    { "<leader> ,t",  group = "tree integration" },
+    { "<leader> ,ta", aider_cmd("AiderTreeAddFile"),  desc = "add from tree" },
     { "<leader> ,td", aider_cmd("AiderTreeDropFile"), desc = "drop from tree" },
 
-    { "<leader> c", group = "CodeCompanion" },
+    { "<leader> c",   group = "CodeCompanion" },
     {
       "<leader> ca",
       function()
@@ -559,13 +559,13 @@ wk.add({
     },
   },
 
-  { "<leader> d", group = "diffview" },
-  { "<leader> dc", ":DiffviewClose<cr>", desc = "close" },
-  { "<leader> df", ":DiffviewFileHistory<cr>", desc = "file history" },
+  { "<leader> d",  group = "diffview" },
+  { "<leader> dc", ":DiffviewClose<cr>",         desc = "close" },
+  { "<leader> df", ":DiffviewFileHistory<cr>",   desc = "file history" },
   { "<leader> dF", ":DiffviewFileHistory %<cr>", desc = "file history %" },
-  { "<leader> do", ":DiffviewOpen<cr>", desc = "open" },
+  { "<leader> do", ":DiffviewOpen<cr>",          desc = "open" },
 
-  { "<leader> j", group = "join" },
+  { "<leader> j",  group = "join" },
   {
     "<leader> jj",
     function()
@@ -609,10 +609,10 @@ wk.add({
     desc = "recursive toggle",
   },
 
-  { "<leader> l", group = "lazy" },
-  { "<leader> lh", ":Lazy<cr>", desc = "home" },
-  { "<leader> ls", ":Lazy sync<cr>", desc = "sync" },
-  { "<leader> o", "<cmd>Oil --float<cr>", desc = "edit directory" },
+  { "<leader> l",  group = "lazy" },
+  { "<leader> lh", ":Lazy<cr>",            desc = "home" },
+  { "<leader> ls", ":Lazy sync<cr>",       desc = "sync" },
+  { "<leader> o",  "<cmd>Oil --float<cr>", desc = "edit directory" },
   {
     "<leader> q",
     function()
@@ -654,23 +654,23 @@ wk.add({
 
   {
     mode = { "n", "v" },
-    { "<leader> t", group = "translate" },
-    { "<leader> td", group = "deutsch" },
+    { "<leader> t",   group = "translate" },
+    { "<leader> td",  group = "deutsch" },
     { "<leader> tdf", ":Translate DE -output=floating<cr>", desc = "floating" },
     { "<leader> tdg", ":Translate DE -output=register<cr>", desc = "register" },
-    { "<leader> tdi", ":Translate DE -output=insert<cr>", desc = "insert" },
-    { "<leader> tdr", ":Translate DE -output=replace<cr>", desc = "replace" },
-    { "<leader> tds", ":Translate DE -output=split<cr>", desc = "split" },
+    { "<leader> tdi", ":Translate DE -output=insert<cr>",   desc = "insert" },
+    { "<leader> tdr", ":Translate DE -output=replace<cr>",  desc = "replace" },
+    { "<leader> tds", ":Translate DE -output=split<cr>",    desc = "split" },
 
-    { "<leader> te", group = "english" },
+    { "<leader> te",  group = "english" },
     { "<leader> tef", ":Translate EN -output=floating<cr>", desc = "floating" },
     { "<leader> teg", ":Translate EN -output=register<cr>", desc = "register" },
-    { "<leader> tei", ":Translate EN -output=insert<cr>", desc = "insert" },
-    { "<leader> ter", ":Translate EN -output=replace<cr>", desc = "replace" },
-    { "<leader> tes", ":Translate EN -output=split<cr>", desc = "split" },
+    { "<leader> tei", ":Translate EN -output=insert<cr>",   desc = "insert" },
+    { "<leader> ter", ":Translate EN -output=replace<cr>",  desc = "replace" },
+    { "<leader> tes", ":Translate EN -output=split<cr>",    desc = "split" },
   },
 
-  { "<leader>.", smart_open, desc = "smart open" },
+  { "<leader>.",  smart_open,            desc = "smart open" },
   {
     "<leader>-",
     function()
@@ -679,8 +679,8 @@ wk.add({
     desc = "honour ignores",
   },
 
-  { "<leader> ", group = "plugins" },
-  { "<leader>,", group = "language" },
+  { "<leader> ",  group = "plugins" },
+  { "<leader>,",  group = "language" },
   { "<leader>,a", group = "all" },
   {
     "<leader>,ai",
@@ -692,13 +692,13 @@ wk.add({
     end,
     desc = "set indentation",
   },
-  { "<leader>,g", group = "go" },
-  { "<leader>,ga", ":GoAlt!<cr>", desc = "alternative file" },
-  { "<leader>,gc", ":GoCoverage<cr>", desc = "coverage" },
+  { "<leader>,g",   group = "go" },
+  { "<leader>,ga",  ":GoAlt!<cr>",     desc = "alternative file" },
+  { "<leader>,gc",  ":GoCoverage<cr>", desc = "coverage" },
 
-  { "<leader>,gd", group = "debug" },
-  { "<leader>,gds", ":GoDebug<cr>", desc = "start" },
-  { "<leader>,gdt", ":GoDbgStop<cr>", desc = "stop" },
+  { "<leader>,gd",  group = "debug" },
+  { "<leader>,gds", ":GoDebug<cr>",    desc = "start" },
+  { "<leader>,gdt", ":GoDbgStop<cr>",  desc = "stop" },
 
   {
     "<leader>,gi",
@@ -750,7 +750,7 @@ wk.add({
     desc = "toggle summary",
   },
 
-  { "<leader>,p", group = "perl" },
+  { "<leader>,p",  group = "perl" },
   {
     "<leader>,ps",
     function()
@@ -759,7 +759,7 @@ wk.add({
     desc = "stack trace to qf",
   },
 
-  { "<leader>f", group = "telescope" },
+  { "<leader>f",  group = "telescope" },
   { "<leader>f,", group = "find files" },
   {
     "<leader>f,a",
@@ -793,9 +793,9 @@ wk.add({
     end,
     desc = "honour ignores",
   },
-  { "<leader>f,s", smart_open, desc = "smart open" },
+  { "<leader>f,s", smart_open,                              desc = "smart open" },
 
-  { "<leader>fa", vim.lsp.buf.code_action, desc = "code action" },
+  { "<leader>fa",  vim.lsp.buf.code_action,                 desc = "code action" },
   {
     "<leader>fA",
     function()
@@ -834,7 +834,7 @@ wk.add({
     desc = "commands",
   },
 
-  { "<leader>fd", group = "diagnostics" },
+  { "<leader>fd",  group = "diagnostics" },
   { "<leader>fdd", ":Telescope diagnostics<cr>", desc = "all" },
   {
     "<leader>fde",
@@ -1098,11 +1098,11 @@ wk.add({
     desc = "undo",
   },
 
-  { "<leader>fU", group = "url" },
-  { "<leader>fUu", ":UrlView buffer<cr>", desc = "yank url" },
+  { "<leader>fU",  group = "url" },
+  { "<leader>fUu", ":UrlView buffer<cr>",               desc = "yank url" },
   { "<leader>fUU", ":UrlView buffer action=system<cr>", desc = "open url" },
-  { "<leader>fUl", ":UrlView lazy<cr>", desc = "yank lazy url" },
-  { "<leader>fUL", ":UrlView lazy action=system<cr>", desc = "open lazy url" },
+  { "<leader>fUl", ":UrlView lazy<cr>",                 desc = "yank lazy url" },
+  { "<leader>fUL", ":UrlView lazy action=system<cr>",   desc = "open lazy url" },
   {
     "<leader>fv",
     function()
@@ -1110,10 +1110,10 @@ wk.add({
     end,
     desc = "cword tags",
   },
-  { "<leader>fx", ":TodoTelescope<cr>", desc = "todos" },
-  { "<leader>fY", ":Telescope symbols<cr>", desc = "symbols" },
+  { "<leader>fx",  ":TodoTelescope<cr>",     desc = "todos" },
+  { "<leader>fY",  ":Telescope symbols<cr>", desc = "symbols" },
 
-  { "<leader>fy", group = "type" },
+  { "<leader>fy",  group = "type" },
   { "<leader>fyg", group = "go" },
   {
     "<leader>fygg",
@@ -1213,7 +1213,7 @@ wk.add({
     desc = "lsp symbols",
   },
 
-  { "<leader>g", group = "git" },
+  { "<leader>g",   group = "git" },
   {
     "<leader>gg",
     function()
@@ -1238,7 +1238,7 @@ wk.add({
     desc = "push",
   },
 
-  { "<leader>gl", group = "gitlab" },
+  { "<leader>gl",  group = "gitlab" },
   {
     "<leader>gla",
     function()
@@ -1394,7 +1394,7 @@ wk.add({
     desc = "revoke",
   },
 
-  { "<leader>h", group = "hunk" },
+  { "<leader>h",   group = "hunk" },
   {
     "<leader>hb",
     function()
@@ -1511,17 +1511,17 @@ wk.add({
     end,
     desc = "find git changes",
   },
-  { "<leader>n", ":NewFile<cr>", desc = "new file template" },
+  { "<leader>n",  ":NewFile<cr>", desc = "new file template" },
 
-  { "<leader>q", group = "quote" },
-  { "<leader>qb", [[ysiw`]], noremap = false, desc = "insert backtick" },
-  { "<leader>qB", [[ds`]], noremap = false, desc = "delete backtick" },
-  { "<leader>qd", [[ysiw"]], noremap = false, desc = "insert double" },
-  { "<leader>qD", [[ds"]], noremap = false, desc = "delete double" },
-  { "<leader>qq", [[cs'"]], noremap = false, desc = "single -> double" },
-  { "<leader>qQ", [[cs"']], noremap = false, desc = "double -> single" },
-  { "<leader>qs", [[ysiw']], noremap = false, desc = "insert single" },
-  { "<leader>qS", [[ds']], noremap = false, desc = "delete single" },
+  { "<leader>q",  group = "quote" },
+  { "<leader>qb", [[ysiw`]],      noremap = false,           desc = "insert backtick" },
+  { "<leader>qB", [[ds`]],        noremap = false,           desc = "delete backtick" },
+  { "<leader>qd", [[ysiw"]],      noremap = false,           desc = "insert double" },
+  { "<leader>qD", [[ds"]],        noremap = false,           desc = "delete double" },
+  { "<leader>qq", [[cs'"]],       noremap = false,           desc = "single -> double" },
+  { "<leader>qQ", [[cs"']],       noremap = false,           desc = "double -> single" },
+  { "<leader>qs", [[ysiw']],      noremap = false,           desc = "insert single" },
+  { "<leader>qS", [[ds']],        noremap = false,           desc = "delete single" },
   {
     "<leader>q(",
     [[ysiw(]],
@@ -1547,38 +1547,38 @@ wk.add({
     desc = "insert braces without space",
   },
 
-  { "<leader>r", group = "session & git" },
+  { "<leader>r",   group = "session & git" },
   {
     "<leader>rr",
     ":mksess! /tmp/tmp_session.vim<cr>:xa<cr>",
     desc = "save session and exit",
   },
 
-  { "<leader>s", group = "spell" },
-  { "<leader>sd", ":setlocal spell spelllang=de_ch<cr>", desc = "Deutsch" },
-  { "<leader>se", ":setlocal spell spelllang=en_gb<cr>", desc = "English" },
-  { "<leader>so", ":set nospell<cr>", desc = "off" },
+  { "<leader>s",   group = "spell" },
+  { "<leader>sd",  ":setlocal spell spelllang=de_ch<cr>",     desc = "Deutsch" },
+  { "<leader>se",  ":setlocal spell spelllang=en_gb<cr>",     desc = "English" },
+  { "<leader>so",  ":set nospell<cr>",                        desc = "off" },
 
-  { "<leader>t", group = "toggle" },
-  { "<leader>t ", ":Yazi toggle<cr>", desc = "yazi" },
-  { "<leader>tc", ":TSContextToggle<cr>", desc = "context" },
+  { "<leader>t",   group = "toggle" },
+  { "<leader>t ",  ":Yazi toggle<cr>",                        desc = "yazi" },
+  { "<leader>tc",  ":TSContextToggle<cr>",                    desc = "context" },
 
-  { "<leader>tg", group = "git" },
+  { "<leader>tg",  group = "git" },
   { "<leader>tgb", ":Gitsigns toggle_current_line_blame<cr>", desc = "blame" },
-  { "<leader>tgd", ":Gitsigns toggle_deleted<cr>", desc = "deleted" },
-  { "<leader>tgi", ":Gitsigns toggle_word_diff<cr>", desc = "diff" },
-  { "<leader>tgl", ":Gitsigns toggle_linehl<cr>", desc = "line hl" },
-  { "<leader>tgn", ":Gitsigns toggle_numhl<cr>", desc = "num hl" },
-  { "<leader>tgs", ":Gitsigns toggle_signs<cr>", desc = "signs" },
+  { "<leader>tgd", ":Gitsigns toggle_deleted<cr>",            desc = "deleted" },
+  { "<leader>tgi", ":Gitsigns toggle_word_diff<cr>",          desc = "diff" },
+  { "<leader>tgl", ":Gitsigns toggle_linehl<cr>",             desc = "line hl" },
+  { "<leader>tgn", ":Gitsigns toggle_numhl<cr>",              desc = "num hl" },
+  { "<leader>tgs", ":Gitsigns toggle_signs<cr>",              desc = "signs" },
 
-  { "<leader>th", ":TSBufToggle highlight<cr>", desc = "treesitter highlight" },
+  { "<leader>th",  ":TSBufToggle highlight<cr>",              desc = "treesitter highlight" },
 
-  { "<leader>tm", group = "markdown" },
-  { "<leader>tmp", ":MarkdownPreviewToggle<cr>", desc = "preview" },
-  { "<leader>tmv", ":Markview toggle<cr>", desc = "view" },
-  { "<leader>tms", ":Markview splitToggle<cr>", desc = "split" },
+  { "<leader>tm",  group = "markdown" },
+  { "<leader>tmp", ":MarkdownPreviewToggle<cr>",              desc = "preview" },
+  { "<leader>tmv", ":Markview toggle<cr>",                    desc = "view" },
+  { "<leader>tms", ":Markview splitToggle<cr>",               desc = "split" },
 
-  { "<leader>to", ":Outline<cr>", desc = "symbols" },
+  { "<leader>to",  ":Outline<cr>",                            desc = "symbols" },
   {
     "<leader>ts",
     function()
@@ -1586,7 +1586,7 @@ wk.add({
     end,
     desc = "sidebar",
   },
-  { "<leader>tt", ":NvimTreeToggle<cr>", desc = "tree" },
+  { "<leader>tt", ":NvimTreeToggle<cr>",   desc = "tree" },
   {
     "<leader>tv",
     toggle_virtual_diagnostics,
