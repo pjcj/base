@@ -121,50 +121,6 @@ local plugins = {
     version = "*",
     event = { "BufReadPost", "BufNewFile" },
     config = function()
-      require("conform").setup({
-        formatters_by_ft = {
-          dockerfile = { "dprint", "dockerfmt" },
-          javascript = { "prettierd", "prettier", stop_after_first = true },
-          json = { "fixjson" },
-          lua = { "stylua" },
-          make = { "bake" },
-          markdown = { "markdownlint", "mdformat", "injected", "mdsf" },
-          python = { "isort", "black" },
-          sh = { "shellharden", "shellcheck", "shfmt" },
-          bash = { "shellharden", "shellcheck", "shfmt" },
-          zsh = { "shellharden", "shellcheck" },
-          sql = { "sql_formatter" },
-          terraform = { "terraform_fmt" },
-          toml = { "taplo" },
-          yaml = { "yamlfmt" }, -- yamlfix is too buggy
-          ["*"] = { "codespell", "typos" },
-        },
-        default_format_opts = {
-          lsp_format = "last",
-        },
-        log_level = vim.log.levels.DEBUG,
-      })
-
-      require("conform.formatters.bake").command = "mbake"
-
-      require("conform.formatters.mdformat").args = {
-        "--number",
-        "-",
-      }
-
-      require("conform.formatters.shellcheck").args = {
-        "--shell=bash",
-        "-",
-      }
-
-      require("conform.formatters.shfmt").args = {
-        "-i",
-        "2",
-        "-s",
-        "-filename",
-        "$FILENAME",
-      }
-
       local codespell_args = {
         "$FILENAME",
         "--write-changes",
@@ -177,7 +133,45 @@ local plugins = {
       if found then
         vim.list_extend(codespell_args, { "-I", found })
       end
-      require("conform.formatters.codespell").args = codespell_args
+
+      require("conform").setup({
+        formatters_by_ft = {
+          dockerfile = { "dprint", "dockerfmt" },
+          javascript = { "prettierd", "prettier", stop_after_first = true },
+          json = { "fixjson" },
+          make = { "bake" },
+          markdown = { "markdownlint", "mdformat", "injected", "mdsf" },
+          python = { "isort", "black" },
+          sh = { "shellharden", "shellcheck", "shfmt" },
+          bash = { "shellharden", "shellcheck", "shfmt" },
+          zsh = { "shellcheck" },
+          sql = { "sql_formatter" },
+          terraform = { "terraform_fmt" },
+          yaml = { "yamlfmt" }, -- yamlfix is too buggy
+          ["*"] = { "codespell", "typos" },
+        },
+        formatters = {
+          bake = {
+            command = "mbake",
+          },
+          codespell = {
+            args = codespell_args,
+          },
+          mdformat = {
+            args = { "--number", "-" },
+          },
+          shellcheck = {
+            args = { "--shell=bash", "-" },
+          },
+          shfmt = {
+            append_args = { "-i", "2" },
+          },
+        },
+        default_format_opts = {
+          lsp_format = "first",
+        },
+        log_level = vim.log.levels.DEBUG,
+      })
     end,
   },
   -- Rule-based linting and code analysis
