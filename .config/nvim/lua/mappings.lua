@@ -431,8 +431,26 @@ wk.add({
   {
     "glf",
     function()
-      require("conform").format({ async = true, lsp_fallback = true })
-      require("notify")("formatted")
+      vim.notify("Formatting...", vim.log.levels.INFO, { title = "Format" })
+      require("conform").format(
+        { async = true, lsp_format = "last" },
+        function(err, did_edit)
+          if err then
+            vim.notify(
+              "Formatting error: " .. err,
+              vim.log.levels.ERROR,
+              { title = "Format" }
+            )
+            return
+          elseif not did_edit then
+            vim.notify("No formatting changes needed", vim.log.levels.INFO, {
+              title = "Format",
+            })
+            return
+          end
+          vim.notify("Formatted", vim.log.levels.INFO, { title = "Format" })
+        end
+      )
     end,
     mode = { "n", "v" },
     desc = "format",
