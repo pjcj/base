@@ -115,6 +115,7 @@ return {
   -- Scrollbar with git and diagnostic indicators
   {
     "petertriho/nvim-scrollbar",
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       local l = require("local_defs")
       local c = l.colour
@@ -174,6 +175,7 @@ return {
   -- Smooth cursor movement animation with mode indicators
   {
     "gen740/SmoothCursor.nvim",
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       require("smoothcursor").setup({
         priority = 1,
