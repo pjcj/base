@@ -121,7 +121,7 @@ return {
       local c = l.colour
       require("scrollbar").setup({
         handle = {
-          color = c.ddblue,
+          color = c.dblue,
         },
         handlers = {
           cursor = true,
