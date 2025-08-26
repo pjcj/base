@@ -123,6 +123,10 @@ completion() {
       >|~/g/base/zsh/functions/_git
   fi
 
+  if which datadog-agent >/dev/null; then
+    datadog-agent completion zsh >|~/g/base/zsh/functions/_datadog-agent
+  fi
+
   if which aider >/dev/null; then
     aider --shell-completions zsh >|~/g/base/zsh/functions/_aider
   fi
