@@ -182,10 +182,8 @@ return {
   {
     "Wansmer/treesj",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-    opts = {
-      use_default_keymaps = false,
-      max_join_length = 80,
-    },
+    opts = { use_default_keymaps = false, max_join_length = 80 },
+    -- Keymaps are defined in mappings.lua under "<leader> j" group
   },
 
   -- Convert text to ASCII art blocks (:AsciiBlockify)
