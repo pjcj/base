@@ -741,7 +741,7 @@ if [[ $(uname) == Darwin ]]; then
   s()  { open "$@" }
   fd() { command fd -H --exclude '/Volumes/' "$@" }
   pll() {
-    ps -o user,pid,ppid,%cpu,%mem,vsz,rss,tty,state,start,cputime,command "$@"
+    ps -o user,pid,ppid,pcpu,pmem,vsz,rss,tty,stat,stime,time,args "$@"
   }
   pl() { pll -eww "$@" | m }
   pp() { pl -rc "$@" | m }
