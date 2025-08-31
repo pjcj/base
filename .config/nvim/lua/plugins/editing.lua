@@ -151,7 +151,10 @@ return {
   { "uga-rosa/translate.nvim" },
 
   -- Enhanced word movement for camelCase and snake_case
-  { "chrisgrieser/nvim-spider" },
+  {
+    "chrisgrieser/nvim-spider",
+    -- Keymaps are defined in mappings.lua under which-key config
+  },
 
   -- Find and open URLs in buffer (,fU)
   {
