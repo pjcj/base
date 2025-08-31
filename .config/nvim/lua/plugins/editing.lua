@@ -69,7 +69,7 @@ return {
   -- Additional text objects for enhanced editing (numbers, URLs, etc.)
   {
     "chrisgrieser/nvim-various-textobjs",
-    event = "UIEnter",
+    event = { "BufReadPost", "BufNewFile" },
     opts = {
       keymaps = { useDefaults = true },
     },
