@@ -1657,23 +1657,53 @@ wk.add({
       desc = "digraph",
     },
   },
+
+  -- EasyAlign mappings
+  {
+    "gA",
+    "<Plug>(EasyAlign)",
+    mode = { "n", "x" },
+    noremap = false,
+    desc = "easy align",
+  },
+  {
+    "<Enter>",
+    "<Plug>(EasyAlign)",
+    mode = "v",
+    noremap = false,
+    desc = "easy align",
+  },
+
+  -- Move block mappings
+  {
+    "<C-Up>",
+    "<Plug>MoveBlockUp",
+    mode = "v",
+    noremap = false,
+    desc = "move block up",
+  },
+  {
+    "<C-Down>",
+    "<Plug>MoveBlockDown",
+    mode = "v",
+    noremap = false,
+    desc = "move block down",
+  },
+  {
+    "<C-Left>",
+    "<Plug>MoveBlockLeft",
+    mode = "v",
+    noremap = false,
+    desc = "move block left",
+  },
+  {
+    "<C-Right>",
+    "<Plug>MoveBlockRight",
+    mode = "v",
+    noremap = false,
+    desc = "move block right",
+  },
 })
-
-local vmap = vim.api.nvim_set_keymap -- global mappings
-
-vmap("n", "gA", "<Plug>(EasyAlign)", {})
-vmap("x", "gA", "<Plug>(EasyAlign)", {})
-vmap("v", "<Enter>", "<Plug>(EasyAlign)", {})
-
-vmap("v", "<C-Up>", "<Plug>MoveBlockUp", {})
-vmap("v", "<C-Down>", "<Plug>MoveBlockDown", {})
-vmap("v", "<C-Left>", "<Plug>MoveBlockLeft", {})
-vmap("v", "<C-Right>", "<Plug>MoveBlockRight", {})
-
--- vim.keymap.set({"n", "o", "x"}, "w", "<cmd>lua require('spider').motion('w')<CR>", { desc = "Spider-w" })
--- vim.keymap.set({"n", "o", "x"}, "e", "<cmd>lua require('spider').motion('e')<CR>", { desc = "Spider-e" })
--- vim.keymap.set({"n", "o", "x"}, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" })
--- vim.keymap.set({"n", "o", "x"}, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })
 
 vim.cmd([[
   cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
