@@ -473,44 +473,44 @@ d() { f "$@" }
 u() { popd }
 
 v() {
-  if [ "$EDITOR" = "nvim" ]; then
-    mkdir -p $VIMTMP
-    TMPDIR=$VIMTMP \
+  if [[ "$EDITOR" == "nvim" ]]; then
+    mkdir -p "$VIMTMP"
+    TMPDIR="$VIMTMP" \
       ENABLE_AI_PLUGINS=1 \
-      OPENAI_API_KEY=$openai_api_key \
-      ANTHROPIC_API_KEY=$anthropic_api_key \
-      GEMINI_API_KEY=$gemini_api_key \
-      PPLX_API_KEY=$pplx_api_key \
-      command $EDITOR "$@"
+      OPENAI_API_KEY="$openai_api_key" \
+      ANTHROPIC_API_KEY="$anthropic_api_key" \
+      GEMINI_API_KEY="$gemini_api_key" \
+      PPLX_API_KEY="$pplx_api_key" \
+      command "$EDITOR" "$@"
       # OLLAMA_NUM_BATCH=2048 \
       # OLLAMA_NUM_CTX=4096 \
       # OLLAMA_NUM_GPU=1 \
-  elif [ "$EDITOR" = "vim" ]; then
-    command $EDITOR -u NONE "$@"
+  elif [[ "$EDITOR" == "vim" ]]; then
+    command "$EDITOR" -u NONE "$@"
   else
-    command $EDITOR "$@"
+    command "$EDITOR" "$@"
   fi
 }
 vs() { v -S /tmp/tmp_session.vim "$@" }
 
 vc() {
-  if [ "$EDITOR" = "nvim" ]; then
+  if [[ "$EDITOR" == "nvim" ]]; then
     command nvim --clean "$@"
-  elif [ "$EDITOR" = "vim" ]; then
-    command $EDITOR -u NONE "$@"
+  elif [[ "$EDITOR" == "vim" ]]; then
+    command "$EDITOR" -u NONE "$@"
   else
-    command $EDITOR "$@"
+    command "$EDITOR" "$@"
   fi
 }
 
 vv() {
-  if [ "$EDITOR" = "nvim" ]; then
-    mkdir -p $VIMTMP
-    TMPDIR=$VIMTMP command $EDITOR "$@"
-  elif [ "$EDITOR" = "vim" ]; then
-    command $EDITOR -u NONE "$@"
+  if [[ "$EDITOR" == "nvim" ]]; then
+    mkdir -p "$VIMTMP"
+    TMPDIR="$VIMTMP" command "$EDITOR" "$@"
+  elif [[ "$EDITOR" == "vim" ]]; then
+    command "$EDITOR" -u NONE "$@"
   else
-    command $EDITOR "$@"
+    command "$EDITOR" "$@"
   fi
 }
 vvs() { vv -S /tmp/tmp_session.vim "$@" }
