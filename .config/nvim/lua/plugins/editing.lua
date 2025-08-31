@@ -156,7 +156,11 @@ return {
   },
 
   -- Translate text using various translation services
-  { "uga-rosa/translate.nvim" },
+  {
+    "uga-rosa/translate.nvim",
+    cmd = "Translate",
+    -- Keymaps are defined in mappings.lua under "<leader> t" group
+  },
 
   -- Enhanced word movement for camelCase and snake_case
   {
