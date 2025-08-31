@@ -143,8 +143,11 @@ return {
     opts = {},
   },
 
-  -- Easy text alignment with regex patterns (Ctrl-X)
-  { "junegunn/vim-easy-align" },
+  -- Easy text alignment with regex patterns (gA then Ctrl-X)
+  {
+    "junegunn/vim-easy-align",
+    event = { "BufReadPre", "BufNewFile" },
+  },
 
   -- Swap function arguments and list items (g< g> gs)
   { "machakann/vim-swap" },
