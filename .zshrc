@@ -444,6 +444,13 @@ else
   export EDITOR=vim
 fi
 
+# Set GIT_EDITOR to use the v() function
+if [[ "$EDITOR" == "nvim" ]]; then
+  export GIT_EDITOR='zsh -ic "v \"\$@\"" --'
+else
+  export GIT_EDITOR="$EDITOR"
+fi
+
 c() {
   if [[ $1 == "--" ]]; then
     shift
