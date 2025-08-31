@@ -7,9 +7,7 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "UIEnter",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function()
-      require("statusline")
-    end,
+    config = function() require("statusline") end,
   },
 
   -- Popup showing available keybindings for partial commands
@@ -238,7 +236,7 @@ return {
   -- Colorful window separators with animations
   {
     "nvim-zh/colorful-winsep.nvim",
-    event = { "WinLeave" },
+    event = "UIEnter", -- just WinLeave causes session loading to hang
     config = function()
       require("colorful-winsep").setup({
         border = "rounded",
@@ -248,4 +246,3 @@ return {
     end,
   },
 }
-
