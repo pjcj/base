@@ -1656,6 +1656,44 @@ wk.add({
       end,
       desc = "digraph",
     },
+    -- Smart scroll mappings that accept completion first if popup is visible
+    {
+      "<C-e>",
+      function()
+        if vim.fn.pumvisible() ~= 0 then
+          return "<C-y><C-e>" -- Accept completion then scroll down
+        else
+          return "<Esc>a<C-e>"
+        end
+      end,
+      expr = true,
+      desc = "smart scroll down",
+    },
+    {
+      "<C-y>",
+      function()
+        if vim.fn.pumvisible() ~= 0 then
+          return "<C-y><C-y>" -- Accept completion then scroll up
+        else
+          return "<C-y>"
+        end
+      end,
+      expr = true,
+      desc = "smart scroll up",
+    },
+  },
+
+  {
+    mode = "c",
+    -- Write file with sudo when permission denied
+    {
+      "w!!",
+      function()
+        return "execute 'silent! write !sudo tee % >/dev/null' | edit!"
+      end,
+      expr = true,
+      desc = "sudo write",
+    },
   },
 
   -- EasyAlign mappings
@@ -1705,23 +1743,55 @@ wk.add({
   },
 })
 
-vim.cmd([[
-  cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
-  inoremap <expr> <C-e> pumvisible() ? "\<C-y>\<C-e>" : "\<Esc>a\<C-e>"
-  inoremap <expr> <C-y> pumvisible() ? "\<C-y>\<C-y>" : "\<C-y>"
+-- Insert mode abbreviation
+vim.keymap.set("ia", ",,", "=>", { desc = "arrow abbreviation" })
 
-  iabbr ,, =>
+-- NewFile function in Lua
+local function new_file(args)
+  local file_type = args.args or ""
+  local current_file = vim.fn.expand("%")
+  local path = vim.o.path
 
-  function! NewFile(type)
-    " exe 'normal ggdG'
-    exe 'r! file_template -path ' . &path . ' ' . expand('%') . ' ' . a:type
-    exe 'normal ggdd'
-    /^[ \t]*[#] *implementation/
-    w
-  endfunction
-  command! -nargs=? NewFile :call NewFile(<q-args>)
+  -- Execute the file_template command
+  local cmd = string.format("file_template -path %s %s %s", path, current_file, file_type)
+  vim.cmd("r! " .. cmd)
 
-  command! -nargs=+ Xshell 10new | execute "Shell" <q-args> | wincmd p
-  command! -nargs=+ Sshell vnew | execute "Shell" <q-args> | wincmd p
-]])
+  -- Remove the first line (which would be empty after the read)
+  vim.cmd("normal! ggdd")
+
+  -- Search for the implementation comment
+  local ok = pcall(vim.cmd, "/^[ \\t]*[#] *implementation/")
+  if not ok then
+    -- If search fails, just go to the beginning
+    vim.cmd("normal! gg")
+  end
+
+  -- Write the file
+  vim.cmd("write")
+end
+
+-- Create the NewFile command
+vim.api.nvim_create_user_command("NewFile", new_file, {
+  nargs = "?",
+  desc = "Create new file from template"
+})
+
+-- Shell commands
+vim.api.nvim_create_user_command("Xshell", function(args)
+  vim.cmd("10new")
+  vim.cmd("Shell " .. args.args)
+  vim.cmd("wincmd p")
+end, {
+  nargs = "+",
+  desc = "Execute shell command in horizontal split"
+})
+
+vim.api.nvim_create_user_command("Sshell", function(args)
+  vim.cmd("vnew")
+  vim.cmd("Shell " .. args.args)
+  vim.cmd("wincmd p")
+end, {
+  nargs = "+",
+  desc = "Execute shell command in vertical split"
+})
