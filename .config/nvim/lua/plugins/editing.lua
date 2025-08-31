@@ -150,7 +150,10 @@ return {
   },
 
   -- Swap function arguments and list items (g< g> gs)
-  { "machakann/vim-swap" },
+  {
+    "machakann/vim-swap",
+    keys = { "g<", "g>", "gs" },
+  },
 
   -- Translate text using various translation services
   { "uga-rosa/translate.nvim" },
