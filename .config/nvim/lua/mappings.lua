@@ -424,25 +424,25 @@ wk.add({
     "w",
     function() require("spider").motion("w") end,
     mode = { "n", "o", "x" },
-    desc = "Spider-w (enhanced word movement)"
+    desc = "Spider-w"
   },
   {
     "e",
     function() require("spider").motion("e") end,
     mode = { "n", "o", "x" },
-    desc = "Spider-e (enhanced word movement)"
+    desc = "Spider-e"
   },
   {
     "b",
     function() require("spider").motion("b") end,
     mode = { "n", "o", "x" },
-    desc = "Spider-b (enhanced word movement)"
+    desc = "Spider-b"
   },
   {
     "ge",
     function() require("spider").motion("ge") end,
     mode = { "n", "o", "x" },
-    desc = "Spider-ge (enhanced word movement)"
+    desc = "Spider-ge"
   },
 
   { "g",   group = "goto" },
