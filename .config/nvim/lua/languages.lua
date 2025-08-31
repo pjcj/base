@@ -65,3 +65,46 @@ autocmd("FileType", {
   pattern = "qf",
   command = "setlocal winheight=20",
 })
+
+-- Git commit
+augroup("git_commit", { clear = true })
+autocmd("User", {
+  group = "git_commit",
+  pattern = "FugitiveChanged",
+  once = true,
+  callback = function()
+    -- Check if we just completed a commit
+    local result = vim.fn.FugitiveResult()
+    if result.args and vim.tbl_contains(result.args, "commit") then
+      if result.exit_status ~= 0 then
+        vim.notify(
+          "Git commit failed with exit status: " .. result.exit_status,
+          vim.log.levels.ERROR
+        )
+      end
+    end
+  end,
+})
+
+autocmd("FileType", {
+  group = "git_commit",
+  pattern = "gitcommit",
+  callback = function()
+    -- Set cmdheight for better visibility during commit
+    vim.opt.cmdheight = 2
+
+    -- Add blank line if needed and start insert mode
+    if vim.fn.getline(2) ~= "" then
+      vim.cmd("normal O")
+    end
+    vim.cmd("startinsert")
+  end,
+})
+
+autocmd({ "BufLeave", "BufWinLeave" }, {
+  group = "git_commit",
+  pattern = "COMMIT_EDITMSG",
+  callback = function()
+    vim.opt.cmdheight = 0
+  end,
+})

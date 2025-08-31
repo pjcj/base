@@ -204,50 +204,6 @@ local function full_map(from, to)
   return { from, to, hidden = true, noremap = false, mode = "nvoitc" }
 end
 
-local function setup_git_commit_autocmds()
-  -- Set up autocmd to handle post-commit actions
-  vim.api.nvim_create_autocmd("User", {
-    pattern = "FugitiveChanged",
-    once = true,
-    callback = function()
-      -- Check if we just completed a commit
-      local result = vim.fn.FugitiveResult()
-      if result.args and vim.tbl_contains(result.args, "commit") then
-        if result.exit_status ~= 0 then
-          vim.notify(
-            "Git commit failed with exit status: " .. result.exit_status,
-            vim.log.levels.ERROR
-          )
-        end
-      end
-    end,
-  })
-
-  -- Set up autocmd to prepare commit buffer
-  vim.api.nvim_create_autocmd("FileType", {
-    pattern = "gitcommit",
-    once = true,
-    callback = function()
-      -- Set cmdheight for better visibility during commit
-      vim.opt.cmdheight = 2
-
-      -- Add blank line if needed and start insert mode
-      if vim.fn.getline(2) ~= "" then
-        vim.cmd("normal O")
-      end
-      vim.cmd("startinsert")
-    end,
-  })
-
-  -- Reset cmdheight when leaving the commit buffer
-  vim.api.nvim_create_autocmd({ "BufLeave", "BufWinLeave" }, {
-    pattern = "COMMIT_EDITMSG",
-    once = true,
-    callback = function()
-      vim.opt.cmdheight = 0
-    end,
-  })
-end
 
 for i = 1, 12 do
   wk.add({
@@ -1790,5 +1746,3 @@ end, {
   desc = "Execute shell command in vertical split"
 })
 
--- Set up git commit autocmds
-setup_git_commit_autocmds()
