@@ -1795,3 +1795,6 @@ end, {
   nargs = "+",
   desc = "Execute shell command in vertical split"
 })
+
+-- Set up git commit autocmds
+setup_git_commit_autocmds()
