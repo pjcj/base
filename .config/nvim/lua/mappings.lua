@@ -1242,18 +1242,12 @@ wk.add({
   { "<leader>g",   group = "git" },
   {
     "<leader>gg",
-    function()
-      setup_git_commit_autocmds()
-      vim.cmd("tab Git commit")
-    end,
+    function() vim.cmd("tab Git commit") end,
     desc = "commit",
   },
   {
     "<leader>gG",
-    function()
-      setup_git_commit_autocmds()
-      vim.cmd("tab Git commit --no-verify")
-    end,
+    function() vim.cmd("tab Git commit --no-verify") end,
     desc = "commit --no-verify",
   },
   {
