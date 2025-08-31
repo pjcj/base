@@ -1,7 +1,6 @@
 --# selene: allow(mixed_table)
 
 -- Text editing enhancement plugins
-
 return {
   -- Syntax highlighting and code parsing using tree-sitter
   {
