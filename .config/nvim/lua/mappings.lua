@@ -1676,28 +1676,28 @@ wk.add({
 
   -- Move block mappings
   {
-    "<C-Up>",
+    "<C-S-Up>",
     "<Plug>MoveBlockUp",
     mode = "v",
     noremap = false,
     desc = "move block up",
   },
   {
-    "<C-Down>",
+    "<C-S-Down>",
     "<Plug>MoveBlockDown",
     mode = "v",
     noremap = false,
     desc = "move block down",
   },
   {
-    "<C-Left>",
+    "<C-S-Left>",
     "<Plug>MoveBlockLeft",
     mode = "v",
     noremap = false,
     desc = "move block left",
   },
   {
-    "<C-Right>",
+    "<C-S-Right>",
     "<Plug>MoveBlockRight",
     mode = "v",
     noremap = false,

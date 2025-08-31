@@ -109,11 +109,13 @@ return {
     end,
   },
 
-  -- Move lines and selections up/down with Alt+j/k
+  -- Move lines and selections up/down/left/right
   {
     "matze/vim-move",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       vim.g.move_map_keys = 0
+      -- Keymaps are defined in mappings.lua using Ctrl+Shift+Arrow keys
     end,
   },
 
