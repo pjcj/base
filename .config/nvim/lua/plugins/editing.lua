@@ -124,14 +124,15 @@ return {
     "cohama/lexima.vim",
     event = "InsertEnter",
     config = function()
-      vim.cmd([[
-        call lexima#add_rule({"char": '"', "at": '\%#\(\w\|\$\)'})
-        call lexima#add_rule({"char": "'", "at": '\%#\(\w\|\$\)'})
-        call lexima#add_rule({"char": '`', "at": '\%#\(\w\|\$\)'})
-        call lexima#add_rule({"char": '(', "at": '\%#\(\w\|\$\)'})
-        call lexima#add_rule({"char": '[', "at": '\%#\(\w\|\$\)'})
-        call lexima#add_rule({"char": '{', "at": '\%#\(\w\|\$\)'})
-      ]])
+      local lexima = vim.fn["lexima#add_rule"]
+      local pattern = [[\%#\(\w\|\$\)]]
+
+      lexima({ char = '"', at = pattern })
+      lexima({ char = "'", at = pattern })
+      lexima({ char = "`", at = pattern })
+      lexima({ char = "(", at = pattern })
+      lexima({ char = "[", at = pattern })
+      lexima({ char = "{", at = pattern })
     end,
   },
 
