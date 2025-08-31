@@ -485,8 +485,10 @@ v() {
       # OLLAMA_NUM_BATCH=2048 \
       # OLLAMA_NUM_CTX=4096 \
       # OLLAMA_NUM_GPU=1 \
-  else
+  elif [ "$EDITOR" = "vim" ]; then
     command $EDITOR -u NONE "$@"
+  else
+    command $EDITOR "$@"
   fi
 }
 vs() { v -S /tmp/tmp_session.vim "$@" }
@@ -495,8 +497,10 @@ vv() {
   if [ "$EDITOR" = "nvim" ]; then
     mkdir -p $VIMTMP
     TMPDIR=$VIMTMP command $EDITOR "$@"
-  else
+  elif [ "$EDITOR" = "vim" ]; then
     command $EDITOR -u NONE "$@"
+  else
+    command $EDITOR "$@"
   fi
 }
 vvs() { vv -S /tmp/tmp_session.vim "$@" }
