@@ -493,6 +493,16 @@ v() {
 }
 vs() { v -S /tmp/tmp_session.vim "$@" }
 
+vc() {
+  if [ "$EDITOR" = "nvim" ]; then
+    command nvim --clean "$@"
+  elif [ "$EDITOR" = "vim" ]; then
+    command $EDITOR -u NONE "$@"
+  else
+    command $EDITOR "$@"
+  fi
+}
+
 vv() {
   if [ "$EDITOR" = "nvim" ]; then
     mkdir -p $VIMTMP
