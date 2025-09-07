@@ -21,6 +21,8 @@ cursor-color = #dc322f
 selection-background = #f0a63f
 selection-foreground = #001920
 
+minimum-contrast = 1.8
+
 # ANSI colors
 palette = 0=#022731
 palette = 1=#dc322f
