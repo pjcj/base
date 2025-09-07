@@ -75,22 +75,34 @@ local plugins = {
       vim.list_extend(codespell_args, { "--stdin-single-line", "-" })
       lint.linters.codespell.args = codespell_args
 
+      local last_lint_time = 0
+      local cursor_hold_throttle_ms = 1000
+
       vim.api.nvim_create_autocmd({
         "BufEnter",
         "BufReadPost",
         "BufWritePost",
         "CursorHold",
       }, {
-        callback = function()
-          -- callback = function(ev)
-          -- if ev.event == "CursorHold" then
-          --   require("notify")(string.format("lint: %s", ev.event))
-          -- end
+        callback = function(ev)
+          local current_time = vim.loop.hrtime() / 1000000 -- Convert to ms
+          if ev.event == "CursorHold" then
+            if current_time - last_lint_time < cursor_hold_throttle_ms then
+              return
+            end
+            if not vim.bo.modified then
+              return
+            end
+          end
+
+          -- require("notify")(string.format("start lint"))
           lint.try_lint()
           if vim.bo.filetype ~= "SidebarNvim" then
             lint.try_lint("codespell")
             lint.try_lint("typos")
           end
+          last_lint_time = current_time
+          -- require("notify")(string.format("end lint"))
         end,
       })
     end,
