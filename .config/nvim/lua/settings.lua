@@ -25,6 +25,7 @@ vopt.listchars     = { tab = "» ", trail = "·", nbsp = "␣" }
 vopt.matchpairs    = vopt.matchpairs + { "<:>" }
 vopt.mouse         = "a"
 vopt.mousefocus    = true
+vopt.mousescroll   = "ver:1,hor:1"
 vopt.number        = true
 vopt.report        = 0
 vopt.scrolloff     = 12
