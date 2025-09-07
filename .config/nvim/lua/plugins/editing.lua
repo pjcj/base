@@ -143,73 +143,79 @@ return {
     opts = {
       surrounds = {
         -- Perl word list qw with parentheses
-        ["qw("] = {
+        A = {
           add = { "qw( ", " )" },
           find = "%f[%w]qw%b()",
           delete = "^(qw%( ?)().-( ?%))()$",
         },
         -- Perl word list qw with square brackets
-        ["qw["] = {
+        N = {
           add = { "qw[ ", " ]" },
           find = "%f[%w]qw%b[]",
           delete = "^(qw%[ ?)().-( ?%])()$",
         },
         -- Perl word list qw with curly braces
-        ["qw{"] = {
+        C = {
           add = { "qw{ ", " }" },
           find = "%f[%w]qw%b{}",
           delete = "^(qw{ ?)().-( ?%})()$",
         },
         -- Perl word list qw with angle brackets
-        ["qw<"] = {
+        D = {
           add = { "qw< ", " >" },
           find = "%f[%w]qw%b<>",
           delete = "^(qw< ?)().-( ?%>)()$",
         },
+        -- Perl word list qw with forward slashes
+        E = {
+          add = { "qw/", "/" },
+          find = "%f[%w]qw/[^/]*/",
+          delete = "^(qw/)().-(/())$",
+        },
         -- Perl qq with parentheses
-        ["qq("] = {
+        F = {
           add = { "qq(", ")" },
           find = "%f[%w]qq%b()",
           delete = "^(qq%()().-(%))()$",
         },
         -- Perl qq with square brackets
-        ["qq["] = {
+        G = {
           add = { "qq[", "]" },
           find = "%f[%w]qq%b[]",
           delete = "^(qq%[)().-(%])()$",
         },
         -- Perl qq with curly braces
-        ["qq{"] = {
+        H = {
           add = { "qq{", "}" },
           find = "%f[%w]qq%b{}",
           delete = "^(qq{)().-(%})()$",
         },
         -- Perl qq with angle brackets
-        ["qq<"] = {
+        I = {
           add = { "qq<", ">" },
           find = "%f[%w]qq%b<>",
           delete = "^(qq<)().-(%>)()$",
         },
         -- Perl q with parentheses
-        ["q("] = {
+        J = {
           add = { "q(", ")" },
           find = "%f[%w]q%b()%f[%W]",
           delete = "^(q%()().-(%))()$",
         },
         -- Perl q with square brackets
-        ["q["] = {
+        K = {
           add = { "q[", "]" },
           find = "%f[%w]q%b[]%f[%W]",
           delete = "^(q%[)().-(%])()$",
         },
         -- Perl q with curly braces
-        ["q{"] = {
+        L = {
           add = { "q{", "}" },
           find = "%f[%w]q%b{}%f[%W]",
           delete = "^(q{)().-(%})()$",
         },
         -- Perl q with angle brackets
-        ["q<"] = {
+        M = {
           add = { "q<", ">" },
           find = "%f[%w]q%b<>%f[%W]",
           delete = "^(q<)().-(%>)()$",
@@ -218,7 +224,7 @@ return {
       aliases = {
         -- Q alias includes all Perl quote operators plus standard quotes
         -- Multi-character keys are more intuitive and memorable
-        Q = { '"', "'", "`", "qw(", "qw[", "qw{", "qw<", "qq(", "qq[", "qq{", "qq<", "q(", "q[", "q{", "q<" },
+        Q = { '"', "'", "`", "A", "N", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M" },
       },
     },
   },
