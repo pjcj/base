@@ -65,10 +65,8 @@ local plugins = {
       }
 
       local codespell_args = { "--builtin", "clear,rare,informal,usage,names" }
-      local found = vim.fs.find(
-        ".codespell",
-        { upward = true, path = vim.fn.getcwd() }
-      )[1]
+      local found =
+        vim.fs.find(".codespell", { upward = true, path = vim.fn.getcwd() })[1]
       if found then
         vim.list_extend(codespell_args, { "-I", found })
       end
@@ -142,10 +140,8 @@ local plugins = {
         "--builtin",
         "clear,rare,informal,usage,names",
       }
-      local found = vim.fs.find(
-        ".codespell",
-        { upward = true, path = vim.fn.getcwd() }
-      )[1]
+      local found =
+        vim.fs.find(".codespell", { upward = true, path = vim.fn.getcwd() })[1]
       if found then
         vim.list_extend(codespell_args, { "-I", found })
       end
@@ -155,6 +151,7 @@ local plugins = {
           dockerfile = { "dprint", "dockerfmt" },
           javascript = { "prettierd", "prettier", stop_after_first = true },
           json = { "fixjson" },
+          lua = { "stylua" },
           make = { "bake" },
           markdown = { "markdownlint", "mdformat", "injected", "mdsf" },
           python = { "isort", "black" },
@@ -202,9 +199,9 @@ local plugins = {
       -- print(vim.inspect(vim.g.gutentags_ctags_exclude))
 
       -- can be extended with '*/sub/path' if required
-      vim.g.gutentags_generate_on_new          = 1
-      vim.g.gutentags_generate_on_missing      = 1
-      vim.g.gutentags_generate_on_write        = 1
+      vim.g.gutentags_generate_on_new = 1
+      vim.g.gutentags_generate_on_missing = 1
+      vim.g.gutentags_generate_on_write = 1
       vim.g.gutentags_generate_on_empty_buffer = 0
 
       local is_freebsd = (io.popen("uname"):read() == "FreeBSD")
