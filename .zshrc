@@ -700,6 +700,7 @@ hash -d local_base=~/g/local_base
 zshrc_load_status "environment"
 
 export BAT_THEME="Solarized (dark)"
+export BAT_STYLE=full
 export CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR=1
 export GOPATH=~/g/go
 export LESS='--LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS --mouse'
