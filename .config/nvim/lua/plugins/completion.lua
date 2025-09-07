@@ -38,6 +38,7 @@ return {
   {
     "saghen/blink.compat",
     version = "2.*", -- use v2.* for blink.cmp v1.*
+    enabled = true,
     opts = {},
   },
 
@@ -45,6 +46,7 @@ return {
   {
     "saghen/blink.cmp",
     version = "1.*",
+    enabled = true,
     event = "InsertEnter",
     dependencies = {
       {
@@ -59,6 +61,10 @@ return {
         "huijiro/blink-cmp-supermaven",
         enabled = _G.using_ai(),
       },
+      {
+        "Exafunction/codeium.nvim",
+        enabled = _G.using_ai(),
+      },
       "moyiz/blink-emoji.nvim",
       {
         "Kaiser-Yang/blink-cmp-dictionary",
@@ -67,14 +73,9 @@ return {
       "mgalliou/blink-cmp-tmux",
       "hrsh7th/vim-vsnip",
       "hrsh7th/vim-vsnip-integ",
-      "https://codeberg.org/FelipeLema/bink-cmp-vsnip.git",
-      {
-        "Exafunction/codeium.nvim",
-        enabled = _G.using_ai(),
-      },
+      "https://codeberg.org/FelipeLema/blink-cmp-vsnip.git",
     },
     config = function()
-      -- Build sources list conditionally
       local sources = {
         "lsp",
         "path",
@@ -83,19 +84,17 @@ return {
         -- "omni",
         "emoji",
         "dictionary",
-        "tmux",
+        -- "tmux",  # slows down insert too much
         "vsnip",
       }
 
-      -- Add AI sources if enabled
       if _G.using_ai() then
         table.insert(sources, "copilot")
         table.insert(sources, "supermaven")
-        -- table.insert(sources, "minuet")
+        table.insert(sources, "minuet")
         table.insert(sources, "codeium")
       end
 
-      -- Build providers table
       local providers = {
         lsp = {
           async = true,
@@ -150,6 +149,7 @@ return {
           name = "Dict",
           min_keyword_length = 3,
           max_items = 5,
+          async = true,
           opts = {
             dictionary_files = { vim.fn.expand("~/g/base/dict/en.dict") },
           },
@@ -161,7 +161,9 @@ return {
           async = true,
           opts = {
             all_panes = true,
-            capture_history = false,
+            capture_history = true,
+            triggered_only = true,
+            trigger_chars = { "." }
           },
         },
         vsnip = {
@@ -171,7 +173,6 @@ return {
         },
       }
 
-      -- Conditionally add AI providers
       if _G.using_ai() then
         providers.copilot = {
           name = "copilot",
@@ -186,12 +187,12 @@ return {
           score_offset = 19,
           async = true,
         }
-        -- providers.minuet = {
-        --   name = "minuet",
-        --   module = "minuet.blink",
-        --   score_offset = 18,
-        --   async = true,
-        -- }
+        providers.minuet = {
+          name = "minuet",
+          module = "minuet.blink",
+          score_offset = 18,
+          async = true,
+        }
         providers.codeium = {
           name = "codeium",
           module = "blink.compat.source",
@@ -272,20 +273,23 @@ return {
           },
           trigger = {
             -- show completion window after backspacing
-            show_on_backspace = true,
+            show_on_backspace = false,
 
             -- show completion window after backspacing into a keyword
-            show_on_backspace_in_keyword = true,
+            show_on_backspace_in_keyword = false,
 
             -- show completion window after accepting a completion and then
             -- backspacing into a keyword
-            show_on_backspace_after_accept = true,
+            show_on_backspace_after_accept = false,
 
             -- show the completion window after entering insert mode and
             -- backspacing into keyword
-            show_on_backspace_after_insert_enter = true,
+            show_on_backspace_after_insert_enter = false,
 
             show_on_insert = true,
+
+            show_on_blocked_trigger_characters = {},
+            show_on_x_blocked_trigger_characters = {},
           },
 
           -- Show documentation when selecting a completion item
