@@ -375,32 +375,6 @@ wk.add({
     desc = "previous match",
   },
 
-  -- nvim-spider enhanced word movement
-  {
-    "w",
-    function() require("spider").motion("w") end,
-    mode = { "n", "o", "x" },
-    desc = "Spider-w"
-  },
-  {
-    "e",
-    function() require("spider").motion("e") end,
-    mode = { "n", "o", "x" },
-    desc = "Spider-e"
-  },
-  {
-    "b",
-    function() require("spider").motion("b") end,
-    mode = { "n", "o", "x" },
-    desc = "Spider-b"
-  },
-  {
-    "ge",
-    function() require("spider").motion("ge") end,
-    mode = { "n", "o", "x" },
-    desc = "Spider-ge"
-  },
-
   { "g",   group = "goto" },
   { "gd",  lb.definition,      desc = "definition" },
   { "gD",  lb.declaration,     desc = "declaration" },
@@ -466,6 +440,33 @@ wk.add({
   { "glyi", ":TSLspImportAll<cr>",      desc = "import all" },
   { "glyo", ":TSLspOrganize<cr>",       desc = "organise" },
   { "glyr", ":TSLspRenameFile<cr>",     desc = "rename file" },
+
+  -- breaks works at snake and camel case boundaries
+  { "gl",  group = "spider" },
+  {
+    "gpw",
+    function() require("spider").motion("w") end,
+    mode = { "n", "o", "x" },
+    desc = "Spider-w"
+  },
+  {
+    "gpe",
+    function() require("spider").motion("e") end,
+    mode = { "n", "o", "x" },
+    desc = "Spider-e"
+  },
+  {
+    "gpb",
+    function() require("spider").motion("b") end,
+    mode = { "n", "o", "x" },
+    desc = "Spider-b"
+  },
+  {
+    "gpge",
+    function() require("spider").motion("ge") end,
+    mode = { "n", "o", "x" },
+    desc = "Spider-ge"
+  },
 
   {
     mode = { "n", "v" },
