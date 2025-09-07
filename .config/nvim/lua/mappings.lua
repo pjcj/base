@@ -1491,8 +1491,8 @@ wk.add({
   { "<leader>n",  ":NewFile<cr>", desc = "new file template" },
 
   { "<leader>q",   group = "quote" },
-  { "<leader>qA",  [[csQS]],       noremap = false,           desc = "-> q( )" },
-  { "<leader>qa",  [[csQD]],       noremap = false,           desc = "-> qq( )" },
+  { "<leader>qA",  [[csQq(]],      noremap = false,           desc = "-> q( )" },
+  { "<leader>qa",  [[csQqq(]],     noremap = false,           desc = "-> qq( )" },
   { "<leader>qb",  [[csQ`]],       noremap = false,           desc = "-> backtick" },
   { "<leader>qdb", [[ds`]],        noremap = false,           desc = "delete backtick" },
   { "<leader>qdd", [[ds"]],        noremap = false,           desc = "delete double" },
@@ -1503,7 +1503,7 @@ wk.add({
   { "<leader>qQ",  [[csQ']],       noremap = false,           desc = "-> single" },
   { "<leader>qq",  [[csQ"]],       noremap = false,           desc = "-> double" },
   { "<leader>qr",  [[dsQ]],        noremap = false,           desc = "delete quotes" },
-  { "<leader>qw",  [[csQw]],       noremap = false,           desc = "-> qw( )" },
+  { "<leader>qw",  [[csQqw(]],     noremap = false,           desc = "-> qw( )" },
   {
     "<leader>qi(",
     [[ysiw(]],
