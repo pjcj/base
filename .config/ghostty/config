@@ -54,7 +54,7 @@ palette = 15=#fdf6e3
 
 # Mouse configuration
 mouse-hide-while-typing = true
-mouse-scroll-multiplier = 0.25
+mouse-scroll-multiplier = 1
 copy-on-select = clipboard
 click-repeat-interval = 500
 mouse-shift-capture = false
