@@ -140,7 +140,15 @@ return {
     "kylechui/nvim-surround",
     event = { "BufReadPre", "BufNewFile" },
     -- tag = "*",
-    opts = {},
+    opts = {
+      surrounds = {
+        w = {
+          add = { "qw( ", " )" },
+          find = "qw%b()",
+          delete = "^(qw%( ?)().-( ?%)())$",
+        },
+      },
+    },
   },
 
   -- Easy text alignment with regex patterns (gA then Ctrl-X)
