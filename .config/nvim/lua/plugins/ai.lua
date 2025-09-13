@@ -60,8 +60,8 @@ return {
             adapter = "claude37sonnet",
             tools = {
               opts = {
-                wait_timeout = 600000, -- 10 minutes
-                auto_submit_errors = true, -- Automatically submit errors to the LLM
+                wait_timeout = 600000,      -- 10 minutes
+                auto_submit_errors = true,  -- Automatically submit errors to the LLM
                 auto_submit_success = true, -- Automatically submit successful results to the LLM
                 default_tools = {
                   "full_stack_dev",
@@ -146,7 +146,7 @@ return {
             callback = "mcphub.extensions.codecompanion",
             opts = {
               show_result_in_chat = true, -- Show mcp tool results in chat
-              make_vars = true, -- Convert resources to #variables
+              make_vars = true,           -- Convert resources to #variables
               make_slash_commands = true, -- Add prompts as /slash commands
             },
           },
@@ -253,7 +253,7 @@ return {
       -- the below dependencies are optional
       "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
       "nvim-tree/nvim-web-devicons",
-      "zbirenbaum/copilot.lua", -- for providers='copilot'
+      "zbirenbaum/copilot.lua",        -- for providers='copilot'
       "ravitemer/mcphub.nvim",
       "MeanderingProgrammer/render-markdown.nvim",
       -- {
@@ -490,7 +490,7 @@ return {
         "<cmd>ClaudeCode<cr><cmd>horizontal wincmd =<cr>",
         desc = "Toggle Claude",
       },
-      { "<leader> .f", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+      { "<leader> .f", "<cmd>ClaudeCodeFocus<cr>",     desc = "Focus Claude" },
       { "<leader> .r", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
       {
         "<leader> .c",
@@ -516,7 +516,7 @@ return {
       },
       -- Diff management
       { "<leader> .a", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
-      { "<leader> .d", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+      { "<leader> .d", "<cmd>ClaudeCodeDiffDeny<cr>",   desc = "Deny diff" },
     },
   },
 
