@@ -25,6 +25,15 @@ local on_attach = function(client, bufnr)
   end
 end
 
+-- Custom on_attach for lua_ls to disable formatting
+local lua_ls_on_attach = function(client, bufnr)
+  -- Disable lua_ls formatting to avoid conflicts with conform.nvim/stylua
+  client.server_capabilities.documentFormattingProvider = false
+  client.server_capabilities.documentRangeFormattingProvider = false
+  -- Call the common on_attach function
+  on_attach(client, bufnr)
+end
+
 -- Configure lua language server for neovim development
 -- Settings are now handled by .luarc.json and lazydev.nvim
 local lua_settings = {}
@@ -153,6 +162,7 @@ vim.lsp.config.lua_ls = {
   },
   init_options = { hostInfo = "neovim" },
   settings = lua_settings,
+  on_attach = lua_ls_on_attach,
 }
 
 vim.lsp.config.perlnavigator = {
@@ -252,12 +262,11 @@ local function setup_servers()
     table.insert(lsps, "taplo")
   end
 
-  -- Set common on_attach for all servers
+  -- Set common on_attach for all servers except lua_ls (which has custom
+  -- on_attach)
   for _, server in ipairs(lsps) do
     local config = vim.lsp.config[server]
-    if config then
-      config.on_attach = on_attach
-    end
+    if config and server ~= "lua_ls" then config.on_attach = on_attach end
   end
 
   -- Enable all servers
@@ -315,9 +324,7 @@ local function filter_diagnostics(diagnostic)
 
   -- Perlnavigator-specific filters
   -- Using plain string search (4th parameter = true) for better performance
-  if message:find("Useless use of a constant", 1, true) then
-    return false
-  end
+  if message:find("Useless use of a constant", 1, true) then return false end
 
   -- Check for subroutine redefined (both conditions must be true)
   if
