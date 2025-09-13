@@ -1,5 +1,5 @@
-require "plugins.init"
-require "settings"
-require "languages"
-require "mappings"
-require "setup"
+require("plugins.init")
+require("settings")
+require("languages")
+require("mappings")
+require("setup")

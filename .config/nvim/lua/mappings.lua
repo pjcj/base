@@ -31,30 +31,14 @@ local wk = require("which-key")
 
 local lb = vim.lsp.buf
 local d = vim.diagnostic
-local function t()
-  return require("telescope")
-end
-local function tb()
-  return require("telescope.builtin")
-end
-local function bd()
-  return require("better-digraphs")
-end
-local function gs()
-  return require("gitsigns")
-end
-local function gl()
-  return require("gitlab")
-end
-local function tj()
-  return require("treesj")
-end
-local function nt()
-  return require("neotest")
-end
-local function ss()
-  return require("smart-splits")
-end
+local function t() return require("telescope") end
+local function tb() return require("telescope.builtin") end
+local function bd() return require("better-digraphs") end
+local function gs() return require("gitsigns") end
+local function gl() return require("gitlab") end
+local function tj() return require("treesj") end
+local function nt() return require("neotest") end
+local function ss() return require("smart-splits") end
 
 local function aider_cmd(cmd)
   return function()
@@ -84,9 +68,7 @@ local function aider_add_git_changes()
 
   -- Add each changed file to aider
   for _, file in ipairs(files) do
-    if file ~= "" then
-      require("nvim_aider").api.add_file(file)
-    end
+    if file ~= "" then require("nvim_aider").api.add_file(file) end
   end
   vim.cmd("stopinsert")
 
@@ -115,9 +97,7 @@ local function aider_add_all_windows()
   vim.cmd("stopinsert")
 
   -- Wait a moment for aider to potentially create new windows, then equalize
-  vim.defer_fn(function()
-    vim.cmd("wincmd =")
-  end, 100)
+  vim.defer_fn(function() vim.cmd("wincmd =") end, 100)
 
   local count = 0
   for _ in pairs(buffers) do
@@ -142,9 +122,7 @@ local function smart_star_search()
   -- Execute a command that uses the last search pattern, like 'n'
   -- Then jump back to the original position
   vim.cmd("normal! n``")
-  if pcall(require, "hlslens") then
-    require("hlslens").start()
-  end
+  if pcall(require, "hlslens") then require("hlslens").start() end
 end
 
 local diagnostic_modes = {
@@ -204,7 +182,6 @@ local function full_map(from, to)
   return { from, to, hidden = true, noremap = false, mode = "nvoitc" }
 end
 
-
 for i = 1, 12 do
   wk.add({
     full_map("<F" .. i + 12 .. ">", "<S-F" .. i .. ">"),
@@ -226,134 +203,116 @@ wk.add({
   -- Smart splits navigation
   {
     "<C-h>",
-    function()
-      ss().move_cursor_left()
-    end,
+    function() ss().move_cursor_left() end,
     desc = "move left",
   },
   {
     "<C-j>",
-    function()
-      ss().move_cursor_down()
-    end,
+    function() ss().move_cursor_down() end,
     desc = "move down",
   },
   {
     "<C-k>",
-    function()
-      ss().move_cursor_up()
-    end,
+    function() ss().move_cursor_up() end,
     desc = "move up",
   },
   {
     "<C-l>",
-    function()
-      ss().move_cursor_right()
-    end,
+    function() ss().move_cursor_right() end,
     desc = "move right",
   },
 
   -- Smart splits resizing
   {
     "<A-h>",
-    function()
-      ss().resize_left()
-    end,
+    function() ss().resize_left() end,
     desc = "resize left",
   },
   {
     "<A-j>",
-    function()
-      ss().resize_down()
-    end,
+    function() ss().resize_down() end,
     desc = "resize down",
   },
   {
     "<A-k>",
-    function()
-      ss().resize_up()
-    end,
+    function() ss().resize_up() end,
     desc = "resize up",
   },
   {
     "<A-l>",
-    function()
-      ss().resize_right()
-    end,
+    function() ss().resize_right() end,
     desc = "resize right",
   },
 
   {
     "<F1>",
-    function()
-      gs().stage_hunk()
-    end,
+    function() gs().stage_hunk() end,
     desc = "stage hunk",
   },
   {
     "<F1>",
-    function()
-      gs().stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-    end,
+    function() gs().stage_hunk({ vim.fn.line("."), vim.fn.line("v") }) end,
     mode = "v",
     desc = "stage hunk",
   },
   {
     "<F2>",
-    function()
-      gs().prev_hunk()
-    end,
+    function() gs().prev_hunk() end,
     desc = "previous hunk",
   },
   {
     "<F3>",
-    function()
-      gs().next_hunk()
-    end,
+    function() gs().next_hunk() end,
     desc = "next hunk",
   },
-  { "<S-F1>", ":q<cr>",            desc = "quit" },
-  { "<S-F1>", "<C-\\><C-n>:q<cr>", mode = "i",   desc = "quit" },
+  { "<S-F1>", ":q<cr>", desc = "quit" },
+  { "<S-F1>", "<C-\\><C-n>:q<cr>", mode = "i", desc = "quit" },
   {
     "<S-F2>",
-    function()
-      vim.diagnostic.jump({ count = -1, float = true })
-    end,
+    function() vim.diagnostic.jump({ count = -1, float = true }) end,
     desc = "previous diagnostic",
   },
   {
     "<S-F3>",
-    function()
-      vim.diagnostic.jump({ count = 1, float = true })
-    end,
+    function() vim.diagnostic.jump({ count = 1, float = true }) end,
     desc = "next diagnostic",
   },
   { "<C-F2>", "<Plug>(ale_previous_wrap)", desc = "previous diagnostic" },
-  { "<C-F3>", "<Plug>(ale_next_wrap)",     desc = "next diagnostic" },
+  { "<C-F3>", "<Plug>(ale_next_wrap)", desc = "next diagnostic" },
   {
     "<F4>",
-    function()
-      tb().tags({ default_text = vim.fn.expand("<cword>") })
-    end,
+    function() tb().tags({ default_text = vim.fn.expand("<cword>") }) end,
     desc = "cword tags",
   },
-  { "<F6>",       ":cprevious<cr>",                  desc = "quickfix next" },
-  { "<S-F6>",     ":lprevious<cr>",                  desc = "location next" },
-  { "<F7>",       ":cnext<cr>",                      desc = "quickfix previous" },
-  { "<S-F7>",     ":lnext<cr>",                      desc = "location next" },
-  { "<F9>",       ":cclose<bar>lclose<bar>only<cr>", desc = "close other windows" },
-  { "<C-F5>",     "expand selection" },
-  { "<C-F6>",     "reduce selection" },
-  { "<C-F7>",     "expand selection to name" },
-  { "<F12>",      "",                               desc = "previous buffer" },
+  { "<F6>", ":cprevious<cr>", desc = "quickfix next" },
+  { "<S-F6>", ":lprevious<cr>", desc = "location next" },
+  {
+    "<F7>",
+    ":cnext<cr>",
+    desc = "quickfix previous",
+  },
+  { "<S-F7>", ":lnext<cr>", desc = "location next" },
+  {
+    "<F9>",
+    ":cclose<bar>lclose<bar>only<cr>",
+    desc = "close other windows",
+  },
+  { "<C-F5>", "expand selection" },
+  { "<C-F6>", "reduce selection" },
+  { "<C-F7>", "expand selection to name" },
+  { "<F12>", "", desc = "previous buffer" },
 
-  { "<PageUp>",   "0",                              desc = "page up" },
-  { "<PageDown>", "0",                              desc = "page down" },
-  { "-",          desc = "comment" },
-  { "ä",          desc = "show cursor" },
-  { "ö",          ":w<cr> | :wa<cr>",                desc = "write all" },
+  { "<PageUp>", "0", desc = "page up" },
+  { "<PageDown>", "0", desc = "page down" },
+  { "-", desc = "comment" },
+  { "ä", desc = "show cursor" },
+  { "ö", ":w<cr> | :wa<cr>", desc = "write all" },
 
-  { "*",          smart_star_search,                 desc = "highlight word (case sensitive)" },
+  {
+    "*",
+    smart_star_search,
+    desc = "highlight word (case sensitive)",
+  },
   {
     "#",
     [[*``<cmd>lua require("hlslens").start()<cr>]],
@@ -375,14 +334,14 @@ wk.add({
     desc = "previous match",
   },
 
-  { "g",   group = "goto" },
-  { "gd",  lb.definition,      desc = "definition" },
-  { "gD",  lb.declaration,     desc = "declaration" },
-  { "gi",  lb.implementation,  desc = "implementation" },
-  { "gr",  lb.references,      desc = "references" },
+  { "g", group = "goto" },
+  { "gd", lb.definition, desc = "definition" },
+  { "gD", lb.declaration, desc = "declaration" },
+  { "gi", lb.implementation, desc = "implementation" },
+  { "gr", lb.references, desc = "references" },
 
-  { "gl",  group = "lsp" },
-  { "gla", lb.code_action,     desc = "action" },
+  { "gl", group = "lsp" },
+  { "gla", lb.code_action, desc = "action" },
   { "glD", lb.type_definition, desc = "type definition" },
   {
     "glf",
@@ -411,61 +370,59 @@ wk.add({
     mode = { "n", "v" },
     desc = "format",
   },
-  { "glF",  ":ALEFix<cr>",             desc = "ALE fix" },
-  { "gli",  lb.incoming_calls,         desc = "incoming calls" },
-  { "glk",  lb.signature_help,         desc = "signature" },
-  { "glK",  lb.hover,                  desc = "hover" },
-  { "gll",  vim.diagnostic.open_float, desc = "show" },
-  { "glo",  lb.outgoing_calls,         desc = "outgoing calls" },
-  { "glq",  vim.diagnostic.setqflist,  desc = "quickfix" },
-  { "glr",  lb.rename,                 desc = "rename" },
-  { "gls",  lb.lsp_document_symbols,   desc = "symbols" },
+  { "glF", ":ALEFix<cr>", desc = "ALE fix" },
+  { "gli", lb.incoming_calls, desc = "incoming calls" },
+  { "glk", lb.signature_help, desc = "signature" },
+  { "glK", lb.hover, desc = "hover" },
+  { "gll", vim.diagnostic.open_float, desc = "show" },
+  { "glo", lb.outgoing_calls, desc = "outgoing calls" },
+  { "glq", vim.diagnostic.setqflist, desc = "quickfix" },
+  { "glr", lb.rename, desc = "rename" },
+  { "gls", lb.lsp_document_symbols, desc = "symbols" },
 
-  { "glv",  group = "virtual text" },
-  { "glvh", d.hide,                    desc = "hide" },
-  { "glvs", d.show,                    desc = "show" },
+  { "glv", group = "virtual text" },
+  { "glvh", d.hide, desc = "hide" },
+  { "glvs", d.show, desc = "show" },
 
-  { "glw",  group = "workspace" },
-  { "glwa", lb.add_workspace_folder,   desc = "add" },
+  { "glw", group = "workspace" },
+  { "glwa", lb.add_workspace_folder, desc = "add" },
   {
     "glwl",
-    function()
-      print(vim.inspect(lb.list_workspace_folders()))
-    end,
+    function() print(vim.inspect(lb.list_workspace_folders())) end,
     desc = "list",
   },
   { "glwr", lb.remove_workspace_folder, desc = "remove" },
 
-  { "gly",  group = "tsserver" },
-  { "glyi", ":TSLspImportAll<cr>",      desc = "import all" },
-  { "glyo", ":TSLspOrganize<cr>",       desc = "organise" },
-  { "glyr", ":TSLspRenameFile<cr>",     desc = "rename file" },
+  { "gly", group = "tsserver" },
+  { "glyi", ":TSLspImportAll<cr>", desc = "import all" },
+  { "glyo", ":TSLspOrganize<cr>", desc = "organise" },
+  { "glyr", ":TSLspRenameFile<cr>", desc = "rename file" },
 
   -- breaks works at snake and camel case boundaries
-  { "gl",  group = "spider" },
+  { "gl", group = "spider" },
   {
     "gpw",
     function() require("spider").motion("w") end,
     mode = { "n", "o", "x" },
-    desc = "Spider-w"
+    desc = "Spider-w",
   },
   {
     "gpe",
     function() require("spider").motion("e") end,
     mode = { "n", "o", "x" },
-    desc = "Spider-e"
+    desc = "Spider-e",
   },
   {
     "gpb",
     function() require("spider").motion("b") end,
     mode = { "n", "o", "x" },
-    desc = "Spider-b"
+    desc = "Spider-b",
   },
   {
     "gpge",
     function() require("spider").motion("ge") end,
     mode = { "n", "o", "x" },
-    desc = "Spider-ge"
+    desc = "Spider-ge",
   },
 
   {
@@ -473,14 +430,12 @@ wk.add({
     { "r", group = "replace" },
     {
       "r<C-k><C-k>",
-      function()
-        bd().digraphs()
-      end,
+      function() bd().digraphs() end,
       desc = "digraph",
     },
   },
 
-  { "<leader>",  group = "leader" },
+  { "<leader>", group = "leader" },
   { "<leader> ", group = "plugin" },
   { "<leader>a", group = "avante" },
 
@@ -489,182 +444,158 @@ wk.add({
 
     {
       "<leader>  ",
-      function()
-        require("yazi").yazi()
-      end,
+      function() require("yazi").yazi() end,
       desc = "yazi",
     },
-    { "<leader> .",  group = "claudecode" },
+    { "<leader> .", group = "claudecode" },
 
     { "<leader> ,",  group = "opencode" },
 
-    { "<leader> a",  group = "nvim-aider" },
+    { "<leader> a", group = "nvim-aider" },
     { "<leader> a,", aider_cmd("Aider toggle"), desc = "toggle" },
-    { "<leader> a ", aider_cmd("Aider"),        desc = "picker" },
+    { "<leader> a ", aider_cmd("Aider"), desc = "picker" },
     {
       "<leader> as",
       aider_cmd("Aider send"),
       desc = "send",
       mode = { "n", "v" },
     },
-    { "<leader> ac", aider_cmd("Aider command"),      desc = "commands" },
-    { "<leader> ab", aider_cmd("Aider buffer"),       desc = "send buffer" },
-    { "<leader> aa", aider_cmd("Aider add"),          desc = "add file" },
-    { "<leader> ad", aider_cmd("Aider drop"),         desc = "drop file" },
+    { "<leader> ac", aider_cmd("Aider command"), desc = "commands" },
+    { "<leader> ab", aider_cmd("Aider buffer"), desc = "send buffer" },
+    { "<leader> aa", aider_cmd("Aider add"), desc = "add file" },
+    { "<leader> ad", aider_cmd("Aider drop"), desc = "drop file" },
     { "<leader> ar", aider_cmd("Aider add readonly"), desc = "add read-only" },
-    { "<leader> aw", aider_add_all_windows,           desc = "add all windows" },
-    { "<leader> ag", aider_add_git_changes,           desc = "add git changes" },
-    { "<leader> aR", aider_cmd("Aider reset"),        desc = "reset session" },
+    {
+      "<leader> aw",
+      aider_add_all_windows,
+      desc = "add all windows",
+    },
+    {
+      "<leader> ag",
+      aider_add_git_changes,
+      desc = "add git changes",
+    },
+    { "<leader> aR", aider_cmd("Aider reset"), desc = "reset session" },
     {
       "<leader> al",
-      function()
-        require("nvim_aider").api.send_diagnostics_with_prompt()
-      end,
+      function() require("nvim_aider").api.send_diagnostics_with_prompt() end,
       desc = "send lsp diagnostics",
     },
-    { "<leader> at",  group = "tree integration" },
-    { "<leader> ata", aider_cmd("AiderTreeAddFile"),  desc = "add from tree" },
+    { "<leader> at", group = "tree integration" },
+    { "<leader> ata", aider_cmd("AiderTreeAddFile"), desc = "add from tree" },
     { "<leader> atd", aider_cmd("AiderTreeDropFile"), desc = "drop from tree" },
 
-    { "<leader> c",   group = "CodeCompanion" },
+    { "<leader> c", group = "CodeCompanion" },
     {
       "<leader> ca",
-      function()
-        require("codecompanion").actions()
-      end,
+      function() require("codecompanion").actions() end,
       desc = "Actions",
     },
     {
       "<leader> cc",
-      function()
-        require("codecompanion").toggle()
-      end,
+      function() require("codecompanion").toggle() end,
       desc = "Chat",
     },
   },
 
-  { "<leader> d",  group = "diffview" },
-  { "<leader> dc", ":DiffviewClose<cr>",         desc = "close" },
-  { "<leader> df", ":DiffviewFileHistory<cr>",   desc = "file history" },
+  { "<leader> d", group = "diffview" },
+  { "<leader> dc", ":DiffviewClose<cr>", desc = "close" },
+  { "<leader> df", ":DiffviewFileHistory<cr>", desc = "file history" },
   { "<leader> dF", ":DiffviewFileHistory %<cr>", desc = "file history %" },
-  { "<leader> do", ":DiffviewOpen<cr>",          desc = "open" },
+  { "<leader> do", ":DiffviewOpen<cr>", desc = "open" },
 
-  { "<leader> j",  group = "join" },
+  { "<leader> j", group = "join" },
   {
     "<leader> jj",
-    function()
-      tj().join()
-    end,
+    function() tj().join() end,
     desc = "join",
   },
   {
     "<leader> jJ",
-    function()
-      tj().join({ split = { recursive = true } })
-    end,
+    function() tj().join({ split = { recursive = true } }) end,
     desc = "recursive join",
   },
   {
     "<leader> js",
-    function()
-      tj().split()
-    end,
+    function() tj().split() end,
     desc = "split",
   },
   {
     "<leader> jS",
-    function()
-      tj().split({ split = { recursive = true } })
-    end,
+    function() tj().split({ split = { recursive = true } }) end,
     desc = "recursive split",
   },
   {
     "<leader> jt",
-    function()
-      tj().toggle()
-    end,
+    function() tj().toggle() end,
     desc = "toggle",
   },
   {
     "<leader> jT",
-    function()
-      tj().toggle({ split = { recursive = true } })
-    end,
+    function() tj().toggle({ split = { recursive = true } }) end,
     desc = "recursive toggle",
   },
 
-  { "<leader> l",  group = "lazy" },
-  { "<leader> lh", ":Lazy<cr>",            desc = "home" },
-  { "<leader> ls", ":Lazy sync<cr>",       desc = "sync" },
-  { "<leader> o",  "<cmd>Oil --float<cr>", desc = "edit directory" },
+  { "<leader> l", group = "lazy" },
+  { "<leader> lh", ":Lazy<cr>", desc = "home" },
+  { "<leader> ls", ":Lazy sync<cr>", desc = "sync" },
+  { "<leader> o", "<cmd>Oil --float<cr>", desc = "edit directory" },
   {
     "<leader> q",
-    function()
-      require("replacer").run()
-    end,
+    function() require("replacer").run() end,
     desc = "quickfix replacer",
   },
 
   { "<leader> r", group = "linter rules" },
   {
     "<leader> ri",
-    function()
-      require("rulebook").ignoreRule()
-    end,
+    function() require("rulebook").ignoreRule() end,
     desc = "ignore",
   },
   {
     "<leader> rl",
-    function()
-      require("rulebook").lookupRule()
-    end,
+    function() require("rulebook").lookupRule() end,
     desc = "lookup rule",
   },
   {
     "<leader> rs",
-    function()
-      require("rulebook").suppressFormatter()
-    end,
+    function() require("rulebook").suppressFormatter() end,
     mode = { "n", "x" },
     desc = "suppress formatter",
   },
   {
     "<leader> ry",
-    function()
-      require("rulebook").yankDiagnosticCode()
-    end,
+    function() require("rulebook").yankDiagnosticCode() end,
     desc = "yank diagnostic code",
   },
 
   {
     mode = { "n", "v" },
-    { "<leader> t",   group = "translate" },
-    { "<leader> td",  group = "deutsch" },
+    { "<leader> t", group = "translate" },
+    { "<leader> td", group = "deutsch" },
     { "<leader> tdf", ":Translate DE -output=floating<cr>", desc = "floating" },
     { "<leader> tdg", ":Translate DE -output=register<cr>", desc = "register" },
-    { "<leader> tdi", ":Translate DE -output=insert<cr>",   desc = "insert" },
-    { "<leader> tdr", ":Translate DE -output=replace<cr>",  desc = "replace" },
-    { "<leader> tds", ":Translate DE -output=split<cr>",    desc = "split" },
+    { "<leader> tdi", ":Translate DE -output=insert<cr>", desc = "insert" },
+    { "<leader> tdr", ":Translate DE -output=replace<cr>", desc = "replace" },
+    { "<leader> tds", ":Translate DE -output=split<cr>", desc = "split" },
 
-    { "<leader> te",  group = "english" },
+    { "<leader> te", group = "english" },
     { "<leader> tef", ":Translate EN -output=floating<cr>", desc = "floating" },
     { "<leader> teg", ":Translate EN -output=register<cr>", desc = "register" },
-    { "<leader> tei", ":Translate EN -output=insert<cr>",   desc = "insert" },
-    { "<leader> ter", ":Translate EN -output=replace<cr>",  desc = "replace" },
-    { "<leader> tes", ":Translate EN -output=split<cr>",    desc = "split" },
+    { "<leader> tei", ":Translate EN -output=insert<cr>", desc = "insert" },
+    { "<leader> ter", ":Translate EN -output=replace<cr>", desc = "replace" },
+    { "<leader> tes", ":Translate EN -output=split<cr>", desc = "split" },
   },
 
-  { "<leader>.",  smart_open,            desc = "smart open" },
+  { "<leader>.", smart_open, desc = "smart open" },
   {
     "<leader>-",
-    function()
-      tb().find_files({ hidden = true })
-    end,
+    function() tb().find_files({ hidden = true }) end,
     desc = "honour ignores",
   },
 
-  { "<leader> ",  group = "plugins" },
-  { "<leader>,",  group = "language" },
+  { "<leader> ", group = "plugins" },
+  { "<leader>,", group = "language" },
   { "<leader>,a", group = "all" },
   {
     "<leader>,ai",
@@ -676,13 +607,13 @@ wk.add({
     end,
     desc = "set indentation",
   },
-  { "<leader>,g",   group = "go" },
-  { "<leader>,ga",  ":GoAlt!<cr>",     desc = "alternative file" },
-  { "<leader>,gc",  ":GoCoverage<cr>", desc = "coverage" },
+  { "<leader>,g", group = "go" },
+  { "<leader>,ga", ":GoAlt!<cr>", desc = "alternative file" },
+  { "<leader>,gc", ":GoCoverage<cr>", desc = "coverage" },
 
-  { "<leader>,gd",  group = "debug" },
-  { "<leader>,gds", ":GoDebug<cr>",    desc = "start" },
-  { "<leader>,gdt", ":GoDbgStop<cr>",  desc = "stop" },
+  { "<leader>,gd", group = "debug" },
+  { "<leader>,gds", ":GoDebug<cr>", desc = "start" },
+  { "<leader>,gdt", ":GoDbgStop<cr>", desc = "stop" },
 
   {
     "<leader>,gi",
@@ -721,35 +652,27 @@ wk.add({
   },
   {
     "<leader>,gto",
-    function()
-      nt().output.open({ enter = true })
-    end,
+    function() nt().output.open({ enter = true }) end,
     desc = "open results",
   },
   {
     "<leader>,gts",
-    function()
-      nt().summary.toggle()
-    end,
+    function() nt().summary.toggle() end,
     desc = "toggle summary",
   },
 
-  { "<leader>,p",  group = "perl" },
+  { "<leader>,p", group = "perl" },
   {
     "<leader>,ps",
-    function()
-      load_perl_stack_trace()
-    end,
+    function() load_perl_stack_trace() end,
     desc = "stack trace to qf",
   },
 
-  { "<leader>f",  group = "telescope" },
+  { "<leader>f", group = "telescope" },
   { "<leader>f,", group = "find files" },
   {
     "<leader>f,a",
-    function()
-      t().find_files({ hidden = true, no_ignore = true })
-    end,
+    function() t().find_files({ hidden = true, no_ignore = true }) end,
     desc = "include ignores",
   },
   {
@@ -765,33 +688,33 @@ wk.add({
   { "<leader>f,f", ":Telescope frecency workspace=CWD<cr>", desc = "frecency" },
   {
     "<leader>f,g",
-    function()
-      t().git_files({ hidden = true })
-    end,
+    function() t().git_files({ hidden = true }) end,
     desc = "git files",
   },
   {
     "<leader>f,i",
-    function()
-      t().find_files({ hidden = true })
-    end,
+    function() t().find_files({ hidden = true }) end,
     desc = "honour ignores",
   },
-  { "<leader>f,s", smart_open,                              desc = "smart open" },
+  {
+    "<leader>f,s",
+    smart_open,
+    desc = "smart open",
+  },
 
-  { "<leader>fa",  vim.lsp.buf.code_action,                 desc = "code action" },
+  {
+    "<leader>fa",
+    vim.lsp.buf.code_action,
+    desc = "code action",
+  },
   {
     "<leader>fA",
-    function()
-      t().find_files({ hidden = true, no_ignore = true })
-    end,
+    function() t().find_files({ hidden = true, no_ignore = true }) end,
     desc = "find all files",
   },
   {
     "<leader>fb",
-    function()
-      tb().buffers()
-    end,
+    function() tb().buffers() end,
     desc = "buffers",
   },
 
@@ -812,13 +735,11 @@ wk.add({
 
   {
     "<leader>fC",
-    function()
-      tb().commands()
-    end,
+    function() tb().commands() end,
     desc = "commands",
   },
 
-  { "<leader>fd",  group = "diagnostics" },
+  { "<leader>fd", group = "diagnostics" },
   { "<leader>fdd", ":Telescope diagnostics<cr>", desc = "all" },
   {
     "<leader>fde",
@@ -841,269 +762,207 @@ wk.add({
 
   {
     "<leader>fD",
-    function()
-      tb().lsp_diagnostics()
-    end,
+    function() tb().lsp_diagnostics() end,
     desc = "lsp diagnostics",
   },
   {
     "<leader>fe",
-    function()
-      tb().resume()
-    end,
+    function() tb().resume() end,
     mode = { "n", "v" },
     desc = "resume",
   },
   {
     "<leader>ff",
-    function()
-      tb().builtin()
-    end,
+    function() tb().builtin() end,
     mode = { "n", "v" },
     desc = "builtin",
   },
   {
     "<leader>fE",
-    function()
-      tb().treesitter()
-    end,
+    function() tb().treesitter() end,
     desc = "treesitter",
   },
   {
     "<leader>fg",
-    function()
-      tb().live_grep()
-    end,
+    function() tb().live_grep() end,
     desc = "live grep",
   },
   {
     "<leader>fG",
     function()
       tb().live_grep({
-        additional_args = function()
-          return { "-w" }
-        end,
+        additional_args = function() return { "-w" } end,
       })
     end,
     desc = "grep word",
   },
   {
     "<leader>fh",
-    function()
-      tb().help_tags()
-    end,
+    function() tb().help_tags() end,
     desc = "help tags",
   },
   {
     "<leader>fH",
-    function()
-      tb().highlights()
-    end,
+    function() tb().highlights() end,
     desc = "highlights",
   },
 
   { "<leader>fi", group = "git" },
   {
     "<leader>fib",
-    function()
-      tb().git_branches()
-    end,
+    function() tb().git_branches() end,
     desc = "branches",
   },
   {
     "<leader>fic",
-    function()
-      tb().git_commits()
-    end,
+    function() tb().git_commits() end,
     desc = "commits",
   },
   {
     "<leader>fif",
-    function()
-      tb().git_files()
-    end,
+    function() tb().git_files() end,
     desc = "files",
   },
   {
     "<leader>fih",
-    function()
-      t().extensions.git_file_history.git_file_history()
-    end,
+    function() t().extensions.git_file_history.git_file_history() end,
     desc = "file history",
   },
   {
     "<leader>fis",
-    function()
-      tb().git_status()
-    end,
+    function() tb().git_status() end,
     desc = "status",
   },
   {
     "<leader>fit",
-    function()
-      tb().git_stash()
-    end,
+    function() tb().git_stash() end,
     desc = "stash",
   },
   {
     "<leader>fiu",
-    function()
-      tb().git_commits()
-    end,
+    function() tb().git_commits() end,
     desc = "buffer commits",
   },
 
   {
     "<leader>fj",
-    function()
-      tb().jumplist()
-    end,
+    function() tb().jumplist() end,
     desc = "jump list",
   },
   {
     "<leader>fJ",
-    function()
-      t().extensions.emoji.emoji()
-    end,
+    function() t().extensions.emoji.emoji() end,
     desc = "emoji",
   },
   {
     "<leader>fl",
-    function()
-      tb().current_buffer_fuzzy_find()
-    end,
+    function() tb().current_buffer_fuzzy_find() end,
     desc = "fuzzy find",
   },
   {
     "<leader>fm",
-    function()
-      tb().keymaps()
-    end,
+    function() tb().keymaps() end,
     desc = "mappings",
   },
   {
     "<leader>fM",
-    function()
-      tb().man_pages()
-    end,
+    function() tb().man_pages() end,
     desc = "man pages",
   },
   {
     "<leader>fn",
-    function()
-      t().extensions.notify.notify()
-    end,
+    function() t().extensions.notify.notify() end,
     desc = "show notifications",
   },
   {
     "<leader>fo",
-    function()
-      tb().vim_options()
-    end,
+    function() tb().vim_options() end,
     desc = "vim options",
   },
   {
     "<leader>fO",
-    function()
-      tb().oldfiles()
-    end,
+    function() tb().oldfiles() end,
     desc = "old files",
   },
   {
     "<leader>fp",
-    function()
-      t().extensions.neoclip.default()
-    end,
+    function() t().extensions.neoclip.default() end,
     desc = "paste",
   },
   { "<leader>fP", ":UrlView lazy<cr>", desc = "plugins" },
   {
     "<leader>fq",
-    function()
-      tb().quickfix()
-    end,
+    function() tb().quickfix() end,
     desc = "quickfix",
   },
   {
     "<leader>fQ",
-    function()
-      tb().quickfixhistory()
-    end,
+    function() tb().quickfixhistory() end,
     desc = "quickfix history",
   },
   {
     "<leader>fr",
-    function()
-      tb().lsp_references()
-    end,
+    function() tb().lsp_references() end,
     desc = "lsp references",
   },
   {
     "<leader>fR",
-    function()
-      t().extensions.refactoring.refactors()
-    end,
+    function() t().extensions.refactoring.refactors() end,
     desc = "refactor",
   },
   {
     "<leader>fs",
-    function()
-      tb().grep_string()
-    end,
+    function() tb().grep_string() end,
     mode = { "n", "v" },
     desc = "grep string",
   },
   {
     "<leader>fS",
-    function()
-      tb().grep_string({ word_match = "-w" })
-    end,
+    function() tb().grep_string({ word_match = "-w" }) end,
     desc = "grep string word",
   },
   {
     "<leader>ft",
-    function()
-      tb().current_buffer_tags()
-    end,
+    function() tb().current_buffer_tags() end,
     desc = "local tags",
   },
   {
     "<leader>fT",
-    function()
-      tb().tags()
-    end,
+    function() tb().tags() end,
     desc = "tags",
   },
   {
     "<leader>fu",
-    function()
-      t().extensions.undo.undo()
-    end,
+    function() t().extensions.undo.undo() end,
     desc = "undo",
   },
 
-  { "<leader>fU",  group = "url" },
-  { "<leader>fUu", ":UrlView buffer<cr>",               desc = "yank url" },
+  { "<leader>fU", group = "url" },
+  { "<leader>fUu", ":UrlView buffer<cr>", desc = "yank url" },
   { "<leader>fUU", ":UrlView buffer action=system<cr>", desc = "open url" },
-  { "<leader>fUl", ":UrlView lazy<cr>",                 desc = "yank lazy url" },
-  { "<leader>fUL", ":UrlView lazy action=system<cr>",   desc = "open lazy url" },
+  {
+    "<leader>fUl",
+    ":UrlView lazy<cr>",
+    desc = "yank lazy url",
+  },
+  {
+    "<leader>fUL",
+    ":UrlView lazy action=system<cr>",
+    desc = "open lazy url",
+  },
   {
     "<leader>fv",
-    function()
-      tb().tags({ default_text = vim.fn.expand("<cword>") })
-    end,
+    function() tb().tags({ default_text = vim.fn.expand("<cword>") }) end,
     desc = "cword tags",
   },
-  { "<leader>fx",  ":TodoTelescope<cr>",     desc = "todos" },
-  { "<leader>fY",  ":Telescope symbols<cr>", desc = "symbols" },
+  { "<leader>fx", ":TodoTelescope<cr>", desc = "todos" },
+  { "<leader>fY", ":Telescope symbols<cr>", desc = "symbols" },
 
-  { "<leader>fy",  group = "type" },
+  { "<leader>fy", group = "type" },
   { "<leader>fyg", group = "go" },
   {
     "<leader>fygg",
-    function()
-      tb().live_grep({ type_filter = "go" })
-    end,
+    function() tb().live_grep({ type_filter = "go" }) end,
     desc = "grep",
   },
   {
@@ -1111,9 +970,7 @@ wk.add({
     function()
       tb().live_grep({
         type_filter = "go",
-        additional_args = function()
-          return { "-w" }
-        end,
+        additional_args = function() return { "-w" } end,
       })
     end,
     desc = "grep word",
@@ -1122,9 +979,7 @@ wk.add({
     "<leader>fygs",
     function()
       tb().grep_string({
-        additional_args = function()
-          return { "--type=go" }
-        end,
+        additional_args = function() return { "--type=go" } end,
       })
     end,
     mode = { "n", "v" },
@@ -1134,9 +989,7 @@ wk.add({
     "<leader>fygS",
     function()
       tb().grep_string({
-        additional_args = function()
-          return { "--type=go" }
-        end,
+        additional_args = function() return { "--type=go" } end,
         word_match = "-w",
       })
     end,
@@ -1147,9 +1000,7 @@ wk.add({
   { "<leader>fyp", group = "perl" },
   {
     "<leader>fypg",
-    function()
-      tb().live_grep({ type_filter = "perl" })
-    end,
+    function() tb().live_grep({ type_filter = "perl" }) end,
     desc = "grep",
   },
   {
@@ -1157,9 +1008,7 @@ wk.add({
     function()
       tb().live_grep({
         type_filter = "perl",
-        additional_args = function()
-          return { "-w" }
-        end,
+        additional_args = function() return { "-w" } end,
       })
     end,
     desc = "grep word",
@@ -1168,9 +1017,7 @@ wk.add({
     "<leader>fyps",
     function()
       tb().grep_string({
-        additional_args = function()
-          return { "--type=perl" }
-        end,
+        additional_args = function() return { "--type=perl" } end,
       })
     end,
     mode = { "n", "v" },
@@ -1180,9 +1027,7 @@ wk.add({
     "<leader>fypS",
     function()
       tb().grep_string({
-        additional_args = function()
-          return { "--type=perl" }
-        end,
+        additional_args = function() return { "--type=perl" } end,
         word_match = "-w",
       })
     end,
@@ -1191,13 +1036,11 @@ wk.add({
   },
   {
     "<leader>fz",
-    function()
-      tb().lsp_document_symbols()
-    end,
+    function() tb().lsp_document_symbols() end,
     desc = "lsp symbols",
   },
 
-  { "<leader>g",   group = "git" },
+  { "<leader>g", group = "git" },
   {
     "<leader>gg",
     function() vim.cmd("tab Git commit") end,
@@ -1210,267 +1053,197 @@ wk.add({
   },
   {
     "<leader>gp",
-    function()
-      vim.cmd("Git push")
-    end,
+    function() vim.cmd("Git push") end,
     desc = "push",
   },
 
-  { "<leader>gl",  group = "gitlab" },
+  { "<leader>gl", group = "gitlab" },
   {
     "<leader>gla",
-    function()
-      gl().approve()
-    end,
+    function() gl().approve() end,
     desc = "approve",
   },
 
   { "<leader>glA", group = "assignee" },
   {
     "<leader>glAa",
-    function()
-      gl().add_assignee()
-    end,
+    function() gl().add_assignee() end,
     desc = "add assignee",
   },
   {
     "<leader>glAd",
-    function()
-      gl().delete_assignee()
-    end,
+    function() gl().delete_assignee() end,
     desc = "delete assignee",
   },
 
   {
     "<leader>glc",
-    function()
-      gl().create_comment()
-    end,
+    function() gl().create_comment() end,
     desc = "create comment",
   },
   {
     "<leader>glc",
-    function()
-      gl().create_multiline_comment()
-    end,
+    function() gl().create_multiline_comment() end,
     mode = "v",
     desc = "create multiline comment",
   },
   {
     "<leader>gld",
-    function()
-      gl().toggle_discussions()
-    end,
+    function() gl().toggle_discussions() end,
     desc = "toggle discussions",
   },
 
   { "<leader>gll", group = "label" },
   {
     "<leader>glla",
-    function()
-      gl().add_label()
-    end,
+    function() gl().add_label() end,
     desc = "add label",
   },
   {
     "<leader>glld",
-    function()
-      gl().delete_label()
-    end,
+    function() gl().delete_label() end,
     desc = "delete label",
   },
 
   {
     "<leader>glm",
-    function()
-      gl().move_to_discussion_tree_from_diagnostic()
-    end,
+    function() gl().move_to_discussion_tree_from_diagnostic() end,
     desc = "move to discussion tree from diagnostic",
   },
 
   { "<leader>glM", group = "MR" },
   {
     "<leader>glMc",
-    function()
-      gl().create_mr()
-    end,
+    function() gl().create_mr() end,
     desc = "create mr",
   },
   {
     "<leader>glMm",
-    function()
-      gl().merge()
-    end,
+    function() gl().merge() end,
     desc = "merge",
   },
 
   {
     "<leader>gln",
-    function()
-      gl().create_note()
-    end,
+    function() gl().create_note() end,
     desc = "create note",
   },
   {
     "<leader>glo",
-    function()
-      gl().open_in_browser()
-    end,
+    function() gl().open_in_browser() end,
     desc = "open in browser",
   },
   {
     "<leader>glp",
-    function()
-      gl().pipeline()
-    end,
+    function() gl().pipeline() end,
     desc = "pipeline",
   },
   {
     "<leader>glr",
-    function()
-      gl().review()
-    end,
+    function() gl().review() end,
     desc = "review",
   },
 
   { "<leader>glR", group = "reviewer" },
   {
     "<leader>glRa",
-    function()
-      gl().add_reviewer()
-    end,
+    function() gl().add_reviewer() end,
     desc = "add reviewer",
   },
   {
     "<leader>glRd",
-    function()
-      gl().delete_reviewer()
-    end,
+    function() gl().delete_reviewer() end,
     desc = "delete reviewer",
   },
 
   {
     "<leader>gls",
-    function()
-      gl().summary()
-    end,
+    function() gl().summary() end,
     desc = "summary",
   },
   {
     "<leader>glS",
-    function()
-      gl().create_comment_suggestion()
-    end,
+    function() gl().create_comment_suggestion() end,
     mode = "v",
     desc = "create comment suggestion",
   },
   {
     "<leader>glV",
-    function()
-      gl().revoke()
-    end,
+    function() gl().revoke() end,
     desc = "revoke",
   },
 
-  { "<leader>h",   group = "hunk" },
+  { "<leader>h", group = "hunk" },
   {
     "<leader>hb",
-    function()
-      gs().blame_line({ full = true })
-    end,
+    function() gs().blame_line({ full = true }) end,
     desc = "blame",
   },
   {
     "<leader>hd",
-    function()
-      gs().diffthis()
-    end,
+    function() gs().diffthis() end,
     desc = "diff hunk",
   },
   {
     "<leader>hD",
-    function()
-      gs().diffthis("~")
-    end,
+    function() gs().diffthis("~") end,
     desc = "diff",
   },
   {
     "<leader>hi",
-    function()
-      gs().preview_hunk_inline()
-    end,
+    function() gs().preview_hunk_inline() end,
     desc = "preview hunk inline",
   },
   {
     "<leader>hp",
-    function()
-      gs().preview_hunk()
-    end,
+    function() gs().preview_hunk() end,
     desc = "preview hunk",
   },
   {
     "<leader>hr",
-    function()
-      gs().reset_hunk()
-    end,
+    function() gs().reset_hunk() end,
     desc = "reset hunk",
   },
   {
     "<leader>hr",
-    function()
-      gs().reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-    end,
+    function() gs().reset_hunk({ vim.fn.line("."), vim.fn.line("v") }) end,
     mode = "v",
     desc = "reset hunk",
   },
   {
     "<leader>hR",
-    function()
-      gs().reset_buffer()
-    end,
+    function() gs().reset_buffer() end,
     desc = "reset_buffer",
   },
   {
     "<leader>hs",
-    function()
-      gs().stage_hunk()
-    end,
+    function() gs().stage_hunk() end,
     desc = "stage hunk",
   },
   {
     "<leader>hs",
-    function()
-      gs().stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-    end,
+    function() gs().stage_hunk({ vim.fn.line("."), vim.fn.line("v") }) end,
     mode = "v",
     desc = "stage hunk",
   },
   {
     "<leader>hS",
-    function()
-      gs().stage_buffer()
-    end,
+    function() gs().stage_buffer() end,
     desc = "stage buffer",
   },
   {
     "<leader>hu",
-    function()
-      gs().undo_stage_hunk()
-    end,
+    function() gs().undo_stage_hunk() end,
     desc = "unstage hunk",
   },
   {
     "<leader>hx",
-    function()
-      gs().show()
-    end,
+    function() gs().show() end,
     desc = "show index",
   },
   {
     "ih",
-    function()
-      gs().select_hunk()
-    end,
+    function() gs().select_hunk() end,
     mode = { "o", "x" },
     desc = "select hunk",
   },
@@ -1484,27 +1257,25 @@ wk.add({
   },
   {
     "<leader>m",
-    function()
-      tb().git_status()
-    end,
+    function() tb().git_status() end,
     desc = "find git changes",
   },
-  { "<leader>n",  ":NewFile<cr>", desc = "new file template" },
+  { "<leader>n", ":NewFile<cr>", desc = "new file template" },
 
-  { "<leader>q",   group = "quote" },
-  { "<leader>qA",  [[csQJ]],  noremap = false, desc = "-> q( )" },
-  { "<leader>qa",  [[csQF]],  noremap = false, desc = "-> qq( )" },
-  { "<leader>qb",  [[csQ`]],  noremap = false, desc = "-> backtick" },
-  { "<leader>qdb", [[ds`]],   noremap = false, desc = "delete backtick" },
-  { "<leader>qdd", [[ds"]],   noremap = false, desc = "delete double" },
-  { "<leader>qds", [[ds']],   noremap = false, desc = "delete single" },
+  { "<leader>q", group = "quote" },
+  { "<leader>qA", [[csQJ]], noremap = false, desc = "-> q( )" },
+  { "<leader>qa", [[csQF]], noremap = false, desc = "-> qq( )" },
+  { "<leader>qb", [[csQ`]], noremap = false, desc = "-> backtick" },
+  { "<leader>qdb", [[ds`]], noremap = false, desc = "delete backtick" },
+  { "<leader>qdd", [[ds"]], noremap = false, desc = "delete double" },
+  { "<leader>qds", [[ds']], noremap = false, desc = "delete single" },
   { "<leader>qib", [[ysiw`]], noremap = false, desc = "insert backtick" },
   { "<leader>qid", [[ysiw"]], noremap = false, desc = "insert double" },
   { "<leader>qis", [[ysiw']], noremap = false, desc = "insert single" },
-  { "<leader>qQ",  [[csQ']],  noremap = false, desc = "-> single" },
-  { "<leader>qq",  [[csQ"]],  noremap = false, desc = "-> double" },
-  { "<leader>qr",  [[dsQ]],   noremap = false, desc = "delete quotes" },
-  { "<leader>qw",  [[csQA]],  noremap = false, desc = "-> qw( )" },
+  { "<leader>qQ", [[csQ']], noremap = false, desc = "-> single" },
+  { "<leader>qq", [[csQ"]], noremap = false, desc = "-> double" },
+  { "<leader>qr", [[dsQ]], noremap = false, desc = "delete quotes" },
+  { "<leader>qw", [[csQA]], noremap = false, desc = "-> qw( )" },
   {
     "<leader>qi(",
     [[ysiw(]],
@@ -1530,46 +1301,76 @@ wk.add({
     desc = "insert braces without space",
   },
 
-  { "<leader>r",   group = "session & git" },
+  { "<leader>r", group = "session & git" },
   {
     "<leader>rr",
     ":mksess! /tmp/tmp_session.vim<cr>:xa<cr>",
     desc = "save session and exit",
   },
 
-  { "<leader>s",   group = "spell" },
-  { "<leader>sd",  ":setlocal spell spelllang=de_ch<cr>",     desc = "Deutsch" },
-  { "<leader>se",  ":setlocal spell spelllang=en_gb<cr>",     desc = "English" },
-  { "<leader>so",  ":set nospell<cr>",                        desc = "off" },
+  { "<leader>s", group = "spell" },
+  {
+    "<leader>sd",
+    ":setlocal spell spelllang=de_ch<cr>",
+    desc = "Deutsch",
+  },
+  {
+    "<leader>se",
+    ":setlocal spell spelllang=en_gb<cr>",
+    desc = "English",
+  },
+  { "<leader>so", ":set nospell<cr>", desc = "off" },
 
-  { "<leader>t",   group = "toggle" },
-  { "<leader>t ",  ":Yazi toggle<cr>",                        desc = "yazi" },
-  { "<leader>tc",  ":TSContextToggle<cr>",                    desc = "context" },
+  { "<leader>t", group = "toggle" },
+  { "<leader>t ", ":Yazi toggle<cr>", desc = "yazi" },
+  {
+    "<leader>tc",
+    ":TSContextToggle<cr>",
+    desc = "context",
+  },
 
-  { "<leader>tg",  group = "git" },
+  { "<leader>tg", group = "git" },
   { "<leader>tgb", ":Gitsigns toggle_current_line_blame<cr>", desc = "blame" },
-  { "<leader>tgd", ":Gitsigns toggle_deleted<cr>",            desc = "deleted" },
-  { "<leader>tgi", ":Gitsigns toggle_word_diff<cr>",          desc = "diff" },
-  { "<leader>tgl", ":Gitsigns toggle_linehl<cr>",             desc = "line hl" },
-  { "<leader>tgn", ":Gitsigns toggle_numhl<cr>",              desc = "num hl" },
-  { "<leader>tgs", ":Gitsigns toggle_signs<cr>",              desc = "signs" },
+  {
+    "<leader>tgd",
+    ":Gitsigns toggle_deleted<cr>",
+    desc = "deleted",
+  },
+  { "<leader>tgi", ":Gitsigns toggle_word_diff<cr>", desc = "diff" },
+  {
+    "<leader>tgl",
+    ":Gitsigns toggle_linehl<cr>",
+    desc = "line hl",
+  },
+  { "<leader>tgn", ":Gitsigns toggle_numhl<cr>", desc = "num hl" },
+  { "<leader>tgs", ":Gitsigns toggle_signs<cr>", desc = "signs" },
 
-  { "<leader>th",  ":TSBufToggle highlight<cr>",              desc = "treesitter highlight" },
+  {
+    "<leader>th",
+    ":TSBufToggle highlight<cr>",
+    desc = "treesitter highlight",
+  },
 
-  { "<leader>tm",  group = "markdown" },
-  { "<leader>tmp", ":MarkdownPreviewToggle<cr>",              desc = "preview" },
-  { "<leader>tmv", ":Markview toggle<cr>",                    desc = "view" },
-  { "<leader>tms", ":Markview splitToggle<cr>",               desc = "split" },
+  { "<leader>tm", group = "markdown" },
+  {
+    "<leader>tmp",
+    ":MarkdownPreviewToggle<cr>",
+    desc = "preview",
+  },
+  { "<leader>tmv", ":Markview toggle<cr>", desc = "view" },
+  { "<leader>tms", ":Markview splitToggle<cr>", desc = "split" },
 
-  { "<leader>to",  ":Outline<cr>",                            desc = "symbols" },
+  {
+    "<leader>to",
+    ":Outline<cr>",
+    desc = "symbols",
+  },
   {
     "<leader>ts",
-    function()
-      require("sidebar-nvim").toggle()
-    end,
+    function() require("sidebar-nvim").toggle() end,
     desc = "sidebar",
   },
-  { "<leader>tt", ":NvimTreeToggle<cr>",   desc = "tree" },
+  { "<leader>tt", ":NvimTreeToggle<cr>", desc = "tree" },
   {
     "<leader>tv",
     toggle_virtual_diagnostics,
@@ -1578,9 +1379,7 @@ wk.add({
   { "<leader>tw", ":ToggleWhitespace<cr>", desc = "whitespace" },
   {
     "<leader>tx",
-    function()
-      require("hex").toggle()
-    end,
+    function() require("hex").toggle() end,
     desc = "hex",
   },
   {
@@ -1590,16 +1389,12 @@ wk.add({
   },
   {
     "<leader>G",
-    function()
-      vim.fn.setreg("+", vim.fn.expand("%:p"))
-    end,
+    function() vim.fn.setreg("+", vim.fn.expand("%:p")) end,
     desc = "copy filename",
   },
   {
     "<leader><C-g>",
-    function()
-      vim.fn.setreg("+", vim.fn.expand("%"))
-    end,
+    function() vim.fn.setreg("+", vim.fn.expand("%")) end,
     desc = "copy relative filename",
   },
 
@@ -1608,9 +1403,7 @@ wk.add({
     { "jk", "<esc>", desc = "escape" },
     {
       "<C-k><C-k>",
-      function()
-        bd().digraphs("insert")
-      end,
+      function() bd().digraphs("insert") end,
       desc = "digraph",
     },
     -- Smart scroll mappings that accept completion first if popup is visible
@@ -1700,7 +1493,6 @@ wk.add({
   },
 })
 
-
 -- Insert mode abbreviation
 vim.keymap.set("ia", ",,", "=>", { desc = "arrow abbreviation" })
 
@@ -1711,7 +1503,8 @@ local function new_file(args)
   local path = vim.o.path
 
   -- Execute the file_template command
-  local cmd = string.format("file_template -path %s %s %s", path, current_file, file_type)
+  local cmd =
+    string.format("file_template -path %s %s %s", path, current_file, file_type)
   vim.cmd("r! " .. cmd)
 
   -- Remove the first line (which would be empty after the read)
@@ -1731,7 +1524,7 @@ end
 -- Create the NewFile command
 vim.api.nvim_create_user_command("NewFile", new_file, {
   nargs = "?",
-  desc = "Create new file from template"
+  desc = "Create new file from template",
 })
 
 -- Shell commands
@@ -1741,7 +1534,7 @@ vim.api.nvim_create_user_command("Xshell", function(args)
   vim.cmd("wincmd p")
 end, {
   nargs = "+",
-  desc = "Execute shell command in horizontal split"
+  desc = "Execute shell command in horizontal split",
 })
 
 vim.api.nvim_create_user_command("Sshell", function(args)
@@ -1750,6 +1543,5 @@ vim.api.nvim_create_user_command("Sshell", function(args)
   vim.cmd("wincmd p")
 end, {
   nargs = "+",
-  desc = "Execute shell command in vertical split"
+  desc = "Execute shell command in vertical split",
 })
-

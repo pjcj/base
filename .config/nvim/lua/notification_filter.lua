@@ -25,9 +25,7 @@ local config = {
 }
 
 -- Get current time in seconds
-local function get_time()
-  return vim.uv.hrtime() / 1e9
-end
+local function get_time() return vim.uv.hrtime() / 1e9 end
 
 -- Transform message using configured patterns
 local function transform_message(msg)
@@ -74,22 +72,16 @@ local original_notify = vim.notify
 
 -- Custom notify function
 local function filtered_notify(msg, level, opts)
-  if type(msg) ~= "string" then
-    return original_notify(msg, level, opts)
-  end
+  if type(msg) ~= "string" then return original_notify(msg, level, opts) end
 
   -- Transform the message
   local transformed_msg, category = transform_message(msg)
 
   -- Skip empty messages
-  if transformed_msg == "" then
-    return
-  end
+  if transformed_msg == "" then return end
 
   -- Check rate limiting
-  if should_rate_limit(transformed_msg, category) then
-    return
-  end
+  if should_rate_limit(transformed_msg, category) then return end
 
   -- Call original notify with transformed message
   return original_notify(transformed_msg, level, opts)
@@ -107,18 +99,12 @@ function M.setup(user_config)
 end
 
 -- Function to restore original notify (for testing/debugging)
-function M.restore()
-  vim.notify = original_notify
-end
+function M.restore() vim.notify = original_notify end
 
 -- Function to clear rate limiting history
-function M.clear_history()
-  last_notifications = {}
-end
+function M.clear_history() last_notifications = {} end
 
 -- Export for debugging
-function M.get_history()
-  return vim.deepcopy(last_notifications)
-end
+function M.get_history() return vim.deepcopy(last_notifications) end
 
 return M

@@ -104,14 +104,12 @@ return {
     "vim-perl/vim-perl",
     build = "make clean carp dancer heredoc-sql highlight-all-pragmas "
       .. "js-css-in-mason method-signatures moose test-more try-tiny",
-    config = function()
-      vim.g.perl_highlight_data = 1
-    end,
+    config = function() vim.g.perl_highlight_data = 1 end,
   },
 
   -- Terraform syntax highlighting and indentation
   { "hashivim/vim-terraform" },
-  
+
   -- Helm template syntax highlighting
   { "towolf/vim-helm" },
 

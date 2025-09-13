@@ -253,9 +253,7 @@ local function setup_servers()
 
   local handle = io.popen("uname")
   local is_freebsd = handle and handle:read() == "FreeBSD"
-  if handle then
-    handle:close()
-  end
+  if handle then handle:close() end
   if not is_freebsd then
     table.insert(lsps, "clangd")
     table.insert(lsps, "lua_ls")

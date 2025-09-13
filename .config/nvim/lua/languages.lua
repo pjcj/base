@@ -17,9 +17,7 @@ augroup("buf_enter", { clear = true })
 autocmd("BufWinEnter", {
   group = "buf_enter",
   pattern = "*",
-  callback = function()
-    require("local_defs").fn.set_buffer_settings()
-  end,
+  callback = function() require("local_defs").fn.set_buffer_settings() end,
 })
 
 -- Autowrite
@@ -94,9 +92,7 @@ autocmd("FileType", {
     vim.opt.cmdheight = 2
 
     -- Add blank line if needed and start insert mode
-    if vim.fn.getline(2) ~= "" then
-      vim.cmd("normal O")
-    end
+    if vim.fn.getline(2) ~= "" then vim.cmd("normal O") end
     vim.cmd("startinsert")
   end,
 })
@@ -104,7 +100,5 @@ autocmd("FileType", {
 autocmd({ "BufLeave", "BufWinLeave" }, {
   group = "git_commit",
   pattern = "COMMIT_EDITMSG",
-  callback = function()
-    vim.opt.cmdheight = 0
-  end,
+  callback = function() vim.opt.cmdheight = 0 end,
 })

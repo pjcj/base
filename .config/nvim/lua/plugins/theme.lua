@@ -191,9 +191,7 @@ return {
     },
     init = function()
       vim.api.nvim_create_autocmd({ "VimEnter" }, {
-        callback = function()
-          vim.cmd(":IBLEnable")
-        end,
+        callback = function() vim.cmd(":IBLEnable") end,
       })
     end,
   },

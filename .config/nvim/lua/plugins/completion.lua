@@ -104,9 +104,7 @@ return {
         },
         path = {
           opts = {
-            get_cwd = function(_)
-              return vim.fn.getcwd()
-            end,
+            get_cwd = function(_) return vim.fn.getcwd() end,
           },
         },
         buffer = {
@@ -163,7 +161,7 @@ return {
             all_panes = true,
             capture_history = true,
             triggered_only = true,
-            trigger_chars = { "." }
+            trigger_chars = { "." },
           },
         },
         vsnip = {
@@ -210,9 +208,10 @@ return {
               -- Remove codeium from git commit sources to prevent nil offset error
               local git_sources = vim.deepcopy(sources)
               if _G.using_ai() then
-                git_sources = vim.tbl_filter(function(source)
-                  return source ~= "codeium"
-                end, git_sources)
+                git_sources = vim.tbl_filter(
+                  function(source) return source ~= "codeium" end,
+                  git_sources
+                )
               end
               return git_sources
             end,

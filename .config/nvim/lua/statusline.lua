@@ -45,9 +45,7 @@ local function has_multiple_windows()
   for _, win in ipairs(wins) do
     local config = vim.api.nvim_win_get_config(win)
     -- Only count normal windows (not floating, not external)
-    if config.relative == "" then
-      normal_win_count = normal_win_count + 1
-    end
+    if config.relative == "" then normal_win_count = normal_win_count + 1 end
   end
 
   return normal_win_count > 1
@@ -82,9 +80,7 @@ local function get_aider_info()
     end
 
     -- Try to get from buffer variables
-    if not model then
-      model = vim.b.aider_model or vim.g.aider_model
-    end
+    if not model then model = vim.b.aider_model or vim.g.aider_model end
 
     -- Try to read from running aider process
     if not model then
@@ -94,9 +90,7 @@ local function get_aider_info()
       if handle then
         local result = handle:read("*a")
         handle:close()
-        if result and result ~= "" then
-          model = result:gsub("%s+", "")
-        end
+        if result and result ~= "" then model = result:gsub("%s+", "") end
       end
     end
 
@@ -142,9 +136,7 @@ local function winbar_component(active_colors)
     function()
       -- Check if this is an aider window first
       local aider_info = get_aider_info()
-      if aider_info then
-        return aider_info
-      end
+      if aider_info then return aider_info end
 
       if has_multiple_windows() then
         return vim.fn.expand("%:~:.") -- Show relative path
@@ -167,9 +159,7 @@ local function winbar_component(active_colors)
 end
 
 -- Custom function for CWD (last part only)
-local function cwd_basename()
-  return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
-end
+local function cwd_basename() return vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end
 
 -- Custom Navic component
 -- local function navic_component()
@@ -195,18 +185,14 @@ local function mcphub_component_definition()
   return {
     function()
       -- Check if MCPHub is loaded
-      if not vim.g.loaded_mcphub then
-        return "󰐻 -"
-      end
+      if not vim.g.loaded_mcphub then return "󰐻 -" end
 
       local count = vim.g.mcphub_servers_count or 0
       local status = vim.g.mcphub_status or "stopped"
       local executing = vim.g.mcphub_executing
 
       -- Show "-" when stopped
-      if status == "stopped" then
-        return "󰐻 -"
-      end
+      if status == "stopped" then return "󰐻 -" end
 
       -- Show spinner when executing, starting, or restarting
       if executing or status == "starting" or status == "restarting" then
@@ -310,9 +296,7 @@ require("lualine").setup({
     },
     lualine_c = {
       {
-        function()
-          return vim.fn.expand("%:~:.")
-        end,
+        function() return vim.fn.expand("%:~:.") end,
         separator = "",
         padding = { left = 1, right = 0 },
         color = function()
@@ -444,9 +428,7 @@ require("lualine").setup({
       {
         "filesize",
         padding = { left = 0, right = 1 },
-        cond = function()
-          return vim.fn.getfsize(vim.fn.expand("%:p")) > 0
-        end,
+        cond = function() return vim.fn.getfsize(vim.fn.expand("%:p")) > 0 end,
       },
     },
     lualine_z = {

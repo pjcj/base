@@ -114,7 +114,7 @@ local function set_exclude()
     "dist",
   }
 
-  local excl = os.getenv "EXCLUDE_PATHS"
+  local excl = os.getenv("EXCLUDE_PATHS")
   if excl then
     for path in string.gmatch(excl, "([^:]+)") do
       table.insert(exclude, path)
@@ -189,7 +189,7 @@ local_defs.fn.perl_inc_dirs = function()
   return final_include_paths
 end
 
-local wk = require "which-key"
+local wk = require("which-key")
 -- local wk -- swap these to bootstrap
 
 local_defs.fn.set_buffer_settings = function()
@@ -206,9 +206,7 @@ local_defs.fn.set_buffer_settings = function()
     lopt.listchars = current_listchars
 
     local e = b.editorconfig
-    if e == nil or e.indent_style == nil then
-      lopt.expandtab = false
-    end
+    if e == nil or e.indent_style == nil then lopt.expandtab = false end
     if e == nil or e.indent_size == nil then
       lopt.tabstop = 2
       lopt.shiftwidth = 2
@@ -252,9 +250,7 @@ local_defs.fn.set_buffer_settings = function()
     lopt.spelllang = "en_gb"
   end
 
-  if ft == "helm" then
-    vim.diagnostic.enable(false)
-  end
+  if ft == "helm" then vim.diagnostic.enable(false) end
 end
 
 return local_defs

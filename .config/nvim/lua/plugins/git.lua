@@ -19,7 +19,7 @@ return {
       watch_gitdir = { interval = 1000 },
       sign_priority = 6,
       update_debounce = 1000,
-      status_formatter = nil,          -- Use default
+      status_formatter = nil, -- Use default
       diff_opts = { internal = true }, -- If luajit is present
       word_diff = false,
       current_line_blame = true,
@@ -66,7 +66,7 @@ return {
   -- Enhanced git diff viewing and file history
   {
     "sindrets/diffview.nvim",
-    event = { "BufReadPre", "BufNewFile" }
+    event = { "BufReadPre", "BufNewFile" },
   },
 
   -- Open current line/selection in GitHub web interface
@@ -96,13 +96,11 @@ return {
       "MunifTanjim/nui.nvim",
       "nvim-lua/plenary.nvim",
       "sindrets/diffview.nvim",
-      "stevearc/dressing.nvim",      -- Recommended. Better UI for pickers.
+      "stevearc/dressing.nvim", -- Recommended. Better UI for pickers.
       "nvim-tree/nvim-web-devicons", -- Recommended. Icons in discussion tree.
     },
     event = { "BufReadPre", "BufNewFile" },
-    build = function()
-      require("gitlab.server").build(true)
-    end, -- Builds the Go binary
+    build = function() require("gitlab.server").build(true) end, -- Builds the Go binary
     config = function()
       require("gitlab").setup({
         debug = { go_request = true, go_response = true },

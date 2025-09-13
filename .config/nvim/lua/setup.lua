@@ -6,9 +6,7 @@ local function setup_cmdheight_for_session()
     vim.opt.cmdheight = 1
     vim.api.nvim_create_autocmd("VimEnter", {
       callback = function()
-        vim.defer_fn(function()
-          vim.opt.cmdheight = 0
-        end, 100)
+        vim.defer_fn(function() vim.opt.cmdheight = 0 end, 100)
       end,
     })
   end
@@ -52,9 +50,11 @@ local function setup_auto_refresh()
   end
 
   -- Use vim.fn.timer_start for compatibility
-  vim.fn.timer_start(2000, function()
-    vim.schedule(refresh_visible_buffers)
-  end, { ["repeat"] = -1 })
+  vim.fn.timer_start(
+    2000,
+    function() vim.schedule(refresh_visible_buffers) end,
+    { ["repeat"] = -1 }
+  )
 end
 
 -- Configure Devel::Cover highlights and signs for Perl code coverage
@@ -106,7 +106,10 @@ local function setup_coverage_auto_execute()
     end
 
     if not has_perl_buffer then
-      vim.notify("No Perl buffers, skipping coverage check", vim.log.levels.DEBUG)
+      vim.notify(
+        "No Perl buffers, skipping coverage check",
+        vim.log.levels.DEBUG
+      )
       return
     end
 
@@ -164,18 +167,22 @@ local function setup_coverage_auto_execute()
   end
 
   -- Set up timer with proper repeat syntax
-  local timer_id = vim.fn.timer_start(5000, function()
-    vim.schedule(check_and_execute_coverage)
-  end, { ["repeat"] = -1 })
+  local timer_id = vim.fn.timer_start(
+    5000,
+    function() vim.schedule(check_and_execute_coverage) end,
+    { ["repeat"] = -1 }
+  )
 
   vim.notify(
-    "Coverage auto-execute timer started (id=" .. timer_id .. ", 5 second interval)",
+    "Coverage auto-execute timer started (id="
+      .. timer_id
+      .. ", 5 second interval)",
     vim.log.levels.INFO
   )
 
   -- Check when opening Perl buffers
   vim.api.nvim_create_autocmd("BufReadPost", {
-    pattern = {"*.pl", "*.pm", "*.t", "*.pod"},
+    pattern = { "*.pl", "*.pm", "*.t", "*.pod" },
     callback = function()
       vim.notify("Perl buffer opened, checking coverage", vim.log.levels.DEBUG)
       check_and_execute_coverage()
@@ -185,7 +192,7 @@ local function setup_coverage_auto_execute()
 
   -- Also check when filetype is set to perl
   vim.api.nvim_create_autocmd("FileType", {
-    pattern = {"perl", "perl6", "raku"},
+    pattern = { "perl", "perl6", "raku" },
     callback = function()
       vim.notify("Perl filetype set, checking coverage", vim.log.levels.DEBUG)
       check_and_execute_coverage()

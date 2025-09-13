@@ -67,9 +67,7 @@ local plugins = {
       local codespell_args = { "--builtin", "clear,rare,informal,usage,names" }
       local found =
         vim.fs.find(".codespell", { upward = true, path = vim.fn.getcwd() })[1]
-      if found then
-        vim.list_extend(codespell_args, { "-I", found })
-      end
+      if found then vim.list_extend(codespell_args, { "-I", found }) end
       vim.list_extend(codespell_args, { "--stdin-single-line", "-" })
       lint.linters.codespell.args = codespell_args
 
@@ -88,9 +86,7 @@ local plugins = {
             if current_time - last_lint_time < cursor_hold_throttle_ms then
               return
             end
-            if not vim.bo.modified then
-              return
-            end
+            if not vim.bo.modified then return end
           end
 
           -- require("notify")(string.format("start lint"))
@@ -142,9 +138,7 @@ local plugins = {
       }
       local found =
         vim.fs.find(".codespell", { upward = true, path = vim.fn.getcwd() })[1]
-      if found then
-        vim.list_extend(codespell_args, { "-I", found })
-      end
+      if found then vim.list_extend(codespell_args, { "-I", found }) end
 
       require("conform").setup({
         formatters_by_ft = {
