@@ -496,34 +496,35 @@ wk.add({
     },
     { "<leader> .",  group = "claudecode" },
 
-    { "<leader> ,",  group = "nvim-aider" },
-    { "<leader> ,,", aider_cmd("Aider toggle"), desc = "toggle" },
-    { "<leader> , ", aider_cmd("Aider"),        desc = "picker" },
+    { "<leader> ,",  group = "opencode" },
+
+    { "<leader> a",  group = "nvim-aider" },
+    { "<leader> a,", aider_cmd("Aider toggle"), desc = "toggle" },
+    { "<leader> a ", aider_cmd("Aider"),        desc = "picker" },
     {
-      "<leader> ,s",
+      "<leader> as",
       aider_cmd("Aider send"),
       desc = "send",
       mode = { "n", "v" },
     },
-    { "<leader> ,c", aider_cmd("Aider command"),      desc = "commands" },
-    { "<leader> ,b", aider_cmd("Aider buffer"),       desc = "send buffer" },
-    { "<leader> ,a", aider_cmd("Aider add"),          desc = "add file" },
-    { "<leader> ,d", aider_cmd("Aider drop"),         desc = "drop file" },
-    { "<leader> ,r", aider_cmd("Aider add readonly"), desc = "add read-only" },
-    { "<leader> ,w", aider_add_all_windows,           desc = "add all windows" },
-    { "<leader> ,g", aider_add_git_changes,           desc = "add git changes" },
-    { "<leader> ,R", aider_cmd("Aider reset"),        desc = "reset session" },
+    { "<leader> ac", aider_cmd("Aider command"),      desc = "commands" },
+    { "<leader> ab", aider_cmd("Aider buffer"),       desc = "send buffer" },
+    { "<leader> aa", aider_cmd("Aider add"),          desc = "add file" },
+    { "<leader> ad", aider_cmd("Aider drop"),         desc = "drop file" },
+    { "<leader> ar", aider_cmd("Aider add readonly"), desc = "add read-only" },
+    { "<leader> aw", aider_add_all_windows,           desc = "add all windows" },
+    { "<leader> ag", aider_add_git_changes,           desc = "add git changes" },
+    { "<leader> aR", aider_cmd("Aider reset"),        desc = "reset session" },
     {
-      "<leader> ,l",
+      "<leader> al",
       function()
         require("nvim_aider").api.send_diagnostics_with_prompt()
       end,
       desc = "send lsp diagnostics",
     },
-
-    { "<leader> ,t",  group = "tree integration" },
-    { "<leader> ,ta", aider_cmd("AiderTreeAddFile"),  desc = "add from tree" },
-    { "<leader> ,td", aider_cmd("AiderTreeDropFile"), desc = "drop from tree" },
+    { "<leader> at",  group = "tree integration" },
+    { "<leader> ata", aider_cmd("AiderTreeAddFile"),  desc = "add from tree" },
+    { "<leader> atd", aider_cmd("AiderTreeDropFile"), desc = "drop from tree" },
 
     { "<leader> c",   group = "CodeCompanion" },
     {
