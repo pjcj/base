@@ -570,4 +570,20 @@ return {
       { "<leader>ch", "<cmd>ClaudeHistory<cr>", desc = "Claude History" },
     },
   },
+
+  {
+    "NickvanDyke/opencode.nvim",
+    dependencies = {
+      -- Recommended for better prompt input, and required to use
+      -- `opencode.nvim`'s embedded terminal — otherwise optional
+      { "folke/snacks.nvim", opts = { input = { enabled = true } } },
+    },
+    config = function()
+      vim.g.opencode_opts = {
+        -- Your configuration, if any — see `lua/opencode/config.lua`
+      }
+
+      vim.opt.autoread = true -- Required for `opts.auto_reload`
+    end,
+  },
 }

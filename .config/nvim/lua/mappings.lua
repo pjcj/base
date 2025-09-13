@@ -449,7 +449,59 @@ wk.add({
     },
     { "<leader> .", group = "claudecode" },
 
-    { "<leader> ,",  group = "opencode" },
+    { "<leader> ,", group = "opencode" },
+    {
+      "<leader> ,t",
+      function() require("opencode").toggle() end,
+      desc = "toggle opencode",
+    },
+    {
+      "<leader> ,A",
+      function() require("opencode").ask() end,
+      desc = "ask opencode",
+    },
+    {
+      "<leader> ,a",
+      function() require("opencode").ask("@cursor: ") end,
+      desc = "ask opencode about this",
+    },
+    {
+      "<leader> ,a",
+      function() require("opencode").ask("@selection: ") end,
+      mode = "v",
+      desc = "ask opencode about selection",
+    },
+    {
+      "<leader> ,n",
+      function() require("opencode").command("session_new") end,
+      desc = "new opencode session",
+    },
+    {
+      "<leader> ,y",
+      function() require("opencode").command("messages_copy") end,
+      desc = "copy last opencode response",
+    },
+    {
+      "<S-C-u>",
+      function() require("opencode").command("messages_half_page_up") end,
+      desc = "messages half page up",
+    },
+    {
+      "<S-C-d>",
+      function() require("opencode").command("messages_half_page_down") end,
+      desc = "messages half page down",
+    },
+    {
+      "<leader> ,s",
+      function() require("opencode").select() end,
+      mode = { "n", "v" },
+      desc = "select opencode prompt",
+    },
+    {
+      "<leader> ,e",
+      function() require("opencode").prompt("Explain @cursor and its context") end,
+      desc = "explain this code",
+    },
 
     { "<leader> a", group = "nvim-aider" },
     { "<leader> a,", aider_cmd("Aider toggle"), desc = "toggle" },
