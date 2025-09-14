@@ -348,7 +348,7 @@ wk.add({
     function()
       vim.notify("Formatting...", vim.log.levels.INFO, { title = "Format" })
       require("conform").format(
-        { async = true, lsp_format = "last" },
+        { async = true, lsp_format = "fallback" },
         function(err, did_edit)
           if err then
             vim.notify(
