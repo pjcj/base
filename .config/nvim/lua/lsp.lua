@@ -25,9 +25,10 @@ local on_attach = function(client, bufnr)
   end
 end
 
--- Custom on_attach for lua_ls to disable formatting
+-- Custom on_attach for lua_ls to disable formatting (use conform/stylua
+-- instead)
 local lua_ls_on_attach = function(client, bufnr)
-  -- Disable lua_ls formatting to avoid conflicts with conform.nvim/stylua
+  -- Disable lua_ls formatting to use conform/stylua instead
   client.server_capabilities.documentFormattingProvider = false
   client.server_capabilities.documentRangeFormattingProvider = false
   -- Call the common on_attach function
@@ -35,7 +36,7 @@ local lua_ls_on_attach = function(client, bufnr)
 end
 
 -- Configure lua language server for neovim development
--- Settings are now handled by .luarc.json and lazydev.nvim
+-- Formatting will be handled by stylua via custom on_attach
 local lua_settings = {}
 
 -- Register server configurations using vim.lsp.config
