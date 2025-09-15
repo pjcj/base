@@ -334,6 +334,12 @@ return {
 
           ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
         },
+
+        cmdline = {
+          enabled = true,
+          keymap = { preset = "cmdline" },
+          completion = { menu = { auto_show = true } },
+        },
       }
 
       require("blink.cmp").setup(config)
