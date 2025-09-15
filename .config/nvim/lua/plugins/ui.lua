@@ -48,6 +48,7 @@ return {
           modes = { "n" },
           icon_provider = "devicons",
         },
+        initial_state = false,
         markdown = {
           checkboxes = presets.checkboxes.nerd,
           headings = presets.headings.slanted,
