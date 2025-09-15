@@ -246,6 +246,13 @@ return {
     },
   },
 
+  -- Show marks in the gutter
+  {
+    "chentoast/marks.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {},
+  },
+
   -- Easy text alignment with regex patterns (gA then Ctrl-X)
   {
     "junegunn/vim-easy-align",
