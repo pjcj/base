@@ -204,21 +204,25 @@ wk.add({
   {
     "<C-h>",
     function() ss().move_cursor_left() end,
+    mode = { "n", "t" },
     desc = "move left",
   },
   {
     "<C-j>",
     function() ss().move_cursor_down() end,
+    mode = { "n", "t" },
     desc = "move down",
   },
   {
     "<C-k>",
     function() ss().move_cursor_up() end,
+    mode = { "n", "t" },
     desc = "move up",
   },
   {
     "<C-l>",
     function() ss().move_cursor_right() end,
+    mode = { "n", "t" },
     desc = "move right",
   },
 
