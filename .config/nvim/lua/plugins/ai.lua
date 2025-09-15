@@ -580,7 +580,12 @@ return {
     },
     config = function()
       vim.g.opencode_opts = {
-        -- Your configuration, if any — see `lua/opencode/config.lua`
+        terminal = {
+          env = {
+            -- Use our custom theme instead of the default "system" theme
+            OPENCODE_THEME = "solarized-pjcj",
+          },
+        },
       }
 
       vim.opt.autoread = true -- Required for `opts.auto_reload`
