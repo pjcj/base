@@ -91,6 +91,7 @@ update_brew() {
       brew bundle install --file=$brewfile
     fi
   fi
+  brew link --overwrite node
 }
 
 update_other() {
