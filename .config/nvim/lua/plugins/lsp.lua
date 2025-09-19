@@ -204,11 +204,6 @@ local plugins = {
       end
     end,
   },
-
-  -- LSP server for ctags-based navigation
-  {
-    "netmute/ctags-lsp.nvim",
-  },
 }
 
 return plugins
