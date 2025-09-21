@@ -124,4 +124,28 @@ return {
       installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
     },
   },
+
+  -- DB access
+  {
+    "praem90/db.nvim",
+    config = function()
+      require("db").setup({
+        dependencies = {
+          "nvim-lua/plenary.nvim",
+          "MunifTanjim/nui.nvim",
+          "nvim-telescope/telescope.nvim",
+        },
+        main = "db",
+        connections = {
+          {
+            name = "devserver",
+            host = "127.1",
+            port = 3306,
+            user = "root",
+            password = "password",
+          },
+        },
+      })
+    end,
+  },
 }

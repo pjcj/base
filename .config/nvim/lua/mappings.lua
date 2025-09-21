@@ -554,6 +554,28 @@ wk.add({
     },
   },
 
+  { "<leader> b", group = "DB" },
+  {
+    "<leader> bo",
+    function() require("db").open() end,
+    desc = "Open DB",
+  },
+  {
+    "<leader> bc",
+    function() require("db").open_active_connections() end,
+    desc = "Open Connections",
+  },
+  {
+    "<leader> bt",
+    function() require("db").open_tables() end,
+    desc = "Open Tables",
+  },
+  {
+    "<leader> bh",
+    function() require("db").open_history() end,
+    desc = "Open History",
+  },
+
   { "<leader> d", group = "diffview" },
   { "<leader> dc", ":DiffviewClose<cr>", desc = "close" },
   { "<leader> df", ":DiffviewFileHistory<cr>", desc = "file history" },

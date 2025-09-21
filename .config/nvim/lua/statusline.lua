@@ -323,6 +323,42 @@ require("lualine").setup({
     },
     lualine_x = {
       {
+        function()
+          local ok, db = pcall(require, "db")
+          if ok and db.connection_statusline then
+            return db.connection_statusline()
+          end
+          return ""
+        end,
+        separator = "",
+        padding = { left = 1, right = 0 },
+        color = { fg = c.lblue },
+        cond = function()
+          local ok, db = pcall(require, "db")
+          return ok
+            and db.connection_statusline
+            and db.connection_statusline() ~= ""
+        end,
+      },
+      {
+        function()
+          local ok, db = pcall(require, "db")
+          if ok and db.database_statusline then
+            return db.database_statusline()
+          end
+          return ""
+        end,
+        separator = "  ",
+        padding = { left = 1, right = 0 },
+        color = { fg = c.llblue },
+        cond = function()
+          local ok, db = pcall(require, "db")
+          return ok
+            and db.database_statusline
+            and db.database_statusline() ~= ""
+        end,
+      },
+      {
         "copilot",
         separator = "",
         padding = { left = 0, right = 1 },
