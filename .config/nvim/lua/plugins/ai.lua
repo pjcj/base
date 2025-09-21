@@ -57,7 +57,7 @@ return {
       require("codecompanion").setup({
         strategies = {
           chat = {
-            adapter = "claude37sonnet",
+            adapter = "claude4sonnet",
             tools = {
               opts = {
                 wait_timeout = 600000, -- 10 minutes
@@ -78,8 +78,8 @@ return {
               },
             },
           },
-          inline = { adapter = "claude37sonnet" },
-          cmd = { adapter = "claude37sonnet" },
+          inline = { adapter = "claude4sonnet" },
+          cmd = { adapter = "claude4sonnet" },
         },
         display = {
           chat = {
