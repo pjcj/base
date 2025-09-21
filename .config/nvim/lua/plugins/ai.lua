@@ -97,58 +97,60 @@ return {
           },
         },
         adapters = {
-          claude4sonnet = function()
-            return require("codecompanion.adapters").extend("copilot", {
-              schema = {
-                model = {
-                  default = "claude-sonnet-4",
+          http = {
+            claude4sonnet = function()
+              return require("codecompanion.adapters").extend("copilot", {
+                schema = {
+                  model = {
+                    default = "claude-sonnet-4",
+                  },
+                  -- max_tokens = {
+                  --   default = 81920,
+                  -- },
                 },
-                -- max_tokens = {
-                --   default = 81920,
-                -- },
-              },
-            })
-          end,
-          claude37sonnet = function()
-            return require("codecompanion.adapters").extend("copilot", {
-              schema = {
-                model = {
-                  default = "claude-3.7-sonnet",
+              })
+            end,
+            claude37sonnet = function()
+              return require("codecompanion.adapters").extend("copilot", {
+                schema = {
+                  model = {
+                    default = "claude-3.7-sonnet",
+                  },
+                  -- max_tokens = {
+                  --   default = 81920,
+                  -- },
                 },
-                -- max_tokens = {
-                --   default = 81920,
-                -- },
-              },
-            })
-          end,
-          gpt5 = function()
-            return require("codecompanion.adapters").extend("copilot", {
-              schema = {
-                model = {
-                  default = "gpt-5",
+              })
+            end,
+            gpt5 = function()
+              return require("codecompanion.adapters").extend("copilot", {
+                schema = {
+                  model = {
+                    default = "gpt-5",
+                  },
                 },
-              },
-            })
-          end,
-          gemini25 = function()
-            return require("codecompanion.adapters").extend("gemini", {
-              -- give this adapter a different name to differentiate it from the
-              -- default gemini adapter
-              name = "gemini25",
-              schema = {
-                model = {
-                  default = "gemini-2.5-pro",
-                  -- default = "gemini-2.5-pro-preview-06-05",
+              })
+            end,
+            gemini25 = function()
+              return require("codecompanion.adapters").extend("gemini", {
+                -- give this adapter a different name to differentiate it from the
+                -- default gemini adapter
+                name = "gemini25",
+                schema = {
+                  model = {
+                    default = "gemini-2.5-pro",
+                    -- default = "gemini-2.5-pro-preview-06-05",
+                  },
+                  -- num_ctx = {
+                  --   default = 16384,
+                  -- },
+                  -- num_predict = {
+                  --   default = -1,
+                  -- },
                 },
-                -- num_ctx = {
-                --   default = 16384,
-                -- },
-                -- num_predict = {
-                --   default = -1,
-                -- },
-              },
-            })
-          end,
+              })
+            end,
+          },
         },
         extensions = {
           mcphub = {
