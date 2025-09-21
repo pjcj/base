@@ -377,6 +377,12 @@ return {
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "avante*", "Avante*" },
+        callback = function() vim.wo.colorcolumn = "" end,
+      })
+    end,
   },
 
   -- AI pair programming with aider integration
