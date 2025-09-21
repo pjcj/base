@@ -121,6 +121,15 @@ return {
               },
             })
           end,
+          gpt5 = function()
+            return require("codecompanion.adapters").extend("copilot", {
+              schema = {
+                model = {
+                  default = "gpt-5",
+                },
+              },
+            })
+          end,
           gemini25 = function()
             return require("codecompanion.adapters").extend("gemini", {
               -- give this adapter a different name to differentiate it from the
@@ -290,6 +299,14 @@ return {
           timeout = 60000,
           extra_request_body = {
             max_tokens = 2000000,
+          },
+        },
+        copilot_gpt_5 = {
+          __inherited_from = "copilot",
+          model = "gpt-5",
+          timeout = 60000,
+          extra_request_body = {
+            max_tokens = 128000,
           },
         },
         copilot_gemini = {
