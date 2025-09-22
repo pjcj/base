@@ -196,6 +196,21 @@ vim.lsp.config.sqlls = {
   cmd = { "sql-language-server", "up", "--method", "stdio" },
   filetypes = { "sql", "mysql" },
   root_markers = { ".git" },
+  settings = {
+    sqlLanguageServer = {
+      lint = {
+        rules = {  -- duplicates .sqlintrc.json - only one is actually needed
+          ["align-column-to-the-first"] = "error",
+          ["align-where-clause-to-the-first"] = "error",
+          ["column-new-line"] = "error",
+          ["linebreak-after-clause-keyword"] = 1,
+          ["reserved-word-case"] = { 1, "lower" },
+          ["space-surrounding-operators"] = "error",
+          ["where-clause-new-line"] = 1,
+        },
+      },
+    },
+  },
 }
 
 vim.lsp.config.taplo = {
