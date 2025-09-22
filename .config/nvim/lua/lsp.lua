@@ -204,6 +204,7 @@ vim.lsp.config.sqlls = {
           ["align-where-clause-to-the-first"] = "error",
           ["column-new-line"] = "error",
           ["linebreak-after-clause-keyword"] = 1,
+          ["require-as-to-rename-column"] = "off",
           ["reserved-word-case"] = { 1, "lower" },
           ["space-surrounding-operators"] = "error",
           ["where-clause-new-line"] = 1,

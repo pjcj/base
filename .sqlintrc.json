@@ -9,6 +9,7 @@
         ],
         "space-surrounding-operators": "error",
         "where-clause-new-line": 1,
-        "align-where-clause-to-the-first": "error"
+        "align-where-clause-to-the-first": "error",
+        "require-as-to-rename-column": "off"
     }
 }
