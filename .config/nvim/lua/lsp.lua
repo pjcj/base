@@ -200,7 +200,7 @@ vim.lsp.config.sqlls = {
     sqlLanguageServer = {
       lint = {
         --  see https://github.com/joe-re/sql-language-server/tree/release/packages/sqlint#configuration
-        rules = {  -- duplicates .sqlintrc.json - only one is actually needed
+        rules = { -- duplicates .sqlintrc.json - only one is actually needed
           ["align-column-to-the-first"] = "error",
           ["align-where-clause-to-the-first"] = "error",
           ["column-new-line"] = "error",
