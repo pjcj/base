@@ -1587,16 +1587,13 @@ wk.add({
 --                 bookmark under the cursor. Works across buffers.
 -- dm=             Delete the bookmark under the cursor.
 
--- Insert mode abbreviation
 vim.keymap.set("ia", ",,", "=>", { desc = "arrow abbreviation" })
 
--- NewFile function in Lua
 local function new_file(args)
   local file_type = args.args or ""
   local current_file = vim.fn.expand("%")
   local path = vim.o.path
 
-  -- Execute the file_template command
   local cmd =
     string.format("file_template -path %s %s %s", path, current_file, file_type)
   vim.cmd("r! " .. cmd)
@@ -1611,17 +1608,14 @@ local function new_file(args)
     vim.cmd("normal! gg")
   end
 
-  -- Write the file
   vim.cmd("write")
 end
 
--- Create the NewFile command
 vim.api.nvim_create_user_command("NewFile", new_file, {
   nargs = "?",
   desc = "Create new file from template",
 })
 
--- Shell commands
 vim.api.nvim_create_user_command("Xshell", function(args)
   vim.cmd("10new")
   vim.cmd("Shell " .. args.args)
