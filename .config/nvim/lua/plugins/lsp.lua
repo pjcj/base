@@ -145,7 +145,7 @@ local plugins = {
           dockerfile = { "dprint", "dockerfmt" },
           javascript = { "prettierd", "prettier", stop_after_first = true },
           json = { "fixjson" },
-          lua = { "stylua" },
+          lua = { "stylua", lsp_format = "fallback" },
           make = { "bake" },
           markdown = { "markdownlint", "mdformat", "injected", "mdsf" },
           python = { "isort", "black" },

@@ -25,20 +25,6 @@ local on_attach = function(client, bufnr)
   end
 end
 
--- Custom on_attach for lua_ls to disable formatting (use conform/stylua
--- instead)
-local lua_ls_on_attach = function(client, bufnr)
-  -- Disable lua_ls formatting to use conform/stylua instead
-  client.server_capabilities.documentFormattingProvider = false
-  client.server_capabilities.documentRangeFormattingProvider = false
-  -- Call the common on_attach function
-  on_attach(client, bufnr)
-end
-
--- Configure lua language server for neovim development
--- Formatting will be handled by stylua via custom on_attach
-local lua_settings = {}
-
 -- Register server configurations using vim.lsp.config
 vim.lsp.config.bashls = {
   cmd = { "bash-language-server", "start" },
@@ -162,8 +148,7 @@ vim.lsp.config.lua_ls = {
     ".git",
   },
   init_options = { hostInfo = "neovim" },
-  settings = lua_settings,
-  on_attach = lua_ls_on_attach,
+  settings = {},
 }
 
 vim.lsp.config.perlnavigator = {
@@ -278,11 +263,9 @@ local function setup_servers()
     table.insert(lsps, "taplo")
   end
 
-  -- Set common on_attach for all servers except lua_ls (which has custom
-  -- on_attach)
   for _, server in ipairs(lsps) do
     local config = vim.lsp.config[server]
-    if config and server ~= "lua_ls" then config.on_attach = on_attach end
+    config.on_attach = on_attach
   end
 
   -- Enable all servers
