@@ -47,8 +47,8 @@ return {
           ignore_buftypes = {},
           modes = { "n" },
           icon_provider = "devicons",
+          enable = false,
         },
-        initial_state = false,
         markdown = {
           checkboxes = presets.checkboxes.nerd,
           headings = presets.headings.slanted,
