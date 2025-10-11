@@ -66,4 +66,29 @@ return {
 
   -- Command-line fuzzy finder (required by telescope-fzf-native)
   { "junegunn/fzf" },
+
+  -- Turn off expensive plugins and features for large files
+  {
+    "pteroctopus/faster.nvim",
+    opts = {
+      behaviours = {
+        bigfile = {
+          on = true,
+          filesize = 2, -- MB
+          pattern = "*",
+          features_disabled = {
+            "illuminate",
+            "matchparen",
+            "lsp",
+            "treesitter",
+            "indent_blankline",
+            "vimopts",
+            "syntax",
+            "filetype",
+            "codespell",
+          },
+        },
+      },
+    },
+  },
 }
