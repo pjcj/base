@@ -604,14 +604,14 @@ return {
       { "folke/snacks.nvim", opts = { input = { enabled = true } } },
     },
     config = function()
-      vim.g.opencode_opts = {
-        terminal = {
-          env = {
-            -- Use our custom theme instead of the default "system" theme
-            OPENCODE_THEME = "solarized-pjcj",
-          },
-        },
-      }
+      -- vim.g.opencode_opts = {
+      --   terminal = {
+      --     env = {
+      --       -- Use our custom theme instead of the default "system" theme
+      --       OPENCODE_THEME = "solarized-pjcj",
+      --     },
+      --   },
+      -- }
 
       vim.opt.autoread = true -- Required for `opts.auto_reload`
     end,
