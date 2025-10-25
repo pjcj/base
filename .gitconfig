@@ -221,6 +221,6 @@
     sed 's/[0-9a-f][0-9a-f]*/\"&\"/g'; echo '}'; }; f"
   distclean = "!f() { git status --porcelain | grep '??' | awk '{print $2}' | \
     xargs rm; }; f"
-  recent-files = "!f() { git log --all --name-only --pretty=format:%ai%x09%H -- \"${1:-.}\" | perl -ne 'if (/^(\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}:\\d{2})/) { $date = $1 } elsif (/\\S/) { $seen{$_} = $date unless $seen{$_} gt $date } END { foreach (sort { $seen{$b} cmp $seen{$a} } keys %seen) { printf \"%s %s\", $seen{$_}, $_ } }' | less; }; f"
+  recent-files = "!f() { git log --all --name-only --pretty=format:%ai%x09%H -- \"${1:-.}\" | perl -ne 'if (/^(\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}:\\d{2})/) { $date = $1 } elsif (/\\S/) { $seen{$_} = $date unless $seen{$_} gt $date } END { foreach (sort { $seen{$b} cmp $seen{$a} } keys %seen) { printf \"%s %s\", $seen{$_}, $_ } }' | fzf --preview='f=$(echo {} | perl -pe \"s/^\\S+\\s+\\S+\\s+//\"); bat --tabs=2 --color=always \"$f\" 2>/dev/null || cat \"$f\" 2>/dev/null' --preview-window=right:70% --with-nth=3.. | perl -pe 's/^\\S+\\s+\\S+\\s+//'; }; f"
 [include]
   path = ~/.gitconfig.local
