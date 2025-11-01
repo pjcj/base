@@ -23,7 +23,6 @@ brew "bat"
 brew "block-goose-cli"
 brew "cd-discid"
 brew "chardet", link: false
-brew "claude-squad"
 brew "cmake"
 brew "codespell"
 brew "coreutils"
