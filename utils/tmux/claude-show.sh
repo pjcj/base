@@ -50,7 +50,7 @@ else
       echo "Current path from tmux: $current_path" >>$log
       opts="--ide --permission-mode bypassPermissions"
       tmux split-window -h -l 35% -c "$current_path" \
-        "zsh -ic \"cd '$current_path' && '$HOME/.claude/local/claude' $opts\""
+        "zsh -ic \"cd '$current_path' && claude $opts\""
       tmux select-pane -T 'claude'
 
       # If we split from a neovim pane, equalize its windows horizontally
