@@ -2,6 +2,24 @@ local M = {}
 
 -- Custom on_attach function
 local on_attach = function(client, bufnr)
+  -- Set dynamic debounce for perlnavigator based on file size
+  if client.name == "perlnavigator" then
+    local line_count = vim.api.nvim_buf_line_count(bufnr)
+    -- 2ms per line, min 500ms, max 60s
+    local debounce = math.max(500, math.min(60000, line_count * 2))
+    vim.lsp.config.perlnavigator.debounce_text_changes = debounce
+    vim.schedule(function()
+      vim.notify(
+        string.format(
+          "perlnavigator debounce: %.1fs (%d lines)",
+          debounce / 1000,
+          line_count
+        ),
+        vim.log.levels.INFO
+      )
+    end)
+  end
+
   -- Set autocommands conditional on server_capabilities
   if client.server_capabilities.document_highlight then
     local group =
@@ -174,7 +192,6 @@ vim.lsp.config.perlnavigator = {
       enableWarnings = false,
     },
   },
-  debounce_text_changes = 5000, -- milliseconds
 }
 
 vim.lsp.config.sqlls = {

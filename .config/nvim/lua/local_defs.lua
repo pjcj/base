@@ -189,6 +189,14 @@ local_defs.fn.perl_inc_dirs = function()
   return final_include_paths
 end
 
+local_defs.fn.large_perl_file = function(bufnr)
+  bufnr = bufnr or 0
+  local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+  if filetype ~= "perl" then return false end
+  local line_count = vim.api.nvim_buf_line_count(bufnr)
+  return line_count > 5000
+end
+
 local wk = require("which-key")
 -- local wk -- swap these to bootstrap
 
