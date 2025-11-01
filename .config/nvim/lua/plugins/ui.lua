@@ -158,6 +158,19 @@ return {
       set_default_link("HlSearchLens", "SpellLocal")
       set_default_link("HlSearchLensNear", "SpellRare")
       set_default_link("HlSearchFloat", "Search")
+
+      -- Conditionally hide scrollbar for large Perl files
+      local scrollbar_utils = require("scrollbar.utils")
+      local is_large_perl_file = require("local_defs").fn.large_perl_file
+      vim.api.nvim_create_autocmd({ "BufEnter", "FileType" }, {
+        callback = function()
+          if is_large_perl_file(0) then
+            scrollbar_utils.hide()
+          else
+            scrollbar_utils.show()
+          end
+        end,
+      })
     end,
   },
 
