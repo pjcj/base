@@ -1,64 +1,44 @@
 #!/bin/bash
-# Script to show/create claude pane
+# Script to create claude pane
 # Used by tmux binding C-a A
 
 set -e
 
-log="/tmp/claude-show.log"
-echo "$(date) - starting claude-show.sh" >>$log
-echo "pwd is $(pwd)" >>$log
+logfile="/tmp/claude-show.log"
+exec >"$logfile" 2>&1
 
-# Get current window info
-current_window_name=$(tmux display-message -p '#{window_name}')
-session_name=$(tmux display-message -p '#{session_name}')
+echo "=== $(date) ==="
+
+# Get current pane info
 current_pane_id=$(tmux display-message -p '#{pane_id}')
 current_pane_command=$(tmux display-message -p '#{pane_current_command}')
 current_path=$(tmux display-message -p '#{pane_current_path}')
 
-# Check if we're currently in a hidden claude window
-if echo "$current_window_name" | grep -q "^claude-hidden-.*"; then
-  # Extract target window from hidden window name
-  target_window=${current_window_name#claude-hidden-*-}
-  # Join current window as pane to target window
-  tmux join-pane -h -l 35% -t "$target_window"
-  tmux select-pane -T 'claude'
-else
-  # Normal logic for non-hidden windows
-  window_id=$(tmux display-message -p '#{window_id}')
-  hidden_name="claude-hidden-$session_name-$window_id"
+# Debug: show what we detected
+echo "Current pane ID: $current_pane_id"
+echo "Current pane command: [$current_pane_command]"
+echo "Current path: $current_path"
 
-  # Check if hidden claude window exists for current window
-  if tmux list-windows -F '#{window_name}' | grep -q "^$hidden_name$"; then
-    # Restore hidden claude window as pane
-    tmux join-pane -h -l 35% -s "$hidden_name"
-    tmux select-pane -T 'claude'
-  else
-    # Check if claude pane already exists in current window
-    claude_pane=$(tmux list-panes -F '#{pane_title} #{pane_id}' |
-      grep '^claude ' | cut -d' ' -f2)
-    if [ -n "$claude_pane" ]; then
-      # Focus existing claude pane
-      tmux select-pane -t "$claude_pane"
-    else
-      # If we split from a neovim pane, start ClaudeCode for IDE integration
-      if [ "$current_pane_command" = "nvim" ]; then
-        # Send command to the original neovim pane
-        tmux send-keys -t "$current_pane_id" Escape
-        tmux send-keys -t "$current_pane_id" ":ClaudeCode" Enter
-      fi
-      # Create new claude pane with zsh to enable autoenv
-      echo "Current path from tmux: $current_path" >>$log
-      opts="--ide --permission-mode bypassPermissions"
-      tmux split-window -h -l 35% -c "$current_path" \
-        "zsh -ic \"cd '$current_path' && claude $opts\""
-      tmux select-pane -T 'claude'
+# If splitting from nvim, start ClaudeCode first
+if [[ $current_pane_command == "nvim" ]]; then
+  echo "Condition matched: starting ClaudeCode in nvim"
+  tmux send-keys -t "$current_pane_id" Escape ":ClaudeCode" Enter
+  echo "ClaudeCode started"
+fi
 
-      # If we split from a neovim pane, equalize its windows horizontally
-      if [ "$current_pane_command" = "nvim" ]; then
-        # Send command to the original neovim pane
-        tmux send-keys -t "$current_pane_id" Escape
-        tmux send-keys -t "$current_pane_id" ":horizontal wincmd =" Enter
-      fi
-    fi
-  fi
+# Create new claude pane with zsh to enable autoenv
+opts="--ide --permission-mode bypassPermissions"
+echo "Creating new claude pane..."
+tmux split-window -h -l 35% -c "$current_path" \
+  "zsh -ic \"cd '$current_path' && claude $opts\""
+tmux select-pane -T 'claude'
+echo "Claude pane created"
+
+# After split, equalize nvim windows if we split from nvim
+if [[ $current_pane_command == "nvim" ]]; then
+  echo "Waiting for nvim to settle after split..."
+  sleep 0.3
+  echo "Equalizing nvim windows in pane $current_pane_id"
+  tmux send-keys -t "$current_pane_id" Escape ":horizontal wincmd =" Enter
+  echo "Nvim windows equalized"
 fi
