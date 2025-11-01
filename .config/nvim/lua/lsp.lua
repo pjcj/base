@@ -271,6 +271,15 @@ local function setup_servers()
   -- Enable all servers
   vim.lsp.enable(lsps)
 
+  -- Add LspAttach autocmd to ensure on_attach logic runs
+  vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(args)
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      local bufnr = args.buf
+      on_attach(client, bufnr)
+    end,
+  })
+
   -- Diagnostic configuration
   vim.diagnostic.config({
     virtual_text = { prefix = "●" },
