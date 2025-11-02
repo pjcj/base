@@ -53,7 +53,7 @@ return {
   { "farmergreg/vim-lastplace", lazy = false },
 
   -- Handle Vim swap files intelligently
-  { "gioele/vim-autoswap" },
+  { "gioele/vim-autoswap", lazy = false },
 
   -- Repeat plugin commands with dot operator
   { "tpope/vim-repeat" },
