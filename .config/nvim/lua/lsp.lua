@@ -39,7 +39,10 @@ local on_attach = function(client, bufnr)
   end
 
   if client.server_capabilities.documentSymbolProvider then
-    require("nvim-navic").attach(client, bufnr)
+     local navic = require("nvim-navic")
+    if not navic.is_available(bufnr) then
+      navic.attach(client, bufnr)
+    end
   end
 end
 

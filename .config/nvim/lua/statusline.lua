@@ -162,13 +162,13 @@ end
 local function cwd_basename() return vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end
 
 -- Custom Navic component
--- local function navic_component()
---   local navic_ok, navic = pcall(require, "nvim-navic")
---   if navic_ok and navic.is_available() then
---     return navic.get_location()
---   end
---   return ""
--- end
+local function navic_component()
+  local navic_ok, navic = pcall(require, "nvim-navic")
+  if navic_ok and navic.is_available() then
+    return navic.get_location()
+  end
+  return ""
+end
 
 local function diff_source()
   local gitsigns = vim.b.gitsigns_status_dict
@@ -319,7 +319,7 @@ require("lualine").setup({
         sources = { "nvim_diagnostic", "ale" },
         symbols = { error = "E", warn = "W", info = "I", hint = "H" },
       },
-      -- { navic_component, cond = function() return navic_component() ~= "" end },
+      { navic_component, cond = function() return navic_component() ~= "" end },
     },
     lualine_x = {
       {
