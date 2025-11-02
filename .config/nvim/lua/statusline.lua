@@ -169,7 +169,8 @@ local function navic_component()
   local data = navic.get_data()
   if not data or #data == 0 then return "" end
 
-  -- Define highlight group for yellow function names
+  -- Define highlight groups for navic component
+  vim.api.nvim_set_hl(0, "NavicNormal", { fg = c.base1, bg = c.base02 })
   vim.api.nvim_set_hl(
     0,
     "NavicYellowFunction",
@@ -208,12 +209,12 @@ local function navic_component()
     local part = (item.icon or "") .. item.name
     -- Apply yellow highlight to the last function
     if i == last_func_idx then
-      part = "%#NavicYellowFunction#" .. part .. "%*"
+      part = "%#NavicYellowFunction#" .. part .. "%#NavicNormal#"
     end
     table.insert(parts, part)
   end
 
-  return table.concat(parts, " > ")
+  return "%#NavicNormal#" .. table.concat(parts, " > ")
 end
 
 local function diff_source()
