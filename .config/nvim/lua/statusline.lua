@@ -214,7 +214,7 @@ local function navic_component()
     table.insert(parts, part)
   end
 
-  return "%#NavicNormal#" .. table.concat(parts, " > ")
+  return "%#NavicNormal#" .. table.concat(parts, " › ")
 end
 
 local function diff_source()
