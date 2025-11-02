@@ -361,11 +361,25 @@ require("lualine").setup({
       },
       {
         "diagnostics",
+        separator = "",
         padding = { left = 1, right = 0 },
         sources = { "nvim_diagnostic", "ale" },
         symbols = { error = "E", warn = "W", info = "I", hint = "H" },
       },
-      { navic_component, cond = function() return navic_component() ~= "" end },
+      {
+        function() return " " end,
+        cond = function() return navic_component() ~= "" end,
+        separator = { right = "" },
+        padding = { left = 0, right = 0 },
+        color = { fg = c.base05, bg = c.base05 },
+      },
+      {
+        navic_component,
+        cond = function() return navic_component() ~= "" end,
+        separator = { right = "" },
+        padding = { left = 1, right = 1 },
+        color = { fg = c.base1, bg = c.base02 },
+      },
     },
     lualine_x = {
       {
