@@ -173,7 +173,7 @@ local function navic_component()
   vim.api.nvim_set_hl(
     0,
     "NavicYellowFunction",
-    { fg = c.pyellow, bg = c.base05 }
+    { fg = c.pyellow, bg = c.base02 }
   )
 
   -- For Perl files, skip the package name if it matches the file path
