@@ -176,6 +176,22 @@ local function navic_component()
     { fg = c.pyellow, bg = c.base05 }
   )
 
+  -- For Perl files, skip the package name if it matches the file path
+  local start_idx = 1
+  if vim.bo.filetype == "perl" and #data > 0 then
+    local first_item = data[1]
+    if first_item.type == "Package" then
+      local package_name = first_item.name
+      -- Convert package name to expected path
+      local expected_path = package_name:gsub("::", "/") .. ".pm"
+      local current_file = vim.api.nvim_buf_get_name(0)
+      -- Check if the file path ends with the expected path
+      if current_file:sub(-#expected_path) == expected_path then
+        start_idx = 2
+      end
+    end
+  end
+
   -- Find the index of the last function/method
   local last_func_idx = nil
   for i = #data, 1, -1 do
@@ -187,7 +203,8 @@ local function navic_component()
 
   -- Build the breadcrumb string
   local parts = {}
-  for i, item in ipairs(data) do
+  for i = start_idx, #data do
+    local item = data[i]
     local part = (item.icon or "") .. item.name
     -- Apply yellow highlight to the last function
     if i == last_func_idx then
