@@ -164,10 +164,39 @@ local function cwd_basename() return vim.fn.fnamemodify(vim.fn.getcwd(), ":t") e
 -- Custom Navic component
 local function navic_component()
   local navic_ok, navic = pcall(require, "nvim-navic")
-  if navic_ok and navic.is_available() then
-    return navic.get_location()
+  if not navic_ok or not navic.is_available() then return "" end
+
+  local data = navic.get_data()
+  if not data or #data == 0 then return "" end
+
+  -- Define highlight group for yellow function names
+  vim.api.nvim_set_hl(
+    0,
+    "NavicYellowFunction",
+    { fg = c.pyellow, bg = c.base05 }
+  )
+
+  -- Find the index of the last function/method
+  local last_func_idx = nil
+  for i = #data, 1, -1 do
+    if data[i].type == "Function" or data[i].type == "Method" then
+      last_func_idx = i
+      break
+    end
   end
-  return ""
+
+  -- Build the breadcrumb string
+  local parts = {}
+  for i, item in ipairs(data) do
+    local part = (item.icon or "") .. item.name
+    -- Apply yellow highlight to the last function
+    if i == last_func_idx then
+      part = "%#NavicYellowFunction#" .. part .. "%*"
+    end
+    table.insert(parts, part)
+  end
+
+  return table.concat(parts, " > ")
 end
 
 local function diff_source()
