@@ -51,7 +51,7 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
-      "ravitemer/mcphub.nvim",
+      -- "ravitemer/mcphub.nvim",
     },
     config = function()
       require("codecompanion").setup({
@@ -152,16 +152,16 @@ return {
             end,
           },
         },
-        extensions = {
-          mcphub = {
-            callback = "mcphub.extensions.codecompanion",
-            opts = {
-              show_result_in_chat = true, -- Show mcp tool results in chat
-              make_vars = true, -- Convert resources to #variables
-              make_slash_commands = true, -- Add prompts as /slash commands
-            },
-          },
-        },
+        -- extensions = {
+        --   mcphub = {
+        --     callback = "mcphub.extensions.codecompanion",
+        --     opts = {
+        --       show_result_in_chat = true, -- Show mcp tool results in chat
+        --       make_vars = true, -- Convert resources to #variables
+        --       make_slash_commands = true, -- Add prompts as /slash commands
+        --     },
+        --   },
+        -- },
       })
       local group = vim.api.nvim_create_augroup("CodeCompanionHooks", {})
 
@@ -227,28 +227,28 @@ return {
   },
 
   -- Model Context Protocol hub for AI tools integration
-  {
-    "ravitemer/mcphub.nvim",
-    enabled = _G.using_ai(),
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    cmd = "MCPHub", -- lazy load by default
-    build = "npm install -g mcp-hub@latest",
-    config = function()
-      require("mcphub").setup({
-        log = {
-          level = vim.log.levels.INFO, -- DEBUG, INFO, WARN, ERROR
-        },
-        extensions = {
-          avante = {
-            auto_approve_mcp_tool_calls = false, -- auto approve mcp tool calls
-          },
-        },
-      })
-    end,
-  },
+  -- {
+  --   "ravitemer/mcphub.nvim",
+  --   enabled = _G.using_ai(),
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --   },
+  --   cmd = "MCPHub", -- lazy load by default
+  --   build = "npm install -g mcp-hub@latest",
+  --   config = function()
+  --     require("mcphub").setup({
+  --       log = {
+  --         level = vim.log.levels.INFO, -- DEBUG, INFO, WARN, ERROR
+  --       },
+  --       extensions = {
+  --         avante = {
+  --           auto_approve_mcp_tool_calls = false, -- auto approve mcp tool calls
+  --         },
+  --       },
+  --     })
+  --   end,
+  -- },
 
   -- AI-powered coding assistant with inline editing and chat
   {
@@ -265,7 +265,7 @@ return {
       "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
       "nvim-tree/nvim-web-devicons",
       "zbirenbaum/copilot.lua", -- for providers='copilot'
-      "ravitemer/mcphub.nvim",
+      -- "ravitemer/mcphub.nvim",
       "MeanderingProgrammer/render-markdown.nvim",
       -- {
       --   -- support for image pasting
@@ -366,16 +366,16 @@ return {
 
       -- system_prompt as function ensures LLM always has latest MCP server
       -- state - evaluated for every message, even in existing chats.
-      system_prompt = function()
-        local hub = require("mcphub").get_hub_instance()
-        return hub:get_active_servers_prompt()
-      end,
-      -- using a function prevents requiring mcphub before it's loaded
-      custom_tools = function()
-        return {
-          require("mcphub.extensions.avante").mcp_tool(),
-        }
-      end,
+      -- system_prompt = function()
+      --   local hub = require("mcphub").get_hub_instance()
+      --   return hub:get_active_servers_prompt()
+      -- end,
+      -- -- using a function prevents requiring mcphub before it's loaded
+      -- custom_tools = function()
+      --   return {
+      --     require("mcphub.extensions.avante").mcp_tool(),
+      --   }
+      -- end,
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",

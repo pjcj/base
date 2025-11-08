@@ -228,57 +228,57 @@ local function diff_source()
   end
 end
 
-local function mcphub_component_definition()
-  return {
-    function()
-      -- Check if MCPHub is loaded
-      if not vim.g.loaded_mcphub then return "󰐻 -" end
+-- local function mcphub_component_definition()
+--   return {
+--     function()
+--       -- Check if MCPHub is loaded
+--       if not vim.g.loaded_mcphub then return "󰐻 -" end
 
-      local count = vim.g.mcphub_servers_count or 0
-      local status = vim.g.mcphub_status or "stopped"
-      local executing = vim.g.mcphub_executing
+--       local count = vim.g.mcphub_servers_count or 0
+--       local status = vim.g.mcphub_status or "stopped"
+--       local executing = vim.g.mcphub_executing
 
-      -- Show "-" when stopped
-      if status == "stopped" then return "󰐻 -" end
+--       -- Show "-" when stopped
+--       if status == "stopped" then return "󰐻 -" end
 
-      -- Show spinner when executing, starting, or restarting
-      if executing or status == "starting" or status == "restarting" then
-        local frames = {
-          "⠋",
-          "⠙",
-          "⠹",
-          "⠸",
-          "⠼",
-          "⠴",
-          "⠦",
-          "⠧",
-          "⠇",
-          "⠏",
-        }
-        local frame = math.floor(vim.loop.now() / 100) % #frames + 1
-        return "󰐻 " .. frames[frame]
-      end
+--       -- Show spinner when executing, starting, or restarting
+--       if executing or status == "starting" or status == "restarting" then
+--         local frames = {
+--           "⠋",
+--           "⠙",
+--           "⠹",
+--           "⠸",
+--           "⠼",
+--           "⠴",
+--           "⠦",
+--           "⠧",
+--           "⠇",
+--           "⠏",
+--         }
+--         local frame = math.floor(vim.loop.now() / 100) % #frames + 1
+--         return "󰐻 " .. frames[frame]
+--       end
 
-      return "󰐻 " .. count
-    end,
-    separator = "",
-    padding = { left = 0, right = 0 },
-    color = function()
-      if not vim.g.loaded_mcphub then
-        return { fg = "#6c7086" } -- Gray for not loaded
-      end
+--       return "󰐻 " .. count
+--     end,
+--     separator = "",
+--     padding = { left = 0, right = 0 },
+--     color = function()
+--       if not vim.g.loaded_mcphub then
+--         return { fg = "#6c7086" } -- Gray for not loaded
+--       end
 
-      local status = vim.g.mcphub_status or "stopped"
-      if status == "ready" or status == "restarted" then
-        return { fg = c.c_green } -- Green for connected
-      elseif status == "starting" or status == "restarting" then
-        return { fg = c.yellow } -- Orange for connecting
-      else
-        return { fg = c.red } -- Red for error/stopped
-      end
-    end,
-  }
-end
+--       local status = vim.g.mcphub_status or "stopped"
+--       if status == "ready" or status == "restarted" then
+--         return { fg = c.c_green } -- Green for connected
+--       elseif status == "starting" or status == "restarting" then
+--         return { fg = c.yellow } -- Orange for connecting
+--       else
+--         return { fg = c.red } -- Red for error/stopped
+--       end
+--     end,
+--   }
+-- end
 
 -- local function avante_rag_status()
 --   local ok, _ = pcall(require, "avante.api")
@@ -494,7 +494,7 @@ require("lualine").setup({
       --     return config_ok and config.rag_service and config.rag_service.enabled
       --   end,
       -- },
-      mcphub_component_definition(),
+      -- mcphub_component_definition(),
       {
         "lsp_status",
         padding = { left = 1, right = 1 },
