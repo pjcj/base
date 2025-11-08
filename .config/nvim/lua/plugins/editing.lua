@@ -61,7 +61,8 @@ return {
         separator = nil,
         zindex = 20, -- The Z-index of the context window
         on_attach = function(buf)
-          local filetype = vim.api.nvim_get_option_value("filetype", { buf = buf })
+          local filetype =
+            vim.api.nvim_get_option_value("filetype", { buf = buf })
           return filetype ~= "perl" -- Disable for Perl files
         end,
       })
