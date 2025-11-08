@@ -212,11 +212,21 @@ local function main()
 
   -- Set up auto-refresh after VimEnter to ensure everything is initialised
   vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function() setup_auto_refresh() end,
+    desc = "Setup auto-refresh for file changes",
+  })
+
+  -- Only set up coverage monitoring when a Perl file is opened
+  local coverage_setup_done = false
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = "perl",
     callback = function()
-      setup_auto_refresh()
-      setup_coverage_auto_execute()
+      if not coverage_setup_done then
+        coverage_setup_done = true
+        setup_coverage_auto_execute()
+      end
     end,
-    desc = "Setup auto-refresh for file changes and coverage monitoring",
+    desc = "Setup coverage monitoring for Perl files",
   })
 end
 
