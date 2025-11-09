@@ -180,19 +180,9 @@ local function setup_coverage_auto_execute()
     vim.log.levels.INFO
   )
 
-  -- Check when opening Perl buffers
-  vim.api.nvim_create_autocmd("BufReadPost", {
-    pattern = { "*.pl", "*.pm", "*.t", "*.pod" },
-    callback = function()
-      vim.notify("Perl buffer opened, checking coverage", vim.log.levels.DEBUG)
-      check_and_execute_coverage()
-    end,
-    desc = "Check coverage when opening Perl files",
-  })
-
   -- Also check when filetype is set to perl
   vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "perl", "perl6", "raku" },
+    pattern = { "perl" },
     callback = function()
       vim.notify("Perl filetype set, checking coverage", vim.log.levels.DEBUG)
       check_and_execute_coverage()
