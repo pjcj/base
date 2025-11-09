@@ -255,6 +255,20 @@ return {
     "chentoast/marks.nvim",
     event = { "BufReadPre", "BufNewFile" },
     opts = {},
+    config = function(_, opts)
+      require("marks").setup(opts)
+
+      -- Store the original marks 'm' mapping
+      local marks_m = vim.fn.maparg("m", "n", false, true)
+
+      -- Replace with custom mapping that shows which-key first
+      vim.keymap.set("n", "m", function()
+        require("which-key").show({ keys = "m", mode = "n" })
+        local char = vim.fn.getcharstr()
+        -- Call original marks.nvim callback with the character
+        if marks_m.callback then marks_m.callback(char) end
+      end, { desc = "marks (mx=set, m[0-9]=bookmark)" })
+    end,
   },
 
   -- Easy text alignment with regex patterns (gA then Ctrl-X)

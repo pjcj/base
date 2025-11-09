@@ -26,6 +26,10 @@ return {
           max = 40,
         },
       },
+      triggers = {
+        { "<auto>", mode = "nxsot" },
+        { "m", mode = { "n", "v" } },
+      },
     },
   },
 
