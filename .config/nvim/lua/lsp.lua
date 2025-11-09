@@ -8,16 +8,18 @@ local on_attach = function(client, bufnr)
     -- 2ms per line, min 500ms, max 60s
     local debounce = math.max(500, math.min(60000, line_count * 2))
     vim.lsp.config.perlnavigator.debounce_text_changes = debounce
-    vim.schedule(function()
-      vim.notify(
-        string.format(
-          "perlnavigator debounce: %.1fs (%d lines)",
-          debounce / 1000,
-          line_count
-        ),
-        vim.log.levels.INFO
-      )
-    end)
+    vim.schedule(
+      function()
+        vim.notify(
+          string.format(
+            "perlnavigator debounce: %.1fs (%d lines)",
+            debounce / 1000,
+            line_count
+          ),
+          vim.log.levels.INFO
+        )
+      end
+    )
   end
 
   -- Set autocommands conditional on server_capabilities
@@ -39,10 +41,8 @@ local on_attach = function(client, bufnr)
   end
 
   if client.server_capabilities.documentSymbolProvider then
-     local navic = require("nvim-navic")
-    if not navic.is_available(bufnr) then
-      navic.attach(client, bufnr)
-    end
+    local navic = require("nvim-navic")
+    if not navic.is_available(bufnr) then navic.attach(client, bufnr) end
   end
 end
 
