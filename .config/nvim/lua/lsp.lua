@@ -301,8 +301,9 @@ local function setup_servers()
   })
 
   -- Diagnostic configuration
+  -- Note: virtual_text disabled to let tiny-inline-diagnostic handle display
   vim.diagnostic.config({
-    virtual_text = { prefix = "●" },
+    virtual_text = false,
     float = {
       source = true,
       border = "rounded",

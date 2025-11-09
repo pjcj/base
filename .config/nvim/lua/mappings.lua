@@ -125,26 +125,31 @@ local function smart_star_search()
   if pcall(require, "hlslens") then require("hlslens").start() end
 end
 
-local diagnostic_modes = {
-  { -- Mode 1: Virtual Text
-    config = { virtual_text = { prefix = "●" }, virtual_lines = false },
-    message = "Virtual text ON",
-  },
-  { -- Mode 2: Virtual Lines
-    config = { virtual_text = false, virtual_lines = true },
-    message = "Virtual lines ON",
-  },
-  { -- Mode 3: Off
-    config = { virtual_text = false, virtual_lines = false },
-    message = "Virtual diagnostics OFF",
-  },
-}
-local current_diagnostic_mode = 1
-local function toggle_virtual_diagnostics()
-  current_diagnostic_mode = (current_diagnostic_mode % #diagnostic_modes) + 1
-  local mode = diagnostic_modes[current_diagnostic_mode]
-  vim.diagnostic.config(mode.config)
-  vim.notify(mode.message, vim.log.levels.INFO, { title = "Diagnostics" })
+-- Toggle tiny-inline-diagnostic (powerline on/off)
+local diagnostic_enabled = true
+local function cycle_inline_diagnostics()
+  diagnostic_enabled = not diagnostic_enabled
+
+  -- Ensure built-in virtual_text is always disabled
+  vim.diagnostic.config({ virtual_text = false })
+
+  if diagnostic_enabled then
+    -- Powerline mode: full messages with powerline styling
+    require("tiny-inline-diagnostic").enable()
+    vim.notify(
+      "Inline diagnostics: ON",
+      vim.log.levels.INFO,
+      { title = "Diagnostics" }
+    )
+  else
+    -- Off mode
+    require("tiny-inline-diagnostic").disable()
+    vim.notify(
+      "Inline diagnostics: OFF",
+      vim.log.levels.INFO,
+      { title = "Diagnostics" }
+    )
+  end
 end
 
 -- parse a Perl stack trace from the + register into the quickfix list
@@ -1453,8 +1458,8 @@ wk.add({
   { "<leader>tt", ":NvimTreeToggle<cr>", desc = "tree" },
   {
     "<leader>tv",
-    toggle_virtual_diagnostics,
-    desc = "toggle virtual diagnostics",
+    cycle_inline_diagnostics,
+    desc = "toggle inline diagnostics",
   },
   { "<leader>tw", ":ToggleWhitespace<cr>", desc = "whitespace" },
   {

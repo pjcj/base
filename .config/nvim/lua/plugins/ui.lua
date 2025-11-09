@@ -178,6 +178,35 @@ return {
     end,
   },
 
+  -- Inline diagnostic display with powerline styling
+  {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "VeryLazy",
+    priority = 1000,
+    config = function()
+      -- Disable built-in diagnostics BEFORE setting up the plugin
+      vim.diagnostic.config({ virtual_text = false })
+
+      -- Initial setup with powerline preset
+      require("tiny-inline-diagnostic").setup({
+        preset = "powerline",
+        options = {
+          show_source = { enabled = true },
+          show_all_diags_on_cursorline = true,
+          multilines = {
+            enabled = true,
+            always_show = true, -- always show all lines
+            trim_whitespaces = true,
+          },
+          overflow = {
+            mode = "wrap",
+          },
+          override_open_float = true,
+        },
+      })
+    end,
+  },
+
   -- Sidebar with git status, diagnostics, todos, and symbols
   {
     "sidebar-nvim/sidebar.nvim",
