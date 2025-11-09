@@ -930,6 +930,11 @@ wk.add({
     desc = "emoji",
   },
   {
+    "<leader>fk",
+    function() tb().marks() end,
+    desc = "marks",
+  },
+  {
     "<leader>fl",
     function() tb().current_buffer_fuzzy_find() end,
     desc = "fuzzy find",
