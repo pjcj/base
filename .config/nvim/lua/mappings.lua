@@ -1584,7 +1584,10 @@ wk.add({
   { "m}", desc = "next bookmark (same type)" },
   { "m{", desc = "previous bookmark (same type)" },
 
-  { "d", group = "delete [marks (dmx=mark, dm[0-9]=group, dm =buffer dm-=line dm==cursor)" },
+  {
+    "d",
+    group = "delete [marks (dmx=mark, dm[0-9]=group, dm =buffer dm-=line dm==cursor)",
+  },
   { "dm", group = "delete marks (dmx=mark, dm[0-9]=group)" },
   { "dm-", desc = "delete marks on line" },
   { "dm<space>", desc = "delete marks in buffer" },
