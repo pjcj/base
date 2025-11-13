@@ -71,7 +71,7 @@ brew "mdformat"
 brew "mkcert"
 brew "multitail"
 brew "mutt"
-brew "mysql@8.4", restart_service: :changed
+brew "mysql@8.4"
 brew "ncdu"
 brew "neovim"
 brew "neovide"
