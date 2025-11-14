@@ -130,8 +130,11 @@ local diagnostic_enabled = true
 local function cycle_inline_diagnostics()
   diagnostic_enabled = not diagnostic_enabled
 
-  -- Ensure built-in virtual_text is always disabled
-  vim.diagnostic.config({ virtual_text = false })
+  -- Ensure built-in virtual_text is always disabled, underline enabled
+  vim.diagnostic.config({
+    virtual_text = false,
+    underline = true,
+  })
 
   if diagnostic_enabled then
     -- Powerline mode: full messages with powerline styling
