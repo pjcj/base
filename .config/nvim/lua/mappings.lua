@@ -125,36 +125,6 @@ local function smart_star_search()
   if pcall(require, "hlslens") then require("hlslens").start() end
 end
 
--- Toggle tiny-inline-diagnostic (powerline on/off)
-local diagnostic_enabled = true
-local function cycle_inline_diagnostics()
-  diagnostic_enabled = not diagnostic_enabled
-
-  -- Ensure built-in virtual_text is always disabled, underline enabled
-  vim.diagnostic.config({
-    virtual_text = false,
-    underline = true,
-  })
-
-  if diagnostic_enabled then
-    -- Powerline mode: full messages with powerline styling
-    require("tiny-inline-diagnostic").enable()
-    vim.notify(
-      "Inline diagnostics: ON",
-      vim.log.levels.INFO,
-      { title = "Diagnostics" }
-    )
-  else
-    -- Off mode
-    require("tiny-inline-diagnostic").disable()
-    vim.notify(
-      "Inline diagnostics: OFF",
-      vim.log.levels.INFO,
-      { title = "Diagnostics" }
-    )
-  end
-end
-
 -- parse a Perl stack trace from the + register into the quickfix list
 local function load_perl_stack_trace()
   -- Get the content of the + register (clipboard)
@@ -1461,7 +1431,7 @@ wk.add({
   { "<leader>tt", ":NvimTreeToggle<cr>", desc = "tree" },
   {
     "<leader>tv",
-    cycle_inline_diagnostics,
+    function() require("tiny-inline-diagnostic").toggle() end,
     desc = "toggle inline diagnostics",
   },
   { "<leader>tw", ":ToggleWhitespace<cr>", desc = "whitespace" },
