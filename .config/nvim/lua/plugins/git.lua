@@ -13,14 +13,15 @@ return {
         delete = { show_count = true, text = "_" },
         topdelete = { show_count = true, text = "‾" },
         changedelete = { show_count = true, text = "~" },
+        untracked = { text = "┆" },
       },
       numhl = true,
       linehl = false,
       watch_gitdir = { interval = 1000 },
       sign_priority = 6,
       update_debounce = 1000,
-      status_formatter = nil, -- Use default
-      diff_opts = { internal = true }, -- If luajit is present
+      status_formatter = nil,
+      diff_opts = { internal = true },
       word_diff = false,
       current_line_blame = true,
       current_line_blame_opts = {
