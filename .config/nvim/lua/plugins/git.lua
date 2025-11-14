@@ -29,7 +29,7 @@ return {
         virt_text_pos = "eol",
         virt_text_priority = 200, -- below diagnostics
         ignore_whitespace = true,
-        delay = 1000,
+        delay = 500,
       },
       count_chars = {
         [1] = "₁",
