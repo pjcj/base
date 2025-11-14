@@ -18,7 +18,7 @@ return {
       numhl = true,
       linehl = false,
       watch_gitdir = { interval = 1000 },
-      sign_priority = 6,
+      sign_priority = 1,
       update_debounce = 1000,
       status_formatter = nil,
       diff_opts = { internal = true },
