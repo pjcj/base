@@ -59,10 +59,24 @@ return {
     end,
   },
 
-  -- Highlight and navigate git conflict markers
+  -- Highlight git conflict markers
   {
-    "rhysd/conflict-marker.vim",
+    "akinsho/git-conflict.nvim",
+    version = "*",
     event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      {
+        default_mappings = false,
+        default_commands = true,
+        disable_diagnostics = false,
+        list_opener = "copen",
+        highlights = {
+          incoming = "DiffAdd",
+          current = "DiffText",
+          ancestor = "DiffChange",
+        },
+      },
+    },
   },
 
   -- Enhanced git diff viewing and file history
