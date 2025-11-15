@@ -110,10 +110,11 @@ return {
   },
 
   -- Task runner and job management
-  {
-    "stevearc/overseer.nvim",
-    opts = {},
-  },
+  -- I just don't use this...
+  -- {
+  --   "stevearc/overseer.nvim",
+  --   opts = {},
+  -- },
 
   -- Scrollbar with git and diagnostic indicators
   {
