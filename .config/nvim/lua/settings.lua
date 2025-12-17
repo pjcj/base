@@ -36,6 +36,7 @@ vopt.showmatch     = true
 vopt.signcolumn    = "yes:1"
 vopt.smartcase     = true
 vopt.smarttab      = true
+vopt.spelloptions  = "camel"
 vopt.splitbelow    = true
 vopt.splitright    = true
 vopt.termguicolors = true
