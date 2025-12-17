@@ -1369,12 +1369,12 @@ wk.add({
   { "<leader>s", group = "spell" },
   {
     "<leader>sd",
-    ":setlocal spell spelllang=de_ch<cr>",
+    ":setlocal spell spelllang=de_ch spelloptions=camel<cr>",
     desc = "Deutsch",
   },
   {
     "<leader>se",
-    ":setlocal spell spelllang=en_gb<cr>",
+    ":setlocal spell spelllang=en_gb spelloptions=camel<cr>",
     desc = "English",
   },
   { "<leader>so", ":set nospell<cr>", desc = "off" },
