@@ -37,11 +37,21 @@ return {
             enable = true,
             lookahead = true, -- Automatically jump forward to the text object
             keymaps = {
-              -- Custom text object for comments
-              ["ia"] = "@comment.inner", -- Select inner part of a comment
-              ["aa"] = "@comment.outer", -- Select outer part of a comment
+              ["ia"] = "@comment.inner",
+              ["aa"] = "@comment.outer",
+              ["af"] = "@function.outer",
+              ["if"] = "@function.inner",
             },
             include_surrounding_whitespace = false,
+          },
+          swap = {
+            enable = true,
+            swap_next = {
+              ["gb"] = "@parameter.inner",
+            },
+            swap_previous = {
+              ["gB"] = "@parameter.inner",
+            },
           },
         },
         autotag = {
