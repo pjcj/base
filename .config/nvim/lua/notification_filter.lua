@@ -67,25 +67,9 @@ local function should_rate_limit(msg, category)
   return true
 end
 
--- Store original vim.notify
-local original_notify = vim.notify
-
--- Custom notify function
-local function filtered_notify(msg, level, opts)
-  if type(msg) ~= "string" then return original_notify(msg, level, opts) end
-
-  -- Transform the message
-  local transformed_msg, category = transform_message(msg)
-
-  -- Skip empty messages
-  if transformed_msg == "" then return end
-
-  -- Check rate limiting
-  if should_rate_limit(transformed_msg, category) then return end
-
-  -- Call original notify with transformed message
-  return original_notify(transformed_msg, level, opts)
-end
+-- Module-level variables to be set during setup
+local original_notify
+local filtered_notify
 
 -- Setup function to install the filter
 function M.setup(user_config)
@@ -94,12 +78,26 @@ function M.setup(user_config)
     config = vim.tbl_deep_extend("force", config, user_config)
   end
 
+  -- Capture vim.notify at setup time (after nvim-notify has replaced it)
+  original_notify = vim.notify
+
+  -- Custom notify function
+  filtered_notify = function(msg, level, opts)
+    if type(msg) ~= "string" then return original_notify(msg, level, opts) end
+    local transformed_msg, category = transform_message(msg)
+    if transformed_msg == "" then return end
+    if should_rate_limit(transformed_msg, category) then return end
+    return original_notify(transformed_msg, level, opts)
+  end
+
   -- Replace vim.notify with our filtered version
   vim.notify = filtered_notify
 end
 
 -- Function to restore original notify (for testing/debugging)
-function M.restore() vim.notify = original_notify end
+function M.restore()
+  if original_notify then vim.notify = original_notify end
+end
 
 -- Function to clear rate limiting history
 function M.clear_history() last_notifications = {} end

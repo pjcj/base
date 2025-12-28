@@ -191,9 +191,6 @@ return {
       "nvim-lua/plenary.nvim",
     },
     config = function()
-      -- Setup notification filter to prevent spam from API errors
-      require("notification_filter").setup()
-
       require("minuet").setup({
         provider = "gemini",
         provider_options = {

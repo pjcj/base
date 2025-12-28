@@ -22,6 +22,9 @@ return {
         background_colour = require("local_defs").colour.base03,
         top_down = false,
       })
+
+      -- Setup notification filter to wrap nvim-notify
+      require("notification_filter").setup()
     end,
   },
 
