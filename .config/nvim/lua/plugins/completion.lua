@@ -346,6 +346,41 @@ return {
     end,
   },
 
+  -- Smart tabbing out of brackets, quotes, etc.
+  {
+    "abecodes/tabout.nvim",
+    lazy = false,
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "saghen/blink.cmp",
+    },
+    opt = true,
+    event = "InsertCharPre",
+    priority = 1000,
+    config = function()
+      require("tabout").setup({
+        tabkey = "<Tab>",
+        backwards_tabkey = "<S-Tab>",
+        act_as_tab = true,
+        act_as_shift_tab = false,
+        default_tab = "<C-t>",
+        default_shift_tab = "<C-d>",
+        enable_backwards = true,
+        completion = true,
+        tabouts = {
+          { open = "'", close = "'" },
+          { open = '"', close = '"' },
+          { open = "`", close = "`" },
+          { open = "(", close = ")" },
+          { open = "[", close = "]" },
+          { open = "{", close = "}" },
+        },
+        ignore_beginning = true,
+        exclude = {},
+      })
+    end,
+  },
+
   -- Emoji picker and insertion via Telescope
   {
     "allaman/emoji.nvim",
