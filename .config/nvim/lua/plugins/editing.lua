@@ -9,7 +9,6 @@ return {
       "nvim-treesitter/nvim-treesitter-refactor",
       "nvim-treesitter/nvim-treesitter-textobjects",
       "nvim-treesitter/nvim-treesitter-context",
-      "windwp/nvim-ts-autotag",
     },
     build = ":TSUpdate",
     config = function()
@@ -81,9 +80,9 @@ return {
     "windwp/nvim-ts-autotag",
     event = { "BufReadPost", "BufNewFile" },
     opts = {
-      enable_close = true, -- Auto close tags
-      enable_rename = true, -- Auto rename pairs of tags
-      enable_close_on_slash = false, -- Auto close on trailing </
+      -- enable_close = true, -- Auto close tags
+      -- enable_rename = true, -- Auto rename pairs of tags
+      -- enable_close_on_slash = false, -- Auto close on trailing </
     },
   },
 
