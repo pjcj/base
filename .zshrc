@@ -44,7 +44,7 @@ zinit load "woefe/vi-mode.zsh"
 zinit load "joshskidmore/zsh-fzf-history-search"
 zinit load "Aloxaf/fzf-tab"
 zinit load 'zsh-users/zsh-autosuggestions'
-zinit load "zdharma/fast-syntax-highlighting"
+zinit load "zdharma-continuum/fast-syntax-highlighting"
 zinit load "Tarrasch/zsh-bd"
 
 zshrc_load_status "options"
