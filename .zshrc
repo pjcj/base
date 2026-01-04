@@ -434,7 +434,7 @@ export NPM_PACKAGES=~/g/sw/.npm-packages
 
 zshrc_load_status "aliases"
 
-alias mkdir "nocorrect mkdir"
+alias mkdir='nocorrect mkdir'
 alias -g PV="pv -abgprtv"
 
 zshrc_load_status "functions"
