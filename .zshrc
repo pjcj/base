@@ -644,13 +644,19 @@ wh() {
   command whence -afpSvm "$@"
 }
 
-tm() {
-  if [[ -z "$1" || -u "$TMUX" ]]; then
+_tm() {
+  local opts=$1
+  local session=$2
+  if [[ -z "$session" || -u "$TMUX" ]]; then
     tmux
   else
-    tmux has -t $1 && tmux attach -d -t $1 || tmux new -s $1
+    tmux has -t $session && tmux attach $opts -t $session || tmux new -s $session
   fi
 }
+
+tm() { _tm "-d" "$1" }
+tmc() { _tm "" "$1" }
+
 __tmux-sessions() {
   local expl
   local -a sessions
