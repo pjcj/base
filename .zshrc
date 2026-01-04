@@ -996,12 +996,14 @@ zshrc_load_status "fzf"
 
 fh() { print -z $(fc -li 1 | fzf-tmux +s --tac | sed -r 's/ *[0-9]+.{18}//') }
 
-if which lsd >&/dev/null; then
-  tree="lsd -A --tree --color=always --icon=always"
+if (( $+commands[eza] )); then
+  _tree_cmd="eza -T --color=always --icons"
+elif (( $+commands[lsd] )); then
+  _tree_cmd="lsd -A --tree --color=always --icon=always"
 else
-  tree="tree -C"
+  _tree_cmd="tree -C"
 fi
-tree() { eval $tree "$@" }
+tree() { ${=_tree_cmd} "$@" }
 
 head="2>/dev/null | head -250"
 
@@ -1017,9 +1019,9 @@ export FZF_DEFAULT_OPTS="
   --bind 'f2:toggle-preview'
 "
 export FZF_DEFAULT_COMMAND="fd --hidden --no-ignore-vcs --exclude .git"
-export FZF_CTRL_T_OPTS="--preview '(bat --tabs=2 --color=always {} 2>/dev/null || cat {} || $tree {}) $head'"
+export FZF_CTRL_T_OPTS="--preview '(bat --tabs=2 --color=always {} 2>/dev/null || cat {} || $_tree_cmd {}) $head'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_OPTS="--preview '$tree {} $head'"
+export FZF_ALT_C_OPTS="--preview '$_tree_cmd {} $head'"
 export FZF_ALT_C_COMMAND="fd --hidden --no-ignore-vcs --exclude .git --type d"
 
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
