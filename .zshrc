@@ -4,10 +4,10 @@ zshrc_load_status () {
 }
 
 load() {
-  for f in $@; do
-    if [[ -r $f ]]; then
+  for f in "$@"; do
+    if [[ -r "$f" ]]; then
       zshrc_load_status "$f"
-      . $f
+      . "$f"
     fi
   done
 }
