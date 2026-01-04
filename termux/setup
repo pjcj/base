@@ -1,0 +1,138 @@
+#!/usr/bin/env bash
+
+set -eEuo pipefail
+shopt -s inherit_errexit
+
+usage() {
+  cat <<EOF
+Usage: $(basename "$0") [options]
+
+Setup Termux environment with packages and config files.
+
+Options:
+  -h, --help     Show this help message
+  -p, --packages Install/update packages only
+  -c, --config   Create config directories only
+  -a, --all      Install packages and create directories (default)
+
+Examples:
+  $(basename "$0")           # Install everything
+  $(basename "$0") -p        # Only install packages
+  $(basename "$0") -c        # Only install config files
+EOF
+}
+
+log() {
+  echo "==> $*"
+}
+
+err() {
+  echo "ERROR: $*" >&2
+}
+
+check_termux() {
+  if [[ ! -d /data/data/com.termux ]]; then
+    err "This script is intended to run in Termux"
+    exit 1
+  fi
+}
+
+install_packages() {
+  log "Updating package lists"
+  pkg update -y
+
+  log "Upgrading existing packages"
+  pkg upgrade -y
+
+  local packages=(
+    # Essential
+    openssh
+    git
+    vim
+    tmux
+
+    # Recommended
+    fzf
+    fd
+    ripgrep
+    bat
+    eza
+    zoxide
+
+    # Optional extras
+    tig
+    ncurses-utils
+    bash-completion
+  )
+
+  log "Installing packages: ${packages[*]}"
+  pkg install -y "${packages[@]}"
+
+  log "Packages installed successfully"
+}
+
+install_config() {
+  log "Creating vim directories"
+  mkdir -p "$HOME/.vim/undo"
+  mkdir -p "$HOME/.vim/backup"
+
+  if [[ ! -d "$HOME/.ssh" ]]; then
+    log "Creating SSH directory"
+    mkdir -p "$HOME/.ssh"
+    chmod 700 "$HOME/.ssh"
+  fi
+
+  log "Config directories created"
+}
+
+main() {
+  local do_packages=false
+  local do_config=false
+
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+      -h | --help)
+        usage
+        exit 0
+        ;;
+      -p | --packages)
+        do_packages=true
+        shift
+        ;;
+      -c | --config)
+        do_config=true
+        shift
+        ;;
+      -a | --all)
+        do_packages=true
+        do_config=true
+        shift
+        ;;
+      *)
+        err "Unknown option: $1"
+        usage
+        exit 1
+        ;;
+    esac
+  done
+
+  # Default to all if no options specified
+  if [[ $do_packages == false && $do_config == false ]]; then
+    do_packages=true
+    do_config=true
+  fi
+
+  check_termux
+
+  if [[ $do_packages == true ]]; then
+    install_packages
+  fi
+
+  if [[ $do_config == true ]]; then
+    install_config
+  fi
+
+  log "Setup complete"
+}
+
+main "$@"
