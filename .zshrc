@@ -663,7 +663,7 @@ __tmux-sessions() {
   sessions=( ${${(f)"$(command tmux list-sessions)"}/:[ $'\t']##/:} )
   _describe -t sessions "sessions" sessions "$@"
 }
-compdef __tmux-sessions tm
+compdef __tmux-sessions tm tmc
 
 sshtm() {
   local server=${1?}
