@@ -955,20 +955,22 @@ if [[ -e ~/.plenv ]] then
 fi
 
 zshrc_load_status "nvm"
-if [[ -d $(brew --prefix nvm) ]] then
+_brew_nvm="${HOMEBREW_PREFIX}/opt/nvm"
+if [[ -n $HOMEBREW_PREFIX && -d $_brew_nvm ]]; then
   export NVM_DIR=~/.config/nvm
   mkdir -p $NVM_DIR
-  load $(brew --prefix nvm)/nvm.sh
-  load $(brew --prefix nvm)/etc/bash_completion.d/nvm
+  load $_brew_nvm/nvm.sh
+  load $_brew_nvm/etc/bash_completion.d/nvm
   nvm use --silent system
 fi
 
 zshrc_load_status "pyenv"
-if [[ -d $(brew --prefix pyenv) ]] then
+_brew_pyenv="${HOMEBREW_PREFIX}/opt/pyenv"
+if [[ -n $HOMEBREW_PREFIX && -d $_brew_pyenv ]]; then
   export PYENV_ROOT=~/.config/pyenv
   mkdir -p $PYENV_ROOT
   PATH=$PYENV_ROOT/bin:$PATH
-  eval "$(pyenv init --path  | grep -v pyenv.zsh)"
+  eval "$(pyenv init --path | grep -v pyenv.zsh)"
   eval "$(pyenv virtualenv-init -)"
 fi
 
