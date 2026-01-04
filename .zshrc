@@ -825,7 +825,8 @@ fi
 
 [[ ! -d ~/g/tmp/vim ]] && mkdir -p ~/g/tmp/vim
 
-eval "$(thefuck --alias ff)"
+# Lazy load thefuck - only initialise on first use
+ff() { eval "$(thefuck --alias ff)" && ff "$@" }
 
 function preexec {
   [[ -z $SSH_CLIENT ]] || export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
