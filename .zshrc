@@ -871,7 +871,7 @@ export s_dred="#400200"     # dark red
 export s_ddred="#2b0200"    # dark dark red
 export s_dddred="#150100"   # dark dark dark red
 export s_lviolet="#c0c3ef"  # light violet
-export s_mvoilet="#7c81e4"  # medium violet
+export s_mviolet="#7c81e4"  # medium violet
 export s_dviolet="#323799"  # dark violet
 export s_ddviolet="#0F1363" # dark dark violet
 export s_dcyan="#04746c"    # dark cyan
@@ -888,7 +888,7 @@ for c in s_base03 s_base02 s_base01 s_base00 s_base0 s_base1 s_base2 s_base3 \
   s_yellow s_orange s_red s_magenta s_violet s_blue s_cyan s_green s_normal \
   s_base04 s_base05 s_base06 s_peach s_pyellow s_llyellow s_lyellow s_dyellow \
   s_dorange s_lllred s_llred s_lred s_mred s_lmred s_dred s_ddred s_dddred \
-  s_lviolet s_mvoilet s_dviolet s_ddviolet s_dcyan s_llblue s_lblue s_dblue \
+  s_lviolet s_mviolet s_dviolet s_ddviolet s_dcyan s_llblue s_lblue s_dblue \
   s_ddblue s_lgreen s_rgreen s_dgreen s_ddgreen; do
   export ef$c="$(print -rP "%F{${(P)c}}")"  # foreground terminal esc sequence
   export eb$c="$(print -rP "%K{${(P)c}}")"  # background terminal esc sequence
