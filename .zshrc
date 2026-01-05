@@ -1041,7 +1041,7 @@ _fzf_compgen_dir() {
 _fzfgv() {
   local pc=${1:-$FZF_WIDTH}
   local gsh="git -c core.pager=cat show --remerge-diff --color=never %"
-  local disp="$gsh | delta --width=$(expr $(tput cols) \* $pc / 100)"
+  local disp="$gsh | delta --width=$(( $(tput cols) * pc / 100 ))"
   echo "xargs -I % sh -c '$disp'"
 }
 
