@@ -652,7 +652,7 @@ _tm() {
   if [[ -z "$session" || -u "$TMUX" ]]; then
     tmux
   else
-    tmux has -t $session && tmux attach $opts -t $session || tmux new -s $session
+    tmux has -t "$session" && tmux attach $opts -t "$session" || tmux new -s "$session"
   fi
 }
 
