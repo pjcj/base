@@ -1272,7 +1272,7 @@ custom_prompt() {
   #   p_status=$(seg "$s_base03" "$s_lblue" " ✔ ")
   # fi
 
-  local term_width=$(tput cols)
+  local term_width=$COLUMNS
   if [[ -n $SSH_CLIENT ]]; then ncol="$s_lllred"
   elif [[ $EUID -eq 0 ]]; then ncol="$s_red"
   else ncol="$s_base2"
