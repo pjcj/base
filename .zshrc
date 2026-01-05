@@ -613,7 +613,7 @@ vd() { dirs -v "$@" | fzf | cut -f 1 | { local d=$(cat); cd "+$d" } }
 
 glk() {
   if [[ -n $FZF_GIT_K ]]; then
-    gl $FZF_GIT_K "$@"
+    gl "$FZF_GIT_K" "$@"
   else
     gl "$@"
   fi
