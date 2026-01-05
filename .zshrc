@@ -922,7 +922,7 @@ load \
 zshrc_load_status "perl"
 
 [[ -z $PERLBREW_ROOT ]] && export PERLBREW_ROOT="$HOME/perl5/perlbrew"
-if [[ -e $PERLBREW_ROOT/etc/bashrc ]] then
+if [[ -e $PERLBREW_ROOT/etc/bashrc ]]; then
   __path=$PATH
   __manpath=$MANPATH
   . $PERLBREW_ROOT/etc/bashrc 2>/dev/null
@@ -942,7 +942,7 @@ function _dzil_compdef_setup() {
   fi
 }
 
-if [[ -e ~/.plenv ]] then
+if [[ -e ~/.plenv ]]; then
   export PATH=~/.plenv/bin:$PATH
   eval "$(plenv init - zsh)"
   autoload -Uz add-zsh-hook
