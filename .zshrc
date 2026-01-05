@@ -598,7 +598,7 @@ rssh()    { ssh -p 9999 "$@" localhost }
 rtunnel() { ssh -N -f -R 9999:localhost:22 "$@" }
 rr()      { ranger "$@" }
 tg()      { tcgrep -brun "$@" }
-tojpg()   { for f ("$@") { echo "$f"; j=`echo $f(:r)`; convert "$f" "$j.jpg" } }
+tojpg()   { for f ("$@") { echo "$f"; j=${f:r}; convert "$f" "$j.jpg" } }
 t()       { TERM=xterm-color tig --all "$@" }
 tf()      { tail -f "$@" }
 ud()      { u "$@"; d }
@@ -608,7 +608,7 @@ zb()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil build "$@" }
 zt()      { perl Makefile.PL; make clean; perl Makefile.PL; dzil test "$@" }
 = ()      { echo "$@" | bc -l }
 
-vd() { dirs -v "$@" | fzf | cut -f 1 | { local d=`cat /dev/stdin`; cd "+$d" } }
+vd() { dirs -v "$@" | fzf | cut -f 1 | { local d=$(cat); cd "+$d" } }
 
 glk() {
   if [[ -n $FZF_GIT_K ]]; then
