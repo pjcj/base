@@ -1341,7 +1341,7 @@ elif [[ $_uname == FreeBSD ]]; then
 else
   eval $(keychain --eval id_ed25519 id_rsa)
   if [[ -n $WSL_DISTRO_NAME ]]; then
-    if ps aux | grep tailscaled | grep -v grep >/dev/null; then
+    if pgrep -x tailscaled >/dev/null; then
       echo tailscaled running
     else
       sudo tailscaled > /dev/null 2>&1 &
