@@ -356,10 +356,10 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 zstyle ':fzf-tab:*' switch-group ',' '.'
 disable-fzf-tab
 
-if which jj >&/dev/null; then
+if (( $+commands[jj] )); then
   source <(jj util completion zsh)
 fi
-if which mdsf >&/dev/null; then
+if (( $+commands[mdsf] )); then
   eval "$(mdsf completions zsh)"
 fi
 
@@ -440,7 +440,7 @@ alias -g PV="pv -abgprtv"
 
 zshrc_load_status "functions"
 
-if which nvim >&/dev/null; then
+if (( $+commands[nvim] )); then
   export EDITOR=nvim
 else
   export EDITOR=vim
@@ -620,7 +620,7 @@ glk() {
 
 n() {
   mk=make
-  which gmake >/dev/null && mk=gmake
+  (( $+commands[gmake] )) && mk=gmake
   $mk "$@"
 }
 
@@ -757,9 +757,9 @@ export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[4;32m'
 export _NROFF_U=1
 
-if which python3 >&/dev/null; then
+if (( $+commands[python3] )); then
   export PYTHON3=python3
-elif which python3.6 >&/dev/null; then
+elif (( $+commands[python3.6] )); then
   export PYTHON3=python3.6
 fi
 
@@ -788,7 +788,7 @@ elif [[ $(uname) == FreeBSD ]]; then
   pp() { pl -rc "$@" | m }
   export LESS='--LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS'
 else
-  if which dmidecode >&/dev/null; then
+  if (( $+commands[dmidecode] )); then
     (sudo dmidecode -t system | grep -Eq 'VirtualBox|VMware') && ISVM=1
   fi
   cp()  { command cp -bv --backup=numbered "$@" }
@@ -799,9 +799,9 @@ else
   pp()  { pll -e --sort=-pcpu "$@" | m }
   if [[ -n $WSL_DISTRO_NAME ]]; then
     s() { wslview "$@" }
-  elif which xdg-open >&/dev/null; then
+  elif (( $+commands[xdg-open] )); then
     s() { xdg-open "$@" }
-  elif which gnome-open >&/dev/null; then
+  elif (( $+commands[gnome-open] )); then
     s() { gnome-open "$@" }
   else
     s() { echo Cannot find open command; echo "$@" }
@@ -810,7 +810,7 @@ fi
 
 [[ $ISVM == 1 ]] && ulimit -n 4096
 
-if which eza >&/dev/null; then
+if (( $+commands[eza] )); then
   f() {
     eza -lagH \
       --colour-scale=all --colour-scale-mode=gradient --colour=always \
@@ -1146,7 +1146,7 @@ bindkey '^Y' toggle-fzf-tab
 
 zshrc_load_status "aws"
 
-if which assume >/dev/null; then
+if (( $+commands[assume] )); then
   [[ -d ~/.granted ]] && fpath=(~/.granted/zsh_autocomplete/*/ $fpath)
   alias assume="source assume"
   export GRANTED_ENABLE_AUTO_REASSUME=true
@@ -1198,7 +1198,7 @@ perl_here() {
 
 perlv () {
   if [[ ${PROMPT_SHOW_PERL:-$(perl_here)} == 1 ]]; then
-    if which plenv >&/dev/null; then
+    if (( $+commands[plenv] )); then
       local perl=$(plenv version-name)
       if [[ $perl == system ]]; then
         perl -e 'print "$^V "'
