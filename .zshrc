@@ -224,7 +224,8 @@ PATH=/snap/bin:$PATH
   PATH=$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH &&
   PATH=$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH
 PATH=~/g/local_base/utils:~/g/base/utils:$PATH
-PATH=~/g/base/utils/${(L)$(uname)}:$PATH
+_uname=$(uname)
+PATH=~/g/base/utils/${(L)_uname}:$PATH
 PATH=/usr/local/bin:$PATH:~/g/go/bin:/usr/local/sbin:/usr/sbin:/sbin
 PATH=~/bin:$PATH
 PATH=$PATH:~/.claude/local
@@ -764,7 +765,7 @@ elif (( $+commands[python3.6] )); then
 fi
 
 export ISVM=
-if [[ $(uname) == Darwin ]]; then
+if [[ $_uname == Darwin ]]; then
   cp() { command gcp -bv --backup=numbered "$@" }
   f()  { ls -ABGhl "$@" }
   mv() { command gmv -bv --backup=numbered "$@" }
@@ -776,7 +777,7 @@ if [[ $(uname) == Darwin ]]; then
   pl() { pll -eww "$@" | m }
   pp() { pl -rc "$@" | m }
   tailscale() { /Applications/Tailscale.app/Contents/MacOS/Tailscale "$@" }
-elif [[ $(uname) == FreeBSD ]]; then
+elif [[ $_uname == FreeBSD ]]; then
   cp() { command cp -v "$@" }
   f()  { ls -ABGhl "$@" }
   mv() { command mv -v "$@" }
@@ -1324,7 +1325,7 @@ RPROMPT=""
 zshrc_load_status "keychain"
 
 # Handle startup
-if [[ $(uname) == Darwin ]]; then
+if [[ $_uname == Darwin ]]; then
   ulimit -n 65536
   ulimit -s 32768
   # launchctl setenv OLLAMA_NUM_BATCH 2048
@@ -1335,7 +1336,7 @@ if [[ $(uname) == Darwin ]]; then
   export ACCELERATE_USE_MPS=1
 
   [[ -z $TMUX ]] && ssh-add --apple-load-keychain
-elif [[ $(uname) == FreeBSD ]]; then
+elif [[ $_uname == FreeBSD ]]; then
   :
 else
   eval $(keychain --eval id_ed25519 id_rsa)
