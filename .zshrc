@@ -427,8 +427,8 @@ zshrc_load_status "miscellaneous"
 # url-quote-magic breaks fast-syntax-highlighting
 # autoload -U url-quote-magic && zle -N self-insert url-quote-magic
 
-export REPORTTIME=1  # 1 cpu second
-export TIMEFMT="  %J  %E %P  %U user + %S system  %W swaps  %Mk mem"
+REPORTTIME=10  # 10 cpu seconds
+TIMEFMT="  %J  %E %P  %U user + %S system  %W swaps  %Mk mem"
 
 export LS_OPTIONS=
 
