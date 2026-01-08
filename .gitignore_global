@@ -2,7 +2,5 @@
 .gitlab.nvim
 .gonvim/
 .fseventsd/
+.claude/settings.local.json
 .aider*
-CLAUDE.*
-.claude/
-AGENTS.md
