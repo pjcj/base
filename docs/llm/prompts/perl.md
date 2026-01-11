@@ -6,7 +6,8 @@
   - If `.perlcriticrc` exists
 - Use [perltidy](https://metacpan.org/dist/Perl-Tidy/view/bin/perltidy)
   - If `.perltidy` exists
-- Beyond that follow these rules:
+- Beyond that follow these rules, which one day may get codified into
+  perlcritic and/or perltidy
   - Don't use empty parens on method calls: `$self->x` instead of `$self->x()`
   - Don't postfix dereference on simple variables: `@$var` instead of
     `@{$var}` or `$var->@*`
@@ -15,8 +16,6 @@
   - Don't use extraneous arrows: `$x->{a}{b}` instead of `$x->{a}->{b}`
   - Don't use unnecessary `scalar` keywords: `$count = @x` instead of
     `$count = scalar @x`
-    - To check whether an array has any elements use `@x` rather than `scalar
-    @x` or `@x > 0`
   - Use heredocs in preference to multi-line strings: `$x = <<~EOT;`
     - Use `<<~EOT` rather than `<<EOT` to remove leading whitespace
     - Prefer `<<~EOT` to `<<~'EOT'` in accordance with the quotng rules below
@@ -26,7 +25,7 @@
   - Use quotes in preference to `q` or `qq`: `"string"` instead of `qq{string}`
     - But use `q` or `qq` where that makes sense, eg where the string contains
       quotes
-    - Try to use `qq()`, `qq{}`, `qq<>` or `qq[]` in order of preference
+    - Try to use `qq()`, `qq[]`, `qq{}` or `qq<>` in order of preference
     - Use bracketing operators and not something like `qq//`
   - When using `qw` include a space after the opening delimiter and before the
     closing delimiter: `qw( a b c )` instead of `qw(a b c)`
@@ -52,8 +51,10 @@
     `if ($x =~ /x/)` instead of `unless ($x !~ /x/)`
   - Use `for` instead of `foreach`: they are synonyms
   - Don't use spacer comments: `#----------------------------` and similar
+  - To check whether an array has any elements use `@x` rather than
+    `scalar @x` or `@x > 0`
   - If a subroutine returns values at its end, return them without an explicit
-  `return` or trailing semicolon
+    `return` or trailing semicolon
   - For conditionals with a single statement prefer a postfix conditional
   - Use ternary `?:` instead of `if () {} else {}` for single statements
   - Prefer hashrefs and arrayrefs to hashes and arrays for data structures
