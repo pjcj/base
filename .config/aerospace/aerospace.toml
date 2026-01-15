@@ -228,6 +228,10 @@ if.app-name-regex-substring = "Signal"
 run = "move-node-to-workspace 8"
 
 [[on-window-detected]]
+if.app-name-regex-substring = "Chrome"
+run = "move-node-to-workspace 8"
+
+[[on-window-detected]]
 if.app-name-regex-substring = "Python"
 run = "move-node-to-workspace 5"
 
