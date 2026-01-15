@@ -178,6 +178,7 @@ comma = "mode service"
 
 f = ["fullscreen", "mode main"]
 r = ["reload-config", "mode main"]
+o = ["exec-and-forget ~/g/base/utils/toggle_audio", "mode main"]
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
