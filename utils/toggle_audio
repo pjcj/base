@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+set -eEuo pipefail
+shopt -s inherit_errexit
+
+# Toggle audio output/input devices
+
+main() {
+  local current_output available_outputs available_inputs
+  local new_output new_input
+
+  current_output=$(SwitchAudioSource -c -t output)
+  available_outputs=$(SwitchAudioSource -a -t output)
+  available_inputs=$(SwitchAudioSource -a -t input)
+
+  # Determine new output device
+  if [[ "$current_output" == "Jabra EVOLVE LINK" ]]; then
+    if echo "$available_outputs" | grep -q "^USB audio CODEC$"; then
+      new_output="USB audio CODEC"
+    else
+      new_output="MacBook Pro Speakers"
+    fi
+  else
+    if echo "$available_outputs" | grep -q "^Jabra EVOLVE LINK$"; then
+      new_output="Jabra EVOLVE LINK"
+    elif [[ "$current_output" != "MacBook Pro Speakers" ]]; then
+      new_output="MacBook Pro Speakers"
+    else
+      new_output="$current_output"
+    fi
+  fi
+
+  # Determine new input device
+  if echo "$available_inputs" | grep -q "^Jabra EVOLVE LINK$"; then
+    new_input="Jabra EVOLVE LINK"
+  else
+    new_input="MacBook Pro Microphone"
+  fi
+
+  # Apply changes
+  SwitchAudioSource -s "$new_output" -t output >/dev/null
+  SwitchAudioSource -s "$new_input" -t input >/dev/null
+
+  # Notify
+  local msg="Output: $new_output\nInput:  $new_input"
+  osascript -e "display notification \"$msg\" with title \"Audio Switched\""
+}
+
+main "$@"
