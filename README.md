@@ -3,8 +3,8 @@
 This is the base system that I put onto any machine on which I am developing.
 It includes config files for:
 
-- [bspwm](https://github.com/baskerville/bspwm) (tiling window manager)
-- [sxhkd](https://github.com/baskerville/sxhkd) (X hotkey daemon)
+- [aerospace](https://github.com/nikitabobko/AeroSpace) (tiling window manager for macOS)
+- [i3](https://i3wm.org/) (tiling window manager for Linux)
 - Xdefaults
 - [tmux](https://tmux.github.io/) (terminal multiplexer)
 - [zsh](http://www.zsh.org/) (shell)
