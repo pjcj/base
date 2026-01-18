@@ -13,7 +13,6 @@ Based on the nvim-lint and LSP configurations, the following linters are used:
 - **perlcritic**: Comprehensive Perl static analysis (severity level 2)
 - **perlimports**: Import management and validation
 - **perlnavigator**: LSP-based analysis via Perl Navigator
-- **custom perl linter**: Custom syntax checking via `utils/lint_perl`
 
 ### Shell Scripts (sh, bash, zsh)
 
@@ -191,7 +190,6 @@ These run on all file types:
 
 ### Custom Tools
 
-- `utils/lint_perl`: Custom Perl syntax validation
 - Spell checking respects `.codespell` ignore files
 - Perlcritic and perlimports integrate with editor workflows
 

@@ -34,11 +34,9 @@ utils/build <component>
 ### Development Tools
 
 ```bash
-# Perl code linting
-utils/lint_perl
-
 # Neovim configuration is managed via lazy.nvim
 # Plugins auto-install on startup
+# Perl linting is handled by Perl Navigator LSP
 ```
 
 ## Architecture and Structure
@@ -93,7 +91,7 @@ utils/lint_perl
 ### Development Workflow
 
 - Optimised for terminal-based development with extensive tmux integration
-- Custom Perl linting available via `utils/lint_perl`
+- Perl linting handled by Perl Navigator LSP
 - Git integration with advanced aliases and tooling
 - File templates available in `templates/` directory for common Perl patterns
 
