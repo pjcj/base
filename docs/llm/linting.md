@@ -104,7 +104,7 @@ These policies are intentionally disabled:
 - **Perlcritic integration**: Automatic if `.perlcriticrc` exists
 - **Perlimports support**: Automatic if `.perlimports.toml` exists
 - **Custom include paths**: Dynamically determined
-- **Debounce delay**: 5000ms for text changes
+- **Debounce delay**: Dynamic based on file size (2ms per line, min 500ms, max 60s)
 
 ### Diagnostic Filtering
 
