@@ -11,9 +11,6 @@ ln -bs g/base/{.vimrc,.Xdefaults,.vim,.nvim,.tmux.conf,.tigrc,.doitrc} ~
 ln -bs ~/g/base/.config/* ~/.config
 ( cd ~ && ln -bs g/base/.zshrc* g/base/.zshenv . )
 
-[[ -d ~/.zplug ]] || curl -sL --proto-redir -all,https \
-    https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
-
 echo "Start tmux and then run full_build"
 
 exit

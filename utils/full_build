@@ -99,10 +99,7 @@ update_other() {
   pipx upgrade-all
 }
 
-do_zplug() {
-  [[ -d ~/.zplug ]] || curl -sL --proto-redir -all,https \
-    https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
-
+do_zinit() {
   ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
   # shellcheck disable=SC1091
   source "$ZINIT_HOME/zinit.zsh"
@@ -233,7 +230,7 @@ main() {
   update_packages
   update_brew
   update_other
-  do_zplug
+  do_zinit
   completion
   create_wezterm_terminfo
   fixup_fzf_completion

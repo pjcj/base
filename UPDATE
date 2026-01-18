@@ -10,7 +10,4 @@
 # 3. Source this script
 #    $ . ./UPDATE
 
-# zplug clean
-zplug update
-
-full_build
+nice =full_build
