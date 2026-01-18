@@ -1,4 +1,6 @@
 #!/bin/bash
+# Linux only - builds software from ghq.repos (st, caps2esc) and fonts.
+# On macOS, these tools are not needed or are installed via Homebrew.
 set -euo pipefail
 
 script=$(basename "$0")

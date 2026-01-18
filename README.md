@@ -24,7 +24,10 @@ On Linux, unpackaged software is managed with
 On macOS, these tools are not needed as alternatives are available via Homebrew
 or the system.
 
-Other useful tools (installed via Homebrew on all platforms):
+Homebrew is used as the primary package manager on both macOS and Linux.
+Platform-specific Brewfiles define the packages for each system.
+
+Other useful tools (installed via Homebrew):
 
 - [fzf](https://github.com/junegunn/fzf) (fuzzy finder)
 - [PathPicker](https://github.com/facebook/PathPicker) (file selector)

@@ -1,4 +1,7 @@
 #!/bin/bash
+# Linux only - builds individual software components from source.
+# Uses ghq for repo locations and aptitude for dependencies.
+# On macOS, these tools are installed via Homebrew instead.
 set -uo pipefail
 
 script=$(basename "$0")

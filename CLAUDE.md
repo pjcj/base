@@ -18,16 +18,16 @@ workflows using Neovim, tmux, and zsh.
 # Initial system setup on linux
 ./SETUP
 
-# Update existing installation
+# Update existing installation (calls full_build)
 . ./UPDATE
 
 # Complete system rebuild (updates packages, plugins, dependencies)
 utils/full_build
 
-# Build all external repositories managed via ghq
+# Build all external repositories managed via ghq (Linux only)
 utils/build_all
 
-# Build individual software components
+# Build individual software components (Linux only)
 utils/build <component>
 ```
 
@@ -66,7 +66,7 @@ utils/lint_perl
 
 - **Neovim**: lazy.nvim for plugin management with AI completion support
 - **Shell**: zinit for zsh plugin management
-- **System**: Brewfile for package management across platforms
+- **System**: Homebrew for package management on macOS and Linux
 
 ### Cross-Platform Support
 
