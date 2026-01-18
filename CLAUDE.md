@@ -15,7 +15,7 @@ workflows using Neovim, tmux, and zsh.
 ### System Setup and Maintenance
 
 ```bash
-# Initial system setup
+# Initial system setup on linux
 ./SETUP
 
 # Update existing installation
@@ -80,7 +80,7 @@ utils/lint_perl
 ### Build System
 
 - `utils/full_build` is the master build script for complete system setup
-- External repositories are managed via ghq (listed in `ghq.repos`)
+- On Linux, external repositories are managed via ghq (listed in `ghq.repos`)
 - Package dependencies are defined in platform-specific Brewfiles
 
 ### Neovim Configuration
