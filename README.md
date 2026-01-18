@@ -15,42 +15,40 @@ It includes config files for:
 Colours are Solarized Dark slightly altered to make the dark background colours
 a little darker.
 
-Unpackaged software, or software that is newer than packaged versions, is
-managed with [ghq](https://github.com/motemen/ghq) and includes the following
-repositories:
+On Linux, unpackaged software is managed with
+[ghq](https://github.com/motemen/ghq) and includes:
 
-- [st](http://git.suckless.org/st/)
-- [zsh](git://zsh.git.sf.net/gitroot/zsh/zsh)
-- [zsh-git-prompt](https://github.com/olivierverdier/zsh-git-prompt) (prompt for
-  zsh including git status)
-- [neovim](https://github.com/neovim/neovim)
-- [tmux](https://github.com/tmux/tmux) and
-  [libevent](https://github.com/libevent/libevent)
-- [bspwm](https://github.com/baskerville/bspwm)
-- [sxhkd](https://github.com/baskerville/sxhkd)
-- [git](https://github.com/git/git)
-- [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy) (better git diffs)
-- [tig](https://github.com/jonas/tig) (git viewer)
+- [st](http://git.suckless.org/st/) (suckless terminal)
 - [caps2esc](https://github.com/oblitum/caps2esc) (make capslock useful)
-- [xdotool](https://github.com/jordansissel/xdotool) (automate X input)
-- [Clipit](https://github.com/shantzu/ClipIt) (clipboard manager)
-- [urlview](https://github.com/sigpipe/urlview) (extract URLs from text)
-- [shellcheck](https://github.com/koalaman/shellcheck) (shell linter)
+
+On macOS, these tools are not needed as alternatives are available via Homebrew
+or the system.
+
+Other useful tools (installed via Homebrew on all platforms):
+
 - [fzf](https://github.com/junegunn/fzf) (fuzzy finder)
 - [PathPicker](https://github.com/facebook/PathPicker) (file selector)
 - [htop](https://github.com/hishamhm/htop) (better top)
 - [hosts](https://github.com/StevenBlack/hosts) (safe hosts file)
 
-The zsh config uses [zplug](https://github.com/b4b4r07/zplug) and the following
-plugins:
+The zsh config uses [zinit](https://github.com/zdharma-continuum/zinit) and the
+following plugins:
 
 - [zsh-completions](https://github.com/zsh-users/zsh-completions) (extra
   completions)
-- [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
-  (highlighting on the command line)
-- [zsh-dwim](https://github.com/oknowton/zsh-dwim) (predict next command with
-  ^U)
-- [git-extras](https://github.com/tj/git-extras) (additional git commands)
+- [zsh-autoenv](https://github.com/Tarrasch/zsh-autoenv) (automatic env
+  switching)
+- [git-prompt.zsh](https://github.com/woefe/git-prompt.zsh) (git status in
+  prompt)
+- [vi-mode.zsh](https://github.com/woefe/vi-mode.zsh) (vi mode enhancements)
+- [zsh-fzf-history-search](https://github.com/joshskidmore/zsh-fzf-history-search)
+  (fuzzy history search)
+- [fzf-tab](https://github.com/Aloxaf/fzf-tab) (fzf for tab completion)
+- [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
+  (fish-like suggestions)
+- [fast-syntax-highlighting](https://github.com/zdharma-continuum/fast-syntax-highlighting)
+  (syntax highlighting on command line)
+- [zsh-bd](https://github.com/Tarrasch/zsh-bd) (jump back to parent directory)
 
 The neovim config uses [lazy.nvim](https://github.com/folke/lazy.nvim) and the
 following plugins:
