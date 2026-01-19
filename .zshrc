@@ -297,7 +297,6 @@ zstyle ":completion::complete:*" use-cache 1
 
 compdef wh=which
 compdef n=make
-compdef _gh  ghub
 compdef _git ga=git-add
 compdef _git gb=git-branch
 compdef _git gbl=git-blame
@@ -310,8 +309,8 @@ compdef _git gds=git-diff
 compdef _git gf=git-fetch
 compdef _git gg=git-grep
 compdef _git g=git
-compdef _git gh=git-checkout
-compdef _git gho=git-origin-branch-move
+compdef _git gt=git-checkout
+compdef _git gto=git-origin-branch-move
 compdef _git gld=git-log
 compdef _git gl=git-log
 compdef _git gll=git-log
@@ -556,9 +555,8 @@ gdw()     { git diffwords "$@" }
 gf()      { git fetch --prune --prune-tags "$@" }
 gg()      { git grep -n "$@" }
 ggv()     { git grep -O$EDITOR "$@" }
-gh()      { git co "$@" }
-gho()     { git omvo "${1-$(git branch-current)}" }
-ghub()    { command gh "$@" }
+gt()      { git co "$@" }
+gto()     { git omvo "${1-$(git branch-current)}" }
 gl()      { gll --all }
 glab()    { PAGER=bat command glab "$@" }
 gll()     { $(git-commit-sel "$@"); true }
