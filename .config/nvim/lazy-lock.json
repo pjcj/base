@@ -32,7 +32,7 @@
   "emoji.nvim": { "branch": "main", "commit": "6f693ef989e894f772fc27b3a6fe724ba1060382" },
   "faster.nvim": { "branch": "main", "commit": "2e7a50f659711854b9a7fdc76d943b59b30d7852" },
   "fzf": { "branch": "master", "commit": "d01eaa9de3f0cfa1b57701e3577b4f7afee0e2be" },
-  "fzf-lua": { "branch": "main", "commit": "abe5ecafebb4e24feb162384d5f492431036e791" },
+  "fzf-lua": { "branch": "main", "commit": "518ab7a64ca65899a218f364f0fb9e38ff7bdcc8" },
   "git-conflict.nvim": { "branch": "main", "commit": "4bbfdd92d547d2862a75b4e80afaf30e73f7bbb4" },
   "git-messenger.vim": { "branch": "master", "commit": "fd124457378a295a5d1036af4954b35d6b807385" },
   "gitlab.nvim": { "branch": "main", "commit": "e29909cd1064a7b53c3150bff49449a548dadf8d" },
@@ -130,5 +130,5 @@
   "vim-vsnip": { "branch": "master", "commit": "9bcfabea653abdcdac584283b5097c3f8760abaa" },
   "vim-vsnip-integ": { "branch": "master", "commit": "c7c93934dece8315db3649bdc6898b76358a8b8d" },
   "which-key.nvim": { "branch": "main", "commit": "fcbf4eea17cb299c02557d576f0d568878e354a4" },
-  "yazi.nvim": { "branch": "main", "commit": "096699a9d6bbe8cbde0f403967b3c24876d66001" }
+  "yazi.nvim": { "branch": "main", "commit": "5634692fab930cb3ef8359760a11418b2d4d2d85" }
 }
