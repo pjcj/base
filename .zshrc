@@ -303,6 +303,7 @@ compdef _git gbl=git-blame
 compdef _git gcae=git-commit
 compdef _git gca=git-commit
 compdef _git gc=git-commit
+compdef _git gcn=git-commit
 compdef _git gcp=git-cherry-pick
 compdef _git gd=git-diff
 compdef _git gds=git-diff
@@ -546,6 +547,7 @@ ga()      { git add "$@" }
 gb()      { git branch "$@" }
 gbl()     { git blame -wMC "$@" }
 gc()      { git commit "$@" }
+gcn()     { gc --no-verify "$@" }
 gca()     { git commit --amend "$@" }
 gcae()    { git commit --amend --no-edit "$@" }
 gcp()     { git cherry-pick "$@" }
