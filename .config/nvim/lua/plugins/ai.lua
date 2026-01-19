@@ -26,6 +26,7 @@ return {
   {
     "zbirenbaum/copilot.lua",
     enabled = _G.using_ai(),
+    event = { "BufReadPre", "BufNewFile" },
     cmd = "Copilot",
     opts = {
       suggestion = { enabled = false },
@@ -47,7 +48,8 @@ return {
   {
     "olimorris/codecompanion.nvim",
     version = "*",
-    enabled = _G.using_ai(),
+    -- enabled = _G.using_ai(),
+    enabled = false,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
@@ -250,8 +252,9 @@ return {
   -- AI-powered coding assistant with inline editing and chat
   {
     "yetone/avante.nvim",
-    enabled = _G.using_ai(),
     version = false, -- never set this to "*"
+    -- enabled = _G.using_ai(),
+    enabled = false,
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
@@ -387,7 +390,8 @@ return {
   -- AI pair programming with aider integration
   {
     "GeorgesAlkhouri/nvim-aider",
-    enabled = _G.using_ai(),
+    -- enabled = _G.using_ai(),
+    enabled = false,
     cmd = "Aider",
     dependencies = {
       {
@@ -478,6 +482,7 @@ return {
   -- Claude Code integration for AI-powered development
   {
     "coder/claudecode.nvim",
+    enabled = false,
     event = { "BufReadPre", "BufNewFile" },
     config = true,
     opts = {
@@ -541,6 +546,7 @@ return {
   -- FZF integration for Claude Code file selection
   {
     "pittcat/claude-fzf.nvim",
+    enabled = false,
     dependencies = {
       "ibhagwan/fzf-lua",
       "coder/claudecode.nvim",
@@ -585,6 +591,7 @@ return {
   -- Claude Code conversation history browser
   {
     "pittcat/claude-fzf-history.nvim",
+    enabled = false,
     dependencies = { "ibhagwan/fzf-lua" },
     opts = {},
     cmd = { "ClaudeHistory", "ClaudeHistoryDebug" },
@@ -595,6 +602,7 @@ return {
 
   {
     "NickvanDyke/opencode.nvim",
+    enabled = false,
     dependencies = {
       -- Recommended for better prompt input, and required to use
       -- `opencode.nvim`'s embedded terminal — otherwise optional
