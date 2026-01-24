@@ -482,7 +482,7 @@ return {
   -- Claude Code integration for AI-powered development
   {
     "coder/claudecode.nvim",
-    enabled = false,
+    enabled = true,  -- needed for claude code /ide command
     event = { "BufReadPre", "BufNewFile" },
     config = true,
     opts = {
