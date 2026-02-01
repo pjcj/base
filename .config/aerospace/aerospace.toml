@@ -205,7 +205,10 @@ shift-down = ["volume set 0", "mode main"]
 
 [[on-window-detected]]
 if.app-name-regex-substring = "WezTerm"
-run = "move-node-to-workspace 1"
+run = [
+  "layout floating",
+  "exec-and-forget osascript -e 'tell application \"WezTerm\" to activate'",
+]
 
 [[on-window-detected]]
 if.app-name-regex-substring = "Ghostty"
