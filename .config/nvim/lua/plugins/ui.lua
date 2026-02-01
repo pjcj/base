@@ -228,7 +228,7 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     config = function()
       require("smoothcursor").setup({
-        priority = 1,
+        priority = 0,
         fancy = { enable = true },
         show_last_positions = "enter",
       })
