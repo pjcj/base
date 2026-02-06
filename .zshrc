@@ -430,6 +430,12 @@ zshrc_load_status "miscellaneous"
 REPORTTIME=10  # 10 cpu seconds
 TIMEFMT="  %J  %E %P  %U user + %S system  %W swaps  %Mk mem"
 
+# Clean up old test_info files periodically
+PERIOD=300  # 5 minutes
+periodic() {
+  rm -f .test_info.*.json(Nmh+1)
+}
+
 export LS_OPTIONS=
 
 export NPM_PACKAGES=~/g/sw/.npm-packages
