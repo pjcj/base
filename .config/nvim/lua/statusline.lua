@@ -459,7 +459,6 @@ require("lualine").setup({
       --     return ok
       --   end,
       -- },
-      -- require("vectorcode.integrations").lualine({ show_job_count = true }),
       -- {
       --   avante_rag_status,
       --   separator = "",
