@@ -441,7 +441,20 @@ require("lualine").setup({
       },
       {
         "lsp_status",
+        separator = "",
+        padding = { left = 1, right = 0 },
+      },
+      {
+        function()
+          return require("spinner").render("lsp_progress")
+        end,
+        separator = "",
         padding = { left = 1, right = 1 },
+        cond = function()
+          local ok = pcall(require, "spinner")
+          if not ok then return false end
+          return #vim.lsp.get_clients({ bufnr = 0 }) > 0
+        end,
       },
     },
     lualine_y = {

@@ -2,6 +2,30 @@
 
 -- UI-related plugins for enhanced visual experience and interface
 return {
+  -- Animated spinner for LSP progress in statusline
+  {
+    "xieyonn/spinner.nvim",
+    config = function()
+      require("spinner").config("lsp_progress", {
+        kind = "statusline",
+        placeholder = "✔",
+        on_update_ui = function()
+          require("lualine").refresh()
+        end,
+      })
+      vim.api.nvim_create_autocmd("LspRequest", {
+        callback = function(event)
+          local request = event.data.request
+          if request.type == "pending" then
+            require("spinner").start("lsp_progress")
+          elseif request.type == "complete" or request.type == "cancel" then
+            require("spinner").stop("lsp_progress")
+          end
+        end,
+      })
+    end,
+  },
+
   -- Customizable statusline with Git, LSP, and mode indicators
   {
     "nvim-lualine/lualine.nvim",
