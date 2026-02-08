@@ -439,26 +439,6 @@ require("lualine").setup({
         show_colors = true,
         show_loading = true,
       },
-      -- {
-      --   function()
-      --     local ok, minuet_lualine = pcall(require, "minuet.lualine")
-      --     if ok then
-      --       return minuet_lualine()
-      --     end
-      --     return ""
-      --   end,
-      --   -- the following is the default configuration
-      --   -- the name displayed in the lualine. Set to "provider", "model" or "both"
-      --   -- display_name = 'both',
-      --   -- separator between provider and model name for option "both"
-      --   -- provider_model_separator = ':',
-      --   -- whether show display_name when no completion requests are active
-      --   display_on_idle = true,
-      --   cond = function()
-      --     local ok, _ = pcall(require, "minuet.lualine")
-      --     return ok
-      --   end,
-      -- },
       {
         "lsp_status",
         padding = { left = 1, right = 1 },
