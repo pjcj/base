@@ -295,7 +295,8 @@ return {
   -- Smart window splitting and resizing with tmux integration
   {
     "mrjones2014/smart-splits.nvim",
-    version = "*",
+    -- version = "*",  until next release
+    lazy = false, -- as specified in docs
     opts = {
       ignored_filetypes = {
         "nofile",
