@@ -1,0 +1,252 @@
+#!/usr/bin/env bash
+
+# Rename files starting with known prefixes (any case) followed by
+# non-alphabetic characters, with pattern-based aliasing.
+# Also normalizes .jpeg to .jpg and extracts [word] patterns.
+# Never overwrites existing files.
+
+set -eEuo pipefail
+shopt -s inherit_errexit
+
+# Find next available filename: base.ext, base1.ext, base2.ext, ...
+# Never returns a name that already exists.
+find_available_name() {
+  local base=$1 ext=$2
+  local candidate="${base}${ext}"
+  [[ -e $candidate ]] || {
+    printf '%s' "$candidate"
+    return
+  }
+
+  local i=1
+  while [[ -e "${base}${i}${ext}" ]]; do
+    ((++i))
+  done
+  printf '%s' "${base}${i}${ext}"
+}
+
+# Normalize all .jpeg files to .jpg, avoiding collisions.
+normalize_jpeg() {
+  local f base new
+  for f in *.jpeg *.JPEG; do
+    [[ -f $f ]] || continue
+    # Strip extension
+    if [[ $f =~ ^(.+)\.(jpeg|JPEG)$ ]]; then
+      base="${BASH_REMATCH[1]}"
+      new=$(find_available_name "$base" ".jpg")
+      echo "'$f' -> '$new'"
+      mv "$f" "$new"
+    fi
+  done
+}
+
+# If there's only one .jpg file, rename it to front.jpg
+rename_single_jpg() {
+  local jpgs=()
+  local f
+  for f in *.jpg *.JPG; do
+    [[ -f $f ]] || continue
+    jpgs+=("$f")
+  done
+
+  if ((${#jpgs[@]} == 1)); then
+    local file="${jpgs[0]}"
+
+    # Already exactly correct
+    [[ $file == "front.jpg" ]] && return 0
+
+    # Case variant on case-insensitive FS — normalise via temp file
+    local file_lower
+    file_lower=$(printf '%s' "$file" | tr '[:upper:]' '[:lower:]')
+    if [[ $file_lower == "front.jpg" ]]; then
+      echo "'$file' -> 'front.jpg'"
+      mv "$file" ".tmp_case_rename"
+      mv ".tmp_case_rename" "front.jpg"
+      return 0
+    fi
+
+    # Different name — find available slot
+    local new
+    new=$(find_available_name "front" ".jpg")
+    if [[ $file != "$new" ]]; then
+      echo "'$file' -> '$new'"
+      mv "$file" "$new"
+    fi
+  fi
+}
+
+# Extract [word] from filenames like foo[inside].jpg -> inside.jpg
+extract_brackets() {
+  local f word ext new
+  for f in *\[*\].*; do
+    [[ -f $f ]] || continue
+    if [[ $f =~ \[([a-zA-Z]+)\].*\.([^.]+)$ ]]; then
+      word="${BASH_REMATCH[1]}"
+      word=$(printf '%s' "$word" | tr '[:upper:]' '[:lower:]')
+      ext=".${BASH_REMATCH[2]}"
+      new=$(find_available_name "$word" "$ext")
+      echo "'$f' -> '$new'"
+      mv "$f" "$new"
+    fi
+  done
+}
+
+# Rename all files matching a given prefix (case-insensitive).
+# Matches files starting with the prefix or alias pattern.
+# Never overwrites; finds next available numbered slot.
+rename_prefix() {
+  local prefix=$1
+  local alias_pattern=${2:-}
+
+  local files=()
+  local f pattern
+
+  # Build case-insensitive pattern anchored to start of filename
+  if [[ -n $alias_pattern ]]; then
+    pattern="^$alias_pattern"
+  else
+    pattern="^$prefix"
+  fi
+
+  # Match files containing the pattern (case-insensitive via shopt)
+  shopt -s nocasematch
+  for f in *; do
+    [[ -f $f ]] || continue
+    if [[ $f =~ $pattern ]]; then
+      files+=("$f")
+    fi
+  done
+  shopt -u nocasematch
+
+  local count=${#files[@]}
+  ((count > 0)) || return 0
+
+  local sorted=()
+  readarray -t sorted < <(printf '%s\n' "${files[@]}" | sort -V)
+
+  # Determine zero-padding width from total count
+  local width=${#count}
+
+  # Find next available slot for this prefix
+  local next_slot=1
+  local use_number=true
+  if ((count == 1)); then
+    local ext file file_lower target_lower existing_lower
+    for file in "${sorted[@]}"; do
+      if [[ $file =~ \.([^.]+)$ ]]; then
+        ext=".${BASH_REMATCH[1]}"
+      else
+        ext=""
+      fi
+    done
+
+    # If single file already has exact canonical name, skip it
+    if [[ $file == "${prefix}${ext}" ]]; then
+      return 0
+    fi
+
+    # Don't use number for single file unless target is blocked by a different
+    # file.  On case-insensitive filesystems, the source file itself may appear
+    # to block the target.
+    file_lower=$(printf '%s' "$file" | tr '[:upper:]' '[:lower:]')
+    if [[ -e "${prefix}${ext}" ]]; then
+      existing_lower=$(
+        printf '%s' "${prefix}${ext}" | tr '[:upper:]' '[:lower:]'
+      )
+      if [[ $file_lower == "$existing_lower" ]]; then
+        # Source is a case variant of target — allow unnumbered name
+        use_number=false
+      fi
+    else
+      use_number=false
+    fi
+  fi
+
+  # Build set of source files for collision detection (lowercase for
+  # case-insensitive FS)
+  declare -A source_files
+  local file lower
+  for file in "${sorted[@]}"; do
+    lower=$(printf '%s' "$file" | tr '[:upper:]' '[:lower:]')
+    source_files[$lower]=1
+  done
+
+  # Build rename map: old -> new
+  declare -A rename_map
+  declare -A assigned_targets
+  local ext num new target_lower
+  for file in "${sorted[@]}"; do
+    if [[ $file =~ \.([^.]+)$ ]]; then
+      ext=".${BASH_REMATCH[1]}"
+    else
+      ext=""
+    fi
+
+    # Only use unnumbered name for single file
+    if [[ $use_number == false ]] && ((count == 1)); then
+      new="${prefix}${ext}"
+      use_number=true # Only skip number for first file
+    else
+      # Find next available numbered slot
+      # Skip if: (exists AND not a source file) OR already assigned as target
+      # Use lowercase for case-insensitive filesystem comparison
+      while true; do
+        target_lower=$(
+          printf '%s' "${prefix}${next_slot}${ext}" | tr '[:upper:]' '[:lower:]'
+        )
+        { [[ -e "${prefix}${next_slot}${ext}" ]] &&
+          [[ ! ${source_files[$target_lower]+_} ]]; } ||
+          [[ ${assigned_targets[$target_lower]+_} ]] || break
+        ((++next_slot))
+      done
+      printf -v num "%0${width}d" "$next_slot"
+      new="${prefix}${num}${ext}"
+      ((++next_slot))
+    fi
+
+    # Skip if already correct (exact match - we still want case normalization)
+    [[ $file == "$new" ]] && continue
+
+    rename_map[$file]=$new
+    lower=$(printf '%s' "$new" | tr '[:upper:]' '[:lower:]')
+    assigned_targets[$lower]=1
+  done
+
+  # Two-phase rename to avoid collisions
+  local old
+  for old in "${!rename_map[@]}"; do
+    new="${rename_map[$old]}"
+    echo "'$old' -> '$new'"
+    mv "$old" ".tmp_rename_$new"
+  done
+
+  local tmp
+  for tmp in ".tmp_rename_${prefix}"*; do
+    [[ -e $tmp ]] || continue
+    mv "$tmp" "${tmp#.tmp_rename_}"
+  done
+}
+
+main() {
+  [[ $# -eq 1 ]] || {
+    echo "Usage: $0 <directory>" >&2
+    exit 1
+  }
+  [[ -d $1 ]] || {
+    echo "Error: '$1' is not a directory" >&2
+    exit 1
+  }
+
+  cd "$1"
+
+  normalize_jpeg
+  rename_single_jpg
+  extract_brackets
+  rename_prefix "front" "(frontal|front|cover|folder)"
+  rename_prefix "back" "(trasera|back|rear)"
+  rename_prefix "cd" "(disc|cd)"
+  rename_prefix "inside"
+  rename_prefix "booklet"
+}
+
+main "$@"
