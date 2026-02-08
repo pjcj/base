@@ -132,7 +132,6 @@ following plugins:
   integration)
 - [nvim-aider](https://github.com/GeorgesAlkhouri/nvim-aider) (Aider AI
   assistant)
-- [mcphub.nvim](https://github.com/ravitemer/mcphub.nvim) (MCP integration)
 
 **Language Support:**
 

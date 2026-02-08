@@ -493,7 +493,6 @@ require("lualine").setup({
       --     return config_ok and config.rag_service and config.rag_service.enabled
       --   end,
       -- },
-      -- mcphub_component_definition(),
       {
         "lsp_status",
         padding = { left = 1, right = 1 },
