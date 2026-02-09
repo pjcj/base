@@ -354,11 +354,10 @@ require("lualine").setup({
         padding = { left = 1, right = 0 },
       },
       {
-        function()
-          return require("spinner").render("lsp_progress")
-        end,
+        function() return require("spinner").render("lsp_progress") end,
         separator = "",
         padding = { left = 1, right = 1 },
+        color = { fg = c.peach },
         cond = function()
           local ok = pcall(require, "spinner")
           if not ok then return false end
