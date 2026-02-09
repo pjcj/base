@@ -31,7 +31,7 @@
   "emission.nvim": { "branch": "main", "commit": "9a8e8806b01723da229befc95d3f7ecbcc35faac" },
   "emoji.nvim": { "branch": "main", "commit": "6f693ef989e894f772fc27b3a6fe724ba1060382" },
   "faster.nvim": { "branch": "main", "commit": "2e7a50f659711854b9a7fdc76d943b59b30d7852" },
-  "fzf": { "branch": "master", "commit": "880dd20b18852fc6978942664b98c015123f2881" },
+  "fzf": { "branch": "master", "commit": "0e859a18ed399dc4d9d15be6e462f6c4b4e02358" },
   "git-conflict.nvim": { "branch": "main", "commit": "4bbfdd92d547d2862a75b4e80afaf30e73f7bbb4" },
   "git-messenger.vim": { "branch": "master", "commit": "fd124457378a295a5d1036af4954b35d6b807385" },
   "gitlab.nvim": { "branch": "main", "commit": "19c688309a8a101d7506c626ba12a16ac93baf21" },
@@ -95,7 +95,7 @@
   "sidebar.nvim": { "branch": "main", "commit": "082e4903c1659a65e27a075b752178b0c56fffb2" },
   "smart-open.nvim": { "branch": "main", "commit": "1082c18eabd0fb6fcdac4a828b698ccd6e25f291" },
   "smart-splits.nvim": { "branch": "master", "commit": "208ac7ba3d56f76dda9fc55b004b84aaea7c7588" },
-  "spinner.nvim": { "branch": "main", "commit": "31e2b914341f72bde8a11cd3b15e9f92b08b3d6a" },
+  "spinner.nvim": { "branch": "main", "commit": "c9cf0bc971fb738e8cbebafe3b13f28a963c4804" },
   "sqlite.lua": { "branch": "master", "commit": "50092d60feb242602d7578398c6eb53b4a8ffe7b" },
   "supermaven-nvim": { "branch": "main", "commit": "07d20fce48a5629686aefb0a7cd4b25e33947d50" },
   "tabout.nvim": { "branch": "master", "commit": "9a3499480a8e53dcaa665e2836f287e3b7764009" },
@@ -129,5 +129,5 @@
   "vim-vsnip": { "branch": "master", "commit": "9bcfabea653abdcdac584283b5097c3f8760abaa" },
   "vim-vsnip-integ": { "branch": "master", "commit": "c7c93934dece8315db3649bdc6898b76358a8b8d" },
   "which-key.nvim": { "branch": "main", "commit": "fcbf4eea17cb299c02557d576f0d568878e354a4" },
-  "yazi.nvim": { "branch": "main", "commit": "4c82951638c9c3fd3ee360154a2ce3c1e0db1a76" }
+  "yazi.nvim": { "branch": "main", "commit": "d0f6f796563cfd76a9514191b294d1d98e8da4de" }
 }
