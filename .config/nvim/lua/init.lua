@@ -1,5 +1,6 @@
 require("plugins.init")
 require("settings")
 require("languages")
+require("ui")
 require("mappings")
 require("setup")

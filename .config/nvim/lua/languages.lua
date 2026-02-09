@@ -2,16 +2,6 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
--- Yank highlight
-augroup("yank_highlight", { clear = true })
-autocmd("TextYankPost", {
-  group = "yank_highlight",
-  pattern = "*",
-  callback = function()
-    vim.highlight.on_yank({ higroup = "Cursor", timeout = 1000 })
-  end,
-})
-
 -- Buffer enter
 augroup("buf_enter", { clear = true })
 autocmd("BufWinEnter", {
