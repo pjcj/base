@@ -84,7 +84,7 @@ return {
         -- "omni",
         "emoji",
         "dictionary",
-        -- "tmux",  # slows down insert too much
+        "tmux",
         "vsnip",
       }
 
@@ -158,9 +158,12 @@ return {
           max_items = 5,
           async = true,
           opts = {
-            all_panes = true,
-            capture_history = true,
-            triggered_only = true,
+            -- be careful here
+            -- if panes is set to "all", and especially if capture_history is
+            -- true, then tmux source can be very slow and cause lag
+            panes = "session",
+            capture_history = false,
+            triggered_only = false,
             trigger_chars = { "." },
           },
         },
