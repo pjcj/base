@@ -58,6 +58,7 @@ palette = 15=#fdf6e3
 mouse-hide-while-typing = true
 mouse-scroll-multiplier = 1
 copy-on-select = clipboard
+right-click-action = paste
 click-repeat-interval = 500
 mouse-shift-capture = false
 focus-follows-mouse = true
