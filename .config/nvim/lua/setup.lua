@@ -1,5 +1,12 @@
 local vopt = vim.opt -- set options
 
+-- Enable/disable Perl coverage display (default: on)
+vim.g.devel_cover_enabled = true
+
+-- Coverage monitoring state (module-level for toggle access)
+local coverage_last_mtime = nil
+local coverage_timer_id = nil
+
 -- Configure cmdheight during session loading to prevent "Press ENTER" prompts
 local function setup_cmdheight_for_session()
   if vim.v.argv and vim.tbl_contains(vim.v.argv, "-S") then
@@ -89,10 +96,11 @@ end
 
 -- Auto-execute coverage.lua when it changes
 local function setup_coverage_auto_execute()
-  local last_mtime = nil
   local coverage_file = "cover_db/coverage.lua"
 
   local function check_and_execute_coverage()
+    if not vim.g.devel_cover_enabled then return end
+
     -- Only check if we have at least one Perl buffer
     local has_perl_buffer = false
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
@@ -123,14 +131,14 @@ local function setup_coverage_auto_execute()
       -- File exists, check if it's changed
       vim.notify(
         "File exists. last_mtime="
-          .. tostring(last_mtime)
+          .. tostring(coverage_last_mtime)
           .. " current_mtime="
           .. tostring(mtime),
         vim.log.levels.DEBUG
       )
 
-      if last_mtime == nil or mtime ~= last_mtime then
-        last_mtime = mtime
+      if coverage_last_mtime == nil or mtime ~= coverage_last_mtime then
+        coverage_last_mtime = mtime
         vim.notify(
           "Executing " .. coverage_file .. " (mtime changed)",
           vim.log.levels.INFO
@@ -156,18 +164,18 @@ local function setup_coverage_auto_execute()
       end
     else
       -- File doesn't exist, reset last_mtime
-      if last_mtime ~= nil then
+      if coverage_last_mtime ~= nil then
         vim.notify(
           "File no longer exists, resetting mtime",
           vim.log.levels.DEBUG
         )
       end
-      last_mtime = nil
+      coverage_last_mtime = nil
     end
   end
 
   -- Set up timer with proper repeat syntax
-  local timer_id = vim.fn.timer_start(
+  coverage_timer_id = vim.fn.timer_start(
     5000,
     function() vim.schedule(check_and_execute_coverage) end,
     { ["repeat"] = -1 }
@@ -175,7 +183,7 @@ local function setup_coverage_auto_execute()
 
   vim.notify(
     "Coverage auto-execute timer started (id="
-      .. timer_id
+      .. coverage_timer_id
       .. ", 5 second interval)",
     vim.log.levels.INFO
   )
@@ -193,6 +201,33 @@ local function setup_coverage_auto_execute()
   -- Also check immediately on startup
   check_and_execute_coverage()
 end
+
+-- Clear coverage signs from all buffers
+local function clear_coverage_signs()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_valid(buf) then
+      pcall(vim.fn.sign_unplace, "DevelCover", { buffer = buf })
+    end
+  end
+end
+
+-- Toggle Perl coverage display on/off
+local function toggle_perl_coverage()
+  vim.g.devel_cover_enabled = not vim.g.devel_cover_enabled
+  if vim.g.devel_cover_enabled then
+    vim.notify("Perl coverage: ON", vim.log.levels.INFO)
+    coverage_last_mtime = nil -- force re-execution on next poll
+  else
+    vim.notify("Perl coverage: OFF", vim.log.levels.INFO)
+    clear_coverage_signs()
+  end
+end
+
+vim.api.nvim_create_user_command(
+  "TogglePerlCoverage",
+  toggle_perl_coverage,
+  { desc = "Toggle Perl coverage gutter display" }
+)
 
 -- Main setup function
 local function main()

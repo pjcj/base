@@ -1418,6 +1418,9 @@ wk.add({
   { "<leader>tmv", ":Markview toggle<cr>", desc = "view" },
   { "<leader>tms", ":Markview splitToggle<cr>", desc = "split" },
 
+  { "<leader>tp", group = "perl" },
+  { "<leader>tpc", ":TogglePerlCoverage<cr>", desc = "coverage" },
+
   {
     "<leader>to",
     ":Outline<cr>",
