@@ -6,9 +6,10 @@
   whitespace                    = trailing-space,space-before-tab
   autocrlf                      = input
   excludesfile                  = ~/.gitignore_global
-  commitGraph                   = true
-[pack]
-  threads                       = 0
+[transfer]
+  fsckObjects                   = true
+[gc]
+  pruneExpire                   = 60 days
 [init]
   defaultBranch                 = main
 [column]
@@ -20,7 +21,7 @@
 [tag]
   sort                          = version:refname
 [diff]
-  renamelimit                   = 0
+  renamelimit                   = 10000
   renames                       = copies
   mnemonicprefix                = true
   algorithm                     = histogram
@@ -68,12 +69,9 @@
   patternType                   = perl
 [github]
   user                          = pjcj
-[url "git://github.com/"]
+[url "https://github.com/"]
   insteadOf                     = github:
-[hub]
-  protocol                      = ssh
 [color]
-  ui                            = auto
 [color.grep]
   context                       = blue
   filename                      = "#3f86dc"
@@ -125,102 +123,157 @@
   tabs                          = 2
   whitespace-error-style        = reverse blue
   zero-style                    = normal
-  blame-code-style = syntax
-  blame-format = "{author:<18} {commit:<6} {timestamp:<15}"
-  blame-palette = "#2E3440" "#3B4252" "#434C5E"
+  blame-code-style              = syntax
+  blame-format                  = "{author:<18} {commit:<6} {timestamp:<15}"
+  blame-palette                 = "#2E3440" "#3B4252" "#434C5E"
   side-by-side                  = true
   relative-paths                = true
 [alias]
-  git    = !exec git
-  g      = !exec git
-  dclean = clean -dxf
-  st     = status -sb
-  ci     = commit
-  co     = checkout
-  br     = branch
-  bc     = branch --show-current
-  bfd    = branch-full-delete
-  tfd    = tag-full-delete
-  alias  = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | \
-             sort
-  whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
-  vgc    = repack -f -a -d --depth=250 --window=250
-  nvgc   = !ionice -n7 nice -n20 git vgc
-  fullgc = "!f() { nice git gc && nice git repack -Ad --threads=0; }; f"
-  amend  = commit -a --amend -C HEAD
-  bl     = blame -wMCCC
-  latest = for-each-ref --sort=-committerdate \
-             --format='%(committerdate:short) %(refname:short)  %(authorname)'
-  bmv    = branch -f
-  bmvp   = "!f() { git bmv $1 $2 && \
-             git push origin --force-with-lease $1; }; f"
-  omv    = origin-branch-move
-  omvo   = "!f() { git origin-branch-move $1 && git checkout -q $1; }; f"
+  git = !exec git
+  g   = !exec git
 
-  # Pick our version of a file while merging
-  ours   = "!f() { git co --ours $@ && git add $@; }; f"
-  # Pick their version of a file while merging
+  bc  = branch --show-current
+  bfd = branch-full-delete
+  bl  = blame -wMCCC
+  br  = branch
+  ci  = commit
+  co  = checkout
+  st  = status -sb
+  tfd = tag-full-delete
+
+  alias = "!git config --get-regexp 'alias.*' \
+    | colrm 1 6 | sed 's/[ ]/ = /' | sort"
+  distclean = "!f() { \
+    git status --porcelain | grep '??' \
+    | awk '{print $2}' | xargs rm; }; f"
+  whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+
+  vgc    = repack -fad --depth=250 --window=250
+  nvgc   = !ionice -n7 nice -n20 git vgc
+  fullgc = "!f() { nice git gc && nice git vgc; }; f"
+
+  latest = for-each-ref --sort=-committerdate \
+    --format='%(committerdate:short) %(refname:short)  %(authorname)'
+
+  bmv  = branch -f
+  bmvp = "!f() { \
+    git bmv $1 $2 \
+    && git push origin --force-with-lease $1; }; f"
+  omv  = origin-branch-move
+  omvo = "!f() { \
+    git origin-branch-move $1 && git checkout -q $1; }; f"
+
+  # Pick our version of a file during conflict resolution
+  # During merge: keeps our branch's version
+  # During rebase: keeps the target branch's version (not yours)
+  ours = "!f() { git co --ours $@ && git add $@; }; f"
+  # Pick their version of a file during conflict resolution
+  # During merge: keeps their branch's version
+  # During rebase: keeps your version (the commits being replayed)
   theirs = "!f() { git co --theirs $@ && git add $@; }; f"
 
-  lgm    = "!f() { git ll $( git reflog | awk '{print $1}' ); }; f"
-  lgr    = "!f() { git ll $( git fsck --no-reflog | \
-             awk '/dangling commit/ {print $3}' ); }; f"
-  lla    = ll --all
-  lga    = lg --all
+  lgm = "!f() { \
+    git reflog --format='%H' | xargs git ll; }; f"
+  lgr = "!f() { \
+    git fsck --no-reflog \
+    | awk '/dangling commit/ {print $3}' \
+    | xargs git ll; }; f"
+  lgd = "!f() { \
+    git reflog --since='24 hours ago' --format='%H' \
+    | xargs git ll; }; f"
+
   ll = "!f() { \
-    local f=\"%C(#833652)%h%Creset -%C(#f0c53f)%d%C(#9599dc) %s\"; \
+    local f=\"%C(#833652)%h%Creset\"; \
+    f=\"$f -%C(#f0c53f)%d%C(#9599dc) %s\"; \
     f=\"$f %C(#3f86dc)(%ad) %C(#687e85)%an%Creset\"; \
-    git log --graph --topo-order --pretty=format:\"$f\" \
-      --date=relative \"$@\"; \
-  }; f"
-  lle = "!f() { \
-    local f=\"%C(#833652)%h%Creset -%C(#f0c53f)%d%C(#9599dc) %s\"; \
-    f=\"$f %C(#3f86dc)(%ad) %C(#687e85)%an <%ae>%Creset\"; \
-    git log --graph --topo-order --pretty=format:\"$f\" \
-      --date=relative --date-order \"$@\"; \
+    git log --graph --topo-order \
+    --pretty=format:\"$f\" --date=relative \"$@\"; \
   }; f"
   lg = "!f() { \
-    local f=\"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad)\"; \
+    local f=\"%Cred%h%Creset\"; \
+    f=\"$f -%C(yellow)%d%Creset %s %Cgreen(%ad)\"; \
     f=\"$f %C(blue)<%an>%Creset\"; \
-    git log --graph --pretty=format:\"$f\" \
-      --date=relative --date-order \"$@\"; \
+    git log --graph \
+    --pretty=format:\"$f\" --date=relative \"$@\"; \
   }; f"
+  lla = ll --all
+  lga = lg --all
+
   # git nd [[[[year] month] day] hour]
-  nd  = "!f() { git commit --amend --no-edit --no-verify --date=$(git --no-pager show \
-    --format='%ai' | head -1 |  perl -e '@n = reverse qq(@ARGV) =~ /(\\d+)/g; \
-    @d = <STDIN> =~ /(\\d+)/g; printf q(%04d-%02d-%02dT%02d:%02d:%02d), \
-    $n[3] // $d[0], $n[2] // $d[1], $n[1] // $d[2], $n[0] // $d[3], \
+  nd = "!f() { git commit --amend --no-edit --no-verify \
+    --date=$(git --no-pager show --format='%ai' | head -1 \
+    | perl -e ' \
+    @n = reverse qq(@ARGV) =~ /(\\d+)/g; \
+    @d = <STDIN> =~ /(\\d+)/g; \
+    printf q(%04d-%02d-%02dT%02d:%02d:%02d), \
+    $n[3] // $d[0], $n[2] // $d[1], \
+    $n[1] // $d[2], $n[0] // $d[3], \
     rand 60, rand 60' $@); }; f"
-  churn = !git log --all -M -C --name-only --format='format:' "$@" | sort | \
-    grep -v '^$' | uniq -c | sort | \
-    awk 'BEGIN {print "count,file"} {print $1 ", " $2}' | sort -rn | less
-  # git change-commits GIT_COMMITTER_NAME "old name" "new name"
-  change-commits = "!f() { VAR1=$1; VAR='$'$1; OLD=$2; NEW=$3; \
-    echo -n \"Are you sure for replace $VAR $OLD => $NEW ? (Y/N) \"; read OK; \
-    if [ \"$OK\" = 'Y' ] ; then shift 3; \
-    git filter-branch --env-filter \
-      \"if [ \\\"${VAR}\\\" = '$OLD' ]; then \
-      export $VAR1='$NEW'; echo 'to $NEW'; fi\" \
-    $@; fi;}; f"
-  rm-untracked  = "!f() { git status --porcelain | grep '??' | \
-    awk '{print $2}' | xargs rm; }; f"
-  lp = "!git ll --color=always \"$@\" | \
-    fzf --ansi -m --no-sort --reverse --tiebreak=index --preview-window=down \
-    --height=100%  --preview \"(grep -o '[a-f0-9]\\{7\\}' | head -1 | \
-    xargs -I % sh -c 'git -c core.pager=cat show --color=never % | \
-    delta --width=$(tput cols)') <<< {}\" #"
-  lpr = "!git ll --color=always \"$@\" | \
-    fzf --ansi -m --no-sort --reverse --tiebreak=index \
-    --preview-window=right:60% --height=100% \
-    --preview \"(grep -o '[a-f0-9]\\{7\\}' | head -1 | \
-    xargs -I % sh -c 'git -c core.pager=cat show --color=never % | \
-    delta --width=$(expr $(tput cols) \\* 6 / 10)') <<< {}\" #"
-  # git graphviz | dot -Tpdf >| /tmp/g.pdf
-  graphviz = "!f() { echo 'digraph git {'; git log \
-    --pretty='format:  %h -> { %p }' \"$@\" | \
-    sed 's/[0-9a-f][0-9a-f]*/\"&\"/g'; echo '}'; }; f"
-  distclean = "!f() { git status --porcelain | grep '??' | awk '{print $2}' | \
-    xargs rm; }; f"
-  recent-files = "!f() { git log --all --name-only --pretty=format:%ai%x09%H -- \"${1:-.}\" | perl -ne 'if (/^(\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}:\\d{2})/) { $date = $1 } elsif (/\\S/) { $seen{$_} = $date unless $seen{$_} gt $date } END { foreach (sort { $seen{$b} cmp $seen{$a} } keys %seen) { printf \"%s %s\", $seen{$_}, $_ } }' | fzf --preview='f=$(echo {} | perl -pe \"s/^\\S+\\s+\\S+\\s+//\"); bat --tabs=2 --color=always \"$f\" 2>/dev/null || cat \"$f\" 2>/dev/null' --preview-window=right:70% --with-nth=3.. | perl -pe 's/^\\S+\\s+\\S+\\s+//'; }; f"
+
+  churn = "!git log --all -M -C --name-only \
+    --format='format:' \"$@\" | sort \
+    | grep -v '^$' | uniq -c | sort \
+    | awk 'BEGIN {print \"count,file\"} \
+    {print $1 \", \" $2}' | sort -rn | less"
+
+  # git change-commits <field> "old" "new" [--refs <ref>...]
+  # field: committer_name, author_name,
+  #        committer_email, author_email
+  change-commits = "!f() { \
+    F=$1; OLD=$2; NEW=$3; shift 3; \
+    echo -n \"Replace $F '$OLD' => '$NEW'? (Y/N) \"; \
+    read OK; \
+    if [ \"$OK\" = 'Y' ]; then \
+      git filter-repo --force --commit-callback \
+        \"if commit.$F == b'$OLD': \
+        commit.$F = b'$NEW'\" \"$@\"; \
+    fi; }; f"
+
+  # git set-ticket [TICKET] [BASE]
+  # Add Ticket line to commits on current branch.
+  # TICKET: extracted from branch name if omitted
+  # BASE: defaults to main
+  set-ticket = "!f() { \
+    T=${1:-$(git branch --show-current \
+    | perl -ne 'print $1 if /^(\\w+-\\d+)/')}; \
+    B=${2:-main}; \
+    if [ -z \"$T\" ]; then \
+      echo 'Cannot determine ticket from branch name'; \
+      return 1; \
+    fi; \
+    echo \"Adding 'Ticket $T' to commits since $B\"; \
+    git rebase $B --exec ' \
+      if ! git log -1 --format=%B \
+        | grep -q \"^Ticket \"; then \
+        git commit --amend --no-verify -m \"$( \
+          git log -1 --format=%B \
+          | perl -0777 -pe \"BEGIN { \\$t = q('\"$T\"') } \
+            s/\\A([^\\n]+)\\n*/\\$1\\n\\nTicket \\$t\\n\\n/ \
+            unless /^Ticket /m\" \
+          | perl -0777 -pe \"s/\\n{3,}/\\n\\n/g; \
+            s/\\s+\\z/\\n/\" \
+        )\"; \
+      fi'; }; f"
+
+  recent-files = "!f() { \
+    git log --all --name-only \
+    --pretty=format:%ai%x09%H -- \"${1:-.}\" \
+    | perl -ne ' \
+    if (/^(\\d{4}-\\d{2}-\\d{2}\\s\\d{2}:\\d{2}:\\d{2})/) \
+    { $date = $1 } \
+    elsif (/\\S/) \
+    { $seen{$_} = $date unless $seen{$_} gt $date } \
+    END { \
+    foreach (sort { $seen{$b} cmp $seen{$a} } \
+    keys %seen) \
+    { printf \"%s %s\", $seen{$_}, $_ } }' \
+    | fzf \
+    --preview='f=$(echo {} \
+    | perl -pe \"s/^\\S+\\s+\\S+\\s+//\"); \
+    bat --tabs=2 --color=always \"$f\" 2>/dev/null \
+    || cat \"$f\" 2>/dev/null' \
+    --preview-window=right:70% --with-nth=3.. \
+    | perl -pe 's/^\\S+\\s+\\S+\\s+//'; }; f"
+
 [include]
   path = ~/.gitconfig.local
