@@ -17,12 +17,15 @@ augroup("pane_focus_dim", { clear = true })
 local c = require("local_defs").colour
 vim.api.nvim_set_hl(0, "NormalNC", { bg = c.base06 })
 local saved_normal = nil
+local is_dimmed = false
 autocmd("FocusLost", {
   group = "pane_focus_dim",
   pattern = "*",
   callback = function()
+    if is_dimmed then return end
     saved_normal = vim.api.nvim_get_hl(0, { name = "Normal" })
     vim.api.nvim_set_hl(0, "Normal", { bg = c.base06 })
+    is_dimmed = true
   end,
 })
 autocmd("FocusGained", {
@@ -30,5 +33,6 @@ autocmd("FocusGained", {
   pattern = "*",
   callback = function()
     if saved_normal then vim.api.nvim_set_hl(0, "Normal", saved_normal) end
+    is_dimmed = false
   end,
 })
