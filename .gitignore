@@ -1,37 +1,32 @@
-*.org
+# editor directories and file
 *.bak
+*.org
 *~
+*.sw?
+.idea/
+
+# Development files
+tags*
+tmp/
+llm/
+.perl-version
+*.tdy
+.build/
+cover_db/
+
+# Droppings
 .DS_Store
 *.tgz
 *.tar.gz
 *.pyo
 *.pyc
-tags*
-tmp/
-.config/gtk-3.0/bookmarks
-.config/i3/config
-.config/nvim/plugin/packer_compiled.vim
-.config/nvim/plugin/packer_compiled.lua
-.config/ranger/bookmarks
-.config/ranger/history
-.config/ranger/tagged
-.config/sxhkd/sxhkdrc
-.config/vim/yankround/history
+
+# Local
 .config/karabiner/automatic_backups
-.vim/autoload/plug.vim*
-.vim/bundle/
-.vim/.miniyank.mpack
-.vim/.netrwhist
-.vim/plugged/
-.vim/sessions/default.vim
-.vim/shada/
 .vim/spell/
 zsh/functions/_docker
 zsh/functions/_docker-compose
 zsh/functions/_docker-machine
 zsh/functions/_git
-
-.glab-cli
-.idea/
 
 !.aider.conf.yml

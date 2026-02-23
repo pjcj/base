@@ -1,17 +1,24 @@
-# Dist::Zilla build artefacts
-.build/
-Perl-Critic-Strings-*/
-*.tar.gz
+# editor directories and file
+*.bak
+*.org
+*~
+*.sw?
+.idea/
 
 # Development files
-.perl-version
 tags*
 tmp/
+llm/
+.perl-version
+*.tdy
+.build/
+cover_db/
 
-# Perl temporary files
-*.bak
-*.old
-*~
-
-# OS generated files
+# Droppings
 .DS_Store
+*.tgz
+*.tar.gz
+*.pyo
+*.pyc
+
+# Local
