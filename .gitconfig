@@ -231,30 +231,30 @@
     fi; }; f"
 
   # git set-ticket [TICKET] [BASE]
-  # Add Ticket line to commits on current branch.
+  # Add or replace Ticket line on line 3 of each commit
+  # on the current branch.
   # TICKET: extracted from branch name if omitted
   # BASE: defaults to main
   set-ticket = "!f() { \
-    T=${1:-$(git branch --show-current \
-    | perl -ne 'print $1 if /^(\\w+-\\d+)/')}; \
+    T=${1:-$(perl -e ' \
+      my $re = qr/([A-Z]{2,8}-\\d+)/; \
+      my ($br) = `git branch --show-current` =~ /^$re/; \
+      $br //= $1 if !$br && `git status` =~ $re; \
+      print $br if $br')}; \
     B=${2:-main}; \
     if [ -z \"$T\" ]; then \
       echo 'Cannot determine ticket from branch name'; \
       return 1; \
     fi; \
-    echo \"Adding 'Ticket $T' to commits since $B\"; \
+    echo \"Setting 'Ticket $T' in commits since $B\"; \
     git rebase $B --exec ' \
-      if ! git log -1 --format=%B \
-        | grep -q \"^Ticket \"; then \
-        git commit --amend --no-verify -m \"$( \
-          git log -1 --format=%B \
-          | perl -0777 -pe \"BEGIN { \\$t = q('\"$T\"') } \
-            s/\\A([^\\n]+)\\n*/\\$1\\n\\nTicket \\$t\\n\\n/ \
-            unless /^Ticket /m\" \
-          | perl -0777 -pe \"s/\\n{3,}/\\n\\n/g; \
-            s/\\s+\\z/\\n/\" \
-        )\"; \
-      fi'; }; f"
+      git log -1 --format=%B \
+      | perl -0777 -pe \"BEGIN { \\$t = q('\"$T\"') } \
+        s/\\A([^\\n]+)\\n+Ticket [A-Z]{2,8}-(?:\\d+|XXXXX)\\n?/\\$1\\n/s; \
+        s/\\A([^\\n]+)\\n*/\\$1\\n\\nTicket \\$t\\n\\n/; \
+        s/\\n{3,}/\\n\\n/g; \
+        s/\\s+\\z/\\n/\" \
+      | git commit --amend --no-verify -F -'; }; f"
 
   recent-files = "!f() { \
     git log --all --name-only \
