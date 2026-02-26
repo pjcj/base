@@ -52,8 +52,9 @@ rename_single_jpg() {
   if ((${#jpgs[@]} == 1)); then
     local file="${jpgs[0]}"
 
-    # Already exactly correct
+    # Already exactly correct, or explicitly preserved
     [[ $file == "front.jpg" ]] && return 0
+    [[ $file == "front_cover_tag.jpg" ]] && return 0
 
     # Case variant on case-insensitive FS — normalise via temp file
     local file_lower
@@ -112,6 +113,7 @@ rename_prefix() {
   shopt -s nocasematch
   for f in *; do
     [[ -f $f ]] || continue
+    [[ $f == "front_cover_tag.jpg" ]] && continue
     if [[ $f =~ $pattern ]]; then
       files+=("$f")
     fi
