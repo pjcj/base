@@ -237,6 +237,7 @@ vim.lsp.config.yamlls = {
         bracketSpacing = true,
         singleQuote = false,
       },
+      customTags = { "!reference sequence" },
       keyOrdering = false,
       schemaStore = {
         enable = true,
