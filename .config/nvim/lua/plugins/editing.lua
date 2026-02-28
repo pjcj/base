@@ -362,6 +362,28 @@ return {
         desc = "hex edit (pick file)",
       },
     },
-    opts = {},
+    config = function()
+      local c = require("local_defs").colour
+      require("hexinspector").setup({
+        colors = {
+          bg             = c.base03,
+          info_bg        = c.base06,
+          border         = c.cyan,
+          addr           = c.base01,
+          hex            = c.base0,
+          ascii          = c.green,
+          null           = c.base05,
+          cursor_bg      = c.base05,
+          cursor_line_bg = c.base06,
+          float          = c.orange,
+          int            = c.violet,
+          uint           = c.cyan,
+          title          = c.blue,
+          search         = c.magenta,
+          modified       = c.red,
+          selection_bg   = c.ddblue,
+        },
+      })
+    end,
   },
 }
