@@ -557,6 +557,8 @@ wk.add({
   { "<leader> dF", ":DiffviewFileHistory %<cr>", desc = "file history %" },
   { "<leader> do", ":DiffviewOpen<cr>", desc = "open" },
 
+  { "<leader> h", group = "hex" },
+
   { "<leader> j", group = "join" },
   {
     "<leader> jj",
@@ -1438,11 +1440,6 @@ wk.add({
     desc = "toggle inline diagnostics",
   },
   { "<leader>tw", ":ToggleWhitespace<cr>", desc = "whitespace" },
-  {
-    "<leader>tx",
-    function() require("hex").toggle() end,
-    desc = "hex",
-  },
   {
     "<leader>W",
     [[:%s/\s\+$//<cr>:let @/ = ""<cr>]],

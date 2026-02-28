@@ -336,4 +336,32 @@ return {
     "superhawk610/ascii-blocks.nvim",
     cmd = "AsciiBlockify",
   },
+
+  -- Hex editor and binary inspector
+  {
+    "Punity122333/hexinspector.nvim",
+    cmd = { "HexEdit", "HexInspect" },
+    keys = {
+      {
+        "<leader> hx",
+        function() require("hexinspector").open() end,
+        desc = "hex edit",
+      },
+      {
+        "<leader> hX",
+        function()
+          vim.ui.input(
+            { prompt = "File path: ", default = vim.fn.expand("%:p") },
+            function(input)
+              if input and input ~= "" then
+                require("hexinspector").open(input)
+              end
+            end
+          )
+        end,
+        desc = "hex edit (pick file)",
+      },
+    },
+    opts = {},
+  },
 }
