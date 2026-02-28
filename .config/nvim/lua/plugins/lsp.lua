@@ -120,6 +120,9 @@ local plugins = {
         sh = {},
         yaml = { "spectral" },
       }
+      vim.g.ale_pattern_options = {
+        ["gitlab-ci"] = { ale_linters = { yaml = {} } },
+      }
       -- vim.g.ale_fixers = {
       -- }
     end,
