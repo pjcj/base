@@ -9,9 +9,7 @@ return {
       require("spinner").config("lsp_progress", {
         kind = "statusline",
         placeholder = "✔",
-        on_update_ui = function()
-          require("lualine").refresh()
-        end,
+        on_update_ui = function() require("lualine").refresh() end,
       })
       vim.api.nvim_create_autocmd("LspRequest", {
         callback = function(event)

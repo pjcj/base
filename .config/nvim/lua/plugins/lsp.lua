@@ -101,7 +101,7 @@ local plugins = {
       })
     end,
   },
-  -- Asynchronous linting engine (legacy support)
+  -- Asynchronous linting engine
   {
     "dense-analysis/ale",
     event = { "BufReadPost", "BufNewFile" },
