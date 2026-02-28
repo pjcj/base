@@ -223,7 +223,7 @@ return {
         completion = {
           list = {
             selection = {
-              preselect = false,
+              preselect = true,
               auto_insert = false,
             },
           },
@@ -337,6 +337,65 @@ return {
           ["<S-Tab>"] = { "select_prev", "fallback" },
 
           ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
+
+          -- Accept the next word from the selected completion
+          ["<C-l>"] = {
+            function(cmp)
+              local item = cmp.get_selected_item()
+              if not item then return end
+
+              local text_edits_lib = require("blink.cmp.lib.text_edits")
+              local text_edit = text_edits_lib.get_from_item(item)
+
+              if
+                item.insertTextFormat
+                == vim.lsp.protocol.InsertTextFormat.Snippet
+              then
+                local snippets_utils =
+                  require("blink.cmp.sources.snippets.utils")
+                local expanded = snippets_utils.safe_parse(text_edit.newText)
+                if expanded then text_edit.newText = tostring(expanded) end
+              end
+
+              local range = text_edit.range
+              local cursor_col = vim.api.nvim_win_get_cursor(0)[2]
+              local first_line = vim.split(text_edit.newText, "\n")[1] or ""
+
+              -- How far into newText the cursor sits
+              local typed_len = math.max(0, cursor_col - range.start.character)
+              local after_cursor = first_line:sub(typed_len + 1)
+
+              -- Find the next word boundary
+              local chunk
+              if after_cursor:match("^[%w_]") then
+                -- Mid-word: complete to end of this word
+                chunk = after_cursor:match("^([%w_]+)")
+              else
+                -- At boundary: skip non-word chars, take next word
+                chunk = after_cursor:match("^(%W*[%w_]+)")
+              end
+              if not chunk or chunk == "" then return end
+
+              -- Only replace from cursor to range end
+              cmp.hide()
+              vim.schedule(function()
+                vim.api.nvim_buf_set_text(
+                  0,
+                  range.start.line,
+                  cursor_col,
+                  range["end"].line,
+                  range["end"].character,
+                  { chunk }
+                )
+                vim.api.nvim_win_set_cursor(
+                  0,
+                  { range.start.line + 1, cursor_col + #chunk }
+                )
+              end)
+              return true
+            end,
+            "fallback",
+          },
         },
 
         cmdline = {
