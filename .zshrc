@@ -891,15 +891,31 @@ export s_rgreen="#25ad2e"   # a nice green for diffs (opposite of red)
 export s_dgreen="#017008"   # dark green
 export s_ddgreen="#003203"  # dark dark green
 
-for c in s_base03 s_base02 s_base01 s_base00 s_base0 s_base1 s_base2 s_base3 \
-  s_yellow s_orange s_red s_magenta s_violet s_blue s_cyan s_green s_normal \
-  s_base04 s_base05 s_base06 s_peach s_pyellow s_llyellow s_lyellow s_dyellow \
-  s_dorange s_lllred s_llred s_lred s_mred s_lmred s_dred s_ddred s_dddred \
-  s_lviolet s_mviolet s_dviolet s_ddviolet s_dcyan s_llblue s_lblue s_dblue \
-  s_ddblue s_lgreen s_rgreen s_dgreen s_ddgreen; do
-  export ef$c="$(print -rP "%F{${(P)c}}")"  # foreground terminal esc sequence
-  export eb$c="$(print -rP "%K{${(P)c}}")"  # background terminal esc sequence
-done
+_colour_vars=(s_base03 s_base02 s_base01 s_base00 s_base0 s_base1 s_base2 s_base3
+  s_yellow s_orange s_red s_magenta s_violet s_blue s_cyan s_green s_normal
+  s_base04 s_base05 s_base06 s_peach s_pyellow s_llyellow s_lyellow s_dyellow
+  s_dorange s_lllred s_llred s_lred s_mred s_lmred s_dred s_ddred s_dddred
+  s_lviolet s_mviolet s_dviolet s_ddviolet s_dcyan s_llblue s_lblue s_dblue
+  s_ddblue s_lgreen s_rgreen s_dgreen s_ddgreen)
+_colour_cache=~/.zsh_colour_cache
+_colour_key="${(j: :)${(@)_colour_vars/(#b)(*)/${(P)match[1]}}}"
+if [[ -r $_colour_cache ]] && read -r _cached_key < $_colour_cache && \
+    [[ $_cached_key == "# $_colour_key" ]]; then
+  . $_colour_cache
+else
+  {
+    echo "# $_colour_key"
+    for c in $_colour_vars; do
+      local _fg="$(print -rP "%F{${(P)c}}")"
+      local _bg="$(print -rP "%K{${(P)c}}")"
+      export ef$c="$_fg"
+      export eb$c="$_bg"
+      echo "export ef$c=${(qq)_fg}"
+      echo "export eb$c=${(qq)_bg}"
+    done
+  } > $_colour_cache
+fi
+unset _colour_vars _colour_cache _colour_key _cached_key
 
 if command -v gdircolors >/dev/null; then
   eval "$(gdircolors -b ~/g/base/dircolours)"
