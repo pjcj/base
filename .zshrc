@@ -985,8 +985,16 @@ if [[ -n $HOMEBREW_PREFIX && -d $_brew_pyenv ]]; then
   export PYENV_ROOT=~/.config/pyenv
   mkdir -p $PYENV_ROOT
   PATH=$PYENV_ROOT/bin:$PATH
-  eval "$(pyenv init --path | grep -v pyenv.zsh)"
-  eval "$(pyenv virtualenv-init -)"
+  _lazy_load_pyenv() {
+    unset -f _lazy_load_pyenv pyenv python python3 pip pip3
+    eval "$(pyenv init --path | grep -v pyenv.zsh)"
+    eval "$(pyenv virtualenv-init -)"
+  }
+  pyenv()   { _lazy_load_pyenv && pyenv "$@" }
+  python()  { _lazy_load_pyenv && python "$@" }
+  python3() { _lazy_load_pyenv && python3 "$@" }
+  pip()     { _lazy_load_pyenv && pip "$@" }
+  pip3()    { _lazy_load_pyenv && pip3 "$@" }
 fi
 
 zshrc_load_status "zoxide"
