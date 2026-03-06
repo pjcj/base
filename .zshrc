@@ -154,12 +154,32 @@ setopt                      \
 zshrc_load_status "environment"
 
 if [[ $EUID -ne 0 ]]; then
-  [[ -e /home/linuxbrew/.linuxbrew/bin/brew ]] && \
-    eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-  [[ -e /usr/local/bin/brew ]] && \
-    eval $(/usr/local/bin/brew shellenv)
-  [[ -e /opt/homebrew/bin/brew ]] && \
-    eval $(/opt/homebrew/bin/brew shellenv)
+  _brew_bin=
+  if [[ -e /opt/homebrew/bin/brew ]]; then
+    _brew_bin=/opt/homebrew/bin/brew
+  elif [[ -e /usr/local/bin/brew ]]; then
+    _brew_bin=/usr/local/bin/brew
+  elif [[ -e /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+    _brew_bin=/home/linuxbrew/.linuxbrew/bin/brew
+  fi
+  if [[ -n $_brew_bin ]]; then
+    _brew_cache=~/.cache/zsh/brew_shellenv
+    [[ -d ${_brew_cache:h} ]] || mkdir -p ${_brew_cache:h}
+    _brew_mtime=$(stat -f%m "$_brew_bin" 2>/dev/null || stat -c%Y "$_brew_bin" 2>/dev/null)
+    _brew_key="$_brew_bin $_brew_mtime"
+    if [[ -r $_brew_cache ]] && read -r _cached_key < $_brew_cache && \
+        [[ $_cached_key == "# $_brew_key" ]]; then
+      . $_brew_cache
+    else
+      {
+        echo "# $_brew_key"
+        $_brew_bin shellenv
+      } > $_brew_cache
+      . $_brew_cache
+    fi
+    unset _brew_cache _brew_mtime _brew_key _cached_key
+  fi
+  unset _brew_bin
 fi
 
 # shellcheck disable=SC1036
