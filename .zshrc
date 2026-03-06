@@ -897,7 +897,8 @@ _colour_vars=(s_base03 s_base02 s_base01 s_base00 s_base0 s_base1 s_base2 s_base
   s_dorange s_lllred s_llred s_lred s_mred s_lmred s_dred s_ddred s_dddred
   s_lviolet s_mviolet s_dviolet s_ddviolet s_dcyan s_llblue s_lblue s_dblue
   s_ddblue s_lgreen s_rgreen s_dgreen s_ddgreen)
-_colour_cache=~/.zsh_colour_cache
+_colour_cache=~/.cache/zsh/colour_cache
+[[ -d ${_colour_cache:h} ]] || mkdir -p ${_colour_cache:h}
 _colour_key="${(j: :)${(@)_colour_vars/(#b)(*)/${(P)match[1]}}}"
 if [[ -r $_colour_cache ]] && read -r _cached_key < $_colour_cache && \
     [[ $_cached_key == "# $_colour_key" ]]; then
