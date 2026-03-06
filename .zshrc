@@ -967,9 +967,16 @@ _brew_nvm="${HOMEBREW_PREFIX}/opt/nvm"
 if [[ -n $HOMEBREW_PREFIX && -d $_brew_nvm ]]; then
   export NVM_DIR=~/.config/nvm
   mkdir -p $NVM_DIR
-  load $_brew_nvm/nvm.sh
-  load $_brew_nvm/etc/bash_completion.d/nvm
-  nvm use --silent system
+  _lazy_load_nvm() {
+    unset -f _lazy_load_nvm nvm node npm npx
+    load $_brew_nvm/nvm.sh
+    load $_brew_nvm/etc/bash_completion.d/nvm
+    nvm use --silent system
+  }
+  nvm()  { _lazy_load_nvm && nvm "$@" }
+  node() { _lazy_load_nvm && node "$@" }
+  npm()  { _lazy_load_nvm && npm "$@" }
+  npx()  { _lazy_load_nvm && npx "$@" }
 fi
 
 zshrc_load_status "pyenv"
