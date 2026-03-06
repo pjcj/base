@@ -249,3 +249,8 @@ go "golang.org/x/tools/cmd/toolstash"
 go "golang.org/x/tools/go/analysis/passes/unmarshal/cmd/unmarshal"
 go "golang.org/x/tools/go/analysis/passes/unusedresult/cmd/unusedresult"
 cargo "devicon-lookup"
+uv "-"
+uv "-"
+uv "-"
+uv "aider-chat", with: ["pip"]
+uv "vectorcode[lsp,mcp]"
