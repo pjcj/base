@@ -1339,7 +1339,7 @@ _prompt_perlv_status() {
     if [[ $pv == system ]]; then
       perl -e 'print "$^V "'
     else
-      print "$pv "
+      print -n "$pv "
     fi
   else
     perl -e '
