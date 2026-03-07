@@ -554,7 +554,8 @@ vvs() { vv -S /tmp/tmp_session.vim "$@" }
 y() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   yazi "$@" --cwd-file="$tmp"
-  if cwd="$(command cat -- "$tmp")" && [[ -n "$cwd" ]] && [[ "$cwd" != "$PWD" ]]; then
+  if cwd="$(command cat -- "$tmp")" \
+      && [[ -n "$cwd" ]] && [[ "$cwd" != "$PWD" ]]; then
     builtin cd -- "$cwd"
   fi
   rm -f -- "$tmp"
@@ -678,7 +679,9 @@ _tm() {
   if [[ -z "$session" || -u "$TMUX" ]]; then
     tmux
   else
-    tmux has -t "$session" && tmux attach $opts -t "$session" || tmux new -s "$session"
+    tmux has -t "$session" \
+      && tmux attach $opts -t "$session" \
+      || tmux new -s "$session"
   fi
 }
 
@@ -738,7 +741,8 @@ export BAT_THEME="Solarized (dark)"
 export BAT_STYLE=full
 export CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR=1
 export GOPATH=~/g/go
-export LESS='--LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS --mouse'
+export LESS='--LONG-PROMPT --ignore-case --quit-if-one-screen'
+LESS+=' --RAW-CONTROL-CHARS --mouse'
 export NOPASTE_SERVICES="Gist Pastie Snitch Shadowcat"
 export PAGER="less -N"
 export TEMPLATE_DIR=~base/templates
@@ -813,7 +817,8 @@ elif [[ $_uname == FreeBSD ]]; then
   }
   pl() { pll -eww "$@" | m }
   pp() { pl -rc "$@" | m }
-  export LESS='--LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS'
+  export LESS='--LONG-PROMPT --ignore-case'
+  LESS+=' --quit-if-one-screen --RAW-CONTROL-CHARS'
 else
   if (( $+commands[dmidecode] )); then
     (sudo dmidecode -t system | grep -Eq 'VirtualBox|VMware') && ISVM=1
