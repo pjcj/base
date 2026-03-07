@@ -152,6 +152,22 @@ setopt                      \
 
 zshrc_load_status "environment"
 
+# Source a cached file, regenerating if the key changed.
+# Usage: _source_cached <cache_file> <key> <generator_cmd>
+_source_cached() {
+  local _sc_file=$1 _sc_key=$2; shift 2
+  [[ -d ${_sc_file:h} ]] || mkdir -p ${_sc_file:h}
+  local _sc_cached_key
+  if [[ -r $_sc_file ]] \
+      && read -r _sc_cached_key < $_sc_file \
+      && [[ $_sc_cached_key == "# $_sc_key" ]]; then
+    . $_sc_file
+  else
+    { echo "# $_sc_key"; "$@" } > $_sc_file
+    . $_sc_file
+  fi
+}
+
 if [[ $EUID -ne 0 ]]; then
   _brew_bin=
   if [[ -e /opt/homebrew/bin/brew ]]; then
@@ -162,22 +178,12 @@ if [[ $EUID -ne 0 ]]; then
     _brew_bin=/home/linuxbrew/.linuxbrew/bin/brew
   fi
   if [[ -n $_brew_bin ]]; then
-    _brew_cache=~/.cache/zsh/brew_shellenv
-    [[ -d ${_brew_cache:h} ]] || mkdir -p ${_brew_cache:h}
     _brew_mtime=$(stat -f%m "$_brew_bin" 2>/dev/null \
       || stat -c%Y "$_brew_bin" 2>/dev/null)
-    _brew_key="$_brew_bin $_brew_mtime"
-    if [[ -r $_brew_cache ]] && read -r _cached_key < $_brew_cache && \
-        [[ $_cached_key == "# $_brew_key" ]]; then
-      . $_brew_cache
-    else
-      {
-        echo "# $_brew_key"
-        $_brew_bin shellenv
-      } > $_brew_cache
-      . $_brew_cache
-    fi
-    unset _brew_cache _brew_mtime _brew_key _cached_key
+    _source_cached ~/.cache/zsh/brew_shellenv \
+      "$_brew_bin $_brew_mtime" \
+      $_brew_bin shellenv
+    unset _brew_mtime
   fi
   unset _brew_bin
 fi
@@ -930,26 +936,21 @@ _colour_vars=(
   s_dorange s_lllred s_llred s_lred s_mred s_lmred s_dred s_ddred s_dddred
   s_lviolet s_mviolet s_dviolet s_ddviolet s_dcyan s_llblue s_lblue s_dblue
   s_ddblue s_lgreen s_rgreen s_dgreen s_ddgreen)
-_colour_cache=~/.cache/zsh/colour_cache
-[[ -d ${_colour_cache:h} ]] || mkdir -p ${_colour_cache:h}
+_colour_gen() {
+  for c in $_colour_vars; do
+    local _fg="$(print -rP "%F{${(P)c}}")"
+    local _bg="$(print -rP "%K{${(P)c}}")"
+    export ef$c="$_fg"
+    export eb$c="$_bg"
+    echo "export ef$c=${(qq)_fg}"
+    echo "export eb$c=${(qq)_bg}"
+  done
+}
 _colour_key="${(j: :)${(@)_colour_vars/(#b)(*)/${(P)match[1]}}}"
-if [[ -r $_colour_cache ]] && read -r _cached_key < $_colour_cache && \
-    [[ $_cached_key == "# $_colour_key" ]]; then
-  . $_colour_cache
-else
-  {
-    echo "# $_colour_key"
-    for c in $_colour_vars; do
-      local _fg="$(print -rP "%F{${(P)c}}")"
-      local _bg="$(print -rP "%K{${(P)c}}")"
-      export ef$c="$_fg"
-      export eb$c="$_bg"
-      echo "export ef$c=${(qq)_fg}"
-      echo "export eb$c=${(qq)_bg}"
-    done
-  } > $_colour_cache
-fi
-unset _colour_vars _colour_cache _colour_key _cached_key
+_source_cached ~/.cache/zsh/colour_cache \
+  "$_colour_key" _colour_gen
+unset _colour_vars _colour_key
+unset -f _colour_gen
 
 if command -v gdircolors >/dev/null; then
   eval "$(gdircolors -b ~/g/base/dircolours)"
@@ -1005,7 +1006,7 @@ if [[ -e ~/.plenv ]]; then
   _lazy_load_plenv() {
     unset -f _lazy_load_plenv plenv
     local _plenv_dir
-    _plenv_dir=$(readlink -f /opt/homebrew/bin/plenv)
+    _plenv_dir=$(readlink -f "$commands[plenv]")
     source "${_plenv_dir%/*}/../completions/plenv.zsh"
     plenv() {
       local command="$1"
