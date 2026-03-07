@@ -1340,14 +1340,15 @@ _prompt_perlv_status() {
 # --- Async machinery ---
 typeset -g _GIT_ASYNC_FD _GIT_ASYNC_PID
 typeset -g _PERLV_ASYNC_FD _PERLV_ASYNC_PID
+typeset -gA _ASYNC_FD_MAP
 
 _async_cancel() {
   local fd_var=$1 pid_var=$2
   local fd=${(P)fd_var} pid=${(P)pid_var}
   [[ -n "$fd" ]] && \
     { true <&$fd } 2>/dev/null || return
-  exec {fd}<&-
   zle -F $fd
+  exec {fd}<&-
   if [[ -o MONITOR ]]; then
     kill -TERM -$pid 2>/dev/null
   else
@@ -1369,56 +1370,46 @@ _async_start() {
   typeset -g ${pid_var}=$pid
 }
 
-_git_async_request() {
-  _async_cancel _GIT_ASYNC_FD _GIT_ASYNC_PID
-  _async_start _GIT_ASYNC_FD _GIT_ASYNC_PID \
-    _prompt_git_status
-  zle -F "$_GIT_ASYNC_FD" _git_async_callback
+_async_request() {
+  local fd_var=$1 pid_var=$2
+  local func=$3 result_var=$4
+  _async_cancel $fd_var $pid_var
+  _async_start $fd_var $pid_var $func
+  local fd=${(P)fd_var}
+  _ASYNC_FD_MAP[$fd]="$result_var $fd_var $pid_var"
+  zle -F "$fd" _async_callback
 }
 
-_git_async_callback() {
-  local old="$_PROMPT_GIT"
+_async_callback() {
+  local fd=$1
+  local parts=(${=_ASYNC_FD_MAP[$fd]})
+  local result_var=${parts[1]}
+  local fd_var=${parts[2]} pid_var=${parts[3]}
+  local old="${(P)result_var}"
   if [[ -z "$2" || "$2" == "hup" ]]; then
-    _PROMPT_GIT="$(command cat <&$1)"
-    if [[ "$old" != "$_PROMPT_GIT" ]]; then
-      zle reset-prompt
-      zle -R
-    fi
-    exec {1}<&-
+    local buf=""
+    sysread -i $fd buf
+    typeset -g ${result_var}="$buf"
   fi
-  zle -F "$1"
-  unset _GIT_ASYNC_FD
-}
-
-_perlv_async_request() {
-  _async_cancel _PERLV_ASYNC_FD _PERLV_ASYNC_PID
-  _async_start _PERLV_ASYNC_FD _PERLV_ASYNC_PID \
-    _prompt_perlv_status
-  zle -F "$_PERLV_ASYNC_FD" _perlv_async_callback
-}
-
-_perlv_async_callback() {
-  local old="$_PROMPT_PERLV"
-  if [[ -z "$2" || "$2" == "hup" ]]; then
-    _PROMPT_PERLV="$(command cat <&$1)"
-    if [[ "$old" != "$_PROMPT_PERLV" ]]; then
-      zle reset-prompt
-      zle -R
-    fi
-    exec {1}<&-
+  zle -F $fd
+  unset "$fd_var" "$pid_var"
+  unset "_ASYNC_FD_MAP[$fd]"
+  exec {fd}<&-
+  if [[ "${(P)result_var}" != "$old" ]]; then
+    zle reset-prompt
+    zle -R
   fi
-  zle -F "$1"
-  unset _PERLV_ASYNC_FD
 }
 
 _prompt_precmd() {
   _PROMPT_GIT=""
   _PROMPT_PERLV=""
-  _git_async_request
-  _perlv_async_request
+  _async_request _GIT_ASYNC_FD _GIT_ASYNC_PID \
+    _prompt_git_status _PROMPT_GIT
+  _async_request _PERLV_ASYNC_FD _PERLV_ASYNC_PID \
+    _prompt_perlv_status _PROMPT_PERLV
 }
 
-autoload -Uz add-zsh-hook
 add-zsh-hook precmd _prompt_precmd
 
 # Function to calculate actual display width of prompt strings
