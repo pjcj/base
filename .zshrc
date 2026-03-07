@@ -1005,20 +1005,9 @@ function _dzil_compdef_setup() {
 
 if [[ -e ~/.plenv ]]; then
   export PATH=~/.plenv/shims:~/.plenv/bin:$PATH
-  export PLENV_SHELL=zsh
   _init_plenv() {
     unset -f _init_plenv _lazy_load_plenv plenv
-    local _plenv_dir
-    _plenv_dir=$(readlink -f "$commands[plenv]")
-    source "${_plenv_dir%/*}/../completions/plenv.zsh"
-    plenv() {
-      local command="$1"
-      if [ "$#" -gt 0 ]; then shift; fi
-      case "$command" in
-      rehash|shell) eval "`plenv "sh-$command" "$@"`";;
-      *) command plenv "$command" "$@";;
-      esac
-    }
+    eval "$(command plenv init - zsh)"
   }
   _lazy_load_plenv() { _init_plenv; plenv "$@" }
   plenv() { _lazy_load_plenv "$@" }
