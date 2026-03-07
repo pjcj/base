@@ -163,7 +163,10 @@ _source_cached() {
       && [[ $_sc_cached_key == "# $_sc_key" ]]; then
     . $_sc_file
   else
-    { echo "# $_sc_key"; "$@" } > $_sc_file
+    {
+      echo "# $_sc_key"
+      "$@"
+    } > $_sc_file
     . $_sc_file
   fi
 }
