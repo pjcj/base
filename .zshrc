@@ -165,7 +165,8 @@ if [[ $EUID -ne 0 ]]; then
   if [[ -n $_brew_bin ]]; then
     _brew_cache=~/.cache/zsh/brew_shellenv
     [[ -d ${_brew_cache:h} ]] || mkdir -p ${_brew_cache:h}
-    _brew_mtime=$(stat -f%m "$_brew_bin" 2>/dev/null || stat -c%Y "$_brew_bin" 2>/dev/null)
+    _brew_mtime=$(stat -f%m "$_brew_bin" 2>/dev/null \
+      || stat -c%Y "$_brew_bin" 2>/dev/null)
     _brew_key="$_brew_bin $_brew_mtime"
     if [[ -r $_brew_cache ]] && read -r _cached_key < $_brew_cache && \
         [[ $_cached_key == "# $_brew_key" ]]; then
@@ -987,8 +988,24 @@ function _dzil_compdef_setup() {
 }
 
 if [[ -e ~/.plenv ]]; then
-  export PATH=~/.plenv/bin:$PATH
-  eval "$(plenv init - zsh)"
+  export PATH=~/.plenv/shims:~/.plenv/bin:$PATH
+  export PLENV_SHELL=zsh
+  _lazy_load_plenv() {
+    unset -f _lazy_load_plenv plenv
+    local _plenv_dir
+    _plenv_dir=$(readlink -f /opt/homebrew/bin/plenv)
+    source "${_plenv_dir%/*}/../completions/plenv.zsh"
+    plenv() {
+      local command="$1"
+      if [ "$#" -gt 0 ]; then shift; fi
+      case "$command" in
+      rehash|shell) eval "`plenv "sh-$command" "$@"`";;
+      *) command plenv "$command" "$@";;
+      esac
+    }
+    plenv "$@"
+  }
+  plenv() { _lazy_load_plenv "$@" }
   autoload -Uz add-zsh-hook
 
   # Run on directory change (useful for .perl-version switching)
