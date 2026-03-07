@@ -1561,7 +1561,9 @@ if [[ $_uname == Darwin ]]; then
 elif [[ $_uname == FreeBSD ]]; then
   :
 else
-  eval $(keychain --eval id_ed25519 id_rsa)
+  if [[ -z $TMUX ]] && (( $+commands[keychain] )) && ! ssh-add -l &>/dev/null; then
+    eval $(keychain --eval id_ed25519 id_rsa)
+  fi
   if [[ -n $WSL_DISTRO_NAME ]]; then
     if pgrep -x tailscaled >/dev/null; then
       echo tailscaled running
