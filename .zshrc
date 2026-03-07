@@ -261,7 +261,8 @@ MANPATH=~/g/sw/share/man:$NPM_PACKAGES/share/man:$MANPATH
 # To start mysql@8.4 now and restart at login:
 #   brew services start mysql@8.4
 # Or, if you don't want/need a background service you can just run:
-#   /opt/homebrew/opt/mysql@8.4/bin/mysqld_safe --datadir\=/opt/homebrew/var/mysql
+#   /opt/homebrew/opt/mysql@8.4/bin/mysqld_safe \
+#     --datadir\=/opt/homebrew/var/mysql
 
 zshrc_load_status "compinit"
 
@@ -703,7 +704,11 @@ sshtm() {
 compdef sshtm=ssh
 
 __gwm() {
-  local -a records=( ${(ps.\n\n.)"$(_call_program directories git worktree list --porcelain)"} )
+  local -a records=(
+    ${(ps.\n\n.)"$(
+      _call_program directories git worktree list --porcelain
+    )"}
+  )
   local -a directories descriptions
   local i hash branch
   for i in $records; do
@@ -721,7 +726,9 @@ __gwm() {
 
     descriptions+=( "${directories[-1]}"$'\t'"$hash $branch" )
   done
-  _wanted directories expl 'working tree' compadd -ld descriptions -S ' ' -f -M 'r:|/=* r:|=*' -a directories
+  _wanted directories expl 'working tree' \
+    compadd -ld descriptions -S ' ' -f \
+    -M 'r:|/=* r:|=*' -a directories
 
 }
 compdef __gwm gwm
@@ -916,7 +923,8 @@ export s_rgreen="#25ad2e"   # a nice green for diffs (opposite of red)
 export s_dgreen="#017008"   # dark green
 export s_ddgreen="#003203"  # dark dark green
 
-_colour_vars=(s_base03 s_base02 s_base01 s_base00 s_base0 s_base1 s_base2 s_base3
+_colour_vars=(
+  s_base03 s_base02 s_base01 s_base00 s_base0 s_base1 s_base2 s_base3
   s_yellow s_orange s_red s_magenta s_violet s_blue s_cyan s_green s_normal
   s_base04 s_base05 s_base06 s_peach s_pyellow s_llyellow s_lyellow s_dyellow
   s_dorange s_lllred s_llred s_lred s_mred s_lmred s_dred s_ddred s_dddred
@@ -1093,8 +1101,11 @@ export FZF_WIDTH=70
 export FZF_DEFAULT_OPTS="
   --height 80% --reverse --inline-info
   --preview-window=right:${FZF_WIDTH}%
-  --color fg:-1,bg:-1,hl:$s_blue,fg+:$s_normal,bg+:$s_ddred,hl+:$s_blue,gutter:$s_base02
-  --color info:$s_cyan,prompt:$s_violet,pointer:$s_green,marker:$s_base3,spinner:$s_yellow
+  --color fg:-1,bg:-1,hl:$s_blue,fg+:$s_normal
+  --color bg+:$s_ddred,hl+:$s_blue,gutter:$s_base02
+  --color info:$s_cyan,prompt:$s_violet
+  --color pointer:$s_green,marker:$s_base3
+  --color spinner:$s_yellow
   --color nomatch:$s_base1
   --bind 'f1:abort'
   --bind 'f2:toggle-preview'
@@ -1103,7 +1114,9 @@ export FZF_DEFAULT_OPTS="
   --bind 'f7:down-match'
 "
 export FZF_DEFAULT_COMMAND="fd --hidden --no-ignore-vcs --exclude .git"
-export FZF_CTRL_T_OPTS="--preview '(bat --tabs=2 --color=always {} 2>/dev/null || cat {} || $_tree_cmd {}) $head'"
+local _fzf_ct_preview="(bat --tabs=2 --color=always {} 2>/dev/null || cat {}"
+_fzf_ct_preview+=" || $_tree_cmd {}) $head"
+export FZF_CTRL_T_OPTS="--preview '$_fzf_ct_preview'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_OPTS="--preview '$_tree_cmd {} $head'"
 export FZF_ALT_C_COMMAND="fd --hidden --no-ignore-vcs --exclude .git --type d"
