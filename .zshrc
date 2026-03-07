@@ -1414,7 +1414,9 @@ if [[ $_uname == Darwin ]]; then
   export PYTORCH_ENABLE_MPS_FALLBACK=1
   export ACCELERATE_USE_MPS=1
 
-  [[ -z $TMUX ]] && ssh-add --apple-load-keychain
+  if [[ -z $TMUX ]] && ! ssh-add -l &>/dev/null; then
+    ssh-add --apple-load-keychain
+  fi
 elif [[ $_uname == FreeBSD ]]; then
   :
 else
