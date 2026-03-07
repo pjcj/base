@@ -1006,8 +1006,8 @@ function _dzil_compdef_setup() {
 if [[ -e ~/.plenv ]]; then
   export PATH=~/.plenv/shims:~/.plenv/bin:$PATH
   export PLENV_SHELL=zsh
-  _lazy_load_plenv() {
-    unset -f _lazy_load_plenv plenv
+  _init_plenv() {
+    unset -f _init_plenv _lazy_load_plenv plenv
     local _plenv_dir
     _plenv_dir=$(readlink -f "$commands[plenv]")
     source "${_plenv_dir%/*}/../completions/plenv.zsh"
@@ -1019,9 +1019,11 @@ if [[ -e ~/.plenv ]]; then
       *) command plenv "$command" "$@";;
       esac
     }
-    plenv "$@"
   }
+  _lazy_load_plenv() { _init_plenv; plenv "$@" }
   plenv() { _lazy_load_plenv "$@" }
+  _plenv_completion() { _init_plenv 2>/dev/null; _plenv "$@" }
+  compctl -K _plenv_completion plenv
   autoload -Uz add-zsh-hook
 
   # Run on directory change (useful for .perl-version switching)
