@@ -39,7 +39,6 @@ zshrc_load_status "load plugins"
 
 zinit load "zsh-users/zsh-completions"
 zinit load "Tarrasch/zsh-autoenv"
-zinit load "woefe/git-prompt.zsh"
 zinit load "woefe/vi-mode.zsh"
 zinit load "joshskidmore/zsh-fzf-history-search"
 zinit load "Aloxaf/fzf-tab"
@@ -1246,50 +1245,90 @@ fpath=($^fpath(N))
 zshrc_load_status "prompt"
 
 setopt prompt_subst
-autoload -U colors && colors # Enable colors in prompt
 
-export ZSH_GIT_PROMPT_FORCE_BLANK=1
-export ZSH_THEME_GIT_PROMPT_PREFIX=""
-export ZSH_THEME_GIT_PROMPT_SUFFIX=" "
-export ZSH_THEME_GIT_PROMPT_SEPARATOR=" "
-export ZSH_THEME_GIT_PROMPT_DETACHED="%{$ers_cyan%}:"
-export ZSH_THEME_GIT_PROMPT_BRANCH="%{$efs_yellow%}"
-export ZSH_THEME_GIT_PROMPT_BEHIND="%{$efs_lred%}%{↓%G%}"
-export ZSH_THEME_GIT_PROMPT_AHEAD="%{$efs_lred%}%{↑%G%}"
-export ZSH_THEME_GIT_PROMPT_UNMERGED="%{$efs_red%}%{⋆%G%}"
-export ZSH_THEME_GIT_PROMPT_STAGED="%{$efs_red%}%{●%G%}"
-export ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$efs_lblue%}%{+%G%}"
-export ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$efs_violet…%G%}"
-export ZSH_THEME_GIT_PROMPT_STASHED="%{$efs_dorange%}⚑"
-export ZSH_THEME_GIT_PROMPT_CLEAN="%{$efs_lgreen%}✔"
+# --- Async prompt (git status + perl version) ---
+zmodload zsh/system
+typeset -g _PROMPT_GIT="" _PROMPT_PERLV=""
 
-export ZSH_GIT_PROMPT_SHOW_STASH=1
-export ZSH_GIT_PROMPT_SHOW_UPSTREAM=
-
-. ~/.local/share/zinit/plugins/woefe---git-prompt.zsh/git-prompt.zsh
-
-perl_here() {
-  if [[ -d perl || -d t || -e Makefile.PL ]]; then
-    print 1
+_prompt_git_status() {
+  local line head="" oid=""
+  local -i ahead=0 behind=0
+  local -i untracked=0 unmerged=0 staged=0
+  local -i unstaged=0 stashed=0
+  while IFS= read -r line; do
+    case "$line" in
+      "# branch.head "*)
+        head="${line#\# branch.head }" ;;
+      "# branch.oid "*)
+        oid="${line#\# branch.oid }" ;;
+      "# branch.ab "*)
+        ahead="${${line#\# branch.ab +}%% *}"
+        behind="${${line##* -}}" ;;
+      "# stash "*)
+        stashed="${line#\# stash }" ;;
+      "? "*)  (( untracked++ )) ;;
+      "u "*)  (( unmerged++ )) ;;
+      "1 "* | "2 "*)
+        local xy="${${(s: :)line}[2]}"
+        [[ ${xy[1]} != . ]] && (( staged++ ))
+        [[ ${xy[2]} != . ]] && (( unstaged++ ))
+        ;;
+      "fatal:"*) return ;;
+    esac
+  done < <(
+    GIT_OPTIONAL_LOCKS=0 command git status \
+      --show-stash --branch --porcelain=v2 2>&1
+  )
+  [[ -z "$head" ]] && return
+  local r=""
+  if [[ "$head" == "(detached)" ]]; then
+    r+="%{$efs_cyan%}:${oid[1,7]}%f"
   else
-    print 0
+    r+="%{$efs_yellow%}${head//\%/%%}%f"
   fi
+  (( behind > 0 )) && \
+    r+="%{$efs_lred%}%{↓%G%}${behind}%f"
+  (( ahead > 0 )) && \
+    r+="%{$efs_lred%}%{↑%G%}${ahead}%f"
+  r+=" "
+  (( unmerged > 0 )) && \
+    r+="%{$efs_red%}%{⋆%G%}${unmerged}%f"
+  (( staged > 0 )) && \
+    r+="%{$efs_red%}%{●%G%}${staged}%f"
+  (( unstaged > 0 )) && \
+    r+="%{$efs_lblue%}%{+%G%}${unstaged}%f"
+  (( untracked > 0 )) && \
+    r+="%{$efs_violet%}%{…%G%}${untracked}%f"
+  (( stashed > 0 )) && \
+    r+="%{$efs_dorange%}%{⚑%G%}${stashed}%f"
+  if (( unmerged + staged + unstaged \
+        + untracked == 0 )); then
+    r+="%{$efs_lgreen%}✔%f"
+  fi
+  r+=" "
+  builtin echo -n "$r"
 }
 
-perlv () {
-  if [[ ${PROMPT_SHOW_PERL:-$(perl_here)} == 1 ]]; then
-    if (( $+commands[plenv] )); then
-      local perl=$(plenv version-name)
-      if [[ $perl == system ]]; then
-        perl -e 'print "$^V "'
-      else
-        print "$perl "
-      fi
-      return
+_prompt_perlv_status() {
+  if [[ -n $PROMPT_SHOW_PERL ]]; then
+    [[ $PROMPT_SHOW_PERL == 1 ]] || return
+  else
+    [[ -d perl || -d t || -e Makefile.PL ]] \
+      || return
+  fi
+  if (( $+commands[plenv] )); then
+    local pv=$(plenv version-name)
+    if [[ $pv == system ]]; then
+      perl -e 'print "$^V "'
+    else
+      print "$pv "
     fi
+  else
     perl -e '
       $t = -e "Makefile";
-      $_ = $t ? `grep "FULLPERL = " Makefile` : `which perl`;
+      $_ = $t
+        ? `grep "FULLPERL = " Makefile`
+        : `which perl`;
       s|.*/(.*)/bin/perl.*|$1 |;
       s/^usr $//;
       s/perl-// if $t;
@@ -1297,6 +1336,90 @@ perlv () {
     '
   fi
 }
+
+# --- Async machinery ---
+typeset -g _GIT_ASYNC_FD _GIT_ASYNC_PID
+typeset -g _PERLV_ASYNC_FD _PERLV_ASYNC_PID
+
+_async_cancel() {
+  local fd_var=$1 pid_var=$2
+  local fd=${(P)fd_var} pid=${(P)pid_var}
+  [[ -n "$fd" ]] && \
+    { true <&$fd } 2>/dev/null || return
+  exec {fd}<&-
+  zle -F $fd
+  if [[ -o MONITOR ]]; then
+    kill -TERM -$pid 2>/dev/null
+  else
+    kill -TERM $pid 2>/dev/null
+  fi
+}
+
+_async_start() {
+  local fd_var=$1 pid_var=$2 func=$3
+  local fd
+  exec {fd}< <(
+    builtin echo $sysparams[pid]
+    $func
+  )
+  command true
+  typeset -g ${fd_var}=$fd
+  local pid
+  read pid <&$fd
+  typeset -g ${pid_var}=$pid
+}
+
+_git_async_request() {
+  _async_cancel _GIT_ASYNC_FD _GIT_ASYNC_PID
+  _async_start _GIT_ASYNC_FD _GIT_ASYNC_PID \
+    _prompt_git_status
+  zle -F "$_GIT_ASYNC_FD" _git_async_callback
+}
+
+_git_async_callback() {
+  local old="$_PROMPT_GIT"
+  if [[ -z "$2" || "$2" == "hup" ]]; then
+    _PROMPT_GIT="$(command cat <&$1)"
+    if [[ "$old" != "$_PROMPT_GIT" ]]; then
+      zle reset-prompt
+      zle -R
+    fi
+    exec {1}<&-
+  fi
+  zle -F "$1"
+  unset _GIT_ASYNC_FD
+}
+
+_perlv_async_request() {
+  _async_cancel _PERLV_ASYNC_FD _PERLV_ASYNC_PID
+  _async_start _PERLV_ASYNC_FD _PERLV_ASYNC_PID \
+    _prompt_perlv_status
+  zle -F "$_PERLV_ASYNC_FD" _perlv_async_callback
+}
+
+_perlv_async_callback() {
+  local old="$_PROMPT_PERLV"
+  if [[ -z "$2" || "$2" == "hup" ]]; then
+    _PROMPT_PERLV="$(command cat <&$1)"
+    if [[ "$old" != "$_PROMPT_PERLV" ]]; then
+      zle reset-prompt
+      zle -R
+    fi
+    exec {1}<&-
+  fi
+  zle -F "$1"
+  unset _PERLV_ASYNC_FD
+}
+
+_prompt_precmd() {
+  _PROMPT_GIT=""
+  _PROMPT_PERLV=""
+  _git_async_request
+  _perlv_async_request
+}
+
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _prompt_precmd
 
 # Function to calculate actual display width of prompt strings
 prompt-length() {
@@ -1363,9 +1486,9 @@ custom_prompt() {
   local p_time="$Reply"
   seg $bg2 $ncol " %m:%~ "
   local p_location="$Reply"
-  seg $bg1 $s_normal " $(gitprompt)"
+  seg $bg1 $s_normal " $_PROMPT_GIT"
   local p_git="$Reply"
-  seg $bg2 $s_base1 " $(perlv)"
+  seg $bg2 $s_base1 " $_PROMPT_PERLV"
   local p_perl="$Reply"
   seg $bg1 "" " "
   local p_gap="$Reply"
