@@ -69,6 +69,16 @@ require("which-key").add({
 })
 
 vim.opt_local.formatoptions = "tcrqnljp"
+function _G.PerlFormatExpr()
+  local saved = vim.bo.indentexpr
+  vim.bo.indentexpr = ""
+  vim.schedule(function()
+    vim.bo.indentexpr = saved
+  end)
+  return 1
+end
+
+vim.bo.formatexpr = "v:lua.PerlFormatExpr()"
 
 local perl_inc_dirs =
   table.concat(require("local_defs").fn.perl_inc_dirs(), ",")
