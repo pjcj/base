@@ -144,7 +144,7 @@
   alias = "!git config --get-regexp 'alias.*' \
     | colrm 1 6 \
     | sed 's/[ ]/ = /; s/  */ /g' | sort"
-  distclean = "!f() { \
+  remove-unknown = "!f() { \
     git status --porcelain | grep '??' \
     | awk '{print $2}' | xargs rm; }; f"
   whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
