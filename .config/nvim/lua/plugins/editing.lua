@@ -295,6 +295,9 @@ return {
   {
     "junegunn/vim-easy-align",
     event = { "BufReadPre", "BufNewFile" },
+    init = function()
+      vim.g.easy_align_ignore_groups = {}
+    end,
   },
 
   -- Swap function arguments and list items (g< g> gs)
