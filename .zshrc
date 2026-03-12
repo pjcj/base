@@ -166,7 +166,7 @@ _source_cached() {
     {
       echo "# $_sc_key"
       "$@"
-    } > $_sc_file
+    } >| $_sc_file
     . $_sc_file
   fi
 }
