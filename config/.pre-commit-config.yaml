@@ -4,7 +4,7 @@
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: check-added-large-files
         args: [ --maxkb=600 ]
@@ -42,18 +42,18 @@ repos:
         args: [ -w -i 2 -s -d ]
 
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.37.1
+    rev: v1.38.0
     hooks:
       - id: yamllint
         args: [ --config-file=.yamllint ]
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.45.0
+    rev: v0.48.0
     hooks:
       - id: markdownlint
 
   - repo: https://github.com/hadolint/hadolint
-    rev: v2.13.1-beta
+    rev: v2.14.0
     hooks:
       - id: hadolint
 
@@ -64,15 +64,16 @@ repos:
         args: [ --force-exclude ]
 
   - repo: https://github.com/executablebooks/mdformat
-    rev: 0.7.22
+    rev: 1.0.0
     hooks:
       - id: mdformat
-        args: [ --number ]
+        args: [ --number, --wrap, "80" ]
         additional_dependencies:
           - mdformat-gfm
+          - mdformat-frontmatter
 
   - repo: https://github.com/golangci/misspell
-    rev: v0.7.0
+    rev: v0.8.0
     hooks:
       - id: misspell
         # The hook will run on all files by default.
