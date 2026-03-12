@@ -1051,11 +1051,11 @@ if [[ -n $HOMEBREW_PREFIX && -d $_brew_pyenv ]]; then
     eval "$(command pyenv init --path | grep -v pyenv.zsh)"
     eval "$(command pyenv virtualenv-init -)"
   }
-  pyenv()   { _init_pyenv; pyenv "$@" }
-  python()  { _init_pyenv; command python "$@" }
-  python3() { _init_pyenv; command python3 "$@" }
-  pip()     { _init_pyenv; command pip "$@" }
-  pip3()    { _init_pyenv; command pip3 "$@" }
+  pyenv()   { (( $+functions[_init_pyenv] )) && _init_pyenv; pyenv "$@" }
+  python()  { (( $+functions[_init_pyenv] )) && _init_pyenv; command python "$@" }
+  python3() { (( $+functions[_init_pyenv] )) && _init_pyenv; command python3 "$@" }
+  pip()     { (( $+functions[_init_pyenv] )) && _init_pyenv; command pip "$@" }
+  pip3()    { (( $+functions[_init_pyenv] )) && _init_pyenv; command pip3 "$@" }
 fi
 
 zshrc_load_status "zoxide"
