@@ -271,7 +271,7 @@ local function setup_servers()
     "html",
     "jsonls",
     "perlnavigator",
-    "sqlls",
+    -- "sqlls", -- broken with Node.js v25 (SlowBuffer removed)
     "yamlls",
   }
 

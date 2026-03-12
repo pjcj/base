@@ -18,7 +18,7 @@ return {
           enable = true,
           disable = {},
         },
-        indent = { enable = true },
+        indent = { enable = true, disable = { "markdown" } },
         incremental_selection = {
           enable = true,
           keymaps = {

@@ -151,7 +151,7 @@ local plugins = {
           json = { "fixjson" },
           lua = { "stylua", lsp_format = "fallback" },
           make = { "bake" },
-          markdown = { "markdownlint", "mdformat", "injected", "mdsf" },
+          markdown = { "markdownlint", "mdformat", "injected" },
           python = { "isort", "black" },
           sh = { "shellcheck", "shfmt" },
           bash = { "shellcheck", "shfmt" },
@@ -169,13 +169,21 @@ local plugins = {
             args = codespell_args,
           },
           mdformat = {
-            args = { "--number", "-" },
+            args = { "--number", "--wrap", "80", "-" },
           },
           shellcheck = {
             args = { "--shell=bash", "-" },
           },
           shfmt = {
             append_args = { "-i", "2" },
+          },
+          injected = {
+            options = {
+              lang_to_formatters = {
+                sql = {},
+                yaml = {},
+              },
+            },
           },
         },
         default_format_opts = {
