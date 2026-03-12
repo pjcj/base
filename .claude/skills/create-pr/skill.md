@@ -5,6 +5,8 @@ description: >-
   creating PRs, opening pull requests, submitting code for review, or pushing
   changes for review.
 user-invocable: true
+arguments: description
+argument-hint: '[description or options]'
 ---
 
 # Create GitHub Pull Request Skill
@@ -121,6 +123,12 @@ Examples:
 - `GH-98765 Fix sidebar widget alignment`
 
 ### Step 6: Compose PR Description
+
+**Line wrapping in descriptions:** Jira, GitLab, and GitHub all treat
+newlines in input as hard line breaks. Do not hard-wrap prose at a
+fixed column width — write each paragraph as a single long line and
+let the platform wrap it for display. Use newlines only where you
+intentionally want a paragraph break or between list items.
 
 Use this markdown template:
 
