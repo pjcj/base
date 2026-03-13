@@ -327,41 +327,50 @@ zstyle ":completion::complete:*" use-cache 1
 
 compdef wh=which
 compdef n=make
-compdef _git ga=git-add
-compdef _git gb=git-branch
-compdef _git gbl=git-blame
-compdef _git gcae=git-commit
-compdef _git gca=git-commit
-compdef _git gc=git-commit
-compdef _git gcn=git-commit
-compdef _git gcp=git-cherry-pick
-compdef _git gd=git-diff
-compdef _git gds=git-diff
-compdef _git gf=git-fetch
-compdef _git gg=git-grep
 compdef _git g=git
-compdef _git gt=git-checkout
 compdef _git gto=git-origin-branch-move
-compdef _git gld=git-log
-compdef _git gl=git-log
-compdef _git gll=git-log
-compdef _git glsa=git-log
-compdef _git gls=git-log
-compdef _git gm=git-merge
-compdef _git gpf=git-push
-compdef _git gp=git-push
-compdef _git gpof=git-push
-compdef _git gpo=git-push
-compdef _git gra=git-rebase
-compdef _git grc=git-rebase
-compdef _git gr=git-rebase
-compdef _git grh=git-reset
-compdef _git gri=git-rebase
-compdef _git grs=git-restore
-compdef _git gs=git-status
-compdef _git gsh=git-show
-compdef _git gvd=git-diff
-compdef _git gw=git-worktree
+
+# Wrap git subcommand completions to avoid __git_cmd_idx being unset when
+# the bash completion shim is invoked via compdef _git alias=git-subcmd.
+_git_subcmd_compdef() {
+  local alias=$1 subcmd=$2
+  eval "_${alias}() { words=(git ${subcmd} \"\${words[@]:1}\"); (( CURRENT++ )); local service=git; _git; }"
+  compdef _${alias} ${alias}
+}
+
+_git_subcmd_compdef ga add
+_git_subcmd_compdef gb branch
+_git_subcmd_compdef gbl blame
+_git_subcmd_compdef gcae commit
+_git_subcmd_compdef gca commit
+_git_subcmd_compdef gc commit
+_git_subcmd_compdef gcn commit
+_git_subcmd_compdef gcp cherry-pick
+_git_subcmd_compdef gd diff
+_git_subcmd_compdef gds diff
+_git_subcmd_compdef gf fetch
+_git_subcmd_compdef gg grep
+_git_subcmd_compdef gt checkout
+_git_subcmd_compdef gld log
+_git_subcmd_compdef gl log
+_git_subcmd_compdef gll log
+_git_subcmd_compdef glsa log
+_git_subcmd_compdef gls log
+_git_subcmd_compdef gm merge
+_git_subcmd_compdef gpf push
+_git_subcmd_compdef gp push
+_git_subcmd_compdef gpof push
+_git_subcmd_compdef gpo push
+_git_subcmd_compdef gra rebase
+_git_subcmd_compdef grc rebase
+_git_subcmd_compdef gr rebase
+_git_subcmd_compdef grh reset
+_git_subcmd_compdef gri rebase
+_git_subcmd_compdef grs restore
+_git_subcmd_compdef gs status
+_git_subcmd_compdef gsh show
+_git_subcmd_compdef gvd diff
+_git_subcmd_compdef gw worktree
 
 _git-branch-full-delete() { __git_branch_names }
 zstyle ":completion:*:*:git:*" user-commands \
