@@ -29,7 +29,7 @@ fi
 # Create new claude pane with zsh to enable autoenv
 opts="--ide --permission-mode bypassPermissions"
 echo "Creating new claude pane..."
-tmux split-window -h -l 35% -c "$current_path" \
+tmux split-window -h -l 40% -c "$current_path" \
   "zsh -ic \"cd '$current_path' && claude $opts\""
 tmux select-pane -T 'claude'
 echo "Claude pane created"
