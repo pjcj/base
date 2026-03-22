@@ -91,7 +91,7 @@ return {
       if _G.using_ai() then
         table.insert(sources, "copilot")
         table.insert(sources, "supermaven")
-        table.insert(sources, "minuet")
+        -- table.insert(sources, "minuet")
         table.insert(sources, "codeium")
       end
 

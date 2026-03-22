@@ -187,7 +187,8 @@ return {
   -- Multi-provider AI completion with Gemini Flash model
   {
     "milanglacier/minuet-ai.nvim",
-    enabled = _G.using_ai(),
+    -- enabled = _G.using_ai(),
+    enabled = false,
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "nvim-lua/plenary.nvim",
