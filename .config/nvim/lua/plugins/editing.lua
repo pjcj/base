@@ -5,67 +5,104 @@ return {
   -- Syntax highlighting and code parsing using tree-sitter
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
+      { "nvim-treesitter/nvim-treesitter-textobjects", branch = "main" },
       "nvim-treesitter/nvim-treesitter-context",
     },
     build = ":TSUpdate",
     config = function()
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = "all",
-        highlight = {
-          enable = true,
-          disable = {},
-        },
-        indent = { enable = true, disable = { "markdown" } },
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = "<F53>", -- option-f5
-            scope_incremental = "<F55>", -- option-f7
-            node_incremental = "<F53>", -- option-f5
-            node_decremental = "<F54>", -- option-f6
-          },
-        },
-        textobjects = {
-          select = {
-            enable = true,
-            lookahead = true, -- Automatically jump forward to the text object
-            keymaps = {
-              ["ia"] = "@comment.inner",
-              ["aa"] = "@comment.outer",
-              ["af"] = "@function.outer",
-              ["if"] = "@function.inner",
-            },
-            include_surrounding_whitespace = false,
-          },
-          swap = {
-            enable = true,
-            swap_next = {
-              ["gb"] = "@parameter.inner",
-            },
-            swap_previous = {
-              ["gB"] = "@parameter.inner",
-            },
-          },
+      require("nvim-treesitter").install("all")
+
+      -- Disable treesitter indent for markdown
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "markdown",
+        callback = function() vim.bo.indentexpr = "" end,
+      })
+
+      -- Incremental selection via treesitter nodes
+      local sel_history = {}
+      local function select_node(node, track)
+        if not node then return end
+        if track then table.insert(sel_history, node) end
+        local sr, sc, er, ec = node:range()
+        vim.fn.setpos("'<", { 0, sr + 1, sc + 1, 0 })
+        vim.fn.setpos("'>", { 0, er + 1, ec, 0 })
+        vim.cmd("normal! gv")
+      end
+
+      vim.keymap.set("n", "<M-C-F5>", function() -- option-f5: init/expand
+        sel_history = {}
+        local node = vim.treesitter.get_node()
+        select_node(node, true)
+      end, { desc = "treesitter: init/expand selection" })
+
+      vim.keymap.set("v", "<M-C-F5>", function() -- option-f5: expand
+        local cur = sel_history[#sel_history]
+        if cur then select_node(cur:parent() or cur, true) end
+      end, { desc = "treesitter: expand selection" })
+
+      vim.keymap.set("v", "<M-C-F6>", function() -- option-f6: shrink
+        if #sel_history > 1 then
+          table.remove(sel_history)
+          select_node(sel_history[#sel_history], false)
+        end
+      end, { desc = "treesitter: shrink selection" })
+
+
+      -- Textobjects
+      require("nvim-treesitter-textobjects").setup({
+        select = {
+          lookahead = true,
+          include_surrounding_whitespace = false,
         },
       })
+
+      local ts_select = require("nvim-treesitter-textobjects.select")
+      local ts_swap = require("nvim-treesitter-textobjects.swap")
+
+      local select_maps = {
+        ["ia"] = "@comment.inner",
+        ["aa"] = "@comment.outer",
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+      }
+      for keys, query in pairs(select_maps) do
+        vim.keymap.set(
+          { "x", "o" },
+          keys,
+          function() ts_select.select_textobject(query, "textobjects") end
+        )
+      end
+
+      vim.keymap.set(
+        "n",
+        "gb",
+        function() ts_swap.swap_next("@parameter.inner") end,
+        { desc = "swap next parameter" }
+      )
+      vim.keymap.set(
+        "n",
+        "gB",
+        function() ts_swap.swap_previous("@parameter.inner") end,
+        { desc = "swap previous parameter" }
+      )
+
+      -- Treesitter context
       require("treesitter-context").setup({
         enable = true,
-        max_lines = 3, -- Limit context lines for better performance
-        min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+        max_lines = 3,
+        min_window_height = 0,
         line_numbers = true,
-        multiline_threshold = 20, -- Maximum number of lines to show for a single context
-        trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-        mode = "topline", -- Use topline instead of cursor to reduce recalculation during scrolling
-        -- Separator between context and content. Should be a single character string, like '-'.
-        -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+        multiline_threshold = 20,
+        trim_scope = "outer",
+        mode = "topline",
         separator = nil,
-        zindex = 20, -- The Z-index of the context window
+        zindex = 20,
         on_attach = function(buf)
           local filetype =
             vim.api.nvim_get_option_value("filetype", { buf = buf })
-          return filetype ~= "perl" -- Disable for Perl files
+          return filetype ~= "perl"
         end,
       })
     end,
@@ -290,9 +327,7 @@ return {
   {
     "junegunn/vim-easy-align",
     event = { "BufReadPre", "BufNewFile" },
-    init = function()
-      vim.g.easy_align_ignore_groups = {}
-    end,
+    init = function() vim.g.easy_align_ignore_groups = {} end,
   },
 
   -- Swap function arguments and list items (g< g> gs)
