@@ -149,6 +149,15 @@
     | awk '{print $2}' | xargs rm; }; f"
   whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
 
+  # Show all changes including untracked files,
+  # piped through a single delta instance
+  diffall = "!f() { \
+    { GIT_PAGER=cat git diff --color=always HEAD; \
+    for f in $(git ls-files --others --exclude-standard); do \
+      GIT_PAGER=cat git diff --color=always --no-index /dev/null \"$f\"; \
+    done; } \
+    | delta; }; f"
+
   vgc    = repack -fad --depth=250 --window=250
   nvgc   = !ionice -n7 nice -n20 git vgc
   fullgc = "!f() { nice git gc && nice git vgc; }; f"

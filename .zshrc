@@ -446,7 +446,9 @@ bindkey "^[OP" fzf_git_commit_widget_k       # f1
 bindkey "^[[25~" fzf_git_commit_widget_lall  # shift-f1
 bindkey "^[OQ" fzf_git_commit_widget_l       # f2
 bindkey -s "^[OR" "^[0Digs^M"                # f3
-bindkey -s "^[OS" "^[0Digd^M"                # f4
+bindkey -s "^[OS" "^[0Dig diffall^M"         # f4
+bindkey -s "^[[1;2S" "^[0Digd^M"             # shift-f4
+bindkey -s "^[[1;3S" "^[0Digd --staged^M"    # command-f4
 
 autoload -Uz select-bracketed select-quoted
 zle -N select-quoted
