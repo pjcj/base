@@ -6,7 +6,6 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-refactor",
       "nvim-treesitter/nvim-treesitter-textobjects",
       "nvim-treesitter/nvim-treesitter-context",
     },
@@ -27,9 +26,6 @@ return {
             node_incremental = "<F53>", -- option-f5
             node_decremental = "<F54>", -- option-f6
           },
-        },
-        refactor = {
-          highlight_definitions = { enable = true },
         },
         textobjects = {
           select = {
@@ -102,8 +98,7 @@ return {
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
     opts = {
-      enable_autocmd = true,
-      ts_context_commentstring_module = true,
+      enable_autocmd = false,
     },
   },
 
