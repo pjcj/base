@@ -1,0 +1,146 @@
+#!/usr/bin/env bash
+
+# Wraps a repo's commit-msg hook to run fmt-commit-msg first.
+#
+# Install:   wrap-commit-msg
+# Uninstall: wrap-commit-msg --unwrap
+# As hook:   called by git with the message file as $1
+
+set -eEuo pipefail
+shopt -s inherit_errexit
+
+Self=$(realpath "$0")
+readonly Self
+Self_dir=$(dirname "$Self")
+readonly Self_dir
+
+install() {
+  local git_dir
+  git_dir=$(git rev-parse --git-dir 2>/dev/null) || {
+    echo "Not a git repository" >&2
+    return 1
+  }
+
+  local hooks_dir="$git_dir/hooks"
+  local hook="$hooks_dir/commit-msg"
+  local saved_dir="$hooks_dir/commit-msg.d"
+
+  if [[ -e "$hook" ]] && [[ "$(realpath "$hook")" == "$Self" ]]; then
+    echo "Already wrapped" >&2
+    return 0
+  fi
+
+  mkdir -p "$hooks_dir" "$saved_dir"
+
+  if [[ -e "$hook" ]] || [[ -L "$hook" ]]; then
+    if [[ -e "$saved_dir/original" ]] || [[ -L "$saved_dir/original" ]]; then
+      echo "Original already saved at $saved_dir/original" >&2
+      echo "Run --unwrap first to re-wrap" >&2
+      return 1
+    fi
+    if [[ -L "$hook" ]]; then
+      # Resolve to absolute path so it works from the new location
+      local target
+      target=$(realpath "$hook")
+      ln -s "$target" "$saved_dir/original"
+      rm "$hook"
+    else
+      mv "$hook" "$saved_dir/original"
+    fi
+    echo "Saved existing hook to $saved_dir/original"
+  fi
+
+  ln -s "$Self" "$hook"
+  echo "Installed commit-msg wrapper"
+}
+
+unwrap() {
+  local git_dir
+  git_dir=$(git rev-parse --git-dir 2>/dev/null) || {
+    echo "Not a git repository" >&2
+    return 1
+  }
+
+  local hooks_dir="$git_dir/hooks"
+  local hook="$hooks_dir/commit-msg"
+  local saved_dir="$hooks_dir/commit-msg.d"
+
+  if [[ ! -e "$hook" ]] || [[ "$(realpath "$hook")" != "$Self" ]]; then
+    echo "commit-msg is not wrapped by this script" >&2
+    return 1
+  fi
+
+  rm "$hook"
+
+  if [[ -e "$saved_dir/original" ]] || [[ -L "$saved_dir/original" ]]; then
+    mv "$saved_dir/original" "$hook"
+    rmdir "$saved_dir" 2>/dev/null || true
+    echo "Restored original hook"
+  else
+    rmdir "$saved_dir" 2>/dev/null || true
+    echo "Removed wrapper (no original to restore)"
+  fi
+}
+
+status() {
+  local git_dir
+  git_dir=$(git rev-parse --git-dir 2>/dev/null) || {
+    echo "Not a git repository" >&2
+    return 1
+  }
+
+  local hook="$git_dir/hooks/commit-msg"
+  local original="$git_dir/hooks/commit-msg.d/original"
+
+  if [[ -e "$hook" ]] && [[ "$(realpath "$hook")" == "$Self" ]]; then
+    echo "Wrapped"
+    if [[ -e "$original" ]] || [[ -L "$original" ]]; then
+      echo "Original: $original"
+    else
+      echo "Original: (none)"
+    fi
+  elif [[ -e "$hook" ]]; then
+    echo "Not wrapped (hook exists: $hook)"
+  else
+    echo "Not wrapped (no hook)"
+  fi
+}
+
+run_hook() {
+  local msg_file="$1"
+  shift
+
+  local tmp
+  tmp=$(mktemp)
+  if "$Self_dir/fmt-commit-msg" <"$msg_file" >"$tmp"; then
+    mv "$tmp" "$msg_file"
+  else
+    rm -f "$tmp"
+  fi
+
+  local git_dir
+  git_dir=$(git rev-parse --git-dir)
+  local original="$git_dir/hooks/commit-msg.d/original"
+
+  if [[ -x "$original" ]]; then
+    exec "$original" "$msg_file" "$@"
+  fi
+}
+
+main() {
+  case "${1:-}" in
+  --install) install ;;
+  --unwrap) unwrap ;;
+  --status) status ;;
+  --help)
+    echo "Usage: wrap-commit-msg [--install|--unwrap|--status|--help]"
+    echo "  (no args)  Install wrapper in current repo"
+    echo "  --unwrap   Restore original hook"
+    echo "  --status   Show current hook state"
+    ;;
+  "") install ;;
+  *) run_hook "$@" ;;
+  esac
+}
+
+main "$@"
