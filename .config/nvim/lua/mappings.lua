@@ -332,7 +332,7 @@ wk.add({
       require("conform").format({ async = true }, function(err, did_edit)
         if err then
           vim.notify(
-            "Formatting error: " .. err,
+            "Formatting error: " .. vim.inspect(err),
             vim.log.levels.ERROR,
             { title = "Format" }
           )
