@@ -222,7 +222,7 @@ main() {
   ln -sf ~/g/base/.config/* ~/.config
 
   [[ -d ~/.claude/skills ]] || mkdir -p ~/.claude/skills
-  ln -sf ~/g/base/.claude/skills/* ~/.claude/skills
+  ln -sf ~/g/local_base/claude/skills/* ~/.claude/skills
 
   [[ -e ~/.ssh/rc ]] || ln -s ~/g/base/.ssh/rc ~/.ssh
   [[ -e ~/.ssh/config ]] || cp ~/g/base/.ssh/config ~/.ssh
