@@ -14,6 +14,11 @@ return {
     config = function()
       require("nvim-treesitter").install("all")
 
+      -- Enable treesitter highlighting for any filetype with a parser
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args) pcall(vim.treesitter.start, args.buf) end,
+      })
+
       -- Disable treesitter indent for markdown
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "markdown",
