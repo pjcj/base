@@ -54,7 +54,6 @@ return {
         end
       end, { desc = "treesitter: shrink selection" })
 
-
       -- Textobjects
       require("nvim-treesitter-textobjects").setup({
         select = {
