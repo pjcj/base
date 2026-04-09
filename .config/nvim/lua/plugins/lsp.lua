@@ -71,6 +71,32 @@ local plugins = {
       vim.list_extend(codespell_args, { "--stdin-single-line", "-" })
       lint.linters.codespell.args = codespell_args
 
+      -- perlimports lint (active when perl-lsp is the current server)
+      lint.linters.perlimports = {
+        cmd = "perlimports",
+        args = { "--lint" },
+        stdin = false,
+        ignore_exitcode = true,
+        stream = "stderr",
+        parser = function(output)
+          local diagnostics = {}
+          for line in output:gmatch("[^\n]+") do
+            local msg, lnum =
+              line:match("^[^\n]-(%S+ %b()) at .+ line (%d+)")
+            if msg and lnum then
+              table.insert(diagnostics, {
+                lnum = tonumber(lnum) - 1,
+                col = 0,
+                message = msg,
+                severity = vim.diagnostic.severity.WARN,
+                source = "perlimports",
+              })
+            end
+          end
+          return diagnostics
+        end,
+      }
+
       local last_lint_time = 0
       local cursor_hold_throttle_ms = 1000
 
@@ -94,6 +120,13 @@ local plugins = {
           if vim.bo.filetype ~= "SidebarNvim" then
             lint.try_lint("codespell")
             lint.try_lint("typos")
+          end
+          if
+            vim.bo.filetype == "perl"
+            and vim.g.perl_lsp_server == "perl_lsp"
+            and vim.fn.filereadable(".perlimports.toml") == 1
+          then
+            lint.try_lint("perlimports")
           end
           last_lint_time = current_time
           -- require("notify")(string.format("end lint"))
@@ -158,6 +191,7 @@ local plugins = {
           zsh = { "shellcheck" },
           sql = { "sql_formatter" },
           terraform = { "terraform_fmt" },
+          perl = { "perlimports_tidy" },
           yaml = { "yamlfmt" }, -- yamlfix is too buggy
           ["*"] = { "codespell", "typos" },
         },
@@ -179,6 +213,15 @@ local plugins = {
           },
           shfmt = {
             append_args = { "-i", "2" },
+          },
+          perlimports_tidy = {
+            command = "perlimports",
+            args = { "--read-stdin", "--filename", "$FILENAME" },
+            stdin = true,
+            condition = function()
+              return vim.g.perl_lsp_server == "perl_lsp"
+                and vim.fn.filereadable(".perlimports.toml") == 1
+            end,
           },
           injected = {
             options = {

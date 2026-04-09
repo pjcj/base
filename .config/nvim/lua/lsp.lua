@@ -197,6 +197,27 @@ vim.lsp.config.perlnavigator = {
   },
 }
 
+vim.lsp.config.perl_lsp = {
+  cmd = { "perllsp", "--stdio" },
+  filetypes = { "perl" },
+  root_markers = { ".git" },
+  settings = {
+    perl = {
+      workspace = {
+        includePaths = (function()
+          local ok, local_defs = pcall(require, "local_defs")
+          return ok and local_defs.fn.perl_inc_dirs() or {}
+        end)(),
+      },
+      perlcritic = {
+        enabled = vim.fn.filereadable(".perlcriticrc") == 1,
+        severity = 1,
+        profile = ".perlcriticrc",
+      },
+    },
+  },
+}
+
 vim.lsp.config.sqlls = {
   cmd = { "sql-language-server", "up", "--method", "stdio" },
   filetypes = { "sql", "mysql" },
@@ -270,7 +291,7 @@ local function setup_servers()
     "gopls",
     "html",
     "jsonls",
-    "perlnavigator",
+    vim.g.perl_lsp_server,
     -- "sqlls", -- broken with Node.js v25 (SlowBuffer removed)
     "yamlls",
   }
@@ -321,6 +342,32 @@ end
 
 M.setup_servers = setup_servers
 
+-- Toggle between PerlNavigator and perl-lsp
+local function toggle_perl_lsp()
+  local current = vim.g.perl_lsp_server
+  local new = current == "perlnavigator" and "perl_lsp" or "perlnavigator"
+
+  if vim.fn.executable(vim.lsp.config[new].cmd[1]) ~= 1 then
+    vim.notify(
+      vim.lsp.config[new].cmd[1] .. " not found",
+      vim.log.levels.ERROR
+    )
+    return
+  end
+
+  vim.lsp.enable(current, false)
+  vim.g.perl_lsp_server = new
+  vim.lsp.config[new].on_attach = on_attach
+  vim.lsp.enable(new)
+  vim.notify("Perl LSP: " .. new, vim.log.levels.INFO)
+end
+
+vim.api.nvim_create_user_command(
+  "TogglePerlLsp",
+  toggle_perl_lsp,
+  { desc = "Toggle between PerlNavigator and perl-lsp" }
+)
+
 -- Diagnostic filtering - optimised single-pass in-place filter
 local function filter(arr, func)
   local j = 0
@@ -340,8 +387,12 @@ local function filter_diagnostics(diagnostic)
   local source = diagnostic.source
   local message = diagnostic.message
 
-  -- Early return for non-perlnavigator sources
-  if source ~= "perlnavigator" then
+  -- Early return for non-Perl LSP sources
+  if
+    source ~= "perlnavigator"
+    and source ~= "perl_lsp"
+    and source ~= "perl-lsp"
+  then
     -- Special case for bash-language-server
     if
       source == "bash-language-server"

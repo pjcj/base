@@ -1429,6 +1429,7 @@ wk.add({
 
   { "<leader>tp", group = "perl" },
   { "<leader>tpc", ":TogglePerlCoverage<cr>", desc = "coverage" },
+  { "<leader>tpl", ":TogglePerlLsp<cr>", desc = "lsp server" },
 
   {
     "<leader>to",
