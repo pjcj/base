@@ -3,6 +3,9 @@ local vopt = vim.opt -- set options
 -- Enable/disable Perl coverage display (default: on)
 vim.g.devel_cover_enabled = true
 
+-- Which Perl LSP server to use: "perlnavigator" or "perl_lsp"
+vim.g.perl_lsp_server = vim.g.perl_lsp_server or "perlnavigator"
+
 -- Coverage monitoring state (module-level for toggle access)
 local coverage_last_mtime = nil
 local coverage_timer_id = nil
