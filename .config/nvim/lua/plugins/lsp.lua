@@ -146,7 +146,7 @@ local plugins = {
 
       require("conform").setup({
         formatters_by_ft = {
-          dockerfile = { "dprint", "dockerfmt" },
+          dockerfile = { "dockerfmt" },
           javascript = { "prettierd", "prettier", stop_after_first = true },
           json = { "fixjson" },
           lua = { "stylua", lsp_format = "fallback" },
@@ -173,6 +173,9 @@ local plugins = {
           },
           shellcheck = {
             args = { "--shell=bash", "-" },
+          },
+          dockerfmt = {
+            append_args = { "-i", "2" },
           },
           shfmt = {
             append_args = { "-i", "2" },
