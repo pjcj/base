@@ -57,7 +57,7 @@ update_packages() {
 
     sudo apt autoremove -y
     sudo apt update
-    sudo apt install -y build-essential procps curl file git
+    sudo apt install -y build-essential procps curl file git zlib1g-dev
     sudo apt full-upgrade
 
     if ! dpkg -s docker-ce &>/dev/null; then
