@@ -248,7 +248,7 @@ PATH=~/.cargo/bin:$NPM_PACKAGES/bin:$PATH
 # PATH=~/.yarn/bin:~/.config/yarn/global/node_modules/.bin:$PATH
 PATH=/snap/bin:$PATH
 [[ -n $HOMEBREW_PREFIX ]] &&
-  PATH=$HOMEBREW_PREFIX/bin:$PATH &&
+  PATH=$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/opt/perl/bin:$PATH &&
   PATH=$HOMEBREW_PREFIX/opt/mysql@8.4/bin:$PATH &&
   PATH=$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH &&
   PATH=$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH
