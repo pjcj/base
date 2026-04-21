@@ -117,11 +117,7 @@ return {
   {
     "ThePrimeagen/refactoring.nvim",
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    opts = {
-      installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+      "lewis6991/async.nvim",
     },
   },
 

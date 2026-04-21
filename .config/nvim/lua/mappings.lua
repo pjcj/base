@@ -967,7 +967,7 @@ wk.add({
   },
   {
     "<leader>fR",
-    function() t().extensions.refactoring.refactors() end,
+    function() require("refactoring").select_refactor() end,
     desc = "refactor",
   },
   {
