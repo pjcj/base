@@ -488,39 +488,9 @@ return {
     config = true,
     opts = {
       auto_start = true,
-      terminal = {
-        terminal_cmd = "~/.claude/local/claude",
-        -- provider = "native",
-        provider = {
-          -- setup = function(config) end,
-          -- open = function(cmd_string, env_table, effective_config, focus) end,
-          -- close = function() end,
-          -- simple_toggle = function(cmd_string, env_table, effective_config) end,
-          -- focus_toggle = function(cmd_string, env_table, effective_config) end,
-          setup = function() end,
-          open = function() end,
-          close = function() end,
-          simple_toggle = function() end,
-          focus_toggle = function() end,
-          get_active_bufnr = function() end,
-          is_available = function() return true end,
-        },
-        split_width_percentage = 0.4,
-      },
+      port_range = { min = 63720, max = 63739 },
     },
     keys = {
-      {
-        "<leader> ..",
-        "<cmd>ClaudeCode<cr><cmd>horizontal wincmd =<cr>",
-        desc = "Toggle Claude",
-      },
-      { "<leader> .f", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
-      { "<leader> .r", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
-      {
-        "<leader> .c",
-        "<cmd>ClaudeCode --continue<cr>",
-        desc = "Continue Claude",
-      },
       {
         "<leader> .b",
         "<cmd>ClaudeCodeAdd %<cr>",
