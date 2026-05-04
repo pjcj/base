@@ -191,6 +191,21 @@ return {
     end,
   },
 
+  -- Guided code exploration: definitions, refs, callers, tests, recent commits
+  {
+    "error311/wayfinder.nvim",
+    cmd = {
+      "Wayfinder",
+      "WayfinderExportQuickfix",
+      "WayfinderExportTrailQuickfix",
+      "WayfinderTrailNext",
+      "WayfinderTrailPrev",
+      "WayfinderTrailOpen",
+      "WayfinderTrailShow",
+    },
+    opts = {},
+  },
+
   -- File explorer tree with git integration
   {
     "nvim-tree/nvim-tree.lua",

@@ -642,6 +642,20 @@ wk.add({
     { "<leader> tes", ":Translate EN -output=split<cr>", desc = "split" },
   },
 
+  { "<leader> w", group = "wayfinder" },
+  { "<leader> wf", ":Wayfinder<cr>", desc = "open" },
+  { "<leader> wq", ":WayfinderExportQuickfix<cr>", desc = "export to qf" },
+  {
+    "<leader> wQ",
+    ":WayfinderExportTrailQuickfix<cr>",
+    desc = "export trail to qf",
+  },
+  { "<leader> wt", group = "trail" },
+  { "<leader> wtn", ":WayfinderTrailNext<cr>", desc = "next" },
+  { "<leader> wtp", ":WayfinderTrailPrev<cr>", desc = "prev" },
+  { "<leader> wto", ":WayfinderTrailOpen<cr>", desc = "open" },
+  { "<leader> wts", ":WayfinderTrailShow<cr>", desc = "show" },
+
   { "<leader>.", smart_open, desc = "smart open" },
   {
     "<leader>-",
