@@ -635,6 +635,15 @@ hg()      { fc -li 1 | grep "$@" }
 hh()      { fc -li 1 }
 ht()      { sudo =htop "$@" }
 kitty()   { ~/.local/kitty.app/bin/kitty "$@" }
+nclaude() {
+  if (( ! $+commands[nono] )); then
+    print -u2 "nclaude: nono not installed; falling back to claude"
+    command claude "$@"
+    return
+  fi
+  nono run --allow-cwd --profile pjcj --allow-launch-services -- \
+    command claude "$@"
+}
 ll()      { f "$@" | less -r -X }
 lll()     { eval $(perl -Mlocal::lib=$(pwd)/local_lib) }
 lu()      { fc -e - lsq=usq -1 }

@@ -19,18 +19,11 @@ echo "Current pane ID: $current_pane_id"
 echo "Current pane command: [$current_pane_command]"
 echo "Current path: $current_path"
 
-# If splitting from nvim, start ClaudeCode first
-if [[ $current_pane_command == "nvim" ]]; then
-  echo "Condition matched: starting ClaudeCode in nvim"
-  tmux send-keys -t "$current_pane_id" Escape ":ClaudeCode" Enter
-  echo "ClaudeCode started"
-fi
-
 # Create new claude pane with zsh to enable autoenv
 opts="--ide --permission-mode bypassPermissions"
 echo "Creating new claude pane..."
 tmux split-window -h -l 40% -c "$current_path" \
-  "zsh -ic \"cd '$current_path' && claude $opts\""
+  "zsh -ic \"cd '$current_path' && nclaude $opts\""
 tmux select-pane -T 'claude'
 echo "Claude pane created"
 

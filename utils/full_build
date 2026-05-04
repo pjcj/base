@@ -113,6 +113,7 @@ update_other() {
   pipx inject mdformat mdformat-gfm mdformat-frontmatter
   pipx upgrade-all
   pre-commit autoupdate --config ~/g/base/config/.pre-commit-config.yaml
+  ~/g/base/utils/install_nono
 }
 
 do_zinit() {

@@ -1,0 +1,143 @@
+#!/usr/bin/env bash
+
+# Install or update nono (https://github.com/always-further/nono) from a
+# GitHub release. Verifies SHA-256 against the published SHA256SUMS.txt.
+#
+# Usage: install_nono [--version vX.Y.Z]
+#
+# Defaults to the latest release. Re-running is a no-op when the installed
+# version already matches the requested version.
+
+set -euo pipefail
+
+REPO="always-further/nono"
+INSTALL_DIR="$HOME/.local/bin"
+LOCAL_BASE_NONO="$HOME/g/local_base/.config/nono"
+USER_CONFIG_NONO="$HOME/.config/nono"
+
+want_version=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --version)
+      want_version=$2
+      shift 2
+      ;;
+    -h | --help)
+      sed -n '3,10p' "$0"
+      exit 0
+      ;;
+    *)
+      echo "Unknown argument: $1" >&2
+      exit 2
+      ;;
+  esac
+done
+
+detect_target() {
+  local os arch
+  os=$(uname -s)
+  arch=$(uname -m)
+  case "$os/$arch" in
+    Darwin/arm64) echo "aarch64-apple-darwin" ;;
+    Darwin/x86_64) echo "x86_64-apple-darwin" ;;
+    Linux/aarch64) echo "aarch64-unknown-linux-gnu" ;;
+    Linux/x86_64) echo "x86_64-unknown-linux-gnu" ;;
+    *)
+      echo "Unsupported platform: $os/$arch" >&2
+      exit 1
+      ;;
+  esac
+}
+
+resolve_version() {
+  if [ -n "$want_version" ]; then
+    echo "$want_version"
+    return
+  fi
+  if ! command -v gh >/dev/null 2>&1; then
+    echo "gh CLI not found; install gh or pass --version" >&2
+    exit 1
+  fi
+  gh release view --repo "$REPO" --json tagName --jq .tagName
+}
+
+current_version() {
+  if [ -x "$INSTALL_DIR/nono" ]; then
+    "$INSTALL_DIR/nono" --version 2>/dev/null \
+      | awk 'NR==1 { for (i=1;i<=NF;i++) if ($i ~ /^v?[0-9]/) { v=$i; sub(/^v/, "", v); print "v" v; exit } }'
+  fi
+}
+
+ensure_config_link() {
+  if [ ! -d "$LOCAL_BASE_NONO" ]; then
+    return
+  fi
+  mkdir -p "$HOME/.config"
+  if [ -L "$USER_CONFIG_NONO" ]; then
+    local target
+    target=$(readlink "$USER_CONFIG_NONO")
+    if [ "$target" = "$LOCAL_BASE_NONO" ]; then
+      return
+    fi
+    echo "Replacing existing $USER_CONFIG_NONO symlink (was $target)"
+    rm "$USER_CONFIG_NONO"
+  elif [ -e "$USER_CONFIG_NONO" ]; then
+    echo "$USER_CONFIG_NONO exists and is not a symlink; leaving alone" >&2
+    return
+  fi
+  ln -s "$LOCAL_BASE_NONO" "$USER_CONFIG_NONO"
+  echo "Linked $USER_CONFIG_NONO -> $LOCAL_BASE_NONO"
+}
+
+main() {
+  local target version tarball sums url tmp installed
+  target=$(detect_target)
+  version=$(resolve_version)
+  case "$version" in
+    v*) ;;
+    *) version="v$version" ;;
+  esac
+  installed=$(current_version || true)
+
+  if [ "$installed" = "$version" ]; then
+    echo "nono $version already installed at $INSTALL_DIR/nono"
+    ensure_config_link
+    return
+  fi
+
+  tarball="nono-${version}-${target}.tar.gz"
+  sums="SHA256SUMS.txt"
+  url="https://github.com/$REPO/releases/download/$version"
+
+  tmp=$(mktemp -d)
+  # shellcheck disable=SC2064
+  trap "rm -rf '$tmp'" EXIT
+
+  echo "Downloading $tarball from $version"
+  curl -fsSL -o "$tmp/$tarball" "$url/$tarball"
+  curl -fsSL -o "$tmp/$sums" "$url/$sums"
+
+  echo "Verifying SHA-256"
+  (
+    cd "$tmp"
+    grep " ${tarball}\$" "$sums" | shasum -a 256 -c -
+  )
+
+  echo "Extracting"
+  tar -xzf "$tmp/$tarball" -C "$tmp"
+
+  local extracted
+  extracted=$(find "$tmp" -type f -name nono -perm -u+x | head -n 1)
+  if [ -z "$extracted" ]; then
+    echo "nono binary not found in tarball" >&2
+    exit 1
+  fi
+
+  mkdir -p "$INSTALL_DIR"
+  install -m 0755 "$extracted" "$INSTALL_DIR/nono"
+  echo "Installed $("$INSTALL_DIR/nono" --version 2>/dev/null | head -n 1)"
+
+  ensure_config_link
+}
+
+main "$@"
