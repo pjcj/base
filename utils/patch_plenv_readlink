@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Replace plenv's racy readlink lookup
+#   read READLINK < <( type -p greadlink readlink )
+# with the single-line, race-free
+#   READLINK=$(command -v greadlink || command -v readlink)
+#
+# The original outputs "type: write error: Broken pipe" because
+# `type -p` writes two lines but `read` only consumes one.
+
+target="$(brew --prefix plenv)/libexec/plenv"
+old='read READLINK < <( type -p greadlink readlink )'
+new='READLINK=$(command -v greadlink || command -v readlink)'
+
+if grep -qF "$new" "$target"; then
+  echo "$target: already patched"
+  exit 0
+fi
+
+if ! grep -qF "$old" "$target"; then
+  echo "$target: expected line not found - refusing to patch" >&2
+  exit 1
+fi
+
+OLD="$old" NEW="$new" perl -i -pe '
+  BEGIN { $o = $ENV{OLD}; $n = $ENV{NEW} }
+  s/\Q$o\E/$n/
+' "$target"
+
+echo "$target: patched"

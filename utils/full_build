@@ -105,6 +105,7 @@ update_brew() {
     fi
   fi
   brew link --overwrite node
+  ~/g/base/utils/patch_plenv_readlink
 }
 
 update_other() {
