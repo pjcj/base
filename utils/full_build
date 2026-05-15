@@ -115,6 +115,7 @@ update_other() {
   pipx upgrade-all
   pre-commit autoupdate --config ~/g/base/config/.pre-commit-config.yaml
   ~/g/base/utils/install_nono
+  which claude >&/dev/null && claude update
 }
 
 do_zinit() {
