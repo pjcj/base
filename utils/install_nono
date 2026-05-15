@@ -101,6 +101,7 @@ main() {
 
   if [ "$installed" = "$version" ]; then
     echo "nono $version already installed at $INSTALL_DIR/nono"
+    nono update
     ensure_config_link
     return
   fi
