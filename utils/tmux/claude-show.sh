@@ -1,6 +1,6 @@
 #!/bin/bash
 # Script to create claude pane
-# Used by tmux binding C-a A
+# Used by tmux binding C-a A (default) and C-a W (work)
 
 set -e
 
@@ -8,6 +8,18 @@ logfile="/tmp/claude-show.log"
 exec >"$logfile" 2>&1
 
 echo "=== $(date) ==="
+
+mode="${1:-default}"
+echo "Mode: $mode"
+
+env_prefix=""
+title="claude"
+border_style=""
+if [[ $mode == work ]]; then
+  env_prefix="CLAUDE_CONFIG_DIR=$HOME/.claude-work "
+  title="claude-work"
+  border_style="fg=#cb4b16"
+fi
 
 # Get current pane info
 current_pane_id=$(tmux display-message -p '#{pane_id}')
@@ -23,8 +35,9 @@ echo "Current path: $current_path"
 opts="--ide --permission-mode bypassPermissions"
 echo "Creating new claude pane..."
 tmux split-window -h -l 40% -c "$current_path" \
-  "zsh -ic \"cd '$current_path' && nclaude $opts\""
-tmux select-pane -T 'claude'
+  "zsh -ic \"cd '$current_path' && ${env_prefix}nclaude $opts\""
+tmux select-pane -T "$title"
+[[ -n $border_style ]] && tmux select-pane -P "$border_style"
 echo "Claude pane created"
 
 # After split, equalize nvim windows if we split from nvim
