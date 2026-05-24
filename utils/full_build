@@ -164,6 +164,21 @@ create_wezterm_terminfo() {
     rm "$tempfile"
 }
 
+create_tmux_rgb_terminfo() {
+  local tic_bin=tic
+  # [[ $uname == Darwin ]] && tic_bin=/opt/homebrew/opt/ncurses/bin/tic
+  tempfile=$(mktemp) || return
+  cat >"$tempfile" <<'EOF'
+tmux-256color-rgb|tmux with truecolor (RGB),
+  colors#0x1000000,
+  pairs#0x10000,
+  RGB,
+  use=tmux-256color,
+EOF
+  "$tic_bin" -x -o ~/.terminfo "$tempfile"
+  rm "$tempfile"
+}
+
 fixup_fzf_completion() {
   # shellcheck disable=SC2044
   for fzfcomp in $(find "$HOMEBREW_CELLAR" -name 'completion.zsh'); do
@@ -241,6 +256,7 @@ main() {
   do_zinit
   completion
   create_wezterm_terminfo
+  create_tmux_rgb_terminfo
   fixup_fzf_completion
   fixup_perlnavigator
 
