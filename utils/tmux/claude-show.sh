@@ -1,6 +1,6 @@
 #!/bin/bash
 # Script to create claude pane
-# Used by tmux binding C-a A (default) and C-a W (work)
+# Used by tmux binding C-a A (default), C-a W (work) and C-a O (os)
 
 set -e
 
@@ -18,7 +18,11 @@ border_style=""
 if [[ $mode == work ]]; then
   env_prefix="CLAUDE_CONFIG_DIR=$HOME/.claude-work "
   title="claude-work"
-  border_style="fg=#cb4b16"
+  border_style="fg=#fff179"
+elif [[ $mode == os ]]; then
+  env_prefix="CLAUDE_CONFIG_DIR=$HOME/.claude-os "
+  title="claude-os"
+  border_style="fg=#c9f5cc"
 fi
 
 # Get current pane info
@@ -32,7 +36,7 @@ echo "Current pane command: [$current_pane_command]"
 echo "Current path: $current_path"
 
 # Create new claude pane with zsh to enable autoenv
-opts="--ide --permission-mode bypassPermissions"
+opts="--chrome"
 echo "Creating new claude pane..."
 tmux split-window -h -l 40% -c "$current_path" \
   "zsh -ic \"cd '$current_path' && ${env_prefix}nclaude $opts\""
