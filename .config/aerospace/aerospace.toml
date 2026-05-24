@@ -142,9 +142,7 @@ ctrl-down = 'focus-monitor right'
 alt-tab = "workspace-back-and-forth"
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
 alt-shift-tab = "move-workspace-to-monitor --wrap-around next"
-
-# See: https://nikitabobko.github.io/AeroSpace/commands#mode
-alt-comma = "mode service"
+# alt-comma = "mode service"
 alt-slash = "mode op"
 
 [mode.op.binding]
@@ -172,36 +170,36 @@ shift-8 = ["move-node-to-workspace 8", "mode main"]
 shift-9 = ["move-node-to-workspace 9", "mode main"]
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
-slash = "layout tiles horizontal vertical"
-period = "layout accordion horizontal vertical"
-comma = "mode service"
+slash = ["layout tiles horizontal vertical", "mode main"]
+period = ["layout accordion horizontal vertical", "mode main"]
+# comma = "mode service"
 
-f = ["fullscreen", "mode main"]
+z = ["fullscreen", "mode main"]
 r = ["reload-config", "mode main"]
 o = ["exec-and-forget ~/g/base/utils/toggle_audio", "mode main"]
 
-# 'service' binding mode declaration.
-# See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
-[mode.service.binding]
-esc = ["reload-config", "mode main"]
-r = ["flatten-workspace-tree", "mode main"] # reset layout
-f = [
-  "layout floating tiling",
-  "mode main",
-] # Toggle between floating and tiling layout
-backspace = ["close-all-windows-but-current", "mode main"]
+# # 'service' binding mode declaration.
+# # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
+# [mode.service.binding]
+# esc = ["reload-config", "mode main"]
+# r = ["flatten-workspace-tree", "mode main"] # reset layout
+# f = [
+#   "layout floating tiling",
+#   "mode main",
+# ] # Toggle between floating and tiling layout
+# backspace = ["close-all-windows-but-current", "mode main"]
 
-# sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
-#s = ['layout sticky tiling', 'mode main']
+# # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
+# #s = ['layout sticky tiling', 'mode main']
 
-alt-shift-h = ["join-with left", "mode main"]
-alt-shift-j = ["join-with down", "mode main"]
-alt-shift-k = ["join-with up", "mode main"]
-alt-shift-l = ["join-with right", "mode main"]
+# alt-shift-h = ["join-with left", "mode main"]
+# alt-shift-j = ["join-with down", "mode main"]
+# alt-shift-k = ["join-with up", "mode main"]
+# alt-shift-l = ["join-with right", "mode main"]
 
-down = "volume down"
-up = "volume up"
-shift-down = ["volume set 0", "mode main"]
+# down = "volume down"
+# up = "volume up"
+# shift-down = ["volume set 0", "mode main"]
 
 [[on-window-detected]]
 if.app-name-regex-substring = "WezTerm"
@@ -240,7 +238,7 @@ run = "move-node-to-workspace 5"
 
 [[on-window-detected]]
 if.app-name-regex-substring = "DBeaver"
-run = ["layout tiling", "move-node-to-workspace 5"]
+run = ["layout tiling", "move-node-to-workspace 4"]
 
 [[on-window-detected]]
 if.app-name-regex-substring = "1Password"
