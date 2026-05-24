@@ -1351,8 +1351,8 @@ _prompt_perlv_status() {
   if [[ -n $PROMPT_SHOW_PERL ]]; then
     [[ $PROMPT_SHOW_PERL == 1 ]] || return
   else
-    [[ -d perl || -d t || -e Makefile.PL ]] \
-      || return
+    [[ -d perl || -d t || -e Makefile.PL \
+       || -e .perl-version ]] || return
   fi
   if (( $+commands[plenv] )); then
     local pv=$(plenv version-name)
