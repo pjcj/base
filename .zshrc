@@ -649,7 +649,7 @@ lll()     { eval $(perl -Mlocal::lib=$(pwd)/local_lib) }
 lu()      { fc -e - lsq=usq -1 }
 m()       { bat --tabs=2 "$@" }
 mn()      { nroff -man "$@" | m }
-mutt()    { mkdir -p /tmp/ml && command mutt "$@" }
+mutt()    { mkdir -p /tmp/ml && TERM=tmux-direct neomutt "$@" }
 pm()      { pod2man "$@" | mn }
 restart() { exec $SHELL "$@" }
 rssh()    { ssh -p 9999 "$@" localhost }
