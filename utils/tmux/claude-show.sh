@@ -18,7 +18,7 @@ border_style=""
 if [[ $mode == work ]]; then
   env_prefix="CLAUDE_CONFIG_DIR=$HOME/.claude-work "
   title="claude-work"
-  border_style="fg=#fff179"
+  border_style="fg=#ffcdcc"
 elif [[ $mode == os ]]; then
   env_prefix="CLAUDE_CONFIG_DIR=$HOME/.claude-os "
   title="claude-os"

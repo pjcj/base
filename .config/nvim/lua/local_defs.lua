@@ -31,6 +31,7 @@ local local_defs = {
     lyellow     = "#de860e", -- light yellow
     dyellow     = "#433200", -- dark yellow
     dorange     = "#7d2500", -- dark orange
+    llllred     = "#ffcdcc", -- light light light light red
     lllred      = "#ffacaa", -- light light light red
     llred       = "#ff8784", -- light light red
     lred        = "#f05a5c", -- light red
