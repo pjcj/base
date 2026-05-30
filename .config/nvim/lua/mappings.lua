@@ -378,7 +378,7 @@ wk.add({
   { "glyr", ":TSLspRenameFile<cr>", desc = "rename file" },
 
   -- breaks works at snake and camel case boundaries
-  { "gl", group = "spider" },
+  { "gp", group = "spider" },
   {
     "gpw",
     function() require("spider").motion("w") end,
