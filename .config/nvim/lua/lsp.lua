@@ -226,6 +226,18 @@ vim.lsp.config.taplo = {
   root_markers = { ".git" },
 }
 
+vim.lsp.config.typos_lsp = {
+  cmd = { "typos-lsp" },
+  -- no filetypes = attach to all filetypes
+  root_markers = {
+    "typos.toml",
+    "_typos.toml",
+    ".typos.toml",
+    ".git",
+  },
+  settings = {},
+}
+
 vim.lsp.config.yamlls = {
   cmd = { "yaml-language-server", "--stdio" },
   filetypes = { "yaml", "yaml.docker-compose" },
@@ -272,6 +284,7 @@ local function setup_servers()
     "jsonls",
     "perlnavigator",
     -- "sqlls", -- broken with Node.js v25 (SlowBuffer removed)
+    "typos_lsp",
     "yamlls",
   }
 

@@ -93,7 +93,6 @@ local plugins = {
           lint.try_lint()
           if vim.bo.filetype ~= "SidebarNvim" then
             lint.try_lint("codespell")
-            lint.try_lint("typos")
           end
           last_lint_time = current_time
           -- require("notify")(string.format("end lint"))
