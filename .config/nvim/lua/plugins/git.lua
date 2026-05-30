@@ -121,6 +121,10 @@ return {
       require("gitlab").setup({
         debug = { go_request = true, go_response = true },
         popup = { exit = "<leader>q" },
+        -- the default global keymaps live under the `gl` prefix and collide
+        -- with the LSP `gl` group (gla, gll, glr become prefixes); GitLab
+        -- actions are bound under <leader>gl in mappings.lua instead
+        keymaps = { global = { disable_all = true } },
       })
     end,
   },
