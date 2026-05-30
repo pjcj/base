@@ -424,7 +424,7 @@ script_sections = NAME | SYNOPSIS | DESCRIPTION
 
 
 # Use functions from Carp instead of `warn' or `die'.
-[ErrorHandling::RequireCarping]
+[-ErrorHandling::RequireCarping]
 # set_themes                         = certrule core maintenance pbp
 # add_themes                         =
 # severity                           = 3
@@ -1564,7 +1564,7 @@ add_packages = DBI
 
 
 # Write `local $foo = $bar;' instead of just `local $foo;'.
-[Variables::RequireInitializationForLocalVars]
+[-Variables::RequireInitializationForLocalVars]
 # set_themes                         = bugs certrec core pbp
 # add_themes                         =
 # severity                           = 3
