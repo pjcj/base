@@ -285,5 +285,14 @@
     --preview-window=right:70% --with-nth=3.. \
     | perl -pe 's/^\\S+\\s+\\S+\\s+//'; }; f"
 
+  # Show a stash's tracked patch plus any untracked file contents
+  stashp = "!f() { \
+    s=\"$1\"; [ -z \"$s\" ] && s=\"stash@{0}\"; \
+    git stash show -p \"$s\"; \
+    if git rev-parse --verify --quiet \"${s}^3\" >/dev/null; then \
+      echo; echo \"# untracked files:\"; \
+      git show \"${s}^3\"; \
+    fi; }; f"
+
 [include]
   path = ~/.gitconfig.local
