@@ -200,7 +200,8 @@ fpath=(
 # shellcheck disable=SC1036
 [[ -n $HOMEBREW_PREFIX ]] && fpath=(
   $HOMEBREW_PREFIX/share/zsh/site-functions
-  $HOMEBREW_PREFIX/Cellar/zsh/*(On[1])/share/zsh/functions(N)
+  $HOMEBREW_PREFIX/share/zsh/functions(N)
+  $HOMEBREW_PREFIX/Cellar/zsh/*/share/zsh/functions(NOn[1])
   $fpath
 )
 
