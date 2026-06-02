@@ -1,12 +1,12 @@
 {
   "FixCursorHold.nvim": { "branch": "master", "commit": "1900f89dc17c603eec29960f57c00bd9ae696495" },
   "SmoothCursor.nvim": { "branch": "main", "commit": "12518b284e1e3f7c6c703b346815968e1620bee2" },
-  "ale": { "branch": "master", "commit": "399c0ffd64affec81331c9046d454fd5d4be6c78" },
+  "ale": { "branch": "master", "commit": "178fe113564d31cba304263765aeb21e7ed23a7e" },
   "ascii-blocks.nvim": { "branch": "main", "commit": "a8a7d99fc52df30d7c4e7664818542fd44839d97" },
   "async.nvim": { "branch": "main", "commit": "7a1d7d49933fbe902b84b55f352a3b10fd587331" },
   "avante.nvim": { "branch": "main", "commit": "e89eb79abf5754645e20aa6074da10ed20bba33c" },
   "better-digraphs.nvim": { "branch": "master", "commit": "c895f619cbd2e23860285baea6d2933649a28b26" },
-  "blink-cmp-dictionary": { "branch": "master", "commit": "78e8a6b63dcfbe8d084ba6731dfc37d7659775f7" },
+  "blink-cmp-dictionary": { "branch": "master", "commit": "898a958cece34da20524d04ebc032a92a9565643" },
   "blink-cmp-supermaven": { "branch": "main", "commit": "635ce12e9e2d2a5a483728ac764d0bc5b57af23b" },
   "blink-cmp-tmux": { "branch": "main", "commit": "1ef35d8e388475ab8eaeecfc12e196c78bd5de04" },
   "blink-cmp-vsnip": { "branch": "main", "commit": "eec95fac337360fcb75e10a9c448ddf1a4515e33" },
@@ -131,5 +131,5 @@
   "vim-vsnip-integ": { "branch": "master", "commit": "c7c93934dece8315db3649bdc6898b76358a8b8d" },
   "wayfinder.nvim": { "branch": "main", "commit": "8d7e68151428554c0530032b90659f3c0008f3a9" },
   "which-key.nvim": { "branch": "main", "commit": "fcbf4eea17cb299c02557d576f0d568878e354a4" },
-  "yazi.nvim": { "branch": "main", "commit": "470290970dceccccc073d2d686b820f2789f1a57" }
+  "yazi.nvim": { "branch": "main", "commit": "af52ba3a412b4cd63b789378370dd3b099782aaa" }
 }
