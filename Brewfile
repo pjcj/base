@@ -1,3 +1,4 @@
+tap "anomalyco/tap"
 tap "chase/tap"
 tap "common-fate/granted"
 tap "dimentium/autoraise"
@@ -9,7 +10,6 @@ tap "iina/mpv-iina"
 tap "louisbrunner/valgrind"
 tap "netmute/tap"
 tap "nikitabobko/tap"
-tap "sst/tap"
 tap "tako8ki/tap"
 tap "tonisives/tap"
 # Highly capable, feature-rich programming language
@@ -176,6 +176,10 @@ brew "nmap"
 brew "nvm"
 # Create, run, and share large language models (LLMs)
 brew "ollama"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# AI coding agent, built for the terminal
+brew "opencode"
 # SSL/TLS VPN implementing OSI layer 2 or 3 secure network extension
 brew "openvpn"
 # Swiss-army knife of markup format conversion
@@ -208,8 +212,6 @@ brew "recode"
 brew "redis"
 # SVG rendering tool and library
 brew "resvg"
-# Search tool like grep and The Silver Searcher
-brew "ripgrep"
 # Utility that provides fast incremental file transfer
 brew "rsync"
 # Safe, concurrent, practical language
