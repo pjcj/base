@@ -302,6 +302,8 @@ cask "datadog-agent"
 cask "disk-inventory-x"
 # Client for the Dropbox cloud storage service
 cask "dropbox"
+# Matrix collaboration client
+cask "element"
 # Web browser
 cask "firefox"
 cask "font-inconsolata"
