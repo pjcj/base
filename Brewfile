@@ -283,6 +283,18 @@ brew "zeromq"
 brew "zoxide"
 # UNIX shell (command interpreter)
 brew "zsh"
+# The easiest way to access your cloud.
+brew "common-fate/granted/granted", trusted: true
+# Focus-follows-mouse for MacOS
+brew "dimentium/autoraise/autoraise", args: ["with-dold_activation_method"], trusted: true
+# A window border system for macOS
+brew "felixkratz/formulae/borders", trusted: true
+# Format, and lint, markdown code snippets using your favorite tools
+brew "hougesen/tap/mdsf", trusted: true
+# Dynamic analysis tools (memory, debug, profiling)
+brew "louisbrunner/valgrind/valgrind", args: ["HEAD"], trusted: true
+# Cross-platform TUI database management tool written in Rust
+brew "tako8ki/tap/gobang", trusted: true
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
 # Command-line interface for 1Password
