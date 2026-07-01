@@ -1,5 +1,4 @@
 tap "anomalyco/tap", "https://github.com/anomalyco/homebrew-tap.git"
-tap "chase/tap"
 tap "common-fate/granted"
 tap "dimentium/autoraise"
 tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae"
