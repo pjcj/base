@@ -1,13 +1,13 @@
-tap "anomalyco/tap", "https://github.com/anomalyco/homebrew-tap.git"
+tap "anomalyco/tap", "https://github.com/anomalyco/homebrew-tap.git", trusted: true
 tap "common-fate/granted"
 tap "dimentium/autoraise"
 tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae"
 tap "homebrew/bundle"
 tap "homebrew/services"
 tap "hougesen/tap"
-tap "iina/mpv-iina"
+tap "iina/mpv-iina", trusted: true
 tap "louisbrunner/valgrind", "https://github.com/LouisBrunner/homebrew-valgrind"
-tap "netmute/tap"
+tap "netmute/tap", trusted: true
 tap "nikitabobko/tap"
 tap "tako8ki/tap"
 tap "tonisives/tap"
@@ -300,7 +300,7 @@ cask "1password"
 # Command-line interface for 1Password
 cask "1password-cli"
 # AeroSpace is an i3-like tiling window manager for macOS
-cask "nikitabobko/tap/aerospace"
+cask "nikitabobko/tap/aerospace", trusted: true
 # Android SDK component
 cask "android-platform-tools"
 # Music player and library organiser
@@ -346,7 +346,7 @@ cask "musicbrainz-picard"
 # Desktop sync client for Nextcloud software products
 cask "nextcloud"
 # System-wide Vim mode for macOS
-cask "tonisives/tap/ovim"
+cask "tonisives/tap/ovim", trusted: true
 # Home media player
 cask "plex"
 # Music player focusing on visuals
