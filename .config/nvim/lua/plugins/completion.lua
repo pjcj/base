@@ -50,10 +50,6 @@ return {
     event = "InsertEnter",
     dependencies = {
       {
-        "milanglacier/minuet-ai.nvim", -- Multi-provider AI
-        enabled = _G.using_ai(),
-      },
-      {
         "fang2hou/blink-copilot",
         enabled = _G.using_ai(),
       },
@@ -62,7 +58,7 @@ return {
         enabled = _G.using_ai(),
       },
       {
-        "Exafunction/codeium.nvim",
+        "Exafunction/windsurf.nvim",
         enabled = _G.using_ai(),
       },
       "moyiz/blink-emoji.nvim",
@@ -91,7 +87,6 @@ return {
       if _G.using_ai() then
         table.insert(sources, "copilot")
         table.insert(sources, "supermaven")
-        -- table.insert(sources, "minuet")
         table.insert(sources, "codeium")
       end
 
@@ -186,12 +181,6 @@ return {
           name = "supermaven",
           module = "blink-cmp-supermaven",
           score_offset = 19,
-          async = true,
-        }
-        providers.minuet = {
-          name = "minuet",
-          module = "minuet.blink",
-          score_offset = 18,
           async = true,
         }
         providers.codeium = {

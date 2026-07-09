@@ -40,72 +40,6 @@ local function tj() return require("treesj") end
 local function nt() return require("neotest") end
 local function ss() return require("smart-splits") end
 
-local function aider_cmd(cmd)
-  return function()
-    vim.cmd(cmd)
-    vim.cmd("stopinsert")
-  end
-end
-
-local function aider_add_git_changes()
-  -- Get all files with changes according to git
-  local git_cmd = "git diff --name-only HEAD"
-  local handle = io.popen(git_cmd)
-  if not handle then
-    vim.notify("Failed to execute git command", vim.log.levels.ERROR)
-    return
-  end
-
-  local result = handle:read("*a")
-  handle:close()
-
-  if result == "" then
-    vim.notify("No git changes found", vim.log.levels.INFO)
-    return
-  end
-
-  local files = vim.split(result, "\n", { trimempty = true })
-
-  -- Add each changed file to aider
-  for _, file in ipairs(files) do
-    if file ~= "" then require("nvim_aider").api.add_file(file) end
-  end
-  vim.cmd("stopinsert")
-
-  vim.notify(
-    "Added " .. #files .. " git-changed files to aider",
-    vim.log.levels.INFO
-  )
-end
-
-local function aider_add_all_windows()
-  -- Get all open buffers in all windows
-  local buffers = {}
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    local buf = vim.api.nvim_win_get_buf(win)
-    local bufname = vim.api.nvim_buf_get_name(buf)
-    -- Only add file buffers (not empty, terminal, or special buffers)
-    if bufname ~= "" and vim.bo[buf].buftype == "" then
-      buffers[bufname] = true
-    end
-  end
-
-  -- Add each unique buffer to aider using the API
-  for bufname, _ in pairs(buffers) do
-    require("nvim_aider").api.add_file(bufname)
-  end
-  vim.cmd("stopinsert")
-
-  -- Wait a moment for aider to potentially create new windows, then equalize
-  vim.defer_fn(function() vim.cmd("wincmd =") end, 100)
-
-  local count = 0
-  for _ in pairs(buffers) do
-    count = count + 1
-  end
-  vim.notify("Added " .. count .. " files to aider", vim.log.levels.INFO)
-end
-
 local function smart_star_search()
   local word = vim.fn.expand("<cword>")
   if word == "" then
@@ -416,7 +350,6 @@ wk.add({
 
   { "<leader>", group = "leader" },
   { "<leader> ", group = "plugin" },
-  { "<leader>a", group = "avante" },
 
   {
     mode = { "n", "v" },
@@ -427,106 +360,6 @@ wk.add({
       desc = "yazi",
     },
     { "<leader> .", group = "claudecode" },
-
-    { "<leader> ,", group = "opencode" },
-    {
-      "<leader> ,t",
-      function() require("opencode").toggle() end,
-      desc = "toggle opencode",
-    },
-    {
-      "<leader> ,A",
-      function() require("opencode").ask() end,
-      desc = "ask opencode",
-    },
-    {
-      "<leader> ,a",
-      function() require("opencode").ask("@cursor: ") end,
-      desc = "ask opencode about this",
-    },
-    {
-      "<leader> ,a",
-      function() require("opencode").ask("@selection: ") end,
-      mode = "v",
-      desc = "ask opencode about selection",
-    },
-    {
-      "<leader> ,n",
-      function() require("opencode").command("session_new") end,
-      desc = "new opencode session",
-    },
-    {
-      "<leader> ,y",
-      function() require("opencode").command("messages_copy") end,
-      desc = "copy last opencode response",
-    },
-    {
-      "<S-C-u>",
-      function() require("opencode").command("messages_half_page_up") end,
-      desc = "messages half page up",
-    },
-    {
-      "<S-C-d>",
-      function() require("opencode").command("messages_half_page_down") end,
-      desc = "messages half page down",
-    },
-    {
-      "<leader> ,s",
-      function() require("opencode").select() end,
-      mode = { "n", "v" },
-      desc = "select opencode prompt",
-    },
-    {
-      "<leader> ,e",
-      function() require("opencode").prompt("Explain @cursor and its context") end,
-      desc = "explain this code",
-    },
-
-    { "<leader> a", group = "nvim-aider" },
-    { "<leader> a,", aider_cmd("Aider toggle"), desc = "toggle" },
-    { "<leader> a ", aider_cmd("Aider"), desc = "picker" },
-    {
-      "<leader> as",
-      aider_cmd("Aider send"),
-      desc = "send",
-      mode = { "n", "v" },
-    },
-    { "<leader> ac", aider_cmd("Aider command"), desc = "commands" },
-    { "<leader> ab", aider_cmd("Aider buffer"), desc = "send buffer" },
-    { "<leader> aa", aider_cmd("Aider add"), desc = "add file" },
-    { "<leader> ad", aider_cmd("Aider drop"), desc = "drop file" },
-    { "<leader> ar", aider_cmd("Aider add readonly"), desc = "add read-only" },
-    {
-      "<leader> aw",
-      aider_add_all_windows,
-      desc = "add all windows",
-    },
-    {
-      "<leader> ag",
-      aider_add_git_changes,
-      desc = "add git changes",
-    },
-    { "<leader> aR", aider_cmd("Aider reset"), desc = "reset session" },
-    {
-      "<leader> al",
-      function() require("nvim_aider").api.send_diagnostics_with_prompt() end,
-      desc = "send lsp diagnostics",
-    },
-    { "<leader> at", group = "tree integration" },
-    { "<leader> ata", aider_cmd("AiderTreeAddFile"), desc = "add from tree" },
-    { "<leader> atd", aider_cmd("AiderTreeDropFile"), desc = "drop from tree" },
-
-    { "<leader> c", group = "CodeCompanion" },
-    {
-      "<leader> ca",
-      function() require("codecompanion").actions() end,
-      desc = "Actions",
-    },
-    {
-      "<leader> cc",
-      function() require("codecompanion").toggle() end,
-      desc = "Chat",
-    },
   },
 
   { "<leader> b", group = "DB" },

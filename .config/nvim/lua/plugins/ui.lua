@@ -274,15 +274,6 @@ return {
     ft = { "markdown" },
   },
 
-  -- Render markdown in specific filetypes (Avante, codecompanion)
-  {
-    "MeanderingProgrammer/render-markdown.nvim",
-    opts = {
-      file_types = { "Avante", "codecompanion" },
-    },
-    ft = { "Avante", "codecompanion" },
-  },
-
   -- Enhanced help file viewer with better formatting
   {
     "OXY2DEV/helpview.nvim",
