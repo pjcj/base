@@ -380,6 +380,7 @@ return {
                   0,
                   { range.start.line + 1, cursor_col + #chunk }
                 )
+                cmp.show()
               end)
               return true
             end,
