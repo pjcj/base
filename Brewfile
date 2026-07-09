@@ -345,7 +345,7 @@ cask "museeks"
 cask "musicbrainz-picard"
 # Desktop sync client for Nextcloud software products
 cask "nextcloud"
-# System-wide Vim mode for macOS
+# System-wide Vim mode
 cask "tonisives/tap/ovim", trusted: true
 # Home media player
 cask "plex"
