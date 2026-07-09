@@ -44,6 +44,27 @@ return {
     enabled = _G.using_ai(),
   },
 
+  -- Copilot Next Edit Suggestions rendered as navigable diffs
+  {
+    "folke/sidekick.nvim",
+    enabled = _G.using_ai(),
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      {
+        "<tab>",
+        function()
+          if not require("sidekick").nes_jump_or_apply() then
+            return "<C-i>" -- no suggestion pending: keep jumplist-forward
+          end
+        end,
+        mode = "n",
+        expr = true,
+        desc = "NES jump/apply",
+      },
+    },
+  },
+
   -- Claude Code integration for AI-powered development
   {
     "coder/claudecode.nvim",

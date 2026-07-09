@@ -262,6 +262,23 @@ require("lualine").setup({
         show_loading = true,
       },
       {
+        -- Sidekick NES state: red = LSP error, yellow = fetching suggestion
+        function() return "" end,
+        separator = "",
+        padding = { left = 1, right = 0 },
+        color = function()
+          local status = require("sidekick.status").get()
+          if not status then return nil end
+          if status.kind == "Error" then return { fg = c.red } end
+          if status.busy then return { fg = c.yellow } end
+          return { fg = c.base1 }
+        end,
+        cond = function()
+          local ok, status = pcall(require, "sidekick.status")
+          return ok and status.get() ~= nil
+        end,
+      },
+      {
         "lsp_status",
         separator = "",
         padding = { left = 1, right = 0 },
