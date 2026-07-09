@@ -350,20 +350,13 @@ return {
               local cursor_col = vim.api.nvim_win_get_cursor(0)[2]
               local first_line = vim.split(text_edit.newText, "\n")[1] or ""
 
-              -- How far into newText the cursor sits
-              local typed_len = math.max(0, cursor_col - range.start.character)
-              local after_cursor = first_line:sub(typed_len + 1)
-
-              -- Find the next word boundary
-              local chunk
-              if after_cursor:match("^[%w_]") then
-                -- Mid-word: complete to end of this word
-                chunk = after_cursor:match("^([%w_]+)")
-              else
-                -- At boundary: skip non-word chars, take next word
-                chunk = after_cursor:match("^(%W*[%w_]+)")
-              end
-              if not chunk or chunk == "" then return end
+              local chunk = require("accept_word").next_chunk(
+                first_line,
+                vim.api.nvim_get_current_line(),
+                cursor_col,
+                range.start.character
+              )
+              if not chunk then return end
 
               -- Only replace from cursor to range end
               cmp.hide()
