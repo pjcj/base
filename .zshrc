@@ -874,7 +874,7 @@ fi
 if (( $+commands[eza] )); then
   f() {
     eza -lagH \
-      --colour-scale=all --colour-scale-mode=gradient --colour=always \
+      --color-scale=all --color-scale-mode=gradient --color=always \
       --git --time-style=long-iso --icons --show-symlinks \
       "$@"
   }
