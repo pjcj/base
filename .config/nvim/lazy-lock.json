@@ -124,5 +124,5 @@
   "wayfinder.nvim": { "branch": "main", "commit": "8d7e68151428554c0530032b90659f3c0008f3a9" },
   "which-key.nvim": { "branch": "main", "commit": "fcbf4eea17cb299c02557d576f0d568878e354a4" },
   "windsurf.nvim": { "branch": "main", "commit": "821b570b526dbb05b57aa4ded578b709a704a38a" },
-  "yazi.nvim": { "branch": "main", "commit": "668cd1f1045c4b929b6292bafc084d5c699770e6" }
+  "yazi.nvim": { "branch": "main", "commit": "bba4c0579e4247729bf71b4104471eb131516922" }
 }
