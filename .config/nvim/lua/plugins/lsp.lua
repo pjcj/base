@@ -226,7 +226,7 @@ local plugins = {
       vim.g.gutentags_generate_on_write = 1
       vim.g.gutentags_generate_on_empty_buffer = 0
 
-      local is_freebsd = (io.popen("uname"):read() == "FreeBSD")
+      local is_freebsd = vim.uv.os_uname().sysname == "FreeBSD"
       if is_freebsd then
         vim.g.gutentags_ctags_executable = "/usr/local/bin/uctags"
       end

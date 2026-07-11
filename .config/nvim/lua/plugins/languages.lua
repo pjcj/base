@@ -88,12 +88,10 @@ return {
     },
     config = function()
       require("neotest").setup({
-        opts = {
-          adapters = {
-            require("neotest-go")({
-              args = { "-count=1", "-timeout=60s" },
-            }),
-          },
+        adapters = {
+          require("neotest-go")({
+            args = { "-count=1", "-timeout=60s" },
+          }),
         },
       })
     end,

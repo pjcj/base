@@ -21,7 +21,7 @@ end
 
 -- Configure grep program based on available tools
 local function setup_grep_program()
-  if vim.fn.executable("rg") then
+  if vim.fn.executable("rg") == 1 then
     vopt.grepprg = "rg --no-heading --hidden --glob '!.git' --vimgrep"
     vopt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
   else

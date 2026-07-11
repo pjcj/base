@@ -2,40 +2,22 @@ local M = {}
 
 -- Custom on_attach function
 local on_attach = function(client, bufnr)
-  -- Set dynamic debounce for perlnavigator based on file size
-  if client.name == "perlnavigator" then
-    local line_count = vim.api.nvim_buf_line_count(bufnr)
-    -- 2ms per line, min 500ms, max 60s
-    local debounce = math.max(500, math.min(60000, line_count * 2))
-    vim.lsp.config.perlnavigator.debounce_text_changes = debounce
-    vim.schedule(
-      function()
-        vim.notify(
-          string.format(
-            "perlnavigator debounce: %.1fs (%d lines)",
-            debounce / 1000,
-            line_count
-          ),
-          vim.log.levels.INFO
-        )
-      end
-    )
-  end
-
   -- Set autocommands conditional on server_capabilities
-  if client.server_capabilities.document_highlight then
-    local group =
-      vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+  if client.server_capabilities.documentHighlightProvider then
+    local group = vim.api.nvim_create_augroup(
+      "lsp_document_highlight_" .. bufnr,
+      { clear = true }
+    )
 
     vim.api.nvim_create_autocmd("CursorHold", {
       group = group,
-      buffer = 0,
+      buffer = bufnr,
       callback = vim.lsp.buf.document_highlight,
     })
 
     vim.api.nvim_create_autocmd("CursorMoved", {
       group = group,
-      buffer = 0,
+      buffer = bufnr,
       callback = vim.lsp.buf.clear_references,
     })
   end
@@ -288,9 +270,7 @@ local function setup_servers()
     "yamlls",
   }
 
-  local handle = io.popen("uname")
-  local is_freebsd = handle and handle:read() == "FreeBSD"
-  if handle then handle:close() end
+  local is_freebsd = vim.uv.os_uname().sysname == "FreeBSD"
   if not is_freebsd then
     table.insert(lsps, "clangd")
     table.insert(lsps, "lua_ls")
