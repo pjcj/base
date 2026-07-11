@@ -193,18 +193,42 @@ vim.lsp.config.perl_lsp = {
   settings = {
     perl = {
       workspace = {
+        perlPath = os.getenv("LINT_PERL_PATH") or "perl",
         includePaths = (function()
           local ok, local_defs = pcall(require, "local_defs")
           return ok and local_defs.fn.perl_inc_dirs() or {}
         end)(),
+        -- Probe the interpreter's @INC so installed modules resolve, as
+        -- perlnavigator does; without this perl-lsp flags them as missing.
+        useSystemInc = true,
       },
+      -- enabled and profile are resolved from the project root in on_init below.
       perlcritic = {
-        enabled = vim.fn.filereadable(".perlcriticrc") == 1,
         severity = 1,
-        profile = ".perlcriticrc",
+      },
+      -- Shell out to real Perl::Critic rather than the native Rust rules, to
+      -- match perlnavigator's diagnostics.
+      critic = {
+        engine = "perlcritic",
+      },
+      -- Formatting is handled by conform, so keep the LSP formatter out of it.
+      formatting = {
+        engine = "off",
       },
     },
   },
+  -- perl-lsp applies editor config reliably from didChangeConfiguration, but its
+  -- workspace/configuration pull can miss folders and fall back to defaults, so
+  -- push the settings on init.  Enable perlcritic only when the project root has
+  -- a .perlcriticrc, resolved from the client root rather than the startup cwd.
+  on_init = function(client)
+    local root = client.root_dir or vim.fn.getcwd()
+    local rc = root .. "/.perlcriticrc"
+    local settings = client.settings
+    settings.perl.perlcritic.enabled = vim.fn.filereadable(rc) == 1
+    if settings.perl.perlcritic.enabled then settings.perl.perlcritic.profile = rc end
+    client:notify("workspace/didChangeConfiguration", { settings = settings })
+  end,
 }
 
 vim.lsp.config.sqlls = {
