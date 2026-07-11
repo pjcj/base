@@ -190,7 +190,74 @@ fixup_fzf_completion() {
 }
 
 fixup_perlnavigator() {
-  perl -pi.bak -e 's/\b25000\b/120000/' ~/.local/share/nvim/mason/packages/perlnavigator/node_modules/perlnavigator-server/{src,out}/{formatting,diagnostics}.?s
+  # perlnavigator ships only compiled JS, so we patch each install in place.
+  # Target every copy we can find: the one nvim launches (its cmd resolves
+  # perlnavigator on $PATH) and the mason-managed copy where that is used.
+  local -a servers=()
+  local bin
+  bin=$(command -v perlnavigator) && servers+=("${bin:A:h:h}")
+  local mason=~/.local/share/nvim/mason/packages/perlnavigator/node_modules/perlnavigator-server
+  [[ -d $mason ]] && servers+=("$mason")
+
+  local dir
+  for dir in "${servers[@]}"; do
+    [[ -d $dir ]] || continue
+
+    # Raise the perlcritic/perltidy/perlimports timeout from 25s to 120s.
+    local -a tfiles=( "$dir"/{src,out}/{formatting,diagnostics}.?s(N) )
+    (( $#tfiles )) && perl -pi.bak -e 's/\b25000\b/120000/' "${tfiles[@]}"
+
+    # Serialise validation runs so a burst of edits to a large file never
+    # starts a second perlcritic before the first finishes. Idempotent: skips
+    # if already applied, and leaves the file untouched if the expected anchors
+    # are gone (e.g. after an upstream rewrite).
+    [[ -f $dir/out/server.js ]] || continue
+    PNAV_SERVER="$dir/out/server.js" node - <<'NODE'
+const fs = require("fs");
+const f = process.env.PNAV_SERVER;
+const orig = fs.readFileSync(f, "utf8");
+if (orig.includes("validationsInProgress")) process.exit(0);
+const patched = orig
+  .replace(
+    "const timers = new Map();\n",
+    "const timers = new Map();\n" +
+      "const validationsInProgress = new Set();\n" +
+      "const validationsPending = new Set();\n"
+  )
+  .replace(
+    "async function validatePerlDocument(textDocument) {\n",
+`async function validatePerlDocument(textDocument) {
+    const uri = textDocument.uri;
+    if (validationsInProgress.has(uri)) {
+        validationsPending.add(uri);
+        return;
+    }
+    validationsInProgress.add(uri);
+    try {
+        do {
+            validationsPending.delete(uri);
+            const latest = documents.get(uri);
+            if (!latest) break;
+            await runValidation(latest);
+        } while (validationsPending.has(uri));
+    } finally {
+        validationsInProgress.delete(uri);
+        validationsPending.delete(uri);
+    }
+}
+
+async function runValidation(textDocument) {
+`
+  );
+if (!patched.includes("validationsInProgress") ||
+    !patched.includes("async function runValidation(textDocument) {")) {
+  console.error("perlnavigator: serialisation anchors not found in " + f + "; left unchanged");
+  process.exit(0);
+}
+fs.writeFileSync(f, patched);
+console.error("perlnavigator: applied validation-serialisation patch to " + f);
+NODE
+  done
 }
 
 do_tpm() {
