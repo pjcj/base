@@ -44,7 +44,7 @@ utils/build <component>
 ### Core Configuration Layout
 
 - `.config/nvim/` - Neovim configuration with Lua-based plugins
-  - `lua/plugins.lua` - Plugin management with lazy.nvim
+  - `lua/plugins/` - Plugin management with lazy.nvim
   - `lua/mappings.lua` - Key bindings and which-key setup
   - `lua/lsp.lua` - Language Server Protocol configuration
   - `ftplugin/` - File type specific configurations
