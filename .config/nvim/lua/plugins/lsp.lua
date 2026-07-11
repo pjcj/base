@@ -151,6 +151,7 @@ local plugins = {
           lua = { "stylua", lsp_format = "fallback" },
           make = { "bake" },
           markdown = { "markdownlint", "mdformat", "injected" },
+          perl = { "quotefix", lsp_format = "last" },
           python = { "isort", "black" },
           sh = { "shellcheck", "shfmt" },
           bash = { "shellcheck", "shfmt" },
@@ -169,6 +170,19 @@ local plugins = {
           },
           mdformat = {
             args = { "--number", "--wrap", "80", "-" },
+          },
+          quotefix = {
+            command = "perl-quote-fix",
+            stdin = true,
+            range_args = function(_, ctx)
+              return {
+                "--lines",
+                ctx.range.start[1] .. "-" .. ctx.range["end"][1],
+              }
+            end,
+            condition = function()
+              return vim.fn.executable("perl-quote-fix") == 1
+            end,
           },
           shellcheck = {
             args = { "--shell=bash", "-" },
