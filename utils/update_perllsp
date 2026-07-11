@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+# Update perllsp (EffortlessMetrics/perl-lsp) to a release binary in ~/bin.
+#
+# Usage:
+#   update_perllsp            # install the pinned default version
+#   update_perllsp 0.18.0     # install a specific version
+#   update_perllsp latest     # install the newest published release
+#
+# The Neovim `lsp` branch config was validated against the default below.
+
+set -euo pipefail
+
+repo="EffortlessMetrics/perl-lsp"
+dest="$HOME/bin/perllsp"
+default_version="0.17.0"
+
+# Map the host to a release target triple.
+os=$(uname -s)
+arch=$(uname -m)
+case "$os/$arch" in
+Darwin/arm64) triple="aarch64-apple-darwin" ;;
+Darwin/x86_64) triple="x86_64-apple-darwin" ;;
+Linux/aarch64) triple="aarch64-unknown-linux-gnu" ;;
+Linux/x86_64) triple="x86_64-unknown-linux-gnu" ;;
+*)
+  echo "No prebuilt perllsp for $os/$arch. Build from source instead:" >&2
+  echo "  cargo install --root \"\$HOME\" perllsp --locked" >&2
+  exit 1
+  ;;
+esac
+
+# Decide which version to fetch.
+version="${1:-$default_version}"
+if [[ $version == latest ]]; then
+  version=$(curl -fsSL "https://api.github.com/repos/$repo/releases/latest" |
+    sed -n 's/.*"tag_name": *"\([^"]*\)".*/\1/p' | head -1)
+fi
+version="${version#v}"
+if [[ -z $version ]]; then
+  echo "Could not determine the perllsp version to install." >&2
+  exit 1
+fi
+
+# Skip the download if the wanted version is already in place.
+if [[ -x $dest ]]; then
+  current=$("$dest" --version 2>/dev/null | awk 'NR==1 { print $2 }' || true)
+  if [[ $current == "$version" ]]; then
+    echo "perllsp $version already installed at $dest"
+    exit 0
+  fi
+fi
+
+asset="perllsp-$version-$triple.tar.gz"
+url="https://github.com/$repo/releases/download/v$version/$asset"
+
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+
+echo "Downloading $asset"
+curl -fsSL -o "$tmp/$asset" "$url"
+tar xzf "$tmp/$asset" -C "$tmp"
+
+# The binary may sit at the archive root or in a versioned subdirectory.
+bin=$(find "$tmp" -maxdepth 2 -name perllsp -type f | head -1)
+if [[ -z $bin ]]; then
+  echo "perllsp binary not found inside $asset" >&2
+  exit 1
+fi
+
+mkdir -p "$HOME/bin"
+install -m 0755 "$bin" "$dest"
+# Clear the Gatekeeper quarantine flag if macOS set one.
+xattr -d com.apple.quarantine "$dest" 2>/dev/null || true
+
+echo "Installed:"
+"$dest" --version
