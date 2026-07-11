@@ -291,7 +291,7 @@ wk.add({
   { "glo", lb.outgoing_calls, desc = "outgoing calls" },
   { "glq", vim.diagnostic.setqflist, desc = "quickfix" },
   { "glr", lb.rename, desc = "rename" },
-  { "gls", lb.lsp_document_symbols, desc = "symbols" },
+  { "gls", lb.document_symbol, desc = "symbols" },
 
   { "glv", group = "virtual text" },
   { "glvh", d.hide, desc = "hide" },
@@ -305,11 +305,6 @@ wk.add({
     desc = "list",
   },
   { "glwr", lb.remove_workspace_folder, desc = "remove" },
-
-  { "gly", group = "tsserver" },
-  { "glyi", ":TSLspImportAll<cr>", desc = "import all" },
-  { "glyo", ":TSLspOrganize<cr>", desc = "organise" },
-  { "glyr", ":TSLspRenameFile<cr>", desc = "rename file" },
 
   -- breaks works at snake and camel case boundaries
   { "gp", group = "spider" },
@@ -574,13 +569,13 @@ wk.add({
   { "<leader>f,", group = "find files" },
   {
     "<leader>f,a",
-    function() t().find_files({ hidden = true, no_ignore = true }) end,
+    function() tb().find_files({ hidden = true, no_ignore = true }) end,
     desc = "include ignores",
   },
   {
     "<leader>f,c",
     function()
-      t().find_files({
+      tb().find_files({
         fd = require("local_defs").fn.common_fd(),
         hidden = true,
       })
@@ -590,12 +585,12 @@ wk.add({
   { "<leader>f,f", ":Telescope frecency workspace=CWD<cr>", desc = "frecency" },
   {
     "<leader>f,g",
-    function() t().git_files({ hidden = true }) end,
+    function() tb().git_files({ hidden = true }) end,
     desc = "git files",
   },
   {
     "<leader>f,i",
-    function() t().find_files({ hidden = true }) end,
+    function() tb().find_files({ hidden = true }) end,
     desc = "honour ignores",
   },
   {
@@ -611,28 +606,13 @@ wk.add({
   },
   {
     "<leader>fA",
-    function() t().find_files({ hidden = true, no_ignore = true }) end,
+    function() tb().find_files({ hidden = true, no_ignore = true }) end,
     desc = "find all files",
   },
   {
     "<leader>fb",
     function() tb().buffers() end,
     desc = "buffers",
-  },
-
-  {
-    mode = { "n", "v" },
-    { "<leader>fc", group = "copilot" },
-    {
-      "<leader>fca",
-      function()
-        local actions = require("CopilotChat.actions")
-        require("CopilotChat.integrations.telescope").pick(
-          actions.prompt_actions()
-        )
-      end,
-      desc = "actions",
-    },
   },
 
   {
@@ -664,7 +644,7 @@ wk.add({
 
   {
     "<leader>fD",
-    function() tb().lsp_diagnostics() end,
+    function() tb().diagnostics() end,
     desc = "lsp diagnostics",
   },
   {
@@ -742,7 +722,7 @@ wk.add({
   },
   {
     "<leader>fiu",
-    function() tb().git_commits() end,
+    function() tb().git_bcommits() end,
     desc = "buffer commits",
   },
 
@@ -862,7 +842,6 @@ wk.add({
     function() tb().tags({ default_text = vim.fn.expand("<cword>") }) end,
     desc = "cword tags",
   },
-  { "<leader>fx", ":TodoTelescope<cr>", desc = "todos" },
   { "<leader>fY", ":Telescope symbols<cr>", desc = "symbols" },
 
   { "<leader>fy", group = "type" },
@@ -1293,7 +1272,6 @@ wk.add({
     function() require("tiny-inline-diagnostic").toggle() end,
     desc = "toggle inline diagnostics",
   },
-  { "<leader>tw", ":ToggleWhitespace<cr>", desc = "whitespace" },
   {
     "<leader>W",
     [[:%s/\s\+$//<cr>:let @/ = ""<cr>]],
@@ -1457,7 +1435,7 @@ vim.api.nvim_create_user_command("NewFile", new_file, {
 
 vim.api.nvim_create_user_command("Xshell", function(args)
   vim.cmd("10new")
-  vim.cmd("Shell " .. args.args)
+  vim.cmd("0read !" .. args.args)
   vim.cmd("wincmd p")
 end, {
   nargs = "+",
@@ -1466,7 +1444,7 @@ end, {
 
 vim.api.nvim_create_user_command("Sshell", function(args)
   vim.cmd("vnew")
-  vim.cmd("Shell " .. args.args)
+  vim.cmd("0read !" .. args.args)
   vim.cmd("wincmd p")
 end, {
   nargs = "+",
