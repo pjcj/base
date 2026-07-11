@@ -182,7 +182,14 @@ vim.lsp.config.perlnavigator = {
 vim.lsp.config.perl_lsp = {
   cmd = { "perllsp", "--stdio" },
   filetypes = { "perl" },
-  root_markers = { ".git" },
+  root_markers = {
+    ".perl-lsp.toml",
+    "Makefile.PL",
+    "Build.PL",
+    "cpanfile",
+    "dist.ini",
+    ".git",
+  },
   settings = {
     perl = {
       workspace = {
