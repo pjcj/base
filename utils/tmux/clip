@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+set -eEuo pipefail
+shopt -s inherit_errexit 2>/dev/null || true
+
+# Portable clipboard shim for the tmux bindings.
+# Dispatches to whichever clipboard tool the platform provides:
+#   macOS   -> pbcopy / pbpaste
+#   Wayland -> wl-copy / wl-paste
+#   X11     -> xclip or xsel
+# "copy" reads stdin onto the clipboard; "paste" writes the clipboard to stdout.
+
+usage() {
+  cat <<'EOF'
+Usage: clip copy    read stdin, place it on the system clipboard
+       clip paste   write the system clipboard to stdout
+EOF
+}
+
+have() { command -v "$1" >/dev/null 2>&1; }
+
+copy() {
+  if have pbcopy; then
+    pbcopy
+  elif have wl-copy; then
+    wl-copy
+  elif have xclip; then
+    xclip -selection clipboard -in
+  elif have xsel; then
+    xsel --clipboard --input
+  else
+    echo "clip: no clipboard tool found" >&2
+    return 1
+  fi
+}
+
+paste() {
+  if have pbpaste; then
+    pbpaste
+  elif have wl-paste; then
+    wl-paste --no-newline
+  elif have xclip; then
+    xclip -selection clipboard -out
+  elif have xsel; then
+    xsel --clipboard --output
+  else
+    echo "clip: no clipboard tool found" >&2
+    return 1
+  fi
+}
+
+main() {
+  case "${1:-}" in
+  copy) copy ;;
+  paste) paste ;;
+  -h | --help) usage ;;
+  *)
+    usage >&2
+    return 2
+    ;;
+  esac
+}
+
+main "$@"
