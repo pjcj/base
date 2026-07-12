@@ -190,6 +190,14 @@ vim.lsp.config.perl_lsp = {
     "dist.ini",
     ".git",
   },
+  -- perllsp is navigation-only here.  Its diagnostics are too noisy and it
+  -- delivers them via several paths with inconsistent sources ("perl-lsp" on
+  -- pull, "perl" on push), so drop them at the client with no-op handlers
+  -- rather than trying to match on source.  perlcritic is run via nvim-lint.
+  handlers = {
+    ["textDocument/publishDiagnostics"] = function() end,
+    ["textDocument/diagnostic"] = function() end,
+  },
   settings = {
     perl = {
       workspace = {
@@ -202,15 +210,6 @@ vim.lsp.config.perl_lsp = {
         -- perlnavigator does; without this perl-lsp flags them as missing.
         useSystemInc = true,
       },
-      -- enabled and profile are resolved from the project root in on_init below.
-      perlcritic = {
-        severity = 1,
-      },
-      -- Shell out to real Perl::Critic rather than the native Rust rules, to
-      -- match perlnavigator's diagnostics.
-      critic = {
-        engine = "perlcritic",
-      },
       -- Formatting is handled by conform, so keep the LSP formatter out of it.
       formatting = {
         engine = "off",
@@ -222,13 +221,29 @@ vim.lsp.config.perl_lsp = {
   -- push the settings on init.  Enable perlcritic only when the project root has
   -- a .perlcriticrc, resolved from the client root rather than the startup cwd.
   on_init = function(client)
-    local root = client.root_dir or vim.fn.getcwd()
-    local rc = root .. "/.perlcriticrc"
-    local settings = client.settings
-    settings.perl.perlcritic.enabled = vim.fn.filereadable(rc) == 1
-    if settings.perl.perlcritic.enabled then settings.perl.perlcritic.profile = rc end
-    client:notify("workspace/didChangeConfiguration", { settings = settings })
+    -- perllsp is navigation-only here: all its diagnostics are suppressed and
+    -- perlcritic is run via nvim-lint.  It delivers diagnostics by pull, so drop
+    -- the capability to stop nvim requesting them at all.
+    client.server_capabilities.diagnosticProvider = nil
+    client:notify(
+      "workspace/didChangeConfiguration",
+      { settings = client.settings }
+    )
   end,
+}
+
+-- tree-sitter-perl/perl-lsp (Veesh) - diagnostics are minimal and opt-in by
+-- default, so no settings block is needed for the quiet baseline.
+vim.lsp.config.perl_lsp_ts = {
+  cmd = { "perl-lsp" },
+  filetypes = { "perl" },
+  root_markers = {
+    "cpanfile",
+    "Makefile.PL",
+    "Build.PL",
+    "dist.ini",
+    ".git",
+  },
 }
 
 vim.lsp.config.sqlls = {
@@ -296,6 +311,11 @@ vim.lsp.config.yamlls = {
 
 -- Setup function
 local function setup_servers()
+  -- setup_servers runs before setup.lua, so default the active Perl server here
+  -- too.  A nil entry would truncate the lsps list and drop every server after
+  -- it.
+  vim.g.perl_lsp_server = vim.g.perl_lsp_server or "perl_lsp"
+
   require("mason").setup({
     ui = {
       icons = {
@@ -366,30 +386,48 @@ end
 
 M.setup_servers = setup_servers
 
--- Toggle between PerlNavigator and perl-lsp
-local function toggle_perl_lsp()
-  local current = vim.g.perl_lsp_server
-  local new = current == "perlnavigator" and "perl_lsp" or "perlnavigator"
+-- Rotate through the Perl LSP servers, skipping any whose binary is absent:
+--   perlnavigator -> perl_lsp (EffortlessMetrics) -> perl_lsp_ts (Veesh)
+local perl_lsp_servers = { "perlnavigator", "perl_lsp", "perl_lsp_ts" }
 
-  if vim.fn.executable(vim.lsp.config[new].cmd[1]) ~= 1 then
-    vim.notify(
-      vim.lsp.config[new].cmd[1] .. " not found",
-      vim.log.levels.ERROR
-    )
-    return
+local function cycle_perl_lsp()
+  local current = vim.g.perl_lsp_server
+  local start = 1
+  for i, name in ipairs(perl_lsp_servers) do
+    if name == current then
+      start = i
+      break
+    end
   end
 
-  vim.lsp.enable(current, false)
-  vim.g.perl_lsp_server = new
-  vim.lsp.config[new].on_attach = on_attach
-  vim.lsp.enable(new)
-  vim.notify("Perl LSP: " .. new, vim.log.levels.INFO)
+  local n = #perl_lsp_servers
+  for step = 1, n do
+    local new = perl_lsp_servers[(start - 1 + step) % n + 1]
+    if vim.fn.executable(vim.lsp.config[new].cmd[1]) == 1 then
+      vim.lsp.enable(current, false)
+      -- enable(false) stops future attaches but leaves the running client, so
+      -- stop it explicitly to fully switch over.
+      for _, c in ipairs(vim.lsp.get_clients({ name = current })) do
+        c:stop(true)
+      end
+      vim.g.perl_lsp_server = new
+      vim.lsp.config[new].on_attach = on_attach
+      vim.lsp.enable(new)
+      -- Let nvim-lint refresh the perl linters for the new server (perlcritic
+      -- runs only under perl_lsp, so it must be re-run or cleared on a switch).
+      vim.api.nvim_exec_autocmds("User", { pattern = "PerlLspChanged" })
+      vim.notify("Perl LSP: " .. new, vim.log.levels.INFO)
+      return
+    end
+  end
+
+  vim.notify("No other Perl LSP server available", vim.log.levels.WARN)
 end
 
 vim.api.nvim_create_user_command(
-  "TogglePerlLsp",
-  toggle_perl_lsp,
-  { desc = "Toggle between PerlNavigator and perl-lsp" }
+  "CyclePerlLsp",
+  cycle_perl_lsp,
+  { desc = "Rotate between PerlNavigator, perl_lsp and perl_lsp_ts" }
 )
 
 -- Diagnostic filtering - optimised single-pass in-place filter
@@ -450,10 +488,25 @@ local function filter_diagnostics(diagnostic)
     return false
   end
 
+  -- Veesh perl-lsp: unresolved-method and unresolved-function fire on dispatch
+  -- and calls it cannot resolve statically, so drop both categories.
+  if
+    source == "perl-lsp"
+    and (
+      diagnostic.code == "unresolved-method"
+      or diagnostic.code == "unresolved-function"
+    )
+  then
+    return false
+  end
+
   return true
 end
 
--- Override the default diagnostic handler to filter diagnostics
+-- Filter push diagnostics (perlnavigator, perl_lsp_ts) in the publishDiagnostics
+-- handler, on the raw LSP data before conversion.  EM perllsp delivers via pull
+-- and is suppressed by disabling its diagnostics in on_init, so it need not be
+-- filtered here.
 local orig_diagnostic_handler =
   vim.lsp.handlers["textDocument/publishDiagnostics"]
 vim.lsp.handlers["textDocument/publishDiagnostics"] = function(

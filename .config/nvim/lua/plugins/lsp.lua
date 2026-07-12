@@ -97,6 +97,130 @@ local plugins = {
         end,
       }
 
+      -- perlcritic lint (active when perl-lsp/EM is the current server).  Runs
+      -- real Perl::Critic with the project .perlcriticrc, which EM's native
+      -- critic cannot reproduce.  A wrapper reads the buffer from stdin but
+      -- reports it under the real filename (--file), so it lints live (unsaved
+      -- content) like PerlNavigator while filename policies such as
+      -- RequireFilenameMatchesPackage still fire.
+      local function perlcriticrc()
+        return vim.fs.find(".perlcriticrc", {
+          upward = true,
+          path = vim.fs.dirname(vim.api.nvim_buf_get_name(0)),
+        })[1]
+      end
+
+      -- PerlNavigator's default critic severity mapping (perlcritic 1-5).
+      local perlcritic_severity = {
+        ["5"] = vim.diagnostic.severity.WARN,
+        ["4"] = vim.diagnostic.severity.INFO,
+        ["3"] = vim.diagnostic.severity.HINT,
+        ["2"] = vim.diagnostic.severity.HINT,
+        ["1"] = vim.diagnostic.severity.HINT,
+      }
+
+      lint.linters.perlcritic = {
+        cmd = os.getenv("LINT_PERL_PATH") or "perl",
+        stdin = true,
+        append_fname = false,
+        ignore_exitcode = true,
+        stream = "stdout",
+        args = {
+          vim.fn.stdpath("config") .. "/scripts/perlcritic-stdin.pl",
+          "--file",
+          function() return vim.api.nvim_buf_get_name(0) end,
+          function() return "--profile=" .. (perlcriticrc() or "") end,
+        },
+        parser = function(output)
+          local diagnostics = {}
+          for line in output:gmatch("[^\n]+") do
+            local lnum, col, sev, policy, msg =
+              line:match("^.-:(%d+):(%d+):(%d+):%[([^%]]+)%]%s*(.*)$")
+            if lnum then
+              table.insert(diagnostics, {
+                lnum = tonumber(lnum) - 1,
+                col = math.max(tonumber(col) - 1, 0),
+                message = msg,
+                code = policy,
+                source = "perlcritic",
+                severity = perlcritic_severity[sev]
+                  or vim.diagnostic.severity.WARN,
+              })
+            end
+          end
+          return diagnostics
+        end,
+      }
+
+      -- perl -c syntax check (active when perl-lsp/EM is the current server),
+      -- like PerlNavigator.  Reads the buffer from stdin so it checks live
+      -- content; stdin lines map 1:1 to buffer lines, and errors report "- line
+      -- N".  Include paths come from the same helper as the LSP servers.
+      local perl_check_args = { "-c", "-Mwarnings", "-M-warnings=redefine" }
+      do
+        local ok, local_defs = pcall(require, "local_defs")
+        if ok then
+          for _, dir in ipairs(local_defs.fn.perl_inc_dirs()) do
+            perl_check_args[#perl_check_args + 1] = "-I" .. dir
+          end
+        end
+      end
+
+      -- Compile-time noise that is not an actionable syntax problem, matching
+      -- the perlnavigator diagnostic filters.
+      local function perl_check_ignored(msg)
+        return msg:find("had compilation errors", 1, true)
+          or msg:find("BEGIN failed", 1, true)
+          or msg:find("CHECK failed", 1, true)
+          or msg:find("Useless use of a constant", 1, true)
+          or msg:find("set_first_init_and_end", 1, true)
+      end
+
+      lint.linters.perl = {
+        cmd = os.getenv("LINT_PERL_PATH") or "perl",
+        stdin = true,
+        append_fname = false,
+        ignore_exitcode = true,
+        stream = "stderr",
+        args = perl_check_args,
+        parser = function(output)
+          local diagnostics = {}
+          for line in output:gmatch("[^\n]+") do
+            if not line:match("^%s") then
+              local msg, lnum = line:match("^(.-)%s+at %- line (%d+)")
+              if msg and lnum and not perl_check_ignored(msg) then
+                table.insert(diagnostics, {
+                  lnum = tonumber(lnum) - 1,
+                  col = 0,
+                  message = msg,
+                  source = "perl",
+                  severity = vim.diagnostic.severity.ERROR,
+                })
+              end
+            end
+          end
+          return diagnostics
+        end,
+      }
+
+      -- Run the perl linters wanted under perl_lsp for the current buffer.
+      -- perl -c always applies; perlcritic only when a .perlcriticrc is found.
+      -- Run from the project root so relative include paths (-Ilib) and the
+      -- plenv .perl-version resolve, regardless of Neovim's own cwd.
+      local function lint_perl()
+        local root = vim.fs.root(0, {
+          "Makefile.PL",
+          "Build.PL",
+          "cpanfile",
+          "dist.ini",
+          ".perl-version",
+          ".git",
+        })
+        local opts = root and { cwd = root } or nil
+        lint.try_lint("perl", opts)
+        if perlcriticrc() then lint.try_lint("perlcritic", opts) end
+      end
+
       local last_lint_time = 0
       local cursor_hold_throttle_ms = 1000
 
@@ -127,10 +251,46 @@ local plugins = {
           then
             lint.try_lint("perlimports")
           end
+          -- Run the perl linters live: on read, write, and on-type via
+          -- CursorHold (throttled and only when modified, above).
+          if
+            vim.bo.filetype == "perl"
+            and vim.g.perl_lsp_server == "perl_lsp"
+            and (
+              ev.event == "BufReadPost"
+              or ev.event == "BufWritePost"
+              or ev.event == "CursorHold"
+            )
+          then
+            lint_perl()
+          end
           last_lint_time = current_time
           -- require("notify")(string.format("end lint"))
         end,
       })
+
+      -- On a Perl LSP switch, refresh the perl linters - clear them (they are
+      -- only wanted under perl_lsp, and perlnavigator provides its own), then
+      -- re-run when switching to perl_lsp.
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "PerlLspChanged",
+        callback = function()
+          if vim.bo.filetype ~= "perl" then return end
+          vim.diagnostic.reset(lint.get_namespace("perlcritic"), 0)
+          vim.diagnostic.reset(lint.get_namespace("perl"), 0)
+          if vim.g.perl_lsp_server == "perl_lsp" then lint_perl() end
+        end,
+      })
+
+      -- nvim-lint lazy-loads on the perl buffer's BufReadPost, so its autocmd
+      -- can miss that first event.  Lint the current buffer now.
+      vim.schedule(function()
+        if
+          vim.bo.filetype == "perl" and vim.g.perl_lsp_server == "perl_lsp"
+        then
+          lint_perl()
+        end
+      end)
     end,
   },
   -- Asynchronous linting engine
