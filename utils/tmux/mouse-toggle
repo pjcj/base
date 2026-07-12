@@ -1,12 +1,21 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-if tmux show-options -g | grep -q '[m]ouse off'
-then to=on
-else to=off
-fi
+set -eEuo pipefail
+shopt -s inherit_errexit 2>/dev/null || true
 
-echo turning mouse $to
+# Toggle tmux mouse mode on/off
+# Used by tmux binding C-a y
 
-tmux set -g mouse $to > /dev/null
+main() {
+  local to
+  if [[ "$(tmux show-options -g mouse)" == *off ]]; then
+    to=on
+  else
+    to=off
+  fi
 
-exit 0
+  echo "turning mouse $to"
+  tmux set -g mouse "$to" >/dev/null
+}
+
+main "$@"
