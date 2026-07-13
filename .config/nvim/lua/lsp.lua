@@ -210,7 +210,10 @@ vim.lsp.config.perl_lsp = {
         -- perlnavigator does; without this perl-lsp flags them as missing.
         useSystemInc = true,
       },
-      -- Formatting is handled by conform, so keep the LSP formatter out of it.
+      -- Perl formatting is handled by conform, which falls back to an LSP
+      -- formatter only as a last resort.  This server is navigation-only, so
+      -- its own formatting engine stays off and that fallback is left to any
+      -- other formatting-capable server.
       formatting = {
         engine = "off",
       },
