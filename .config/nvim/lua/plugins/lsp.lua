@@ -81,8 +81,16 @@ local plugins = {
         parser = function(output)
           local diagnostics = {}
           for line in output:gmatch("[^\n]+") do
-            local msg, lnum =
-              line:match("^[^\n]-(%S+ %b()) at .+ line (%d+)")
+            -- Match only a genuine finding, which perlimports prefixes with a
+            -- cross mark: "❌ Module (reason) at FILE line N".  Anchoring on the
+            -- mark keeps the whole message and the real source line.  Without it
+            -- the pattern also matched "Can't locate ... at (eval N) line N"
+            -- compile errors, capturing just their trailing "module) (@INC
+            -- ...)" fragment against the eval's internal line number.  Those
+            -- errors mean perlimports could not load a dependency, which the
+            -- Perl language server already reports against the correct paths, so
+            -- dropping them here loses no signal.
+            local msg, lnum = line:match("^❌%s+(%S+ %b()) at .+ line (%d+)")
             if msg and lnum then
               table.insert(diagnostics, {
                 lnum = tonumber(lnum) - 1,
