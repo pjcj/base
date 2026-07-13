@@ -71,11 +71,22 @@ local plugins = {
       vim.list_extend(codespell_args, { "--stdin-single-line", "-" })
       lint.linters.codespell.args = codespell_args
 
-      -- perlimports lint (active when perl-lsp is the current server)
+      -- perlimports lint (active when perl-lsp is the current server).  Feed
+      -- the live buffer on stdin with --read-stdin so it lints on-type like
+      -- perlcritic, rather than re-reading the saved file from disk.
+      -- --read-stdin needs the filename passed explicitly with -f (it rejects a
+      -- bare positional), so append it as a function and stop nvim-lint adding
+      -- its own.
       lint.linters.perlimports = {
         cmd = "perlimports",
-        args = { "--lint" },
-        stdin = false,
+        args = {
+          "--lint",
+          "--read-stdin",
+          "-f",
+          function() return vim.api.nvim_buf_get_name(0) end,
+        },
+        append_fname = false,
+        stdin = true,
         ignore_exitcode = true,
         stream = "stderr",
         parser = function(output)
