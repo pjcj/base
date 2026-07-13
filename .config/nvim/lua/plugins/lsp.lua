@@ -248,10 +248,11 @@ local plugins = {
         "BufReadPost",
         "BufWritePost",
         "CursorHold",
+        "TextChanged",
       }, {
         callback = function(ev)
           local current_time = vim.loop.hrtime() / 1000000 -- Convert to ms
-          if ev.event == "CursorHold" then
+          if ev.event == "CursorHold" or ev.event == "TextChanged" then
             if current_time - last_lint_time < cursor_hold_throttle_ms then
               return
             end
@@ -270,8 +271,11 @@ local plugins = {
           then
             lint.try_lint("perlimports")
           end
-          -- Run the perl linters live: on read, write, and on-type via
-          -- CursorHold (throttled and only when modified, above).
+          -- Run the perl linters live: on read, write, and on change via
+          -- CursorHold and TextChanged (both throttled and only when modified,
+          -- above).  TextChanged also catches a conform format that rewrites the
+          -- buffer without moving the cursor, which would otherwise leave no
+          -- CursorHold to re-lint against.
           if
             vim.bo.filetype == "perl"
             and vim.g.perl_lsp_server == "perl_lsp"
@@ -279,6 +283,7 @@ local plugins = {
               ev.event == "BufReadPost"
               or ev.event == "BufWritePost"
               or ev.event == "CursorHold"
+              or ev.event == "TextChanged"
             )
           then
             lint_perl()
