@@ -290,6 +290,17 @@ vim.lsp.config.typos_lsp = {
   settings = {},
 }
 
+vim.lsp.config.vtsls = {
+  cmd = { "vtsls", "--stdio" },
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+  },
+  root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
+}
+
 vim.lsp.config.yamlls = {
   cmd = { "yaml-language-server", "--stdio" },
   filetypes = { "yaml", "yaml.docker-compose" },
@@ -342,6 +353,7 @@ local function setup_servers()
     vim.g.perl_lsp_server,
     -- "sqlls", -- broken with Node.js v25 (SlowBuffer removed)
     "typos_lsp",
+    "vtsls",
     "yamlls",
   }
 
