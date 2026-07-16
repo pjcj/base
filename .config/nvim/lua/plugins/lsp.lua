@@ -368,7 +368,12 @@ local plugins = {
           lua = { "stylua", lsp_format = "fallback" },
           make = { "bake" },
           markdown = { "markdownlint", "mdformat", "injected" },
-          perl = { "quotefix", "perlimports_tidy", lsp_format = "last" },
+          perl = {
+            "quotefix",
+            "perlimports_tidy",
+            "perltidy",
+            lsp_format = "last",
+          },
           python = { "isort", "black" },
           sh = { "shellcheck", "shfmt" },
           bash = { "shellcheck", "shfmt" },
@@ -417,6 +422,14 @@ local plugins = {
             condition = function()
               return vim.g.perl_lsp_server == "perl_lsp"
                 and vim.fn.filereadable(".perlimports.toml") == 1
+            end,
+          },
+          -- perlnavigator runs perltidy itself via lsp_format = "last", so
+          -- conform's perltidy runs only under the navigation-only perl_lsp.
+          perltidy = {
+            condition = function()
+              return vim.g.perl_lsp_server == "perl_lsp"
+                and vim.fn.filereadable(".perltidyrc") == 1
             end,
           },
           injected = {
