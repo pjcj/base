@@ -91,6 +91,46 @@ vim.lsp.config.eslint = {
     "package.json",
     ".git",
   },
+  -- The server expects the settings VS Code sends and crashes on
+  -- textDocument/diagnostic without them ("path" must be of type string).
+  settings = {
+    validate = "on",
+    useESLintClass = false,
+    experimental = {},
+    codeActionOnSave = {
+      enable = false,
+      mode = "all",
+    },
+    format = true,
+    quiet = false,
+    onIgnoredFiles = "off",
+    rulesCustomizations = {},
+    run = "onType",
+    problems = {
+      shortenToSingleLine = false,
+    },
+    nodePath = "",
+    workingDirectory = { mode = "auto" },
+    codeAction = {
+      disableRuleComment = {
+        enable = true,
+        location = "separateLine",
+      },
+      showDocumentation = {
+        enable = true,
+      },
+    },
+  },
+  before_init = function(_, config)
+    local root_dir = config.root_dir
+    if root_dir then
+      config.settings = config.settings or {}
+      config.settings.workspaceFolder = {
+        uri = root_dir,
+        name = vim.fn.fnamemodify(root_dir, ":t"),
+      }
+    end
+  end,
 }
 
 vim.lsp.config.golangci_lint_ls = {
