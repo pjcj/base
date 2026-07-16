@@ -312,6 +312,12 @@ vim.lsp.config.sqlls = {
   },
 }
 
+vim.lsp.config.svelte = {
+  cmd = { "svelteserver", "--stdio" },
+  filetypes = { "svelte" },
+  root_markers = { "package.json", ".git" },
+}
+
 vim.lsp.config.taplo = {
   cmd = { "taplo", "lsp", "stdio" },
   filetypes = { "toml" },
@@ -392,6 +398,7 @@ local function setup_servers()
     "jsonls",
     vim.g.perl_lsp_server,
     -- "sqlls", -- broken with Node.js v25 (SlowBuffer removed)
+    "svelte",
     "typos_lsp",
     "vtsls",
     "yamlls",
