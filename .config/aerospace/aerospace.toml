@@ -61,12 +61,6 @@ automatically-unhide-macos-hidden-apps = false
 [key-mapping]
 preset = "qwerty"
 
-[key-mapping.key-notation-to-key-code]
-"/" = "minus"
-"." = "period"
-"," = "comma"
-# "=" = "backtick"
-
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
 # - Constant:     gaps.outer.top = 8
