@@ -260,6 +260,16 @@ NODE
   done
 }
 
+fixup_ale() {
+  # ALE's pull-diagnostics handler indexes a nil result, which throws when
+  # a stale request returns null after an external file modification.
+  local f=~/.local/share/nvim/lazy/ale/lua/ale/lsp.lua
+  [[ -f $f ]] || return 0
+  grep -q 'err == nil and result ~= nil' "$f" && return 0
+  perl -0pi -e 's/(function\(err,\ result,\ request,\ _\)\n
+    \s*if\ err\ ==\ nil)\ then/$1 and result ~= nil then/x' "$f"
+}
+
 do_tpm() {
   local dir=~/.tmux/plugins/tpm
   if [ ! -d $dir ]; then
@@ -326,6 +336,7 @@ main() {
   create_tmux_rgb_terminfo
   fixup_fzf_completion
   fixup_perlnavigator
+  fixup_ale
 
   if [[ -z $TMUX ]]; then
     echo "Start tmux and then run full_build"
