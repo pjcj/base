@@ -9,12 +9,11 @@
 
 _G.whichKey = require("which_key")
 
-hs.urlevent.bind("whichkey-show", function(_, params)
-  _G.whichKey:show((params and params.mode) or "op")
-end)
+hs.urlevent.bind(
+  "whichkey-show",
+  function(_, params) _G.whichKey:show((params and params.mode) or "op") end
+)
 
-hs.urlevent.bind("whichkey-hide", function()
-  _G.whichKey:hide()
-end)
+hs.urlevent.bind("whichkey-hide", function() _G.whichKey:hide() end)
 
 hs.alert.show("Hammerspoon which-key loaded")

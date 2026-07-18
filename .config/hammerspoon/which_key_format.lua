@@ -38,9 +38,7 @@ local KEY_LABEL = {
   backspace = "backspace",
 }
 
-local function base_label(base)
-  return KEY_LABEL[base] or base
-end
+local function base_label(base) return KEY_LABEL[base] or base end
 
 -- Turn a binding notation such as "shift-1" into a display label such as "⇧1",
 -- translating the base key to its de-ch legend.
@@ -75,9 +73,7 @@ function M.clean_command(command)
   return table.concat(parts, " + ")
 end
 
-local function basename(path)
-  return (path:gsub("^.*/", ""))
-end
+local function basename(path) return (path:gsub("^.*/", "")) end
 
 -- Cosmetic, rule-based label from a cleaned command. A pure function of the
 -- string, so it needs no per-binding upkeep.
@@ -93,9 +89,7 @@ function M.prettify(command)
     ["close"] = "close window",
     ["fullscreen"] = "fullscreen",
   }
-  if exact[command] then
-    return exact[command]
-  end
+  if exact[command] then return exact[command] end
 
   local patterns = {
     { "^workspace%s+(.+)$", "workspace %s" },
@@ -107,15 +101,11 @@ function M.prettify(command)
   }
   for _, rule in ipairs(patterns) do
     local arg = command:match(rule[1])
-    if arg then
-      return rule[2]:format(arg)
-    end
+    if arg then return rule[2]:format(arg) end
   end
 
   local exec = command:match("^exec%-and%-forget%s+(.+)$")
-  if exec then
-    return "run " .. basename(exec)
-  end
+  if exec then return "run " .. basename(exec) end
 
   return command
 end
@@ -124,16 +114,10 @@ end
 -- cancel key; a bare switch to another mode reads as an arrow to that mode.
 function M.describe(command)
   local desc = M.prettify(M.clean_command(command))
-  if desc ~= "" then
-    return desc
-  end
-  if command:match("^%s*mode main%s*$") then
-    return "cancel"
-  end
+  if desc ~= "" then return desc end
+  if command:match("^%s*mode main%s*$") then return "cancel" end
   local sub = command:match("mode%s+(%S+)")
-  if sub then
-    return "→ " .. sub .. " mode"
-  end
+  if sub then return "→ " .. sub .. " mode" end
   return ""
 end
 
@@ -169,9 +153,7 @@ function M.build_rows(binding)
   table.sort(rows, function(a, b)
     local ta, tb = sort_tuple(a.notation), sort_tuple(b.notation)
     for i = 1, 3 do
-      if ta[i] ~= tb[i] then
-        return ta[i] < tb[i]
-      end
+      if ta[i] ~= tb[i] then return ta[i] < tb[i] end
     end
     return false
   end)
