@@ -128,10 +128,6 @@ alt-shift-j = "move down"
 alt-shift-k = "move up"
 alt-shift-l = "move right"
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#resize
-alt-keypadMinus = "resize smart -50"
-alt-keypadPlus = "resize smart +50"
-
 ctrl-left = "workspace --wrap-around prev"
 ctrl-right = "workspace --wrap-around next"
 
@@ -176,6 +172,13 @@ shift-9 = ["move-node-to-workspace 9", "mode main"]
 slash = ["layout tiles horizontal vertical", "mode main"]
 period = ["layout accordion horizontal vertical", "mode main"]
 # comma = "mode service"
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#resize
+# No 'mode main', so op mode stays active for repeated steps; esc to leave.
+h = "resize width -50"
+l = "resize width +50"
+k = "resize height -50"
+j = "resize height +50"
 
 z = ["fullscreen", "mode main"]
 r = ["reload-config", "mode main"]
