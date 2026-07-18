@@ -7,10 +7,16 @@
 -- live bindings of the given mode, so the panel can never disagree with the
 -- real keymap - aerospace.toml is the single source of truth.
 --
--- Driven from aerospace.toml over IPC, e.g.
---   exec-and-forget /opt/homebrew/bin/hs -c "whichKey:show('op')"
+-- Driven from aerospace.toml over the hammerspoon:// URL scheme, e.g.
+--   exec-and-forget /usr/bin/open -g hammerspoon://whichkey-show?mode=op
 
 local fmt = require("which_key_format")
+
+-- Reuse the Neovim colour palette as the single source of truth. That module
+-- is dependency-free, so it loads fine outside Neovim once its directory is on
+-- the Lua path.
+package.path = os.getenv("HOME") .. "/.config/nvim/lua/?.lua;" .. package.path
+local palette = require("solarized_palette")
 
 local M = {}
 
@@ -21,14 +27,14 @@ local canvas = nil
 local timer = nil
 local tap = nil
 
--- Solarized-dark palette, with the border matching the JankyBorders active
--- colour used in aerospace.toml.
+-- Panel colours, drawn from the shared solarized palette. The border matches
+-- the JankyBorders active colour (lgreen) set in aerospace.toml.
 local COLOR = {
-  bg = { red = 0.0, green = 0.169, blue = 0.212, alpha = 0.94 },
-  border = { red = 0.427, green = 0.827, blue = 0.455, alpha = 1.0 },
-  title = { red = 0.427, green = 0.827, blue = 0.455, alpha = 1.0 },
-  key = { red = 0.710, green = 0.537, blue = 0.0, alpha = 1.0 },
-  desc = { red = 0.514, green = 0.580, blue = 0.588, alpha = 1.0 },
+  bg = { hex = palette.base03, alpha = 0.94 },
+  border = { hex = palette.lgreen },
+  title = { hex = palette.lgreen },
+  key = { hex = palette.yellow },
+  desc = { hex = palette.base0 },
 }
 
 local function query_binding(mode)
@@ -38,13 +44,9 @@ local function query_binding(mode)
     mode
   )
   local out = hs.execute(cmd)
-  if not out or out == "" then
-    return nil
-  end
+  if not out or out == "" then return nil end
   local ok, decoded = pcall(hs.json.decode, out)
-  if ok and type(decoded) == "table" then
-    return decoded
-  end
+  if ok and type(decoded) == "table" then return decoded end
   return nil
 end
 
@@ -159,16 +161,12 @@ end
 function M:show(mode)
   mode = mode or "main"
   local binding = query_binding(mode)
-  if not binding or next(binding) == nil then
-    return
-  end
+  if not binding or next(binding) == nil then return end
   M.hide()
   draw(fmt.build_rows(binding), mode)
   -- Timer first, so the panel still auto-hides even if the keypress watcher
   -- cannot start (for example before Accessibility is granted).
-  timer = hs.timer.doAfter(AUTO_HIDE, function()
-    M.hide()
-  end)
+  timer = hs.timer.doAfter(AUTO_HIDE, function() M.hide() end)
   pcall(start_dismiss_watch)
 end
 
