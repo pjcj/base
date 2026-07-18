@@ -143,7 +143,10 @@ alt-tab = "workspace-back-and-forth"
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
 alt-shift-tab = "move-workspace-to-monitor --wrap-around next"
 # alt-comma = "mode service"
-alt-slash = "mode op"
+alt-slash = [
+  "mode op",
+  "exec-and-forget /usr/bin/open -g hammerspoon://whichkey-show?mode=op",
+]
 
 [mode.op.binding]
 
@@ -177,6 +180,7 @@ period = ["layout accordion horizontal vertical", "mode main"]
 z = ["fullscreen", "mode main"]
 r = ["reload-config", "mode main"]
 o = ["exec-and-forget ~/g/base/utils/toggle_audio", "mode main"]
+esc = "mode main"
 
 # # 'service' binding mode declaration.
 # # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
