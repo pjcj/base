@@ -21,7 +21,7 @@ local palette = require("solarized_palette")
 local M = {}
 
 local AEROSPACE = "/opt/homebrew/bin/aerospace"
-local AUTO_HIDE = 8 -- seconds, backstop against an orphaned panel
+local AUTO_HIDE = 30 -- seconds, backstop against an orphaned panel
 
 local canvas = nil
 local timer = nil
@@ -165,8 +165,15 @@ function M:show(mode)
   M.hide()
   draw(fmt.build_rows(binding), mode)
   -- Timer first, so the panel still auto-hides even if the keypress watcher
-  -- cannot start (for example before Accessibility is granted).
-  timer = hs.timer.doAfter(AUTO_HIDE, function() M.hide() end)
+  -- cannot start (for example before Accessibility is granted). On timeout we
+  -- also leave the binding mode, since an idle panel means AeroSpace is still
+  -- waiting in that mode with nothing on screen to say so.
+  timer = hs.timer.doAfter(AUTO_HIDE, function()
+    M.hide()
+    if mode ~= "main" then
+      hs.execute(string.format("%s mode main", AEROSPACE))
+    end
+  end)
   pcall(start_dismiss_watch)
 end
 
