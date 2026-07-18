@@ -179,6 +179,18 @@ l = "resize width +50"
 k = "resize height -50"
 j = "resize height +50"
 
+# See: https://nikitabobko.github.io/AeroSpace/commands#join-with
+shift-h = ["join-with left", "mode main"]
+shift-j = ["join-with down", "mode main"]
+shift-k = ["join-with up", "mode main"]
+shift-l = ["join-with right", "mode main"]
+
+# Float toggle, close, balance splits, reset (flatten) the layout.
+f = ["layout floating tiling", "mode main"]
+q = ["close", "mode main"]
+b = ["balance-sizes", "mode main"]
+shift-r = ["flatten-workspace-tree", "mode main"]
+
 z = ["fullscreen", "mode main"]
 r = ["reload-config", "mode main"]
 o = ["exec-and-forget ~/g/base/utils/toggle_audio", "mode main"]
