@@ -1,5 +1,6 @@
 tap "anomalyco/tap", "https://github.com/anomalyco/homebrew-tap.git", trusted: true
 tap "common-fate/granted"
+tap "darrylmorley/whatcable"
 tap "dimentium/autoraise"
 tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae"
 tap "homebrew/bundle"
@@ -7,6 +8,7 @@ tap "homebrew/services"
 tap "hougesen/tap"
 tap "iina/mpv-iina", trusted: true
 tap "louisbrunner/valgrind", "https://github.com/LouisBrunner/homebrew-valgrind"
+tap "manaflow-ai/cmux"
 tap "netmute/tap", trusted: true
 tap "nikitabobko/tap"
 tap "tako8ki/tap"
@@ -303,12 +305,10 @@ cask "1password-cli"
 cask "nikitabobko/tap/aerospace", trusted: true
 # Android SDK component
 cask "android-platform-tools"
-# Music player and library organiser
-cask "clementine"
+# Ghostty-based terminal with vertical tabs and notifications for AI coding agents
+cask "cmux"
 # Preference Pane for controlling cursor hiding
 cask "cursorcerer"
-# Monitoring and security across systems, apps, and services
-cask "datadog-agent"
 # Disk usage utility
 cask "disk-inventory-x"
 # Client for the Dropbox cloud storage service
@@ -321,10 +321,10 @@ cask "font-inconsolata"
 cask "font-symbols-only-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
-# Go (golang) IDE
-cask "goland"
 # Web browser
 cask "google-chrome"
+# Desktop automation application
+cask "hammerspoon"
 # Utility to hide menu bar items
 cask "hiddenbar"
 # Download manager
@@ -375,6 +375,8 @@ cask "vlc"
 cask "vmware-fusion"
 # GPU-accelerated cross-platform terminal emulator and multiplexer
 cask "wezterm"
+# Menu bar app for USB-C cable diagnostics
+cask "darrylmorley/whatcable/whatcable", trusted: true
 # Lossless audio decoder
 cask "xld"
 # Video communication and virtual meeting platform
