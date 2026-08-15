@@ -51,6 +51,10 @@
   },
 
   "workspaceColors": {
+    // base05, a step up from the #012028 sidebar tint. Without this cmux
+    // uses the macOS accent blue, which is far too bright beside solarized.
+    "selectionColor": "#0e3c49",
+
     // Every colour here comes from .config/nvim/lua/solarized_palette.lua,
     // named in the trailing comments. The whole set is listed because cmux
     // replaces this key rather than merging into it. Work and OS match the
