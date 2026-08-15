@@ -2,40 +2,30 @@
   "$schema": "https://raw.githubusercontent.com/manaflow-ai/cmux/main/web/data/cmux.schema.json",
   "schemaVersion": 1,
 
-  // Pane dividers match .tmux.conf pane-border-style (brightgreen, which the
-  // Ghostty palette maps to #586e75) and pane-active-border-style.
+  // Matches pane-border-style and pane-active-border-style in .tmux.conf.
   "paneBorderColor": "#586e75",
   "activePaneBorderColor": "#fff179",
 
   "app": {
     "appearance": "dark",
-    // The only text-size control cmux has. It scales the sidebar, but also
-    // terminals, tab titles and the rest of the app chrome. Steps of 10 only,
-    // from 50 to 200.
+    // Scales the whole app, not the sidebar alone. config.ghostty offsets it.
     "globalFontMagnification": 120,
-    // Ghostty config sets quit-after-last-window-closed and
-    // confirm-close-surface = false, so do not ask on the way out.
+    // Ghostty config already skips both confirmations.
     "confirmQuit": "never",
     "warnBeforeClosingTab": false
   },
 
   "terminal": {
-    // Ghostty config sets copy-on-select = clipboard. cmux defaults to false
-    // and suppresses it, so turn it back on here.
+    // cmux defaults this off, suppressing Ghostty's copy-on-select.
     "copyOnSelect": true
   },
 
   "sidebar": {
-    // Wrap workspace titles over several lines rather than truncating them
-    // after one.
     "wrapWorkspaceTitles": true
   },
 
   "sidebarAppearance": {
-    // #012028 is the background .tmux.conf gives inactive panes, against
-    // #001920 for the active one. Reusing it here puts the sidebar in the
-    // same visual language. Set matchTerminalBackground true instead to
-    // have the sidebar share the terminal background exactly.
+    // #012028 is the inactive pane background .tmux.conf uses.
     "matchTerminalBackground": false,
     "tintColor": "#012028",
     "tintOpacity": 1
@@ -45,20 +35,15 @@
     "agentPermissionPrompt": true,
     "agentTurnComplete": "whenIdle",
     "agentIdleReminder": true,
-    // cmux runs on its own aerospace workspace, so a sound is the only cue
-    // that reaches you while you work in Ghostty. Set "none" to silence it.
+    // cmux sits on its own aerospace workspace, so sound is the only cue.
     "sound": "Tink"
   },
 
   "workspaceColors": {
-    // base05, a step up from the #012028 sidebar tint. Without this cmux
-    // uses the macOS accent blue, which is far too bright beside solarized.
+    // base05. The default is the macOS accent blue, garish beside solarized.
     "selectionColor": "#0e3c49",
 
-    // Every colour here comes from .config/nvim/lua/solarized_palette.lua,
-    // named in the trailing comments. The whole set is listed because cmux
-    // replaces this key rather than merging into it. Work and OS match the
-    // pane border colours claude-show uses in tmux.
+    // Names from solarized_palette.lua. cmux replaces this key, not merges.
     "colors": {
       "Red": "#dc322f",      // red
       "Crimson": "#64110f",  // mred
@@ -83,14 +68,12 @@
 
   "automation": {
     "claudeCodeIntegration": true,
-    // Route every claude cmux starts through nono. cmux injects its hook
-    // arguments before it resolves this path, so the sandbox sees them.
+    // Routes claude through nono. cmux injects its hook arguments first.
     "claudeBinaryPath": "/Users/pjcj/g/local_base/utils/cmux-claude"
   },
 
   "actions": {
-    // The tmux C-a A binding, less the split, which cmux has no target for.
-    // claude rather than nclaude, because the cmux shim routes it via nono.
+    // claude, not nclaude. The cmux shim already routes it through nono.
     "claude": {
       "type": "command",
       "title": "Claude Code",
@@ -102,20 +85,7 @@
   },
 
   "shortcuts": {
-    // Two problems drove this. cmux binds 14 actions to [ and ], which on a
-    // Swiss German keyboard need Option to type at all, so they cannot be
-    // reached with Command or Control held. And pane focus shipped on
-    // opt+cmd with the arrows, where opt+cmd+h is the macOS Hide Others
-    // shortcut and something takes opt+cmd+left as well.
-    //
-    // So everything lives on ctrl+cmd and hjkl instead. Nothing collides
-    // with nvim, tmux or aerospace, none of which use Command. Plain
-    // ctrl+hjkl stays free, so smart-splits keeps working in nvim.
-    //
-    // hjkl means direction, so pane focus takes the plain group. Workspaces
-    // are a vertical list and tabs a horizontal strip, so those two share a
-    // group, k and j for one and h and l for the other. Adding opt means
-    // move the thing rather than move to it.
+    // [ and ] need Option on a Swiss German keyboard. ctrl+cmd is free.
     "bindings": {
       "focusLeft": "ctrl+cmd+h",
       "focusDown": "ctrl+cmd+j",
@@ -135,9 +105,7 @@
       "moveSurfaceToPreviousPane": "ctrl+opt+cmd+shift+h",
       "moveSurfaceToNextPane": "ctrl+opt+cmd+shift+l",
 
-      // Back and forward share their keys, as they do by default, because
-      // cmux picks between them by context. Focus history walks the
-      // workspaces you have visited, browser history the pages.
+      // Shared keys, as by default. cmux picks between them by context.
       "focusHistoryBack": "ctrl+opt+cmd+shift+k",
       "focusHistoryForward": "ctrl+opt+cmd+shift+j",
       "browserBack": "ctrl+opt+cmd+shift+k",
