@@ -7,7 +7,8 @@
 #   update_perllsp 0.18.0     # install a specific version
 #   update_perllsp latest     # install the newest published release
 #
-# The Neovim `lsp` branch config was validated against the default below.
+# Each run reports where it checks for versions, the recent releases with their
+# dates, and the version already installed.
 
 set -euo pipefail
 
@@ -30,25 +31,61 @@ Linux/x86_64) triple="x86_64-unknown-linux-gnu" ;;
   ;;
 esac
 
+# Report where the version information comes from, and what is on offer.
+# Prefer gh, which authenticates and so gets 5000 API calls an hour rather than
+# the 60 an hour GitHub allows an anonymous caller.
+releases_url="https://api.github.com/repos/$repo/releases"
+if command -v gh >/dev/null; then
+  via="gh"
+  releases=$(gh api "repos/$repo/releases?per_page=5" \
+    --jq '.[] | "\(.tag_name) \(.published_at[0:10])"' 2>/dev/null || true)
+else
+  # Pair each tag with the date below it. grep -o puts one field per line, so
+  # this reads both the compact and the indented forms of the reply.
+  via="curl"
+  releases=$(curl -fsL "$releases_url?per_page=5" |
+    grep -oE '"(tag_name|published_at)": *"[^"]*"' |
+    awk -F'"' '
+      /tag_name/ && !tag { tag = $4 }
+      /published_at/ && tag { print tag, substr($4, 1, 10); tag = "" }' ||
+    true)
+fi
+echo "Checking releases at $releases_url (via $via)"
+latest=$(printf '%s\n' "$releases" | awk 'NR == 1 { print $1 }')
+if [[ -n $latest ]]; then
+  echo "Recent releases, newest first:"
+  printf '%s\n' "$releases" | awk '
+    { mark = NR == 1 ? "  (latest)" : ""
+      printf "  %-10s %s%s\n", $1, $2, mark }'
+else
+  echo "Could not read the release list, so the latest version is unknown." >&2
+  echo "GitHub rate limits anonymous callers. Run 'gh auth login' to raise" >&2
+  echo "the limit, or check https://github.com/$repo/releases by hand." >&2
+fi
+
+# Report what is installed now, and where.
+current=""
+if [[ -x $dest ]]; then
+  current=$("$dest" --version 2>/dev/null | awk 'NR==1 { print $2 }' || true)
+fi
+echo "Installed at $dest: ${current:-none}"
+
 # Decide which version to fetch.
 version="${1:-$default_version}"
 if [[ $version == latest ]]; then
-  version=$(curl -fsSL "https://api.github.com/repos/$repo/releases/latest" |
-    sed -n 's/.*"tag_name": *"\([^"]*\)".*/\1/p' | head -1)
+  version=$latest
 fi
 version="${version#v}"
 if [[ -z $version ]]; then
   echo "Could not determine the perllsp version to install." >&2
   exit 1
 fi
+echo "Wanted version: $version (pinned default $default_version)"
 
 # Skip the download if the wanted version is already in place.
-if [[ -x $dest ]]; then
-  current=$("$dest" --version 2>/dev/null | awk 'NR==1 { print $2 }' || true)
-  if [[ $current == "$version" ]]; then
-    echo "perllsp $version already installed at $dest"
-    exit 0
-  fi
+if [[ $current == "$version" ]]; then
+  echo "perllsp $version already installed at $dest"
+  exit 0
 fi
 
 asset="perllsp-$version-$triple.tar.gz"
