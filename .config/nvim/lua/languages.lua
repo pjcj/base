@@ -45,6 +45,9 @@ autocmd({ "BufNewFile", "BufReadPost" }, {
   pattern = "*.tt",
   command = "set ft=tt2html",
 })
+-- cmux reads this as JSONC but insists on the .json name. Nvim already claims
+-- .json, so override its detection rather than race it with an autocmd.
+vim.filetype.add({ filename = { ["cmux.json"] = "jsonc" } })
 
 -- Quickfix
 augroup("quickfix", { clear = true })
