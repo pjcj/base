@@ -227,12 +227,16 @@ if.app-name-regex-substring = "Ghostty"
 run = "move-node-to-workspace 1"
 
 [[on-window-detected]]
-if.app-name-regex-substring = "Firefox"
+if.app-name-regex-substring = "cmux"
 run = "move-node-to-workspace 2"
 
 [[on-window-detected]]
+if.app-name-regex-substring = "Firefox"
+run = "move-node-to-workspace 3"
+
+[[on-window-detected]]
 if.app-name-regex-substring = "Safari"
-run = "move-node-to-workspace 2"
+run = "move-node-to-workspace 3"
 
 [[on-window-detected]]
 if.app-name-regex-substring = "Slack"
