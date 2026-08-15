@@ -9,6 +9,10 @@
 
   "app": {
     "appearance": "dark",
+    // The only text-size control cmux has. It scales the sidebar, but also
+    // terminals, tab titles and the rest of the app chrome. Steps of 10 only,
+    // from 50 to 200.
+    "globalFontMagnification": 120,
     // Ghostty config sets quit-after-last-window-closed and
     // confirm-close-surface = false, so do not ask on the way out.
     "confirmQuit": "never",
@@ -19,6 +23,12 @@
     // Ghostty config sets copy-on-select = clipboard. cmux defaults to false
     // and suppresses it, so turn it back on here.
     "copyOnSelect": true
+  },
+
+  "sidebar": {
+    // Wrap workspace titles over several lines rather than truncating them
+    // after one.
+    "wrapWorkspaceTitles": true
   },
 
   "sidebarAppearance": {
