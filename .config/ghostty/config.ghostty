@@ -7,3 +7,7 @@
 # which would render the shared font-size of 17 at about 20.4. Dropping the
 # base to 14 gives 16.8, near the size before the sidebar was enlarged.
 font-size = 14
+
+# The shared 0.5 is too dark for watching several agents at once. Use 1 to
+# turn dimming off, since the active pane border already marks the focus.
+unfocused-split-opacity = 0.85
