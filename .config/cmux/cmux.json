@@ -41,27 +41,29 @@
   },
 
   "workspaceColors": {
-    // The full palette, since cmux replaces rather than merges this key. Work
-    // and OS match the pane border colours claude-show uses in tmux.
+    // Every colour here comes from .config/nvim/lua/solarized_palette.lua,
+    // named in the trailing comments. The whole set is listed because cmux
+    // replaces this key rather than merging into it. Work and OS match the
+    // pane border colours claude-show uses in tmux.
     "colors": {
-      "Red": "#C0392B",
-      "Crimson": "#922B21",
-      "Orange": "#A04000",
-      "Amber": "#7D6608",
-      "Olive": "#4A5C18",
-      "Green": "#196F3D",
-      "Teal": "#006B6B",
-      "Aqua": "#0E6B8C",
-      "Blue": "#1565C0",
-      "Navy": "#1A5276",
-      "Indigo": "#283593",
-      "Purple": "#6A1B9A",
-      "Magenta": "#AD1457",
-      "Rose": "#880E4F",
-      "Brown": "#7B3F00",
-      "Charcoal": "#3E4B5E",
-      "Work": "#FFCDCC",
-      "OS": "#C9F5CC"
+      "Red": "#dc322f",      // red
+      "Crimson": "#64110f",  // mred
+      "Orange": "#cb4b16",   // orange
+      "Amber": "#b58900",    // yellow
+      "Olive": "#859900",    // green
+      "Green": "#25ad2e",    // rgreen
+      "Teal": "#04746c",     // dcyan
+      "Aqua": "#2aa198",     // cyan
+      "Blue": "#268bd2",     // blue
+      "Navy": "#023458",     // ddblue
+      "Indigo": "#323799",   // dviolet
+      "Purple": "#6c71c4",   // violet
+      "Magenta": "#d33682",  // magenta
+      "Rose": "#d37b79",     // lmred
+      "Brown": "#7d2500",    // dorange
+      "Charcoal": "#0e3c49", // base05
+      "Work": "#ffcdcc",     // llllred
+      "OS": "#c9f5cc"        // lllgreen
     }
   },
 
