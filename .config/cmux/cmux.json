@@ -82,5 +82,49 @@
     // Route every claude cmux starts through nono. cmux injects its hook
     // arguments before it resolves this path, so the sandbox sees them.
     "claudeBinaryPath": "/Users/pjcj/g/local_base/utils/cmux-claude"
+  },
+
+  "shortcuts": {
+    // Two problems drove this. cmux binds 14 actions to [ and ], which on a
+    // Swiss German keyboard need Option to type at all, so they cannot be
+    // reached with Command or Control held. And pane focus shipped on
+    // opt+cmd with the arrows, where opt+cmd+h is the macOS Hide Others
+    // shortcut and something takes opt+cmd+left as well.
+    //
+    // So everything lives on ctrl+cmd and hjkl instead. Nothing collides
+    // with nvim, tmux or aerospace, none of which use Command. Plain
+    // ctrl+hjkl stays free, so smart-splits keeps working in nvim.
+    //
+    // hjkl means direction, so pane focus takes the plain group. Workspaces
+    // are a vertical list and tabs a horizontal strip, so those two share a
+    // group, k and j for one and h and l for the other. Adding opt means
+    // move the thing rather than move to it.
+    "bindings": {
+      "focusLeft": "ctrl+cmd+h",
+      "focusDown": "ctrl+cmd+j",
+      "focusUp": "ctrl+cmd+k",
+      "focusRight": "ctrl+cmd+l",
+
+      "prevSidebarTab": "ctrl+cmd+shift+k",
+      "nextSidebarTab": "ctrl+cmd+shift+j",
+      "prevSurface": "ctrl+cmd+shift+h",
+      "nextSurface": "ctrl+cmd+shift+l",
+
+      "moveWorkspaceUp": "ctrl+opt+cmd+k",
+      "moveWorkspaceDown": "ctrl+opt+cmd+j",
+      "moveSurfaceLeft": "ctrl+opt+cmd+h",
+      "moveSurfaceRight": "ctrl+opt+cmd+l",
+
+      "moveSurfaceToPreviousPane": "ctrl+opt+cmd+shift+h",
+      "moveSurfaceToNextPane": "ctrl+opt+cmd+shift+l",
+
+      // Back and forward share their keys, as they do by default, because
+      // cmux picks between them by context. Focus history walks the
+      // workspaces you have visited, browser history the pages.
+      "focusHistoryBack": "ctrl+opt+cmd+shift+k",
+      "focusHistoryForward": "ctrl+opt+cmd+shift+j",
+      "browserBack": "ctrl+opt+cmd+shift+k",
+      "browserForward": "ctrl+opt+cmd+shift+j"
+    }
   }
 }
