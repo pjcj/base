@@ -84,6 +84,19 @@
     "claudeBinaryPath": "/Users/pjcj/g/local_base/utils/cmux-claude"
   },
 
+  "actions": {
+    // The tmux C-a A binding, less the split, which cmux has no target for.
+    // claude rather than nclaude, because the cmux shim routes it via nono.
+    "claude": {
+      "type": "command",
+      "title": "Claude Code",
+      "subtitle": "Start claude in a new tab",
+      "command": "claude --chrome",
+      "target": "newTabInCurrentPane",
+      "shortcut": "ctrl+cmd+a"
+    }
+  },
+
   "shortcuts": {
     // Two problems drove this. cmux binds 14 actions to [ and ], which on a
     // Swiss German keyboard need Option to type at all, so they cannot be
