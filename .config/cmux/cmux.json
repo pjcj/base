@@ -1,0 +1,74 @@
+{
+  "$schema": "https://raw.githubusercontent.com/manaflow-ai/cmux/main/web/data/cmux.schema.json",
+  "schemaVersion": 1,
+
+  // Pane dividers match .tmux.conf pane-border-style (brightgreen, which the
+  // Ghostty palette maps to #586e75) and pane-active-border-style.
+  "paneBorderColor": "#586e75",
+  "activePaneBorderColor": "#fff179",
+
+  "app": {
+    "appearance": "dark",
+    // Ghostty config sets quit-after-last-window-closed and
+    // confirm-close-surface = false, so do not ask on the way out.
+    "confirmQuit": "never",
+    "warnBeforeClosingTab": false
+  },
+
+  "terminal": {
+    // Ghostty config sets copy-on-select = clipboard. cmux defaults to false
+    // and suppresses it, so turn it back on here.
+    "copyOnSelect": true
+  },
+
+  "sidebarAppearance": {
+    // #012028 is the background .tmux.conf gives inactive panes, against
+    // #001920 for the active one. Reusing it here puts the sidebar in the
+    // same visual language. Set matchTerminalBackground true instead to
+    // have the sidebar share the terminal background exactly.
+    "matchTerminalBackground": false,
+    "tintColor": "#012028",
+    "tintOpacity": 1
+  },
+
+  "notifications": {
+    "agentPermissionPrompt": true,
+    "agentTurnComplete": "whenIdle",
+    "agentIdleReminder": true,
+    // cmux runs on its own aerospace workspace, so a sound is the only cue
+    // that reaches you while you work in Ghostty. Set "none" to silence it.
+    "sound": "Tink"
+  },
+
+  "workspaceColors": {
+    // The full palette, since cmux replaces rather than merges this key. Work
+    // and OS match the pane border colours claude-show uses in tmux.
+    "colors": {
+      "Red": "#C0392B",
+      "Crimson": "#922B21",
+      "Orange": "#A04000",
+      "Amber": "#7D6608",
+      "Olive": "#4A5C18",
+      "Green": "#196F3D",
+      "Teal": "#006B6B",
+      "Aqua": "#0E6B8C",
+      "Blue": "#1565C0",
+      "Navy": "#1A5276",
+      "Indigo": "#283593",
+      "Purple": "#6A1B9A",
+      "Magenta": "#AD1457",
+      "Rose": "#880E4F",
+      "Brown": "#7B3F00",
+      "Charcoal": "#3E4B5E",
+      "Work": "#FFCDCC",
+      "OS": "#C9F5CC"
+    }
+  },
+
+  "automation": {
+    "claudeCodeIntegration": true,
+    // Route every claude cmux starts through nono. cmux injects its hook
+    // arguments before it resolves this path, so the sandbox sees them.
+    "claudeBinaryPath": "/Users/pjcj/g/local_base/utils/cmux-claude"
+  }
+}
