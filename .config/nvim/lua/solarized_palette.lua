@@ -28,6 +28,7 @@ return {
   base05      = "#0e3c49", -- lighter than base02
   base06      = "#012028", -- lighter than base03
   base07      = "#052c37", -- between base02 and base05
+  cream       = "#fff9c7", -- terminal foreground (ghostty, wezterm)
   peach       = "#ffdc79", -- peach
   pyellow     = "#fff179", -- pale yellow
   llyellow    = "#f0a63f", -- light yellow
