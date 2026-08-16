@@ -16,7 +16,7 @@
 set -eEuo pipefail
 shopt -s inherit_errexit 2>/dev/null || true
 
-readonly Width_percent=40
+readonly Width_percent=35
 readonly Title="claude"
 
 usage() {
