@@ -1,13 +1,14 @@
 # cmux-only Ghostty overrides, layered over `config` in this directory.
-#
-# Ghostty itself reads only `config`, so nothing here reaches the Ghostty
-# app. Run `cmux reload-config` after editing.
-#
-# app.globalFontMagnification in cmux.json scales every terminal by 120%,
-# which would render the shared font-size of 17 at about 20.4. Dropping the
-# base to 14 gives 16.8, near the size before the sidebar was enlarged.
+# Ghostty reads only `config`. Run `cmux reload-config` after editing.
+
+# cmux.json magnifies every terminal by 120%, so 14 renders at 16.8. The
+# shared 17 would give 20.4.
 font-size = 14
 
-# The shared 0.5 is too dark for watching several agents at once. Use 1 to
-# turn dimming off, since the active pane border already marks the focus.
+# The shared 0.5 is too dark.
 unfocused-split-opacity = 0.85
+
+# cmux draws the pane border over the terminal, so without padding the
+# first line and column sit under it.
+window-padding-x = 12,12
+window-padding-y = 12,0
