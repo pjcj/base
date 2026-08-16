@@ -102,10 +102,17 @@
                         ]
                     },
                     {
-                        "description": "f5 -> [",
+                        "description": "f5 -> [ (needs enable_fkey_symbols)",
                         "manipulators": [
                             {
-                                "from": { "key_code": "ff5" },
+                                "conditions": [
+                                    {
+                                        "name": "enable_fkey_symbols",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": { "key_code": "f5" },
                                 "to": {
                                     "key_code": "5",
                                     "modifiers": ["right_option"]
@@ -134,10 +141,17 @@
                         ]
                     },
                     {
-                        "description": "f6 -> ]",
+                        "description": "f6 -> ] (needs enable_fkey_symbols)",
                         "manipulators": [
                             {
-                                "from": { "key_code": "ff6" },
+                                "conditions": [
+                                    {
+                                        "name": "enable_fkey_symbols",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": { "key_code": "f6" },
                                 "to": {
                                     "key_code": "6",
                                     "modifiers": ["right_option"]
@@ -166,10 +180,17 @@
                         ]
                     },
                     {
-                        "description": "f7 -> {",
+                        "description": "f7 -> { (needs enable_fkey_symbols)",
                         "manipulators": [
                             {
-                                "from": { "key_code": "ff7" },
+                                "conditions": [
+                                    {
+                                        "name": "enable_fkey_symbols",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": { "key_code": "f7" },
                                 "to": {
                                     "key_code": "8",
                                     "modifiers": ["right_option"]
@@ -198,10 +219,17 @@
                         ]
                     },
                     {
-                        "description": "f8 -> }",
+                        "description": "f8 -> } (needs enable_fkey_symbols)",
                         "manipulators": [
                             {
-                                "from": { "key_code": "ff8" },
+                                "conditions": [
+                                    {
+                                        "name": "enable_fkey_symbols",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": { "key_code": "f8" },
                                 "to": {
                                     "key_code": "9",
                                     "modifiers": ["right_option"]
@@ -268,10 +296,17 @@
                         ]
                     },
                     {
-                        "description": "f10 -> |",
+                        "description": "f10 -> | (needs enable_fkey_symbols)",
                         "manipulators": [
                             {
-                                "from": { "key_code": "ff10" },
+                                "conditions": [
+                                    {
+                                        "name": "enable_fkey_symbols",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": { "key_code": "f10" },
                                 "to": {
                                     "key_code": "7",
                                     "modifiers": ["right_option"]
@@ -281,10 +316,17 @@
                         ]
                     },
                     {
-                        "description": "f9 -> ~",
+                        "description": "f9 -> ~ (needs enable_fkey_symbols)",
                         "manipulators": [
                             {
-                                "from": { "key_code": "ff9" },
+                                "conditions": [
+                                    {
+                                        "name": "enable_fkey_symbols",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "from": { "key_code": "f9" },
                                 "to": {
                                     "key_code": "n",
                                     "modifiers": ["right_option"]
