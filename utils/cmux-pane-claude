@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+
+# Open claude in a pane beside the current cmux pane.
+#
+# The cmux counterpart of claude-show, which does the same job in tmux.
+# A cmux action in ~/.config/cmux/cmux.json types this command into the
+# focused terminal, so $PWD is the pane it was run from.
+#
+# cmux splits at half width and offers no ratio when splitting, so the
+# width is set afterwards through the pane.resize RPC, which the
+# resize-pane command does not expose.
+#
+# The pane is as tall as the pane it was split from, so it fills the
+# height unless that pane was already part of a vertical split.
+
+set -eEuo pipefail
+shopt -s inherit_errexit 2>/dev/null || true
+
+readonly Width_percent=40
+readonly Title="claude"
+
+usage() {
+  cat <<EOF
+Usage: cmux-pane-claude
+
+Open claude in a pane beside the current cmux pane, taking
+${Width_percent}% of the workspace width.
+
+Options:
+  -h, --help   Show this help and exit.
+
+Bound to the claude-pane action in ~/.config/cmux/cmux.json.
+EOF
+}
+
+die() {
+  echo "cmux-pane-claude: $1" >&2
+  exit 1
+}
+
+pane_holding() {
+  local panes="$1" surface="$2"
+  jq -r --arg surface "$surface" \
+    '.panes[] | select(.surface_refs | index($surface)) | .ref' <<<"$panes"
+}
+
+pane_width() {
+  local panes="$1" width
+  width=$(jq ".container_frame.width * $Width_percent / 100" <<<"$panes")
+  [[ $width != 0 ]] || die "this workspace is not the visible one"
+  echo "$width"
+}
+
+resize_pane() {
+  local workspace="$1" pane="$2" width="$3"
+  cmux rpc pane.resize "{\"workspace_id\": \"$workspace\",
+    \"pane_id\": \"$pane\", \"absolute_axis\": \"horizontal\",
+    \"target_pixels\": $width}" >/dev/null
+}
+
+claude_command() {
+  local quoted_dir claude_cmd
+  printf -v quoted_dir %q "$PWD"
+  printf -v claude_cmd 'zsh -ic %q' "cd $quoted_dir && claude --chrome"
+  echo "$claude_cmd"
+}
+
+main() {
+  case "${1:-}" in
+  -h | --help)
+    usage
+    return 0
+    ;;
+  "") ;;
+  *)
+    echo "cmux-pane-claude: unknown argument '$1'" >&2
+    usage >&2
+    return 2
+    ;;
+  esac
+
+  command -v cmux >/dev/null || die "cmux is not installed"
+  command -v jq >/dev/null || die "jq is not installed"
+  export CMUX_QUIET=1
+
+  local reply surface workspace
+  reply=$(cmux new-split right --focus true) ||
+    die "could not split the pane, is this a cmux terminal?"
+  read -r _ surface workspace <<<"$reply"
+
+  local panes pane width claude_cmd
+  panes=$(cmux rpc pane.list "{\"workspace_id\": \"$workspace\"}")
+  pane=$(pane_holding "$panes" "$surface")
+  width=$(pane_width "$panes")
+  resize_pane "$workspace" "$pane" "$width"
+
+  claude_cmd=$(claude_command)
+  cmux respawn-pane --workspace "$workspace" --surface "$surface" \
+    --command "$claude_cmd" >/dev/null
+  cmux rename-tab --workspace "$workspace" --surface "$surface" \
+    "$Title" >/dev/null
+}
+
+main "$@"

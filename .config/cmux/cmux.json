@@ -81,6 +81,17 @@
       "command": "claude --chrome",
       "target": "newTabInCurrentPane",
       "shortcut": "ctrl+cmd+a"
+    },
+
+    // currentTerminal, so the script inherits the pane's directory. It
+    // needs a shell prompt, unlike the newTabInCurrentPane action above.
+    "claude-pane": {
+      "type": "command",
+      "title": "Claude Pane",
+      "subtitle": "Start claude in a 40% pane on the right",
+      "command": "cmux-pane-claude",
+      "target": "currentTerminal",
+      "shortcut": "ctrl+cmd+shift+a"
     }
   },
 
