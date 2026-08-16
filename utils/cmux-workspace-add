@@ -1,0 +1,171 @@
+#!/usr/bin/env bash
+
+# Create a cmux workspace set up for work on a directory.
+#
+# The workspace holds two panes. The left one has a neovim tab and a
+# zsh tab, the right one runs claude, split and sized by
+# cmux-pane-claude.
+#
+# The zsh tab runs two font steps smaller. cmux offers no command for
+# the terminal font size, so the script presses cmd-minus through
+# System Events instead. That needs accessibility permission for
+# whatever runs the script, and it brings cmux to the front. When it
+# fails the workspace is still built, only at the usual font size.
+
+set -eEuo pipefail
+shopt -s inherit_errexit 2>/dev/null || true
+
+readonly Font_steps=2
+readonly Bundle_id="com.cmuxterm.app"
+
+Script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+readonly Script_dir
+
+usage() {
+  cat <<EOF
+Usage: cmux-workspace-add <directory>
+
+Create a cmux workspace for <directory>, holding a neovim tab and a
+zsh tab on the left and a claude pane on the right.
+
+The zsh tab starts ${Font_steps} font steps smaller than the rest.
+
+Options:
+  -h, --help   Show this help and exit.
+EOF
+}
+
+warn() {
+  echo "cmux-workspace-add: $1" >&2
+}
+
+die() {
+  warn "$1"
+  exit 1
+}
+
+new_workspace() {
+  local dir="$1" reply workspace
+  reply=$(cmux new-workspace --cwd "$dir" --focus true) ||
+    die "could not create a workspace, is cmux running?"
+  read -r _ workspace <<<"$reply"
+  echo "$workspace"
+}
+
+surface_in_pane() {
+  local workspace="$1" pane="$2" index="$3"
+  cmux rpc surface.list "{\"workspace_id\": \"$workspace\"}" |
+    jq -r --arg pane "$pane" --argjson index "$index" \
+      '.surfaces[]
+       | select(.pane_ref == $pane and .index_in_pane == $index)
+       | .ref'
+}
+
+first_surface() {
+  local workspace="$1"
+  cmux rpc surface.list "{\"workspace_id\": \"$workspace\"}" |
+    jq -r '.surfaces[0] | "\(.ref) \(.pane_ref)"'
+}
+
+wait_for_prompt() {
+  local workspace="$1" surface="$2" try screen
+  for ((try = 0; try < 50; try++)); do
+    screen=$(cmux read-screen --workspace "$workspace" \
+      --surface "$surface" 2>/dev/null) || screen=""
+    [[ -z ${screen//[[:space:]]/} ]] || return 0
+    sleep 0.1
+  done
+  warn "the shell in $surface never prompted, typing into it anyway"
+}
+
+focus_surface() {
+  local workspace="$1" surface="$2"
+  cmux rpc surface.focus \
+    "{\"workspace_id\": \"$workspace\", \"surface_id\": \"$surface\"}" \
+    >/dev/null
+}
+
+press_cmd_minus() {
+  osascript >/dev/null 2>&1 <<'EOF'
+tell application "System Events" to keystroke "-" using command down
+EOF
+}
+
+shrink_font() {
+  local step
+  osascript -e "tell application id \"$Bundle_id\" to activate" \
+    >/dev/null 2>&1 ||
+    {
+      warn "could not raise cmux, leaving the zsh font as it is"
+      return 0
+    }
+  sleep 0.2
+  for ((step = 0; step < Font_steps; step++)); do
+    press_cmd_minus || {
+      warn "could not press cmd-minus, leaving the zsh font as it is"
+      return 0
+    }
+  done
+}
+
+add_claude_pane() {
+  local workspace="$1" surface="$2" dir="$3"
+  (
+    cd "$dir"
+    CMUX_WORKSPACE_ID="$workspace" CMUX_SURFACE_ID="$surface" \
+      "$Script_dir/cmux-pane-claude"
+  )
+}
+
+main() {
+  local dir
+  case "${1:-}" in
+  -h | --help)
+    usage
+    return 0
+    ;;
+  "")
+    warn "give me a directory"
+    usage >&2
+    return 2
+    ;;
+  -*)
+    warn "unknown option '$1'"
+    usage >&2
+    return 2
+    ;;
+  *)
+    dir="$1"
+    ;;
+  esac
+  (($# == 1)) || die "expected one directory, got $#"
+  [[ -d $dir ]] || die "no such directory: $dir"
+  dir=$(cd "$dir" && pwd)
+
+  command -v cmux >/dev/null || die "cmux is not installed"
+  command -v jq >/dev/null || die "jq is not installed"
+  export CMUX_QUIET=1
+
+  local workspace nvim_surface pane zsh_surface
+  workspace=$(new_workspace "$dir")
+  read -r nvim_surface pane <<<"$(first_surface "$workspace")"
+
+  wait_for_prompt "$workspace" "$nvim_surface"
+  cmux send --workspace "$workspace" --surface "$nvim_surface" -- \
+    'nvim\n' >/dev/null
+
+  cmux tab-action --workspace "$workspace" --tab "$nvim_surface" \
+    --action new-terminal-right >/dev/null
+  zsh_surface=$(surface_in_pane "$workspace" "$pane" 1)
+  [[ -n $zsh_surface ]] || die "the zsh tab did not appear"
+
+  add_claude_pane "$workspace" "$zsh_surface" "$dir"
+
+  # cmux titles the workspace after the focused tab, so leave the zsh
+  # tab focused rather than the claude pane cmux-pane-claude focuses.
+  # The keys shrink_font sends go to that tab.
+  focus_surface "$workspace" "$zsh_surface"
+  shrink_font
+}
+
+main "$@"
