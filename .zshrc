@@ -1281,6 +1281,13 @@ setopt prompt_subst
 zmodload zsh/system
 typeset -g _PROMPT_GIT="" _PROMPT_PERLV=""
 
+typeset -g _PROMPT_CMUX=""
+if [[ -n $CMUX_SURFACE_ID && -z $TMUX ]] \
+  && (( $+commands[cmux] && $+commands[jq] )); then
+  _PROMPT_CMUX=$(cmux identify 2>/dev/null \
+    | jq -r '.caller.surface_ref // empty')
+fi
+
 _prompt_git_status() {
   local line head="" oid=""
   local -i ahead=0 behind=0
@@ -1512,10 +1519,15 @@ custom_prompt() {
   local p_git="$Reply"
   seg $bg2 $s_base1 " $_PROMPT_PERLV"
   local p_perl="$Reply"
+  local p_cmux=""
+  if [[ -n $_PROMPT_CMUX ]]; then
+    seg $bg2 $s_base01 "$_PROMPT_CMUX "
+    p_cmux="$Reply"
+  fi
   seg $bg1 "" " "
   local p_gap="$Reply"
 
-  local content="$top_left$p_time$p_location$p_git$p_perl$p_gap"
+  local content="$top_left$p_time$p_location$p_git$p_perl$p_cmux$p_gap"
   prompt-length "$content"
   local content_length=$Reply
   local extra_spaces=0
