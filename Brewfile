@@ -381,12 +381,6 @@ cask "darrylmorley/whatcable/whatcable", trusted: true
 cask "xld"
 # Video communication and virtual meeting platform
 cask "zoom"
-mas "1Password for Safari", id: 1569813296
-mas "GarageBand", id: 682658836
-mas "iMovie", id: 408981434
-mas "Keynote", id: 409183694
-mas "Numbers", id: 409203825
-mas "Pages", id: 409201541
 mas "Tailscale", id: 1475387142
 go "golang.org/x/tools/cmd/auth/authtest"
 go "golang.org/x/tools/cmd/benchcmp"
