@@ -11,6 +11,7 @@ tap "louisbrunner/valgrind", "https://github.com/LouisBrunner/homebrew-valgrind"
 tap "manaflow-ai/cmux"
 tap "netmute/tap", trusted: true
 tap "nikitabobko/tap"
+tap "oetiker/mdmost", "https://github.com/oetiker/mdmost", trusted: true
 tap "tako8ki/tap"
 tap "tonisives/tap"
 # Highly capable, feature-rich programming language
@@ -295,6 +296,8 @@ brew "felixkratz/formulae/borders", trusted: true
 brew "hougesen/tap/mdsf", trusted: true
 # Dynamic analysis tools (memory, debug, profiling)
 brew "louisbrunner/valgrind/valgrind", args: ["HEAD"], trusted: true
+# Full-screen terminal pager for a single Markdown document
+brew "oetiker/mdmost/mdmost"
 # Cross-platform TUI database management tool written in Rust
 brew "tako8ki/tap/gobang", trusted: true
 # Password manager that keeps all passwords secure behind one password
