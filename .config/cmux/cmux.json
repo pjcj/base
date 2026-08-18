@@ -21,7 +21,9 @@
   },
 
   "sidebar": {
-    "wrapWorkspaceTitles": true
+    "wrapWorkspaceTitles": true,
+    // Off until cmux prunes dead ports - stale test-server ports pile up.
+    "showPorts": false
   },
 
   "sidebarAppearance": {
