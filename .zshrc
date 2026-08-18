@@ -1107,7 +1107,7 @@ export FZF_TMUX=1
 export FZF_TMUX_HEIGHT=90%
 export FZF_WIDTH=70
 export FZF_DEFAULT_OPTS="
-  --height 80% --reverse --inline-info
+  --height 90% --reverse --inline-info
   --preview-window=right:${FZF_WIDTH}%
   --color fg:-1,bg:-1,hl:$s_blue,fg+:$s_normal
   --color bg+:$s_ddred,hl+:$s_blue,gutter:$s_base02
