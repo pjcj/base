@@ -306,6 +306,9 @@ main() {
   ln -sf g/base/{.zshenv,.zshrc,.wezterm.lua,.aider.conf.yml} .
   [[ -d ~/.config ]] || mkdir ~/.config
   ln -sf ~/g/base/.config/* ~/.config
+  # mdmost reads its config from Application Support on macOS, not ~/.config
+  [[ $uname == Darwin ]] &&
+    ln -sfn ~/g/base/.config/mdmost "$HOME/Library/Application Support/mdmost"
 
   [[ -d ~/.claude/skills ]] || mkdir -p ~/.claude/skills
   ln -sf ~/g/local_base/claude/skills/* ~/.claude/skills
