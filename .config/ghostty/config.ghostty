@@ -12,3 +12,6 @@ unfocused-split-opacity = 0.85
 # first line and column sit under it.
 window-padding-x = 12,12
 window-padding-y = 12,0
+
+# Bytes, so 100MB, allocated lazily.
+scrollback-limit = 100000000
