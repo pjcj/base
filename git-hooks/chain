@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Global git hooks (core.hooksPath = ~/g/base/git-hooks). Setting
+# hooksPath stops git looking in the repo's own .git/hooks, so every
+# standard hook name in this directory is a symlink to this script,
+# which runs any global checks for that hook and then hands over to the
+# repo's local hook of the same name. Without the symlinks the local
+# hooks (e.g. the shims pre-commit installs) would silently stop
+# running.
+
+set -euo pipefail
+
+Name=$(basename "$0")
+
+if [[ $Name == commit-msg ]]; then
+  # Lint the commit message prose with Vale, using the canonical wrapper
+  # from project_start when that checkout exists. The sentinel stops the
+  # project-level pre-commit entry linting the same message again.
+  vale_hook=$HOME/g/perl/project_start/utils/vale-commit-msg
+  if [[ -x $vale_hook ]]; then
+    "$vale_hook" "$@"
+    export VALE_COMMIT_MSG_RAN=1
+  fi
+fi
+
+# git rev-parse --git-path hooks honours core.hooksPath, which would
+# point back here, so build the local path from --git-dir instead.
+local_hook=$(git rev-parse --git-dir)/hooks/$Name
+[[ -x $local_hook ]] && exec "$local_hook" "$@"
+exit 0

@@ -6,6 +6,7 @@
   whitespace                    = trailing-space,space-before-tab
   autocrlf                      = input
   excludesfile                  = ~/.gitignore_global
+  hooksPath                     = ~/g/base/git-hooks
 [transfer]
   fsckObjects                   = true
 [gc]
