@@ -59,6 +59,7 @@ local plugins = {
         javascript = { "eslint" },
         json = { "jsonlint" },
         markdown = { "markdownlint" },
+        perl = { "vale_pod" },
         rst = { "rstlint" },
         yaml = { "yamllint" },
         zsh = { "zsh" },
@@ -96,38 +97,53 @@ local plugins = {
         warning = vim.diagnostic.severity.WARN,
         suggestion = vim.diagnostic.severity.HINT,
       }
+      local function vale_parser(output, bufnr)
+        if vim.trim(output) == "" then return {} end
+        local decoded = vim.json.decode(output)
+        local diagnostics = {}
+        local _, items = next(decoded)
+        for _, item in pairs(items or {}) do
+          local curline = unpack(
+            vim.api.nvim_buf_get_lines(bufnr, item.Line - 1, item.Line, false)
+          )
+          local ok, col = pcall(vim.str_byteindex, curline, item.Span[1])
+          if not ok then col = 1 end
+          local end_col
+          ok, end_col = pcall(vim.str_byteindex, curline, item.Span[2])
+          if not ok then end_col = curline and #curline or 1 end
+          table.insert(diagnostics, {
+            lnum = item.Line - 1,
+            end_lnum = item.Line - 1,
+            col = col - 1,
+            end_col = end_col,
+            message = item.Message,
+            source = "vale",
+            code = item.Check,
+            severity = vale_severities[item.Severity]
+              or vim.diagnostic.severity.WARN,
+          })
+        end
+        return diagnostics
+      end
       lint.linters.vale = {
         cmd = "vale",
         stdin = true,
         args = { "--no-exit", "--output", "JSON", "--ext", vale_ext },
-        parser = function(output, bufnr)
-          if vim.trim(output) == "" then return {} end
-          local decoded = vim.json.decode(output)
-          local diagnostics = {}
-          local _, items = next(decoded)
-          for _, item in pairs(items or {}) do
-            local curline = unpack(
-              vim.api.nvim_buf_get_lines(bufnr, item.Line - 1, item.Line, false)
-            )
-            local ok, col = pcall(vim.str_byteindex, curline, item.Span[1])
-            if not ok then col = 1 end
-            local end_col
-            ok, end_col = pcall(vim.str_byteindex, curline, item.Span[2])
-            if not ok then end_col = curline and #curline or 1 end
-            table.insert(diagnostics, {
-              lnum = item.Line - 1,
-              end_lnum = item.Line - 1,
-              col = col - 1,
-              end_col = end_col,
-              message = item.Message,
-              source = "vale",
-              code = item.Check,
-              severity = vale_severities[item.Severity]
-                or vim.diagnostic.severity.WARN,
-            })
-          end
-          return diagnostics
-        end,
+        parser = vale_parser,
+      }
+
+      -- Vale's Perl parser sees only # comments, so a second pass keeps
+      -- POD lines, blanks the rest (line numbers survive) and lints the
+      -- result as markdown.
+      lint.linters.vale_pod = {
+        cmd = "sh",
+        args = {
+          "-c",
+          [[awk '/^=[A-Za-z]/ { p = 1 } { print p ? $0 : "" } /^=cut/ { p = 0 }' ]]
+            .. "| vale --no-exit --output JSON --ext .md",
+        },
+        stdin = true,
+        parser = vale_parser,
       }
 
       -- perlimports lint (active when perl-lsp is the current server).  Feed
