@@ -8,7 +8,7 @@ tap "homebrew/services"
 tap "hougesen/tap"
 tap "iina/mpv-iina", trusted: true
 tap "louisbrunner/valgrind", "https://github.com/LouisBrunner/homebrew-valgrind"
-tap "manaflow-ai/cmux"
+tap "manaflow-ai/cmux", trusted: { casks: ["cmux"] }
 tap "netmute/tap", trusted: true
 tap "nikitabobko/tap"
 tap "oetiker/mdmost", "https://github.com/oetiker/mdmost", trusted: true
@@ -348,6 +348,8 @@ cask "museeks"
 cask "musicbrainz-picard"
 # Desktop sync client for Nextcloud software products
 cask "nextcloud"
+# Identity verification provider
+cask "okta-verify"
 # System-wide Vim mode
 cask "tonisives/tap/ovim", trusted: true
 # Home media player
