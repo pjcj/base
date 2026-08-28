@@ -71,6 +71,65 @@ local plugins = {
       vim.list_extend(codespell_args, { "--stdin-single-line", "-" })
       lint.linters.codespell.args = codespell_args
 
+      -- Vale prose lint, run on every buffer like codespell (see the
+      -- autocmd below). The builtin linter derives --ext from the
+      -- buffer's filename, which misleads Vale for .t files (an
+      -- extension it does not know), .pod (recognised, but POD is not
+      -- extracted - feeding it as markdown works) and extensionless
+      -- buffers such as COMMIT_EDITMSG. Map those by filetype, fall
+      -- back to the filename extension, then plain text. The parser
+      -- reads whichever stdin.<ext> key Vale returns rather than
+      -- deriving the key from the filename as the builtin does.
+      local vale_ext_by_ft = {
+        perl = ".pl",
+        pod = ".md",
+        gitcommit = ".md",
+      }
+      local function vale_ext()
+        local override = vale_ext_by_ft[vim.bo.filetype]
+        if override then return override end
+        local ext = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":e")
+        return ext ~= "" and "." .. ext or ".txt"
+      end
+      local vale_severities = {
+        error = vim.diagnostic.severity.ERROR,
+        warning = vim.diagnostic.severity.WARN,
+        suggestion = vim.diagnostic.severity.HINT,
+      }
+      lint.linters.vale = {
+        cmd = "vale",
+        stdin = true,
+        args = { "--no-exit", "--output", "JSON", "--ext", vale_ext },
+        parser = function(output, bufnr)
+          if vim.trim(output) == "" then return {} end
+          local decoded = vim.json.decode(output)
+          local diagnostics = {}
+          local _, items = next(decoded)
+          for _, item in pairs(items or {}) do
+            local curline = unpack(
+              vim.api.nvim_buf_get_lines(bufnr, item.Line - 1, item.Line, false)
+            )
+            local ok, col = pcall(vim.str_byteindex, curline, item.Span[1])
+            if not ok then col = 1 end
+            local end_col
+            ok, end_col = pcall(vim.str_byteindex, curline, item.Span[2])
+            if not ok then end_col = curline and #curline or 1 end
+            table.insert(diagnostics, {
+              lnum = item.Line - 1,
+              end_lnum = item.Line - 1,
+              col = col - 1,
+              end_col = end_col,
+              message = item.Message,
+              source = "vale",
+              code = item.Check,
+              severity = vale_severities[item.Severity]
+                or vim.diagnostic.severity.WARN,
+            })
+          end
+          return diagnostics
+        end,
+      }
+
       -- perlimports lint (active when perl-lsp is the current server).  Feed
       -- the live buffer on stdin with --read-stdin so it lints on-type like
       -- perlcritic, rather than re-reading the saved file from disk.
@@ -263,6 +322,7 @@ local plugins = {
           lint.try_lint()
           if vim.bo.filetype ~= "SidebarNvim" then
             lint.try_lint("codespell")
+            lint.try_lint("vale")
           end
           if
             vim.bo.filetype == "perl"
