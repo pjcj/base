@@ -260,6 +260,8 @@ brew "tree-sitter-cli"
 brew "typos-cli"
 # Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
+# Syntax-aware linter for prose
+brew "vale"
 # Pager/text based browser
 brew "w3m"
 # Convert HTML to PDF
