@@ -116,6 +116,7 @@ update_other() {
   pre-commit autoupdate --config ~/g/base/config/.pre-commit-config.yaml
   ~/g/base/utils/install_nono
   ~/g/base/utils/update_perllsp
+  vale --config ~/g/local_base/.config/vale/.vale.ini sync
   # skip cmux shim to bypass nono
   [[ -x ~/.local/bin/claude ]] && ~/.local/bin/claude update
 }
@@ -306,7 +307,8 @@ main() {
   ln -sf g/base/{.urlview,.vimrc,.Xdefaults,.vim,.tmux.conf,.tigrc} .
   ln -sf g/base/{.zshenv,.zshrc,.wezterm.lua,.aider.conf.yml} .
   [[ -d ~/.config ]] || mkdir ~/.config
-  ln -sf ~/g/base/.config/* ~/.config
+  ln -sfn ~/g/base/.config/* ~/.config
+  ln -sfn ~/g/local_base/.config/* ~/.config
   # mdmost reads its config from Application Support on macOS, not ~/.config
   [[ $uname == Darwin ]] &&
     ln -sfn ~/g/base/.config/mdmost "$HOME/Library/Application Support/mdmost"
