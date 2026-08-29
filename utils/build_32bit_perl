@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+
+# Build a 32-bit (ivsize=4) perl inside a linux/386 Docker container.
+# macOS cannot build 32-bit binaries natively, so the perl is built and
+# installed into a host directory that must be mounted at the same path
+# (/perl) whenever it is run.
+
+set -eEuo pipefail
+shopt -s inherit_errexit
+
+readonly Image=debian:bookworm
+readonly Perl_build_url=https://raw.githubusercontent.com/tokuhirom/Perl-Build/master/perl-build
+
+usage() {
+  local script
+  script=$(basename "$0")
+  cat <<EOT
+$script [--version <perl version>] [--dest <dir>] [--help]
+
+Build a 32-bit (ivsize=4) perl in a linux/386 Docker container.
+The result is installed under <dir> and runs only inside a
+linux/386 container with <dir> mounted at /perl.
+
+Options:
+  --version  perl version to build (default 5.44.0)
+  --dest     install directory on the host
+             (default ~/g/perl5/perl-<version>-32bit)
+  --help     show this help
+
+Examples:
+  $script
+  $script --version 5.42.0 --dest /tmp/perl32
+
+Run the built perl afterwards with:
+  docker run --rm --platform linux/386 \\
+    -v <dir>:/perl -v "\$PWD":/work -w /work \\
+    $Image /perl/bin/perl -V:ivsize
+EOT
+}
+
+main() {
+  local version=5.44.0 dest=
+
+  while (($# > 0)); do
+    case $1 in
+    --version)
+      version=$2
+      shift 2
+      ;;
+    --dest)
+      dest=$2
+      shift 2
+      ;;
+    --help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "Unknown option: $1" >&2
+      usage >&2
+      exit 1
+      ;;
+    esac
+  done
+
+  [[ -n $dest ]] || dest=$HOME/g/perl5/perl-$version-32bit
+
+  if ! command -v docker >/dev/null; then
+    echo "docker not found - install Docker Desktop first" >&2
+    exit 1
+  fi
+
+  if [[ -x $dest/bin/perl ]]; then
+    echo "$dest/bin/perl already exists - remove it to rebuild" >&2
+    exit 1
+  fi
+
+  mkdir -p "$dest"
+
+  echo "Building 32-bit perl $version into $dest (this is slow under qemu)"
+
+  docker run --rm --platform linux/386 -v "$dest":/perl "$Image" \
+    bash -euo pipefail -c "
+      apt-get update -qq
+      apt-get install -qq -y --no-install-recommends \\
+        build-essential curl ca-certificates > /dev/null
+      curl -fsSL '$Perl_build_url' -o /usr/local/bin/perl-build
+      chmod +x /usr/local/bin/perl-build
+      perl-build --notest '$version' /perl
+      /perl/bin/perl -V:ivsize -V:ptrsize
+    "
+
+  cat <<EOT
+
+Done. Run it with:
+  docker run --rm --platform linux/386 \\
+    -v $dest:/perl -v "\$PWD":/work -w /work \\
+    $Image /perl/bin/perl -V:ivsize
+EOT
+}
+
+main "$@"
