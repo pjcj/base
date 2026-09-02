@@ -28,12 +28,13 @@ The script will:
 - Install perl with development options (usedevel, no man pages)
 - Install cpanm and cpm
 - Install essential development modules:
-  * Dist::Zilla
-  * Perl::Critic
+  * Dist::Zilla and the plugins used by my dist.ini files
+  * Perl::Critic and extra policy sets
   * Perl::Tidy
   * App::perlimports
   * Devel::Cover
-  * Perl::Critic::Moose
+  * Test2::Harness (yath)
+  * App::cpanoutdated
 
 EOF
 }
@@ -51,8 +52,11 @@ remove_existing_installation() {
 
   echo "Removing existing '$name' installation if present..."
 
-  # Check if the version exists and uninstall it
-  if plenv versions --bare | grep -q "^${name}$"; then
+  # Read the list into a variable first: grep -q would close the pipe early,
+  # plenv would then get SIGPIPE and pipefail would report a failure
+  local versions
+  versions=$(plenv versions --bare)
+  if grep -qx "$name" <<<"$versions"; then
     echo "Found existing installation, uninstalling..."
     printf "y\n" | plenv uninstall "$name" || true
   else
@@ -84,13 +88,38 @@ setup_development_tools() {
   cpm install -g \
     Dist::Zilla \
     Dist::Zilla::Plugin::Git \
+    Dist::Zilla::App::Command::cover \
+    Dist::Zilla::Plugin::CheckExtraTests \
+    Dist::Zilla::Plugin::Config::Git \
+    Dist::Zilla::Plugin::Run \
+    Dist::Zilla::Plugin::Test::Compile \
+    Dist::Zilla::Plugin::Test::DistManifest \
+    Dist::Zilla::Plugin::Test::EOL \
+    Dist::Zilla::Plugin::Test::Kwalitee \
+    Dist::Zilla::Plugin::Test::Perl::Critic \
+    Dist::Zilla::Plugin::Test::Pod::Coverage::TrustMe \
+    Dist::Zilla::Plugin::Test::PodSpelling \
+    Dist::Zilla::Plugin::Test::Portability \
+    Dist::Zilla::Plugin::Test::ReportPrereqs \
+    Dist::Zilla::Plugin::Test::Synopsis \
+    Dist::Zilla::Plugin::Test::Version \
+    Software::License \
+    Test::File::ShareDir \
     Archive::Tar::Wrapper \
     Perl::Critic \
     Perl::Critic::Moose \
+    Perl::Critic::Community \
+    Perl::Critic::Freenode \
+    Perl::Critic::RENEEB \
+    Perl::Critic::Policy::Plicease::ProhibitArrayAssignAref \
     Perl::Critic::Policy::ValuesAndExpressions::ProhibitSingleArgArraySlice \
+    Perl::Critic::Policy::Variables::ProhibitLoopOnHash \
+    Perl::Critic::PJCJ \
     Perl::Tidy \
     App::perlimports \
     Devel::Cover \
+    Test2::Harness \
+    App::cpanoutdated \
     Template \
     Browser::Open
 }
