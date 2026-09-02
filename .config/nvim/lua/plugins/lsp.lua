@@ -18,7 +18,7 @@ local plugins = {
 
   -- Package manager for LSP servers, DAP servers, linters, and formatters
   { "williamboman/mason.nvim" },
-  -- Automatic color highlighting for LSP diagnostics
+  -- Automatic colour highlighting for LSP diagnostics
   { "folke/lsp-colors.nvim" },
   -- Shows lightbulb icon when LSP code actions are available
   {
@@ -196,7 +196,7 @@ local plugins = {
       -- critic cannot reproduce.  A wrapper reads the buffer from stdin but
       -- reports it under the real filename (--file), so it lints live (unsaved
       -- content) like PerlNavigator while filename policies such as
-      -- RequireFilenameMatchesPackage still fire.
+      -- RequireFilenameMatchesPackage still apply.
       local function perlcriticrc()
         return vim.fs.find(".perlcriticrc", {
           upward = true,
@@ -419,7 +419,7 @@ local plugins = {
       -- }
     end,
   },
-  -- Code formatting with support for multiple formatters per filetype
+  -- Code formatting with several formatters per filetype
   {
     "stevearc/conform.nvim",
     version = "*",
