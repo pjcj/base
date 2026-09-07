@@ -29,6 +29,7 @@ The script will:
 - Install cpanm and cpm
 - Install essential development modules:
   * Dist::Zilla and the plugins used by my dist.ini files
+  * Module::Build, which left core in perl 5.22
   * Perl::Critic and extra policy sets
   * Perl::Tidy
   * App::perlimports
@@ -103,6 +104,7 @@ setup_development_tools() {
     Dist::Zilla::Plugin::Test::ReportPrereqs \
     Dist::Zilla::Plugin::Test::Synopsis \
     Dist::Zilla::Plugin::Test::Version \
+    Module::Build \
     Software::License \
     Test::File::ShareDir \
     Archive::Tar::Wrapper \
