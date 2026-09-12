@@ -101,8 +101,8 @@ main() {
 
   if [ "$installed" = "$version" ]; then
     echo "nono $version already installed at $INSTALL_DIR/nono"
-    nono update
     ensure_config_link
+    "$INSTALL_DIR/nono" update
     return
   fi
 
@@ -139,6 +139,7 @@ main() {
   echo "Installed $("$INSTALL_DIR/nono" --version 2>/dev/null | head -n 1)"
 
   ensure_config_link
+  "$INSTALL_DIR/nono" update
 }
 
 main "$@"
