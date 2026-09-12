@@ -77,14 +77,19 @@ local plugins = {
       -- buffer's filename, which misleads Vale for .t files (an
       -- extension it does not know), .pod (recognised, but POD is not
       -- extracted - feeding it as markdown works) and extensionless
-      -- buffers such as COMMIT_EDITMSG. Map those by filetype, fall
-      -- back to the filename extension, then plain text. The parser
-      -- reads whichever stdin.<ext> key Vale returns rather than
-      -- deriving the key from the filename as the builtin does.
+      -- buffers such as COMMIT_EDITMSG and shell scripts without an
+      -- extension, which the .txt fallback would lint as prose. Map
+      -- those by filetype, fall back to the filename extension, then
+      -- plain text. The parser reads whichever stdin.<ext> key Vale
+      -- returns rather than deriving the key from the filename as the
+      -- builtin does.
       local vale_ext_by_ft = {
         perl = ".pl",
         pod = ".md",
         gitcommit = ".md",
+        sh = ".sh",
+        bash = ".sh",
+        make = ".sh",
       }
       local function vale_ext()
         local override = vale_ext_by_ft[vim.bo.filetype]
