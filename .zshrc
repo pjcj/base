@@ -464,6 +464,12 @@ for km in viopp visual; do
   done
 done
 
+# A late bracketed paste end marker must not act as keystrokes
+ignore-paste-end() { }
+zle -N ignore-paste-end
+bindkey -M viins '^[[201~' ignore-paste-end
+bindkey -M vicmd '^[[201~' ignore-paste-end
+
 zshrc_load_status "miscellaneous"
 
 # url-quote-magic breaks fast-syntax-highlighting
