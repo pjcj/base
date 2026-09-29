@@ -170,8 +170,6 @@ brew "neovide"
 brew "newsboat"
 # HTTP(S) server and reverse proxy, and IMAP/POP3 proxy server
 brew "nginx"
-# Easily download, build, install, upgrade, and uninstall Python packages
-brew "python-setuptools"
 # Graphical client for the Soulseek peer-to-peer network
 brew "nicotine-plus"
 # Port scanning utility for large networks
@@ -210,6 +208,8 @@ brew "pv"
 brew "pyenv"
 # Pyenv plugin to manage virtualenv
 brew "pyenv-virtualenv"
+# Easily download, build, install, upgrade, and uninstall Python packages
+brew "python-setuptools"
 # Convert character set (charsets)
 brew "recode"
 # Persistent key-value database, with built-in net interface
@@ -464,9 +464,6 @@ go "golang.org/x/tools/go/analysis/passes/unmarshal/cmd/unmarshal"
 go "golang.org/x/tools/go/analysis/passes/unusedresult/cmd/unusedresult"
 cargo "devicon-lookup"
 cargo "perl-lsp"
-uv "-"
-uv "-"
-uv "-"
 uv "aider-chat", with: ["pip"]
 uv "vectorcode[lsp,mcp]"
 npm "@google/gemini-cli"
