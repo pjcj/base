@@ -1,0 +1,175 @@
+#!/usr/bin/env bash
+
+# Build Strawberry Music Player on macOS from a release source tarball,
+# against the prebuilt dependency tarball upstream uses for its own macOS
+# builds, and install the resulting bundle.
+
+set -eEuo pipefail
+if ((BASH_VERSINFO[0] >= 4)); then
+  shopt -s inherit_errexit
+fi
+
+readonly Repo=strawberrymusicplayer/strawberry
+readonly Deps_repo=strawberrymusicplayer/strawberry-macos-dependencies
+readonly Deps_asset=strawberry-macos-arm64-release.tar.xz
+readonly Sw_dir="${STRAWBERRY_SW_DIR:-$HOME/g/sw/strawberry}"
+readonly Prefix="${STRAWBERRY_PREFIX:-/opt/strawberry_macos_arm64_release}"
+readonly App_dir="${STRAWBERRY_APP_DIR:-/Applications}"
+readonly Jobs="${STRAWBERRY_JOBS:-$(sysctl -n hw.ncpu)}"
+readonly Deps_dir="$Sw_dir/deps"
+readonly Src_dir="$Sw_dir/src"
+readonly App="$App_dir/strawberry.app"
+
+usage() {
+  cat <<USAGE
+Usage: build_strawberry [--no-install] [version]
+
+Build Strawberry from the release source tarball for version, which defaults
+to the latest release, against the latest upstream macOS dependency tarball,
+then install the bundle as $App.
+
+Downloads and builds live under $Sw_dir.
+The dependency prefix must be reachable as $Prefix,
+a symlink into that directory.
+USAGE
+}
+
+info() { echo "build_strawberry: $*" >&2; }
+
+die() {
+  info "$@"
+  exit 1
+}
+
+check_prefix_link() {
+  local name target
+  name=$(basename "$Prefix")
+  target="$Deps_dir/opt/$name"
+  [[ -L $Prefix && $(readlink "$Prefix") == "$target" ]] && return
+  die "Missing dependency prefix link. Run: sudo ln -s $target $Prefix"
+}
+
+ensure_not_running() {
+  if pgrep -xq strawberry; then
+    die "Quit Strawberry before installing a new build"
+  fi
+}
+
+latest_version() {
+  gh release list --repo "$Repo" --exclude-pre-releases --exclude-drafts \
+    --limit 1 --json tagName --jq '.[0].tagName'
+}
+
+latest_deps_tag() {
+  gh release view --repo "$Deps_repo" --json tagName --jq .tagName
+}
+
+fetch_source() {
+  local version=$1 file="$Src_dir/strawberry-$1.tar.xz"
+  [[ -f $file ]] && return
+  info "Downloading strawberry $version"
+  gh release download "$version" --repo "$Repo" \
+    --pattern "strawberry-$version.tar.xz" --dir "$Src_dir"
+}
+
+deps_tarball() { echo "$Deps_dir/strawberry-macos-arm64-release-$1.tar.xz"; }
+
+fetch_deps() {
+  local tag=$1 file
+  file=$(deps_tarball "$tag")
+  [[ -f $file ]] && return
+  info "Downloading dependencies $tag"
+  gh release download "$tag" --repo "$Deps_repo" --pattern "$Deps_asset" \
+    --output "$file"
+}
+
+extract_deps() {
+  local tag=$1 marker="$Deps_dir/current"
+  [[ -f $marker && $(<"$marker") == "$tag" ]] && return
+  info "Extracting dependencies $tag"
+  rm -rf "$Deps_dir/opt"
+  tar -xJf "$(deps_tarball "$tag")" -C "$Deps_dir"
+  echo "$tag" >"$marker"
+}
+
+extract_source() {
+  local version=$1
+  rm -rf "$Src_dir/strawberry-$version"
+  tar -xJf "$Src_dir/strawberry-$version.tar.xz" -C "$Src_dir"
+}
+
+build_env() {
+  env PATH="$Prefix/bin:/usr/bin:/bin:/usr/sbin:/sbin" \
+    PKG_CONFIG_PATH="$Prefix/lib/pkgconfig" \
+    LDFLAGS="-L$Prefix/lib -Wl,-rpath,$Prefix/lib" "$@"
+}
+
+configure() {
+  local src=$1 build_dir=$2
+  build_env cmake -S "$src" -B "$build_dir" \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_PREFIX_PATH="$Prefix/lib/cmake" \
+    -DICU_ROOT="$Prefix" \
+    -DUSE_BUNDLE=ON \
+    -DENABLE_SPARKLE=OFF \
+    -DENABLE_QTSPARKLE=OFF \
+    -DENABLE_SPOTIFY=ON \
+    -DBUILD_WERROR=OFF
+  if grep -q /opt/homebrew "$build_dir/CMakeCache.txt"; then
+    die "Homebrew paths leaked into $build_dir/CMakeCache.txt"
+  fi
+}
+
+build_bundle() {
+  local build_dir=$1
+  build_env cmake --build "$build_dir" --parallel "$Jobs"
+  build_env cmake --build "$build_dir" --target install
+  build_env cmake --build "$build_dir" --target deploy
+}
+
+install_app() {
+  local build_dir=$1
+  ensure_not_running
+  rm -rf "$App"
+  ditto "$build_dir/strawberry.app" "$App"
+}
+
+main() {
+  local install=1 version deps_tag src build_dir
+  while (($# > 0)); do
+    case $1 in
+    -h | --help)
+      usage
+      exit 0
+      ;;
+    --no-install) install=0 ;;
+    -*) die "Unknown option: $1" ;;
+    *) break ;;
+    esac
+    shift
+  done
+  check_prefix_link
+  if ((install)); then
+    ensure_not_running
+  fi
+  version=${1:-$(latest_version)}
+  mkdir -p "$Deps_dir" "$Src_dir"
+  fetch_source "$version"
+  deps_tag=$(latest_deps_tag)
+  fetch_deps "$deps_tag"
+  extract_deps "$deps_tag"
+  extract_source "$version"
+  src="$Src_dir/strawberry-$version"
+  build_dir="$src/build"
+  configure "$src" "$build_dir"
+  build_bundle "$build_dir"
+  if ((install)); then
+    install_app "$build_dir"
+    info "Installed strawberry $version as $App"
+  else
+    info "Built $build_dir/strawberry.app"
+    info "Install with: rm -rf $App && ditto $build_dir/strawberry.app $App"
+  fi
+}
+
+main "$@"
