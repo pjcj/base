@@ -1,0 +1,117 @@
+#!/usr/bin/env bash
+
+# Write the Claude Code usage snapshot that claude-hud reads for the
+# per-model (Fable) weekly window, which Claude Code does not send to the
+# status line itself.
+
+set -eEuo pipefail
+if ((BASH_VERSINFO[0] >= 4)); then
+  shopt -s inherit_errexit
+fi
+
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:$PATH"
+
+readonly Claude="${CLAUDE_BIN:-claude}"
+readonly Hud_dir="$HOME/.claude/plugins/claude-hud"
+readonly Snapshot="${CLAUDE_USAGE_SNAPSHOT:-$Hud_dir/usage-snapshot.json}"
+readonly Max_age="${CLAUDE_USAGE_MAX_AGE:-300}"
+readonly Lock="$Snapshot.lock"
+readonly Lock_max_age=60
+Allow_usage_fetch='{"env":{"CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC":""}}'
+Request='{"type":"control_request","request_id":"u1",'
+Request+='"request":{"subtype":"get_usage","skip_behaviors":true}}'
+readonly Allow_usage_fetch Request
+
+usage() {
+  cat <<USAGE
+Usage: claude-usage-snapshot [--force]
+
+Refresh $Snapshot
+when it is older than $Max_age seconds. --force refreshes it regardless.
+
+Point claude-hud at the file with display.externalUsagePath in its config.
+USAGE
+}
+
+age_of() {
+  local now modified
+  now=$(date +%s)
+  modified=$(date -r "$1" +%s)
+  echo $((now - modified))
+}
+
+is_fresh() {
+  [[ -f $Snapshot ]] && (($(age_of "$Snapshot") < Max_age))
+}
+
+release_lock() {
+  rmdir "$Lock" 2>/dev/null || true
+}
+
+acquire_lock() {
+  if [[ -d $Lock ]] && (($(age_of "$Lock") > Lock_max_age)); then
+    release_lock
+  fi
+  mkdir "$Lock" 2>/dev/null
+}
+
+fetch_rate_limits() {
+  echo "$Request" | "$Claude" -p --input-format stream-json \
+    --output-format stream-json --verbose --no-session-persistence \
+    --strict-mcp-config --mcp-config '{"mcpServers":{}}' \
+    --settings "$Allow_usage_fetch" |
+    jq -nc '[inputs | select(.type == "control_response")
+      | .response.response.rate_limits | values] | first // empty'
+}
+
+to_snapshot() {
+  jq '
+    def scoped_from_limits:
+      [(.limits // [])[] | select(.kind == "weekly_scoped")
+        | {display_name: .scope.model.display_name,
+           utilization: .percent,
+           resets_at: (if (.resets_at | type) == "number"
+                       then (.resets_at | todate) else .resets_at end)}];
+    (.model_scoped // []) as $scoped
+    | {updated_at: (now | todate),
+       model_scoped: (if ($scoped | length) > 0 then $scoped
+                      else scoped_from_limits end)}'
+}
+
+write_snapshot() {
+  local tmp
+  tmp=$(mktemp "$Snapshot.XXXXXX")
+  chmod 600 "$tmp"
+  cat >|"$tmp"
+  mv -f "$tmp" "$Snapshot"
+}
+
+main() {
+  local force=0 rate_limits
+  case "${1:-}" in
+  "") ;;
+  --force) force=1 ;;
+  -h | --help)
+    usage
+    exit 0
+    ;;
+  *)
+    echo "Unknown option: $1" >&2
+    usage >&2
+    exit 2
+    ;;
+  esac
+  if ((! force)) && is_fresh; then
+    exit 0
+  fi
+  acquire_lock || exit 0
+  trap release_lock EXIT
+  if ! rate_limits=$(fetch_rate_limits) || [[ -z $rate_limits ]]; then
+    echo "claude-usage-snapshot: claude returned no rate limits" >&2
+    to_snapshot <<<"{}" | write_snapshot
+    exit 1
+  fi
+  to_snapshot <<<"$rate_limits" | write_snapshot
+}
+
+main "$@"
