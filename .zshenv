@@ -8,6 +8,12 @@ if [[ $EUID -ne 0 && -d /home/linuxbrew/.linuxbrew/bin ]]; then
   path=(/home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/sbin $path)
 fi
 
+# Do the same for macOS Homebrew. cmux starts shells with the bare launchd
+# PATH, so brew tools must be on PATH before .zshrc loads its plugins.
+if [[ $EUID -ne 0 && -d /opt/homebrew/bin ]]; then
+  path=(/opt/homebrew/bin /opt/homebrew/sbin $path)
+fi
+
 # Do not export fpath. An exported FPATH is inherited by child shells and by the
 # tmux server, where it overrides zsh's compiled-in default fpath (which
 # includes the core functions directory). After a zsh upgrade the inherited path

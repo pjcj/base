@@ -22,6 +22,47 @@ AUTOENV_FILE_LEAVE=.autoenv.zsh
 AUTOENV_HANDLE_LEAVE=1
 AUTOENV_LOOK_UPWARDS=1
 
+zshrc_load_status "brew"
+
+# Source a cached file, regenerating if the key changed.
+# Usage: _source_cached <cache_file> <key> <generator_cmd>
+_source_cached() {
+  local _sc_file=$1 _sc_key=$2; shift 2
+  [[ -d ${_sc_file:h} ]] || mkdir -p ${_sc_file:h}
+  local _sc_cached_key
+  if [[ -r $_sc_file ]] \
+      && read -r _sc_cached_key < $_sc_file \
+      && [[ $_sc_cached_key == "# $_sc_key" ]]; then
+    . $_sc_file
+  else
+    {
+      echo "# $_sc_key"
+      "$@"
+    } >| $_sc_file
+    . $_sc_file
+  fi
+}
+
+if [[ $EUID -ne 0 ]]; then
+  _brew_bin=
+  if [[ -e /opt/homebrew/bin/brew ]]; then
+    _brew_bin=/opt/homebrew/bin/brew
+  elif [[ -e /usr/local/bin/brew ]]; then
+    _brew_bin=/usr/local/bin/brew
+  elif [[ -e /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+    _brew_bin=/home/linuxbrew/.linuxbrew/bin/brew
+  fi
+  if [[ -n $_brew_bin ]]; then
+    _brew_mtime=$(stat -f%m "$_brew_bin" 2>/dev/null \
+      || stat -c%Y "$_brew_bin" 2>/dev/null)
+    _source_cached ~/.cache/zsh/brew_shellenv \
+      "$_brew_bin $_brew_mtime" \
+      $_brew_bin shellenv
+    unset _brew_mtime
+  fi
+  unset _brew_bin
+fi
+
 zshrc_load_status "plugins"
 
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -151,45 +192,6 @@ setopt                      \
      zle
 
 zshrc_load_status "environment"
-
-# Source a cached file, regenerating if the key changed.
-# Usage: _source_cached <cache_file> <key> <generator_cmd>
-_source_cached() {
-  local _sc_file=$1 _sc_key=$2; shift 2
-  [[ -d ${_sc_file:h} ]] || mkdir -p ${_sc_file:h}
-  local _sc_cached_key
-  if [[ -r $_sc_file ]] \
-      && read -r _sc_cached_key < $_sc_file \
-      && [[ $_sc_cached_key == "# $_sc_key" ]]; then
-    . $_sc_file
-  else
-    {
-      echo "# $_sc_key"
-      "$@"
-    } >| $_sc_file
-    . $_sc_file
-  fi
-}
-
-if [[ $EUID -ne 0 ]]; then
-  _brew_bin=
-  if [[ -e /opt/homebrew/bin/brew ]]; then
-    _brew_bin=/opt/homebrew/bin/brew
-  elif [[ -e /usr/local/bin/brew ]]; then
-    _brew_bin=/usr/local/bin/brew
-  elif [[ -e /home/linuxbrew/.linuxbrew/bin/brew ]]; then
-    _brew_bin=/home/linuxbrew/.linuxbrew/bin/brew
-  fi
-  if [[ -n $_brew_bin ]]; then
-    _brew_mtime=$(stat -f%m "$_brew_bin" 2>/dev/null \
-      || stat -c%Y "$_brew_bin" 2>/dev/null)
-    _source_cached ~/.cache/zsh/brew_shellenv \
-      "$_brew_bin $_brew_mtime" \
-      $_brew_bin shellenv
-    unset _brew_mtime
-  fi
-  unset _brew_bin
-fi
 
 # shellcheck disable=SC1036
 fpath=(
