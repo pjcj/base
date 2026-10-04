@@ -19,7 +19,7 @@ no warnings "experimental::signatures";
 my $Base = path($FindBin::Bin)->parent;
 
 sub load_script () {
-  do "$Base/utils/playlist_sync" or die "Cannot load the script ($@$!)";
+  do "$Base/utils/music_sync" or die "Cannot load the script ($@$!)";
 }
 
 load_script();
@@ -129,7 +129,7 @@ sub plex ($responses = {}) {
 
 subtest "plex playlists" => sub {
   my $plex = plex({ "GET /playlists" => $Playlists_xml });
-  is PlaylistSync::plex_playlists($plex), [
+  is MusicSync::plex_playlists($plex), [
       { id => 10, title => "Trance", smart => 0, count => 3 },
       { id => 12, title => "Recent", smart => 1, count => 5 },
       { id => 13, title => "Chill",  smart => 0, count => 1 },
@@ -139,7 +139,7 @@ subtest "plex playlists" => sub {
 
 subtest "plex playlist items" => sub {
   my $plex = plex({ "GET /playlists/10/items" => $Items_xml });
-  is PlaylistSync::plex_playlist_items($plex, 10), [
+  is MusicSync::plex_playlist_items($plex, 10), [
       {
         item_id => 1001,
         key     => 101,
@@ -168,7 +168,7 @@ subtest "plex library tracks" => sub {
     "GET /library/sections"               => $Sections_xml,
     "GET /library/sections/1/all?type=10" => $Tracks_xml,
   });
-  is PlaylistSync::plex_library_tracks($plex), [
+  is MusicSync::plex_library_tracks($plex), [
       { key => 101, path => "/srv/music/Artist/Album/01 Song A.mp3" },
       { key => 102, path => "/srv/music/Artist/Album/02 Song B.mp3" },
       { key => 103, path => "/srv/music/Other/Album/01 Thé.mp3" },
@@ -181,7 +181,7 @@ subtest "plex library tracks" => sub {
 
 subtest "plex request failure" => sub {
   my $plex = plex;
-  like dies { PlaylistSync::plex_request($plex, "GET", "/missing") },
+  like dies { MusicSync::plex_request($plex, "GET", "/missing") },
     qr/404 Not Found/, "dies with the status";
 };
 
@@ -195,37 +195,33 @@ subtest "roots" => sub {
     { key => 2, path => "/srv/music/Nope/x.mp3" },
     { key => 3, path => "/srv/music/Artist/Album/01 Song A.mp3" },
   ];
-  is PlaylistSync::detect_roots($tracks, $local),
+  is MusicSync::detect_roots($tracks, $local),
     { plex => "/srv/music/", local => "t/" },
     "roots from the first track found locally";
-  is PlaylistSync::detect_roots(
+  is MusicSync::detect_roots(
     [ { key => 4, path => "/srv/music/Artist/Album/02 Song B.mp3" } ], $local
     ),
     { plex => "/srv/music/", local => "" },
     "a collection that mirrors the library directly";
-  is PlaylistSync::detect_roots([ $tracks->[1] ], $local), undef,
+  is MusicSync::detect_roots([ $tracks->[1] ], $local), undef,
     "undef when nothing matches";
-  is PlaylistSync::detect_roots(
-    [ { key => 5, path => "x.mp3" } ],
-    { "x.mp3" => 1 }
-    ),
-    { plex => "/", local => "" }, "a bare file name on both sides";
-  is PlaylistSync::roots({ plex_root => "/x/", local_root => "y/" }, [],
-    $local), { plex => "/x/", local => "y/" }, "options override detection";
-  is PlaylistSync::roots({}, [], $local), { plex => undef, local => "" },
+  is MusicSync::detect_roots([ { key => 5, path => "x.mp3" } ],
+    { "x.mp3" => 1 }), { plex => "/", local => "" },
+    "a bare file name on both sides";
+  is MusicSync::roots({ plex_root => "/x/", local_root => "y/" }, [], $local),
+    { plex => "/x/", local => "y/" }, "options override detection";
+  is MusicSync::roots({}, [], $local), { plex => undef, local => "" },
     "no roots without a match";
-  is PlaylistSync::plex_rel("/srv/", "/srv/a.mp3"), "a.mp3",
+  is MusicSync::plex_rel("/srv/", "/srv/a.mp3"), "a.mp3",
     "path under the root";
-  is PlaylistSync::plex_rel("/srv/", "/other/a.mp3"), undef,
+  is MusicSync::plex_rel("/srv/", "/other/a.mp3"), undef,
     "path outside the root";
-  is PlaylistSync::plex_rel(undef,   "/srv/a.mp3"), undef, "no root known";
-  is PlaylistSync::plex_rel("/srv/", undef), undef, "track without a file";
-  is PlaylistSync::local_rel("t/", "t/a.mp3"), "a.mp3",
-    "path under the folder";
-  is PlaylistSync::local_rel("t/", "u/a.mp3"), undef,
-    "path outside the folder";
-  is PlaylistSync::local_rel("",   "a.mp3"), "a.mp3", "no folder prefix";
-  is PlaylistSync::local_rel("t/", undef),   undef,   "item without a path";
+  is MusicSync::plex_rel(undef, "/srv/a.mp3"), undef,   "no root known";
+  is MusicSync::plex_rel("/srv/", undef),      undef,   "track without a file";
+  is MusicSync::local_rel("t/", "t/a.mp3"),    "a.mp3", "path under the folder";
+  is MusicSync::local_rel("t/", "u/a.mp3"), undef,   "path outside the folder";
+  is MusicSync::local_rel("", "a.mp3"),     "a.mp3", "no folder prefix";
+  is MusicSync::local_rel("t/", undef),     undef,   "item without a path";
 };
 
 sub make_db ($dir) {
@@ -310,7 +306,7 @@ subtest "strawberry database" => sub {
   );
   add_loose_item($dbh, $loose);
 
-  my $songs = PlaylistSync::collection_songs($dbh);
+  my $songs = MusicSync::collection_songs($dbh);
   is [ sort keys %$songs ], [
       "Artist/Album/01 Song A.mp3",
       "Artist/Album/02 Song B.mp3",
@@ -324,13 +320,13 @@ subtest "strawberry database" => sub {
     NFD("$root/Other/Album/01 Thé.mp3"),
     "path keeps the form the file system uses";
 
-  is PlaylistSync::strawberry_playlists($dbh), [
+  is MusicSync::strawberry_playlists($dbh), [
       { id => $chill,  name => "Chill" },
       { id => $loose,  name => "Loose" },
       { id => $trance, name => "Trance" },
     ],
     "favourites by name";
-  is PlaylistSync::strawberry_items($dbh, $trance), [
+  is MusicSync::strawberry_items($dbh, $trance), [
       {
         path   => "$root/Artist/Album/01 Song A.mp3",
         rel    => "Artist/Album/01 Song A.mp3",
@@ -349,18 +345,18 @@ subtest "strawberry database" => sub {
       },
     ],
     "items in order with relative paths";
-  is PlaylistSync::strawberry_items($dbh, $chill)->[0]{rel},
+  is MusicSync::strawberry_items($dbh, $chill)->[0]{rel},
     "Other/Album/01 Thé.mp3", "relative path in NFC";
-  is PlaylistSync::strawberry_items($dbh, $loose), [
+  is MusicSync::strawberry_items($dbh, $loose), [
       { path => undef, rel => undef, title => "Radio", artist => "Net" },
       { path => "/elsewhere/x.mp3", rel => undef, title => "X", artist => "Y" },
     ],
     "items outside the collection have no relative path";
 
-  my $ro = PlaylistSync::open_db($path);
+  my $ro = MusicSync::open_db($path);
   like dies { $ro->do("INSERT INTO playlists (name) VALUES ('x')") },
     qr/readonly/i, "read-only handle rejects writes";
-  ok PlaylistSync::open_db($path, 1)->do("DELETE FROM playlists WHERE 0"),
+  ok MusicSync::open_db($path, 1)->do("DELETE FROM playlists WHERE 0"),
     "writable handle accepts writes";
 };
 
@@ -413,10 +409,10 @@ sub pull_case ($prefix) {
     "GET /playlists/13/items" => [ ($Chill_xml) x 4 ],
   });
   my $mock
-    = mock PlaylistSync => (override => [ strawberry_running => sub () { 0 } ]);
+    = mock MusicSync => (override => [ strawberry_running => sub () { 0 } ]);
   my $url = sub ($rel) { file_url("$root/$prefix$rel") };
 
-  is PlaylistSync::pull_playlists($plex, $dbh, {}), {
+  is MusicSync::pull_playlists($plex, $dbh, {}), {
       roots     => { plex => "/srv/music/", local => $prefix },
       skipped   => ["Recent"],
       playlists => [
@@ -446,7 +442,7 @@ sub pull_case ($prefix) {
     "UPDATE playlists SET is_favorite = 0 WHERE ROWID = ?", undef,
     $trance_id
   );
-  PlaylistSync::pull_playlists($plex, $dbh, { playlists => ["Trance"] });
+  MusicSync::pull_playlists($plex, $dbh, { playlists => ["Trance"] });
   is playlist_rows($dbh), [
       [
         "Trance", 1, 2, $b, "Song B", 36, $url->("Artist/Album/02 Song B.mp3"),
@@ -457,13 +453,13 @@ sub pull_case ($prefix) {
   is $dbh->selectrow_array("SELECT ROWID FROM playlists WHERE name = 'Trance'"),
     $trance_id, "keeps the playlist row";
 
-  PlaylistSync::pull_playlists(
+  MusicSync::pull_playlists(
     $plex, $dbh, { dry_run => 1, plex_root => "/srv/music/" }
   );
   is playlist_rows($dbh)->@*, 2, "dry run changes nothing";
 
   $mock->override(strawberry_running => sub () { 1 });
-  like dies { PlaylistSync::pull_playlists($plex, $dbh, {}) },
+  like dies { MusicSync::pull_playlists($plex, $dbh, {}) },
     qr/Quit Strawberry/, "does not write while Strawberry runs";
 }
 
@@ -541,19 +537,18 @@ subtest "push plans" => sub {
     { item_id => 1001, key => 101 },
     { item_id => 1004, key => 104 },
   ];
-  is PlaylistSync::plan_changes($current, [ 101, 102, 101 ]),
+  is MusicSync::plan_changes($current, [ 101, 102, 101 ]),
     { remove => [1004], add => [101] },
     "removes extra items and adds missing ones";
-  is PlaylistSync::plan_changes($current, [ 102, 101, 104 ]),
+  is MusicSync::plan_changes($current, [ 102, 101, 104 ]),
     { remove => [], add => [] }, "nothing to change";
-  is PlaylistSync::plan_moves([ 1, 2, 3 ], [ 1, 2, 3 ]), [],
-    "already in order";
-  is PlaylistSync::plan_moves([ 1, 2, 3 ], [ 3, 1, 2 ]), [ [ 3, undef ] ],
+  is MusicSync::plan_moves([ 1, 2, 3 ], [ 1, 2, 3 ]), [], "already in order";
+  is MusicSync::plan_moves([ 1, 2, 3 ], [ 3, 1, 2 ]), [ [ 3, undef ] ],
     "one move to the top";
-  is PlaylistSync::plan_moves([ 1, 2, 3 ], [ 2, 3, 1 ]),
+  is MusicSync::plan_moves([ 1, 2, 3 ], [ 2, 3, 1 ]),
     [ [ 2, undef ], [ 3, 2 ] ], "moves after the previous item";
-  is PlaylistSync::reorder_plan([ { item_id => 1, key => 101 } ],
-    [ 102, 101 ]), [], "ignores keys with no item";
+  is MusicSync::reorder_plan([ { item_id => 1, key => 101 } ], [ 102, 101 ]),
+    [], "ignores keys with no item";
 };
 
 sub uri_arg ($keys) {
@@ -576,7 +571,7 @@ subtest "push adds without removing" => sub {
     "GET /playlists/10/items"                       => $after,
   });
   my $current = [ { item_id => 1001, key => 101 } ];
-  is PlaylistSync::sync_playlist($plex, 10, $current, [ 101, 102 ], 0),
+  is MusicSync::sync_playlist($plex, 10, $current, [ 101, 102 ], 0),
     { removed => 0, added => 1, moved => 0 }, "adds the missing track";
   is [ grep !/^GET/, $plex->{http}{calls}->@* ],
     [ "PUT /playlists/10/items?uri=" . uri_arg([102]) ], "one add, no removes";
@@ -593,7 +588,7 @@ subtest "push with nothing matched" => sub {
     "GET /playlists"                      => $Playlists_xml,
     "GET /playlists/10/items"             => $Current_xml,
   });
-  is PlaylistSync::push_playlists($plex, $dbh, {}), {
+  is MusicSync::push_playlists($plex, $dbh, {}), {
       roots     => { plex => undef, local => "" },
       playlists => [ {
         name      => "Trance",
@@ -633,7 +628,7 @@ sub push_case ($prefix) {
   };
 
   my $plex = plex($responses);
-  is PlaylistSync::push_playlists($plex, $dbh, {}), {
+  is MusicSync::push_playlists($plex, $dbh, {}), {
       roots     => { plex => "/srv/music/", local => $prefix },
       playlists => [
         {
@@ -677,7 +672,7 @@ sub push_case ($prefix) {
     "creates, removes, adds and moves on Plex";
 
   $plex->{http}{calls} = [];
-  my $summary = PlaylistSync::push_playlists(
+  my $summary = MusicSync::push_playlists(
     $plex, $dbh, { dry_run => 1, plex_root => "/srv/music/" }
   );
   is [ $summary->{playlists}[5]->@{ qw( removed added moved ) } ], [ 1, 1, 1 ],
@@ -689,16 +684,15 @@ subtest "push"                                 => sub { push_case("") };
 subtest "push from a folder of the collection" => sub { push_case("t/") };
 
 subtest "formats" => sub {
-  is [ PlaylistSync::mp3_for("flac-tagged/A/B/01 X.flac") ],
+  is [ MusicSync::mp3_for("flac-tagged/A/B/01 X.flac") ],
     ["t/f/A/B/01 X.mp3"], "the MP3 of a FLAC";
-  is [ PlaylistSync::mp3_for("flac-tagged/A/B/01 X.mp3") ], [],
+  is [ MusicSync::mp3_for("flac-tagged/A/B/01 X.mp3") ], [],
     "a FLAC folder needs a FLAC file";
-  is [ PlaylistSync::mp3_for("t/f/A/B/01 X.flac") ], [],
+  is [ MusicSync::mp3_for("t/f/A/B/01 X.flac") ], [],
     "a FLAC outside its folder";
-  is [ PlaylistSync::flac_for("t/f/A/B/01 X.mp3") ],
+  is [ MusicSync::flac_for("t/f/A/B/01 X.mp3") ],
     ["flac-tagged/A/B/01 X.flac"], "the FLAC of a converted MP3";
-  is [ PlaylistSync::flac_for("t/m/A/B/01 X.mp3") ], [],
-    "an MP3 with no FLAC";
+  is [ MusicSync::flac_for("t/m/A/B/01 X.mp3") ], [], "an MP3 with no FLAC";
 };
 
 subtest "pull formats" => sub {
@@ -738,8 +732,8 @@ subtest "pull formats" => sub {
     "GET /playlists/10/items" => $items,
   });
   my $mock
-    = mock PlaylistSync => (override => [ strawberry_running => sub () { 0 } ]);
-  is PlaylistSync::pull_playlists($plex, $dbh, { playlists => ["Trance"] }), {
+    = mock MusicSync => (override => [ strawberry_running => sub () { 0 } ]);
+  is MusicSync::pull_playlists($plex, $dbh, { playlists => ["Trance"] }), {
       roots     => { plex => "/srv/music/", local => "" },
       skipped   => [],
       playlists => [ {
@@ -821,7 +815,7 @@ subtest "push formats" => sub {
   });
   my $changes = sub (%opts) {
     my $summary
-      = PlaylistSync::push_playlists($plex, $dbh, { dry_run => 1, %opts });
+      = MusicSync::push_playlists($plex, $dbh, { dry_run => 1, %opts });
     [
       map [ @$_{ qw( name matched removed added ) } ],
       grep $_->{name} ne "Fresh",
@@ -834,7 +828,7 @@ subtest "push formats" => sub {
     "--mp3 swaps a FLAC entry for its MP3";
   is $changes->(flac => 1), [ [ "Mix", 2, 0, 0 ], [ "Old", 1, 1, 1 ] ],
     "--flac swaps an MP3 entry for its FLAC";
-  PlaylistSync::push_playlists($plex, $dbh, { playlists => ["Fresh"] });
+  MusicSync::push_playlists($plex, $dbh, { playlists => ["Fresh"] });
   is [ grep !/^GET/, $plex->{http}{calls}->@* ],
     [ $create . uri_arg([107]) ], "a new playlist takes the FLAC";
 };
@@ -871,7 +865,7 @@ subtest "export" => sub {
   make_file("$out/.DS_Store",                  "junk");
   my $kept_mtime = (stat "$out/Artist/Album/01 Song A.mp3")[9];
 
-  is PlaylistSync::export_playlists($dbh, $out, {}), {
+  is MusicSync::export_playlists($dbh, $out, {}), {
       playlists => [
         { name => "AC/DC mix", matched => 1, unmatched => [] },
         { name => "Chill",     matched => 1, unmatched => [] },
@@ -902,7 +896,7 @@ subtest "export" => sub {
   );
 
   make_file("$out/Old/Album/x.mp3", "stale");
-  is PlaylistSync::export_playlists($dbh, $out, { playlists => ["Trance"] }), {
+  is MusicSync::export_playlists($dbh, $out, { playlists => ["Trance"] }), {
       playlists => [ { name => "Trance", matched => 3, unmatched => [] } ],
       copied    => 0,
       removed   => 0,
@@ -911,66 +905,73 @@ subtest "export" => sub {
   ok -f "$out/Old/Album/x.mp3", "a narrowed export keeps the stale file";
 
   path("$out/Artist/Album/02 Song B.mp3")->remove;
-  my $summary = PlaylistSync::export_playlists($dbh, $out, { dry_run => 1 });
+  my $summary = MusicSync::export_playlists($dbh, $out, { dry_run => 1 });
   is [ $summary->@{ qw( copied removed ) } ], [ 1, 1 ],
     "dry run counts the work";
   ok !-f "$out/Artist/Album/02 Song B.mp3", "dry run copies nothing";
   ok -f "$out/Old/Album/x.mp3",             "dry run removes nothing";
 
   chmod 0555, "$out/Old/Album";
-  like dies { PlaylistSync::export_playlists($dbh, $out, {}) },
+  like dies { MusicSync::export_playlists($dbh, $out, {}) },
     qr/Cannot remove/, "a stale file that cannot go stops the export";
   chmod 0755, "$out/Old/Album";
   path("$out/Artist/Album/02 Song B.mp3")->remove;
   chmod 0555, "$out/Artist/Album";
-  like dies { PlaylistSync::export_playlists($dbh, $out, {}) },
-    qr/Cannot copy/, "a copy that fails stops the export";
+  like dies { MusicSync::export_playlists($dbh, $out, {}) }, qr/Cannot copy/,
+    "a copy that fails stops the export";
   chmod 0755, "$out/Artist/Album";
   my $nowhere
-    = PlaylistSync::export_playlists($dbh, "$dir/nowhere", { dry_run => 1 });
+    = MusicSync::export_playlists($dbh, "$dir/nowhere", { dry_run => 1 });
   is $nowhere->{removed}, 0, "dry run into a missing folder removes nothing";
   ok !-d "$dir/nowhere", "dry run creates no folder";
 
   path("$root/Artist/Album/02 Song B.mp3")->remove;
-  like dies { PlaylistSync::export_playlists($dbh, $out, {}) },
+  like dies { MusicSync::export_playlists($dbh, $out, {}) },
     qr/Missing file/, "a missing source file stops the export";
   my $locked = "$dir/locked";
   mkdir $locked or die "Cannot make $locked ($!)";
   chmod 0555, $locked;
-  like dies { PlaylistSync::export_playlists($dbh, $locked, {}) },
+  like dies { MusicSync::export_playlists($dbh, $locked, {}) },
     qr/Cannot write/, "an unwritable folder stops the export";
   chmod 0755, $locked;
 };
 
 subtest "options" => sub {
-  my $opts = PlaylistSync::parse_options([
-    qw( pull --server x --token t --playlist A --playlist B --dry-run ),
-    qw( --plex-root /srv/music --user 21 --local-root t --flac ),
+  my $opts = MusicSync::parse_options([
+    qw( playlists pull --server x --token t --playlist A --playlist B ),
+    qw( --dry-run --plex-root /srv/music --user 21 --local-root t --flac ),
   ]);
   is [
     $opts->@{
       qw(
-        command server     token playlists dry_run plex_root
-        user    local_root flac
+        noun      verb server     token playlists dry_run
+        plex_root user local_root flac
       ),
     }
+    ], [
+      "playlists",   "pull", "x",  "t", [ "A", "B" ], 1,
+      "/srv/music/", 21,     "t/", 1,
     ],
-    [ "pull", "x", "t", [ "A", "B" ], 1, "/srv/music/", 21, "t/", 1 ],
     "parses a command with options";
-  like dies { PlaylistSync::parse_options([ qw( push --flac --mp3 ) ]) },
+  like
+    dies { MusicSync::parse_options([ qw( playlists push --flac --mp3 ) ]) },
     qr/only one of --flac and --mp3/, "one format at a time";
   like $opts->{db}, qr/strawberry\.db$/, "defaults the database path";
   like dies {
     local $SIG{__WARN__} = sub (@) { };
-    PlaylistSync::parse_options(["--bogus"]);
+    MusicSync::parse_options(["--bogus"]);
   }, qr/Usage:/, "unknown option shows the usage";
-  like dies { PlaylistSync::parse_options([]) }, qr/Usage:/,
-    "missing command shows the usage";
-  like dies { PlaylistSync::parse_options(["dance"]) }, qr/Usage:/,
-    "unknown command shows the usage";
+  like dies { MusicSync::parse_options([]) }, qr/Usage:/,
+    "missing noun shows the usage";
+  like dies { MusicSync::parse_options([ qw( dance pull ) ]) }, qr/Usage:/,
+    "unknown noun shows the usage";
+  like dies { MusicSync::parse_options(["playlists"]) }, qr/Usage:/,
+    "missing verb shows the usage";
+  like dies { MusicSync::parse_options([ qw( playlists dance ) ]) },
+    qr/Usage:/, "unknown verb shows the usage";
   is [
-    PlaylistSync::parse_options(
-      [ qw( list --plex-root /srv/ --local-root t/ ) ]
+    MusicSync::parse_options(
+      [ qw( playlists list --plex-root /srv/ --local-root t/ ) ]
     )->@{ qw( plex_root local_root ) }
     ],
     [ "/srv/", "t/" ], "keeps trailing slashes on the roots";
@@ -979,35 +980,35 @@ subtest "options" => sub {
 subtest "plex client" => sub {
   my $sign_in = "POST https://plex.tv/users/sign_in.xml";
   my $http    = FakeHttp->new({ $sign_in => qq(<user authToken="secret"/>) });
-  like dies { PlaylistSync::plex_client({ server => "http://x" }, $http) },
+  like dies { MusicSync::plex_client({ server => "http://x" }, $http) },
     qr/--token or --username/, "needs a way to authenticate";
-  is PlaylistSync::plex_client(
+  is MusicSync::plex_client(
     { server => "http://x/", token => "t", debug => 1 }, $http
     ),
     { http => $http, server => "http://x", token => "t", debug => 1 },
     "uses a given token and trims the server slash";
-  is PlaylistSync::plex_client(
+  is MusicSync::plex_client(
     { server => "http://x", username => "me", password => "pw" }, $http
   )->{token}, "secret", "signs in with a username and password";
   is $http->{calls}, ["$sign_in me"], "posted the sign in form";
   my $mock
-    = mock PlaylistSync => (override => [ read_password => sub () { "pw" } ]);
-  is PlaylistSync::plex_client({ server => "http://x", username => "me" },
-    $http)->{token}, "secret", "prompts for the password";
+    = mock MusicSync => (override => [ read_password => sub () { "pw" } ]);
+  is MusicSync::plex_client({ server => "http://x", username => "me" }, $http)
+    ->{token}, "secret", "prompts for the password";
   $http = FakeHttp->new;
   like dies {
-    PlaylistSync::plex_client(
+    MusicSync::plex_client(
       { server => "http://x", username => "me", password => "pw" }, $http
     )
   }, qr/401 Unauthorized/, "reports a failed sign in";
   $http = FakeHttp->new({ $sign_in => "<user/>" });
   like dies {
-    PlaylistSync::plex_client(
+    MusicSync::plex_client(
       { server => "http://x", username => "me", password => "pw" }, $http
     )
   }, qr/returned no token/, "reports a sign in without a token";
-  ok PlaylistSync::plex_client({ server => "http://x", token => "t" })
-    ->{http}->isa("HTTP::Tiny"), "builds a real client when none is given";
+  ok MusicSync::plex_client({ server => "http://x", token => "t" })->{http}
+    ->isa("HTTP::Tiny"), "builds a real client when none is given";
 
   my $shared = <<~XML;
     <?xml version="1.0" encoding="UTF-8"?>
@@ -1021,13 +1022,13 @@ subtest "plex client" => sub {
     "GET /api/servers/abc123/shared_servers" =>
       [ $shared, qq(<MediaContainer size="0"/>) ],
   });
-  my $user = PlaylistSync::plex_client(
+  my $user = MusicSync::plex_client(
     { server => "http://x", token => "t", user => 21 }, $http
   );
   is [ @$user{ qw( token machine_id ) } ], [ "usertok", "abc123" ],
     "swaps in the token of the given user";
   like dies {
-    PlaylistSync::plex_client(
+    MusicSync::plex_client(
       { server => "http://x", token => "t", user => 99 }, $http
     )
   }, qr/No access token for Plex user 99/, "unknown user";
@@ -1057,16 +1058,16 @@ subtest "plex client" => sub {
     </resources>
     XML
   $http = FakeHttp->new({ $resources => $devices });
-  is PlaylistSync::plex_client({ token => "t" }, $http)->{server},
+  is MusicSync::plex_client({ token => "t" }, $http)->{server},
     "https://wan.plex.direct:32400",
     "finds Wezflix on plex.tv and prefers its direct internet connection";
-  is $http->{headers}{"X-Plex-Client-Identifier"}, "playlist_sync",
+  is $http->{headers}{"X-Plex-Client-Identifier"}, "music_sync",
     "sends the client identifier plex.tv requires";
-  is PlaylistSync::plex_client({ token => "t", server => "shadowfax" }, $http)
+  is MusicSync::plex_client({ token => "t", server => "shadowfax" }, $http)
     ->{server}, "https://lan2.plex.direct:32400",
     "finds a server by name and falls back to a LAN connection";
   like dies {
-    PlaylistSync::plex_client({ token => "t", server => "Nope" }, $http)
+    MusicSync::plex_client({ token => "t", server => "Nope" }, $http)
   }, qr/No Plex server called Nope \(found Wezflix, shadowfax\)/,
     "unknown server name";
   $http = FakeHttp->new({ $resources => <<~XML });
@@ -1080,14 +1081,14 @@ subtest "plex client" => sub {
     <resource name="Off" provides="server"><connections/></resource>
     </resources>
     XML
-  is PlaylistSync::plex_client({ token => "t", server => "Far" }, $http)
+  is MusicSync::plex_client({ token => "t", server => "Far" }, $http)
     ->{server}, "https://lan.plex.direct:32400",
     "prefers a LAN connection over the relay";
   like dies {
-    PlaylistSync::plex_client({ token => "t", server => "Off" }, $http)
+    MusicSync::plex_client({ token => "t", server => "Off" }, $http)
   }, qr/Plex server Off has no connections/, "server without connections";
   $http = FakeHttp->new({ $resources => "<resources/>" });
-  like dies { PlaylistSync::plex_client({ token => "t" }, $http) },
+  like dies { MusicSync::plex_client({ token => "t" }, $http) },
     qr/No Plex server called Wezflix \(found none\)/, "no servers at all";
 };
 
@@ -1116,23 +1117,23 @@ subtest "run" => sub {
     "GET /playlists/10/items" => $Items_xml,
     "GET /playlists/13/items" => $Chill_xml,
   });
-  my $mock = mock PlaylistSync => (override => [
+  my $mock = mock MusicSync => (override => [
     plex_client        => sub (@) { $plex },
     open_db            => sub (@) { $dbh },
     strawberry_running => sub () { 0 },
   ]);
   my $run = sub (@argv) {
-    capture(sub { PlaylistSync::run(PlaylistSync::parse_options(\@argv)) })
+    capture(sub { MusicSync::run(MusicSync::parse_options(\@argv)) })
   };
 
-  is $run->(qw( list --server s --token t )),
+  is $run->(qw( playlists list --server s --token t )),
       "Plex playlists:\n"
     . "  Trance (3 tracks)\n"
     . "  Recent (5 tracks, smart)\n"
     . "  Chill (1 track)\n"
     . "Strawberry playlists:\n"
     . "  Trance (2 tracks)\n", "lists both sides";
-  is $run->(qw( pull --server s --token t --dry-run )),
+  is $run->(qw( playlists pull --server s --token t --dry-run )),
       "Plex root /srv/music/ maps to the collection root\n"
     . "Trance: 1 of 3 tracks (repeated 1)\n"
     . "  not found: Artist - Song B\n"
@@ -1142,9 +1143,9 @@ subtest "run" => sub {
     . "  not found: Other - Silent\n"
     . "Skipped smart playlists: Recent\n"
     . "Dry run, nothing changed\n", "reports a pull";
-  like dies { $run->(qw( export --server s --token t )) }, qr/--dir/,
-    "export needs a folder";
-  is $run->("export", "--dir", "$dir/out"),
+  like dies { $run->(qw( playlists export --server s --token t )) },
+    qr/--dir/, "export needs a folder";
+  is $run->("playlists", "export", "--dir", "$dir/out"),
     "Trance: 2 of 2 tracks\nCopied 1 file, removed 0\n", "reports an export";
 };
 
@@ -1168,21 +1169,21 @@ subtest "edge cases" => sub {
     "GET /identity"                         => $empty,
     "PUT /playlists/1/items/5/move?after=4" => "",
   });
-  is PlaylistSync::plex_playlists($plex),         [], "no playlists";
-  is PlaylistSync::plex_playlist_items($plex, 1), [], "no items";
-  is PlaylistSync::plex_library_tracks($plex),    [], "no music sections";
-  like dies { PlaylistSync::plex_machine_id($plex) }, qr/machine identifier/,
+  is MusicSync::plex_playlists($plex),         [], "no playlists";
+  is MusicSync::plex_playlist_items($plex, 1), [], "no items";
+  is MusicSync::plex_library_tracks($plex),    [], "no music sections";
+  like dies { MusicSync::plex_machine_id($plex) }, qr/machine identifier/,
     "no identity";
-  PlaylistSync::plex_move_item($plex, 1, 5, 4);
+  MusicSync::plex_move_item($plex, 1, 5, 4);
   is $plex->{http}{calls}[-1], "PUT /playlists/1/items/5/move?after=4",
     "moves after an item";
   $plex = plex({
     "GET /library/sections"               => $Sections_xml,
     "GET /library/sections/1/all?type=10" => $empty,
   });
-  is PlaylistSync::plex_library_tracks($plex), [],  "an empty music section";
-  is PlaylistSync::chars(encode_utf8("é")),    "é", "decodes bytes";
-  is PlaylistSync::chars(undef),               "",  "empty for undef";
+  is MusicSync::plex_library_tracks($plex), [],  "an empty music section";
+  is MusicSync::chars(encode_utf8("é")),    "é", "decodes bytes";
+  is MusicSync::chars(undef),               "",  "empty for undef";
 
   $plex = plex({
     "GET /playlists" => qq(<MediaContainer size="2">
@@ -1190,13 +1191,13 @@ subtest "edge cases" => sub {
       <Playlist ratingKey="8" title="Odd"/>
       </MediaContainer>),
   });
-  is PlaylistSync::plex_playlists($plex),
+  is MusicSync::plex_playlists($plex),
     [ { id => 9, title => "Bare", smart => 0, count => 0 } ],
     "defaults for a playlist without a type or a count";
 
   $plex = plex({ "GET /identity" => $Identity_xml });
   $plex->{debug} = 1;
-  is capture_stderr(sub { PlaylistSync::plex_machine_id($plex) }),
+  is capture_stderr(sub { MusicSync::plex_machine_id($plex) }),
     "GET http://plex.test:32400/identity\n", "debug shows each request";
 };
 
@@ -1206,10 +1207,10 @@ subtest "strawberry running" => sub {
   $pgrep->spew("#!/bin/sh\nexit 0\n");
   chmod 0755, $pgrep;
   local $ENV{PATH} = "$bin:$ENV{PATH}";
-  ok PlaylistSync::strawberry_running(), "running when pgrep finds it";
+  ok MusicSync::strawberry_running(), "running when pgrep finds it";
   $pgrep->spew("#!/bin/sh\nexit 1\n");
   chmod 0755, $pgrep;
-  ok !PlaylistSync::strawberry_running(), "not running otherwise";
+  ok !MusicSync::strawberry_running(), "not running otherwise";
 };
 
 sub with_terminal ($input, $code) {
@@ -1227,7 +1228,7 @@ subtest "password prompt" => sub {
   my $out = with_terminal(
     "secret\n",
     sub {
-      capture(sub { $password = PlaylistSync::read_password() })
+      capture(sub { $password = MusicSync::read_password() })
     }
   );
   is $password, "secret", "reads the password";
@@ -1235,7 +1236,7 @@ subtest "password prompt" => sub {
   with_terminal(
     "",
     sub {
-      capture(sub { $password = PlaylistSync::read_password() })
+      capture(sub { $password = MusicSync::read_password() })
     }
   );
   is $password, "", "empty password at the end of input";
@@ -1244,13 +1245,13 @@ subtest "password prompt" => sub {
 subtest "main" => sub {
   my $plex  = plex({ "GET /playlists" => $Playlists_xml });
   my ($dbh) = make_db(Path::Tiny->tempdir);
-  my $mock  = mock PlaylistSync => (override => [
+  my $mock  = mock MusicSync => (override => [
     plex_client => sub (@) { $plex }, open_db => sub (@) { $dbh }, ]);
-  local @ARGV = qw( list --server s --token t );
-  like capture(sub { PlaylistSync::main() }), qr/^Plex playlists:/,
+  local @ARGV = qw( playlists list --server s --token t );
+  like capture(sub { MusicSync::main() }), qr/^Plex playlists:/,
     "runs the command from the arguments";
   local @ARGV = ("--help");
-  like capture(sub { PlaylistSync::main() }), qr/^Usage:/, "shows the usage";
+  like capture(sub { MusicSync::main() }), qr/^Usage:/, "shows the usage";
 };
 
 subtest "report notes" => sub {
@@ -1274,7 +1275,7 @@ subtest "report notes" => sub {
       { name => "Dup", matched => 2, unmatched => [], repeated => 1 },
     ],
   };
-  is capture(sub { PlaylistSync::report($summary, {}) }),
+  is capture(sub { MusicSync::report($summary, {}) }),
       "New: 1 of 1 track (created on Plex)\n"
     . "Loose: 0 of 1 track (not on Plex, nothing to create)\n"
     . "  not found: Y - X\n"
@@ -1282,13 +1283,13 @@ subtest "report notes" => sub {
     . "Trance: 3 of 3 tracks (removed 1, added 2, moved 0)\n"
     . "Dup: 2 of 3 tracks (repeated 1)\n", "notes for each kind of change";
   is capture(sub {
-    PlaylistSync::report(
+    MusicSync::report(
       { roots => { plex => "/m/", local => "t/" }, playlists => [] }, {}
     )
     }),
     "Plex root /m/ maps to collection folder t/\n", "roots with a folder";
   is capture(sub {
-    PlaylistSync::report(
+    MusicSync::report(
       { roots => { plex => undef, local => "" }, playlists => [] }, {}
     )
     }),
@@ -1297,10 +1298,10 @@ subtest "report notes" => sub {
 
 subtest "default database" => sub {
   local $^O = "darwin";
-  like PlaylistSync::default_db(),
-    qr{Library/Application Support/strawberry}, "macOS path";
+  like MusicSync::default_db(), qr{Library/Application Support/strawberry},
+    "macOS path";
   local $^O = "linux";
-  like PlaylistSync::default_db(), qr{\.local/share/strawberry}, "Linux path";
+  like MusicSync::default_db(), qr{\.local/share/strawberry}, "Linux path";
 };
 
 done_testing;
@@ -1309,11 +1310,11 @@ __END__
 
 =head1 NAME
 
-playlist_sync.t - tests for utils/playlist_sync
+music_sync.t - tests for utils/music_sync
 
 =head1 SYNOPSIS
 
- yath test t/playlist_sync.t
+ yath test t/music_sync.t
 
 =head1 DESCRIPTION
 

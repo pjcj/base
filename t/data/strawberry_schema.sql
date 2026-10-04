@@ -1,4 +1,4 @@
--- Strawberry schema version 25, tables used by utils/playlist_sync
+-- Strawberry schema version 25, tables used by utils/music_sync
 
 CREATE TABLE IF NOT EXISTS schema_version (
   version INTEGER NOT NULL

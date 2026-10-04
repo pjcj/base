@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package PlaylistSync;
+package MusicSync;
 
 use 5.28.0;
 use warnings;
@@ -29,8 +29,8 @@ sub parse_xml ($xml, @force) {
 }
 
 my $Client_headers = {
-  "X-Plex-Client-Identifier" => "playlist_sync",
-  "X-Plex-Product"           => "playlist_sync",
+  "X-Plex-Client-Identifier" => "music_sync",
+  "X-Plex-Product"           => "music_sync",
   "X-Plex-Version"           => "1.0",
 };
 
@@ -173,11 +173,8 @@ sub plex_client ($opts, $http = undef) {
   die "Use --token or --username to sign in to Plex\n"
     unless $opts->{token} || $opts->{username};
   # uncoverable condition false note:HTTP::Tiny->new never returns undef
-  $http //= HTTP::Tiny->new(
-    timeout    => 60,
-    agent      => "playlist_sync/1.0",
-    verify_SSL => 1
-  );
+  $http //= HTTP::Tiny->new(timeout => 60, agent => "music_sync/1.0",
+    verify_SSL => 1);
   my $plex = {
     http  => $http,
     token => plex_token($opts, $http),
@@ -722,13 +719,13 @@ sub export_playlists ($dbh, $dir, $opts) {
 
 sub usage () {
   <<~TEXT
-  Usage: playlist_sync COMMAND [options]
+  Usage: music_sync NOUN VERB [options]
 
   Commands:
-    pull      Copy Plex playlists into Strawberry (quit Strawberry first)
-    push      Update Plex playlists from Strawberry
-    export    Write playlists and their files to a folder for a device
-    list      Show the playlists on both sides
+    playlists pull      Copy Plex playlists into Strawberry (quit it first)
+    playlists push      Update Plex playlists from Strawberry
+    playlists export    Write playlists and their files to a device folder
+    playlists list      Show the playlists on both sides
 
   Options:
     --server NAME|URL   Plex server name or URL, defaults to $Default_server
@@ -752,26 +749,30 @@ sub usage () {
 }
 
 my $Command = {
-  list => sub ($opts) {
-    list_playlists(plex_client($opts), open_db($opts->{db}));
+  playlists => {
+    list => sub ($opts) {
+      list_playlists(plex_client($opts), open_db($opts->{db}));
+    },
+    pull => sub ($opts) {
+      my $dbh = open_db($opts->{db}, !$opts->{dry_run});
+      report(pull_playlists(plex_client($opts), $dbh, $opts), $opts);
+    },
+    push => sub ($opts) {
+      my $dbh = open_db($opts->{db});
+      report(push_playlists(plex_client($opts), $dbh, $opts), $opts);
+    },
+    export => sub ($opts) {
+      die "Use --dir to name the export folder\n" unless $opts->{dir};
+      my $dbh = open_db($opts->{db});
+      report(export_playlists($dbh, $opts->{dir}, $opts), $opts);
+    },
   },
-  pull => sub ($opts) {
-    my $dbh = open_db($opts->{db}, !$opts->{dry_run});
-    report(pull_playlists(plex_client($opts), $dbh, $opts), $opts);
-  },
-  push => sub ($opts) {
-    my $dbh = open_db($opts->{db});
-    report(push_playlists(plex_client($opts), $dbh, $opts), $opts);
-  },
-  export => sub ($opts) {
-    die "Use --dir to name the export folder\n" unless $opts->{dir};
-    my $dbh = open_db($opts->{db});
-    report(export_playlists($dbh, $opts->{dir}, $opts), $opts);
-  },
-  help => sub (@) { print usage() },
 };
 
-sub run ($opts) { $Command->{ $opts->{command} }->($opts) }
+sub run ($opts) {
+  return print usage() if $opts->{help};
+  $Command->{ $opts->{noun} }{ $opts->{verb} }->($opts)
+}
 
 sub default_db () {
   $^O eq "darwin"
@@ -800,14 +801,15 @@ sub parse_options ($argv) {
     "debug"        => \$opts->{debug},
     "help"         => \$opts->{help}
   ) or die usage();
-  return { command => "help" }             if $opts->{help};
+  return $opts                             if $opts->{help};
   die "Use only one of --flac and --mp3\n" if $opts->{flac} && $opts->{mp3};
   for my $key (qw( plex_root local_root )) {
     my $root = \$opts->{$key};
     $$root .= "/" if defined $$root && $$root =~ m|[^/]$|;
   }
-  $opts->{command} = shift @$argv // die usage();
-  die usage() unless $Command->{ $opts->{command} };
+  $opts->{noun} = shift @$argv // die usage();
+  $opts->{verb} = shift @$argv // die usage();
+  die usage() unless ($Command->{ $opts->{noun} } // {})->{ $opts->{verb} };
   $opts
 }
 
@@ -824,14 +826,15 @@ __END__
 
 =head1 NAME
 
-playlist_sync - copy playlists between Plex, Strawberry and devices
+music_sync - copy playlists between Plex, Strawberry and devices
 
 =head1 SYNOPSIS
 
- playlist_sync pull   --username EMAIL [--playlist NAME]...
- playlist_sync push   --username EMAIL [--flac|--mp3] [--playlist NAME]...
- playlist_sync export --dir PATH [--playlist NAME]...
- playlist_sync list   --username EMAIL
+ music_sync playlists pull   --username EMAIL [--playlist NAME]...
+ music_sync playlists push   --username EMAIL [--flac|--mp3]
+                             [--playlist NAME]...
+ music_sync playlists export --dir PATH [--playlist NAME]...
+ music_sync playlists list   --username EMAIL
 
 =head1 DESCRIPTION
 
@@ -844,25 +847,25 @@ to the one called Wezflix, or to the one C<--server> names. It prefers a
 direct connection over the internet, then one on the LAN, then the Plex
 relay. Give C<--server> a URL to skip the lookup.
 
-C<pull> writes every audio playlist on the Plex server into the Strawberry
-database as a favourite playlist, in Plex order, replacing the items of a
-playlist that already exists. Strawberry reads its playlists only at startup
-and overwrites the database whenever a playlist changes, so pull stops with
-an error while Strawberry is open. It skips smart playlists.
+C<playlists pull> writes every audio playlist on the Plex server into the
+Strawberry database as a favourite playlist, in Plex order, replacing the
+items of a playlist that already exists. Strawberry reads its playlists only
+at startup and overwrites the database whenever a playlist changes, so pull
+stops with an error while Strawberry is open. It skips smart playlists.
 
-C<push> makes each Plex playlist match the Strawberry favourite of the same
-name by removing, adding and moving items, and creates playlists Plex lacks.
-It reads the database only, so Strawberry may stay open.
+C<playlists push> makes each Plex playlist match the Strawberry favourite of
+the same name by removing, adding and moving items, and creates playlists
+Plex lacks. It reads the database only, so Strawberry may stay open.
 
 With C<--user> the script acts as that Plex home user, so the playlists it
 reads and writes are theirs rather than those of the account that signs in.
 
-C<export> copies the files of each favourite playlist into a folder, once per
-file at the path the collection uses, and writes one M3U8 playlist per
-favourite at the top of the folder with entries relative to it. It removes
-files and playlists no longer wanted, unless C<--playlist> narrows the
-export. Copy the folder as it is into the Music folder of a Garmin watch or
-into a scanned folder on a phone.
+C<playlists export> copies the files of each favourite playlist into a
+folder, once per file at the path the collection uses, and writes one M3U8
+playlist per favourite at the top of the folder with entries relative to it.
+It removes files and playlists no longer wanted, unless C<--playlist> narrows
+the export. Copy the folder as it is into the Music folder of a Garmin watch
+or into a scanned folder on a phone.
 
 Neither direction deletes a playlist. Only Strawberry playlists saved to the
 sidebar take part, since Strawberry deletes open tabs when they close.
