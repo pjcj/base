@@ -65,9 +65,10 @@ sub items_xml () {
 sub sections_xml () {
   <<~XML
   <?xml version="1.0" encoding="UTF-8"?>
-  <MediaContainer size="2">
-  <Directory key="1" type="artist" title="Music"/>
+  <MediaContainer size="3">
+  <Directory key="1" type="artist" title="mp3"/>
   <Directory key="2" type="movie" title="Films"/>
+  <Directory key="3" type="artist" title="flac"/>
   </MediaContainer>
   XML
 }

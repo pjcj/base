@@ -31,17 +31,18 @@ subtest "options" => sub {
   my $opts = MusicSync::parse_options([
     qw( playlists pull --server x --token t --playlist A --playlist B ),
     qw( --dry-run --plex-root /srv/music --user 21 --local-root t --flac ),
+    qw( --section s ),
   ]);
   is [
     $opts->@{
       qw(
         noun      verb server     token playlists dry_run
-        plex_root user local_root flac
+        plex_root user local_root flac  section
       ),
     }
     ], [
       "playlists",   "pull", "x",  "t", [ "A", "B" ], 1,
-      "/srv/music/", 21,     "t/", 1,
+      "/srv/music/", 21,     "t/", 1,   "s",
     ],
     "parses a command with options";
   like

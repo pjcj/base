@@ -17,10 +17,11 @@ use Unicode::Normalize qw( NFC );
 
 use MusicSync::Match qw( local_rel local_song plex_rel roots track_key );
 use MusicSync::Plex  qw(
-  plex_add_items      plex_create_playlist
-  plex_library_tracks plex_move_item
-  plex_playlist_items plex_playlists
-  plex_remove_item
+  default_section      plex_add_items
+  plex_create_playlist plex_library_tracks
+  plex_move_item       plex_playlist_items
+  plex_playlists       plex_remove_item
+  plex_section
 );
 use MusicSync::Strawberry qw(
   collection_songs replace_playlist
@@ -215,10 +216,13 @@ sub plex_changes ($plex, $target, $name, $keys, $current, $dry_run) {
 }
 
 sub push_playlists ($plex, $dbh, $opts) {
-  my $songs  = collection_songs($dbh);
-  my $tracks = plex_library_tracks($plex);
-  my $roots  = roots($opts, $tracks, $songs);
+  my $songs = collection_songs($dbh);
+  # uncoverable condition false note:the default section name is always set
+  my $section = plex_section($plex, $opts->{section} // default_section());
+  my $tracks  = plex_library_tracks($plex, $section);
+  my $roots   = roots($opts, $tracks, $songs);
   my %key_for;
+
   for my $track (@$tracks) {
     my $rel = plex_rel($roots->{plex}, $track->{path}) // next;
     $key_for{$rel} = $track->{key};

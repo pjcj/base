@@ -13,10 +13,11 @@ use Test2::V0 qw( dies done_testing is like mock ok subtest );
 
 use FakeHttp        ();
 use MusicSync::Plex qw(
-  chars               plex_client
-  plex_library_tracks plex_machine_id
-  plex_move_item      plex_playlist_items
-  plex_playlists      plex_request
+  chars               default_section
+  plex_client         plex_library_tracks
+  plex_machine_id     plex_move_item
+  plex_playlist_items plex_playlists
+  plex_request        plex_section
   read_password
 );
 use MusicSync::Test qw(
@@ -63,19 +64,29 @@ subtest "plex playlist items" => sub {
 };
 
 subtest "plex library tracks" => sub {
-  my $plex = plex({
-    "GET /library/sections"               => sections_xml(),
-    "GET /library/sections/1/all?type=10" => tracks_xml(),
-  });
-  is plex_library_tracks($plex), [
+  my $plex = plex({ "GET /library/sections/1/all?type=10" => tracks_xml() });
+  is plex_library_tracks($plex, 1), [
       { key => 101, path => "/srv/music/Artist/Album/01 Song A.mp3" },
       { key => 102, path => "/srv/music/Artist/Album/02 Song B.mp3" },
       { key => 103, path => "/srv/music/Other/Album/01 Thé.mp3" },
     ],
-    "tracks with files from the music section";
-  is $plex->{http}{calls},
-    [ "GET /library/sections", "GET /library/sections/1/all?type=10" ],
-    "does not fetch the film section";
+    "tracks with files from the section";
+  is $plex->{http}{calls}, ["GET /library/sections/1/all?type=10"],
+    "reads the one section";
+};
+
+subtest "plex section" => sub {
+  my $plex = plex({ "GET /library/sections" => sections_xml() });
+  is default_section(), "mp3", "the default section";
+  is plex_section($plex, "mp3"),  1, "the key of a music section by name";
+  is plex_section($plex, "flac"), 3, "another music section";
+  like dies { plex_section($plex, "Films") },
+    qr/No Plex music section called Films \(found mp3, flac\)/,
+    "a film section does not count";
+  my $none
+    = plex({ "GET /library/sections" => qq(<MediaContainer size="0"/>) });
+  like dies { plex_section($none, "mp3") },
+    qr/No Plex music section called mp3 \(found none\)/, "no music sections";
 };
 
 subtest "plex request failure" => sub {
@@ -209,24 +220,19 @@ subtest "edge cases" => sub {
   my $plex  = plex({
     "GET /playlists"                        => $empty,
     "GET /playlists/1/items"                => $empty,
-    "GET /library/sections"                 => $empty,
     "GET /identity"                         => $empty,
     "PUT /playlists/1/items/5/move?after=4" => "",
   });
   is plex_playlists($plex),         [], "no playlists";
   is plex_playlist_items($plex, 1), [], "no items";
-  is plex_library_tracks($plex),    [], "no music sections";
   like dies { plex_machine_id($plex) }, qr/machine identifier/, "no identity";
   plex_move_item($plex, 1, 5, 4);
   is $plex->{http}{calls}[-1], "PUT /playlists/1/items/5/move?after=4",
     "moves after an item";
-  $plex = plex({
-    "GET /library/sections"               => sections_xml(),
-    "GET /library/sections/1/all?type=10" => $empty,
-  });
-  is plex_library_tracks($plex), [],  "an empty music section";
-  is chars(encode_utf8("é")),    "é", "decodes bytes";
-  is chars(undef),               "",  "empty for undef";
+  $plex = plex({ "GET /library/sections/1/all?type=10" => $empty });
+  is plex_library_tracks($plex, 1), [],  "an empty music section";
+  is chars(encode_utf8("é")),       "é", "decodes bytes";
+  is chars(undef),                  "",  "empty for undef";
 
   $plex = plex({
     "GET /playlists" => qq(<MediaContainer size="2">

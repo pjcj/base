@@ -16,11 +16,12 @@ use lib "$FindBin::RealBin/../lib";
 
 use MusicSync::Playlists qw( export_playlists list_playlists pull_playlists
   push_playlists report );
-use MusicSync::Plex       qw( default_server plex_client );
-use MusicSync::Strawberry qw( default_db     open_db );
+use MusicSync::Plex qw( default_section default_server plex_client );
+use MusicSync::Strawberry qw( default_db open_db );
 
 sub usage () {
-  my $server = default_server();
+  my $server  = default_server();
+  my $section = default_section();
   <<~TEXT
   Usage: music_sync NOUN VERB [options]
 
@@ -40,6 +41,7 @@ sub usage () {
     --plex-root PATH    Library root on the Plex server, detected if absent
     --local-root PATH   Collection folder Plex mirrors, detected if absent
     --user ID           Plex home user whose playlists to use
+    --section NAME      Plex music section for push, defaults to $section
     --playlist NAME     Limit to this playlist, repeatable
     --flac              Push every entry as FLAC where Plex has one
     --mp3               Push every entry as MP3
@@ -90,6 +92,7 @@ sub parse_options ($argv) {
     "plex-root=s"  => \$opts->{plex_root},
     "local-root=s" => \$opts->{local_root},
     "user=s"       => \$opts->{user},
+    "section=s"    => \$opts->{section},
     "playlist=s"   => $opts->{playlists},
     "flac"         => \$opts->{flac},
     "mp3"          => \$opts->{mp3},
@@ -128,7 +131,7 @@ music_sync - copy playlists between Plex, Strawberry and devices
 
  music_sync playlists pull   --username EMAIL [--playlist NAME]...
  music_sync playlists push   --username EMAIL [--flac|--mp3]
-                             [--playlist NAME]...
+                             [--section NAME] [--playlist NAME]...
  music_sync playlists export --dir PATH [--playlist NAME]...
  music_sync playlists list   --username EMAIL
 
@@ -176,6 +179,10 @@ itself. The script detects both from the first track it finds on both sides,
 by taking the longest trailing path the two have in common, unless
 C<--plex-root> and C<--local-root> give them. Every report starts with the
 roots in use. The script lists and skips tracks with no match.
+
+C<playlists push> matches against the tracks of one Plex music section,
+C<mp3> unless C<--section> names another, since a file that two sections
+share has a different key in each.
 
 =head1 FORMATS
 

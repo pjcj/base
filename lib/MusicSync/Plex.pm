@@ -13,12 +13,13 @@ use URI::Escape qw( uri_escape_utf8 );
 use XML::Simple ();
 
 our @EXPORT_OK = qw(
-  chars                default_server
-  plex_add_items       plex_client
-  plex_create_playlist plex_library_tracks
-  plex_machine_id      plex_move_item
-  plex_playlist_items  plex_playlists
-  plex_remove_item     plex_request
+  chars               default_section
+  default_server      plex_add_items
+  plex_client         plex_create_playlist
+  plex_library_tracks plex_machine_id
+  plex_move_item      plex_playlist_items
+  plex_playlists      plex_remove_item
+  plex_request        plex_section
   read_password
 );
 
@@ -182,23 +183,31 @@ sub plex_playlist_items ($plex, $id) {
   ]
 }
 
+sub default_section () { "mp3" }
+
 sub music_sections ($plex) {
   my $data
     = parse_xml(plex_request($plex, "GET", "/library/sections"), "Directory");
-  [ map $_->{key}, grep $_->{type} eq "artist", ($data->{Directory} // [])->@* ]
+  [ grep $_->{type} eq "artist", ($data->{Directory} // [])->@* ]
 }
 
-sub plex_library_tracks ($plex) {
+sub plex_section ($plex, $name) {
+  my $sections  = music_sections($plex);
+  my ($section) = grep $_->{title} eq $name, @$sections;
+  my $names     = join(", ", map $_->{title}, @$sections) || "none";
+  die "No Plex music section called $name (found $names)\n" unless $section;
+  $section->{key}
+}
+
+sub plex_library_tracks ($plex, $section) {
+  my $data = parse_xml(
+    plex_request($plex, "GET", "/library/sections/$section/all?type=10"),
+    qw( Track Media Part )
+  );
   my @tracks;
-  for my $section (music_sections($plex)->@*) {
-    my $data = parse_xml(
-      plex_request($plex, "GET", "/library/sections/$section/all?type=10"),
-      qw( Track Media Part )
-    );
-    for my $track (($data->{Track} // [])->@*) {
-      my $path = track_path($track) // next;
-      push @tracks, { key => $track->{ratingKey}, path => $path };
-    }
+  for my $track (($data->{Track} // [])->@*) {
+    my $path = track_path($track) // next;
+    push @tracks, { key => $track->{ratingKey}, path => $path };
   }
   \@tracks
 }

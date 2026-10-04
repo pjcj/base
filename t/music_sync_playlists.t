@@ -245,6 +245,30 @@ subtest "push with nothing matched" => sub {
   is [ grep !/^GET/, $plex->{http}{calls}->@* ], [], "sends no changes";
 };
 
+subtest "push section" => sub {
+  my $dir   = Path::Tiny->tempdir;
+  my $root  = "$dir/mp3s";
+  my ($dbh) = make_db($dir);
+  my ($a)   = add_songs($dbh, $root);
+  add_playlist($dbh, "Trance", 1, $a);
+  my $plex = plex({
+    "GET /library/sections"               => sections_xml(),
+    "GET /library/sections/3/all?type=10" => tracks_xml(),
+    "GET /playlists"                      => playlists_xml(),
+    "GET /playlists/10/items"             => $Current_xml,
+  });
+  my $summary
+    = push_playlists($plex, $dbh, { dry_run => 1, section => "flac" });
+  is $summary->{playlists}[0]{matched}, 1,
+    "matches against the named section";
+  is [ grep m|/library/|, $plex->{http}{calls}->@* ],
+    [ "GET /library/sections", "GET /library/sections/3/all?type=10" ],
+    "reads only the named section";
+  like dies { push_playlists($plex, $dbh, { section => "Nope" }) },
+    qr/No Plex music section called Nope \(found mp3, flac\)/,
+    "an unknown section stops the push";
+};
+
 sub push_case ($prefix) {
   my $dir   = Path::Tiny->tempdir;
   my $root  = "$dir/mp3s";
