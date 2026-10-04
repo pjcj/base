@@ -351,6 +351,41 @@ subtest "push" => sub { push_case("") };
 
 subtest "push from a folder of the collection" => sub { push_case("t/") };
 
+subtest "pull smart playlists" => sub {
+  my $dir   = Path::Tiny->tempdir;
+  my $root  = "$dir/mp3s";
+  my ($dbh) = make_db($dir);
+  my ($a, $b) = add_songs($dbh, $root);
+  my $plex = plex({
+    "GET /playlists"          => playlists_xml(),
+    "GET /playlists/10/items" => items_xml(),
+    "GET /playlists/12/items" => $Items_later_xml,
+    "GET /playlists/13/items" => chill_xml(),
+  });
+  my $mock = mock "MusicSync::Playlists" =>
+    (override => [ strawberry_running => sub () { 0 } ]);
+  is pull_playlists($plex, $dbh, { smart => 1 }), {
+      roots     => { plex => "/srv/music/", local => "" },
+      skipped   => [],
+      playlists => [
+        { name => "Trance", matched => 2, unmatched => [], repeated => 1 },
+        { name => "Recent", matched => 1, unmatched => [], smart    => 1 },
+        {
+          name      => "Chill",
+          matched   => 1,
+          unmatched => [ "Other - Nope", "Other - Silent" ],
+        },
+      ],
+    },
+    "pulls smart playlists as snapshots";
+  is [ grep $_->[0] eq "Recent", playlist_rows($dbh)->@* ],
+    [ [
+      "Recent", 1, 2, $b, "Song B", 36,
+      file_url("$root/Artist/Album/02 Song B.mp3"),
+    ] ],
+    "writes the snapshot as a plain favourite";
+};
+
 subtest "pull formats" => sub {
   my $dir   = Path::Tiny->tempdir;
   my $root  = "$dir/mp3s";
@@ -607,6 +642,13 @@ subtest "report notes" => sub {
         moved     => 0,
       },
       { name => "Dup", matched => 2, unmatched => [], repeated => 1 },
+      {
+        name      => "Snap",
+        matched   => 2,
+        unmatched => [],
+        smart     => 1,
+        repeated  => 1,
+      },
     ],
   };
   is capture(sub { report($summary, {}) }),
@@ -615,7 +657,9 @@ subtest "report notes" => sub {
     . "  not found: Y - X\n"
     . "Recent: 1 of 1 track (skipped, smart playlist on Plex)\n"
     . "Trance: 3 of 3 tracks (removed 1, added 2, moved 0)\n"
-    . "Dup: 2 of 3 tracks (repeated 1)\n", "notes for each kind of change";
+    . "Dup: 2 of 3 tracks (repeated 1)\n"
+    . "Snap: 2 of 3 tracks (smart, repeated 1)\n",
+    "notes for each kind of change";
   is capture(sub {
     report({ roots => { plex => "/m/", local => "t/" }, playlists => [] }, {})
     }),

@@ -43,6 +43,7 @@ sub usage () {
     --user ID           Plex home user whose playlists to use
     --section NAME      Plex music section for push, defaults to $section
     --playlist NAME     Limit to this playlist, repeatable
+    --smart             Pull smart playlists too, as plain snapshots
     --flac              Push every entry as FLAC where Plex has one
     --mp3               Push every entry as MP3
     --dry-run           Report without changing anything
@@ -94,6 +95,7 @@ sub parse_options ($argv) {
     "user=s"       => \$opts->{user},
     "section=s"    => \$opts->{section},
     "playlist=s"   => $opts->{playlists},
+    "smart"        => \$opts->{smart},
     "flac"         => \$opts->{flac},
     "mp3"          => \$opts->{mp3},
     "dry-run"      => \$opts->{dry_run},
@@ -129,7 +131,7 @@ music_sync - copy playlists between Plex, Strawberry and devices
 
 =head1 SYNOPSIS
 
- music_sync playlists pull   --username EMAIL [--playlist NAME]...
+ music_sync playlists pull   --username EMAIL [--smart] [--playlist NAME]...
  music_sync playlists push   --username EMAIL [--flac|--mp3]
                              [--section NAME] [--playlist NAME]...
  music_sync playlists export --dir PATH [--playlist NAME]...
@@ -150,7 +152,9 @@ C<playlists pull> writes every audio playlist on the Plex server into the
 Strawberry database as a favourite playlist, in Plex order, replacing the
 items of a playlist that already exists. Strawberry reads its playlists only
 at startup and overwrites the database whenever a playlist changes, so pull
-stops with an error while Strawberry is open. It skips smart playlists.
+stops with an error while Strawberry is open. It skips smart playlists,
+unless C<--smart> pulls each one as a plain playlist holding its tracks at
+the time.
 
 C<playlists push> makes each Plex playlist match the Strawberry favourite of
 the same name by removing, adding and moving items, and creates playlists

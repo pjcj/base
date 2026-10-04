@@ -55,6 +55,7 @@ sub list_playlists ($plex, $dbh) {
 
 sub notes ($p) {
   my @notes;
+  push @notes, "smart" if $p->{smart};
   push @notes,
     $p->{created} ? "created on Plex" : "not on Plex, nothing to create"
     if defined $p->{created};
@@ -114,16 +115,17 @@ sub pull_playlists ($plex, $dbh, $opts) {
     if !$opts->{dry_run} && strawberry_running();
   my $songs     = collection_songs($dbh);
   my $playlists = selected(plex_playlists($plex), "title", $opts->{playlists});
-  my @plain     = grep !$_->{smart}, @$playlists;
-  my %items   = map { $_->{id} => plex_playlist_items($plex, $_->{id}) } @plain;
-  my $roots   = roots($opts, [ map @$_, values %items ], $songs);
+  my @wanted    = grep $opts->{smart} || !$_->{smart}, @$playlists;
+  my @skipped   = grep !$opts->{smart} && $_->{smart}, @$playlists;
+  my %items = map { $_->{id} => plex_playlist_items($plex, $_->{id}) } @wanted;
+  my $roots = roots($opts, [ map @$_, values %items ], $songs);
   my $summary = {
     roots     => $roots,
-    skipped   => [ map $_->{title}, grep $_->{smart}, @$playlists ],
+    skipped   => [ map $_->{title}, @skipped ],
     playlists => [],
   };
 
-  for my $playlist (@plain) {
+  for my $playlist (@wanted) {
     my ($found, $unmatched) = partition(
       $items{ $playlist->{id} },
       sub ($item) {
@@ -139,7 +141,8 @@ sub pull_playlists ($plex, $dbh, $opts) {
         name      => $playlist->{title},
         matched   => scalar @$ids,
         unmatched => $unmatched,
-        $repeated ? (repeated => $repeated) : (),
+        $playlist->{smart} ? (smart    => 1)         : (),
+        $repeated          ? (repeated => $repeated) : (),
       };
   }
   $summary
