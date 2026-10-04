@@ -12,9 +12,9 @@ use Path::Tiny qw( path );
 use Test2::V0  qw( dies done_testing is like mock subtest );
 
 use MusicSync::Test qw(
-  add_playlist add_song capture   chill_xml
-  items_xml    make_db  make_file playlists_xml
-  plex
+  add_playlist add_song     capture   chill_xml
+  items_xml    make_db      make_file playlists_xml
+  plex         sections_xml tracks_xml
 );
 
 no warnings "experimental::signatures";
@@ -31,18 +31,19 @@ subtest "options" => sub {
   my $opts = MusicSync::parse_options([
     qw( playlists pull        --server x --token t --playlist A --playlist B ),
     qw( --dry-run --plex-root /srv/music --user 21 --local-root t --flac ),
-    qw( --section s           --smart ),
+    qw( --section s           --smart    --overwrite ),
   ]);
   is [
     $opts->@{
       qw(
         noun      verb server     token playlists dry_run
         plex_root user local_root flac  section   smart
+        overwrite
       ),
     }
     ], [
-      "playlists",   "pull", "x",  "t", [ "A", "B" ], 1,
-      "/srv/music/", 21,     "t/", 1,   "s",          1,
+      "playlists", "pull", "x", "t", [ "A", "B" ],
+      1, "/srv/music/", 21, "t/", 1, "s", 1, 1,
     ],
     "parses a command with options";
   like
@@ -79,14 +80,18 @@ subtest "run" => sub {
   add_playlist($dbh, "Trance", 1, $a, $a);
   add_playlist($dbh, "Tab", 0, $a);
   my $plex = plex({
-    "GET /playlists"          => [ (playlists_xml()) x 3 ],
-    "GET /playlists/10/items" => items_xml(),
-    "GET /playlists/12/items" => items_xml(),
-    "GET /playlists/13/items" => chill_xml(),
+    "GET /playlists"                      => [ (playlists_xml()) x 3 ],
+    "GET /playlists/10/items"             => items_xml(),
+    "GET /playlists/12/items"             => items_xml(),
+    "GET /playlists/13/items"             => chill_xml(),
+    "GET /library/sections"               => sections_xml(),
+    "GET /library/sections/1/all?type=10" => tracks_xml(),
   });
   my $mock = mock MusicSync => (override => [
     plex_client => sub (@) { $plex }, open_db => sub (@) { $dbh }, ]);
   my $quiet = mock "MusicSync::Playlists" =>
+    (override => [ strawberry_running => sub () { 0 } ]);
+  my $still = mock "MusicSync::Ratings" =>
     (override => [ strawberry_running => sub () { 0 } ]);
   my $run = sub (@argv) {
     capture(sub { MusicSync::run(MusicSync::parse_options(\@argv)) })
@@ -119,6 +124,14 @@ subtest "run" => sub {
     . "Recent: 2 of 3 tracks (smart)\n"
     . "  not found: Artist - Song B\n"
     . "Copied 0 files, removed 0\n", "exports smart playlists from Plex";
+  is $run->(qw( ratings pull --server s --token t --dry-run )),
+      "Plex root /srv/music/ maps to the collection root\n"
+    . "Ratings: 1 to Strawberry, 0 to Plex, 0 unchanged, 2 unmatched\n"
+    . "Dry run, nothing changed\n", "reports a ratings pull";
+  is $run->(qw( ratings push --server s --token t --dry-run )),
+      "Plex root /srv/music/ maps to the collection root\n"
+    . "Ratings: 0 to Strawberry, 0 to Plex, 1 unchanged, 2 unmatched\n"
+    . "Dry run, nothing changed\n", "reports a ratings push";
 };
 
 subtest "main" => sub {

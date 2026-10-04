@@ -15,6 +15,7 @@ use MusicSync::Strawberry qw(
   collection_songs     default_db
   open_db              strawberry_items
   strawberry_playlists strawberry_running
+  update_ratings
 );
 use MusicSync::Test qw( add_loose_item add_playlist add_song add_songs make_db
 );
@@ -50,11 +51,12 @@ subtest "strawberry database" => sub {
     ],
     "relative paths in NFC, unavailable songs skipped";
   is $songs->{"Artist/Album/01 Song A.mp3"}, {
-      id   => $a,
-      path => "$root/Artist/Album/01 Song A.mp3",
-      rel  => "Artist/Album/01 Song A.mp3",
+      id     => $a,
+      path   => "$root/Artist/Album/01 Song A.mp3",
+      rel    => "Artist/Album/01 Song A.mp3",
+      rating => -1,
     },
-    "song id, decoded path and relative path";
+    "song id, decoded path, relative path and rating";
   is $songs->{"Other/Album/01 Thé.mp3"}{path},
     NFD("$root/Other/Album/01 Thé.mp3"),
     "path keeps the form the file system uses";
@@ -97,6 +99,18 @@ subtest "strawberry database" => sub {
     qr/readonly/i, "read-only handle rejects writes";
   ok open_db($path, 1)->do("DELETE FROM playlists WHERE 0"),
     "writable handle accepts writes";
+};
+
+subtest "update ratings" => sub {
+  my $dir = Path::Tiny->tempdir;
+  my ($dbh) = make_db($dir);
+  my ($a, $b, $t) = add_songs($dbh, "$dir/mp3s");
+  update_ratings($dbh, { $a => 0.8, $t => 1 });
+  is $dbh->selectall_arrayref("SELECT rating FROM songs ORDER BY ROWID"),
+    [ [0.8], [-1], [1] ], "writes each rating by song";
+  update_ratings($dbh, {});
+  is $dbh->selectall_arrayref("SELECT rating FROM songs ORDER BY ROWID"),
+    [ [0.8], [-1], [1] ], "an empty update changes nothing";
 };
 
 subtest "strawberry running" => sub {

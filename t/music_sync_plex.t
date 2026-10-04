@@ -17,8 +17,8 @@ use MusicSync::Plex qw(
   plex_client         plex_library_tracks
   plex_machine_id     plex_move_item
   plex_playlist_items plex_playlists
-  plex_request        plex_section
-  read_password
+  plex_rate           plex_request
+  plex_section        read_password
 );
 use MusicSync::Test qw(
   capture identity_xml items_xml playlists_xml
@@ -66,9 +66,19 @@ subtest "plex playlist items" => sub {
 subtest "plex library tracks" => sub {
   my $plex = plex({ "GET /library/sections/1/all?type=10" => tracks_xml() });
   is plex_library_tracks($plex, 1), [
-      { key => 101, path => "/srv/music/Artist/Album/01 Song A.mp3" },
-      { key => 102, path => "/srv/music/Artist/Album/02 Song B.mp3" },
-      { key => 103, path => "/srv/music/Other/Album/01 Thé.mp3" },
+      {
+        key    => 101,
+        path   => "/srv/music/Artist/Album/01 Song A.mp3",
+        rating => 8,
+      }, {
+        key    => 102,
+        path   => "/srv/music/Artist/Album/02 Song B.mp3",
+        rating => undef,
+      }, {
+        key    => 103,
+        path   => "/srv/music/Other/Album/01 Thé.mp3",
+        rating => undef,
+      },
     ],
     "tracks with files from the section";
   is $plex->{http}{calls}, ["GET /library/sections/1/all?type=10"],
@@ -79,6 +89,7 @@ subtest "plex section" => sub {
   my $plex = plex({ "GET /library/sections" => sections_xml() });
   is default_section(), "mp3", "the default section";
   is plex_section($plex, "mp3"),  1, "the key of a music section by name";
+  is plex_section($plex, undef),  1, "the default section when none is named";
   is plex_section($plex, "flac"), 3, "another music section";
   like dies { plex_section($plex, "Films") },
     qr/No Plex music section called Films \(found mp3, flac\)/,
@@ -87,6 +98,14 @@ subtest "plex section" => sub {
     = plex({ "GET /library/sections" => qq(<MediaContainer size="0"/>) });
   like dies { plex_section($none, "mp3") },
     qr/No Plex music section called mp3 \(found none\)/, "no music sections";
+};
+
+subtest "plex rate" => sub {
+  my $call = "PUT /:/rate?key=101&identifier=com.plexapp.plugins.library"
+    . "&rating=8";
+  my $plex = plex({ $call => "" });
+  plex_rate($plex, 101, 8);
+  is $plex->{http}{calls}, [$call], "rates a track by key on the Plex scale";
 };
 
 subtest "plex request failure" => sub {

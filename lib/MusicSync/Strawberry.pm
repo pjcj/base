@@ -15,10 +15,10 @@ use URI::Escape        qw( uri_unescape );
 use UUID::Tiny         ();
 
 our @EXPORT_OK = qw(
-  collection_songs default_db
-  open_db          replace_playlist
-  strawberry_items strawberry_playlists
-  strawberry_running
+  collection_songs   default_db
+  open_db            replace_playlist
+  strawberry_items   strawberry_playlists
+  strawberry_running update_ratings
 );
 
 sub default_db () {
@@ -64,13 +64,13 @@ sub relative_path ($dirs, $path) {
 sub collection_songs ($dbh) {
   my $dirs = directories($dbh);
   my $rows = $dbh->selectall_arrayref(
-    "SELECT ROWID, url FROM songs WHERE unavailable = 0");
+    "SELECT ROWID, url, rating FROM songs WHERE unavailable = 0");
   my %songs;
   for my $row (@$rows) {
-    my ($id, $url) = @$row;
+    my ($id, $url, $rating) = @$row;
     my $path = decode_url($url);
     my $rel  = relative_path($dirs, $path) // next;
-    $songs{$rel} = { id => $id, path => $path, rel => $rel };
+    $songs{$rel} = { id => $id, path => $path, rel => $rel, rating => $rating };
   }
   \%songs
 }
@@ -139,6 +139,13 @@ sub replace_playlist ($dbh, $name, $song_ids) {
     my $uuid = UUID::Tiny::create_uuid_as_string(UUID::Tiny::UUID_V4());
     $insert->execute($id, $uuid, $song_id);
   }
+  $dbh->commit;
+}
+
+sub update_ratings ($dbh, $ratings) {
+  $dbh->begin_work;
+  my $update = $dbh->prepare("UPDATE songs SET rating = ? WHERE ROWID = ?");
+  $update->execute($ratings->{$_}, $_) for keys %$ratings;
   $dbh->commit;
 }
 

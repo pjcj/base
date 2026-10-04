@@ -11,7 +11,8 @@ use Unicode::Normalize qw( NFC );
 
 our @EXPORT_OK = qw(
   detect_roots flac_for local_rel local_song
-  mp3_for      plex_rel roots     track_key
+  mp3_for      plex_rel roots     roots_line
+  track_key
 );
 
 sub detect_roots ($tracks, $local) {
@@ -40,6 +41,16 @@ sub roots ($opts, $tracks, $local) {
   $roots->{plex}  = $opts->{plex_root}  if defined $opts->{plex_root};
   $roots->{local} = $opts->{local_root} if defined $opts->{local_root};
   $roots
+}
+
+sub roots_line ($roots) {
+  return "No Plex root found, so nothing can match\n"
+    unless defined $roots->{plex};
+  my $local
+    = $roots->{local} eq ""
+    ? "the collection root"
+    : "collection folder $roots->{local}";
+  "Plex root $roots->{plex} maps to $local\n"
 }
 
 sub plex_rel ($root, $path) {

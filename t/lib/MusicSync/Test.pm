@@ -17,10 +17,11 @@ use URI::Escape        qw( uri_escape_utf8 );
 use FakeHttp ();
 
 our @EXPORT_OK = qw(
-  add_loose_item add_playlist add_song  add_songs
-  capture        chill_xml    file_url  identity_xml
-  items_xml      make_db      make_file playlists_xml
-  plex           sections_xml songs     tracks_xml
+  add_loose_item add_playlist add_song     add_songs
+  capture        chill_xml    file_url     identity_xml
+  items_xml      make_db      make_file    playlists_xml
+  plex           rate_song    sections_xml songs
+  tracks_xml
 );
 
 sub playlists_xml () {
@@ -77,7 +78,8 @@ sub tracks_xml () {
   <<~XML
   <?xml version="1.0" encoding="UTF-8"?>
   <MediaContainer size="4">
-  <Track ratingKey="101" title="Song A" grandparentTitle="Artist">
+  <Track ratingKey="101" title="Song A" grandparentTitle="Artist"
+    userRating="8">
     <Media id="1"><Part id="1" file="/srv/music/Artist/Album/01 Song A.mp3"/>
     </Media>
   </Track>
@@ -152,6 +154,10 @@ sub add_song ($dbh, $root, $rel, $title, $artist, $unavailable = 0) {
     $artist, $unavailable
   );
   $dbh->sqlite_last_insert_rowid
+}
+
+sub rate_song ($dbh, $id, $rating) {
+  $dbh->do("UPDATE songs SET rating = ? WHERE ROWID = ?", undef, $rating, $id);
 }
 
 my $Songs = [

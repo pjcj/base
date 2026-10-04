@@ -15,13 +15,13 @@ use File::Path         qw( make_path );
 use File::Spec         ();
 use Unicode::Normalize qw( NFC );
 
-use MusicSync::Match qw( local_rel local_song plex_rel roots track_key );
-use MusicSync::Plex  qw(
-  default_section      plex_add_items
-  plex_create_playlist plex_library_tracks
-  plex_move_item       plex_playlist_items
-  plex_playlists       plex_remove_item
-  plex_section
+use MusicSync::Match qw( local_rel local_song plex_rel roots roots_line
+  track_key );
+use MusicSync::Plex qw(
+  plex_add_items      plex_create_playlist
+  plex_library_tracks plex_move_item
+  plex_playlist_items plex_playlists
+  plex_remove_item    plex_section
 );
 use MusicSync::Strawberry qw(
   collection_songs replace_playlist
@@ -63,16 +63,6 @@ sub notes ($p) {
   push @notes, map "$_ $p->{$_}", grep defined $p->{$_},
     qw( removed added moved repeated );
   @notes ? " (" . join(", ", @notes) . ")" : ""
-}
-
-sub roots_line ($roots) {
-  return "No Plex root found, so nothing can match\n"
-    unless defined $roots->{plex};
-  my $local
-    = $roots->{local} eq ""
-    ? "the collection root"
-    : "collection folder $roots->{local}";
-  "Plex root $roots->{plex} maps to $local\n"
 }
 
 sub report ($summary, $opts) {
@@ -232,9 +222,8 @@ sub plex_changes ($plex, $target, $name, $keys, $current, $dry_run) {
 }
 
 sub push_playlists ($plex, $dbh, $opts) {
-  my $songs = collection_songs($dbh);
-  # uncoverable condition false note:the default section name is always set
-  my $section = plex_section($plex, $opts->{section} // default_section());
+  my $songs   = collection_songs($dbh);
+  my $section = plex_section($plex, $opts->{section});
   my $tracks  = plex_library_tracks($plex, $section);
   my $roots   = roots($opts, $tracks, $songs);
   my %key_for;

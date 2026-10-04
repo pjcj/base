@@ -18,9 +18,9 @@ our @EXPORT_OK = qw(
   plex_client         plex_create_playlist
   plex_library_tracks plex_machine_id
   plex_move_item      plex_playlist_items
-  plex_playlists      plex_remove_item
-  plex_request        plex_section
-  read_password
+  plex_playlists      plex_rate
+  plex_remove_item    plex_request
+  plex_section        read_password
 );
 
 sub parse_xml ($xml, @force) {
@@ -192,6 +192,8 @@ sub music_sections ($plex) {
 }
 
 sub plex_section ($plex, $name) {
+  # uncoverable condition false note:the default section name is always set
+  $name //= default_section();
   my $sections  = music_sections($plex);
   my ($section) = grep $_->{title} eq $name, @$sections;
   my $names     = join(", ", map $_->{title}, @$sections) || "none";
@@ -207,9 +209,18 @@ sub plex_library_tracks ($plex, $section) {
   my @tracks;
   for my $track (($data->{Track} // [])->@*) {
     my $path = track_path($track) // next;
-    push @tracks, { key => $track->{ratingKey}, path => $path };
+    push @tracks, {
+        key    => $track->{ratingKey},
+        path   => $path,
+        rating => $track->{userRating},
+      };
   }
   \@tracks
+}
+
+sub plex_rate ($plex, $key, $rating) {
+  plex_request($plex, "PUT",
+    "/:/rate?key=$key&identifier=com.plexapp.plugins.library&rating=$rating");
 }
 
 sub plex_remove_item ($plex, $id, $item_id) {
