@@ -18,6 +18,7 @@ our @EXPORT_OK = qw(
 sub detect_roots ($tracks, $local) {
   my %by_name;
   push $by_name{ (split m|/|)[-1] }->@*, $_ for keys %$local;
+  my ($roots, $depth) = (undef, 0);
   for my $track (@$tracks) {
     my @plex = split m|/|, NFC($track->{path} // next);
     for my $key (($by_name{ $plex[-1] } // [])->@*) {
@@ -27,13 +28,15 @@ sub detect_roots ($tracks, $local) {
         while $n < @plex
         && $n < @local
         && $plex[ -1 - $n ] eq $local[ -1 - $n ];
-      return {
+      next if $n <= $depth;
+      $depth = $n;
+      $roots = {
         plex  => join("/", @plex[ 0 .. $#plex - $n ]) . "/",
         local => join("/", @local[ 0 .. $#local - $n ], ""),
       };
     }
   }
-  undef
+  $roots
 }
 
 sub roots ($opts, $tracks, $local) {

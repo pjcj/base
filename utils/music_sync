@@ -231,10 +231,11 @@ A Strawberry item and a Plex track are the same when their paths relative to
 their library roots match, compared in Unicode NFC form. The Plex root is
 the server side path above the library, and the local root is the folder of
 the Strawberry collection that mirrors it, which may be the collection root
-itself. The script detects both from the first track it finds on both sides,
-by taking the longest trailing path the two have in common, unless
-C<--plex-root> and C<--local-root> give them. Every report starts with the
-roots in use. The script lists and skips tracks with no match.
+itself. Unless C<--plex-root> and C<--local-root> give them, the script
+detects both from the pair of files, one on each side, with the longest
+trailing path in common. A file name that a cover shares with its original
+therefore cannot mislead it. Every report starts with the roots in use. The
+script lists and skips tracks with no match.
 
 C<playlists push> and the ratings commands match against the tracks of one
 Plex music section, C<mp3> unless C<--section> names another, since a file

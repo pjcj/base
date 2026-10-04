@@ -23,7 +23,22 @@ subtest "roots" => sub {
     { key => 3, path => "/srv/music/Artist/Album/01 Song A.mp3" },
   ];
   is detect_roots($tracks, $local), { plex => "/srv/music/", local => "t/" },
-    "roots from the first track found locally";
+    "roots from a track found locally";
+  is detect_roots(
+    [
+      { key => 6, path => "/srv/music/Cover/Cover/01 Song A.mp3" },
+      $tracks->[2],
+    ],
+    $local
+    ),
+    { plex => "/srv/music/", local => "t/" },
+    "a deeper match beats an earlier name-only match";
+  is detect_roots(
+    [ $tracks->[2] ],
+    { "Other/Album/01 Song A.mp3" => 1, "t/Artist/Album/01 Song A.mp3" => 1 }
+    ),
+    { plex => "/srv/music/", local => "t/" },
+    "the deeper of two local files with one name wins";
   is detect_roots(
     [ { key => 4, path => "/srv/music/Artist/Album/02 Song B.mp3" } ], $local
     ),
