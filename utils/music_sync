@@ -16,9 +16,10 @@ use lib "$FindBin::RealBin/../lib";
 
 use MusicSync::Playlists qw( export_playlists list_playlists pull_playlists
   push_playlists report );
-use MusicSync::Plex       qw( default_section default_server plex_client );
-use MusicSync::Ratings    qw( pull_ratings    push_ratings   report_ratings );
-use MusicSync::Strawberry qw( default_db      open_db );
+use MusicSync::Plex    qw( default_section default_server plex_client );
+use MusicSync::Ratings qw( merge_ratings pull_ratings push_ratings
+  report_ratings );
+use MusicSync::Strawberry qw( default_db open_db );
 
 sub usage () {
   my $server  = default_server();
@@ -33,6 +34,7 @@ sub usage () {
     playlists list      Show the playlists on both sides
     ratings pull        Take higher ratings from Plex (quit Strawberry first)
     ratings push        Send higher ratings to Plex
+    ratings merge       Raise ratings on both sides to the higher
 
   Options:
     --server NAME|URL   Plex server name or URL, defaults to $server
@@ -89,6 +91,10 @@ my $Command = {
       my $dbh = open_db($opts->{db});
       report_ratings(push_ratings(plex_client($opts), $dbh, $opts), $opts);
     },
+    merge => sub ($opts) {
+      my $dbh = open_db($opts->{db}, !$opts->{dry_run});
+      report_ratings(merge_ratings(plex_client($opts), $dbh, $opts), $opts);
+    },
   },
 };
 
@@ -129,6 +135,8 @@ sub parse_options ($argv) {
   $opts->{noun} = shift @$argv // die usage();
   $opts->{verb} = shift @$argv // die usage();
   die usage() unless ($Command->{ $opts->{noun} } // {})->{ $opts->{verb} };
+  die "ratings merge takes no --overwrite\n"
+    if $opts->{overwrite} && $opts->{verb} eq "merge";
   $opts
 }
 
@@ -157,6 +165,7 @@ music_sync - copy playlists and ratings between Plex, Strawberry and devices
  music_sync playlists list   --username EMAIL
  music_sync ratings pull     --username EMAIL [--overwrite]
  music_sync ratings push     --username EMAIL [--overwrite]
+ music_sync ratings merge    --username EMAIL
 
 =head1 DESCRIPTION
 
@@ -205,10 +214,12 @@ ways, so half stars survive.
 
 C<ratings pull> gives each Strawberry song the Plex rating of its track when
 that is higher, and C<ratings push> gives each Plex track the Strawberry
-rating when that is higher. C<--overwrite> takes every rating from the
-source instead. An unrated track never clears a rating on the other side.
-Only tracks in the chosen section that match a collection song take part.
-Pull writes the database, so quit Strawberry first. Push only reads it.
+rating when that is higher. C<ratings merge> does both, so the higher rating
+wins on each side and a second run has nothing to do. C<--overwrite> takes
+every rating from the source on a pull or a push instead. An unrated track
+never clears a rating on the other side. Only tracks in the chosen section
+that match a collection song take part. Pull and merge write the database,
+so quit Strawberry first. Push only reads it.
 
 Lowering a rating on one side does not carry, since the next default run
 restores the higher one. Use C<ratings pull --overwrite> to make Plex the

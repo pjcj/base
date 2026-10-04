@@ -14,7 +14,8 @@ use MusicSync::Strawberry qw( collection_songs strawberry_running
   update_ratings );
 
 our @EXPORT_OK
-  = qw( plex_scale pull_ratings push_ratings report_ratings winner );
+  = qw( merge_ratings plex_scale pull_ratings push_ratings report_ratings
+    winner );
 
 sub plex_scale ($rating) {
   defined $rating && $rating > 0 ? int($rating * 10 + 0.5) : undef
@@ -41,49 +42,45 @@ sub pairs ($plex, $dbh, $opts) {
   { roots => $roots, pairs => \@pairs, unmatched => $unmatched }
 }
 
-sub summary ($matched, %counts) { {
-  roots         => $matched->{roots},
-  to_strawberry => 0,
-  to_plex       => 0,
-  unmatched     => $matched->{unmatched},
-  %counts,
-} }
-
-sub pull_ratings ($plex, $dbh, $opts) {
-  die "Quit Strawberry before pulling ratings\n"
-    if !$opts->{dry_run} && strawberry_running();
+sub sync ($plex, $dbh, $opts, %way) {
+  die "Quit Strawberry before writing ratings\n"
+    if $way{in} && !$opts->{dry_run} && strawberry_running();
   my $matched = pairs($plex, $dbh, $opts);
   my %ratings;
-  my $unchanged = 0;
-  for my $pair ($matched->{pairs}->@*) {
-    my ($track, $song) = @$pair;
-    my $new = winner($track->{rating}, plex_scale($song->{rating}),
-      $opts->{overwrite});
-    defined $new ? ($ratings{ $song->{id} } = $new / 10) : $unchanged++;
-  }
-  update_ratings($dbh, \%ratings) unless $opts->{dry_run};
-  summary(
-    $matched,
-    to_strawberry => scalar keys %ratings,
-    unchanged     => $unchanged
-  )
-}
-
-sub push_ratings ($plex, $dbh, $opts) {
-  my $matched = pairs($plex, $dbh, $opts);
   my ($to_plex, $unchanged) = (0, 0);
   for my $pair ($matched->{pairs}->@*) {
     my ($track, $song) = @$pair;
-    my $new = winner(plex_scale($song->{rating}), $track->{rating},
-      $opts->{overwrite});
-    if (defined $new) {
-      plex_rate($plex, $track->{key}, $new) unless $opts->{dry_run};
+    my $local = plex_scale($song->{rating});
+    my $to_local
+      = $way{in} ? winner($track->{rating}, $local, $opts->{overwrite}) : undef;
+    my $to_remote
+      = $way{out}
+      ? winner($local, $track->{rating}, $opts->{overwrite})
+      : undef;
+    if (defined $to_local) {
+      $ratings{ $song->{id} } = $to_local / 10;
+    } elsif (defined $to_remote) {
+      plex_rate($plex, $track->{key}, $to_remote) unless $opts->{dry_run};
       $to_plex++;
     } else {
       $unchanged++;
     }
   }
-  summary($matched, to_plex => $to_plex, unchanged => $unchanged)
+  update_ratings($dbh, \%ratings) if %ratings && !$opts->{dry_run};
+  {
+    roots         => $matched->{roots},
+    to_strawberry => scalar keys %ratings,
+    to_plex       => $to_plex,
+    unchanged     => $unchanged,
+    unmatched     => $matched->{unmatched},
+  }
+}
+
+sub pull_ratings ($plex, $dbh, $opts) { sync($plex, $dbh, $opts, in  => 1) }
+sub push_ratings ($plex, $dbh, $opts) { sync($plex, $dbh, $opts, out => 1) }
+
+sub merge_ratings ($plex, $dbh, $opts) {
+  sync($plex, $dbh, $opts, in => 1, out => 1)
 }
 
 sub report_ratings ($summary, $opts) {

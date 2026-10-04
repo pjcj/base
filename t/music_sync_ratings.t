@@ -11,8 +11,8 @@ use lib "$FindBin::Bin/../lib", "$FindBin::Bin/lib";
 use Path::Tiny ();
 use Test2::V0  qw( dies done_testing is like lives mock ok subtest );
 
-use MusicSync::Ratings qw( plex_scale pull_ratings push_ratings report_ratings
-  winner );
+use MusicSync::Ratings qw( merge_ratings plex_scale pull_ratings push_ratings
+  report_ratings winner );
 use MusicSync::Test qw( add_songs capture make_db plex rate_song sections_xml );
 
 no warnings "experimental::signatures";
@@ -152,6 +152,43 @@ subtest "push" => sub {
   is push_ratings($plex, $dbh, { dry_run => 1 })->{to_plex}, 1,
     "dry run counts the changes";
   is rate_calls($plex), [], "dry run rates nothing";
+};
+
+subtest "merge" => sub {
+  my $dbh  = rating_db();
+  my $plex = plex_with_tracks();
+  my $mock = mock "MusicSync::Ratings" =>
+    (override => [ strawberry_running => sub () { 0 } ]);
+  is merge_ratings($plex, $dbh, {}), {
+      roots         => $Roots,
+      to_strawberry => 2,
+      to_plex       => 1,
+      unchanged     => 0,
+      unmatched     => 1,
+    },
+    "the higher rating wins on each side";
+  is ratings($dbh), [ [0.8], [0.6], [1] ],
+    "Strawberry takes the higher Plex ratings";
+  is rate_calls($plex), [ rate_call(103, 10) ],
+    "Plex takes the higher Strawberry rating";
+  my $after = plex({
+    "GET /library/sections"               => sections_xml(),
+    "GET /library/sections/1/all?type=10" => $Tracks_xml
+      =~ s/userRating="4\.0"/userRating="10.0"/r,
+  });
+  is [ merge_ratings($after, $dbh, {})
+      ->@{ qw( to_strawberry to_plex unchanged ) } ], [ 0, 0, 3 ],
+    "nothing to do on a second run";
+  my $dry = rating_db();
+  $plex = plex_with_tracks();
+  is [ merge_ratings($plex, $dry, { dry_run => 1 })
+      ->@{ qw( to_strawberry to_plex ) } ], [ 2, 1 ],
+    "dry run counts the changes";
+  is ratings($dry),     [ [0.4], [-1], [1] ], "dry run writes nothing";
+  is rate_calls($plex), [],                   "dry run rates nothing";
+  $mock->override(strawberry_running => sub () { 1 });
+  like dies { merge_ratings($plex, $dbh, {}) }, qr/Quit Strawberry/,
+    "does not write while Strawberry runs";
 };
 
 subtest "report" => sub {

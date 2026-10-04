@@ -49,6 +49,8 @@ subtest "options" => sub {
   like
     dies { MusicSync::parse_options([ qw( playlists push --flac --mp3 ) ]) },
     qr/only one of --flac and --mp3/, "one format at a time";
+  like dies { MusicSync::parse_options([ qw( ratings merge --overwrite ) ]) },
+    qr/merge takes no --overwrite/, "merge has no overwrite";
   like $opts->{db}, qr/strawberry\.db$/, "defaults the database path";
   like dies {
     local $SIG{__WARN__} = sub (@) { };
@@ -132,6 +134,10 @@ subtest "run" => sub {
       "Plex root /srv/music/ maps to the collection root\n"
     . "Ratings: 0 to Strawberry, 0 to Plex, 1 unchanged, 2 unmatched\n"
     . "Dry run, nothing changed\n", "reports a ratings push";
+  is $run->(qw( ratings merge --server s --token t --dry-run )),
+      "Plex root /srv/music/ maps to the collection root\n"
+    . "Ratings: 1 to Strawberry, 0 to Plex, 0 unchanged, 2 unmatched\n"
+    . "Dry run, nothing changed\n", "reports a ratings merge";
 };
 
 subtest "main" => sub {
