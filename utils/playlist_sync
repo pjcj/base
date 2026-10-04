@@ -1,0 +1,895 @@
+#!/usr/bin/env perl
+
+package PlaylistSync;
+
+use 5.28.0;
+use warnings;
+use utf8;
+use feature "signatures";
+no warnings "experimental::signatures";
+use open qw( :std :utf8 );
+
+use DBD::SQLite        ();
+use DBI                ();
+use Encode             qw( decode_utf8 encode_utf8 );
+use File::Basename     qw( dirname );
+use File::Copy         qw( copy );
+use File::Find         qw( find finddepth );
+use File::Path         qw( make_path );
+use File::Spec         ();
+use Getopt::Long       qw( GetOptionsFromArray );
+use HTTP::Tiny         ();
+use Unicode::Normalize qw( NFC );
+use URI::Escape        qw( uri_escape_utf8 uri_unescape );
+use UUID::Tiny         ();
+use XML::Simple        ();
+
+sub parse_xml ($xml, @force) {
+  XML::Simple->new->XMLin($xml, KeyAttr => {}, ForceArray => [@force])
+}
+
+my $Client_headers = {
+  "X-Plex-Client-Identifier" => "playlist_sync",
+  "X-Plex-Product"           => "playlist_sync",
+  "X-Plex-Version"           => "1.0",
+};
+
+sub request ($plex, $method, $url) {
+  print STDERR "$method $url\n" if $plex->{debug};
+  my $headers = {
+    %$Client_headers,
+    "X-Plex-Token" => $plex->{token},
+    Accept         => "application/xml",
+  };
+  my $response = $plex->{http}->request($method, $url, { headers => $headers });
+  die "$method $url failed with $response->{status} $response->{reason}\n"
+    unless $response->{success};
+  $response->{content}
+}
+
+sub plex_request ($plex, $method, $path) {
+  request($plex, $method, "$plex->{server}$path")
+}
+
+sub chars ($text) {
+  return "" unless defined $text;
+  utf8::is_utf8($text) ? $text : decode_utf8($text)
+}
+
+sub plex_playlists ($plex) {
+  my $data = parse_xml(plex_request($plex, "GET", "/playlists"), "Playlist");
+  [
+    map +{
+      id    => $_->{ratingKey},
+      title => chars($_->{title}),
+      smart => $_->{smart} ? 1 : 0,
+      count => $_->{leafCount} // 0,
+    },
+    grep { ($_->{playlistType} // "") eq "audio" }
+      ($data->{Playlist} // [])->@*,
+  ]
+}
+
+sub plural ($n, $word) { "$n $word" . ($n == 1 ? "" : "s") }
+
+sub strawberry_playlists ($dbh) {
+  my $rows = $dbh->selectall_arrayref(
+    "SELECT ROWID, name FROM playlists WHERE is_favorite != 0 ORDER BY name");
+  [ map { id => $_->[0], name => $_->[1] }, @$rows ]
+}
+
+sub list_playlists ($plex, $dbh) {
+  print "Plex playlists:\n";
+  for my $p (plex_playlists($plex)->@*) {
+    my $smart = $p->{smart} ? ", smart" : "";
+    print "  $p->{title} (" . plural($p->{count}, "track") . "$smart)\n";
+  }
+  print "Strawberry playlists:\n";
+  for my $p (strawberry_playlists($dbh)->@*) {
+    my ($n) = $dbh->selectrow_array(
+      "SELECT COUNT(*) FROM playlist_items WHERE playlist = ?", undef,
+      $p->{id}
+    );
+    print "  $p->{name} (" . plural($n, "track") . ")\n";
+  }
+}
+
+sub plex_sign_in ($http, $username, $password) {
+  my $form     = { "user[login]" => $username, "user[password]" => $password };
+  my $response = $http->post_form(
+    "https://plex.tv/users/sign_in.xml", $form,
+    { headers => $Client_headers }
+  );
+  die "Plex sign in failed with $response->{status} $response->{reason}\n"
+    unless $response->{success};
+  parse_xml($response->{content})->{authToken}
+    // die "Plex sign in returned no token\n"
+}
+
+sub read_password () {
+  print "Plex password: ";
+  system "stty", "-echo";
+  chomp(my $password = STDIN->getline // "");
+  system "stty", "echo";
+  print "\n";
+  $password
+}
+
+sub password ($opts) {
+  # uncoverable condition false note:read_password never returns undef
+  $opts->{password} // read_password()
+}
+
+sub plex_token ($opts, $http) {
+  # uncoverable condition false note:plex_sign_in never returns undef
+  $opts->{token} // plex_sign_in($http, $opts->{username}, password($opts))
+}
+
+my $Default_server = "Wezflix";
+
+sub plex_servers ($plex) {
+  my $url  = "https://plex.tv/api/v2/resources?includeHttps=1&includeRelay=1";
+  my $data = parse_xml(request($plex, "GET", $url), "resource", "connection");
+  [ grep { ($_->{provides} // "") =~ /\bserver\b/ }
+    ($data->{resource} // [])->@* ]
+}
+
+sub plex_find_server ($plex, $name) {
+  my $servers  = plex_servers($plex);
+  my ($server) = grep { $_->{name} eq $name } @$servers;
+  my $names    = join(", ", map $_->{name}, @$servers) || "none";
+  die "No Plex server called $name (found $names)\n" unless $server;
+  my ($best)
+    = sort { $a->{relay} <=> $b->{relay} || $a->{local} <=> $b->{local} }
+    ($server->{connections}{connection} // [])->@*;
+  die "Plex server $name has no connections\n" unless $best;
+  $best->{uri}
+}
+
+sub plex_server ($plex, $server) {
+  return $server =~ s|/$||r if $server =~ m|^https?://|;
+  plex_find_server($plex, $server)
+}
+
+sub plex_machine_id ($plex) {
+  my $data = parse_xml(plex_request($plex, "GET", "/identity"));
+  # uncoverable mcdc note:die never yields a value
+  $data->{machineIdentifier} // die "Plex sent no machine identifier\n"
+}
+
+sub plex_user_token ($plex, $user_id) {
+  $plex->{machine_id} = plex_machine_id($plex);
+  my $url  = "https://plex.tv/api/servers/$plex->{machine_id}/shared_servers";
+  my $data = parse_xml(request($plex, "GET", $url), "SharedServer");
+  my ($server)
+    = grep { ($_->{userID} // "") eq $user_id }
+    ($data->{SharedServer} // [])->@*;
+  # uncoverable mcdc note:die never yields a value
+  ($server // {})->{accessToken}
+    // die "No access token for Plex user $user_id\n"
+}
+
+sub plex_client ($opts, $http = undef) {
+  die "Use --token or --username to sign in to Plex\n"
+    unless $opts->{token} || $opts->{username};
+  # uncoverable condition false note:HTTP::Tiny->new never returns undef
+  $http //= HTTP::Tiny->new(
+    timeout    => 60,
+    agent      => "playlist_sync/1.0",
+    verify_SSL => 1
+  );
+  my $plex = {
+    http  => $http,
+    token => plex_token($opts, $http),
+    debug => $opts->{debug},
+  };
+  # uncoverable condition false note:the default server name is always set
+  $plex->{server} = plex_server($plex, $opts->{server} // $Default_server);
+  $plex->{token}  = plex_user_token($plex, $opts->{user}) if $opts->{user};
+  $plex
+}
+
+sub open_db ($path, $write = 0) {
+  my $flags
+    = $write ? DBD::SQLite::OPEN_READWRITE() : DBD::SQLite::OPEN_READONLY();
+  DBI->connect(
+    "dbi:SQLite:dbname=$path",
+    "", "", {
+      RaiseError        => 1,
+      PrintError        => 0,
+      sqlite_unicode    => 1,
+      sqlite_open_flags => $flags,
+    }
+  )
+}
+
+sub notes ($p) {
+  my @notes;
+  push @notes,
+    $p->{created} ? "created on Plex" : "not on Plex, nothing to create"
+    if defined $p->{created};
+  push @notes, "skipped, $p->{skipped}" if $p->{skipped};
+  push @notes, map "$_ $p->{$_}", grep defined $p->{$_},
+    qw( removed added moved repeated );
+  @notes ? " (" . join(", ", @notes) . ")" : ""
+}
+
+sub roots_line ($roots) {
+  return "No Plex root found, so nothing can match\n"
+    unless defined $roots->{plex};
+  my $local
+    = $roots->{local} eq ""
+    ? "the collection root"
+    : "collection folder $roots->{local}";
+  "Plex root $roots->{plex} maps to $local\n"
+}
+
+sub report ($summary, $opts) {
+  print roots_line($summary->{roots}) if $summary->{roots};
+  for my $p ($summary->{playlists}->@*) {
+    my $total = $p->{matched} + $p->{unmatched}->@* + ($p->{repeated} // 0);
+    print "$p->{name}: $p->{matched} of "
+      . plural($total, "track")
+      . notes($p) . "\n";
+    print "  not found: $_\n" for $p->{unmatched}->@*;
+  }
+  print "Skipped smart playlists: @{$summary->{skipped}}\n"
+    if ($summary->{skipped} // [])->@*;
+  print "Copied "
+    . plural($summary->{copied}, "file")
+    . ", removed $summary->{removed}\n"
+    if defined $summary->{copied};
+  print "Dry run, nothing changed\n" if $opts->{dry_run};
+}
+
+sub strawberry_running () { system("pgrep", "-xq", "strawberry") == 0 }
+
+sub directories ($dbh) {
+  [ map $_->[0], $dbh->selectall_arrayref("SELECT path FROM directories")->@* ]
+}
+
+sub decode_url ($url) {
+  my ($path) = $url =~ m|^file://(.*)$| or return;
+  decode_utf8(uri_unescape($path))
+}
+
+sub relative_path ($dirs, $path) {
+  return undef unless defined $path;
+  for my $dir (@$dirs) {
+    return NFC(substr $path, length($dir) + 1) if index($path, "$dir/") == 0;
+  }
+  undef
+}
+
+sub collection_songs ($dbh) {
+  my $dirs = directories($dbh);
+  my $rows = $dbh->selectall_arrayref(
+    "SELECT ROWID, url FROM songs WHERE unavailable = 0");
+  my %songs;
+  for my $row (@$rows) {
+    my ($id, $url) = @$row;
+    my $path = decode_url($url);
+    my $rel  = relative_path($dirs, $path) // next;
+    $songs{$rel} = { id => $id, path => $path };
+  }
+  \%songs
+}
+
+sub selected ($list, $field, $names) {
+  return $list unless $names && @$names;
+  my %want = map { $_ => 1 } @$names;
+  [ grep $want{ $_->{$field} }, @$list ]
+}
+
+sub track_path ($track) {
+  my $part = $track->{Media}[0]{Part}[0] or return undef;
+  chars($part->{file})
+}
+
+sub plex_playlist_items ($plex, $id) {
+  my $data = parse_xml(
+    plex_request($plex, "GET", "/playlists/$id/items"),
+    qw( Track Media Part )
+  );
+  [
+    map +{
+      item_id => $_->{playlistItemID},
+      key     => $_->{ratingKey},
+      path    => track_path($_),
+      title   => chars($_->{title}),
+      artist  => chars($_->{grandparentTitle}),
+    },
+    ($data->{Track} // [])->@*,
+  ]
+}
+
+sub detect_roots ($tracks, $local) {
+  my %by_name;
+  push $by_name{ (split m|/|)[-1] }->@*, $_ for keys %$local;
+  for my $track (@$tracks) {
+    my @plex = split m|/|, NFC($track->{path} // next);
+    for my $key (($by_name{ $plex[-1] } // [])->@*) {
+      my @local = split m|/|, $key;
+      my $n     = 0;
+      $n++
+        while $n < @plex
+        && $n < @local
+        && $plex[ -1 - $n ] eq $local[ -1 - $n ];
+      return {
+        plex  => join("/", @plex[ 0 .. $#plex - $n ]) . "/",
+        local => join("/", @local[ 0 .. $#local - $n ], ""),
+      };
+    }
+  }
+  undef
+}
+
+sub roots ($opts, $tracks, $local) {
+  my $roots = detect_roots($tracks, $local) // { plex => undef, local => "" };
+  $roots->{plex}  = $opts->{plex_root}  if defined $opts->{plex_root};
+  $roots->{local} = $opts->{local_root} if defined $opts->{local_root};
+  $roots
+}
+
+sub label ($item) { "$item->{artist} - $item->{title}" }
+
+sub partition ($items, $match) {
+  my (@found, @unmatched);
+  for my $item (@$items) {
+    my $value = $match->($item);
+    defined $value ? push @found, $value : push @unmatched, label($item);
+  }
+  (\@found, \@unmatched)
+}
+
+sub plex_rel ($root, $path) {
+  return unless defined $root && defined $path && index($path, $root) == 0;
+  NFC(substr $path, length $root)
+}
+
+my $Flac = { dir => "flac-tagged/", ext => ".flac" };
+my $Mp3  = { dir => "t/f/",         ext => ".mp3" };
+
+sub swap_format ($rel, $from, $to) {
+  return unless index($rel, $from->{dir}) == 0 && $rel =~ /\Q$from->{ext}\E$/;
+  $to->{dir}
+    . substr($rel, length $from->{dir}, -length $from->{ext})
+    . $to->{ext}
+}
+
+sub mp3_for  ($rel) { swap_format($rel, $Flac, $Mp3) }
+sub flac_for ($rel) { swap_format($rel, $Mp3,  $Flac) }
+
+sub local_song ($songs, $roots, $path) {
+  my $rel = plex_rel($roots->{plex}, $path) // return;
+  for my $try ($rel, mp3_for($rel)) {
+    my $song = $songs->{ $roots->{local} . $try };
+    return $song if $song;
+  }
+  undef
+}
+
+sub song_columns ($dbh) {
+  my $names = sub ($table) {
+    [ map $_->[1], $dbh->selectall_arrayref("PRAGMA table_info($table)")->@* ]
+  };
+  my %item = map { $_ => 1 } $names->("playlist_items")->@*;
+  [ grep $item{$_}, $names->("songs")->@* ]
+}
+
+sub playlist_id ($dbh, $name) {
+  my ($id) = $dbh->selectrow_array(
+    "SELECT ROWID FROM playlists WHERE name = ?",
+    undef, $name
+  );
+  if (defined $id) {
+    $dbh->do("UPDATE playlists SET is_favorite = 1 WHERE ROWID = ?", undef,
+      $id);
+    return $id;
+  }
+  $dbh->do(
+    "INSERT INTO playlists (name, ui_order, is_favorite) VALUES (?, -1, 1)",
+    undef, $name
+  );
+  $dbh->sqlite_last_insert_rowid
+}
+
+sub replace_playlist ($dbh, $name, $song_ids) {
+  my $columns = join ", ", song_columns($dbh)->@*;
+  $dbh->begin_work;
+  my $id = playlist_id($dbh, $name);
+  $dbh->do("DELETE FROM playlist_items WHERE playlist = ?", undef, $id);
+  my $insert = $dbh->prepare(
+    "INSERT INTO playlist_items (playlist, type, uuid, collection_id, $columns)
+     SELECT ?, 2, ?, ROWID, $columns FROM songs WHERE ROWID = ?"
+  );
+  for my $song_id (@$song_ids) {
+    my $uuid = UUID::Tiny::create_uuid_as_string(UUID::Tiny::UUID_V4());
+    $insert->execute($id, $uuid, $song_id);
+  }
+  $dbh->commit;
+}
+
+sub pull_playlists ($plex, $dbh, $opts) {
+  die "Quit Strawberry before pulling playlists\n"
+    if !$opts->{dry_run} && strawberry_running();
+  my $songs     = collection_songs($dbh);
+  my $playlists = selected(plex_playlists($plex), "title", $opts->{playlists});
+  my @plain     = grep !$_->{smart}, @$playlists;
+  my %items   = map { $_->{id} => plex_playlist_items($plex, $_->{id}) } @plain;
+  my $roots   = roots($opts, [ map @$_, values %items ], $songs);
+  my $summary = {
+    roots     => $roots,
+    skipped   => [ map $_->{title}, grep $_->{smart}, @$playlists ],
+    playlists => [],
+  };
+
+  for my $playlist (@plain) {
+    my ($found, $unmatched) = partition(
+      $items{ $playlist->{id} },
+      sub ($item) {
+        my $song = local_song($songs, $roots, $item->{path});
+        $song ? $song->{id} : undef
+      }
+    );
+    my %seen;
+    my $ids      = [ grep !$seen{$_}++, @$found ];
+    my $repeated = @$found - @$ids;
+    replace_playlist($dbh, $playlist->{title}, $ids) unless $opts->{dry_run};
+    push $summary->{playlists}->@*, {
+        name      => $playlist->{title},
+        matched   => scalar @$ids,
+        unmatched => $unmatched,
+        $repeated ? (repeated => $repeated) : (),
+      };
+  }
+  $summary
+}
+
+sub music_sections ($plex) {
+  my $data
+    = parse_xml(plex_request($plex, "GET", "/library/sections"), "Directory");
+  [ map $_->{key}, grep $_->{type} eq "artist", ($data->{Directory} // [])->@* ]
+}
+
+sub plex_library_tracks ($plex) {
+  my @tracks;
+  for my $section (music_sections($plex)->@*) {
+    my $data = parse_xml(
+      plex_request($plex, "GET", "/library/sections/$section/all?type=10"),
+      qw( Track Media Part )
+    );
+    for my $track (($data->{Track} // [])->@*) {
+      my $path = track_path($track) // next;
+      push @tracks, { key => $track->{ratingKey}, path => $path };
+    }
+  }
+  \@tracks
+}
+
+sub strawberry_items ($dbh, $playlist_id) {
+  my $dirs = directories($dbh);
+  my $rows = $dbh->selectall_arrayref(
+    "SELECT url, title, artist FROM playlist_items WHERE playlist = ?
+     ORDER BY ROWID", undef, $playlist_id
+  );
+  my @items;
+  for my $row (@$rows) {
+    my ($url, $title, $artist) = @$row;
+    my $path = decode_url($url);
+    push @items, {
+        path   => $path,
+        rel    => relative_path($dirs, $path),
+        title  => $title,
+        artist => $artist,
+      };
+  }
+  \@items
+}
+
+sub local_rel ($prefix, $rel) {
+  return unless defined $rel && index($rel, $prefix) == 0;
+  substr $rel, length $prefix
+}
+
+sub track_key ($key_for, $present, $opts, $rel) {
+  my @keys = grep defined, map $key_for->{$_}, $rel, flac_for($rel);
+  @keys = reverse @keys unless $opts->{mp3};
+  return $keys[0] if $opts->{mp3} || $opts->{flac};
+  my ($kept) = grep $present->{$_}, @keys;
+  return $kept if defined $kept;
+  $keys[0]
+}
+
+sub plan_changes ($current, $desired) {
+  my (%need, @remove, @add);
+  $need{$_}++ for @$desired;
+  for my $item (@$current) {
+    my $key = $item->{key};
+    ($need{$key} // 0) > 0 ? $need{$key}-- : push @remove, $item->{item_id};
+  }
+  for my $key (@$desired) {
+    push @add, $key if $need{$key}-- > 0;
+  }
+  { remove => \@remove, add => \@add }
+}
+
+sub plex_remove_item ($plex, $id, $item_id) {
+  plex_request($plex, "DELETE", "/playlists/$id/items/$item_id");
+}
+
+sub library_uri ($plex, $keys) {
+  # uncoverable condition false note:plex_machine_id never returns undef
+  $plex->{machine_id} //= plex_machine_id($plex);
+  my $metadata = join ",", @$keys;
+  uri_escape_utf8("server://$plex->{machine_id}/com.plexapp.plugins.library"
+    . "/library/metadata/$metadata")
+}
+
+sub plex_add_items ($plex, $id, $keys) {
+  plex_request(
+    $plex, "PUT", "/playlists/$id/items?uri=" . library_uri($plex, $keys)
+  );
+}
+
+sub add_keys ($plex, $id, $keys) {
+  my (%remaining, %seen);
+  $remaining{$_}++ for @$keys;
+  my @order = grep !$seen{$_}++, @$keys;
+  while (my @batch = grep $remaining{$_}-- > 0, @order) {
+    plex_add_items($plex, $id, \@batch);
+  }
+}
+
+sub plan_moves ($current, $desired) {
+  my @order = @$current;
+  my @moves;
+  for my $i (0 .. $#$desired) {
+    my $id = $desired->[$i];
+    next if $order[$i] eq $id;
+    @order = grep $_ ne $id, @order;
+    splice @order, $i, 0, $id;
+    push @moves, [ $id, $i ? $desired->[ $i - 1 ] : undef ];
+  }
+  \@moves
+}
+
+sub reorder_plan ($items, $keys) {
+  my %pool;
+  push $pool{ $_->{key} }->@*, $_->{item_id} for @$items;
+  my @desired = grep defined, map shift(($pool{$_} // [])->@*), @$keys;
+  plan_moves([ map $_->{item_id}, @$items ], \@desired)
+}
+
+sub plex_move_item ($plex, $id, $item_id, $after) {
+  my $query = defined $after ? "?after=$after" : "";
+  plex_request($plex, "PUT", "/playlists/$id/items/$item_id/move$query");
+}
+
+sub sync_playlist ($plex, $id, $current, $keys, $dry_run) {
+  my $changes = plan_changes($current, $keys);
+  my $items   = $current;
+  if ($dry_run) {
+    my %removed = map { $_ => 1 } $changes->{remove}->@*;
+    $items = [ grep !$removed{ $_->{item_id} }, @$current ];
+  } elsif ($changes->{remove}->@* || $changes->{add}->@*) {
+    plex_remove_item($plex, $id, $_) for $changes->{remove}->@*;
+    add_keys($plex, $id, $changes->{add});
+    $items = plex_playlist_items($plex, $id);
+  }
+  my $moves = reorder_plan($items, $keys);
+  plex_move_item($plex, $id, @$_) for $dry_run ? () : @$moves;
+  {
+    removed => scalar $changes->{remove}->@*,
+    added   => scalar $changes->{add}->@*,
+    moved   => scalar @$moves,
+  }
+}
+
+sub plex_create_playlist ($plex, $title, $keys) {
+  my $query = join "&", "type=audio", "smart=0",
+    "title=" . uri_escape_utf8($title), "uri=" . library_uri($plex, $keys);
+  my $data
+    = parse_xml(plex_request($plex, "POST", "/playlists?$query"), "Playlist");
+  $data->{Playlist}[0]{ratingKey}
+}
+
+sub plex_changes ($plex, $target, $name, $keys, $current, $dry_run) {
+  return { skipped => "smart playlist on Plex" } if $target && $target->{smart};
+  return sync_playlist($plex, $target->{id}, $current, $keys, $dry_run)
+    if $target;
+  plex_create_playlist($plex, $name, $keys) if @$keys && !$dry_run;
+  { created => @$keys ? 1 : 0 }
+}
+
+sub push_playlists ($plex, $dbh, $opts) {
+  my $songs  = collection_songs($dbh);
+  my $tracks = plex_library_tracks($plex);
+  my $roots  = roots($opts, $tracks, $songs);
+  my %key_for;
+  for my $track (@$tracks) {
+    my $rel = plex_rel($roots->{plex}, $track->{path}) // next;
+    $key_for{$rel} = $track->{key};
+  }
+  my %on_plex = map { $_->{title} => $_ } plex_playlists($plex)->@*;
+  my $summary = { roots => $roots, playlists => [] };
+  for my $playlist (
+    selected(strawberry_playlists($dbh), "name", $opts->{playlists})->@*
+  ) {
+    my $items   = strawberry_items($dbh, $playlist->{id});
+    my $target  = $on_plex{ $playlist->{name} };
+    my $current = $target
+      && !$target->{smart} ? plex_playlist_items($plex, $target->{id}) : [];
+    my %present = map { $_->{key} => 1 } @$current;
+    my ($keys, $unmatched) = partition(
+      $items,
+      sub ($item) {
+        my $rel = local_rel($roots->{local}, $item->{rel}) // return;
+        track_key(\%key_for, \%present, $opts, $rel)
+      }
+    );
+    my $changes = @$keys || !@$items
+      ? plex_changes(
+        $plex, $target, $playlist->{name}, $keys, $current, $opts->{dry_run}
+      )
+      : { skipped => "no tracks matched" };
+    push $summary->{playlists}->@*, {
+        name      => $playlist->{name},
+        matched   => scalar @$keys,
+        unmatched => $unmatched,
+        %$changes,
+      };
+  }
+  $summary
+}
+
+sub fs ($path) { encode_utf8($path) }
+
+sub m3u_name ($name) {
+  (my $file = $name) =~ s{[\\/:*?"<>|]}{_}g;
+  "$file.m3u8"
+}
+
+sub write_m3u ($path, $entries) {
+  open my $fh, ">", fs($path) or die "Cannot write $path ($!)\n";
+  print $fh "#EXTM3U\n";
+  print $fh "$_\n" for @$entries;
+  # uncoverable branch true note:close fails only on an I/O error
+  close $fh or die "Cannot close $path ($!)\n";
+}
+
+sub stale ($from, $to) {
+  my $size = -s fs($from) // die "Missing file $from\n";
+  !-e fs($to) || -s fs($to) != $size
+}
+
+sub copy_track ($from, $to) {
+  make_path(fs(dirname $to));
+  copy(fs($from), fs($to)) or die "Cannot copy $from to $to ($!)\n";
+}
+
+sub stale_files ($dir, $keep) {
+  return [] unless -d fs($dir);
+  my @stale;
+  my $wanted = sub () {
+    return unless -f;
+    my $rel = NFC(decode_utf8(File::Spec->abs2rel($_, fs($dir))));
+    return if $keep->{$rel} || $rel =~ m!(^|/)\.!;
+    push @stale, $_;
+  };
+  find({ wanted => $wanted, no_chdir => 1 }, fs($dir));
+  \@stale
+}
+
+sub remove_files ($dir, $files) {
+  for my $file (@$files) {
+    unlink $file or die "Cannot remove $file ($!)\n";
+  }
+  my $prune = sub () { rmdir $_ if -d && $_ ne fs($dir) };
+  finddepth({ wanted => $prune, no_chdir => 1 }, fs($dir));
+}
+
+sub export_playlists ($dbh, $dir, $opts) {
+  make_path(fs($dir)) unless $opts->{dry_run};
+  my $summary = { playlists => [], copied => 0, removed => 0 };
+  my (%wanted, %keep);
+  for my $playlist (
+    selected(strawberry_playlists($dbh), "name", $opts->{playlists})->@*
+  ) {
+    my $items = strawberry_items($dbh, $playlist->{id});
+    my ($entries, $unmatched) = partition($items, sub ($item) { $item->{rel} });
+    $wanted{ $_->{rel} } = $_->{path} for grep defined $_->{rel}, @$items;
+    my $m3u = m3u_name($playlist->{name});
+    $keep{$m3u} = 1;
+    write_m3u("$dir/$m3u", $entries) unless $opts->{dry_run};
+    push $summary->{playlists}->@*, {
+        name      => $playlist->{name},
+        matched   => scalar @$entries,
+        unmatched => $unmatched,
+      };
+  }
+  for my $rel (sort keys %wanted) {
+    next unless stale($wanted{$rel}, "$dir/$rel");
+    copy_track($wanted{$rel}, "$dir/$rel") unless $opts->{dry_run};
+    $summary->{copied}++;
+  }
+  return $summary if $opts->{playlists};
+  my $stale = stale_files($dir, { %wanted, %keep });
+  remove_files($dir, $stale) unless $opts->{dry_run};
+  $summary->{removed} = @$stale;
+  $summary
+}
+
+sub usage () {
+  <<~TEXT
+  Usage: playlist_sync COMMAND [options]
+
+  Commands:
+    pull      Copy Plex playlists into Strawberry (quit Strawberry first)
+    push      Update Plex playlists from Strawberry
+    export    Write playlists and their files to a folder for a device
+    list      Show the playlists on both sides
+
+  Options:
+    --server NAME|URL   Plex server name or URL, defaults to $Default_server
+    --token TOKEN       Plex token
+    --username EMAIL    Plex account, prompts for the password
+    --password PASS     Plex password
+    --db PATH           Strawberry database, defaults to the real one
+    --dir PATH          Export folder (export only)
+    --plex-root PATH    Library root on the Plex server, detected if absent
+    --local-root PATH   Collection folder Plex mirrors, detected if absent
+    --user ID           Plex home user whose playlists to use
+    --playlist NAME     Limit to this playlist, repeatable
+    --flac              Push every entry as FLAC where Plex has one
+    --mp3               Push every entry as MP3
+    --dry-run           Report without changing anything
+    --debug             Show each Plex request
+    --help              Show this help
+
+  Only Strawberry playlists saved to the sidebar take part.
+  TEXT
+}
+
+my $Command = {
+  list => sub ($opts) {
+    list_playlists(plex_client($opts), open_db($opts->{db}));
+  },
+  pull => sub ($opts) {
+    my $dbh = open_db($opts->{db}, !$opts->{dry_run});
+    report(pull_playlists(plex_client($opts), $dbh, $opts), $opts);
+  },
+  push => sub ($opts) {
+    my $dbh = open_db($opts->{db});
+    report(push_playlists(plex_client($opts), $dbh, $opts), $opts);
+  },
+  export => sub ($opts) {
+    die "Use --dir to name the export folder\n" unless $opts->{dir};
+    my $dbh = open_db($opts->{db});
+    report(export_playlists($dbh, $opts->{dir}, $opts), $opts);
+  },
+  help => sub (@) { print usage() },
+};
+
+sub run ($opts) { $Command->{ $opts->{command} }->($opts) }
+
+sub default_db () {
+  $^O eq "darwin"
+    ? "$ENV{HOME}/Library/Application Support/strawberry/strawberry"
+    . "/strawberry.db"
+    : "$ENV{HOME}/.local/share/strawberry/strawberry/strawberry.db"
+}
+
+sub parse_options ($argv) {
+  my $opts = { playlists => [], db => default_db() };
+  GetOptionsFromArray(
+    $argv,
+    "server=s"     => \$opts->{server},
+    "token=s"      => \$opts->{token},
+    "username=s"   => \$opts->{username},
+    "password=s"   => \$opts->{password},
+    "db=s"         => \$opts->{db},
+    "dir=s"        => \$opts->{dir},
+    "plex-root=s"  => \$opts->{plex_root},
+    "local-root=s" => \$opts->{local_root},
+    "user=s"       => \$opts->{user},
+    "playlist=s"   => $opts->{playlists},
+    "flac"         => \$opts->{flac},
+    "mp3"          => \$opts->{mp3},
+    "dry-run"      => \$opts->{dry_run},
+    "debug"        => \$opts->{debug},
+    "help"         => \$opts->{help}
+  ) or die usage();
+  return { command => "help" }             if $opts->{help};
+  die "Use only one of --flac and --mp3\n" if $opts->{flac} && $opts->{mp3};
+  for my $key (qw( plex_root local_root )) {
+    my $root = \$opts->{$key};
+    $$root .= "/" if defined $$root && $$root =~ m|[^/]$|;
+  }
+  $opts->{command} = shift @$argv // die usage();
+  die usage() unless $Command->{ $opts->{command} };
+  $opts
+}
+
+sub main () {
+  local @ARGV = map decode_utf8($_), @ARGV;
+  run(parse_options(\@ARGV));
+}
+
+main() unless caller;
+
+1;
+
+__END__
+
+=head1 NAME
+
+playlist_sync - copy playlists between Plex, Strawberry and devices
+
+=head1 SYNOPSIS
+
+ playlist_sync pull   --username EMAIL [--playlist NAME]...
+ playlist_sync push   --username EMAIL [--flac|--mp3] [--playlist NAME]...
+ playlist_sync export --dir PATH [--playlist NAME]...
+ playlist_sync list   --username EMAIL
+
+=head1 DESCRIPTION
+
+Plex and Strawberry each keep their own playlists. This script copies
+playlists in either direction and writes them out for portable players.
+
+The script signs in to plex.tv with C<--username> and C<--password>, or uses
+C<--token>. It then asks plex.tv for the servers of that account and connects
+to the one called Wezflix, or to the one C<--server> names. It prefers a
+direct connection over the internet, then one on the LAN, then the Plex
+relay. Give C<--server> a URL to skip the lookup.
+
+C<pull> writes every audio playlist on the Plex server into the Strawberry
+database as a favourite playlist, in Plex order, replacing the items of a
+playlist that already exists. Strawberry reads its playlists only at startup
+and overwrites the database whenever a playlist changes, so pull stops with
+an error while Strawberry is open. It skips smart playlists.
+
+C<push> makes each Plex playlist match the Strawberry favourite of the same
+name by removing, adding and moving items, and creates playlists Plex lacks.
+It reads the database only, so Strawberry may stay open.
+
+With C<--user> the script acts as that Plex home user, so the playlists it
+reads and writes are theirs rather than those of the account that signs in.
+
+C<export> copies the files of each favourite playlist into a folder, once per
+file at the path the collection uses, and writes one M3U8 playlist per
+favourite at the top of the folder with entries relative to it. It removes
+files and playlists no longer wanted, unless C<--playlist> narrows the
+export. Copy the folder as it is into the Music folder of a Garmin watch or
+into a scanned folder on a phone.
+
+Neither direction deletes a playlist. Only Strawberry playlists saved to the
+sidebar take part, since Strawberry deletes open tabs when they close.
+
+=head1 MATCHING
+
+A Strawberry item and a Plex track are the same when their paths relative to
+their library roots match, compared in Unicode NFC form. The Plex root is
+the server side path above the library, and the local root is the folder of
+the Strawberry collection that mirrors it, which may be the collection root
+itself. The script detects both from the first track it finds on both sides,
+by taking the longest trailing path the two have in common, unless
+C<--plex-root> and C<--local-root> give them. Every report starts with the
+roots in use. The script lists and skips tracks with no match.
+
+=head1 FORMATS
+
+The server holds each ripped CD twice, as FLAC under C<flac-tagged/> and as
+MP3 under C<t/f/>, both relative to the library root, while the collection
+holds only the MP3s. MP3s under C<t/m/> have no FLAC. Pull matches a FLAC
+entry to its MP3 and writes a track once however often the Plex playlist
+repeats it. Push keeps the format each Plex entry already has and adds new
+entries as FLAC where Plex has one. C<--flac> makes every entry FLAC where
+possible and C<--mp3> makes every entry MP3.
+
+=head1 LICENCE
+
+Copyright 2026, Paul Johnson (paul@pjcj.net)
+
+=cut
