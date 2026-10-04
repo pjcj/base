@@ -49,9 +49,12 @@ subtest "strawberry database" => sub {
       "Other/Album/01 Thé.mp3",
     ],
     "relative paths in NFC, unavailable songs skipped";
-  is $songs->{"Artist/Album/01 Song A.mp3"},
-    { id => $a, path => "$root/Artist/Album/01 Song A.mp3" },
-    "song id and decoded path";
+  is $songs->{"Artist/Album/01 Song A.mp3"}, {
+      id   => $a,
+      path => "$root/Artist/Album/01 Song A.mp3",
+      rel  => "Artist/Album/01 Song A.mp3",
+    },
+    "song id, decoded path and relative path";
   is $songs->{"Other/Album/01 Thé.mp3"}{path},
     NFD("$root/Other/Album/01 Thé.mp3"),
     "path keeps the form the file system uses";

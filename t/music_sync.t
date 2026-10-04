@@ -81,6 +81,7 @@ subtest "run" => sub {
   my $plex = plex({
     "GET /playlists"          => [ (playlists_xml()) x 3 ],
     "GET /playlists/10/items" => items_xml(),
+    "GET /playlists/12/items" => items_xml(),
     "GET /playlists/13/items" => chill_xml(),
   });
   my $mock = mock MusicSync => (override => [
@@ -112,6 +113,12 @@ subtest "run" => sub {
     qr/--dir/, "export needs a folder";
   is $run->("playlists", "export", "--dir", "$dir/out"),
     "Trance: 2 of 2 tracks\nCopied 1 file, removed 0\n", "reports an export";
+  is $run->("playlists", "export", "--dir", "$dir/out", "--smart"),
+      "Plex root /srv/music/ maps to the collection root\n"
+    . "Trance: 2 of 2 tracks\n"
+    . "Recent: 2 of 3 tracks (smart)\n"
+    . "  not found: Artist - Song B\n"
+    . "Copied 0 files, removed 0\n", "exports smart playlists from Plex";
 };
 
 subtest "main" => sub {

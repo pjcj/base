@@ -70,7 +70,7 @@ sub collection_songs ($dbh) {
     my ($id, $url) = @$row;
     my $path = decode_url($url);
     my $rel  = relative_path($dirs, $path) // next;
-    $songs{$rel} = { id => $id, path => $path };
+    $songs{$rel} = { id => $id, path => $path, rel => $rel };
   }
   \%songs
 }

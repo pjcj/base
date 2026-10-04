@@ -110,6 +110,26 @@ sub partition ($items, $match) {
   (\@found, \@unmatched)
 }
 
+sub matched_playlists ($plex, $songs, $opts, $playlists) {
+  my %items
+    = map { $_->{id} => plex_playlist_items($plex, $_->{id}) } @$playlists;
+  my $roots = roots($opts, [ map @$_, values %items ], $songs);
+  my @matched;
+  for my $playlist (@$playlists) {
+    my ($found, $unmatched) = partition(
+      $items{ $playlist->{id} },
+      sub ($item) { local_song($songs, $roots, $item->{path}) }
+    );
+    push @matched, {
+        name      => $playlist->{title},
+        smart     => $playlist->{smart},
+        found     => $found,
+        unmatched => $unmatched,
+      };
+  }
+  ($roots, \@matched)
+}
+
 sub pull_playlists ($plex, $dbh, $opts) {
   die "Quit Strawberry before pulling playlists\n"
     if !$opts->{dry_run} && strawberry_running();
@@ -117,30 +137,23 @@ sub pull_playlists ($plex, $dbh, $opts) {
   my $playlists = selected(plex_playlists($plex), "title", $opts->{playlists});
   my @wanted    = grep $opts->{smart} || !$_->{smart}, @$playlists;
   my @skipped   = grep !$opts->{smart} && $_->{smart}, @$playlists;
-  my %items = map { $_->{id} => plex_playlist_items($plex, $_->{id}) } @wanted;
-  my $roots = roots($opts, [ map @$_, values %items ], $songs);
+  my ($roots, $matched) = matched_playlists($plex, $songs, $opts, \@wanted);
   my $summary = {
     roots     => $roots,
     skipped   => [ map $_->{title}, @skipped ],
     playlists => [],
   };
 
-  for my $playlist (@wanted) {
-    my ($found, $unmatched) = partition(
-      $items{ $playlist->{id} },
-      sub ($item) {
-        my $song = local_song($songs, $roots, $item->{path});
-        $song ? $song->{id} : undef
-      }
-    );
+  for my $playlist (@$matched) {
+    my $found = $playlist->{found};
     my %seen;
-    my $ids      = [ grep !$seen{$_}++, @$found ];
+    my $ids      = [ grep !$seen{$_}++, map $_->{id}, @$found ];
     my $repeated = @$found - @$ids;
-    replace_playlist($dbh, $playlist->{title}, $ids) unless $opts->{dry_run};
+    replace_playlist($dbh, $playlist->{name}, $ids) unless $opts->{dry_run};
     push $summary->{playlists}->@*, {
-        name      => $playlist->{title},
+        name      => $playlist->{name},
         matched   => scalar @$ids,
-        unmatched => $unmatched,
+        unmatched => $playlist->{unmatched},
         $playlist->{smart} ? (smart    => 1)         : (),
         $repeated          ? (repeated => $repeated) : (),
       };
@@ -309,23 +322,48 @@ sub remove_files ($dir, $files) {
   finddepth({ wanted => $prune, no_chdir => 1 }, fs($dir));
 }
 
-sub export_playlists ($dbh, $dir, $opts) {
-  make_path(fs($dir)) unless $opts->{dry_run};
-  my $summary = { playlists => [], copied => 0, removed => 0 };
-  my (%wanted, %keep);
+sub strawberry_exports ($dbh, $opts) {
+  my @exports;
   for my $playlist (
     selected(strawberry_playlists($dbh), "name", $opts->{playlists})->@*
   ) {
-    my $items = strawberry_items($dbh, $playlist->{id});
-    my ($entries, $unmatched) = partition($items, sub ($item) { $item->{rel} });
-    $wanted{ $_->{rel} } = $_->{path} for grep defined $_->{rel}, @$items;
-    my $m3u = m3u_name($playlist->{name});
+    my ($found, $unmatched) = partition(
+      strawberry_items($dbh, $playlist->{id}),
+      sub ($item) { defined $item->{rel} ? $item : undef }
+    );
+    push @exports,
+      { name => $playlist->{name}, found => $found, unmatched => $unmatched };
+  }
+  \@exports
+}
+
+sub plex_exports ($plex, $dbh, $opts) {
+  my $playlists = selected(plex_playlists($plex), "title", $opts->{playlists});
+  my $smart     = [ grep $_->{smart}, @$playlists ];
+  matched_playlists($plex, collection_songs($dbh), $opts, $smart)
+}
+
+sub export_playlists ($dbh, $dir, $opts, $plex = undef) {
+  make_path(fs($dir)) unless $opts->{dry_run};
+  my $summary = { playlists => [], copied => 0, removed => 0 };
+  my $exports = strawberry_exports($dbh, $opts);
+  if ($plex) {
+    my ($roots, $smart) = plex_exports($plex, $dbh, $opts);
+    $summary->{roots} = $roots if @$smart;
+    push @$exports, @$smart;
+  }
+  my (%wanted, %keep);
+  for my $export (@$exports) {
+    my $found = $export->{found};
+    $wanted{ $_->{rel} } = $_->{path} for @$found;
+    my $m3u = m3u_name($export->{name});
     $keep{$m3u} = 1;
-    write_m3u("$dir/$m3u", $entries) unless $opts->{dry_run};
+    write_m3u("$dir/$m3u", [ map $_->{rel}, @$found ]) unless $opts->{dry_run};
     push $summary->{playlists}->@*, {
-        name      => $playlist->{name},
-        matched   => scalar @$entries,
-        unmatched => $unmatched,
+        name      => $export->{name},
+        matched   => scalar @$found,
+        unmatched => $export->{unmatched},
+        $export->{smart} ? (smart => 1) : (),
       };
   }
   for my $rel (sort keys %wanted) {

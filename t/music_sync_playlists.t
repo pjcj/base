@@ -623,6 +623,42 @@ subtest "export" => sub {
   chmod 0755, $locked;
 };
 
+subtest "export smart playlists" => sub {
+  my $dir   = Path::Tiny->tempdir;
+  my $root  = "$dir/mp3s";
+  my $out   = "$dir/out";
+  my ($dbh) = make_db($dir);
+  my ($a, $b) = add_songs($dbh, $root);
+  make_file("$root/Artist/Album/01 Song A.mp3", "mp3 Song A");
+  make_file("$root/Artist/Album/02 Song B.mp3", "mp3 Song B");
+  add_playlist($dbh, "Trance", 1, $a, $b);
+  add_playlist($dbh, "Recent", 1, $a);
+  my $plex = plex({
+    "GET /playlists"          => playlists_xml(),
+    "GET /playlists/12/items" => items_xml(),
+  });
+  is export_playlists($dbh, $out, {}, $plex), {
+      roots     => { plex => "/srv/music/", local => "" },
+      playlists => [
+        { name => "Recent", matched => 1, unmatched => [] },
+        { name => "Trance", matched => 2, unmatched => [] },
+        { name => "Recent", matched => 3, unmatched => [], smart => 1 },
+      ],
+      copied  => 2,
+      removed => 0,
+    },
+    "smart playlists from Plex follow the favourites";
+  is $plex->{http}{calls}, [ "GET /playlists", "GET /playlists/12/items" ],
+    "reads only the smart playlists";
+  is path("$out/Recent.m3u8")->slurp_utf8,
+    "#EXTM3U\nArtist/Album/01 Song A.mp3\nArtist/Album/02 Song B.mp3\n"
+    . "Artist/Album/01 Song A.mp3\n",
+    "the smart playlist replaces the favourite of the same name";
+  my $none  = plex({ "GET /playlists" => qq(<MediaContainer size="0"/>) });
+  my $plain = export_playlists($dbh, $out, { dry_run => 1 }, $none);
+  ok !exists $plain->{roots}, "no roots when Plex has no smart playlists";
+};
+
 subtest "report notes" => sub {
   my $summary = {
     playlists => [

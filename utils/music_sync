@@ -43,7 +43,7 @@ sub usage () {
     --user ID           Plex home user whose playlists to use
     --section NAME      Plex music section for push, defaults to $section
     --playlist NAME     Limit to this playlist, repeatable
-    --smart             Pull smart playlists too, as plain snapshots
+    --smart             Include smart playlists, export signs in to Plex
     --flac              Push every entry as FLAC where Plex has one
     --mp3               Push every entry as MP3
     --dry-run           Report without changing anything
@@ -53,6 +53,8 @@ sub usage () {
   Only Strawberry playlists saved to the sidebar take part.
   TEXT
 }
+
+sub smart_client ($opts) { $opts->{smart} ? plex_client($opts) : undef }
 
 my $Command = {
   playlists => {
@@ -69,8 +71,9 @@ my $Command = {
     },
     export => sub ($opts) {
       die "Use --dir to name the export folder\n" unless $opts->{dir};
-      my $dbh = open_db($opts->{db});
-      report(export_playlists($dbh, $opts->{dir}, $opts), $opts);
+      my $dbh  = open_db($opts->{db});
+      my $plex = smart_client($opts);
+      report(export_playlists($dbh, $opts->{dir}, $opts, $plex), $opts);
     },
   },
 };
@@ -134,7 +137,8 @@ music_sync - copy playlists between Plex, Strawberry and devices
  music_sync playlists pull   --username EMAIL [--smart] [--playlist NAME]...
  music_sync playlists push   --username EMAIL [--flac|--mp3]
                              [--section NAME] [--playlist NAME]...
- music_sync playlists export --dir PATH [--playlist NAME]...
+ music_sync playlists export --dir PATH [--smart --username EMAIL]
+                             [--playlist NAME]...
  music_sync playlists list   --username EMAIL
 
 =head1 DESCRIPTION
@@ -167,8 +171,10 @@ C<playlists export> copies the files of each favourite playlist into a
 folder, once per file at the path the collection uses, and writes one M3U8
 playlist per favourite at the top of the folder with entries relative to it.
 It removes files and playlists no longer wanted, unless C<--playlist> narrows
-the export. Copy the folder as it is into the Music folder of a Garmin watch
-or into a scanned folder on a phone.
+the export. With C<--smart> it also signs in to Plex and writes each smart
+playlist beside the favourites, as it stands at the time, so a smart playlist
+named like a favourite replaces its file. Copy the folder as it is into the
+Music folder of a Garmin watch or into a scanned folder on a phone.
 
 Neither direction deletes a playlist. Only Strawberry playlists saved to the
 sidebar take part, since Strawberry deletes open tabs when they close.
