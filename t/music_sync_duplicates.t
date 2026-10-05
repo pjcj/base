@@ -14,7 +14,7 @@ use Test2::V0  qw( dies done_testing is like mock ok subtest );
 use MusicSync::Duplicates qw(
   album_kind   bitrate_band    duplicate_groups list_duplicates
   loser_keys   mark_duplicates rank_key         report_marks
-  titles_match various
+  titles_match track_pairs     various
 );
 use MusicSync::Test qw(
   add_song albums_xml capture   dupes_xml
@@ -57,6 +57,7 @@ sub track (%field) {
     guid      => "plex://track/g1",
     rel       => "t/m/Artist/Album/0$n Song.mp3",
     title     => "Song",
+    artist    => "Artist",
     duration  => 200_000,
     bitrate   => 320,
     size      => 8_000_000,
@@ -269,6 +270,83 @@ subtest "unknown albums" => sub {
   is $group->{folder}, 1, "and that makes a folder duplicate";
 };
 
+subtest "pairs" => sub {
+  my ($one, $two) = ("t/m/A/B/01 Song.mp3", "t/m/A/C/01 Song.mp3");
+  my $x     = "plex://track/x";
+  my $y     = "plex://track/y";
+  my $bands = sub (@tracks) {
+    [ map "$_->{band} $_->{gap}", track_pairs(\@tracks, $Albums)->@* ]
+  };
+  is $bands->(
+    track(rel => $one, guid => $x),
+    track(rel => $two, guid => $y, duration => 203_000)
+    ),
+    ["same album 3000"], "three seconds apart on one album";
+  is $bands->(
+    track(rel => $one, guid => $x),
+    track(rel => $two, guid => $y, duration => 203_001)
+    ),
+    [], "further apart is no pair";
+  is $bands->(track(rel => $one, guid => $x), track(rel => $two, guid => $x)),
+    [], "the same guid is a group, not a pair";
+  is $bands->(
+    track(rel => $one, guid => $x, album_key => undef),
+    track(rel => $two, guid => $y)
+    ),
+    ["catalogue 0"], "no album on one side";
+  is $bands->(
+    track(rel => $one, guid => $x, album_key => 2),
+    track(rel => $two, guid => $y)
+    ),
+    ["catalogue 0"], "different albums";
+  is $bands->(
+    track(rel => $one, guid => $x, album_key => 2),
+    track(rel => $two, guid => "local://1")
+    ),
+    ["local guid 0"], "a local guid on one side of two albums";
+  is $bands->(
+    track(rel => $one, guid => undef, album_key => 2),
+    track(rel => $two, guid => $y)
+    ),
+    ["local guid 0"], "no guid counts as local";
+  is $bands->(
+    track(rel => $one, guid => undef),
+    track(rel => $two, guid => undef)
+    ),
+    [], "two tracks without guids";
+  is $bands->(track(rel => undef, guid => $x),
+    track(rel => $two, guid => $y)), [],
+    "a track outside the root is left out";
+  is $bands->(
+    track(rel => $one, guid => $x, duration => undef),
+    track(rel => $two, guid => $y)
+    ),
+    [], "so is one with no duration";
+  is $bands->(
+    track(rel => "t/m/Various Artists/X/01 Song.mp3", guid => $x),
+    track(rel => "t/m/Various Artists/Y/01 Song.mp3", guid => $y)
+    ),
+    [], "Various Artists tracks need their own artist";
+  is $bands->(
+    track(
+      rel          => "t/m/Various Artists/X/01 Song.mp3",
+      guid         => $x,
+      track_artist => "Someone"
+    ),
+    track(
+      rel          => "t/m/Various Artists/Y/01 Song.mp3",
+      guid         => $y,
+      track_artist => "someone"
+    )
+    ),
+    ["same album 0"], "and match on it whatever the case";
+  is $bands->(
+    track(rel => $one, guid => $x, title => "Song"),
+    track(rel => $two, guid => $y, title => "Other")
+    ),
+    [], "different titles";
+};
+
 subtest "list" => sub {
   my $dir = Path::Tiny->tempdir;
   my ($dbh) = make_db($dir);
@@ -302,8 +380,22 @@ subtest "list" => sub {
       L    ? kbps   0:00  t/m/Artist/Best Of/09 Song D.mp3 (no local song)
     Groups: 4, 2 clean, 2 in doubt, 1 folder duplicate
     Losers: 2, 1 with no local song
+    Pairs with different guids
+      Artist - Song A, same album, 2.0 s apart
+        t/f/Artist/Album/01 Song A.mp3
+        t/m/Artist/Album/01 Song A.mp3
+      Artist - Song B, local guid, 1.0 s apart
+        t/m/Artist/Album/02 Song B.mp3
+        t/m/Various Artists/Hits/02 Song B.mp3
+      Artist - Song A, catalogue, 1.0 s apart
+        t/m/Artist/Album/01 Song A.mp3
+        t/m/Artist/Best Of/05 Song A.mp3
+      Artist - Song D, catalogue, 1.0 s apart
+        t/m/Artist/Album/04 Song D.mp3
+        t/m/Artist/Singles/01 Song D.mp3
+    Pairs: 4, 1 same album, 1 local guid, 2 catalogue
     TEXT
-    "every group with its winner, losers and notes";
+    "every group with its winner, losers and notes, then the pairs";
   is $plex->{http}{calls}, [
       "GET /library/sections",
       "GET /library/sections/1/all?type=10",
@@ -315,9 +407,13 @@ subtest "list" => sub {
     "GET /library/sections/1/all?type=10" => tracks_xml(),
     "GET /library/sections/1/all?type=9"  => albums_xml(),
   });
-  like capture(sub { list_duplicates($alone, $dbh, {}) }),
-    qr/^Groups: 0, 0 clean, 0 in doubt, 0 folder duplicates\n/m,
-    "a section with no shared guids";
+  is capture(sub { list_duplicates($alone, $dbh, {}) }), <<~TEXT,
+    Plex root /srv/music/ maps to collection folder t/f/
+    Groups: 0, 0 clean, 0 in doubt, 0 folder duplicates
+    Losers: 0, 0 with no local song
+    Pairs: 0, 0 same album, 0 local guid, 0 catalogue
+    TEXT
+    "a section with no shared guids and no pairs";
 };
 
 subtest "mark" => sub {

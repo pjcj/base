@@ -125,7 +125,7 @@ sub albums_xml () {
 sub dupes_xml () {
   <<~XML
   <?xml version="1.0" encoding="UTF-8"?>
-  <MediaContainer size="9">
+  <MediaContainer size="13">
   <Track ratingKey="301" guid="plex://track/d1" parentRatingKey="201"
     title="Song A" grandparentTitle="Artist" originalTitle="Artist"
     duration="180000">
@@ -175,6 +175,35 @@ sub dupes_xml () {
     <Media id="7" bitrate="128">
     <Part id="7" file="/srv/music/t/m/Other/Undated/01 Alone.mp3"
       size="1600000"/>
+    </Media>
+  </Track>
+  <Track ratingKey="310" guid="plex://track/e1" parentRatingKey="201"
+    title="Song A" grandparentTitle="Artist" duration="182000">
+    <Media id="10" bitrate="256">
+    <Part id="10" file="/srv/music/t/m/Artist/Album/01 Song A.mp3"
+      size="5800000"/>
+    </Media>
+  </Track>
+  <Track ratingKey="311" guid="local://311" parentRatingKey="203"
+    title="Song B" grandparentTitle="Various Artists" originalTitle="Artist"
+    duration="201000">
+    <Media id="11" bitrate="320">
+    <Part id="11" file="/srv/music/t/m/Various Artists/Hits/02 Song B.mp3"
+      size="8040000"/>
+    </Media>
+  </Track>
+  <Track ratingKey="312" guid="local://312" parentRatingKey="203"
+    title="Song B" grandparentTitle="Various Artists" duration="200000">
+    <Media id="12" bitrate="320">
+    <Part id="12" file="/srv/music/t/m/Various Artists/More/02 Song B.mp3"
+      size="8000000"/>
+    </Media>
+  </Track>
+  <Track ratingKey="313" guid="plex://track/f1" title="Song D"
+    grandparentTitle="Artist" duration="151000">
+    <Media id="13" bitrate="320">
+    <Part id="13" file="/srv/music/t/m/Artist/Singles/01 Song D.mp3"
+      size="6040000"/>
     </Media>
   </Track>
   <Track ratingKey="308" guid="plex://track/d4" parentRatingKey="201"

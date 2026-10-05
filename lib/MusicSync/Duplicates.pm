@@ -16,7 +16,7 @@ use MusicSync::Strawberry qw( collection_songs plex_scale strawberry_running
 our @EXPORT_OK = qw(
   album_kind     bitrate_band    duplicate_groups list_duplicates
   loser_keys     mark_duplicates rank_key         report_marks
-  section_groups titles_match    various
+  section_groups titles_match    track_pairs      various
 );
 
 sub bitrate_band ($bitrate) {
@@ -135,6 +135,7 @@ sub section_groups ($plex, $dbh, $opts) {
   {
     roots  => $roots,
     tracks => $tracks,
+    albums => $albums,
     groups => duplicate_groups($tracks, $albums),
   }
 }
@@ -162,6 +163,63 @@ sub track_line ($mark, $track) {
     clock($track->{duration}), $track->{rel}, $note
 }
 
+sub pair_artist ($track, $album) {
+  return $track->{track_artist} if defined $track->{track_artist};
+  various($track, $album) ? undef : $track->{artist}
+}
+
+sub pair_band ($x, $y) {
+  my ($a, $b) = map $_->{album_key} // "", $x, $y;
+  return "same album" if $a ne "" && $a eq $b;
+  (grep(($_->{guid} // "") !~ m|^plex://|, $x, $y)) ? "local guid" : "catalogue"
+}
+
+sub by_artist_and_title ($tracks, $albums) {
+  my %bucket;
+  for my $track (@$tracks) {
+    next unless defined $track->{rel} && defined $track->{duration};
+    my $album  = $albums->{ $track->{album_key} // "" } // {};
+    my $artist = pair_artist($track, $album)            // next;
+    push $bucket{ lc($artist) . "\0" . lc($track->{title}) }->@*, $track;
+  }
+  [ map [ sort { $a->{rel} cmp $b->{rel} } @$_ ], @bucket{ sort keys %bucket } ]
+}
+
+sub track_pairs ($tracks, $albums) {
+  my @pairs;
+  for my $bucket (by_artist_and_title($tracks, $albums)->@*) {
+    for my $i (0 .. $#$bucket - 1) {
+      for my $j ($i + 1 .. $#$bucket) {
+        my ($x, $y) = @$bucket[ $i, $j ];
+        next if ($x->{guid} // "") eq ($y->{guid} // "");
+        my $gap = abs($x->{duration} - $y->{duration});
+        next if $gap > 3000;
+        push @pairs,
+          { band => pair_band($x, $y), tracks => [ $x, $y ], gap => $gap };
+      }
+    }
+  }
+  \@pairs
+}
+
+my @Bands = ("same album", "local guid", "catalogue");
+
+sub report_pairs ($pairs) {
+  my %by_band = map { $_ => [] } @Bands;
+  push $by_band{ $_->{band} }->@*, $_ for @$pairs;
+  print "Pairs with different guids\n" if @$pairs;
+  for my $band (@Bands) {
+    for my $pair ($by_band{$band}->@*) {
+      my ($x, $y) = $pair->{tracks}->@*;
+      printf "  %s, %s, %.1f s apart\n", label($x), $band, $pair->{gap} / 1000;
+      print "    $_->{rel}\n" for $x, $y;
+    }
+  }
+  print "Pairs: "
+    . @$pairs . ", "
+    . join(", ", map $by_band{$_}->@* . " $_", @Bands) . "\n";
+}
+
 sub list_duplicates ($plex, $dbh, $opts) {
   my $found  = section_groups($plex, $dbh, $opts);
   my $groups = $found->{groups};
@@ -183,6 +241,7 @@ sub list_duplicates ($plex, $dbh, $opts) {
     . ", $clean clean, $doubt in doubt, "
     . "$folder $rips\n";
   print "Losers: $losers, $missing with no local song\n";
+  report_pairs(track_pairs($found->{tracks}, $found->{albums}));
 }
 
 sub mark_duplicates ($plex, $dbh, $opts) {
@@ -280,6 +339,18 @@ share at least half the words of the shorter title, after dropping
 bracketed parts and punctuation, or be equal once everything but letters
 and digits is removed. A group that fails either guard is in doubt and no
 loser in it is marked.
+
+=head2 Pairs
+
+Two tracks with different guids may still be one recording that the agent
+matched twice or not at all. The list reports every pair with the same
+artist and title whose lengths are within three seconds, in three bands.
+The two tracks share an album, or one of them has a local guid, or both
+guids come from the catalogue, which is the band least likely to hold true
+duplicates. The artist is the track artist where Plex has one, else the
+album artist, and under Various Artists a track without its own artist is
+left out, since the album artist says nothing about who performs it.
+Nothing marks a pair.
 
 =head1 LICENCE
 

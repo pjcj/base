@@ -264,6 +264,12 @@ whose copies differ in length by more than five seconds, or whose titles
 share too few words, is in doubt. The list reports it for a look by hand. A
 group decided by the path alone is one album ripped twice into two folders.
 
+After the groups the list reports pairs of tracks with different guids but
+the same artist and title within three seconds of each other. These may be
+one recording the agent matched twice or not at all, so they are reported
+in three bands, same album, a local guid on one side, and both in the
+catalogue, and nothing marks them.
+
 C<duplicates mark> gives every loser of a group not in doubt one star in
 Strawberry, so that it drops out of playlists built on ratings while the
 winner keeps the shared Plex rating. It writes the database, so quit
