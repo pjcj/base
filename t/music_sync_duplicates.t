@@ -9,15 +9,17 @@ use open qw( :std :utf8 );
 use FindBin ();
 use lib "$FindBin::Bin/../lib", "$FindBin::Bin/lib";
 use Path::Tiny ();
-use Test2::V0  qw( done_testing is like ok subtest );
+use Test2::V0  qw( dies done_testing is like mock ok subtest );
 
 use MusicSync::Duplicates qw(
-  album_kind bitrate_band duplicate_groups list_duplicates
-  loser_keys rank_key     titles_match     various
+  album_kind   bitrate_band    duplicate_groups list_duplicates
+  loser_keys   mark_duplicates rank_key         report_marks
+  titles_match various
 );
 use MusicSync::Test qw(
-  add_song albums_xml capture      dupes_xml
-  make_db  plex       sections_xml tracks_xml
+  add_song albums_xml capture   dupes_xml
+  make_db  plex       rate_song sections_xml
+  tracks_xml
 );
 
 no warnings "experimental::signatures";
@@ -316,6 +318,69 @@ subtest "list" => sub {
   like capture(sub { list_duplicates($alone, $dbh, {}) }),
     qr/^Groups: 0, 0 clean, 0 in doubt, 0 folder duplicates\n/m,
     "a section with no shared guids";
+};
+
+subtest "mark" => sub {
+  my $dir   = Path::Tiny->tempdir;
+  my ($dbh) = make_db($dir);
+  my %id    = map { $_->[0] => add_song($dbh, "$dir/mp3s", @$_, "Artist") } (
+    [ "t/f/Artist/Album/01 Song A.mp3",        "Song A" ],
+    [ "t/m/Artist/Best Of/05 Song A.mp3",      "Song A" ],
+    [ "t/m/Artist/Album/02 Song B.mp3",        "Song B" ],
+    [ "t/m/Various Artists/Hits/07 Other.mp3", "Other" ],
+    [ "t/m/Artist/Album/03 Song C.mp3",        "Song C" ],
+    [ "t/m/Artist/Album_/03 Song C.mp3",       "Song C" ],
+    [ "t/m/Artist/Album/04 Song D.mp3",        "Song D" ],
+  );
+  rate_song($dbh, $id{"t/m/Artist/Best Of/05 Song A.mp3"},      0.8);
+  rate_song($dbh, $id{"t/m/Various Artists/Hits/07 Other.mp3"}, 0.8);
+  my $rating = sub ($rel) {
+    $dbh->selectrow_array(
+      "SELECT rating FROM songs WHERE ROWID = ?",
+      undef, $id{$rel}
+    )
+  };
+  my $responses = {
+    "GET /library/sections"               => sections_xml(),
+    "GET /library/sections/1/all?type=10" => dupes_xml(),
+    "GET /library/sections/1/all?type=9"  => albums_xml(),
+  };
+  my $roots   = { plex => "/srv/music/", local => "" };
+  my $running = mock "MusicSync::Duplicates" =>
+    (override => [ strawberry_running => sub () { 1 } ]);
+  like dies { mark_duplicates(plex($responses), $dbh, {}) },
+    qr/Quit Strawberry before marking duplicates/,
+    "refuses to write while Strawberry runs";
+  is mark_duplicates(plex($responses), $dbh, { dry_run => 1 }),
+    { roots => $roots, marked => 2, already => 0, missing => 0, doubt => 2 },
+    "a dry run counts what it would mark";
+  is $rating->("t/m/Artist/Best Of/05 Song A.mp3"), 0.8,
+    "and changes nothing";
+  undef $running;
+  my $quiet = mock "MusicSync::Duplicates" =>
+    (override => [ strawberry_running => sub () { 0 } ]);
+  my $summary = mark_duplicates(plex($responses), $dbh, {});
+  is $summary,
+    { roots => $roots, marked => 2, already => 0, missing => 0, doubt => 2 },
+    "marks the losers of the clean groups";
+  is $rating->("t/m/Artist/Best Of/05 Song A.mp3"), 0.2,
+    "a rated loser goes down to one star";
+  is $rating->("t/m/Artist/Album_/03 Song C.mp3"), 0.2,
+    "an unrated loser gets one star";
+  is $rating->("t/m/Various Artists/Hits/07 Other.mp3"), 0.8,
+    "a loser in a doubt group keeps its rating";
+  is $rating->("t/f/Artist/Album/01 Song A.mp3"), -1,
+    "the winner stays unrated";
+  is mark_duplicates(plex($responses), $dbh, {}),
+    { roots => $roots, marked => 0, already => 2, missing => 0, doubt => 2 },
+    "a second run has nothing to do";
+  is capture(sub { report_marks($summary, {}) }), <<~TEXT, "the report";
+    Plex root /srv/music/ maps to the collection root
+    Losers: 2 marked, 0 already one star, 0 with no local song
+    Groups in doubt left alone: 2
+    TEXT
+  like capture(sub { report_marks($summary, { dry_run => 1 }) }),
+    qr/\nDry run, nothing changed\n$/, "a dry run says so";
 };
 
 done_testing;

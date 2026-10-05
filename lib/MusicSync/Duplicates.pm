@@ -10,11 +10,13 @@ use Exporter qw( import );
 
 use MusicSync::Match qw( from_flac local_song plex_rel roots roots_line );
 use MusicSync::Plex  qw( plex_library_albums plex_library_tracks plex_section );
-use MusicSync::Strawberry qw( collection_songs );
+use MusicSync::Strawberry qw( collection_songs plex_scale strawberry_running
+  update_ratings );
 
 our @EXPORT_OK = qw(
-  album_kind bitrate_band duplicate_groups list_duplicates
-  loser_keys rank_key     titles_match     various
+  album_kind   bitrate_band    duplicate_groups list_duplicates
+  loser_keys   mark_duplicates rank_key         report_marks
+  titles_match various
 );
 
 sub bitrate_band ($bitrate) {
@@ -177,6 +179,40 @@ sub list_duplicates ($plex, $dbh, $opts) {
     . ", $clean clean, $doubt in doubt, "
     . "$folder $rips\n";
   print "Losers: $losers, $missing with no local song\n";
+}
+
+sub mark_duplicates ($plex, $dbh, $opts) {
+  die "Quit Strawberry before marking duplicates\n"
+    if !$opts->{dry_run} && strawberry_running();
+  my $found = section_groups($plex, $dbh, $opts);
+  my %ratings;
+  my ($already, $missing, $doubt) = (0, 0, 0);
+  for my $group ($found->{groups}->@*) {
+    $doubt++, next if $group->{doubt};
+    for my $loser ($group->{losers}->@*) {
+      my $song = $loser->{song};
+      $missing++, next unless $song;
+      (plex_scale($song->{rating}) // 0) == 2
+        ? $already++
+        : ($ratings{ $song->{id} } = 0.2);
+    }
+  }
+  update_ratings($dbh, \%ratings) if %ratings && !$opts->{dry_run};
+  {
+    roots   => $found->{roots},
+    marked  => scalar keys %ratings,
+    already => $already,
+    missing => $missing,
+    doubt   => $doubt,
+  }
+}
+
+sub report_marks ($summary, $opts) {
+  print roots_line($summary->{roots});
+  print "Losers: $summary->{marked} marked, $summary->{already} already one "
+    . "star, $summary->{missing} with no local song\n";
+  print "Groups in doubt left alone: $summary->{doubt}\n";
+  print "Dry run, nothing changed\n" if $opts->{dry_run};
 }
 
 1;

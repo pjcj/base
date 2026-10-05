@@ -161,7 +161,15 @@ subtest "duplicates" => sub {
   like $run->(qw( duplicates list --server s --token t )),
     qr/^Plex root .*^Groups: 4, 2 clean, 2 in doubt, 1 folder duplicate$/ms,
     "lists the duplicates";
-  like MusicSync::usage(), qr/duplicates list/, "the usage names the verb";
+  my $quiet = mock "MusicSync::Duplicates" =>
+    (override => [ strawberry_running => sub () { 0 } ]);
+  is $run->(qw( duplicates mark --server s --token t --dry-run )),
+      "Plex root /srv/music/ maps to the collection root\n"
+    . "Losers: 0 marked, 0 already one star, 2 with no local song\n"
+    . "Groups in doubt left alone: 2\n"
+    . "Dry run, nothing changed\n", "reports a dry mark";
+  like MusicSync::usage(), qr/duplicates list.*duplicates mark/s,
+    "the usage names both verbs";
 };
 
 subtest "main" => sub {

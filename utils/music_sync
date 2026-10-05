@@ -14,7 +14,7 @@ use FindBin      ();
 use Getopt::Long qw( GetOptionsFromArray );
 use lib "$FindBin::RealBin/../lib";
 
-use MusicSync::Duplicates qw( list_duplicates );
+use MusicSync::Duplicates qw( list_duplicates mark_duplicates report_marks );
 use MusicSync::Playlists  qw( export_playlists list_playlists pull_playlists
   push_playlists report );
 use MusicSync::Plex    qw( default_section default_server plex_client );
@@ -37,6 +37,7 @@ sub usage () {
     ratings push        Send higher ratings to Plex
     ratings merge       Raise ratings on both sides to the higher
     duplicates list     Show the copies of each recording and the winner
+    duplicates mark     Give the losing copies one star (quit Strawberry first)
 
   Options:
     --server NAME|URL   Plex server name or URL, defaults to $server
@@ -101,6 +102,10 @@ my $Command = {
   duplicates => {
     list => sub ($opts) {
       list_duplicates(plex_client($opts), open_db($opts->{db}), $opts);
+    },
+    mark => sub ($opts) {
+      my $dbh = open_db($opts->{db}, !$opts->{dry_run});
+      report_marks(mark_duplicates(plex_client($opts), $dbh, $opts), $opts);
     },
   },
 };
@@ -174,6 +179,7 @@ music_sync - copy playlists and ratings between Plex, Strawberry and devices
  music_sync ratings push     --username EMAIL [--overwrite]
  music_sync ratings merge    --username EMAIL
  music_sync duplicates list  --username EMAIL [--section NAME]
+ music_sync duplicates mark  --username EMAIL [--section NAME] [--dry-run]
 
 =head1 DESCRIPTION
 
@@ -247,6 +253,13 @@ the higher bitrate, the larger file and the path decide in turn. A group
 whose copies differ in length by more than five seconds, or whose titles
 share too few words, is in doubt. The list reports it for a look by hand. A
 group decided by the path alone is one album ripped twice into two folders.
+
+C<duplicates mark> gives every loser of a group not in doubt one star in
+Strawberry, so that it drops out of playlists built on ratings while the
+winner keeps the shared Plex rating. It writes the database, so quit
+Strawberry first. A loser already at one star is left alone, and so is a
+loser with no local file. Run it again after new rips, since the groups come
+from Plex each time.
 
 =head1 MATCHING
 
