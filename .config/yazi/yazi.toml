@@ -33,3 +33,8 @@ bizarre_retry    = 3
 image_alloc      = 4294967295  # max, about 4GB
 image_bound      = [ 0, 0 ]
 suppress_preload = false
+
+[plugin]
+prepend_previewers = [
+  { url = "*.md", run = 'piper -- mdmost --render-once --width=$w --no-body-width "$1"' },
+]
