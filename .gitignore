@@ -23,6 +23,7 @@ cover_db/
 
 # Local
 .config/karabiner/automatic_backups
+.config/yazi/plugins/
 .vim/spell/
 zsh/functions/_docker
 zsh/functions/_docker-compose

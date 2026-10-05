@@ -129,6 +129,10 @@ do_zinit() {
   zinit update --parallel
 }
 
+do_yazi() {
+  ya pkg upgrade
+}
+
 completion() {
   curl -SL https://github.com/docker/cli/raw/master/contrib/completion/zsh/_docker \
     >|~/g/base/zsh/functions/_docker
@@ -328,6 +332,7 @@ main() {
   update_brew
   update_other
   do_zinit
+  do_yazi
   completion
   create_wezterm_terminfo
   create_tmux_rgb_terminfo
