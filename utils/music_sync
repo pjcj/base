@@ -235,6 +235,11 @@ never clears a rating on the other side. Only tracks in the chosen section
 that match a collection song take part. Pull and merge write the database,
 so quit Strawberry first. Push only reads it.
 
+All three leave the losing copies of a duplicate group alone, as
+L</DUPLICATES> describes. Pull never raises one and push never sends from
+one, so the rating a group shares in Plex reaches the winner only and a one
+star mark in Strawberry never goes back to Plex.
+
 Lowering a rating on one side does not carry, since the next default run
 restores the higher one. Use C<ratings pull --overwrite> to make Plex the
 authority after such a change.

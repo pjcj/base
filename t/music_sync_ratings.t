@@ -13,7 +13,10 @@ use Test2::V0  qw( dies done_testing is like lives mock ok subtest );
 
 use MusicSync::Ratings qw( merge_ratings pull_ratings push_ratings
   report_ratings winner );
-use MusicSync::Test qw( add_songs capture make_db plex rate_song sections_xml );
+use MusicSync::Test qw(
+  add_song add_songs albums_xml capture
+  make_db  plex      rate_song  sections_xml
+);
 
 no warnings "experimental::signatures";
 
@@ -63,10 +66,11 @@ sub ratings ($dbh) {
   $dbh->selectall_arrayref("SELECT ROUND(rating, 2) FROM songs ORDER BY ROWID")
 }
 
-sub plex_with_tracks () {
+sub plex_with_tracks ($tracks = $Tracks_xml) {
   plex({
     "GET /library/sections"               => sections_xml(),
-    "GET /library/sections/1/all?type=10" => $Tracks_xml,
+    "GET /library/sections/1/all?type=10" => $tracks,
+    "GET /library/sections/1/all?type=9"  => albums_xml(),
     rate_call(101, 4)                     => "",
     rate_call(103, 10)                    => "",
   })
@@ -97,6 +101,7 @@ subtest "pull" => sub {
       to_strawberry => 2,
       to_plex       => 0,
       unchanged     => 1,
+      duplicates    => 0,
       unmatched     => 1,
     },
     "higher Plex ratings come in";
@@ -128,6 +133,7 @@ subtest "push" => sub {
       to_strawberry => 0,
       to_plex       => 1,
       unchanged     => 2,
+      duplicates    => 0,
       unmatched     => 1,
     },
     "higher Strawberry ratings go out";
@@ -155,6 +161,7 @@ subtest "merge" => sub {
       to_strawberry => 2,
       to_plex       => 1,
       unchanged     => 0,
+      duplicates    => 0,
       unmatched     => 1,
     },
     "the higher rating wins on each side";
@@ -162,11 +169,8 @@ subtest "merge" => sub {
     "Strawberry takes the higher Plex ratings";
   is rate_calls($plex), [ rate_call(103, 10) ],
     "Plex takes the higher Strawberry rating";
-  my $after = plex({
-    "GET /library/sections"               => sections_xml(),
-    "GET /library/sections/1/all?type=10" => $Tracks_xml
-      =~ s/userRating="4\.0"/userRating="10.0"/r,
-  });
+  my $after
+    = plex_with_tracks($Tracks_xml =~ s/userRating="4\.0"/userRating="10.0"/r);
   is [ merge_ratings($after, $dbh, {})
       ->@{ qw( to_strawberry to_plex unchanged ) } ], [ 0, 0, 3 ],
     "nothing to do on a second run";
@@ -182,16 +186,88 @@ subtest "merge" => sub {
     "does not write while Strawberry runs";
 };
 
+my $Dupes_xml = <<~XML;
+  <?xml version="1.0" encoding="UTF-8"?>
+  <MediaContainer size="4">
+  <Track ratingKey="201" guid="plex://track/d1" parentRatingKey="201"
+    title="Song" grandparentTitle="Artist" duration="200000" userRating="8.0">
+    <Media id="1" bitrate="320">
+    <Part id="1" file="/srv/music/t/f/Artist/Album/01 Song.mp3"/>
+    </Media>
+  </Track>
+  <Track ratingKey="202" guid="plex://track/d1" parentRatingKey="202"
+    title="Song" grandparentTitle="Artist" duration="201000" userRating="8.0">
+    <Media id="2" bitrate="192">
+    <Part id="2" file="/srv/music/t/m/Artist/Best Of/05 Song.mp3"/>
+    </Media>
+  </Track>
+  <Track ratingKey="203" guid="plex://track/d2" parentRatingKey="201"
+    title="Other" grandparentTitle="Artist" duration="100000" userRating="6.0">
+    <Media id="3" bitrate="320">
+    <Part id="3" file="/srv/music/t/m/Artist/Album/02 Other.mp3"/>
+    </Media>
+  </Track>
+  <Track ratingKey="204" guid="plex://track/d2" parentRatingKey="202"
+    title="Something Else" grandparentTitle="Artist" duration="100000"
+    userRating="6.0">
+    <Media id="4" bitrate="320">
+    <Part id="4" file="/srv/music/t/m/Artist/Best Of/09 Something Else.mp3"/>
+    </Media>
+  </Track>
+  </MediaContainer>
+  XML
+
+sub dupes_db () {
+  my $dir = Path::Tiny->tempdir;
+  push @Dirs, $dir;
+  my ($dbh) = make_db($dir);
+  my @ids = map add_song($dbh, "$dir/mp3s", $_, "Song", "Artist"),
+    "t/f/Artist/Album/01 Song.mp3",  "t/m/Artist/Best Of/05 Song.mp3",
+    "t/m/Artist/Album/02 Other.mp3", "t/m/Artist/Best Of/09 Something Else.mp3";
+  rate_song($dbh, $ids[1], 1);
+  $dbh
+}
+
+subtest "duplicates" => sub {
+  my $dbh  = dupes_db();
+  my $plex = plex_with_tracks($Dupes_xml);
+  my $mock = mock "MusicSync::Ratings" =>
+    (override => [ strawberry_running => sub () { 0 } ]);
+  is pull_ratings($plex, $dbh, {}), {
+      roots         => $Roots,
+      to_strawberry => 3,
+      to_plex       => 0,
+      unchanged     => 0,
+      duplicates    => 1,
+      unmatched     => 0,
+    },
+    "the winner takes the shared rating and the loser is left alone";
+  is ratings($dbh), [ [0.8], [1], [0.6], [0.6] ],
+    "a doubt group takes the rating on every copy";
+  is [
+    push_ratings($plex, $dbh, {})->@{ qw( to_plex unchanged duplicates ) } ],
+    [ 0, 3, 1 ], "push never sends from a loser";
+  is rate_calls($plex), [], "so the five stars on the loser stay local";
+  my $fresh = dupes_db();
+  is [ merge_ratings($plex, $fresh, {})
+      ->@{ qw( to_strawberry to_plex duplicates ) } ], [ 3, 0, 1 ],
+    "merge does neither for a loser";
+  is rate_calls($plex), [], "and rates nothing";
+};
+
 subtest "report" => sub {
   my $summary = {
     roots         => { plex => "/m/", local => "t/" },
     to_strawberry => 2,
     to_plex       => 0,
     unchanged     => 5,
+    duplicates    => 3,
     unmatched     => 1,
   };
-  my $lines = "Plex root /m/ maps to collection folder t/\n"
-    . "Ratings: 2 to Strawberry, 0 to Plex, 5 unchanged, 1 unmatched\n";
+  my $lines
+    = "Plex root /m/ maps to collection folder t/\n"
+    . "Ratings: 2 to Strawberry, 0 to Plex, 5 unchanged, 1 unmatched\n"
+    . "Losing copies left alone: 3\n";
   is capture(sub { report_ratings($summary, {}) }), $lines,
     "roots and counts";
   is capture(sub { report_ratings($summary, { dry_run => 1 }) }),

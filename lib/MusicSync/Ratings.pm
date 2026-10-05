@@ -8,10 +8,10 @@ no warnings "experimental::signatures";
 
 use Exporter qw( import );
 
-use MusicSync::Match qw( local_song          roots     roots_line );
-use MusicSync::Plex  qw( plex_library_tracks plex_rate plex_section );
-use MusicSync::Strawberry qw( collection_songs plex_scale strawberry_running
-  update_ratings );
+use MusicSync::Duplicates qw( loser_keys section_groups );
+use MusicSync::Match      qw( roots_line );
+use MusicSync::Plex       qw( plex_rate );
+use MusicSync::Strawberry qw( plex_scale strawberry_running update_ratings );
 
 our @EXPORT_OK
   = qw( merge_ratings pull_ratings push_ratings report_ratings winner );
@@ -22,29 +22,17 @@ sub winner ($source, $target, $overwrite) {
   $overwrite || !defined $target || $source > $target ? $source : undef
 }
 
-sub pairs ($plex, $dbh, $opts) {
-  my $songs = collection_songs($dbh);
-  my $tracks
-    = plex_library_tracks($plex, plex_section($plex, $opts->{section}));
-  my $roots = roots($opts, $tracks, $songs);
-  my @pairs;
-  my $unmatched = 0;
-
-  for my $track (@$tracks) {
-    my $song = local_song($songs, $roots, $track->{path});
-    $song ? push @pairs, [ $track, $song ] : $unmatched++;
-  }
-  { roots => $roots, pairs => \@pairs, unmatched => $unmatched }
-}
-
 sub sync ($plex, $dbh, $opts, %way) {
   die "Quit Strawberry before writing ratings\n"
     if $way{in} && !$opts->{dry_run} && strawberry_running();
-  my $matched = pairs($plex, $dbh, $opts);
+  my $found = section_groups($plex, $dbh, $opts);
+  my $loser = loser_keys($found->{groups});
   my %ratings;
-  my ($to_plex, $unchanged) = (0, 0);
-  for my $pair ($matched->{pairs}->@*) {
-    my ($track, $song) = @$pair;
+  my ($to_plex, $unchanged, $duplicates, $unmatched) = (0, 0, 0, 0);
+  for my $track ($found->{tracks}->@*) {
+    my $song = $track->{song};
+    $unmatched++,  next unless $song;
+    $duplicates++, next if $loser->{ $track->{key} };
     my $local = plex_scale($song->{rating});
     my $to_local
       = $way{in} ? winner($track->{rating}, $local, $opts->{overwrite}) : undef;
@@ -63,11 +51,12 @@ sub sync ($plex, $dbh, $opts, %way) {
   }
   update_ratings($dbh, \%ratings) if %ratings && !$opts->{dry_run};
   {
-    roots         => $matched->{roots},
+    roots         => $found->{roots},
     to_strawberry => scalar keys %ratings,
     to_plex       => $to_plex,
     unchanged     => $unchanged,
-    unmatched     => $matched->{unmatched},
+    duplicates    => $duplicates,
+    unmatched     => $unmatched,
   }
 }
 
@@ -83,6 +72,7 @@ sub report_ratings ($summary, $opts) {
   print "Ratings: $summary->{to_strawberry} to Strawberry, "
     . "$summary->{to_plex} to Plex, $summary->{unchanged} unchanged, "
     . "$summary->{unmatched} unmatched\n";
+  print "Losing copies left alone: $summary->{duplicates}\n";
   print "Dry run, nothing changed\n" if $opts->{dry_run};
 }
 
@@ -106,6 +96,8 @@ Matches the tracks of one Plex music section to the songs of the Strawberry
 collection by path, compares their ratings on the Plex scale of 0 to 10, and
 raises the lower side to match, or takes every rating from one side with
 C<overwrite>. An unrated track never clears a rating on the other side.
+The losing copies of a duplicate group, as L<MusicSync::Duplicates> finds
+them, are left alone in both directions.
 
 =head1 LICENCE
 

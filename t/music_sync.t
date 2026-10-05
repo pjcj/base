@@ -89,6 +89,7 @@ subtest "run" => sub {
     "GET /playlists/13/items"             => chill_xml(),
     "GET /library/sections"               => sections_xml(),
     "GET /library/sections/1/all?type=10" => tracks_xml(),
+    "GET /library/sections/1/all?type=9"  => albums_xml(),
   });
   my $mock = mock MusicSync => (override => [
     plex_client => sub (@) { $plex }, open_db => sub (@) { $dbh }, ]);
@@ -130,14 +131,17 @@ subtest "run" => sub {
   is $run->(qw( ratings pull --server s --token t --dry-run )),
       "Plex root /srv/music/ maps to the collection root\n"
     . "Ratings: 1 to Strawberry, 0 to Plex, 0 unchanged, 2 unmatched\n"
+    . "Losing copies left alone: 0\n"
     . "Dry run, nothing changed\n", "reports a ratings pull";
   is $run->(qw( ratings push --server s --token t --dry-run )),
       "Plex root /srv/music/ maps to the collection root\n"
     . "Ratings: 0 to Strawberry, 0 to Plex, 1 unchanged, 2 unmatched\n"
+    . "Losing copies left alone: 0\n"
     . "Dry run, nothing changed\n", "reports a ratings push";
   is $run->(qw( ratings merge --server s --token t --dry-run )),
       "Plex root /srv/music/ maps to the collection root\n"
     . "Ratings: 1 to Strawberry, 0 to Plex, 0 unchanged, 2 unmatched\n"
+    . "Losing copies left alone: 0\n"
     . "Dry run, nothing changed\n", "reports a ratings merge";
 };
 

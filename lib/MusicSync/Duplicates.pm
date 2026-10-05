@@ -14,9 +14,9 @@ use MusicSync::Strawberry qw( collection_songs plex_scale strawberry_running
   update_ratings );
 
 our @EXPORT_OK = qw(
-  album_kind   bitrate_band    duplicate_groups list_duplicates
-  loser_keys   mark_duplicates rank_key         report_marks
-  titles_match various
+  album_kind     bitrate_band    duplicate_groups list_duplicates
+  loser_keys     mark_duplicates rank_key         report_marks
+  section_groups titles_match    various
 );
 
 sub bitrate_band ($bitrate) {
@@ -132,7 +132,11 @@ sub section_groups ($plex, $dbh, $opts) {
     $track->{rel}  = plex_rel($roots->{plex}, $track->{path});
     $track->{song} = local_song($songs, $roots, $track->{path});
   }
-  { roots => $roots, groups => duplicate_groups($tracks, $albums) }
+  {
+    roots  => $roots,
+    tracks => $tracks,
+    groups => duplicate_groups($tracks, $albums),
+  }
 }
 
 sub label ($track) {
