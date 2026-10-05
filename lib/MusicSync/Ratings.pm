@@ -10,16 +10,11 @@ use Exporter qw( import );
 
 use MusicSync::Match qw( local_song          roots     roots_line );
 use MusicSync::Plex  qw( plex_library_tracks plex_rate plex_section );
-use MusicSync::Strawberry qw( collection_songs strawberry_running
+use MusicSync::Strawberry qw( collection_songs plex_scale strawberry_running
   update_ratings );
 
 our @EXPORT_OK
-  = qw( merge_ratings plex_scale pull_ratings push_ratings report_ratings
-    winner );
-
-sub plex_scale ($rating) {
-  defined $rating && $rating > 0 ? int($rating * 10 + 0.5) : undef
-}
+  = qw( merge_ratings pull_ratings push_ratings report_ratings winner );
 
 sub winner ($source, $target, $overwrite) {
   return undef unless defined $source;

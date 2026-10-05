@@ -11,7 +11,7 @@ use lib "$FindBin::Bin/../lib", "$FindBin::Bin/lib";
 use Path::Tiny ();
 use Test2::V0  qw( dies done_testing is like lives mock ok subtest );
 
-use MusicSync::Ratings qw( merge_ratings plex_scale pull_ratings push_ratings
+use MusicSync::Ratings qw( merge_ratings pull_ratings push_ratings
   report_ratings winner );
 use MusicSync::Test qw( add_songs capture make_db plex rate_song sections_xml );
 
@@ -73,15 +73,6 @@ sub plex_with_tracks () {
 }
 
 sub rate_calls ($plex) { [ grep /rate/, $plex->{http}{calls}->@* ] }
-
-subtest "scales" => sub {
-  is plex_scale(undef),             undef, "unrated when missing";
-  is plex_scale(-1),                undef, "unrated at -1";
-  is plex_scale(0),                 undef, "unrated at 0";
-  is plex_scale(0.800000011920929), 8,     "four stars from a float";
-  is plex_scale(1),                 10,    "five stars";
-  is plex_scale(0.1),               1,     "half a star";
-};
 
 subtest "winner" => sub {
   is winner(undef, 6,     0), undef, "an unrated source changes nothing";

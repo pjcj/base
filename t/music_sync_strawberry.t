@@ -12,15 +12,24 @@ use Test2::V0          qw( dies done_testing is like ok subtest );
 use Unicode::Normalize qw( NFD );
 
 use MusicSync::Strawberry qw(
-  collection_songs     default_db
-  open_db              strawberry_items
-  strawberry_playlists strawberry_running
-  update_ratings
+  collection_songs   default_db
+  open_db            plex_scale
+  strawberry_items   strawberry_playlists
+  strawberry_running update_ratings
 );
 use MusicSync::Test qw( add_loose_item add_playlist add_song add_songs make_db
 );
 
 ok $INC{"DBD/SQLite.pm"}, "the module loads DBD::SQLite itself";
+
+subtest "scales" => sub {
+  is plex_scale(undef),             undef, "unrated when missing";
+  is plex_scale(-1),                undef, "unrated at -1";
+  is plex_scale(0),                 undef, "unrated at 0";
+  is plex_scale(0.800000011920929), 8,     "four stars from a float";
+  is plex_scale(1),                 10,    "five stars";
+  is plex_scale(0.1),               1,     "half a star";
+};
 
 subtest "strawberry database" => sub {
   my $dir  = Path::Tiny->tempdir;

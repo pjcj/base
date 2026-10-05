@@ -15,10 +15,11 @@ use URI::Escape        qw( uri_unescape );
 use UUID::Tiny         ();
 
 our @EXPORT_OK = qw(
-  collection_songs   default_db
-  open_db            replace_playlist
-  strawberry_items   strawberry_playlists
-  strawberry_running update_ratings
+  collection_songs     default_db
+  open_db              plex_scale
+  replace_playlist     strawberry_items
+  strawberry_playlists strawberry_running
+  update_ratings
 );
 
 sub default_db () {
@@ -140,6 +141,10 @@ sub replace_playlist ($dbh, $name, $song_ids) {
     $insert->execute($id, $uuid, $song_id);
   }
   $dbh->commit;
+}
+
+sub plex_scale ($rating) {
+  defined $rating && $rating > 0 ? int($rating * 10 + 0.5) : undef
 }
 
 sub update_ratings ($dbh, $ratings) {
