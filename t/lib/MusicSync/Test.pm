@@ -17,11 +17,11 @@ use URI::Escape        qw( uri_escape_utf8 );
 use FakeHttp ();
 
 our @EXPORT_OK = qw(
-  add_loose_item add_playlist add_song     add_songs
-  capture        chill_xml    file_url     identity_xml
-  items_xml      make_db      make_file    playlists_xml
-  plex           rate_song    sections_xml songs
-  tracks_xml
+  add_loose_item add_playlist add_song  add_songs
+  albums_xml     capture      chill_xml file_url
+  identity_xml   items_xml    make_db   make_file
+  playlists_xml  plex         rate_song sections_xml
+  songs          tracks_xml
 );
 
 sub playlists_xml () {
@@ -78,13 +78,18 @@ sub tracks_xml () {
   <<~XML
   <?xml version="1.0" encoding="UTF-8"?>
   <MediaContainer size="4">
-  <Track ratingKey="101" title="Song A" grandparentTitle="Artist"
+  <Track ratingKey="101" guid="plex://track/a1" parentRatingKey="201"
+    title="Song A" grandparentTitle="Artist" duration="180000"
     userRating="8">
-    <Media id="1"><Part id="1" file="/srv/music/Artist/Album/01 Song A.mp3"/>
+    <Media id="1" bitrate="320" duration="180000">
+    <Part id="1" file="/srv/music/Artist/Album/01 Song A.mp3" size="7200000"/>
     </Media>
   </Track>
-  <Track ratingKey="102" title="Song B" grandparentTitle="Artist">
-    <Media id="2"><Part id="2" file="/srv/music/Artist/Album/02 Song B.mp3"/>
+  <Track ratingKey="102" guid="plex://track/b2" parentRatingKey="201"
+    title="Song B" grandparentTitle="Artist"
+    originalTitle="Artist feat. Guest">
+    <Media id="2" bitrate="192" duration="200000">
+    <Part id="2" file="/srv/music/Artist/Album/02 Song B.mp3" size="4800000"/>
     </Media>
   </Track>
   <Track ratingKey="103" title="Thé" grandparentTitle="Other">
@@ -92,6 +97,27 @@ sub tracks_xml () {
     </Media>
   </Track>
   <Track ratingKey="104" title="No file" grandparentTitle="Other"/>
+  </MediaContainer>
+  XML
+}
+
+sub albums_xml () {
+  <<~XML
+  <?xml version="1.0" encoding="UTF-8"?>
+  <MediaContainer size="4">
+  <Directory ratingKey="201" type="album" title="Album" parentTitle="Artist"
+    year="1985">
+    <Format tag="Album"/>
+  </Directory>
+  <Directory ratingKey="202" type="album" title="Best Of" parentTitle="Artist"
+    year="1999">
+    <Format tag="Album"/><Subformat tag="Compilation"/>
+  </Directory>
+  <Directory ratingKey="203" type="album" title="Hits"
+    parentTitle="Various Artists" year="2001">
+    <Format tag="Album"/><Subformat tag="Compilation"/><Subformat tag="DJ Mix"/>
+  </Directory>
+  <Directory ratingKey="204" type="album" title="Undated" parentTitle="Other"/>
   </MediaContainer>
   XML
 }

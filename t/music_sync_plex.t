@@ -14,15 +14,16 @@ use Test2::V0 qw( dies done_testing is like mock ok subtest );
 use FakeHttp        ();
 use MusicSync::Plex qw(
   chars               default_section
-  plex_client         plex_library_tracks
-  plex_machine_id     plex_move_item
-  plex_playlist_items plex_playlists
-  plex_rate           plex_request
-  plex_section        read_password
+  plex_client         plex_library_albums
+  plex_library_tracks plex_machine_id
+  plex_move_item      plex_playlist_items
+  plex_playlists      plex_rate
+  plex_request        plex_section
+  read_password
 );
 use MusicSync::Test qw(
-  capture identity_xml items_xml playlists_xml
-  plex    sections_xml tracks_xml
+  albums_xml    capture identity_xml items_xml
+  playlists_xml plex    sections_xml tracks_xml
 );
 
 no warnings "experimental::signatures";
@@ -67,22 +68,78 @@ subtest "plex library tracks" => sub {
   my $plex = plex({ "GET /library/sections/1/all?type=10" => tracks_xml() });
   is plex_library_tracks($plex, 1), [
       {
-        key    => 101,
-        path   => "/srv/music/Artist/Album/01 Song A.mp3",
-        rating => 8,
+        key          => 101,
+        path         => "/srv/music/Artist/Album/01 Song A.mp3",
+        rating       => 8,
+        guid         => "plex://track/a1",
+        title        => "Song A",
+        artist       => "Artist",
+        track_artist => undef,
+        album_key    => 201,
+        duration     => 180000,
+        bitrate      => 320,
+        size         => 7200000,
       }, {
-        key    => 102,
-        path   => "/srv/music/Artist/Album/02 Song B.mp3",
-        rating => undef,
+        key          => 102,
+        path         => "/srv/music/Artist/Album/02 Song B.mp3",
+        rating       => undef,
+        guid         => "plex://track/b2",
+        title        => "Song B",
+        artist       => "Artist",
+        track_artist => "Artist feat. Guest",
+        album_key    => 201,
+        duration     => 200000,
+        bitrate      => 192,
+        size         => 4800000,
       }, {
-        key    => 103,
-        path   => "/srv/music/Other/Album/01 Thé.mp3",
-        rating => undef,
+        key          => 103,
+        path         => "/srv/music/Other/Album/01 Thé.mp3",
+        rating       => undef,
+        guid         => undef,
+        title        => "Thé",
+        artist       => "Other",
+        track_artist => undef,
+        album_key    => undef,
+        duration     => undef,
+        bitrate      => undef,
+        size         => undef,
       },
     ],
     "tracks with files from the section";
   is $plex->{http}{calls}, ["GET /library/sections/1/all?type=10"],
     "reads the one section";
+};
+
+subtest "plex library albums" => sub {
+  my $plex = plex({ "GET /library/sections/1/all?type=9" => albums_xml() });
+  is plex_library_albums($plex, 1), {
+      201 => {
+        title  => "Album",
+        artist => "Artist",
+        year   => 1985,
+        kinds  => ["Album"],
+      },
+      202 => {
+        title  => "Best Of",
+        artist => "Artist",
+        year   => 1999,
+        kinds  => [ "Album", "Compilation" ],
+      },
+      203 => {
+        title  => "Hits",
+        artist => "Various Artists",
+        year   => 2001,
+        kinds  => [ "Album", "Compilation", "DJ Mix" ],
+      },
+      204 =>
+      { title => "Undated", artist => "Other", year => undef, kinds => [] },
+    },
+    "albums keyed by rating key with their kinds";
+  is $plex->{http}{calls}, ["GET /library/sections/1/all?type=9"],
+    "reads the one listing";
+  my $none
+    = plex({ "GET /library/sections/1/all?type=9" => qq(<MediaContainer/>) });
+  is plex_library_albums($none, 1), {}, "no albums";
 };
 
 subtest "plex section" => sub {

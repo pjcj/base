@@ -16,11 +16,12 @@ our @EXPORT_OK = qw(
   chars               default_section
   default_server      plex_add_items
   plex_client         plex_create_playlist
-  plex_library_tracks plex_machine_id
-  plex_move_item      plex_playlist_items
-  plex_playlists      plex_rate
-  plex_remove_item    plex_request
-  plex_section        read_password
+  plex_library_albums plex_library_tracks
+  plex_machine_id     plex_move_item
+  plex_playlist_items plex_playlists
+  plex_rate           plex_remove_item
+  plex_request        plex_section
+  read_password
 );
 
 sub parse_xml ($xml, @force) {
@@ -201,21 +202,57 @@ sub plex_section ($plex, $name) {
   $section->{key}
 }
 
+sub track_artist ($track) {
+  my $artist = $track->{originalTitle} // return undef;
+  chars($artist)
+}
+
+sub library_track ($track) {
+  my $path  = track_path($track) // return undef;
+  my $media = $track->{Media}[0];
+  {
+    key          => $track->{ratingKey},
+    path         => $path,
+    rating       => $track->{userRating},
+    guid         => $track->{guid},
+    title        => chars($track->{title}),
+    artist       => chars($track->{grandparentTitle}),
+    track_artist => track_artist($track),
+    album_key    => $track->{parentRatingKey},
+    duration     => $track->{duration} // $media->{duration},
+    bitrate      => $media->{bitrate},
+    size         => $media->{Part}[0]{size},
+  }
+}
+
 sub plex_library_tracks ($plex, $section) {
   my $data = parse_xml(
     plex_request($plex, "GET", "/library/sections/$section/all?type=10"),
     qw( Track Media Part )
   );
-  my @tracks;
-  for my $track (($data->{Track} // [])->@*) {
-    my $path = track_path($track) // next;
-    push @tracks, {
-        key    => $track->{ratingKey},
-        path   => $path,
-        rating => $track->{userRating},
-      };
+  [ grep defined, map library_track($_), ($data->{Track} // [])->@* ]
+}
+
+sub kinds ($album) {
+  my @tags = map { ($album->{$_} // [])->@* } qw( Format Subformat );
+  [ map chars($_->{tag}), @tags ]
+}
+
+sub plex_library_albums ($plex, $section) {
+  my $data = parse_xml(
+    plex_request($plex, "GET", "/library/sections/$section/all?type=9"),
+    qw( Directory Format Subformat )
+  );
+  my %albums;
+  for my $album (($data->{Directory} // [])->@*) {
+    $albums{ $album->{ratingKey} } = {
+      title  => chars($album->{title}),
+      artist => chars($album->{parentTitle}),
+      year   => $album->{year},
+      kinds  => kinds($album),
+    };
   }
-  \@tracks
+  \%albums
 }
 
 sub plex_rate ($plex, $key, $rating) {
@@ -272,7 +309,7 @@ MusicSync::Plex - talk to plex.tv and a Plex server
 =head1 DESCRIPTION
 
 Signs in to plex.tv, finds the server, and reads and changes its audio
-playlists and library tracks over the XML API.
+playlists, library tracks and albums over the XML API.
 
 =head1 LICENCE
 
