@@ -14,7 +14,8 @@ use FindBin      ();
 use Getopt::Long qw( GetOptionsFromArray );
 use lib "$FindBin::RealBin/../lib";
 
-use MusicSync::Playlists qw( export_playlists list_playlists pull_playlists
+use MusicSync::Duplicates qw( list_duplicates );
+use MusicSync::Playlists  qw( export_playlists list_playlists pull_playlists
   push_playlists report );
 use MusicSync::Plex    qw( default_section default_server plex_client );
 use MusicSync::Ratings qw( merge_ratings pull_ratings push_ratings
@@ -35,6 +36,7 @@ sub usage () {
     ratings pull        Take higher ratings from Plex (quit Strawberry first)
     ratings push        Send higher ratings to Plex
     ratings merge       Raise ratings on both sides to the higher
+    duplicates list     Show the copies of each recording and the winner
 
   Options:
     --server NAME|URL   Plex server name or URL, defaults to $server
@@ -94,6 +96,11 @@ my $Command = {
     merge => sub ($opts) {
       my $dbh = open_db($opts->{db}, !$opts->{dry_run});
       report_ratings(merge_ratings(plex_client($opts), $dbh, $opts), $opts);
+    },
+  },
+  duplicates => {
+    list => sub ($opts) {
+      list_duplicates(plex_client($opts), open_db($opts->{db}), $opts);
     },
   },
 };
@@ -166,6 +173,7 @@ music_sync - copy playlists and ratings between Plex, Strawberry and devices
  music_sync ratings pull     --username EMAIL [--overwrite]
  music_sync ratings push     --username EMAIL [--overwrite]
  music_sync ratings merge    --username EMAIL
+ music_sync duplicates list  --username EMAIL [--section NAME]
 
 =head1 DESCRIPTION
 
@@ -224,6 +232,21 @@ so quit Strawberry first. Push only reads it.
 Lowering a rating on one side does not carry, since the next default run
 restores the higher one. Use C<ratings pull --overwrite> to make Plex the
 authority after such a change.
+
+=head1 DUPLICATES
+
+Tracks that the Plex agent matched to one recording share a guid. A
+recording ripped from a single and again from a compilation therefore has
+two copies with one rating between them. C<duplicates list> groups the
+tracks of the section by guid and names a winner in each group, the copy to
+keep. An MP3 converted from FLAC under C<t/f/> beats one under C<t/m/>.
+Among C<t/m/> files a higher bitrate band wins, with the bands split at 112,
+176 and 240 kbps. After that an original album beats the artist's own
+compilation, which beats a Various Artists one, and then the earlier album,
+the higher bitrate, the larger file and the path decide in turn. A group
+whose copies differ in length by more than five seconds, or whose titles
+share too few words, is in doubt. The list reports it for a look by hand. A
+group decided by the path alone is one album ripped twice into two folders.
 
 =head1 MATCHING
 

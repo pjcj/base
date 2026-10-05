@@ -17,11 +17,11 @@ use URI::Escape        qw( uri_escape_utf8 );
 use FakeHttp ();
 
 our @EXPORT_OK = qw(
-  add_loose_item add_playlist add_song  add_songs
-  albums_xml     capture      chill_xml file_url
-  identity_xml   items_xml    make_db   make_file
-  playlists_xml  plex         rate_song sections_xml
-  songs          tracks_xml
+  add_loose_item add_playlist  add_song  add_songs
+  albums_xml     capture       chill_xml dupes_xml
+  file_url       identity_xml  items_xml make_db
+  make_file      playlists_xml plex      rate_song
+  sections_xml   songs         tracks_xml
 );
 
 sub playlists_xml () {
@@ -118,6 +118,79 @@ sub albums_xml () {
     <Format tag="Album"/><Subformat tag="Compilation"/><Subformat tag="DJ Mix"/>
   </Directory>
   <Directory ratingKey="204" type="album" title="Undated" parentTitle="Other"/>
+  </MediaContainer>
+  XML
+}
+
+sub dupes_xml () {
+  <<~XML
+  <?xml version="1.0" encoding="UTF-8"?>
+  <MediaContainer size="9">
+  <Track ratingKey="301" guid="plex://track/d1" parentRatingKey="201"
+    title="Song A" grandparentTitle="Artist" originalTitle="Artist"
+    duration="180000">
+    <Media id="1" bitrate="320">
+    <Part id="1" file="/srv/music/t/f/Artist/Album/01 Song A.mp3"
+      size="7200000"/>
+    </Media>
+  </Track>
+  <Track ratingKey="302" guid="plex://track/d1" parentRatingKey="202"
+    title="Song A" grandparentTitle="Artist" duration="181000">
+    <Media id="2" bitrate="192">
+    <Part id="2" file="/srv/music/t/m/Artist/Best Of/05 Song A.mp3"
+      size="4300000"/>
+    </Media>
+  </Track>
+  <Track ratingKey="303" guid="plex://track/d2" parentRatingKey="201"
+    title="Song B" grandparentTitle="Artist" duration="200000">
+    <Media id="3" bitrate="320">
+    <Part id="3" file="/srv/music/t/m/Artist/Album/02 Song B.mp3"
+      size="8000000"/>
+    </Media>
+  </Track>
+  <Track ratingKey="304" guid="plex://track/d2" parentRatingKey="203"
+    title="Other" grandparentTitle="Various Artists" originalTitle="Artist"
+    duration="200400">
+    <Media id="4" bitrate="320">
+    <Part id="4" file="/srv/music/t/m/Various Artists/Hits/07 Other.mp3"
+      size="8000000"/>
+    </Media>
+  </Track>
+  <Track ratingKey="305" guid="plex://track/d3" parentRatingKey="201"
+    title="Song C" grandparentTitle="Artist" duration="240000">
+    <Media id="5" bitrate="256">
+    <Part id="5" file="/srv/music/t/m/Artist/Album/03 Song C.mp3"
+      size="7680000"/>
+    </Media>
+  </Track>
+  <Track ratingKey="306" guid="plex://track/d3" parentRatingKey="201"
+    title="Song C" grandparentTitle="Artist" duration="240000">
+    <Media id="6" bitrate="256">
+    <Part id="6" file="/srv/music/t/m/Artist/Album_/03 Song C.mp3"
+      size="7680000"/>
+    </Media>
+  </Track>
+  <Track ratingKey="307" guid="local://307" parentRatingKey="204"
+    title="Alone" grandparentTitle="Other" duration="100000">
+    <Media id="7" bitrate="128">
+    <Part id="7" file="/srv/music/t/m/Other/Undated/01 Alone.mp3"
+      size="1600000"/>
+    </Media>
+  </Track>
+  <Track ratingKey="308" guid="plex://track/d4" parentRatingKey="201"
+    title="Song D" grandparentTitle="Artist" duration="150000">
+    <Media id="8" bitrate="320">
+    <Part id="8" file="/srv/music/t/m/Artist/Album/04 Song D.mp3"
+      size="6000000"/>
+    </Media>
+  </Track>
+  <Track ratingKey="309" guid="plex://track/d4" parentRatingKey="202"
+    title="Song D" grandparentTitle="Artist">
+    <Media id="9">
+    <Part id="9" file="/srv/music/t/m/Artist/Best Of/09 Song D.mp3"
+      size="1"/>
+    </Media>
+  </Track>
   </MediaContainer>
   XML
 }

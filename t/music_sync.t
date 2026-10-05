@@ -12,9 +12,10 @@ use Path::Tiny qw( path );
 use Test2::V0  qw( dies done_testing is like mock subtest );
 
 use MusicSync::Test qw(
-  add_playlist add_song     capture   chill_xml
-  items_xml    make_db      make_file playlists_xml
-  plex         sections_xml tracks_xml
+  add_playlist add_song      albums_xml capture
+  chill_xml    dupes_xml     items_xml  make_db
+  make_file    playlists_xml plex       sections_xml
+  tracks_xml
 );
 
 no warnings "experimental::signatures";
@@ -138,6 +139,29 @@ subtest "run" => sub {
       "Plex root /srv/music/ maps to the collection root\n"
     . "Ratings: 1 to Strawberry, 0 to Plex, 0 unchanged, 2 unmatched\n"
     . "Dry run, nothing changed\n", "reports a ratings merge";
+};
+
+subtest "duplicates" => sub {
+  my $dir = Path::Tiny->tempdir;
+  my ($dbh) = make_db($dir);
+  add_song(
+    $dbh,     "$dir/mp3s", "t/f/Artist/Album/01 Song A.mp3",
+    "Song A", "Artist"
+  );
+  my $plex = plex({
+    "GET /library/sections"               => sections_xml(),
+    "GET /library/sections/1/all?type=10" => dupes_xml(),
+    "GET /library/sections/1/all?type=9"  => albums_xml(),
+  });
+  my $mock = mock MusicSync => (override => [
+    plex_client => sub (@) { $plex }, open_db => sub (@) { $dbh }, ]);
+  my $run = sub (@argv) {
+    capture(sub { MusicSync::run(MusicSync::parse_options(\@argv)) })
+  };
+  like $run->(qw( duplicates list --server s --token t )),
+    qr/^Plex root .*^Groups: 4, 2 clean, 2 in doubt, 1 folder duplicate$/ms,
+    "lists the duplicates";
+  like MusicSync::usage(), qr/duplicates list/, "the usage names the verb";
 };
 
 subtest "main" => sub {

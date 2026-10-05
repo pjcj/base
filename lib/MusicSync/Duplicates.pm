@@ -8,11 +8,13 @@ no warnings "experimental::signatures";
 
 use Exporter qw( import );
 
-use MusicSync::Match qw( from_flac );
+use MusicSync::Match qw( from_flac local_song plex_rel roots roots_line );
+use MusicSync::Plex  qw( plex_library_albums plex_library_tracks plex_section );
+use MusicSync::Strawberry qw( collection_songs );
 
 our @EXPORT_OK = qw(
-  album_kind bitrate_band duplicate_groups loser_keys
-  rank_key   titles_match various
+  album_kind bitrate_band duplicate_groups list_duplicates
+  loser_keys rank_key     titles_match     various
 );
 
 sub bitrate_band ($bitrate) {
@@ -115,6 +117,66 @@ sub loser_keys ($groups) {
     $loser{ $_->{key} } = $group for $group->{losers}->@*;
   }
   \%loser
+}
+
+sub section_groups ($plex, $dbh, $opts) {
+  my $section = plex_section($plex, $opts->{section});
+  my $tracks  = plex_library_tracks($plex, $section);
+  my $albums  = plex_library_albums($plex, $section);
+  my $songs   = collection_songs($dbh);
+  my $roots   = roots($opts, $tracks, $songs);
+
+  for my $track (@$tracks) {
+    $track->{rel}  = plex_rel($roots->{plex}, $track->{path});
+    $track->{song} = local_song($songs, $roots, $track->{path});
+  }
+  { roots => $roots, groups => duplicate_groups($tracks, $albums) }
+}
+
+sub label ($track) {
+  # uncoverable condition false note:the artist is always a string
+  ($track->{track_artist} // $track->{artist}) . " - $track->{title}"
+}
+
+sub group_notes ($group) {
+  my @notes;
+  push @notes, "doubt $group->{doubt}" if $group->{doubt};
+  push @notes, "folder duplicate"      if $group->{folder};
+  @notes ? ", " . join(", ", @notes) : ""
+}
+
+sub clock ($ms) {
+  my $seconds = int(($ms // 0) / 1000 + 0.5);
+  sprintf "%d:%02d", $seconds / 60, $seconds % 60
+}
+
+sub track_line ($mark, $track) {
+  my $note = $track->{song} ? "" : " (no local song)";
+  sprintf "  %s  %3s kbps  %5s  %s%s\n", $mark, $track->{bitrate} // "?",
+    clock($track->{duration}), $track->{rel}, $note
+}
+
+sub list_duplicates ($plex, $dbh, $opts) {
+  my $found  = section_groups($plex, $dbh, $opts);
+  my $groups = $found->{groups};
+  print roots_line($found->{roots});
+  my ($doubt, $folder, $losers, $missing) = (0, 0, 0, 0);
+  for my $group (@$groups) {
+    print label($group->{winner}) . group_notes($group) . "\n";
+    print track_line("W", $group->{winner});
+    print track_line("L", $_) for $group->{losers}->@*;
+    $folder++ if $group->{folder};
+    $doubt++, next if $group->{doubt};
+    $losers  += $group->{losers}->@*;
+    $missing += grep !$_->{song}, $group->{losers}->@*;
+  }
+  my $clean = @$groups - $doubt;
+  my $rips  = $folder == 1 ? "folder duplicate" : "folder duplicates";
+  print "Groups: "
+    . @$groups
+    . ", $clean clean, $doubt in doubt, "
+    . "$folder $rips\n";
+  print "Losers: $losers, $missing with no local song\n";
 }
 
 1;

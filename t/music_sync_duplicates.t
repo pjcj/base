@@ -8,11 +8,16 @@ use open qw( :std :utf8 );
 
 use FindBin ();
 use lib "$FindBin::Bin/../lib", "$FindBin::Bin/lib";
-use Test2::V0 qw( done_testing is ok subtest );
+use Path::Tiny ();
+use Test2::V0  qw( done_testing is like ok subtest );
 
 use MusicSync::Duplicates qw(
-  album_kind bitrate_band duplicate_groups loser_keys
-  rank_key   titles_match various
+  album_kind bitrate_band duplicate_groups list_duplicates
+  loser_keys rank_key     titles_match     various
+);
+use MusicSync::Test qw(
+  add_song albums_xml capture      dupes_xml
+  make_db  plex       sections_xml tracks_xml
 );
 
 no warnings "experimental::signatures";
@@ -260,6 +265,57 @@ subtest "unknown albums" => sub {
   is $group->{winner}{rel}, "t/m/A/B/01 Song.mp3",
     "both rank as originals without a year, so the path decides";
   is $group->{folder}, 1, "and that makes a folder duplicate";
+};
+
+subtest "list" => sub {
+  my $dir = Path::Tiny->tempdir;
+  my ($dbh) = make_db($dir);
+  add_song($dbh, "$dir/mp3s", @$_, "Artist")
+    for (
+      [ "t/f/Artist/Album/01 Song A.mp3",        "Song A" ],
+      [ "t/m/Artist/Best Of/05 Song A.mp3",      "Song A" ],
+      [ "t/m/Artist/Album/02 Song B.mp3",        "Song B" ],
+      [ "t/m/Various Artists/Hits/07 Other.mp3", "Other" ],
+      [ "t/m/Artist/Album/03 Song C.mp3",        "Song C" ],
+      [ "t/m/Artist/Album/04 Song D.mp3",        "Song D" ]
+    );
+  my $plex = plex({
+    "GET /library/sections"               => sections_xml(),
+    "GET /library/sections/1/all?type=10" => dupes_xml(),
+    "GET /library/sections/1/all?type=9"  => albums_xml(),
+  });
+  is capture(sub { list_duplicates($plex, $dbh, {}) }), <<~TEXT,
+    Plex root /srv/music/ maps to the collection root
+    Artist - Song A
+      W  320 kbps   3:00  t/f/Artist/Album/01 Song A.mp3
+      L  192 kbps   3:01  t/m/Artist/Best Of/05 Song A.mp3
+    Artist - Song B, doubt title
+      W  320 kbps   3:20  t/m/Artist/Album/02 Song B.mp3
+      L  320 kbps   3:20  t/m/Various Artists/Hits/07 Other.mp3
+    Artist - Song C, folder duplicate
+      W  256 kbps   4:00  t/m/Artist/Album/03 Song C.mp3
+      L  256 kbps   4:00  t/m/Artist/Album_/03 Song C.mp3 (no local song)
+    Artist - Song D, doubt duration
+      W  320 kbps   2:30  t/m/Artist/Album/04 Song D.mp3
+      L    ? kbps   0:00  t/m/Artist/Best Of/09 Song D.mp3 (no local song)
+    Groups: 4, 2 clean, 2 in doubt, 1 folder duplicate
+    Losers: 2, 1 with no local song
+    TEXT
+    "every group with its winner, losers and notes";
+  is $plex->{http}{calls}, [
+      "GET /library/sections",
+      "GET /library/sections/1/all?type=10",
+      "GET /library/sections/1/all?type=9",
+    ],
+    "one listing of tracks and one of albums";
+  my $alone = plex({
+    "GET /library/sections"               => sections_xml(),
+    "GET /library/sections/1/all?type=10" => tracks_xml(),
+    "GET /library/sections/1/all?type=9"  => albums_xml(),
+  });
+  like capture(sub { list_duplicates($alone, $dbh, {}) }),
+    qr/^Groups: 0, 0 clean, 0 in doubt, 0 folder duplicates\n/m,
+    "a section with no shared guids";
 };
 
 done_testing;
