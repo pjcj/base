@@ -36,5 +36,5 @@ suppress_preload = false
 
 [plugin]
 prepend_previewers = [
-  { url = "*.md", run = 'piper -- mdmost-preview $w "$1"' },
+  { url = "*.md", run = 'faster-piper -- mdmost-preview $w "$1"' },
 ]
