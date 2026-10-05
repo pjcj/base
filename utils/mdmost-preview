@@ -1,0 +1,12 @@
+#!/usr/bin/env expect
+
+# Run mdmost under a pseudo-terminal, since it emits colour only for one.
+
+set width [lindex $argv 0]
+set file [lindex $argv 1]
+set stty_init "-onlcr -echo"
+spawn -noecho mdmost --render-once --wide-emoji --icons --no-body-width \
+  --width $width $file
+expect eof
+catch wait result
+exit [lindex $result 3]

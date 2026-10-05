@@ -36,5 +36,5 @@ suppress_preload = false
 
 [plugin]
 prepend_previewers = [
-  { url = "*.md", run = 'piper -- mdmost --render-once --width=$w --no-body-width "$1"' },
+  { url = "*.md", run = 'piper -- mdmost-preview $w "$1"' },
 ]
