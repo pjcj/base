@@ -19,10 +19,11 @@ use MusicSync::Playlists qw(
   push_playlists   reorder_plan report     sync_playlist
 );
 use MusicSync::Test qw(
-  add_loose_item add_playlist add_song  add_songs
-  capture        chill_xml    file_url  identity_xml
-  items_xml      make_db      make_file playlists_xml
-  plex           sections_xml songs     tracks_xml
+  add_loose_item add_playlist  add_song  add_songs
+  albums_xml     capture       chill_xml dupes_xml
+  file_url       identity_xml  items_xml make_db
+  make_file      playlists_xml plex      sections_xml
+  songs          tracks_xml
 );
 
 no warnings "experimental::signatures";
@@ -37,6 +38,42 @@ my $Items_later_xml = <<~XML;
   </Track>
   </MediaContainer>
   XML
+
+my $Smart_items_xml = <<~XML;
+  <?xml version="1.0" encoding="UTF-8"?>
+  <MediaContainer size="3">
+  <Track ratingKey="301" playlistItemID="1201" title="Song A"
+    grandparentTitle="Artist">
+    <Media id="1">
+    <Part id="1" file="/srv/music/t/f/Artist/Album/01 Song A.mp3"/>
+    </Media>
+  </Track>
+  <Track ratingKey="302" playlistItemID="1202" title="Song A"
+    grandparentTitle="Artist">
+    <Media id="2">
+    <Part id="2" file="/srv/music/t/m/Artist/Best Of/05 Song A.mp3"/>
+    </Media>
+  </Track>
+  <Track ratingKey="303" playlistItemID="1203" title="Song B"
+    grandparentTitle="Artist">
+    <Media id="3">
+    <Part id="3" file="/srv/music/t/m/Artist/Album/02 Song B.mp3"/>
+    </Media>
+  </Track>
+  </MediaContainer>
+  XML
+
+my @Dupe_songs = (
+  [ "t/f/Artist/Album/01 Song A.mp3",   "Song A" ],
+  [ "t/m/Artist/Best Of/05 Song A.mp3", "Song A" ],
+  [ "t/m/Artist/Album/02 Song B.mp3",   "Song B" ],
+);
+
+sub section_responses () { (
+  "GET /library/sections"               => sections_xml(),
+  "GET /library/sections/1/all?type=10" => dupes_xml(),
+  "GET /library/sections/1/all?type=9"  => albums_xml(),
+) }
 
 sub playlist_rows ($dbh) {
   $dbh->selectall_arrayref(
@@ -361,6 +398,7 @@ subtest "pull smart playlists" => sub {
     "GET /playlists/10/items" => items_xml(),
     "GET /playlists/12/items" => $Items_later_xml,
     "GET /playlists/13/items" => chill_xml(),
+    section_responses(),
   });
   my $mock = mock "MusicSync::Playlists" =>
     (override => [ strawberry_running => sub () { 0 } ]);
@@ -623,6 +661,34 @@ subtest "export" => sub {
   chmod 0755, $locked;
 };
 
+subtest "pull drops losing copies from smart playlists" => sub {
+  my $dir   = Path::Tiny->tempdir;
+  my $root  = "$dir/mp3s";
+  my ($dbh) = make_db($dir);
+  my ($a, $loser, $b) = map add_song($dbh, $root, @$_, "Artist"), @Dupe_songs;
+  my $plex = plex({
+    "GET /playlists"          => playlists_xml(),
+    "GET /playlists/12/items" => $Smart_items_xml,
+    section_responses(),
+  });
+  my $mock = mock "MusicSync::Playlists" =>
+    (override => [ strawberry_running => sub () { 0 } ]);
+  my $opts = { smart => 1, playlists => ["Recent"] };
+  is pull_playlists($plex, $dbh, $opts)->{playlists},
+    [ {
+      name       => "Recent",
+      matched    => 2,
+      unmatched  => [],
+      smart      => 1,
+      duplicates => 1,
+    } ],
+    "the losing copy is dropped from the snapshot";
+  is [ map $_->[3], grep $_->[0] eq "Recent", playlist_rows($dbh)->@* ],
+    [ $a, $b ], "the winner and the other track are written";
+  is grep(m|/library/sections|, $plex->{http}{calls}->@*), 3,
+    "one listing of the section";
+};
+
 subtest "export smart playlists" => sub {
   my $dir   = Path::Tiny->tempdir;
   my $root  = "$dir/mp3s";
@@ -636,6 +702,7 @@ subtest "export smart playlists" => sub {
   my $plex = plex({
     "GET /playlists"          => playlists_xml(),
     "GET /playlists/12/items" => items_xml(),
+    section_responses(),
   });
   is export_playlists($dbh, $out, {}, $plex), {
       roots     => { plex => "/srv/music/", local => "" },
@@ -648,8 +715,14 @@ subtest "export smart playlists" => sub {
       removed => 0,
     },
     "smart playlists from Plex follow the favourites";
-  is $plex->{http}{calls}, [ "GET /playlists", "GET /playlists/12/items" ],
-    "reads only the smart playlists";
+  is $plex->{http}{calls}, [
+      "GET /playlists",
+      "GET /library/sections",
+      "GET /library/sections/1/all?type=10",
+      "GET /library/sections/1/all?type=9",
+      "GET /playlists/12/items",
+    ],
+    "reads the section once and only the smart playlists";
   is path("$out/Recent.m3u8")->slurp_utf8,
     "#EXTM3U\nArtist/Album/01 Song A.mp3\nArtist/Album/02 Song B.mp3\n"
     . "Artist/Album/01 Song A.mp3\n",
@@ -657,6 +730,40 @@ subtest "export smart playlists" => sub {
   my $none  = plex({ "GET /playlists" => qq(<MediaContainer size="0"/>) });
   my $plain = export_playlists($dbh, $out, { dry_run => 1 }, $none);
   ok !exists $plain->{roots}, "no roots when Plex has no smart playlists";
+};
+
+subtest "export drops losing copies from smart playlists" => sub {
+  my $dir   = Path::Tiny->tempdir;
+  my $root  = "$dir/mp3s";
+  my $out   = "$dir/out";
+  my ($dbh) = make_db($dir);
+  for my $song (@Dupe_songs) {
+    add_song($dbh, $root, @$song, "Artist");
+    make_file("$root/$song->[0]", "mp3 $song->[1]");
+  }
+  my $plex = plex({
+    "GET /playlists"          => playlists_xml(),
+    "GET /playlists/12/items" => $Smart_items_xml,
+    section_responses(),
+  });
+  is export_playlists($dbh, $out, {}, $plex), {
+      roots     => { plex => "/srv/music/", local => "" },
+      playlists => [ {
+        name       => "Recent",
+        matched    => 2,
+        unmatched  => [],
+        smart      => 1,
+        duplicates => 1,
+      } ],
+      copied  => 2,
+      removed => 0,
+    },
+    "one copy of each recording";
+  is path("$out/Recent.m3u8")->slurp_utf8,
+    "#EXTM3U\nt/f/Artist/Album/01 Song A.mp3\nt/m/Artist/Album/02 Song B.mp3\n",
+    "the winner stands in for the group";
+  ok !-e "$out/t/m/Artist/Best Of/05 Song A.mp3",
+    "the losing copy is not copied";
 };
 
 subtest "report notes" => sub {
@@ -679,11 +786,12 @@ subtest "report notes" => sub {
       },
       { name => "Dup", matched => 2, unmatched => [], repeated => 1 },
       {
-        name      => "Snap",
-        matched   => 2,
-        unmatched => [],
-        smart     => 1,
-        repeated  => 1,
+        name       => "Snap",
+        matched    => 2,
+        unmatched  => [],
+        smart      => 1,
+        repeated   => 1,
+        duplicates => 1,
       },
     ],
   };
@@ -694,7 +802,7 @@ subtest "report notes" => sub {
     . "Recent: 1 of 1 track (skipped, smart playlist on Plex)\n"
     . "Trance: 3 of 3 tracks (removed 1, added 2, moved 0)\n"
     . "Dup: 2 of 3 tracks (repeated 1)\n"
-    . "Snap: 2 of 3 tracks (smart, repeated 1)\n",
+    . "Snap: 2 of 4 tracks (smart, repeated 1, duplicates 1)\n",
     "notes for each kind of change";
   is capture(sub {
     report({ roots => { plex => "/m/", local => "t/" }, playlists => [] }, {})

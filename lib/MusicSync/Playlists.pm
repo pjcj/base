@@ -15,7 +15,8 @@ use File::Path         qw( make_path );
 use File::Spec         ();
 use Unicode::Normalize qw( NFC );
 
-use MusicSync::Match qw( local_rel local_song plex_rel roots roots_line
+use MusicSync::Duplicates qw( loser_keys section_groups );
+use MusicSync::Match      qw( local_rel local_song plex_rel roots roots_line
   track_key );
 use MusicSync::Plex qw(
   plex_add_items      plex_create_playlist
@@ -61,14 +62,18 @@ sub notes ($p) {
     if defined $p->{created};
   push @notes, "skipped, $p->{skipped}" if $p->{skipped};
   push @notes, map "$_ $p->{$_}", grep defined $p->{$_},
-    qw( removed added moved repeated );
+    qw( removed added moved repeated duplicates );
   @notes ? " (" . join(", ", @notes) . ")" : ""
 }
 
 sub report ($summary, $opts) {
   print roots_line($summary->{roots}) if $summary->{roots};
   for my $p ($summary->{playlists}->@*) {
-    my $total = $p->{matched} + $p->{unmatched}->@* + ($p->{repeated} // 0);
+    my $total
+      = $p->{matched}
+      + $p->{unmatched}->@*
+      + ($p->{repeated}   // 0)
+      + ($p->{duplicates} // 0);
     print "$p->{name}: $p->{matched} of "
       . plural($total, "track")
       . notes($p) . "\n";
@@ -100,21 +105,34 @@ sub partition ($items, $match) {
   (\@found, \@unmatched)
 }
 
-sub matched_playlists ($plex, $songs, $opts, $playlists) {
+sub smart_losers ($plex, $dbh, $opts, $playlists) {
+  return {} unless grep $_->{smart}, @$playlists;
+  loser_keys(section_groups($plex, $dbh, $opts)->{groups})
+}
+
+sub without_losers ($playlist, $items, $losers) {
+  return ($items, 0) unless $playlist->{smart};
+  my @kept = grep !$losers->{ $_->{key} }, @$items;
+  (\@kept, @$items - @kept)
+}
+
+sub matched_playlists ($plex, $songs, $opts, $playlists, $losers) {
   my %items
     = map { $_->{id} => plex_playlist_items($plex, $_->{id}) } @$playlists;
   my $roots = roots($opts, [ map @$_, values %items ], $songs);
   my @matched;
   for my $playlist (@$playlists) {
+    my ($items, $dropped)
+      = without_losers($playlist, $items{ $playlist->{id} }, $losers);
     my ($found, $unmatched) = partition(
-      $items{ $playlist->{id} },
-      sub ($item) { local_song($songs, $roots, $item->{path}) }
+      $items, sub ($item) { local_song($songs, $roots, $item->{path}) }
     );
     push @matched, {
         name      => $playlist->{title},
         smart     => $playlist->{smart},
         found     => $found,
         unmatched => $unmatched,
+        $dropped ? (duplicates => $dropped) : (),
       };
   }
   ($roots, \@matched)
@@ -127,7 +145,9 @@ sub pull_playlists ($plex, $dbh, $opts) {
   my $playlists = selected(plex_playlists($plex), "title", $opts->{playlists});
   my @wanted    = grep $opts->{smart} || !$_->{smart}, @$playlists;
   my @skipped   = grep !$opts->{smart} && $_->{smart}, @$playlists;
-  my ($roots, $matched) = matched_playlists($plex, $songs, $opts, \@wanted);
+  my $losers    = smart_losers($plex, $dbh, $opts, \@wanted);
+  my ($roots, $matched)
+    = matched_playlists($plex, $songs, $opts, \@wanted, $losers);
   my $summary = {
     roots     => $roots,
     skipped   => [ map $_->{title}, @skipped ],
@@ -144,8 +164,9 @@ sub pull_playlists ($plex, $dbh, $opts) {
         name      => $playlist->{name},
         matched   => scalar @$ids,
         unmatched => $playlist->{unmatched},
-        $playlist->{smart} ? (smart    => 1)         : (),
-        $repeated          ? (repeated => $repeated) : (),
+        $playlist->{smart}      ? (smart      => 1)                       : (),
+        $repeated               ? (repeated   => $repeated)               : (),
+        $playlist->{duplicates} ? (duplicates => $playlist->{duplicates}) : (),
       };
   }
   $summary
@@ -329,7 +350,8 @@ sub strawberry_exports ($dbh, $opts) {
 sub plex_exports ($plex, $dbh, $opts) {
   my $playlists = selected(plex_playlists($plex), "title", $opts->{playlists});
   my $smart     = [ grep $_->{smart}, @$playlists ];
-  matched_playlists($plex, collection_songs($dbh), $opts, $smart)
+  my $losers    = smart_losers($plex, $dbh, $opts, $smart);
+  matched_playlists($plex, collection_songs($dbh), $opts, $smart, $losers)
 }
 
 sub export_playlists ($dbh, $dir, $opts, $plex = undef) {
@@ -352,7 +374,8 @@ sub export_playlists ($dbh, $dir, $opts, $plex = undef) {
         name      => $export->{name},
         matched   => scalar @$found,
         unmatched => $export->{unmatched},
-        $export->{smart} ? (smart => 1) : (),
+        $export->{smart}      ? (smart      => 1)                     : (),
+        $export->{duplicates} ? (duplicates => $export->{duplicates}) : (),
       };
   }
   for my $rel (sort keys %wanted) {
@@ -385,7 +408,9 @@ MusicSync::Playlists - copy playlists between Plex, Strawberry and devices
 
 Pulls Plex playlists into Strawberry, pushes Strawberry favourites to Plex,
 exports them with their files for a device, and prints the report of what
-each run did.
+each run did. A smart playlist on Plex lists every copy of a recording, so
+pull and export drop the losing copies that L<MusicSync::Duplicates> finds
+and keep the winner.
 
 =head1 LICENCE
 

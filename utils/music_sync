@@ -217,6 +217,11 @@ playlist beside the favourites, as it stands at the time, so a smart playlist
 named like a favourite replaces its file. Copy the folder as it is into the
 Music folder of a Garmin watch or into a scanned folder on a phone.
 
+A smart playlist built on ratings lists every copy of a recording, since
+the copies share one rating. With C<--smart>, pull and export leave out the
+losing copies that L</DUPLICATES> describes and keep the winner, which
+costs one listing of the section per run.
+
 Neither direction deletes a playlist. Only Strawberry playlists saved to the
 sidebar take part, since Strawberry deletes open tabs when they close.
 
