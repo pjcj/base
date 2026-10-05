@@ -183,8 +183,10 @@ music_sync - copy playlists and ratings between Plex, Strawberry and devices
 
 =head1 DESCRIPTION
 
-Plex and Strawberry each keep their own playlists. This script copies
-playlists in either direction and writes them out for portable players.
+Plex and Strawberry each keep their own playlists and ratings. This script
+copies playlists in either direction, writes them out for portable players,
+moves ratings both ways and finds the copies of one recording, so that one
+copy wins and the rest drop out of the way.
 
 The script signs in to plex.tv with C<--username> and C<--password>, or uses
 C<--token>. It then asks plex.tv for the servers of that account and connects
