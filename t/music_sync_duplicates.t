@@ -1,0 +1,265 @@
+#!/usr/bin/perl
+
+use 5.28.0;
+use warnings;
+use utf8;
+use feature "signatures";
+use open qw( :std :utf8 );
+
+use FindBin ();
+use lib "$FindBin::Bin/../lib", "$FindBin::Bin/lib";
+use Test2::V0 qw( done_testing is ok subtest );
+
+use MusicSync::Duplicates qw(
+  album_kind bitrate_band duplicate_groups loser_keys
+  rank_key   titles_match various
+);
+
+no warnings "experimental::signatures";
+
+my $Albums = {
+  1 => { title => "Album", artist => "Artist", year => 1990, kinds => [] },
+  2 => {
+    title  => "Best Of",
+    artist => "Artist",
+    year   => 1999,
+    kinds  => [ "Album", "Compilation" ],
+  },
+  3 => {
+    title  => "Hits",
+    artist => "Various Artists",
+    year   => 2001,
+    kinds  => [ "Album", "Compilation", "DJ Mix" ],
+  },
+  4 => { title => "Undated", artist => "Artist", year => undef, kinds => [] },
+  5 => {
+    title  => "Live",
+    artist => "Artist",
+    year   => 1995,
+    kinds  => [ "Album", "Live" ],
+  },
+  6 => { title => "Early", artist => "Artist", year => 1985, kinds => [] },
+};
+
+my $n = 0;
+
+sub track (%field) {
+  $n++;
+  {
+    key       => 100 + $n,
+    guid      => "plex://track/g1",
+    rel       => "t/m/Artist/Album/0$n Song.mp3",
+    title     => "Song",
+    duration  => 200_000,
+    bitrate   => 320,
+    size      => 8_000_000,
+    album_key => 1,
+    %field,
+  }
+}
+
+sub winner (@tracks) {
+  duplicate_groups(\@tracks, $Albums)->[0]{winner}{rel}
+}
+
+subtest "bitrate bands" => sub {
+  is bitrate_band(320),   0, "top band from 240";
+  is bitrate_band(240),   0, "at the edge";
+  is bitrate_band(239),   1, "just under";
+  is bitrate_band(176),   1, "second band from 176";
+  is bitrate_band(175),   2, "third band";
+  is bitrate_band(112),   2, "third band from 112";
+  is bitrate_band(111),   3, "bottom band";
+  is bitrate_band(undef), 3, "unknown bitrate is the bottom band";
+};
+
+subtest "various artists" => sub {
+  my $own = track();
+  ok !various($own, $Albums->{1}), "an artist's own album";
+  ok various($own,  $Albums->{3}), "by album artist";
+  my $folder = track(rel => "t/f/Various Artists/Hits/01 Song.mp3");
+  ok various($folder, $Albums->{1}), "by folder when Plex renamed the artist";
+  ok !various(track(rel => "x.mp3"), $Albums->{1}), "a short path is not";
+};
+
+subtest "album kinds" => sub {
+  my $track = track();
+  is album_kind($track, $Albums->{1}), 0, "original";
+  is album_kind($track, $Albums->{2}), 1, "the artist's own compilation";
+  is album_kind($track, $Albums->{3}), 2, "Various Artists";
+  is album_kind($track, $Albums->{5}), 0, "a live album is an original";
+  is album_kind($track, { kinds => ["Soundtrack"] }),        1, "a soundtrack";
+  is album_kind($track, { kinds => [ "Album", "DJ Mix" ] }), 1, "a DJ mix";
+  is album_kind($track, { kinds => ["Remix"] }),             0, "a remix album";
+  is album_kind($track, {}), 0, "an album Plex did not list";
+  is album_kind(track(rel => "t/m/Various Artists/X/01 Song.mp3"), {}), 2,
+    "Various Artists by folder with no album";
+};
+
+subtest "rank key" => sub {
+  is rank_key(
+    track(rel => "t/f/Artist/Album/01 Song.mp3", bitrate => 128),
+    $Albums->{2}
+    ),
+    [ 0, 0, 1, 1999, -128, -8_000_000, "t/f/Artist/Album/01 Song.mp3" ],
+    "a FLAC rip ignores its bitrate band";
+  is rank_key(
+    track(rel => "t/m/Artist/Album/01 Song.mp3", bitrate => 128),
+    $Albums->{4}
+    ),
+    [ 1, 2, 0, 9999, -128, -8_000_000, "t/m/Artist/Album/01 Song.mp3" ],
+    "an MP3 with no year sorts last";
+  is rank_key(
+    track(rel => "t/m/A/B/01 Song.mp3", bitrate => undef, size => undef), {}
+    ),
+    [ 1, 3, 0, 9999, 0, 0, "t/m/A/B/01 Song.mp3" ],
+    "missing numbers count as zero";
+};
+
+subtest "titles match" => sub {
+  ok titles_match("Song",        "Song"),           "equal";
+  ok titles_match("Song",        "song"),           "case does not matter";
+  ok titles_match("Realize",     "Realize (Live)"), "brackets are dropped";
+  ok titles_match("TVC 15",      "TVC15"),          "spacing does not matter";
+  ok titles_match("Hyperballad", "Hyper‐Ballad"),   "nor a hyphen";
+  ok titles_match("Another Song Title", "Song Title (Edit)"),
+    "half the words of the shorter title";
+  ok !titles_match("Joan of Arc (Maid of Orleans)", "Maid of Orleans"),
+    "bracketed words do not count";
+  ok !titles_match(
+    "Rockin' Around the Christmas Tree",
+    "Mel and Kim - Rockin Around th"
+    ),
+    "a truncated title";
+  ok !titles_match("You Spin Me Round", "Dolce Vita"), "different songs";
+  ok !titles_match("La Ronde triste", "La Veuve noire"),
+    "one word of three is not enough";
+  ok !titles_match("Realize", "Realise"), "one word differing by a letter";
+  ok titles_match("(Tag)",    "Tag"),     "a title that is all brackets";
+  ok !titles_match("(Tag)",   "(Other)"), "two such titles that differ";
+};
+
+subtest "ranking order" => sub {
+  my ($one, $two) = ("t/m/A/B/01 Song.mp3", "t/m/A/C/01 Song.mp3");
+  is winner(
+    track(rel => "t/f/A/B/01 Song.mp3", bitrate => 128),
+    track(rel => $two)
+    ),
+    "t/f/A/B/01 Song.mp3", "a FLAC rip beats an MP3 whatever the bitrate";
+  is winner(
+    track(rel => $one, bitrate => 175),
+    track(rel => $two, bitrate => 176, album_key => 3)
+    ),
+    $two, "a higher band beats a better album";
+  is winner(
+    track(rel => $one, bitrate => 180, album_key => 2),
+    track(rel => $two, bitrate => 200, album_key => 3)
+    ),
+    $one, "within a band the album kind decides";
+  is winner(
+    track(rel => $one, album_key => 2),
+    track(rel => $two, album_key => 1)
+    ),
+    $two, "an original beats a compilation";
+  is winner(
+    track(rel => $one, album_key => 3),
+    track(rel => $two, album_key => 2)
+    ),
+    $two, "the artist's compilation beats Various Artists";
+  is winner(
+    track(rel => $one, album_key => 1),
+    track(rel => $two, album_key => 6)
+    ),
+    $two, "the earlier album wins";
+  is winner(
+    track(rel => $one, album_key => 4),
+    track(rel => $two, album_key => 1)
+    ),
+    $two, "a missing year loses";
+  is winner(
+    track(rel => $one, bitrate => 256),
+    track(rel => $two, bitrate => 320)
+    ),
+    $two, "the higher bitrate wins in a band";
+  is winner(track(rel => $one, size => 1), track(rel => $two, size => 2)),
+    $two, "the larger file wins";
+  is winner(
+    track(rel => "t/m/A/B_C/01 Song.mp3"),
+    track(rel => "t/m/A/B & C/01 Song.mp3")
+    ),
+    "t/m/A/B & C/01 Song.mp3", "the path decides last";
+};
+
+subtest "groups" => sub {
+  my @tracks = (
+    track(key => 1, guid => "plex://track/g2", rel => "t/m/A/B/01 Song.mp3"),
+    track(key => 2, guid => "plex://track/g2", rel => "t/m/A/B_/01 Song.mp3"),
+    track(key => 3, guid => "plex://track/g1", rel => "t/m/A/X/01 Song.mp3"),
+    track(
+      key      => 4,
+      guid     => "plex://track/g1",
+      rel      => "t/f/A/X/01 Song.mp3",
+      duration => 205_000
+    ),
+    track(
+      key      => 5,
+      guid     => "plex://track/g1",
+      rel      => "t/m/A/Y/01 Song.mp3",
+      duration => 201_000
+    ),
+    track(key => 6,  guid => "plex://track/g3"),
+    track(key => 7,  guid => "local://1234"),
+    track(key => 8,  guid => "local://1234"),
+    track(key => 9,  guid => undef),
+    track(key => 10, guid => "plex://track/g4", rel => undef),
+    track(key => 11, guid => "plex://track/g4", rel => undef),
+  );
+  my $groups = duplicate_groups(\@tracks, $Albums);
+  is [ map $_->{guid}, @$groups ], [ "plex://track/g1", "plex://track/g2" ],
+    "groups of shared Plex guids in order of the winner's path";
+  my ($g1, $g2) = @$groups;
+  is $g1->{winner}{rel}, "t/f/A/X/01 Song.mp3", "the winner";
+  is [ map $_->{rel}, $g1->{losers}->@* ],
+    [ "t/m/A/X/01 Song.mp3", "t/m/A/Y/01 Song.mp3" ], "the losers in order";
+  is $g1->{doubt},  undef, "within 5 seconds and the same title";
+  is $g1->{folder}, 0,     "not a folder duplicate";
+  is $g2->{folder}, 1,     "a folder duplicate";
+  is loser_keys($groups), { 3 => $g1, 5 => $g1, 2 => $g2 },
+    "losers of clean groups";
+};
+
+subtest "doubt" => sub {
+  my $far
+    = duplicate_groups([ track(), track(duration => 205_001) ], $Albums)->[0];
+  is $far->{doubt}, "duration", "over 5 seconds apart";
+  my $close
+    = duplicate_groups([ track(), track(duration => 195_000) ], $Albums)->[0];
+  is $close->{doubt}, undef, "5 seconds apart";
+  my $title
+    = duplicate_groups([ track(), track(title => "Other"), track() ], $Albums)
+    ->[0];
+  is $title->{doubt}, "title", "one loser with another title";
+  is loser_keys([ $far, $close, $title ]),
+    { $close->{losers}[0]{key} => $close }, "doubt groups have no losers";
+  is duplicate_groups([ track(), track(duration => undef) ], $Albums)
+    ->[0]{doubt}, "duration", "a loser with no duration";
+  is duplicate_groups(
+    [ track(rel => "t/f/A/B/01 Song.mp3", duration => undef), track() ],
+    $Albums
+  )->[0]{doubt}, "duration", "a winner with no duration";
+};
+
+subtest "unknown albums" => sub {
+  my $group = duplicate_groups(
+    [
+      track(rel => "t/m/A/C/01 Song.mp3", album_key => undef),
+      track(rel => "t/m/A/B/01 Song.mp3", album_key => 99),
+    ],
+    $Albums
+  )->[0];
+  is $group->{winner}{rel}, "t/m/A/B/01 Song.mp3",
+    "both rank as originals without a year, so the path decides";
+  is $group->{folder}, 1, "and that makes a folder duplicate";
+};
+
+done_testing;

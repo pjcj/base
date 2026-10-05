@@ -10,9 +10,8 @@ use Exporter           qw( import );
 use Unicode::Normalize qw( NFC );
 
 our @EXPORT_OK = qw(
-  detect_roots flac_for local_rel local_song
-  mp3_for      plex_rel roots     roots_line
-  track_key
+  detect_roots flac_for from_flac  local_rel local_song mp3_for
+  plex_rel     roots    roots_line track_key
 );
 
 sub detect_roots ($tracks, $local) {
@@ -73,6 +72,8 @@ sub swap_format ($rel, $from, $to) {
 
 sub mp3_for  ($rel) { swap_format($rel, $Flac, $Mp3) }
 sub flac_for ($rel) { swap_format($rel, $Mp3,  $Flac) }
+
+sub from_flac ($rel) { index($rel, $Mp3->{dir}) == 0 }
 
 sub local_song ($songs, $roots, $path) {
   my $rel = plex_rel($roots->{plex}, $path) // return;

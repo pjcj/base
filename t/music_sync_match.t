@@ -7,10 +7,10 @@ use open qw( :std :utf8 );
 
 use FindBin ();
 use lib "$FindBin::Bin/../lib";
-use Test2::V0 qw( done_testing is subtest );
+use Test2::V0 qw( done_testing is ok subtest );
 
-use MusicSync::Match qw( detect_roots flac_for local_rel mp3_for plex_rel roots
-);
+use MusicSync::Match qw( detect_roots flac_for from_flac local_rel mp3_for
+  plex_rel roots );
 
 subtest "roots" => sub {
   my $local = {
@@ -71,6 +71,8 @@ subtest "formats" => sub {
   is [ flac_for("t/f/A/B/01 X.mp3") ], ["flac-tagged/A/B/01 X.flac"],
     "the FLAC of a converted MP3";
   is [ flac_for("t/m/A/B/01 X.mp3") ], [], "an MP3 with no FLAC";
+  ok from_flac("t/f/A/B/01 X.mp3"),  "an MP3 converted from FLAC";
+  ok !from_flac("t/m/A/B/01 X.mp3"), "an MP3 with no FLAC";
 };
 
 done_testing;
