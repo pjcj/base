@@ -1,0 +1,135 @@
+#!/usr/bin/env bash
+
+# Build the last release of each perl series from 5.8 to 5.18 with plenv.
+#
+# The Devel::PatchPerl in Homebrew's perl-build cannot build 5.8.9 or 5.10.1
+# with current Apple clang, so we put a newer one first on @INC with PERL5OPT.
+# perl-build drops PERL5OPT before Configure, so the new perl never sees it.
+#
+# The plenv perl shim resets PLENV_ROOT, so we build into "plenv root".
+
+set -eEuo pipefail
+shopt -s inherit_errexit
+
+readonly Default_versions=(5.8.9 5.10.1 5.12.5 5.14.4 5.16.3 5.18.4)
+readonly Patch_lib=$HOME/g/perl5/patchperl
+readonly Min_patchperl=2.14
+readonly Cpanm_url=https://cpanmin.us
+readonly Modules=(App::cpanminus Test::NoWarnings Module::Build
+  ExtUtils::CBuilder)
+
+usage() {
+  local script
+  script=$(basename "$0")
+  cat <<EOT
+$script [--jobs <n>] [--log-dir <dir>] [--help] [version ...]
+
+Build perls in parallel with plenv and install a few CPAN modules into each.
+Rerun after a failure to retry. Perls that plenv already has only get the
+modules.
+
+Options:
+  --jobs     make jobs per build (default 4)
+  --log-dir  where to write one log per version
+             (default \${TMPDIR:-/tmp}/build_old_perls)
+  --help     show this help
+
+Examples:
+  $script
+  $script 5.8.9 5.10.1
+  $script --jobs 8 --log-dir ~/tmp/perl-logs
+EOT
+}
+
+ensure_patchperl() {
+  local lib=$Patch_lib/lib/perl5
+  if /usr/bin/perl -I"$lib" -MDevel::PatchPerl \
+    -e "exit(\$Devel::PatchPerl::VERSION >= $Min_patchperl ? 0 : 1)" \
+    2>/dev/null; then
+    return
+  fi
+  echo "Installing Devel::PatchPerl $Min_patchperl or later into $Patch_lib"
+  cpanm -L "$Patch_lib" --notest Devel::PatchPerl
+}
+
+build_one() {
+  local version=$1 jobs=$2 cpanm=$3 root
+  root=$(plenv root)
+
+  if [[ -x $root/versions/$version/bin/perl ]]; then
+    echo "$version is already installed, installing modules only"
+  else
+    PERL5OPT="-I$Patch_lib/lib/perl5" plenv install -j "$jobs" "$version"
+  fi
+
+  PLENV_VERSION=$version plenv exec perl "$cpanm" --notest "${Modules[@]}"
+}
+
+main() {
+  local jobs=4 log_dir=${TMPDIR:-/tmp}/build_old_perls versions=()
+  local cpanm version i tool failed=0 pids=()
+
+  while (($# > 0)); do
+    case $1 in
+    --jobs)
+      jobs=$2
+      shift 2
+      ;;
+    --log-dir)
+      log_dir=$2
+      shift 2
+      ;;
+    --help)
+      usage
+      exit 0
+      ;;
+    -*)
+      echo "Unknown option: $1" >&2
+      usage >&2
+      exit 1
+      ;;
+    *)
+      versions+=("$1")
+      shift
+      ;;
+    esac
+  done
+
+  ((${#versions[@]} > 0)) || versions=("${Default_versions[@]}")
+
+  for tool in plenv cpanm curl; do
+    if ! command -v "$tool" >/dev/null; then
+      echo "$tool not found on PATH" >&2
+      exit 1
+    fi
+  done
+
+  ensure_patchperl
+
+  cpanm=$(mktemp "${TMPDIR:-/tmp}/cpanm.XXXXXX")
+  trap 'rm -f "$cpanm"' EXIT
+  curl -fsSL "$Cpanm_url" -o "$cpanm"
+
+  mkdir -p "$log_dir"
+  echo "Building ${versions[*]} with $jobs make jobs each"
+  echo "Logs are in $log_dir"
+
+  for version in "${versions[@]}"; do
+    build_one "$version" "$jobs" "$cpanm" >"$log_dir/$version.log" 2>&1 &
+    pids+=("$!")
+  done
+
+  for i in "${!versions[@]}"; do
+    if wait "${pids[$i]}"; then
+      echo "${versions[$i]}: ok"
+    else
+      echo "${versions[$i]}: FAILED, see $log_dir/${versions[$i]}.log"
+      failed=1
+    fi
+  done
+
+  plenv rehash
+  exit "$failed"
+}
+
+main "$@"
