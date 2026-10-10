@@ -364,6 +364,8 @@ cask "plexamp"
 cask "prince"
 # Peer to peer Bitorrent client
 cask "qbittorrent"
+# Imaging utility to install operating systems to a microSD card
+cask "raspberry-pi-imager"
 # Control your tools with a few keystrokes
 cask "raycast"
 # Move and resize windows using keyboard shortcuts or snap areas
@@ -386,6 +388,8 @@ cask "vmware-fusion"
 cask "wezterm"
 # Menu bar app for USB-C cable diagnostics
 cask "darrylmorley/whatcable/whatcable", trusted: true
+# Connect to Windows
+cask "windows-app"
 # Lossless audio decoder
 cask "xld"
 # Video communication and virtual meeting platform
