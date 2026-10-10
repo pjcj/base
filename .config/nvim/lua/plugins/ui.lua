@@ -293,9 +293,9 @@ return {
         "prompt",
       },
       ignored_buftypes = { "nofile" },
-      default_amount = 3,
-      at_edge = "wrap",
-      cursor_follows_swapped_bufs = true,
+      resize = { amount = 3 },
+      move = { at_edge = "wrap" },
+      swap = { move_cursor = true },
     },
   },
 
