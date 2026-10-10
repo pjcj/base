@@ -93,6 +93,7 @@ setopt                      \
   NO_all_export             \
      always_last_prompt     \
   NO_always_to_end          \
+     append_create          \
      append_history         \
      auto_cd                \
      auto_list              \
