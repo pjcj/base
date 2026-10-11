@@ -75,6 +75,18 @@ update_packages() {
   fi
 }
 
+# Homebrew's glibc ships no compiled locales, so zsh cannot encode non-ASCII.
+compile_brew_glibc_locales() {
+  local glibc
+  glibc=$(brew --prefix glibc 2>/dev/null) || return
+  [[ -x $glibc/bin/localedef ]] || return
+  mkdir -p "$glibc/lib/locale"
+  local loc
+  for loc in C en_GB en_US; do
+    "$glibc/bin/localedef" -i "$loc" -f UTF-8 "$glibc/lib/locale/$loc.UTF-8"
+  done
+}
+
 update_brew() {
   [[ $uname == FreeBSD ]] && return
   local brewfile
@@ -106,6 +118,7 @@ update_brew() {
   fi
   brew link --overwrite node
   ~/g/base/utils/patch_plenv_readlink
+  compile_brew_glibc_locales
 }
 
 update_other() {
