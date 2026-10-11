@@ -12,8 +12,8 @@ fi
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:$PATH"
 
 readonly Claude="${CLAUDE_BIN:-claude}"
-readonly Hud_dir="$HOME/.claude/plugins/claude-hud"
-readonly Snapshot="${CLAUDE_USAGE_SNAPSHOT:-$Hud_dir/usage-snapshot.json}"
+readonly Config_dir="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
+readonly Snapshot="${CLAUDE_USAGE_SNAPSHOT:-$Config_dir/usage-snapshot.json}"
 readonly Max_age="${CLAUDE_USAGE_MAX_AGE:-300}"
 readonly Lock="$Snapshot.lock"
 readonly Lock_max_age=60

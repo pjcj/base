@@ -148,8 +148,18 @@ test_claude_exits_nonzero() {
   check "backs off after claude fails" test ! -f "$Work/stdin"
 }
 
+test_config_dir_default() {
+  local config_dir="$Work/config"
+  mkdir "$config_dir"
+  fake_claude "$(reply '{"model_scoped":[]}')"
+  CLAUDE_BIN="$Fake_claude" CLAUDE_CONFIG_DIR="$config_dir" "$Script" --force
+  check "defaults to the config directory" \
+    test -f "$config_dir/usage-snapshot.json"
+}
+
 test_model_scoped
 test_limits_fallback
+test_config_dir_default
 test_fresh_snapshot_skipped
 test_lock_held
 test_stale_lock
