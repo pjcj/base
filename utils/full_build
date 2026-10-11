@@ -140,6 +140,7 @@ do_zinit() {
   source "$ZINIT_HOME/zinit.zsh"
   zinit self-update
   zinit update --parallel
+  zinit cclear
 }
 
 do_yazi() {
