@@ -85,6 +85,24 @@
       "shortcut": "ctrl+cmd+a"
     },
 
+    "claude-work": {
+      "type": "command",
+      "title": "Claude Work",
+      "subtitle": "Start claude in a new tab on the work account",
+      "command": "CLAUDE_MODE=work claude --chrome",
+      "target": "newTabInCurrentPane",
+      "shortcut": "ctrl+cmd+w"
+    },
+
+    "claude-os": {
+      "type": "command",
+      "title": "Claude OS",
+      "subtitle": "Start claude in a new tab on the os account",
+      "command": "CLAUDE_MODE=os claude --chrome",
+      "target": "newTabInCurrentPane",
+      "shortcut": "ctrl+cmd+o"
+    },
+
     // currentTerminal, so the script inherits the pane's directory. It
     // needs a shell prompt, unlike the newTabInCurrentPane action above.
     "claude-pane": {

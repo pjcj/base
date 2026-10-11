@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# Open claude in a pane beside the current cmux pane.
+# Open claude in a pane beside the current cmux pane, in the requested
+# mode or the one claude-mode picks for the directory.
 #
 # The cmux counterpart of claude-show, which does the same job in tmux.
 # A cmux action in ~/.config/cmux/cmux.json types this command into the
@@ -17,14 +18,18 @@ set -eEuo pipefail
 shopt -s inherit_errexit 2>/dev/null || true
 
 readonly Width_percent=35
-readonly Title="claude"
 
 usage() {
   cat <<EOF
-Usage: cmux-pane-claude
+Usage: cmux-pane-claude [MODE]
 
 Open claude in a pane beside the current cmux pane, taking
 ${Width_percent}% of the workspace width.
+
+Modes:
+  default   The account claude-mode picks for the directory.
+  work      claude-work, titled claude-work.
+  os        claude-os, titled claude-os.
 
 Options:
   -h, --help   Show this help and exit.
@@ -59,10 +64,29 @@ resize_pane() {
 }
 
 claude_command() {
-  local quoted_dir claude_cmd
+  local mode="$1" quoted_dir claude_cmd
   printf -v quoted_dir %q "$PWD"
-  printf -v claude_cmd 'zsh -ic %q' "cd $quoted_dir && claude --chrome"
+  printf -v claude_cmd 'zsh -ic %q' \
+    "cd $quoted_dir && CLAUDE_MODE=$mode claude --chrome"
   echo "$claude_cmd"
+}
+
+resolve_mode() {
+  local requested="$1"
+  if [[ -z $requested || $requested == default ]]; then
+    claude-mode --print
+  else
+    claude-mode --print "$requested"
+  fi
+}
+
+title_for() {
+  local mode="$1"
+  if [[ $mode == default ]]; then
+    echo claude
+  else
+    echo "claude-$mode"
+  fi
 }
 
 main() {
@@ -81,7 +105,12 @@ main() {
 
   command -v cmux >/dev/null || die "cmux is not installed"
   command -v jq >/dev/null || die "jq is not installed"
+  command -v claude-mode >/dev/null || die "claude-mode is not installed"
   export CMUX_QUIET=1
+
+  local mode title
+  mode=$(resolve_mode "${1:-}")
+  title=$(title_for "$mode")
 
   local reply surface workspace
   reply=$(cmux new-split right --focus true) ||
@@ -94,11 +123,11 @@ main() {
   width=$(pane_width "$panes")
   resize_pane "$workspace" "$pane" "$width"
 
-  claude_cmd=$(claude_command)
+  claude_cmd=$(claude_command "$mode")
   cmux respawn-pane --workspace "$workspace" --surface "$surface" \
     --command "$claude_cmd" >/dev/null
   cmux rename-tab --workspace "$workspace" --surface "$surface" \
-    "$Title" >/dev/null
+    "$title" >/dev/null
 }
 
 main "$@"
