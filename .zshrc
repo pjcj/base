@@ -645,7 +645,7 @@ hg()      { fc -li 1 | grep "$@" }
 hh()      { fc -li 1 }
 ht()      { sudo =htop "$@" }
 kitty()   { ~/.local/kitty.app/bin/kitty "$@" }
-nclaude() { no claude "$@" }
+nclaude() { claude-mode -- no claude "$@" }
 ll()      { f "$@" | less -r -X }
 lll()     { eval $(perl -Mlocal::lib=$(pwd)/local_lib) }
 lu()      { fc -e - lsq=usq -1 }
