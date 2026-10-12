@@ -1,88 +1,275 @@
 tap "homebrew/bundle"
-tap "homebrew/cask-versions"
-tap "homebrew/core"
-tap "linuxbrew/xorg"
+# Zstandard is a real-time compression algorithm
 brew "zstd"
+# GNU binary tools for native development
 brew "binutils"
+# GNU compiler collection
 brew "gcc"
-brew "libtiff"
-brew "openexr"
-brew "python@3.11"
-brew "icu4c"
-brew "libxml2"
-brew "berkeley-db"
-brew "openssl@1.1"
+# C/C++ and Java libraries for Unicode and globalization
+brew "icu4c@78"
+# Portable Foreign Function Interface library
+brew "libffi"
+# Official Amazon AWS command-line interface
 brew "awscli"
+# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# High performance key/value database
+brew "berkeley-db"
+# Asynchronous DNS library
+brew "c-ares"
+# XML-based font configuration API for X Windows
 brew "fontconfig"
+# Core application library for C
 brew "glib"
+# Fix common misspellings in source code and text files
 brew "codespell"
+# C string library for manipulating Unicode strings
+brew "libunistring"
+# HTTP/2 C Library
+brew "libnghttp2"
+# Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
+# Good-lookin' diffs with diff-highlight and more
 brew "diff-so-fancy"
+# GNU compiler collection
 brew "gcc@11"
+# Cryptography and SSL/TLS Toolkit
+brew "openssl@1.1"
+# Command-line DNS client
 brew "dog"
+# Modern replacement for 'ls'
 brew "exa"
+# Program that can automate interactive applications
 brew "expect"
+# Work with ID3 metadata in .mp3 files
 brew "eye-d3"
+# Simple, fast and user-friendly alternative to find
 brew "fd"
+# Free lossless audio codec
 brew "flac"
+# GNOME XML library
+brew "libxml2"
+# High-performance theorem prover
+brew "z3"
+# Protocol for a compositor to talk to its clients
 brew "wayland"
-brew "libva"
+# Graphics Library
 brew "mesa"
+# Hardware accelerated video processing library
+brew "libva"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.12"
+# Mesa OpenGL Utility library
 brew "mesa-glu"
+# Open-source alternative to the OpenGL Utility Toolkit (GLUT) library
 brew "freeglut"
+# Command-line fuzzy finder written in Go
 brew "fzf"
+# GitHub command-line tool
 brew "gh"
+# OpenType text shaping engine
+brew "harfbuzz"
+# TIFF library and utilities
+brew "libtiff"
+# Library for JPEG-2000 image manipulation
+brew "openjpeg"
+# Interpreter for PostScript and PDF
 brew "ghostscript"
+# Remote repository management made easy
 brew "ghq"
+# Distributed revision control system
 brew "git"
+# Syntax-highlighting pager for git and diff output
 brew "git-delta"
+# Quickly rewrite git repository history
 brew "git-filter-repo"
-brew "pcre"
+# Common error values for all GnuPG components
+brew "libgpg-error"
+# Library for storing/retrieving passwords and other secrets
+brew "libsecret"
+# System and service manager
+brew "systemd", link: true
+# GNU Privacy Guard (OpenPGP)
 brew "gnupg"
+# Library access to GnuPG
 brew "gpgme"
+# MIME mail utilities
 brew "gmime"
+# Open source programming language to build simple/reliable/efficient software
 brew "go"
+# Improved top (interactive process viewer)
 brew "htop"
+# ISO/IEC 23008-12:2017 HEIF file format decoder and encoder
 brew "libheif"
-brew "libraw"
+# Tools and libraries to manipulate images in select formats
 brew "imagemagick"
+# Modular IRC client
 brew "irssi"
+# Lightweight and flexible command-line JSON processor
 brew "jq"
+# High quality MPEG Audio Layer III (MP3) encoder
 brew "lame"
-brew "sdl2"
+# Oil Runtime Compiler (ORC)
+brew "orc"
+# SDL2 compatibility layer that uses SDL3 behind the scenes
+brew "sdl2-compat"
+# Audio and video processing tools
 brew "libav"
+# Library for reading RAW files from digital photo cameras
+brew "libraw"
+# Open-source, cross-platform JavaScript runtime environment
 brew "node"
+# CLI for Node.js style checker and lint tool for Markdown files
 brew "markdownlint-cli"
+# Java-based project management
 brew "maven"
+# Fast and user friendly build system
 brew "meson"
+# Remote terminal application
 brew "mosh"
+# Mongrel of mail user agents (part elm, pine, mush, mh, etc.)
 brew "mutt"
+# Incremental parsing library
+brew "tree-sitter"
+# Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
-brew "xapian"
+# High dynamic-range image file format
+brew "openexr"
+# Shell command parallelization utility
 brew "parallel"
+# Perl compatible regular expressions library
+brew "pcre"
+# Port of pdftk in java
 brew "pdftk-java"
+# Perl builder
 brew "perl-build"
+# Parallel gzip
 brew "pigz"
+# Execute binaries from Python packages in isolated environments
+brew "pipx"
+# Perl binary manager
 brew "plenv"
+# Framework for managing multi-language pre-commit hooks
+brew "pre-commit"
+# Easily download, build, install, upgrade, and uninstall Python packages
+brew "python-setuptools"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.11"
+# Encoder and decoder for quoted-printable encoding
+brew "qprint"
+# File browser
 brew "ranger"
+# Rsync for cloud storage
 brew "rclone"
+# Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# Safe, concurrent, practical language
 brew "rust"
+# Blazing-fast modern Lua linter
 brew "selene"
+# Static analysis and lint tool, for (ba)sh scripts
 brew "shellcheck"
+# Bash syntax highlighter that encourages/fixes variables quoting
 brew "shellharden"
+# Autoformat shell script source code
 brew "shfmt"
+# Multi-purpose tool for manipulating and analyzing WAV files
 brew "shntool"
+# File system client based on SSH File Transfer Protocol
 brew "sshfs"
+# Opinionated Lua code formatter
 brew "stylua"
+# Generate scripting interfaces to C/C++ code
 brew "swig"
+# Tool Command Language
+brew "tcl-tk"
+# Text interface for Git repositories
 brew "tig"
+# Simplified and community-driven man pages
 brew "tldr"
+# Terminal multiplexer
 brew "tmux"
+# Source code spell checker
 brew "typos-cli"
+# Maintained ctags implementation
 brew "universal-ctags"
+# Syntax-aware linter for prose
+brew "vale"
+# Pager/text based browser
 brew "w3m"
+# C++ search engine library
+brew "xapian"
+# Linter for YAML files
 brew "yamllint"
+# JavaScript package manager
 brew "yarn"
+# UNIX shell (command interpreter)
 brew "zsh"
+go "github.com/klauspost/asmfmt/cmd/asmfmt"
+go "github.com/go-delve/delve/cmd/dlv"
+go "github.com/kisielk/errcheck"
+go "github.com/davidrjenni/reftools/cmd/fillstruct"
+go "github.com/rogpeppe/godef"
+go "golang.org/x/tools/cmd/goimports"
+go "github.com/golangci/golangci-lint/cmd/golangci-lint"
+go "github.com/nametake/golangci-lint-langserver"
+go "golang.org/x/lint/golint"
+go "github.com/fatih/gomodifytags"
+go "golang.org/x/tools/gopls"
+go "golang.org/x/tools/cmd/gorename"
+go "github.com/jstemmer/gotags"
+go "golang.org/x/tools/cmd/guru"
+go "github.com/koron/iferr"
+go "github.com/josharian/impl"
+go "honnef.co/go/tools/cmd/keyify"
+go "github.com/client9/misspell/cmd/misspell"
+go "github.com/fatih/motion"
+go "github.com/mgechev/revive"
+go "honnef.co/go/tools/cmd/staticcheck"
+cargo "devicon-lookup"
+winget "1Password", id: "AgileBits.1Password"
+winget "7-Zip 26.04 (x64)", id: "7zip.7zip"
+winget "Alacritty", id: "Alacritty.Alacritty"
+winget "AutoHotkey", id: "AutoHotkey.AutoHotkey"
+winget "Browser Tamer", id: "aloneguid.bt"
+winget "Clementine", id: "Clementine.Clementine"
+winget "ConEmu 230724.x64", id: "Maximus5.ConEmu"
+winget "Docker Desktop", id: "Docker.DockerDesktop"
+winget "draw.io 32.4.1", id: "JGraph.Draw"
+winget "Dropbox", id: "Dropbox.Dropbox"
+winget "EA app", id: "ElectronicArts.EADesktop"
+winget "Google Chrome", id: "Google.Chrome"
+winget "HeidiSQL 12.21.0.7344", id: "HeidiSQL.HeidiSQL"
+winget "HWiNFO�� 64", id: "REALiX.HWiNFO"
+winget "Java 8 Update 503 (64-bit)", id: "Oracle.JavaRuntimeEnvironment"
+winget "JDownloader 2", id: "AppWork.JDownloader"
+winget "Logi Bolt", id: "Logitech.LogiBolt"
+winget "Logitech Gaming Software 9.04", id: "Logitech.LGS"
+winget "Logitech Options", id: "Logitech.Options"
+winget "Logitech Presentation", id: "Logitech.Presentation"
+winget "Microsoft 365 Copilot", id: "Microsoft.365Copilot"
+winget "Microsoft Teams", id: "Microsoft.Teams.Classic"
+winget "Microsoft Teams", id: "Microsoft.Teams"
+winget "Microsoft Teams (personal)", id: "Microsoft.Teams.Free"
+winget "Mozilla Thunderbird (x64 en-GB)", id: "Mozilla.Thunderbird.en-GB"
+winget "MusicBrainz Picard", id: "MusicBrainz.Picard"
+winget "Nextcloud", id: "Nextcloud.NextcloudDesktop"
+winget "Oracle VirtualBox 7.2.20", id: "Oracle.VirtualBox"
+winget "Outlook for Windows", id: "Microsoft.Outlook"
+winget "Plex", id: "Plex.Plex"
+winget "PowerToys (Preview) x64", id: "Microsoft.PowerToys"
+winget "QuickLook", id: "QL-Win.QuickLook"
+winget "Rainmeter", id: "Rainmeter.Rainmeter"
+winget "RealVNC Viewer 7.13.1", id: "RealVNC.VNCViewer"
+winget "Revo Uninstaller 2.7.2", id: "RevoUninstaller.RevoUninstaller"
+winget "Signal 8.30.0", id: "OpenWhisperSystems.Signal"
+winget "Slack", id: "SlackTechnologies.Slack"
+winget "Steam", id: "Valve.Steam"
+winget "SumatraPDF", id: "SumatraPDF.SumatraPDF"
+winget "Tailscale", id: "Tailscale.Tailscale"
+winget "VLC media player", id: "VideoLAN.VLC"
+winget "WinDirStat 2.9.2", id: "WinDirStat.WinDirStat"
+winget "Windows Terminal", id: "Microsoft.WindowsTerminal"
+winget "WinFsp 2025", id: "WinFsp.WinFsp"
+winget "Zoom", id: "Zoom.Zoom.EXE"
+npm "fixjson"
