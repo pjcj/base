@@ -649,7 +649,13 @@ nclaude() { claude-mode -- no claude "$@" }
 ll()      { f "$@" | less -r -X }
 lll()     { eval $(perl -Mlocal::lib=$(pwd)/local_lib) }
 lu()      { fc -e - lsq=usq -1 }
-m()       { bat --tabs=2 "$@" }
+m() {
+  if [[ $# -eq 1 && ${(L)1:e} == (md|markdown) && -t 1 ]]; then
+    mdmost "$1"
+  else
+    bat --tabs=2 "$@"
+  fi
+}
 mn()      { nroff -man "$@" | m }
 mutt()    { mkdir -p /tmp/ml && TERM=tmux-direct neomutt "$@" }
 pm()      { pod2man "$@" | mn }
