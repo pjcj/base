@@ -333,6 +333,8 @@ main() {
 
   [[ -d ~/.claude/skills ]] || mkdir -p ~/.claude/skills
   ln -sf ~/g/local_base/claude/skills/* ~/.claude/skills
+  [[ -d ~/.claude/agents ]] || mkdir -p ~/.claude/agents
+  ln -sf ~/g/local_base/claude/agents/* ~/.claude/agents
   ln -sf ~/g/local_base/.ttree* .
 
   [[ -e ~/.ssh/rc ]] || ln -s ~/g/base/.ssh/rc ~/.ssh
