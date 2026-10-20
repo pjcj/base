@@ -325,7 +325,9 @@ return {
           ["<Tab>"] = { "select_next", "fallback" },
           ["<S-Tab>"] = { "select_prev", "fallback" },
 
-          ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
+          -- -this blocks digraphs
+          -- use ctrl-k ctrl-k for digraphs and ctrl-s for signatures
+          -- ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
 
           -- Accept the next word from the selected completion
           ["<C-l>"] = {
