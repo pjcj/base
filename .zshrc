@@ -657,6 +657,11 @@ m() {
   fi
 }
 mn()      { nroff -man "$@" | m }
+mt() {
+  local root
+  root=$(git rev-parse --show-toplevel 2>/dev/null || print .)
+  m "$root"/llm/tickets/*.md(om[1])
+}
 mutt()    { mkdir -p /tmp/ml && TERM=tmux-direct neomutt "$@" }
 pm()      { pod2man "$@" | mn }
 restart() { exec $SHELL "$@" }
