@@ -141,41 +141,25 @@ return {
   -- Scrollbar with git and diagnostic indicators
   {
     "petertriho/nvim-scrollbar",
+    branch = "refactor/v2",
     event = { "BufReadPost", "BufNewFile" },
     config = function()
       local l = require("local_defs")
       local c = l.colour
       require("scrollbar").setup({
-        handle = {
-          color = c.dblue,
-        },
-        handlers = {
-          cursor = true,
-          diagnostic = true,
+        providers = {
           gitsigns = true,
-          handle = true,
-          search = true,
           ale = true,
         },
-        render = {
-          "BufWinEnter",
-          "TabEnter",
-          "TermEnter",
-          "WinEnter",
-          "CmdwinLeave",
-          -- "TextChanged",
-          "VimResized",
-          "WinScrolled",
-          "CursorHold",
-        },
-        clear = {
-          "BufWinLeave",
-          "TabLeave",
-          "TermLeave",
-          "WinLeave",
+        scrollbar = {
+          layout = { columns = { { "thumb", "marks" } } },
+          thumb = {
+            blend = 80,
+            highlight = { bg = c.llblue },
+          },
+          window = { wo = { winblend = 100 } },
         },
       })
-      require("scrollbar.handlers.search").setup({})
 
       local set_default_link = function(group, target)
         vim.api.nvim_set_hl(0, group, { link = target, default = true })
@@ -187,14 +171,14 @@ return {
       set_default_link("HlSearchFloat", "Search")
 
       -- Conditionally hide scrollbar for large Perl files
-      local scrollbar_utils = require("scrollbar.utils")
+      local scrollbar = require("scrollbar")
       local is_large_perl_file = require("local_defs").fn.large_perl_file
       vim.api.nvim_create_autocmd({ "BufEnter", "FileType" }, {
         callback = function()
           if is_large_perl_file(0) then
-            scrollbar_utils.hide()
+            scrollbar.hide()
           else
-            scrollbar_utils.show()
+            scrollbar.show()
           end
         end,
       })
