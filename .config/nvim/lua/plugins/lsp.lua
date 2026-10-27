@@ -75,8 +75,9 @@ local plugins = {
       -- Vale prose lint, run on every buffer like codespell (see the
       -- autocmd below). The builtin linter derives --ext from the
       -- buffer's filename, which misleads Vale for .t files (an
-      -- extension it does not know), .pod (recognised, but POD is not
-      -- extracted - feeding it as markdown works) and extensionless
+      -- extension it does not know), .pod (Vale lints it as Perl code
+      -- and skips the POD - the .podx format in .vale.ini is markdown
+      -- with verbatim paragraphs and C<> spans ignored) and extensionless
       -- buffers such as COMMIT_EDITMSG and shell scripts without an
       -- extension, which the .txt fallback would lint as prose. Map
       -- those by filetype, fall back to the filename extension, then
@@ -85,7 +86,7 @@ local plugins = {
       -- builtin does.
       local vale_ext_by_ft = {
         perl = ".pl",
-        pod = ".md",
+        pod = ".podx",
         gitcommit = ".md",
         sh = ".sh",
         bash = ".sh",
@@ -139,13 +140,13 @@ local plugins = {
 
       -- Vale's Perl parser sees only # comments, so a second pass keeps
       -- POD lines, blanks the rest (line numbers survive) and lints the
-      -- result as markdown.
+      -- result with the .podx format (see above).
       lint.linters.vale_pod = {
         cmd = "sh",
         args = {
           "-c",
           [[awk '/^=[A-Za-z]/ { p = 1 } { print p ? $0 : "" } /^=cut/ { p = 0 }' ]]
-            .. "| vale --no-exit --output JSON --ext .md",
+            .. "| vale --no-exit --output JSON --ext .podx",
         },
         stdin = true,
         parser = vale_parser,
