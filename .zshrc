@@ -334,6 +334,13 @@ compdef n=make
 compdef _git g=git
 compdef _git gto=git-origin-branch-move
 
+_mailu() {
+  local -a o
+  o=($(mailu options))
+  _describe 'mailu command' o
+}
+compdef _mailu mailu
+
 # Wrap git subcommand completions to avoid __git_cmd_idx being unset when
 # the bash completion shim is invoked via compdef _git alias=git-subcmd.
 _git_subcmd_compdef() {
