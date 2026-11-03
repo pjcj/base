@@ -8,7 +8,8 @@
 
   "app": {
     "appearance": "dark",
-    // Scales the whole app, not the sidebar alone. config.ghostty offsets it.
+    // Scales the whole app, not the sidebar alone. The Ghostty font-size
+    // offsets it.
     "globalFontMagnification": 120,
     // Ghostty config already skips both confirmations.
     "confirmQuit": "never",
