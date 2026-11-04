@@ -382,8 +382,6 @@ cask "stats"
 cask "the-unarchiver"
 # Multimedia player
 cask "vlc"
-# Create, manage, and run virtual machines
-cask "vmware-fusion"
 # GPU-accelerated cross-platform terminal emulator and multiplexer
 cask "wezterm"
 # Menu bar app for USB-C cable diagnostics
