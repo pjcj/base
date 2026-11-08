@@ -113,6 +113,7 @@ update_brew() {
       brew bundle dump --file=$brewfile --force
     else
       bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+      eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
       brew bundle install --file=$brewfile
     fi
   fi
