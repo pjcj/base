@@ -22,6 +22,8 @@ brew "abcde"
 brew "cairo"
 # Framework for layout and rendering of i18n text
 brew "pango"
+# Simple, modern, secure file encryption
+brew "age"
 # Strip or convert ANSI codes into HTML, (La)Tex, RTF, or BBCode
 brew "ansifilter"
 # Spell checker with better logic than ispell
