@@ -195,16 +195,16 @@ setopt                      \
 zshrc_load_status "environment"
 
 # shellcheck disable=SC1036
-fpath=(
-  ~/{lib/zsh,.zsh,g/base/zsh}/{functions,scripts}(N)
-  ~/g/go/src/github.com/motemen/ghq/zsh(N)
-  $fpath
-)
-# shellcheck disable=SC1036
 [[ -n $HOMEBREW_PREFIX ]] && fpath=(
   $HOMEBREW_PREFIX/share/zsh/site-functions
   $HOMEBREW_PREFIX/share/zsh/functions(N)
   $HOMEBREW_PREFIX/Cellar/zsh/*/share/zsh/functions(NOn[1])
+  $fpath
+)
+# shellcheck disable=SC1036
+fpath=(
+  ~/{lib/zsh,.zsh,g/base/zsh}/{functions,scripts}(N)
+  ~/g/go/src/github.com/motemen/ghq/zsh(N)
   $fpath
 )
 
