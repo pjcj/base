@@ -383,17 +383,62 @@ _git_subcmd_compdef gsh show
 _git_subcmd_compdef gvd diff
 _git_subcmd_compdef gw worktree
 
-_git-branch-full-delete() { __git_branch_names }
+# Branch names on origin without the origin/ prefix
+__git_origin_branch_names() {
+  declare -a refs branch_names
+  refs=(${(f)"$(_call_program remote-branch-refs \
+    git for-each-ref --format='"%(refname)"' refs/remotes/origin 2>/dev/null)"})
+  __git_command_successful $pipestatus || return 1
+  branch_names=(${${refs#refs/remotes/origin/}:#HEAD})
+  __git_describe_commit branch_names origin-branch-names \
+    'origin branch name' "$@"
+}
+
+# Local and remote branch names that branch-full-delete may delete. Leaves
+# out main, master, the current branch and the remote HEAD pointers.
+__git_deletable_branch_names() {
+  local current pat ret=1
+  declare -a refs branch_names
+  current=$(_call_program current-branch git branch --show-current 2>/dev/null)
+  pat="(main|master${current:+|$current})"
+  refs=(${(f)"$(_call_program branchrefs \
+    git for-each-ref --format='"%(refname)"' refs/heads 2>/dev/null)"})
+  __git_command_successful $pipestatus || return 1
+  branch_names=(${${refs#refs/heads/}:#${~pat}})
+  __git_describe_commit branch_names branch-names 'branch name' "$@" && ret=0
+  refs=(${(f)"$(_call_program remote-branch-refs \
+    git for-each-ref --format='"%(refname)"' refs/remotes 2>/dev/null)"})
+  __git_command_successful $pipestatus || return 1
+  branch_names=(${${refs#refs/remotes/}:#*/(HEAD|${~pat})})
+  __git_describe_commit branch_names remote-branch-names \
+    'remote branch name' "$@" && ret=0
+  return ret
+}
+
+_git-branch-full-delete() {
+  _arguments -S \
+    '*: :__git_ignore_line_inside_arguments __git_deletable_branch_names'
+}
 zstyle ":completion:*:*:git:*" user-commands \
   branch-full-delete:"delete local and remote branches"
 
-_git-origin-branch-move() { __git_branch_names }
+_git-origin-branch-move() {
+  _arguments -S ': :__git_origin_branch_names'
+}
 zstyle ":completion:*:*:git:*" user-commands \
   origin-branch-move:"move branch to its origin"
 
-_git-fpush() { __git_branch_names }
+_git-fpush() {
+  _arguments -S ': :__git_branch_names'
+}
 zstyle ":completion:*:*:git:*" user-commands \
   fpush:"force push even when the remote forbids it"
+
+_git-tag-full-delete() {
+  _arguments -S '*: :__git_ignore_line_inside_arguments __git_tags'
+}
+zstyle ":completion:*:*:git:*" user-commands \
+  tag-full-delete:"delete local and remote tags"
 
 # disable sort when completing `git checkout`
 zstyle ':completion:*:git-checkout:*' sort false
