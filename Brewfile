@@ -138,6 +138,8 @@ brew "k9s"
 brew "kubernetes-cli"
 # Cross-platform TUI database management tool
 brew "lazysql"
+# Secure hashing function
+brew "libb2"
 # Implementation of the file(1) command
 brew "libmagic"
 # Lynx-like WWW browser that supports tables, menus, etc.
